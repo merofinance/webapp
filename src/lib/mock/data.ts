@@ -1,14 +1,11 @@
-import { BigNumber, BigNumberish } from "ethers";
+import { BigNumber } from "ethers";
+import { scale } from "../numeric";
 import { Pool } from "../types";
 
 export const masterAccount = "0xbacE8e7f276FD2Ee5ecE5C1df18BF381148862A6";
 
-function scale(number: BigNumberish, decimals: number = 18) {
-  return BigNumber.from(number).mul(BigNumber.from(10).pow(decimals));
-}
-
 // numbers are scaled to 10^18 to emulate contracst return values
-export const pools: Pool[] = [
+export const pools: Pool<BigNumber>[] = [
   {
     asset: "DAI",
     name: "bDAI3CRV",
@@ -26,7 +23,7 @@ export const pools: Pool[] = [
   {
     asset: "ETH",
     name: "bETHCRV",
-    apy: scale("193", 17),
+    apy: scale(218, 17),
     totalAssets: scale(19738),
     address: "0xCa0cF7A135AC852a4d5591dC48e93e5F67425cB9",
   },
@@ -39,6 +36,6 @@ export const prices: Record<string, BigNumber> = {
 };
 
 export const balances: Record<string, BigNumber> = {
-  [pools[0].address]: scale(250_000, 18), // 250,000 DAI
-  [pools[2].address]: scale(48, 18), // 48 ETH
+  [pools[0].name]: scale(250_000, 18), // 250,000 DAI
+  [pools[2].name]: scale(48, 18), // 48 ETH
 };
