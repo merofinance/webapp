@@ -1,18 +1,29 @@
 import React from "react";
-import { Navbar } from "react-bootstrap";
+import { Nav, Navbar } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 import logo from "../../images/backd_logo.png";
 
 export function Header() {
   return (
     <Navbar bg="light" expand="lg">
-      <Navbar.Brand href="/">
-        <img
-          src={logo}
-          alt="backd logo"
-          className="d-inline-block align-top"
-          height="50"
-        />
-      </Navbar.Brand>
+      <LinkContainer to="/">
+        <Navbar.Brand>
+          <img
+            src={logo}
+            alt="backd logo"
+            className="d-inline-block align-top"
+            height="50"
+          />
+        </Navbar.Brand>
+      </LinkContainer>
+
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="ml-auto">
+          <Nav.Link href="https://github.com/backdfund">Litepaper</Nav.Link>
+          <Nav.Link href="https://github.com/backdfund">Docs</Nav.Link>
+          <Nav.Link href="https://github.com/backdfund">Code</Nav.Link>
+        </Nav>
+      </Navbar.Collapse>
     </Navbar>
   );
 }

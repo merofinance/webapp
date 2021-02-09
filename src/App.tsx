@@ -1,9 +1,11 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import { BackdContext } from "./app/providers/backd";
 import { Header } from "./features/header/Header";
+import { Landing } from "./features/landing/Landing";
 import { Pools } from "./features/pools/Pools";
 import { Backd } from "./lib/backd";
 import { createBackd } from "./lib/factory";
@@ -22,10 +24,20 @@ function App() {
 
   return (
     <BackdContext.Provider value={backd}>
-      <Header />
-      <Container>
-        <Pools />
-      </Container>
+      <Router>
+        <Header />
+        <Container>
+          <Switch>
+            <Route path="/app">
+              <Pools />
+            </Route>
+
+            <Route path="/">
+              <Landing />
+            </Route>
+          </Switch>
+        </Container>
+      </Router>
     </BackdContext.Provider>
   );
 }
