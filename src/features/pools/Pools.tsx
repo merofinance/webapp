@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Col, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { BackdContext } from "../../app/providers/backd";
 import { AppDispatch } from "../../app/store";
@@ -28,7 +28,7 @@ export function Pools() {
   }, [backd, dispatch]);
 
   return (
-    <>
+    <Container>
       <header className="text-center m-4">
         <h1 className="display-3">Pools</h1>
       </header>
@@ -54,6 +54,6 @@ export function Pools() {
           </div>
         ))}
       </div>
-    </>
+    </Container>
   );
 }

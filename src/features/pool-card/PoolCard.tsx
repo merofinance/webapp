@@ -4,7 +4,7 @@ import NumberFormat from "react-number-format";
 import tokenImages from "../../images/tokens";
 import dogeCoin from "../../images/tokens/dogecoin.png";
 import { Pool } from "../../lib";
-import styles from "./PoolCard.module.css";
+import styles from "./PoolCard.module.scss";
 
 export type PoolProps = {
   pool: Pool;
@@ -52,12 +52,12 @@ export function PoolCard({ pool, balance, price }: PoolProps) {
             thousandSeparator={true}
           />
         </Col>
-        <Col>
+        <Col className={styles.actions}>
           <Button size="sm" variant="secondary">
             Deposit
           </Button>
         </Col>
-        <Col>
+        <Col className={styles.actions}>
           <Button size="sm" variant="secondary">
             Positions
           </Button>

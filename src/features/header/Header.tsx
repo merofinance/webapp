@@ -1,3 +1,4 @@
+import classnames from "classnames";
 import React from "react";
 import { Nav, Navbar } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
@@ -17,8 +18,9 @@ export function Header() {
         </Navbar.Brand>
       </LinkContainer>
 
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="ml-auto">
+        <Nav className={classnames("ml-auto", "piped-nav-links")}>
           <Nav.Link href="https://github.com/backdfund">Litepaper</Nav.Link>
           <Nav.Link href="https://github.com/backdfund">Docs</Nav.Link>
           <Nav.Link href="https://github.com/backdfund">Code</Nav.Link>

@@ -1,0 +1,29 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins/_breakpoints";
+
+.landing {
+  section {
+    margin: 3rem 0;
+    text-align: center;
+
+    h1 {
+      font-family: "Lato", sans-serif;
+    }
+
+    p {
+      font-family: "Source Sans Pro", sans-serif;
+    }
+
+    @include media-breakpoint-down(sm) {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
+  }
+
+  .logos {
+    img {
+      width: 60%;
+    }
+  }
+}
