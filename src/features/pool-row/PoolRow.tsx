@@ -4,6 +4,7 @@ import NumberFormat from "react-number-format";
 import tokenImages from "../../images/tokens";
 import dogeCoin from "../../images/tokens/dogecoin.png";
 import { Pool } from "../../lib";
+import styles from "./PoolRow.module.scss";
 
 type AmountCellProps = {
   asset: string;
@@ -64,12 +65,13 @@ export function PoolRow({ pool, balance, price }: PoolRowProps) {
       <td>
         <AmountCell asset={pool.asset} amount={balance} price={price} />
       </td>
-      <td>
+      <td className={styles.actions}>
         <Button size="sm" variant="secondary">
           Deposit
         </Button>
-      </td>
-      <td>
+        <Button size="sm" variant="secondary">
+          Withdraw
+        </Button>
         <Button size="sm" variant="secondary">
           Positions
         </Button>

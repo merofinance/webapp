@@ -50,7 +50,6 @@ export function PoolsList() {
             <th>Total assets</th>
             <th>Balance</th>
             <th></th>
-            <th></th>
           </tr>
         </thead>
         <tbody>

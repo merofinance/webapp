@@ -1,0 +1,13 @@
+.actions {
+  text-align: right;
+
+  // dirty trick to make last cell smaller
+  width: 1%;
+  white-space: nowrap;
+
+  button {
+    &:not(:last-child) {
+      margin-right: 0.5em;
+    }
+  }
+}
