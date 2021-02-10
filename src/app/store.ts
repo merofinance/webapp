@@ -1,5 +1,5 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import poolsReducer from "../features/pools/poolsSlice";
+import poolsReducer from "../features/pools-list/poolsListSlice";
 
 export const store = configureStore({
   reducer: {

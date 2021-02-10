@@ -1,18 +1,20 @@
 import React, { useContext, useEffect } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Container, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { BackdContext } from "../../app/providers/backd";
 import { AppDispatch } from "../../app/store";
 import { Pool } from "../../lib";
-import { PoolCard } from "../pool-card/PoolCard";
+import { PoolRow } from "../pool-row/PoolRow";
 import {
   fetchState,
   selectBalances,
   selectPools,
   selectPrices,
-} from "./poolsSlice";
+} from "./poolsListSlice";
+import styles from "./PoolsList.module.scss";
+import classnames from "classnames";
 
-export function Pools() {
+export function PoolsList() {
   const backd = useContext(BackdContext);
   const dispatch: AppDispatch = useDispatch();
   const pools = useSelector(selectPools);
@@ -32,28 +34,36 @@ export function Pools() {
       <header className="text-center m-4">
         <h1 className="display-3">Pools</h1>
       </header>
-      <div className="table-header p-3">
-        <Row>
-          <Col></Col>
-          <Col xs="2">Pool name</Col>
-          <Col>Asset</Col>
-          <Col>APY</Col>
-          <Col xs="2">Total assets</Col>
-          <Col xs="2">Balance</Col>
-          <Col xs="3"></Col>
-        </Row>
-      </div>
-      <div className="pools">
-        {pools.map((pool) => (
-          <div key={pool.name} className="mb-3">
-            <PoolCard
+      <Table
+        className={classnames(
+          styles["no-border-headers"],
+          styles["tall-lines"],
+          styles["align-cells-middle"]
+        )}
+      >
+        <thead>
+          <tr>
+            <th></th>
+            <th>Pool name</th>
+            <th>Asset</th>
+            <th>APY</th>
+            <th>Total assets</th>
+            <th>Balance</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {pools.map((pool) => (
+            <PoolRow
+              key={pool.name}
               pool={pool}
               balance={getBalance(pool)}
               price={getPrice(pool)}
             />
-          </div>
-        ))}
-      </div>
+          ))}
+        </tbody>
+      </Table>
     </Container>
   );
 }

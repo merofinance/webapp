@@ -4,7 +4,7 @@ import "./App.scss";
 import { BackdContext } from "./app/providers/backd";
 import { Header } from "./features/header/Header";
 import { Landing } from "./features/landing/Landing";
-import { Pools } from "./features/pools/Pools";
+import { PoolsList } from "./features/pools-list/PoolsList";
 import { Backd } from "./lib/backd";
 import { createBackd } from "./lib/factory";
 import MockSigner from "./lib/mock/signer";
@@ -30,7 +30,7 @@ function App() {
         <Header />
         <Switch>
           <Route path="/app">
-            <Pools />
+            <PoolsList />
           </Route>
 
           <Route path="/">
