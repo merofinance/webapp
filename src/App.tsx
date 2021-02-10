@@ -12,6 +12,7 @@ import { Optional } from "./lib/types";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
+import { PoolManagement } from "./features/pool-management/PoolManagement";
 library.add(fab);
 
 function App() {
@@ -29,6 +30,18 @@ function App() {
       <Router>
         <Header />
         <Switch>
+          <Route path="/app/:poolName/deposit">
+            <PoolManagement mode="deposit" />
+          </Route>
+
+          <Route path="/app/:poolName/withdraw">
+            <PoolManagement mode="withdraw" />
+          </Route>
+
+          <Route path="/app/:poolName/positions">
+            <PoolManagement mode="positions" />
+          </Route>
+
           <Route path="/app">
             <PoolsList />
           </Route>

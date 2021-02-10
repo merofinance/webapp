@@ -1,6 +1,6 @@
 import React from "react";
-import { Button } from "react-bootstrap";
 import NumberFormat from "react-number-format";
+import { Link } from "react-router-dom";
 import tokenImages from "../../images/tokens";
 import dogeCoin from "../../images/tokens/dogecoin.png";
 import { Pool } from "../../lib";
@@ -66,15 +66,25 @@ export function PoolRow({ pool, balance, price }: PoolRowProps) {
         <AmountCell asset={pool.asset} amount={balance} price={price} />
       </td>
       <td className={styles.actions}>
-        <Button size="sm" variant="secondary">
+        <Link
+          to={`/app/${pool.name}/deposit`}
+          className="btn btn-sm btn-secondary"
+        >
           Deposit
-        </Button>
-        <Button size="sm" variant="secondary">
+        </Link>
+        <Link
+          to={`/app/${pool.name}/withdraw`}
+          className="btn btn-sm btn-secondary"
+        >
           Withdraw
-        </Button>
-        <Button size="sm" variant="secondary">
+        </Link>
+
+        <Link
+          to={`/app/${pool.name}/positions`}
+          className="btn btn-sm btn-secondary"
+        >
           Positions
-        </Button>
+        </Link>
       </td>
     </tr>
   );

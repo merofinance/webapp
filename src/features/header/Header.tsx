@@ -2,6 +2,7 @@ import classnames from "classnames";
 import React from "react";
 import { Nav, Navbar } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import { NavLink } from "react-router-dom";
 import logo from "../../images/backd_logo.png";
 
 export function Header() {
@@ -17,6 +18,12 @@ export function Header() {
           />
         </Navbar.Brand>
       </LinkContainer>
+
+      <Nav className={classnames("mr-auto")}>
+        <NavLink className="nav-link" to="/app" exact={true}>
+          Pools
+        </NavLink>
+      </Nav>
 
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
