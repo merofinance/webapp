@@ -55,14 +55,14 @@ export function PoolRow({ pool, balance, price }: PoolRowProps) {
       <td>
         <NumberFormat displayType={"text"} value={pool.apy} suffix="%" />
       </td>
-      <td>
+      <td className={styles.shorter}>
         <AmountCell
           asset={pool.asset}
           amount={pool.totalAssets}
           price={price}
         />
       </td>
-      <td>
+      <td className={styles.shorter}>
         <AmountCell asset={pool.asset} amount={balance} price={price} />
       </td>
       <td className={styles.actions}>
