@@ -1,40 +1,10 @@
 import React from "react";
 import NumberFormat from "react-number-format";
 import { Link } from "react-router-dom";
-import tokenImages from "../../images/tokens";
-import dogeCoin from "../../images/tokens/dogecoin.png";
+import { getImage } from "../../images/tokens";
 import { Pool } from "../../lib";
+import { AssetAmount } from "../asset-amount/AssetAmount";
 import styles from "./PoolRow.module.scss";
-
-type AmountCellProps = {
-  asset: string;
-  amount: number;
-  price: number;
-};
-
-function AmountCell({ asset, amount, price }: AmountCellProps) {
-  const totalUSD = Math.round(amount * price);
-  return (
-    <>
-      <NumberFormat
-        displayType={"text"}
-        value={totalUSD}
-        thousandSeparator={true}
-        prefix="$"
-      />
-
-      <br />
-      <small>
-        <NumberFormat
-          displayType={"text"}
-          value={amount}
-          thousandSeparator={true}
-          suffix={` ${asset}`}
-        />
-      </small>
-    </>
-  );
-}
 
 export type PoolRowProps = {
   pool: Pool;
@@ -43,12 +13,10 @@ export type PoolRowProps = {
 };
 
 export function PoolRow({ pool, balance, price }: PoolRowProps) {
-  const image = pool.asset in tokenImages ? tokenImages[pool.asset] : dogeCoin;
-
   return (
     <tr>
       <td>
-        <img height="40" src={image} alt={`${pool.asset} logo`} />
+        <img height="40" src={getImage(pool)} alt={`${pool.asset} logo`} />
       </td>
       <td>{pool.name}</td>
       <td>{pool.asset}</td>
@@ -56,14 +24,20 @@ export function PoolRow({ pool, balance, price }: PoolRowProps) {
         <NumberFormat displayType={"text"} value={pool.apy} suffix="%" />
       </td>
       <td className={styles.shorter}>
-        <AmountCell
+        <AssetAmount
           asset={pool.asset}
           amount={pool.totalAssets}
           price={price}
+          newLine={true}
         />
       </td>
       <td className={styles.shorter}>
-        <AmountCell asset={pool.asset} amount={balance} price={price} />
+        <AssetAmount
+          asset={pool.asset}
+          amount={balance}
+          price={price}
+          newLine={true}
+        />
       </td>
       <td className={styles.actions}>
         <Link
