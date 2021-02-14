@@ -50,7 +50,7 @@ export function PoolInfo({ pool, price, balance }: PoolInfoProps) {
         <Card className={styles.info}>
           <Card.Header>APY</Card.Header>
           <Card.Body>
-            <Card.Title>
+            <Card.Title className={styles["info-tall-body"]}>
               <NumberFormat displayType={"text"} value={pool.apy} suffix="%" />
             </Card.Title>
           </Card.Body>

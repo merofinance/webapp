@@ -7,4 +7,12 @@
   :global .card-header {
     text-align: center;
   }
+
+  :global .card-body {
+    text-align: center;
+  }
+}
+
+.info-tall-body {
+  line-height: 2.5em;
 }
