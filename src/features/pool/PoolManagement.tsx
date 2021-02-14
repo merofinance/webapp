@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Container, Tab, Tabs } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router-dom";
@@ -22,7 +22,6 @@ export function PoolManagement({
   mode: initialMode,
 }: DepositWithdrawParamsProps) {
   let { poolName } = useParams<DepositWithdrawParams>();
-  const [mode, setMode] = useState<Mode>(initialMode);
   const pool = useSelector(selectPool(poolName));
   const balance = useSelector(selectBalance(pool));
   const price = useSelector(selectPrice(pool));
@@ -48,10 +47,7 @@ export function PoolManagement({
       <main>
         <PoolInfo pool={pool} balance={balance} price={price} />
 
-        <Tabs
-          activeKey={mode}
-          onSelect={(k) => setMode((k as unknown) as Mode)}
-        >
+        <Tabs defaultActiveKey={initialMode}>
           <Tab eventKey="deposit" title="Deposit">
             <Deposit pool={pool} />
           </Tab>

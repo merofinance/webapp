@@ -17,7 +17,7 @@ export const pools: Pool<BigNumber>[] = [
     asset: "USDC",
     name: "bUSDC3CRV",
     apy: scale(193, 17),
-    totalAssets: scale(121923401),
+    totalAssets: scale(91923401),
     address: "0xEA3b27fa12eBC0D562a9CCbe9611c866551d3792",
   },
   {
