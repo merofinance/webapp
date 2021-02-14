@@ -16,3 +16,20 @@
 .info-tall-body {
   line-height: 2.5em;
 }
+
+.pool-actions {
+  :global .tab-content {
+    width: 60%;
+    margin: 0 auto;
+    padding: 1em;
+
+    dl {
+      text-align: center;
+    }
+
+    :global .form-group {
+      max-width: 50%;
+      margin: 0 auto;
+    }
+  }
+}

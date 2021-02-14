@@ -6,6 +6,7 @@ import { getImage } from "../../images/tokens";
 import { Deposit } from "./actions/Deposit";
 import { Positions } from "./actions/Positions";
 import { Withdraw } from "./actions/Withdraw";
+import styles from "./Pool.module.scss";
 import { PoolInfo } from "./PoolInfo";
 import { selectBalance, selectPool, selectPrice } from "./selectors";
 
@@ -44,7 +45,7 @@ export function PoolManagement({
         </h1>
       </header>
 
-      <main>
+      <main className={styles["pool-actions"]}>
         <PoolInfo pool={pool} balance={balance} price={price} />
 
         <Tabs defaultActiveKey={initialMode}>
