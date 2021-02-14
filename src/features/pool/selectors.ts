@@ -11,8 +11,7 @@ export function selectPool(
 export function selectBalance(
   pool: Optional<Pool>
 ): (state: RootState) => number {
-  return (state: RootState) =>
-    (pool && state.pools.userBalances[pool.name]) || 0;
+  return (state: RootState) => (pool && state.user.balances[pool.name]) || 0;
 }
 
 export function selectPrice(

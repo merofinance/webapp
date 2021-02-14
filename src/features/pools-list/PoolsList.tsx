@@ -5,14 +5,10 @@ import { BackdContext } from "../../app/providers/backd";
 import { AppDispatch } from "../../app/store";
 import { Pool } from "../../lib";
 import { PoolRow } from "./PoolRow";
-import {
-  fetchState,
-  selectBalances,
-  selectPools,
-  selectPrices,
-} from "./poolsListSlice";
+import { fetchState, selectPools, selectPrices } from "./poolsListSlice";
 import styles from "./PoolsList.module.scss";
 import classnames from "classnames";
+import { selectBalances } from "../user/userSlice";
 
 export function PoolsList() {
   const backd = useContext(BackdContext);

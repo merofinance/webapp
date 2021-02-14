@@ -1,9 +1,11 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import poolsReducer from "../features/pools-list/poolsListSlice";
+import userReducer from "../features/user/userSlice";
 
 export const store = configureStore({
   reducer: {
     pools: poolsReducer,
+    user: userReducer,
   },
 });
 
