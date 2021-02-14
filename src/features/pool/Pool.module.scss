@@ -1,0 +1,10 @@
+.info {
+  min-height: 9.5rem;
+  small {
+    font-size: 0.8rem;
+  }
+
+  :global .card-header {
+    text-align: center;
+  }
+}

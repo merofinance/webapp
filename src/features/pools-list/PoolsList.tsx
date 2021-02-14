@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BackdContext } from "../../app/providers/backd";
 import { AppDispatch } from "../../app/store";
 import { Pool } from "../../lib";
-import { PoolRow } from "../pool-row/PoolRow";
+import { PoolRow } from "./PoolRow";
 import {
   fetchState,
   selectBalances,

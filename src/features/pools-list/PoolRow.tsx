@@ -3,7 +3,7 @@ import NumberFormat from "react-number-format";
 import { Link } from "react-router-dom";
 import { getImage } from "../../images/tokens";
 import { Pool } from "../../lib";
-import { AssetAmount } from "../asset-amount/AssetAmount";
+import { AssetAmount } from "../../components/asset-amount/AssetAmount";
 import styles from "./PoolRow.module.scss";
 
 export type PoolRowProps = {
@@ -40,21 +40,18 @@ export function PoolRow({ pool, balance, price }: PoolRowProps) {
         />
       </td>
       <td className={styles.actions}>
-        <Link
-          to={`/app/${pool.name}/deposit`}
-          className="btn btn-sm btn-secondary"
-        >
+        <Link to={`/${pool.name}/deposit`} className="btn btn-sm btn-secondary">
           Deposit
         </Link>
         <Link
-          to={`/app/${pool.name}/withdraw`}
+          to={`/${pool.name}/withdraw`}
           className="btn btn-sm btn-secondary"
         >
           Withdraw
         </Link>
 
         <Link
-          to={`/app/${pool.name}/positions`}
+          to={`/${pool.name}/positions`}
           className="btn btn-sm btn-secondary"
         >
           Positions

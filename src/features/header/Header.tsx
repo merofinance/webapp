@@ -2,7 +2,7 @@ import classnames from "classnames";
 import React, { useContext, useEffect, useState } from "react";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { NavLink, useRouteMatch } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { BackdContext } from "../../app/providers/backd";
 import logo from "../../images/backd_logo.png";
 import { Address } from "../../lib/types";
@@ -18,7 +18,7 @@ function AppNav() {
 
   return (
     <Nav className={classnames("ml-auto")}>
-      <NavLink className="nav-link" to="/app">
+      <NavLink className="nav-link" to="/" exact={true}>
         Pools
       </NavLink>
 
@@ -32,18 +32,7 @@ function AppNav() {
   );
 }
 
-function LandingNav() {
-  return (
-    <Nav className={classnames("ml-auto")}>
-      <NavLink className="btn btn-primary" to="/app" exact={true}>
-        Enter app
-      </NavLink>
-    </Nav>
-  );
-}
-
 export function Header() {
-  const inApp = useRouteMatch("/app") !== null;
   return (
     <Navbar bg="light" expand="lg">
       <LinkContainer to="/">
@@ -57,7 +46,7 @@ export function Header() {
         </Navbar.Brand>
       </LinkContainer>
 
-      {inApp ? <AppNav /> : <LandingNav />}
+      <AppNav />
     </Navbar>
   );
 }
