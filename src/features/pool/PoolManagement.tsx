@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router-dom";
 import { getImage } from "../../images/tokens";
 import { Deposit } from "./actions/Deposit";
-import { Positions } from "./actions/Positions";
+import { Positions } from "../positions/Positions";
 import { Withdraw } from "./actions/Withdraw";
 import styles from "./Pool.module.scss";
 import { PoolInfo } from "./PoolInfo";
@@ -48,7 +48,7 @@ export function PoolManagement({
       <main className={styles["pool-actions"]}>
         <PoolInfo pool={pool} balance={balance} price={price} />
 
-        <Tabs defaultActiveKey={initialMode}>
+        <Tabs className="justify-content-center" defaultActiveKey={initialMode}>
           <Tab eventKey="deposit" title="Deposit">
             <Deposit pool={pool} />
           </Tab>

@@ -1,6 +1,6 @@
-import { BigNumber } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import { scale } from "../numeric";
-import { Pool } from "../types";
+import { Address, Pool, Position } from "../types";
 
 export const masterAccount = "0xbacE8e7f276FD2Ee5ecE5C1df18BF381148862A6";
 
@@ -38,4 +38,43 @@ export const prices: Record<string, BigNumber> = {
 export const balances: Record<string, BigNumber> = {
   [pools[0].name]: scale(250_000, 18), // 250,000 DAI
   [pools[2].name]: scale(48, 18), // 48 ETH
+};
+
+const positionKeys = [
+  {
+    protocol: "compound",
+    account: "0xE9998d2C082c340D9b7023FA27a54c14f0Bb3F9c",
+    threshold: scale(105, 16),
+  },
+  {
+    protocol: "aave",
+    account: "0xb47b5D45CDBa7D1114A632c010E0bC9B2053B1c1",
+    threshold: scale(110, 16),
+  },
+];
+
+function generateKey(positionKey: typeof positionKeys[0]): string {
+  return ethers.utils.soliditySha256(
+    ["string", "string", "uint256"],
+    [positionKey.protocol, positionKey.account, positionKey.threshold]
+  );
+}
+
+export const positions: Record<Address, Position<BigNumber>[]> = {
+  [pools[0].address]: [
+    {
+      key: generateKey(positionKeys[0]),
+      singleTopUp: scale(1500),
+      totalTopUp: scale(4500),
+      ...positionKeys[0],
+    },
+  ],
+  [pools[2].address]: [
+    {
+      key: generateKey(positionKeys[1]),
+      singleTopUp: scale(10_000),
+      totalTopUp: scale(50_000),
+      ...positionKeys[1],
+    },
+  ],
 };

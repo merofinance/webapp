@@ -8,6 +8,15 @@ export interface Pool<Num = number> {
   totalAssets: Num;
 }
 
+export interface Position<Num = number> {
+  key: string; // key should be a hash of (protocol, threshold, account)
+  protocol: string;
+  account: Address;
+  threshold: Num;
+  singleTopUp: Num;
+  totalTopUp: Num;
+}
+
 type Show = { toString: () => string };
 
 export function transformPool<T extends Show, U>(
@@ -20,6 +29,20 @@ export function transformPool<T extends Show, U>(
     name: pool.name,
     apy: f(pool.apy),
     totalAssets: f(pool.totalAssets),
+  };
+}
+
+export function transformPosition<T extends Show, U>(
+  position: Position<T>,
+  f: (v: T) => U
+): Position<U> {
+  return {
+    key: position.key,
+    protocol: position.protocol,
+    account: position.account,
+    threshold: f(position.threshold),
+    singleTopUp: f(position.singleTopUp),
+    totalTopUp: f(position.totalTopUp),
   };
 }
 

@@ -2,15 +2,22 @@ import { BigNumber } from "ethers";
 import { Pool } from "..";
 import { Backd } from "../backd";
 import { bigNumberToFloat } from "../numeric";
-import { Address, Prices, transformPool, UserBalances } from "../types";
-import { balances, masterAccount, pools, prices } from "./data";
+import {
+  Address,
+  Position,
+  Prices,
+  transformPool,
+  transformPosition,
+  UserBalances,
+} from "../types";
+import { balances, masterAccount, pools, prices, positions } from "./data";
 
 export default class MockBackd implements Backd {
   currentAccount(): Promise<Address> {
     return Promise.resolve(masterAccount);
   }
 
-  listPools(): Promise<Pool<number>[]> {
+  listPools(): Promise<Pool[]> {
     return Promise.resolve(
       pools.map((pool) => transformPool(pool, (v) => bigNumberToFloat(v)))
     );
@@ -24,14 +31,14 @@ export default class MockBackd implements Backd {
   async getBalances(
     pools: Address[],
     account?: Address
-  ): Promise<UserBalances<number>> {
+  ): Promise<UserBalances> {
     const balances = await Promise.all(
       pools.map((p) => this.getBalance(p, account))
     );
     return Object.fromEntries(pools.map((p, i) => [p, balances[i]]));
   }
 
-  getPrices(symbols: string[]): Promise<Prices<number>> {
+  getPrices(symbols: string[]): Promise<Prices> {
     return Promise.resolve(
       Object.fromEntries(
         symbols.map((symbol) => [
@@ -39,6 +46,13 @@ export default class MockBackd implements Backd {
           bigNumberToFloat(prices[symbol] || BigNumber.from(0)),
         ])
       )
+    );
+  }
+
+  getPositions(pool: string): Promise<Position[]> {
+    const poolPositions = positions[pool] || [];
+    return Promise.resolve(
+      poolPositions.map((p) => transformPosition(p, bigNumberToFloat))
     );
   }
 }
