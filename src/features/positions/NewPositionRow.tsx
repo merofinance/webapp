@@ -3,117 +3,109 @@ import { useFormik } from "formik";
 import React from "react";
 import { Button, Form } from "react-bootstrap";
 import * as yup from "yup";
+import { Position } from "../../lib/types";
 import styles from "./Positions.module.scss";
 
 const placeHolderAddress = "0xbac102e9f93Be062EB03A3de2A515C67993D220c";
 
 const validationSchema = yup.object().shape({
   protocol: yup.string().required(),
-  address: yup.string().required(),
+  account: yup.string().required(),
   threshold: yup.number().required(),
-  singleTopUpAmount: yup.number().required().positive(),
-  totalTopUpAmount: yup.number().required().positive(),
+  singleTopUp: yup.number().required().positive(),
+  totalTopUp: yup.number().required().positive(),
 });
 
-const initialValues = {
+const initialValues: Partial<Position> = {
   protocol: "Aave",
-  address: "",
-  threshold: "",
-  singleTopUpAmount: "",
-  totalTopUpAmount: "",
 };
+
+type CellControlProps = {
+  formik: ReturnType<typeof useFormik>;
+  type: string;
+  name: string;
+  placeHolder: string;
+};
+
+function CellControl({ formik, type, name, placeHolder }: CellControlProps) {
+  return (
+    <div className={styles["table-cell"]}>
+      <Form.Control
+        type={type}
+        name={name}
+        placeholder={placeHolder}
+        value={formik.values[name] || ""}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        isInvalid={formik.touched[name] && !!formik.errors[name]}
+        disabled={formik.isSubmitting}
+      />
+      <Form.Control.Feedback type="invalid" tooltip>
+        {formik.errors[name]}
+      </Form.Control.Feedback>
+    </div>
+  );
+}
 
 export function NewPositionRow() {
   const onSubmit = (values: typeof initialValues) => {
     console.log(values);
+    setTimeout(() => formik.setSubmitting(false), 3000);
   };
 
-  const {
-    handleSubmit,
-    handleChange,
-    handleBlur,
-    values,
-    touched,
-    isValid,
-    errors,
-  } = useFormik({ initialValues, validationSchema, onSubmit });
+  const formik = useFormik({ initialValues, validationSchema, onSubmit });
 
   return (
     <Form
       className={classNames(styles["table-row"], styles["table-form"])}
       noValidate
-      onSubmit={handleSubmit}
+      onSubmit={formik.handleSubmit}
     >
       <div className={styles["table-cell"]}>
-        <Form.Control name="protocol" as="select" custom>
+        <Form.Control
+          name="protocol"
+          as="select"
+          custom
+          disabled={formik.isSubmitting}
+        >
           <option>Aave</option>
           <option>Compound</option>
         </Form.Control>
       </div>
 
-      <div className={styles["table-cell"]}>
-        <Form.Control
-          type="text"
-          name="address"
-          placeholder={placeHolderAddress}
-          value={values.address}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          isInvalid={touched.address && !!errors.address}
-        />
-        <Form.Control.Feedback type="invalid" tooltip>
-          {errors.address}
-        </Form.Control.Feedback>
-      </div>
+      <CellControl
+        formik={formik}
+        type="text"
+        name="account"
+        placeHolder={placeHolderAddress}
+      />
+
+      <CellControl
+        formik={formik}
+        type="number"
+        name="threshold"
+        placeHolder="1.05"
+      />
+
+      <CellControl
+        formik={formik}
+        type="number"
+        name="singleTopUp"
+        placeHolder="1,500"
+      />
+
+      <CellControl
+        formik={formik}
+        type="number"
+        name="totalTopUp"
+        placeHolder="4,500"
+      />
 
       <div className={styles["table-cell"]}>
-        <Form.Control
-          type="number"
-          name="threshold"
-          placeholder="1.05"
-          value={values.threshold}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          isInvalid={touched.threshold && !!errors.threshold}
-        />
-
-        <Form.Control.Feedback type="invalid" tooltip>
-          {errors.threshold}
-        </Form.Control.Feedback>
-      </div>
-
-      <div className={styles["table-cell"]}>
-        <Form.Control
-          type="number"
-          name="singleTopUpAmount"
-          placeholder="1,500"
-          value={values.singleTopUpAmount}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          isInvalid={touched.singleTopUpAmount && !!errors.singleTopUpAmount}
-        />
-        <Form.Control.Feedback type="invalid" tooltip>
-          {errors.singleTopUpAmount}
-        </Form.Control.Feedback>
-      </div>
-
-      <div className={styles["table-cell"]}>
-        <Form.Control
-          type="number"
-          name="totalTopUpAmount"
-          placeholder="4,500"
-          value={values.totalTopUpAmount}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          isInvalid={!!errors.totalTopUpAmount && touched.totalTopUpAmount}
-        />
-        <Form.Control.Feedback type="invalid" tooltip>
-          {errors.totalTopUpAmount}
-        </Form.Control.Feedback>
-      </div>
-
-      <div className={styles["table-cell"]}>
-        <Button disabled={!isValid} aria-disabled={!isValid} type="submit">
+        <Button
+          disabled={!formik.dirty || !formik.isValid || formik.isSubmitting}
+          type="submit"
+        >
           Add
         </Button>
       </div>
