@@ -55,7 +55,7 @@ export function PoolManagement({
           <Tab eventKey="withdraw" title="Withdraw">
             <Withdraw pool={pool} />
           </Tab>
-          <Tab eventKey="positions" title="Positions">
+          <Tab eventKey="positions" title="Positions" className="large">
             <Positions pool={pool} />
           </Tab>
         </Tabs>

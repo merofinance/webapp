@@ -13,8 +13,8 @@ type PoolInfoProps = {
 
 export function PoolInfo({ pool, price, balance }: PoolInfoProps) {
   return (
-    <Row className="mb-5">
-      <Col xs={{ span: 2, offset: 3 }}>
+    <Row className="mb-0 mb-md-5">
+      <Col xs={12} md={{ span: 2, offset: 3 }}>
         <Card className={styles.info}>
           <Card.Header>Supply</Card.Header>
           <Card.Body>
@@ -30,7 +30,7 @@ export function PoolInfo({ pool, price, balance }: PoolInfoProps) {
         </Card>
       </Col>
 
-      <Col xs={2}>
+      <Col xs={12} md={2}>
         <Card className={styles.info}>
           <Card.Header>Balance</Card.Header>
           <Card.Body>
@@ -46,7 +46,7 @@ export function PoolInfo({ pool, price, balance }: PoolInfoProps) {
         </Card>
       </Col>
 
-      <Col xs={2}>
+      <Col xs={12} md={2}>
         <Card className={styles.info}>
           <Card.Header>APY</Card.Header>
           <Card.Body>

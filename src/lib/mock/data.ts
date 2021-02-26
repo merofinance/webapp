@@ -42,12 +42,12 @@ export const balances: Record<string, BigNumber> = {
 
 const positionKeys = [
   {
-    protocol: "compound",
+    protocol: "Compound",
     account: "0xE9998d2C082c340D9b7023FA27a54c14f0Bb3F9c",
     threshold: scale(105, 16),
   },
   {
-    protocol: "aave",
+    protocol: "Aave",
     account: "0xb47b5D45CDBa7D1114A632c010E0bC9B2053B1c1",
     threshold: scale(110, 16),
   },

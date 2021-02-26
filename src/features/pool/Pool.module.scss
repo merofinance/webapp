@@ -1,7 +1,15 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins/breakpoints";
+
 .info {
   min-height: 9.5rem;
   small {
     font-size: 0.8rem;
+  }
+
+  @include media-breakpoint-down(sm) {
+    margin-bottom: 1em;
   }
 
   :global .card-header {
@@ -19,9 +27,14 @@
 
 .pool-actions {
   :global .tab-content {
-    width: 60%;
-    margin: 0 auto;
-    padding: 1em;
+    .tab-pane {
+      width: 60%;
+      &.large {
+        width: 100%;
+      }
+      margin: 0 auto;
+      padding: 1em;
+    }
 
     dl {
       text-align: center;
