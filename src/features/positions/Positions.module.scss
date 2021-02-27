@@ -24,6 +24,10 @@
   line-height: 2;
   padding: 0.75rem;
   display: table-cell;
+
+  :global .svg-inline--fa {
+    margin-left: 0.3rem;
+  }
 }
 
 .table-form {

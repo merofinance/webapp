@@ -1,5 +1,5 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { fab } from "@fortawesome/free-brands-svg-icons";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.scss";
@@ -12,7 +12,7 @@ import { createBackd } from "./lib/factory";
 import MockSigner from "./lib/mock/signer";
 import { Optional } from "./lib/types";
 
-library.add(fab);
+library.add(faInfoCircle);
 
 function App() {
   const [backd, setBackd] = useState<Optional<Backd>>(null);

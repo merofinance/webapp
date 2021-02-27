@@ -1,4 +1,6 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useEffect } from "react";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import NumberFormat from "react-number-format";
 import { useDispatch, useSelector } from "react-redux";
 import { BackdContext } from "../../app/providers/backd";
@@ -32,11 +34,77 @@ export function Positions({ pool }: PositionsProps) {
       <div className={styles.table}>
         <div className={styles.thead}>
           <div className={styles["table-row"]}>
-            <div className={styles["table-cell"]}>Protocol</div>
-            <div className={styles["table-cell"]}>Borrower</div>
-            <div className={styles["table-cell"]}>Threshold</div>
-            <div className={styles["table-cell"]}>Single topup</div>
-            <div className={styles["table-cell"]}>Total topup</div>
+            <div className={styles["table-cell"]}>
+              Protocol
+              <OverlayTrigger
+                placement="top"
+                overlay={
+                  <Tooltip id="protocol-tooltip">
+                    Protocol in which to monitor positions and topup
+                  </Tooltip>
+                }
+              >
+                <FontAwesomeIcon icon="info-circle" />
+              </OverlayTrigger>
+            </div>
+            <div className={styles["table-cell"]}>
+              Borrower
+              <OverlayTrigger
+                placement="top"
+                overlay={
+                  <Tooltip id="borrower-tooltip">
+                    The borrower for which the position should be topped up if
+                    it drops below the threshold.
+                  </Tooltip>
+                }
+              >
+                <FontAwesomeIcon icon="info-circle" />
+              </OverlayTrigger>
+            </div>
+            <div className={styles["table-cell"]}>
+              Threshold
+              <OverlayTrigger
+                placement="top"
+                overlay={
+                  <Tooltip id="threshold-tooltip">
+                    The collaterization ratio threshold (&gt; 1) under which the
+                    position should be topped up. See documentation for details
+                    about how the collaterization ratio is computed.
+                  </Tooltip>
+                }
+              >
+                <FontAwesomeIcon icon="info-circle" />
+              </OverlayTrigger>
+            </div>
+            <div className={styles["table-cell"]}>
+              Single topup
+              <OverlayTrigger
+                placement="top"
+                overlay={
+                  <Tooltip id="single-topup-tooltip">
+                    Single topup is the amount that can should be topped up when
+                    the position drops below the given threshold.
+                  </Tooltip>
+                }
+              >
+                <FontAwesomeIcon icon="info-circle" />
+              </OverlayTrigger>
+            </div>
+            <div className={styles["table-cell"]}>
+              Total topup
+              <OverlayTrigger
+                placement="top"
+                overlay={
+                  <Tooltip id="total-topup-tooltip">
+                    Total topup is the total amount, potentially spread across
+                    multiple topups, that can be topped up for this position.
+                    This amount should first be deposited in the pool.
+                  </Tooltip>
+                }
+              >
+                <FontAwesomeIcon icon="info-circle" />
+              </OverlayTrigger>
+            </div>
             <div className={styles["table-cell"]}></div>
           </div>
         </div>
