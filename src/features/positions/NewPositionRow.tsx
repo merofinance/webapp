@@ -1,9 +1,10 @@
 import classNames from "classnames";
 import { useFormik } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import * as yup from "yup";
-import { Position } from "../../lib/types";
+import { Pool, Position } from "../../lib/types";
+import { NewPositionModal } from "./NewPositionModal";
 import styles from "./Positions.module.scss";
 
 const placeHolderAddress = "0xbac102e9f93Be062EB03A3de2A515C67993D220c";
@@ -47,13 +48,28 @@ function CellControl({ formik, type, name, placeHolder }: CellControlProps) {
   );
 }
 
-export function NewPositionRow() {
+type NewPositionRowProps = {
+  pool: Pool;
+};
+
+export function NewPositionRow({ pool }: NewPositionRowProps) {
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+
   const onSubmit = (values: typeof initialValues) => {
-    console.log(values);
-    setTimeout(() => formik.setSubmitting(false), 3000);
+    setShowConfirmModal(true);
   };
 
   const formik = useFormik({ initialValues, validationSchema, onSubmit });
+
+  const handleClose = () => {
+    formik.setSubmitting(false);
+    setShowConfirmModal(false);
+  };
+
+  const handleConfirm = () => {
+    formik.setSubmitting(false);
+    setShowConfirmModal(false);
+  };
 
   return (
     <Form
@@ -109,6 +125,14 @@ export function NewPositionRow() {
           Add
         </Button>
       </div>
+
+      <NewPositionModal
+        show={showConfirmModal}
+        pool={pool}
+        position={formik.values}
+        handleClose={handleClose}
+        handleConfirm={handleConfirm}
+      />
     </Form>
   );
 }

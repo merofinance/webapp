@@ -7,36 +7,52 @@ type AssetAmountProps = {
   price: number;
   newLine?: boolean;
   parenthesis?: boolean;
+  nativeFirst?: boolean;
+  smallSecondary?: boolean;
 };
 
 export function AssetAmount({
   asset,
   amount,
   price,
-  newLine,
-  parenthesis,
+  newLine = false,
+  parenthesis = false,
+  nativeFirst = false,
+  smallSecondary = true,
 }: AssetAmountProps) {
   const totalUSD = Math.round(amount * price);
+  const usdAmount = (
+    <NumberFormat
+      displayType={"text"}
+      value={totalUSD}
+      thousandSeparator={true}
+      prefix="$"
+    />
+  );
+
+  const nativeAmount = (
+    <NumberFormat
+      displayType={"text"}
+      value={amount}
+      thousandSeparator={true}
+      suffix={` ${asset}`}
+    />
+  );
+
+  const innerElem = (
+    <>
+      {parenthesis ? " (" : null}
+      {nativeFirst ? usdAmount : nativeAmount}
+      {parenthesis ? ")" : null}
+    </>
+  );
+
   return (
     <>
-      <NumberFormat
-        displayType={"text"}
-        value={totalUSD}
-        thousandSeparator={true}
-        prefix="$"
-      />
+      {nativeFirst ? nativeAmount : usdAmount}
 
       {newLine ? <br /> : null}
-      <small>
-        {parenthesis ? " (" : null}
-        <NumberFormat
-          displayType={"text"}
-          value={amount}
-          thousandSeparator={true}
-          suffix={` ${asset}`}
-        />
-        {parenthesis ? ")" : null}
-      </small>
+      {smallSecondary ? <small>{innerElem}</small> : innerElem}
     </>
   );
 }

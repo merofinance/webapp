@@ -11,6 +11,7 @@ type EthAddressProps = {
   truncate?: "middle" | "end";
   maxLength?: number;
   ellipsis?: string;
+  etherscanLink?: boolean;
 };
 
 export function EthAddress({
@@ -18,7 +19,11 @@ export function EthAddress({
   truncate,
   maxLength = defaultMaxLength,
   ellipsis = defaultEllipsis,
+  etherscanLink = false,
 }: EthAddressProps) {
+  // TODO: support other networks
+  const etherscanURL = `https://etherscan.io/address/${value}`;
+
   const hasPrefix = value.startsWith(addressPrefix);
   if (hasPrefix) {
     value = value.slice(2);
@@ -41,5 +46,5 @@ export function EthAddress({
   }
 
   value = addressPrefix + value;
-  return <>{value}</>;
+  return etherscanLink ? <a href={etherscanURL}>{value}</a> : <>{value}</>;
 }

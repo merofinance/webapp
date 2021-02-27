@@ -141,7 +141,7 @@ export function Positions({ pool }: PositionsProps) {
               </div>
             );
           })}
-          <NewPositionRow />
+          <NewPositionRow pool={pool} />
         </div>
       </div>
     </>
