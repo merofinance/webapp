@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import NumberFormat from "react-number-format";
 import { useDispatch, useSelector } from "react-redux";
-import { BackdContext } from "../../app/providers/backd";
+import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
 import { EthAddress } from "../../components/eth-address/EthAddress";
 import { Pool } from "../../lib";
@@ -18,7 +18,7 @@ type PositionsProps = {
 export function Positions({ pool }: PositionsProps) {
   const positions = useSelector(selectPositions(pool));
   const dispatch = useDispatch<AppDispatch>();
-  const backd = useContext(BackdContext);
+  const backd = useBackd();
 
   useEffect(() => {
     if (!backd) return;

@@ -1,17 +1,17 @@
-import React, { useContext, useEffect } from "react";
+import classnames from "classnames";
+import React, { useEffect } from "react";
 import { Container, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { BackdContext } from "../../app/providers/backd";
+import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
 import { Pool } from "../../lib";
-import { PoolRow } from "./PoolRow";
-import { fetchState, selectPools, selectPrices } from "./poolsListSlice";
-import styles from "./PoolsList.module.scss";
-import classnames from "classnames";
 import { selectBalances } from "../user/userSlice";
+import { PoolRow } from "./PoolRow";
+import styles from "./PoolsList.module.scss";
+import { fetchState, selectPools, selectPrices } from "./poolsListSlice";
 
 export function PoolsList() {
-  const backd = useContext(BackdContext);
+  const backd = useBackd();
   const dispatch: AppDispatch = useDispatch();
   const pools = useSelector(selectPools);
   const prices = useSelector(selectPrices);

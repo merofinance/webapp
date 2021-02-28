@@ -1,15 +1,25 @@
+import { useWeb3React } from "@web3-react/core";
 import classnames from "classnames";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { NavLink } from "react-router-dom";
-import { BackdContext } from "../../app/providers/backd";
+import { injectedConnector } from "../../app/web3";
 import logo from "../../images/backd_logo.png";
+import { Backd } from "../../lib/backd";
 import { Address } from "../../lib/types";
 
 function AppNav() {
-  const backd = useContext(BackdContext);
+  const {
+    library: backd,
+    activate,
+    active,
+    deactivate,
+  } = useWeb3React<Backd>();
   const [account, setAccount] = useState<Address>("");
+
+  const activateWallet = () => activate(injectedConnector);
+  const deactivateWallet = () => deactivate();
 
   useEffect(() => {
     if (!backd) return;
@@ -18,16 +28,25 @@ function AppNav() {
 
   return (
     <Nav className={classnames("ml-auto")}>
-      <NavLink className="nav-link" to="/" exact={true}>
-        Pools
-      </NavLink>
-
-      <NavDropdown
-        title={account.slice(0, 8) + "..."}
-        id="collasible-nav-dropdown"
-      >
-        <NavDropdown.Item href="#">Logout</NavDropdown.Item>
-      </NavDropdown>
+      {active ? (
+        <>
+          <NavLink className="nav-link" to="/" exact={true}>
+            Pools
+          </NavLink>
+          <NavDropdown
+            title={account.slice(0, 8) + "..."}
+            id="collasible-nav-dropdown"
+          >
+            <NavDropdown.Item href="#" onClick={deactivateWallet}>
+              Logout
+            </NavDropdown.Item>
+          </NavDropdown>
+        </>
+      ) : (
+        <NavLink to="#" className="nav-link" onClick={activateWallet}>
+          Connect wallet
+        </NavLink>
+      )}
     </Nav>
   );
 }

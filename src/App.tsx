@@ -1,5 +1,6 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { Web3ReactProvider } from "@web3-react/core";
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.scss";
@@ -14,39 +15,43 @@ import { Optional } from "./lib/types";
 
 library.add(faInfoCircle);
 
+function getLibrary(provider: any, connector: any) {
+  return createBackd(new MockSigner());
+}
+
 function App() {
   const [backd, setBackd] = useState<Optional<Backd>>(null);
 
   useEffect(() => {
     if (backd) return;
-    createBackd(new MockSigner()).then((backdInstance) => {
-      setBackd(backdInstance);
-    });
-  });
+    setBackd(createBackd(new MockSigner()));
+  }, [backd, setBackd]);
 
   return (
-    <BackdContext.Provider value={backd}>
-      <Router>
-        <Header />
-        <Switch>
-          <Route path="/:poolName/deposit">
-            <PoolManagement mode="deposit" />
-          </Route>
+    <Web3ReactProvider getLibrary={getLibrary}>
+      <BackdContext.Provider value={backd}>
+        <Router>
+          <Header />
+          <Switch>
+            <Route path="/:poolName/deposit">
+              <PoolManagement mode="deposit" />
+            </Route>
 
-          <Route path="/:poolName/withdraw">
-            <PoolManagement mode="withdraw" />
-          </Route>
+            <Route path="/:poolName/withdraw">
+              <PoolManagement mode="withdraw" />
+            </Route>
 
-          <Route path="/:poolName/positions">
-            <PoolManagement mode="positions" />
-          </Route>
+            <Route path="/:poolName/positions">
+              <PoolManagement mode="positions" />
+            </Route>
 
-          <Route path="/">
-            <PoolsList />
-          </Route>
-        </Switch>
-      </Router>
-    </BackdContext.Provider>
+            <Route path="/">
+              <PoolsList />
+            </Route>
+          </Switch>
+        </Router>
+      </BackdContext.Provider>
+    </Web3ReactProvider>
   );
 }
 

@@ -1,9 +1,9 @@
-import { Signer } from "ethers";
+import { providers, Signer } from "ethers";
 import { Backd } from "./backd";
 import { MockBackd } from "./mock";
 import MockSigner from "./mock/signer";
 
-export async function createBackd(signer: Signer): Promise<Backd> {
+export function createBackd(signer: Signer | providers.Provider): Backd {
   if (signer instanceof MockSigner) {
     return new MockBackd();
   }
