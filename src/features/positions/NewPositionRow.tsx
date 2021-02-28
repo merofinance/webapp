@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { ethers } from "ethers";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
@@ -11,7 +12,14 @@ const placeHolderAddress = "0xbac102e9f93Be062EB03A3de2A515C67993D220c";
 
 const validationSchema = yup.object().shape({
   protocol: yup.string().required(),
-  account: yup.string().required(),
+  account: yup
+    .string()
+    .required()
+    .test(
+      "is-address",
+      "is not a valid address",
+      (s: any) => typeof s === "string" && ethers.utils.isAddress(s)
+    ),
   threshold: yup.number().required(),
   singleTopUp: yup.number().required().positive(),
   totalTopUp: yup.number().required().positive(),
@@ -69,6 +77,7 @@ export function NewPositionRow({ pool }: NewPositionRowProps) {
   const handleConfirm = () => {
     formik.setSubmitting(false);
     setShowConfirmModal(false);
+    formik.resetForm({ values: initialValues });
   };
 
   return (
@@ -126,13 +135,15 @@ export function NewPositionRow({ pool }: NewPositionRowProps) {
         </Button>
       </div>
 
-      <NewPositionModal
-        show={showConfirmModal}
-        pool={pool}
-        position={formik.values}
-        handleClose={handleClose}
-        handleConfirm={handleConfirm}
-      />
+      {showConfirmModal ? (
+        <NewPositionModal
+          show={showConfirmModal}
+          pool={pool}
+          position={formik.values}
+          handleClose={handleClose}
+          handleConfirm={handleConfirm}
+        />
+      ) : null}
     </Form>
   );
 }
