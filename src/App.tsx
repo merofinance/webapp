@@ -19,7 +19,8 @@ library.add(faInfoCircle);
 function getLibrary(rawProvider: any, connector: any) {
   const provider = new ethers.providers.Web3Provider(rawProvider);
   const signer = useMock ? new MockSigner() : provider.getSigner();
-  return createBackd(signer);
+  const options = { chainId: parseInt(rawProvider.chainId, 16) };
+  return createBackd(signer, options);
 }
 
 function App() {

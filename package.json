@@ -30,6 +30,7 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
+    "@craco/craco": "^6.1.1",
     "@types/jest": "^24.0.0",
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
@@ -37,13 +38,13 @@
     "@types/react-redux": "^7.1.7",
     "@types/react-router-bootstrap": "^0.24.5",
     "@types/react-router-dom": "^5.1.7",
-    "node-sass": "^5.0.0"
+    "node-sass": "^5.0.0",
+    "ts-loader": "^8.0.18"
   },
   "scripts": {
-    "start": "BROWSER=none react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "BROWSER=none craco start",
+    "build": "craco build",
+    "test": "craco test"
   },
   "eslintConfig": {
     "extends": "react-app"
