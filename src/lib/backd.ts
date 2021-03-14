@@ -1,9 +1,19 @@
 import { providers, Signer } from "ethers";
-import { Address, Pool, Position, Prices, UserBalances } from "./types";
+import {
+  Address,
+  Pool,
+  Position,
+  Prices,
+  transformPool,
+  UserBalances,
+} from "./types";
 
 import contracts from "@backdfund/protocol/build/deployments/map.json";
 import { Controller } from "@backdfund/protocol/typechain/Controller";
 import { ControllerFactory } from "@backdfund/protocol/typechain/ControllerFactory";
+import { BTokenFactory } from "@backdfund/protocol/typechain/BTokenFactory";
+import { Eip20InterfaceFactory } from "@backdfund/protocol/typechain/Eip20InterfaceFactory";
+import { bigNumberToFloat, scale } from "./numeric";
 
 export type BackdOptions = {
   chainId: number;
@@ -52,14 +62,32 @@ export class Web3Backd implements Backd {
     return Promise.resolve("");
   }
 
-  async listPools(): Promise<Pool<number>[]> {
+  async listPools(): Promise<Pool[]> {
     const markets = await this.controller.allMarkets();
-    // TODO: retrieve pool info
-    console.log(markets);
-    return [];
+    return Promise.all(markets.map((v) => this.getPoolInfo(v)));
   }
 
-  async getPositions(pool: string): Promise<Position<number>[]> {
+  private async getPoolInfo(address: Address): Promise<Pool> {
+    const btoken = BTokenFactory.connect(address, this.provider);
+
+    const [name, underlying, totalAssets] = await Promise.all([
+      btoken.name(),
+      btoken.getUnderlying(),
+      btoken.totalUnderlyingLocked(),
+    ]);
+    const asset = await Eip20InterfaceFactory.connect(
+      underlying,
+      this.provider
+    ).symbol();
+
+    // TODO: compute APY
+    const apy = scale(237, 17);
+
+    const pool = { asset, name, apy, address, totalAssets };
+    return transformPool(pool, bigNumberToFloat);
+  }
+
+  async getPositions(pool: string): Promise<Position[]> {
     return [];
   }
 
