@@ -1,8 +1,17 @@
 # backd webapp
 
+## Setup
+
+Install the dependencies with the command `yarn install`.
+
+This repo relies on [backdfund/protocol](https://github.com/backdfund/protocol),
+which is not published to npm yet.
+To use it, first run `yarn link` within the `backdfund/protocol` repository
+and then, run `yarn link @backfund/protocol`.
+
 ## Available Scripts
 
-In the project directory, install the dependencies with the command `yarn install`, then you can run:
+In the project directory, you can run:
 
 ### `yarn start`
 
