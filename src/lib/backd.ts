@@ -1,4 +1,10 @@
+import contracts from "@backdfund/protocol/build/deployments/map.json";
+import { Controller } from "@backdfund/protocol/typechain/Controller";
+import { ControllerFactory } from "@backdfund/protocol/typechain/ControllerFactory";
+import { Eip20InterfaceFactory } from "@backdfund/protocol/typechain/Eip20InterfaceFactory";
+import { LiquidityPoolFactory } from "@backdfund/protocol/typechain/LiquidityPoolFactory";
 import { providers, Signer } from "ethers";
+import { bigNumberToFloat, scale } from "./numeric";
 import {
   Address,
   Pool,
@@ -7,13 +13,6 @@ import {
   transformPool,
   UserBalances,
 } from "./types";
-
-import contracts from "@backdfund/protocol/build/deployments/map.json";
-import { Controller } from "@backdfund/protocol/typechain/Controller";
-import { ControllerFactory } from "@backdfund/protocol/typechain/ControllerFactory";
-import { BTokenFactory } from "@backdfund/protocol/typechain/BTokenFactory";
-import { Eip20InterfaceFactory } from "@backdfund/protocol/typechain/Eip20InterfaceFactory";
-import { bigNumberToFloat, scale } from "./numeric";
 
 export type BackdOptions = {
   chainId: number;
@@ -68,23 +67,26 @@ export class Web3Backd implements Backd {
   }
 
   private async getPoolInfo(address: Address): Promise<Pool> {
-    const btoken = BTokenFactory.connect(address, this.provider);
+    const pool = LiquidityPoolFactory.connect(address, this.provider);
 
-    const [name, underlying, totalAssets] = await Promise.all([
-      btoken.name(),
-      btoken.getUnderlying(),
-      btoken.totalUnderlyingLocked(),
+    const [lpToken, underlying, totalAssets, rawApy] = await Promise.all([
+      pool.getLpToken(),
+      pool.getUnderlying(),
+      pool.totalUnderlying(),
+      pool.computeAPY(),
     ]);
+    const apy = rawApy.sub(scale(1));
     const asset = await Eip20InterfaceFactory.connect(
       underlying,
       this.provider
     ).symbol();
+    const name = await Eip20InterfaceFactory.connect(
+      lpToken,
+      this.provider
+    ).name();
 
-    // TODO: compute APY
-    const apy = scale(237, 17);
-
-    const pool = { asset, name, apy, address, totalAssets };
-    return transformPool(pool, bigNumberToFloat);
+    const rawPool = { asset, name, apy, address, totalAssets };
+    return transformPool(rawPool, bigNumberToFloat);
   }
 
   async getPositions(pool: string): Promise<Position[]> {
