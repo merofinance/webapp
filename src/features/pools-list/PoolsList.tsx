@@ -17,8 +17,8 @@ export function PoolsList() {
   const prices = useSelector(selectPrices);
   const balances = useSelector(selectBalances);
 
-  const getBalance = (pool: Pool) => balances[pool.name] || 0;
-  const getPrice = (pool: Pool) => prices[pool.asset] || 0;
+  const getBalance = (pool: Pool) => balances[pool.lpToken.address] || 0;
+  const getPrice = (pool: Pool) => prices[pool.underlying.symbol] || 0;
 
   useEffect(() => {
     if (!backd) return;
@@ -51,7 +51,7 @@ export function PoolsList() {
         <tbody>
           {pools.map((pool) => (
             <PoolRow
-              key={pool.name}
+              key={pool.lpToken.symbol}
               pool={pool}
               balance={getBalance(pool)}
               price={getPrice(pool)}

@@ -17,13 +17,13 @@ export function Withdraw({ pool }: WithdrawProps) {
           displayType={"text"}
           value={availableToWithdraw}
           thousandSeparator={true}
-          suffix={` ${pool.asset}`}
+          suffix={` ${pool.lpToken.symbol}`}
         />
       </div>
       {availableToWithdraw > 0 ? (
         <AmountInputForm
           submitText="Withdraw"
-          assetName={pool.asset}
+          assetName={pool.lpToken.symbol}
           maxAmount={availableToWithdraw}
         />
       ) : (

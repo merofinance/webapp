@@ -39,9 +39,9 @@ export function PoolManagement({
             className="mr-2"
             height="50"
             src={getImage(pool)}
-            alt={`${pool.asset} logo`}
+            alt={`${pool.lpToken.symbol} logo`}
           />
-          {pool.name}
+          {pool.lpToken.name}
         </h1>
       </header>
 

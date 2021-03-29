@@ -7,22 +7,52 @@ export const masterAccount = "0xbacE8e7f276FD2Ee5ecE5C1df18BF381148862A6";
 // numbers are scaled to 10^18 to emulate contracst return values
 export const pools: Pool<BigNumber>[] = [
   {
-    asset: "DAI",
-    name: "bDAI3CRV",
+    underlying: {
+      address: "0x6b175474e89094c44da98b954eedeac495271d0f",
+      name: "Dai Stablecoin",
+      symbol: "DAI",
+      decimals: 18,
+    },
+    lpToken: {
+      address: "0x25FF22De379B644BD5C2263404baC6FeE5a4b8de",
+      name: "Backd DAI",
+      symbol: "bDAI",
+      decimals: 18,
+    },
     apy: scale(237, 17),
     totalAssets: scale(84180923),
     address: "0xC265707cb6Fa41b51F899000bF248A257eFB52aB",
   },
   {
-    asset: "USDC",
-    name: "bUSDC3CRV",
+    underlying: {
+      address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+      name: "USD Coin",
+      symbol: "USDC",
+      decimals: 6,
+    },
+    lpToken: {
+      address: "0x99A77926B3FB49619DC3A1DAc18565bcB5A98b93",
+      name: "Backd USDC",
+      symbol: "bUSDC",
+      decimals: 18,
+    },
     apy: scale(193, 17),
     totalAssets: scale(91923401),
     address: "0xEA3b27fa12eBC0D562a9CCbe9611c866551d3792",
   },
   {
-    asset: "ETH",
-    name: "bETHCRV",
+    underlying: {
+      name: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+      address: "0x0000000000000000000000000000000000000000",
+    },
+    lpToken: {
+      name: "Backd ETH",
+      symbol: "ETH",
+      decimals: 18,
+      address: "0xa09021117e4f31B83140Ae16b44F634c8624b625",
+    },
     apy: scale(218, 17),
     totalAssets: scale(19738),
     address: "0xCa0cF7A135AC852a4d5591dC48e93e5F67425cB9",
@@ -36,8 +66,8 @@ export const prices: Record<string, BigNumber> = {
 };
 
 export const balances: Record<string, BigNumber> = {
-  [pools[0].name]: scale(250_000, 18), // 250,000 DAI
-  [pools[2].name]: scale(48, 18), // 48 ETH
+  [pools[0].lpToken.address]: scale(250_000, 18), // 250,000 DAI
+  [pools[2].lpToken.address]: scale(48, 18), // 48 ETH
 };
 
 const positionKeys = [

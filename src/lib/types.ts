@@ -1,9 +1,16 @@
 export type Optional<T> = T | null;
 
+export interface Token {
+  address: string;
+  name: string;
+  symbol: string;
+  decimals: number;
+}
+
 export interface Pool<Num = number> {
   address: string;
-  asset: string;
-  name: string;
+  lpToken: Token;
+  underlying: Token;
   apy: Num;
   totalAssets: Num;
 }
@@ -25,8 +32,8 @@ export function transformPool<T extends Show, U>(
 ): Pool<U> {
   return {
     address: pool.address,
-    asset: pool.asset,
-    name: pool.name,
+    lpToken: pool.lpToken,
+    underlying: pool.underlying,
     apy: f(pool.apy),
     totalAssets: f(pool.totalAssets),
   };

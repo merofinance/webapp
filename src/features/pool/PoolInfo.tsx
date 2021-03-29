@@ -20,7 +20,7 @@ export function PoolInfo({ pool, price, balance }: PoolInfoProps) {
           <Card.Body>
             <Card.Title>
               <AssetAmount
-                asset={pool.asset}
+                asset={pool.lpToken.symbol}
                 amount={pool.totalAssets}
                 price={price}
                 newLine={true}
@@ -36,7 +36,7 @@ export function PoolInfo({ pool, price, balance }: PoolInfoProps) {
           <Card.Body>
             <Card.Title>
               <AssetAmount
-                asset={pool.asset}
+                asset={pool.lpToken.symbol}
                 amount={balance}
                 price={price}
                 newLine={true}

@@ -38,7 +38,7 @@ export const fetchPrices = (backd: Backd, pools: Pool[]): AppThunk => (
   dispatch
 ) => {
   backd
-    .getPrices(pools.map((p) => p.asset))
+    .getPrices(pools.map((p) => p.underlying.symbol))
     .then((prices) => dispatch(setPrices(prices)));
 };
 

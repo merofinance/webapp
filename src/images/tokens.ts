@@ -11,5 +11,7 @@ export const tokenImages: Record<string, string> = {
 };
 
 export function getImage(pool: Pool): string {
-  return pool.asset in tokenImages ? tokenImages[pool.asset] : dogeCoin;
+  return pool.underlying.symbol in tokenImages
+    ? tokenImages[pool.underlying.symbol]
+    : dogeCoin;
 }

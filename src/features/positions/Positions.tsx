@@ -126,7 +126,7 @@ export function Positions({ pool }: PositionsProps) {
                     displayType={"text"}
                     value={position.singleTopUp}
                     thousandSeparator={true}
-                    suffix={` ${pool.asset}`}
+                    suffix={` ${pool.underlying.symbol}`}
                   />
                 </div>
                 <div className={styles["table-cell"]}>
@@ -134,7 +134,7 @@ export function Positions({ pool }: PositionsProps) {
                     displayType={"text"}
                     value={position.totalTopUp}
                     thousandSeparator={true}
-                    suffix={` ${pool.asset}`}
+                    suffix={` ${pool.underlying.symbol}`}
                   />
                 </div>
                 <div className={styles["table-cell"]}></div>

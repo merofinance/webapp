@@ -10,6 +10,7 @@ import {
   Pool,
   Position,
   Prices,
+  Token,
   transformPool,
   UserBalances,
 } from "./types";
@@ -66,26 +67,36 @@ export class Web3Backd implements Backd {
     return Promise.all(markets.map((v) => this.getPoolInfo(v)));
   }
 
+  async getTokenInfo(tokenAddress: Address): Promise<Token> {
+    const token = Eip20InterfaceFactory.connect(tokenAddress, this.provider);
+    const [name, symbol, decimals] = await Promise.all([
+      token.name(),
+      token.symbol(),
+      token.decimals(),
+    ]);
+    return { address: tokenAddress, name, symbol, decimals };
+  }
+
   private async getPoolInfo(address: Address): Promise<Pool> {
     const pool = LiquidityPoolFactory.connect(address, this.provider);
-
-    const [lpToken, underlying, totalAssets, rawApy] = await Promise.all([
+    const [
+      lpTokenAddress,
+      underlyingAddress,
+      totalAssets,
+      rawApy,
+    ] = await Promise.all([
       pool.getLpToken(),
       pool.getUnderlying(),
       pool.totalUnderlying(),
       pool.computeAPY(),
     ]);
+    const [lpToken, underlying] = await Promise.all([
+      this.getTokenInfo(lpTokenAddress),
+      this.getTokenInfo(underlyingAddress),
+    ]);
     const apy = rawApy.sub(scale(1));
-    const asset = await Eip20InterfaceFactory.connect(
-      underlying,
-      this.provider
-    ).symbol();
-    const name = await Eip20InterfaceFactory.connect(
-      lpToken,
-      this.provider
-    ).name();
 
-    const rawPool = { asset, name, apy, address, totalAssets };
+    const rawPool = { underlying, lpToken, apy, address, totalAssets };
     return transformPool(rawPool, bigNumberToFloat);
   }
 

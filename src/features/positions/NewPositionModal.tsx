@@ -38,7 +38,7 @@ export function NewPositionModal({
           <b>{position.threshold}</b>, it will be topped up with&nbsp;
           <b>
             <AssetAmount
-              asset={pool.asset}
+              asset={pool.underlying.symbol}
               amount={position.singleTopUp!!}
               price={price}
               parenthesis={true}
@@ -52,7 +52,7 @@ export function NewPositionModal({
           a total of&nbsp;
           <b>
             <AssetAmount
-              asset={pool.asset}
+              asset={pool.underlying.symbol}
               amount={position.totalTopUp!!}
               price={price}
               parenthesis={true}

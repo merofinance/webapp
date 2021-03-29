@@ -17,13 +17,13 @@ export function Deposit({ pool }: DepositProps) {
           displayType={"text"}
           value={availableToDeposit}
           thousandSeparator={true}
-          suffix={` ${pool.asset}`}
+          suffix={` ${pool.underlying.symbol}`}
         />
       </div>
       {availableToDeposit > 0 ? (
         <AmountInputForm
           submitText="Deposit"
-          assetName={pool.asset}
+          assetName={pool.underlying.symbol}
           maxAmount={availableToDeposit}
         />
       ) : (

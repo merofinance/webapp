@@ -27,7 +27,7 @@ export const fetchBalances = (backd: Backd, pools: Pool[]): AppThunk => (
   dispatch
 ) => {
   backd
-    .getBalances(pools.map((p) => p.name))
+    .getBalances(pools.map((p) => p.lpToken.address))
     .then((balances) => dispatch(setBalances(balances)));
 };
 
