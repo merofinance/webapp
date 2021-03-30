@@ -1,4 +1,4 @@
-import { BigNumber, ethers } from "ethers";
+import { BigNumber, ContractReceipt, ContractTransaction, ethers } from "ethers";
 import { scale } from "../numeric";
 import { Address, Pool, Position } from "../types";
 
@@ -7,6 +7,11 @@ export const masterAccount = "0xbacE8e7f276FD2Ee5ecE5C1df18BF381148862A6";
 // numbers are scaled to 10^18 to emulate contracst return values
 export const pools: Pool<BigNumber>[] = [
   {
+    name: "bDAI3CRV",
+    apy: scale(237, 17),
+    totalAssets: scale(84180923),
+    address: "0xC265707cb6Fa41b51F899000bF248A257eFB52aB",
+    exchangeRate: scale(1003, 15),
     underlying: {
       address: "0x6b175474e89094c44da98b954eedeac495271d0f",
       name: "Dai Stablecoin",
@@ -19,11 +24,13 @@ export const pools: Pool<BigNumber>[] = [
       symbol: "bDAI",
       decimals: 18,
     },
-    apy: scale(237, 17),
-    totalAssets: scale(84180923),
-    address: "0xC265707cb6Fa41b51F899000bF248A257eFB52aB",
   },
   {
+    name: "bUSDC3CRV",
+    apy: scale(193, 17),
+    totalAssets: scale(91923401),
+    address: "0xEA3b27fa12eBC0D562a9CCbe9611c866551d3792",
+    exchangeRate: scale(1010, 15),
     underlying: {
       address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
       name: "USD Coin",
@@ -36,11 +43,13 @@ export const pools: Pool<BigNumber>[] = [
       symbol: "bUSDC",
       decimals: 18,
     },
-    apy: scale(193, 17),
-    totalAssets: scale(91923401),
-    address: "0xEA3b27fa12eBC0D562a9CCbe9611c866551d3792",
   },
   {
+    name: "bETHCRV",
+    apy: scale(218, 17),
+    totalAssets: scale(19738),
+    address: "0xCa0cF7A135AC852a4d5591dC48e93e5F67425cB9",
+    exchangeRate: scale(1005, 15),
     underlying: {
       name: "Ether",
       symbol: "ETH",
@@ -53,9 +62,6 @@ export const pools: Pool<BigNumber>[] = [
       decimals: 18,
       address: "0xa09021117e4f31B83140Ae16b44F634c8624b625",
     },
-    apy: scale(218, 17),
-    totalAssets: scale(19738),
-    address: "0xCa0cF7A135AC852a4d5591dC48e93e5F67425cB9",
   },
 ];
 
@@ -66,8 +72,9 @@ export const prices: Record<string, BigNumber> = {
 };
 
 export const balances: Record<string, BigNumber> = {
-  [pools[0].lpToken.address]: scale(250_000, 18), // 250,000 DAI
-  [pools[2].lpToken.address]: scale(48, 18), // 48 ETH
+  [pools[0].lpToken.address]: scale(250_000, 18), // 250,000 bDAI
+  [pools[0].underlying.address]: scale(120_000, 18), // 120,000 DAI
+  [pools[2].lpToken.address]: scale(48, 18), // 48 bETH
 };
 
 const positionKeys = [
@@ -107,4 +114,45 @@ export const positions: Record<Address, Position<BigNumber>[]> = {
       ...positionKeys[1],
     },
   ],
+};
+
+export const makeDepositContractRecipt = (
+  poolAddress: Address,
+  account: Address
+): ContractReceipt => {
+  return {
+    to: poolAddress,
+    from: account,
+    contractAddress: poolAddress,
+    transactionIndex: 18,
+    gasUsed: BigNumber.from(186_434),
+    logsBloom: "",
+    blockHash: "0xa4df94e6bab404a13391c7b57a70650cb58136e5ebab050fa5eb39be923ce2dd",
+    transactionHash: "0x7423f887de21accf3e72889e17532b051733073a4871e130e1a4cf3c01fa4a20",
+    logs: [],
+    blockNumber: 11678953,
+    confirmations: 1,
+    cumulativeGasUsed: BigNumber.from(186_434),
+    byzantium: true,
+  };
+};
+
+export const makeDepositContractTransaction = (
+  poolAddress: Address,
+  account: Address
+): ContractTransaction => {
+  return {
+    hash: "0x7423f887de21accf3e72889e17532b051733073a4871e130e1a4cf3c01fa4a20",
+    blockNumber: 11678953,
+    timestamp: 1610968925,
+    confirmations: 1,
+    from: account,
+    nonce: 1,
+    gasLimit: BigNumber.from(296_053),
+    gasPrice: scale(92, 9),
+    data: "",
+    value: BigNumber.from(0),
+    chainId: 1,
+    wait: () => Promise.resolve(makeDepositContractRecipt(poolAddress, account)),
+  };
 };

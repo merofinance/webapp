@@ -1,14 +1,21 @@
 import React from "react";
 import NumberFormat from "react-number-format";
+import { useSelector } from "react-redux";
 import { AmountInputForm } from "../../../components/amount-input-form/AmountInputForm";
 import { Pool } from "../../../lib";
+import { selectBalance } from "../selectors";
 
 type WithdrawProps = {
   pool: Pool;
 };
 
 export function Withdraw({ pool }: WithdrawProps) {
-  const availableToWithdraw = 8431;
+  const availableToWithdraw = useSelector(selectBalance(pool));
+
+  const executeWithdraw = (value: number) => {
+    console.log(value);
+  };
+
   return (
     <>
       <div className="text-center">
@@ -23,6 +30,7 @@ export function Withdraw({ pool }: WithdrawProps) {
       {availableToWithdraw > 0 ? (
         <AmountInputForm
           submitText="Withdraw"
+          handleSubmit={executeWithdraw}
           assetName={pool.lpToken.symbol}
           maxAmount={availableToWithdraw}
         />

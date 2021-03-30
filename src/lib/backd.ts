@@ -3,17 +3,9 @@ import { Controller } from "@backdfund/protocol/typechain/Controller";
 import { ControllerFactory } from "@backdfund/protocol/typechain/ControllerFactory";
 import { Eip20InterfaceFactory } from "@backdfund/protocol/typechain/Eip20InterfaceFactory";
 import { LiquidityPoolFactory } from "@backdfund/protocol/typechain/LiquidityPoolFactory";
-import { providers, Signer } from "ethers";
-import { bigNumberToFloat, scale } from "./numeric";
-import {
-  Address,
-  Pool,
-  Position,
-  Prices,
-  Token,
-  transformPool,
-  UserBalances,
-} from "./types";
+import { ContractTransaction, providers, Signer } from "ethers";
+import { bigNumberToFloat, floatToBigNumber, scale } from "./numeric";
+import { Address, Pool, Position, Prices, Token, transformPool, UserBalances } from "./types";
 
 export type BackdOptions = {
   chainId: number;
@@ -23,24 +15,19 @@ export interface Backd {
   currentAccount(): Promise<Address>;
   listPools(): Promise<Pool[]>;
   getPositions(pool: Address): Promise<Position[]>;
-  getBalance(pool: Address, account?: Address): Promise<number>;
-  getBalances(pools: Address[], account?: Address): Promise<UserBalances>;
+  getBalance(address: Address, account?: Address): Promise<number>;
+  getBalances(addresses: Address[], account?: Address): Promise<UserBalances>;
   getPrices(symbol: string[]): Promise<Prices>;
+  deposit(poolAddress: Address, amount: number): Promise<ContractTransaction>;
 }
 
 export class Web3Backd implements Backd {
   private controller: Controller;
 
-  constructor(
-    private provider: Signer | providers.Provider,
-    private options: BackdOptions
-  ) {
+  constructor(private provider: Signer | providers.Provider, private options: BackdOptions) {
     const contracts = this.getContracts(options.chainId);
 
-    this.controller = ControllerFactory.connect(
-      contracts["Controller"][0],
-      provider
-    );
+    this.controller = ControllerFactory.connect(contracts["Controller"][0], provider);
   }
 
   private getContracts(chainId: number): Record<string, string[]> {
@@ -48,9 +35,7 @@ export class Web3Backd implements Backd {
       case 1337:
         return contracts["1337"];
       default:
-        throw new Error(
-          "Wrong network selected, please use a development network"
-        );
+        throw new Error("Wrong network selected, please use a development network");
     }
   }
 
@@ -80,15 +65,19 @@ export class Web3Backd implements Backd {
   private async getPoolInfo(address: Address): Promise<Pool> {
     const pool = LiquidityPoolFactory.connect(address, this.provider);
     const [
+      name,
       lpTokenAddress,
       underlyingAddress,
       totalAssets,
       rawApy,
+      exchangeRate,
     ] = await Promise.all([
+      pool.name(),
       pool.getLpToken(),
       pool.getUnderlying(),
       pool.totalUnderlying(),
       pool.computeAPY(),
+      pool.currentExchangeRate(),
     ]);
     const [lpToken, underlying] = await Promise.all([
       this.getTokenInfo(lpTokenAddress),
@@ -96,7 +85,15 @@ export class Web3Backd implements Backd {
     ]);
     const apy = rawApy.sub(scale(1));
 
-    const rawPool = { underlying, lpToken, apy, address, totalAssets };
+    const rawPool = {
+      name,
+      underlying,
+      lpToken,
+      apy,
+      address,
+      totalAssets,
+      exchangeRate,
+    };
     return transformPool(rawPool, bigNumberToFloat);
   }
 
@@ -104,12 +101,25 @@ export class Web3Backd implements Backd {
     return [];
   }
 
-  async getBalance(pool: string, account?: string): Promise<number> {
-    return 0;
+  async deposit(poolAddress: Address, amount: number): Promise<ContractTransaction> {
+    const poolContract = LiquidityPoolFactory.connect(poolAddress, this.provider);
+    const scaledAmount = floatToBigNumber(amount);
+    return poolContract.deposit(scaledAmount);
   }
 
-  async getBalances(pools: string[], account?: string): Promise<UserBalances> {
-    return {};
+  async getBalance(address: string, account?: string): Promise<number> {
+    const token = Eip20InterfaceFactory.connect(address, this.provider);
+    if (!account) {
+      account = await this.currentAccount();
+    }
+    const rawBalance = await token.balanceOf(account);
+    return bigNumberToFloat(rawBalance);
+  }
+
+  async getBalances(addresses: string[], account?: string): Promise<UserBalances> {
+    const promises = addresses.map((a) => this.getBalance(a, account));
+    const balances = await Promise.all(promises);
+    return Object.fromEntries(addresses.map((a, i) => [a, balances[i]]));
   }
 
   async getPrices(symbol: string[]): Promise<Prices> {

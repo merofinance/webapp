@@ -16,13 +16,9 @@ export function PoolRow({ pool, balance, price }: PoolRowProps) {
   return (
     <tr>
       <td>
-        <img
-          height="40"
-          src={getImage(pool)}
-          alt={`${pool.lpToken.symbol} logo`}
-        />
+        <img height="40" src={getImage(pool)} alt={`${pool.lpToken.symbol} logo`} />
       </td>
-      <td>{pool.lpToken.name}</td>
+      <td>{pool.name}</td>
       <td>{pool.underlying.symbol}</td>
       <td>
         <NumberFormat displayType={"text"} value={pool.apy} suffix="%" />
@@ -36,31 +32,17 @@ export function PoolRow({ pool, balance, price }: PoolRowProps) {
         />
       </td>
       <td className={styles.shorter}>
-        <AssetAmount
-          asset={pool.underlying.symbol}
-          amount={balance}
-          price={price}
-          newLine={true}
-        />
+        <AssetAmount asset={pool.underlying.symbol} amount={balance} price={price} newLine={true} />
       </td>
       <td className={styles.actions}>
-        <Link
-          to={`/${pool.lpToken.symbol}/deposit`}
-          className="btn btn-sm btn-secondary"
-        >
+        <Link to={`/${pool.lpToken.symbol}/deposit`} className="btn btn-sm btn-secondary">
           Deposit
         </Link>
-        <Link
-          to={`/${pool.lpToken.symbol}/withdraw`}
-          className="btn btn-sm btn-secondary"
-        >
+        <Link to={`/${pool.lpToken.symbol}/withdraw`} className="btn btn-sm btn-secondary">
           Withdraw
         </Link>
 
-        <Link
-          to={`/${pool.lpToken.symbol}/positions`}
-          className="btn btn-sm btn-secondary"
-        >
+        <Link to={`/${pool.lpToken.symbol}/positions`} className="btn btn-sm btn-secondary">
           Positions
         </Link>
       </td>

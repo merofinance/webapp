@@ -8,11 +8,13 @@ export interface Token {
 }
 
 export interface Pool<Num = number> {
+  name: string;
   address: string;
   lpToken: Token;
   underlying: Token;
   apy: Num;
   totalAssets: Num;
+  exchangeRate: Num;
 }
 
 export interface Position<Num = number> {
@@ -24,25 +26,16 @@ export interface Position<Num = number> {
   totalTopUp: Num;
 }
 
-type Show = { toString: () => string };
-
-export function transformPool<T extends Show, U>(
-  pool: Pool<T>,
-  f: (v: T) => U
-): Pool<U> {
+export function transformPool<T, U>(pool: Pool<T>, f: (v: T) => U): Pool<U> {
   return {
-    address: pool.address,
-    lpToken: pool.lpToken,
-    underlying: pool.underlying,
+    ...pool,
     apy: f(pool.apy),
     totalAssets: f(pool.totalAssets),
+    exchangeRate: f(pool.exchangeRate),
   };
 }
 
-export function transformPosition<T extends Show, U>(
-  position: Position<T>,
-  f: (v: T) => U
-): Position<U> {
+export function transformPosition<T, U>(position: Position<T>, f: (v: T) => U): Position<U> {
   return {
     key: position.key,
     protocol: position.protocol,

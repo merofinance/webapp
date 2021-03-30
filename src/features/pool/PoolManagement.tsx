@@ -19,9 +19,7 @@ type DepositWithdrawParamsProps = {
   mode: Mode;
 };
 
-export function PoolManagement({
-  mode: initialMode,
-}: DepositWithdrawParamsProps) {
+export function PoolManagement({ mode: initialMode }: DepositWithdrawParamsProps) {
   let { poolName } = useParams<DepositWithdrawParams>();
   const pool = useSelector(selectPool(poolName));
   const balance = useSelector(selectBalance(pool));
@@ -41,7 +39,7 @@ export function PoolManagement({
             src={getImage(pool)}
             alt={`${pool.lpToken.symbol} logo`}
           />
-          {pool.lpToken.name}
+          {pool.name}
         </h1>
       </header>
 

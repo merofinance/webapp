@@ -20,3 +20,5 @@ export type AppThunk<ReturnType = void> = ThunkAction<
 >;
 
 export type AppDispatch = typeof store.dispatch;
+
+export type Selector<T> = (state: RootState) => T;

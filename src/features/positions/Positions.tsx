@@ -53,8 +53,8 @@ export function Positions({ pool }: PositionsProps) {
                 placement="top"
                 overlay={
                   <Tooltip id="borrower-tooltip">
-                    The borrower for which the position should be topped up if
-                    it drops below the threshold.
+                    The borrower for which the position should be topped up if it drops below the
+                    threshold.
                   </Tooltip>
                 }
               >
@@ -67,9 +67,9 @@ export function Positions({ pool }: PositionsProps) {
                 placement="top"
                 overlay={
                   <Tooltip id="threshold-tooltip">
-                    The collaterization ratio threshold (&gt; 1) under which the
-                    position should be topped up. See documentation for details
-                    about how the collaterization ratio is computed.
+                    The collaterization ratio threshold (&gt; 1) under which the position should be
+                    topped up. See documentation for details about how the collaterization ratio is
+                    computed.
                   </Tooltip>
                 }
               >
@@ -82,8 +82,8 @@ export function Positions({ pool }: PositionsProps) {
                 placement="top"
                 overlay={
                   <Tooltip id="single-topup-tooltip">
-                    Single topup is the amount that can should be topped up when
-                    the position drops below the given threshold.
+                    Single topup is the amount that can should be topped up when the position drops
+                    below the given threshold.
                   </Tooltip>
                 }
               >
@@ -96,9 +96,9 @@ export function Positions({ pool }: PositionsProps) {
                 placement="top"
                 overlay={
                   <Tooltip id="total-topup-tooltip">
-                    Total topup is the total amount, potentially spread across
-                    multiple topups, that can be topped up for this position.
-                    This amount should first be deposited in the pool.
+                    Total topup is the total amount, potentially spread across multiple topups, that
+                    can be topped up for this position. This amount should first be deposited in the
+                    pool.
                   </Tooltip>
                 }
               >
@@ -114,11 +114,7 @@ export function Positions({ pool }: PositionsProps) {
               <div className={styles["table-row"]} key={position.key}>
                 <div className={styles["table-cell"]}>{position.protocol}</div>
                 <div className={styles["table-cell"]}>
-                  <EthAddress
-                    truncate="middle"
-                    value={position.account}
-                    maxLength={16}
-                  />
+                  <EthAddress truncate="middle" value={position.account} maxLength={16} />
                 </div>
                 <div className={styles["table-cell"]}>{position.threshold}</div>
                 <div className={styles["table-cell"]}>

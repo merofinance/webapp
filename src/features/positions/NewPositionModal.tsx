@@ -48,8 +48,7 @@ export function NewPositionModal({
           </b>
           .
           <br />
-          This will be repeated each time the collaterization ratio drops, until
-          a total of&nbsp;
+          This will be repeated each time the collaterization ratio drops, until a total of&nbsp;
           <b>
             <AssetAmount
               asset={pool.underlying.symbol}

@@ -23,12 +23,9 @@ export const userSlice = createSlice({
 
 export const { setBalances } = userSlice.actions;
 
-export const fetchBalances = (backd: Backd, pools: Pool[]): AppThunk => (
-  dispatch
-) => {
-  backd
-    .getBalances(pools.map((p) => p.lpToken.address))
-    .then((balances) => dispatch(setBalances(balances)));
+export const fetchBalances = (backd: Backd, pools: Pool[]): AppThunk => (dispatch) => {
+  const allTokens = pools.flatMap((p) => [p.lpToken.address, p.underlying.address]);
+  backd.getBalances(allTokens).then((balances) => dispatch(setBalances(balances)));
 };
 
 export const selectBalances = (state: RootState) => state.user.balances;

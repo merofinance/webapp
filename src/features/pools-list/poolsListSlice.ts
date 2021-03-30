@@ -34,9 +34,7 @@ export const fetchPools = (backd: Backd): AppThunk => (dispatch) => {
   backd.listPools().then((pools) => dispatch(setPools(pools)));
 };
 
-export const fetchPrices = (backd: Backd, pools: Pool[]): AppThunk => (
-  dispatch
-) => {
+export const fetchPrices = (backd: Backd, pools: Pool[]): AppThunk => (dispatch) => {
   backd
     .getPrices(pools.map((p) => p.underlying.symbol))
     .then((prices) => dispatch(setPrices(prices)));

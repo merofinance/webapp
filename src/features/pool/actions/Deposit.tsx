@@ -1,21 +1,28 @@
 import React from "react";
 import NumberFormat from "react-number-format";
+import { useSelector } from "react-redux";
 import { AmountInputForm } from "../../../components/amount-input-form/AmountInputForm";
 import { Pool } from "../../../lib";
+import { selectBalance } from "../selectors";
 
 type DepositProps = {
   pool: Pool;
 };
 
 export function Deposit({ pool }: DepositProps) {
-  const availableToDeposit = 14831;
+  const availableToDeposit = useSelector(selectBalance(pool.underlying.address));
+
+  const executeDeposit = (value: number) => {
+    console.log(value);
+  };
+
   return (
     <>
       <div className="text-center">
         <h5>Available to deposit</h5>
         <NumberFormat
           displayType={"text"}
-          value={availableToDeposit}
+          defaultValue={availableToDeposit}
           thousandSeparator={true}
           suffix={` ${pool.underlying.symbol}`}
         />
@@ -25,6 +32,7 @@ export function Deposit({ pool }: DepositProps) {
           submitText="Deposit"
           assetName={pool.underlying.symbol}
           maxAmount={availableToDeposit}
+          handleSubmit={executeDeposit}
         />
       ) : (
         <p className="text-center">No funds available to deposit</p>
