@@ -6,6 +6,7 @@ import { LiquidityPoolFactory } from "@backdfund/protocol/typechain/LiquidityPoo
 import { ContractTransaction, providers, Signer } from "ethers";
 import { bigNumberToFloat, floatToBigNumber, scale } from "./numeric";
 import { Address, Pool, Position, Prices, Token, transformPool, UserBalances } from "./types";
+import { getPrices } from "./coingecko";
 
 export type BackdOptions = {
   chainId: number;
@@ -122,7 +123,7 @@ export class Web3Backd implements Backd {
     return Object.fromEntries(addresses.map((a, i) => [a, balances[i]]));
   }
 
-  async getPrices(symbol: string[]): Promise<Prices> {
-    return {};
+  async getPrices(symbols: string[]): Promise<Prices> {
+    return getPrices(symbols);
   }
 }
