@@ -48,5 +48,6 @@ export function transformPosition<T, U>(position: Position<T>, f: (v: T) => U): 
 
 export type Address = string;
 
-export type UserBalances<Num = number> = Record<string, Num>;
+export type Balances<Num = number> = Record<string, Num>;
 export type Prices<Num = number> = Record<string, Num>;
+export type AllowanceQuery = { spender: Address; token: Token; onBehalfOf?: string };

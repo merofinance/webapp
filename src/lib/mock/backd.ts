@@ -4,11 +4,12 @@ import { Backd } from "../backd";
 import { bigNumberToFloat } from "../numeric";
 import {
   Address,
+  AllowanceQuery,
+  Balances,
   Position,
   Prices,
   transformPool,
   transformPosition,
-  UserBalances,
 } from "../types";
 import {
   balances,
@@ -28,6 +29,14 @@ export default class MockBackd implements Backd {
     return Promise.resolve(pools.map((pool) => transformPool(pool, (v) => bigNumberToFloat(v))));
   }
 
+  getAllowance(tokenAddress: Address, spender: Address, account?: string): Promise<number> {
+    return Promise.resolve(0);
+  }
+
+  getAllowances(queries: AllowanceQuery[]): Promise<Balances> {
+    return Promise.resolve(Object.fromEntries(queries.map((q) => [q.token.symbol, 0])));
+  }
+
   getBalance(pool: Address, account?: Address): Promise<number> {
     const number = pool in balances ? balances[pool] : BigNumber.from(0);
     return Promise.resolve(bigNumberToFloat(number));
@@ -38,7 +47,7 @@ export default class MockBackd implements Backd {
     return makeDepositContractTransaction(poolAddress, account);
   }
 
-  async getBalances(pools: Address[], account?: Address): Promise<UserBalances> {
+  async getBalances(pools: Address[], account?: Address): Promise<Balances> {
     const balances = await Promise.all(pools.map((p) => this.getBalance(p, account)));
     return Object.fromEntries(pools.map((p, i) => [p, balances[i]]));
   }

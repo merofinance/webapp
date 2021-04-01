@@ -4,9 +4,18 @@ import { ControllerFactory } from "@backdfund/protocol/typechain/ControllerFacto
 import { Eip20InterfaceFactory } from "@backdfund/protocol/typechain/Eip20InterfaceFactory";
 import { LiquidityPoolFactory } from "@backdfund/protocol/typechain/LiquidityPoolFactory";
 import { ContractTransaction, providers, Signer } from "ethers";
-import { bigNumberToFloat, floatToBigNumber, scale } from "./numeric";
-import { Address, Pool, Position, Prices, Token, transformPool, UserBalances } from "./types";
 import { getPrices } from "./coingecko";
+import { bigNumberToFloat, floatToBigNumber, scale } from "./numeric";
+import {
+  Address,
+  AllowanceQuery,
+  Balances,
+  Pool,
+  Position,
+  Prices,
+  Token,
+  transformPool,
+} from "./types";
 
 export type BackdOptions = {
   chainId: number;
@@ -17,7 +26,9 @@ export interface Backd {
   listPools(): Promise<Pool[]>;
   getPositions(pool: Address): Promise<Position[]>;
   getBalance(address: Address, account?: Address): Promise<number>;
-  getBalances(addresses: Address[], account?: Address): Promise<UserBalances>;
+  getBalances(addresses: Address[], account?: Address): Promise<Balances>;
+  getAllowance(tokenAddress: Address, spender: Address, account?: string): Promise<number>;
+  getAllowances(queries: AllowanceQuery[]): Promise<Balances>;
   getPrices(symbol: string[]): Promise<Prices>;
   deposit(poolAddress: Address, amount: number): Promise<ContractTransaction>;
 }
@@ -102,6 +113,22 @@ export class Web3Backd implements Backd {
     return [];
   }
 
+  async getAllowance(tokenAddress: Address, spender: Address, account?: string): Promise<number> {
+    const token = Eip20InterfaceFactory.connect(tokenAddress, this.provider);
+    if (!account) {
+      account = await this.currentAccount();
+    }
+    const rawAllowance = await token.allowance(account, spender);
+    return bigNumberToFloat(rawAllowance);
+  }
+
+  async getAllowances(queries: AllowanceQuery[]): Promise<Balances> {
+    const allowances = await Promise.all(
+      queries.map((q) => this.getAllowance(q.token.address, q.spender, q.onBehalfOf))
+    );
+    return Object.fromEntries(queries.map((q, i) => [q.token.symbol, allowances[i]]));
+  }
+
   async deposit(poolAddress: Address, amount: number): Promise<ContractTransaction> {
     const poolContract = LiquidityPoolFactory.connect(poolAddress, this.provider);
     const scaledAmount = floatToBigNumber(amount);
@@ -117,7 +144,7 @@ export class Web3Backd implements Backd {
     return bigNumberToFloat(rawBalance);
   }
 
-  async getBalances(addresses: string[], account?: string): Promise<UserBalances> {
+  async getBalances(addresses: string[], account?: string): Promise<Balances> {
     const promises = addresses.map((a) => this.getBalance(a, account));
     const balances = await Promise.all(promises);
     return Object.fromEntries(addresses.map((a, i) => [a, balances[i]]));
