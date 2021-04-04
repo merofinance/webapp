@@ -51,3 +51,8 @@ export type Address = string;
 export type Balances<Num = number> = Record<string, Num>;
 export type Prices<Num = number> = Record<string, Num>;
 export type AllowanceQuery = { spender: Address; token: Token; onBehalfOf?: string };
+export type TransactionDescription = {
+  hash: string;
+  action: string;
+  args?: Record<string, any>;
+};

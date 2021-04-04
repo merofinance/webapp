@@ -3,7 +3,7 @@ import NumberFormat from "react-number-format";
 import { useSelector } from "react-redux";
 import { AmountInputForm } from "../../../components/amount-input-form/AmountInputForm";
 import { Pool } from "../../../lib";
-import { selectBalance } from "../selectors";
+import { selectBalance } from "../../user/userSlice";
 
 type WithdrawProps = {
   pool: Pool;

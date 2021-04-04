@@ -27,9 +27,10 @@ export interface Backd {
   getPositions(pool: Address): Promise<Position[]>;
   getBalance(address: Address, account?: Address): Promise<number>;
   getBalances(addresses: Address[], account?: Address): Promise<Balances>;
-  getAllowance(tokenAddress: Address, spender: Address, account?: string): Promise<number>;
-  getAllowances(queries: AllowanceQuery[]): Promise<Balances>;
+  getAllowance(token: Token, spender: Address, account?: string): Promise<number>;
+  getAllowances(queries: AllowanceQuery[]): Promise<Record<string, Balances>>;
   getPrices(symbol: string[]): Promise<Prices>;
+  approve(token: Token, spender: Address, amount: number): Promise<ContractTransaction>;
   deposit(poolAddress: Address, amount: number): Promise<ContractTransaction>;
 }
 
@@ -113,24 +114,37 @@ export class Web3Backd implements Backd {
     return [];
   }
 
-  async getAllowance(tokenAddress: Address, spender: Address, account?: string): Promise<number> {
-    const token = Eip20InterfaceFactory.connect(tokenAddress, this.provider);
+  async getAllowance(token: Token, spender: Address, account?: string): Promise<number> {
+    const tokenContract = Eip20InterfaceFactory.connect(token.address, this.provider);
     if (!account) {
       account = await this.currentAccount();
     }
-    const rawAllowance = await token.allowance(account, spender);
-    return bigNumberToFloat(rawAllowance);
+    const rawAllowance = await tokenContract.allowance(account, spender);
+    return bigNumberToFloat(rawAllowance, token.decimals);
   }
 
-  async getAllowances(queries: AllowanceQuery[]): Promise<Balances> {
+  async getAllowances(queries: AllowanceQuery[]): Promise<Record<string, Balances>> {
     const allowances = await Promise.all(
-      queries.map((q) => this.getAllowance(q.token.address, q.spender, q.onBehalfOf))
+      queries.map((q) => this.getAllowance(q.token, q.spender, q.onBehalfOf))
     );
-    return Object.fromEntries(queries.map((q, i) => [q.token.symbol, allowances[i]]));
+    const result: Record<string, Balances> = {};
+    queries.forEach((query, index) => {
+      if (!result[query.token.address]) {
+        result[query.token.address] = {};
+      }
+      result[query.token.address][query.spender] = allowances[index];
+    });
+    return result;
   }
 
-  async deposit(poolAddress: Address, amount: number): Promise<ContractTransaction> {
-    const poolContract = LiquidityPoolFactory.connect(poolAddress, this.provider);
+  async approve(token: Token, spender: Address, amount: number): Promise<ContractTransaction> {
+    const tokenContract = Eip20InterfaceFactory.connect(token.address, this.provider);
+    const scaledAmount = floatToBigNumber(amount, token.decimals);
+    return tokenContract.approve(spender, scaledAmount);
+  }
+
+  async deposit(pool: Address, amount: number): Promise<ContractTransaction> {
+    const poolContract = LiquidityPoolFactory.connect(pool, this.provider);
     const scaledAmount = floatToBigNumber(amount);
     return poolContract.deposit(scaledAmount);
   }

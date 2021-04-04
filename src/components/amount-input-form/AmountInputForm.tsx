@@ -5,6 +5,7 @@ type AmountInputFormProps = {
   assetName: string;
   maxAmount: number;
   submitText: string;
+  handleChange?: (value: number) => void;
   handleSubmit: (value: number) => void;
 };
 
@@ -13,11 +14,12 @@ export function AmountInputForm({
   maxAmount,
   submitText,
   handleSubmit,
+  handleChange,
 }: AmountInputFormProps) {
   const [value, setValue] = useState(0);
   const [valueError, setValueError] = useState("");
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const rawNewValue = e.target.value;
     const newValue = parseInt(rawNewValue.replace(/,/g, ""), 10);
     let error = "";
@@ -27,6 +29,9 @@ export function AmountInputForm({
     if (!isNaN(newValue)) {
       setValue(newValue);
       setValueError(error);
+      if (handleChange) {
+        handleChange(newValue);
+      }
     }
   };
 
@@ -42,7 +47,7 @@ export function AmountInputForm({
           <Form.Control
             type="number"
             value={value.toString()}
-            onChange={handleChange}
+            onChange={onChange}
             isInvalid={valueError.length > 0}
           />
           <InputGroup.Append>
@@ -51,7 +56,7 @@ export function AmountInputForm({
 
           <Form.Control.Feedback type="invalid">{valueError}</Form.Control.Feedback>
         </InputGroup>
-        <Form.Control type="range" value={value} max={maxAmount} onChange={handleChange} />
+        <Form.Control type="range" value={value} max={maxAmount} onChange={onChange} />
       </Form.Group>
 
       <div className="text-center mt-4">

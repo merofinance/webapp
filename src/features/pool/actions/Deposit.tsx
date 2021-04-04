@@ -1,19 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NumberFormat from "react-number-format";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useBackd } from "../../../app/hooks/use-backd";
+import { AppDispatch } from "../../../app/store";
 import { AmountInputForm } from "../../../components/amount-input-form/AmountInputForm";
 import { Pool } from "../../../lib";
-import { selectBalance } from "../selectors";
+import { selectPoolAllowance, selectBalance, approve } from "../../user/userSlice";
 
 type DepositProps = {
   pool: Pool;
 };
 
 export function Deposit({ pool }: DepositProps) {
+  const backd = useBackd();
+  const dispatch: AppDispatch = useDispatch();
+  const [submitText, setSubmitText] = useState("Deposit");
   const availableToDeposit = useSelector(selectBalance(pool.underlying.address));
+  const approvedToDeposit = useSelector(selectPoolAllowance(pool));
+  const [depositAmount, setDepositAmount] = useState(0);
 
-  const executeDeposit = (value: number) => {
-    console.log(value);
+  const handleValueChange = (value: number) => {
+    setDepositAmount(value);
+  };
+
+  useEffect(() => {
+    const submitText = depositAmount > approvedToDeposit ? "Approve & deposit" : "Deposit";
+    setSubmitText(submitText);
+  }, [depositAmount, approvedToDeposit]);
+
+  const executeDeposit = (amount: number) => {
+    if (!backd) return;
+    dispatch(approve({ token: pool.underlying, spender: pool.address, amount, backd })).then(() => {
+      console.log("approve tx dispatched");
+    });
   };
 
   return (
@@ -27,11 +46,12 @@ export function Deposit({ pool }: DepositProps) {
           suffix={` ${pool.underlying.symbol}`}
         />
       </div>
-      {availableToDeposit > 0 ? (
+      {backd && availableToDeposit > 0 ? (
         <AmountInputForm
-          submitText="Deposit"
+          submitText={submitText}
           assetName={pool.underlying.symbol}
           maxAmount={availableToDeposit}
+          handleChange={handleValueChange}
           handleSubmit={executeDeposit}
         />
       ) : (

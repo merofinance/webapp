@@ -15,8 +15,8 @@ function flooredLog(value: BigNumber, base: number = 10): number {
 
 export function bigNumberToFloat(
   value: BigNumber,
-  significantDigits: number = 5,
-  decimals: number = 18
+  decimals: number = 18,
+  significantDigits: number = 5
 ): number {
   const log = flooredLog(value);
   const decimalsScale = Math.min(Math.max(0, log - significantDigits + 1), decimals);
@@ -35,8 +35,8 @@ function countLeadingZeros(value: number, base: number = 10): number {
 
 export function floatToBigNumber(
   value: number,
-  significantDigits: number = 5,
-  decimals: number = 18
+  decimals: number = 18,
+  significantDigits: number = 5
 ): BigNumber {
   const leadingZeros = countLeadingZeros(value);
   const decimalScale = leadingZeros + significantDigits;
