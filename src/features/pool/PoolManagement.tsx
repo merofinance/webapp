@@ -8,7 +8,8 @@ import { Positions } from "../positions/Positions";
 import { Withdraw } from "./actions/Withdraw";
 import styles from "./Pool.module.scss";
 import { PoolInfo } from "./PoolInfo";
-import { selectBalance, selectPool, selectPrice } from "./selectors";
+import { selectPool, selectPrice } from "./selectors";
+import { selectBalance } from "../user/userSlice";
 
 type DepositWithdrawParams = {
   poolName: string;

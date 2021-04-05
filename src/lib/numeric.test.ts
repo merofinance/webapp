@@ -10,7 +10,7 @@ test("converts big numbers to floats", () => {
     { value: scale(84180923, 18), digits: 5, decimals: 18, expected: 84180923 },
   ];
   testCases.forEach(({ value, digits, decimals, expected }) => {
-    const actual = bigNumberToFloat(value, digits, decimals);
+    const actual = bigNumberToFloat(value, decimals, digits);
     expect(Math.abs(actual - expected)).toBeLessThan(epsilon);
   });
 });
@@ -23,7 +23,7 @@ test("converts floats numbers to big numbers", () => {
     { expected: scale(84180923, 18), digits: 5, decimals: 18, value: 84180923 },
   ];
   testCases.forEach(({ value, digits, decimals, expected }) => {
-    const actual = floatToBigNumber(value, digits, decimals);
+    const actual = floatToBigNumber(value, decimals, digits);
     expect(actual.sub(expected).abs().toNumber()).toEqual(0);
   });
 });

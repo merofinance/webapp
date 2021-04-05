@@ -2,7 +2,7 @@ import { useWeb3React } from "@web3-react/core";
 import React, { useEffect } from "react";
 import { Button, Container } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { injectedConnector } from "../../app/web3";
+import { activateIfAuthorized, injectedConnector } from "../../app/web3";
 import { Backd } from "../../lib/backd";
 
 export function ConnectWallet() {
@@ -11,10 +11,11 @@ export function ConnectWallet() {
   const { activate, active } = useWeb3React<Backd>();
 
   useEffect(() => {
+    activateIfAuthorized({ active, activate });
     if (active) {
       history.replace("/");
     }
-  }, [active, history]);
+  }, [active, history, activate]);
 
   const activateWallet = () => {
     activate(injectedConnector);

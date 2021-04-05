@@ -1,31 +1,40 @@
-import { BigNumber, ContractTransaction } from "ethers";
+import { BigNumber, ContractTransaction, providers } from "ethers";
 import { Pool } from "..";
 import { Backd } from "../backd";
 import { bigNumberToFloat } from "../numeric";
 import {
   Address,
+  AllowanceQuery,
+  Balances,
   Position,
   Prices,
+  Token,
   transformPool,
   transformPosition,
-  UserBalances,
 } from "../types";
-import {
-  balances,
-  makeDepositContractTransaction,
-  masterAccount,
-  pools,
-  positions,
-  prices,
-} from "./data";
+import { balances, makeContractTransaction, masterAccount, pools, positions, prices } from "./data";
 
 export default class MockBackd implements Backd {
+  private allowances: Record<string, Balances> = {};
+
+  get provider(): providers.Provider {
+    return providers.getDefaultProvider();
+  }
+
   currentAccount(): Promise<Address> {
     return Promise.resolve(masterAccount);
   }
 
   listPools(): Promise<Pool[]> {
     return Promise.resolve(pools.map((pool) => transformPool(pool, (v) => bigNumberToFloat(v))));
+  }
+
+  getAllowance(token: Token, spender: Address, account?: string): Promise<number> {
+    return Promise.resolve(this.allowances[token.address][spender] || 0);
+  }
+
+  getAllowances(queries: AllowanceQuery[]): Promise<Record<string, Balances>> {
+    return Promise.resolve(this.allowances);
   }
 
   getBalance(pool: Address, account?: Address): Promise<number> {
@@ -35,10 +44,19 @@ export default class MockBackd implements Backd {
 
   async deposit(poolAddress: Address, amount: number): Promise<ContractTransaction> {
     const account = await this.currentAccount();
-    return makeDepositContractTransaction(poolAddress, account);
+    return makeContractTransaction(poolAddress, account);
   }
 
-  async getBalances(pools: Address[], account?: Address): Promise<UserBalances> {
+  async approve(token: Token, spender: Address, amount: number): Promise<ContractTransaction> {
+    const account = await this.currentAccount();
+    if (!this.allowances[token.address]) {
+      this.allowances[token.address] = {};
+    }
+    this.allowances[token.address][spender] = amount;
+    return makeContractTransaction(token.address, account);
+  }
+
+  async getBalances(pools: Address[], account?: Address): Promise<Balances> {
     const balances = await Promise.all(pools.map((p) => this.getBalance(p, account)));
     return Object.fromEntries(pools.map((p, i) => [p, balances[i]]));
   }

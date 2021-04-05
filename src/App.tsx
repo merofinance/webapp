@@ -1,5 +1,11 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheck,
+  faClock,
+  faInfoCircle,
+  faTimesCircle,
+  faExternalLinkAlt,
+} from "@fortawesome/free-solid-svg-icons";
 import { Web3ReactProvider } from "@web3-react/core";
 import { ethers } from "ethers";
 import React from "react";
@@ -14,7 +20,7 @@ import { PoolsList } from "./features/pools-list/PoolsList";
 import { createBackd } from "./lib/factory";
 import MockSigner from "./lib/mock/signer";
 
-library.add(faInfoCircle);
+library.add(faInfoCircle, faClock, faCheck, faTimesCircle, faExternalLinkAlt);
 
 function getLibrary(rawProvider: any, connector: any) {
   const provider = new ethers.providers.Web3Provider(rawProvider);

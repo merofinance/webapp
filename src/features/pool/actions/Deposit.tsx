@@ -1,19 +1,64 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NumberFormat from "react-number-format";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useBackd } from "../../../app/hooks/use-backd";
+import { AppDispatch } from "../../../app/store";
 import { AmountInputForm } from "../../../components/amount-input-form/AmountInputForm";
 import { Pool } from "../../../lib";
-import { selectBalance } from "../selectors";
+import { pendingTransactionsCount } from "../../transactions-list/transactionsSlice";
+import { approve, deposit, selectBalance, selectPoolAllowance } from "../../user/userSlice";
 
 type DepositProps = {
   pool: Pool;
 };
 
 export function Deposit({ pool }: DepositProps) {
+  const backd = useBackd();
+  const dispatch: AppDispatch = useDispatch();
+  const [submitText, setSubmitText] = useState("Deposit");
   const availableToDeposit = useSelector(selectBalance(pool.underlying.address));
+  const approvedToDeposit = useSelector(selectPoolAllowance(pool));
+  const [depositAmount, setDepositAmount] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const pendingTxCount = useSelector(pendingTransactionsCount);
 
-  const executeDeposit = (value: number) => {
-    console.log(value);
+  const handleValueChange = (value: number) => setDepositAmount(value);
+
+  const handleTxDispatch = ({ status }: { status: string; actionType: string }) => {
+    if (status === "rejected") {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const submitText = depositAmount > approvedToDeposit ? "Approve" : "Deposit";
+    setSubmitText(submitText);
+    setLoading(pendingTxCount > 0);
+  }, [depositAmount, approvedToDeposit, pendingTxCount]);
+
+  const executeApprove = (amount: number) => {
+    if (!backd) return;
+    setLoading(true);
+    const approveAction = approve({ token: pool.underlying, spender: pool.address, amount, backd });
+    dispatch(approveAction).then((v) =>
+      handleTxDispatch({ status: v.meta.requestStatus, actionType: "approve" })
+    );
+  };
+
+  const executeDeposit = (amount: number) => {
+    if (!backd) return;
+    setLoading(true);
+    dispatch(deposit({ backd, pool, amount })).then((v) =>
+      handleTxDispatch({ status: v.meta.requestStatus, actionType: "deposit" })
+    );
+  };
+
+  const handleSubmit = (amount: number) => {
+    if (amount > approvedToDeposit) {
+      executeApprove(amount);
+    } else {
+      executeDeposit(amount);
+    }
   };
 
   return (
@@ -27,12 +72,15 @@ export function Deposit({ pool }: DepositProps) {
           suffix={` ${pool.underlying.symbol}`}
         />
       </div>
-      {availableToDeposit > 0 ? (
+      {backd && availableToDeposit > 0 ? (
         <AmountInputForm
-          submitText="Deposit"
+          submitText={submitText}
           assetName={pool.underlying.symbol}
           maxAmount={availableToDeposit}
-          handleSubmit={executeDeposit}
+          handleChange={handleValueChange}
+          handleSubmit={handleSubmit}
+          loading={loading}
+          value={depositAmount}
         />
       ) : (
         <p className="text-center">No funds available to deposit</p>

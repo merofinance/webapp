@@ -1,14 +1,48 @@
-import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
+import {
+  Action,
+  combineReducers,
+  configureStore,
+  getDefaultMiddleware,
+  ThunkAction,
+} from "@reduxjs/toolkit";
 import poolsReducer from "../features/pools-list/poolsListSlice";
 import userReducer from "../features/user/userSlice";
 import positionsReducer from "../features/positions/positionsSlice";
+import transactionsReducer from "../features/transactions-list/transactionsSlice";
+import storage from "redux-persist/lib/storage";
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  persistReducer,
+  persistStore,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+} from "redux-persist";
+
+const rootReducer = combineReducers({
+  pools: poolsReducer,
+  user: userReducer,
+  positions: positionsReducer,
+  transactions: transactionsReducer,
+});
+
+const persistConfig = {
+  key: "root",
+  version: 1,
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: {
-    pools: poolsReducer,
-    user: userReducer,
-    positions: positionsReducer,
-  },
+  reducer: persistedReducer,
+  middleware: getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
@@ -22,3 +56,5 @@ export type AppThunk<ReturnType = void> = ThunkAction<
 export type AppDispatch = typeof store.dispatch;
 
 export type Selector<T> = (state: RootState) => T;
+
+export const persistor = persistStore(store);

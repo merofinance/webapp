@@ -116,14 +116,11 @@ export const positions: Record<Address, Position<BigNumber>[]> = {
   ],
 };
 
-export const makeDepositContractRecipt = (
-  poolAddress: Address,
-  account: Address
-): ContractReceipt => {
+export const makeContractRecipt = (contractAddress: Address, account: Address): ContractReceipt => {
   return {
-    to: poolAddress,
+    to: contractAddress,
     from: account,
-    contractAddress: poolAddress,
+    contractAddress: contractAddress,
     transactionIndex: 18,
     gasUsed: BigNumber.from(186_434),
     logsBloom: "",
@@ -137,8 +134,8 @@ export const makeDepositContractRecipt = (
   };
 };
 
-export const makeDepositContractTransaction = (
-  poolAddress: Address,
+export const makeContractTransaction = (
+  contractAddress: Address,
   account: Address
 ): ContractTransaction => {
   return {
@@ -153,6 +150,6 @@ export const makeDepositContractTransaction = (
     data: "",
     value: BigNumber.from(0),
     chainId: 1,
-    wait: () => Promise.resolve(makeDepositContractRecipt(poolAddress, account)),
+    wait: () => Promise.resolve(makeContractRecipt(contractAddress, account)),
   };
 };

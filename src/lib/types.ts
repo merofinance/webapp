@@ -1,3 +1,5 @@
+import { TransactionReceipt } from "@ethersproject/providers";
+
 export type Optional<T> = T | null;
 
 export interface Token {
@@ -48,5 +50,33 @@ export function transformPosition<T, U>(position: Position<T>, f: (v: T) => U): 
 
 export type Address = string;
 
-export type UserBalances<Num = number> = Record<string, Num>;
+export type Balances<Num = number> = Record<string, Num>;
 export type Prices<Num = number> = Record<string, Num>;
+export type AllowanceQuery = { spender: Address; token: Token; onBehalfOf?: string };
+
+export type TransactionDescription = {
+  action: string;
+  args?: Record<string, any>;
+};
+
+export type TransactionInfo = {
+  hash: string;
+  chainId: number;
+  confirmations: number;
+  timestamp: number;
+  blockNumber?: number;
+  status?: number;
+  description: TransactionDescription;
+};
+
+export type TransactionConfirmation = Omit<TransactionInfo, "description" | "chainId">;
+
+export function parseTransactionReceipt(receipt: TransactionReceipt): TransactionConfirmation {
+  return {
+    hash: receipt.transactionHash,
+    blockNumber: receipt.blockNumber,
+    timestamp: new Date().getTime(),
+    confirmations: receipt.confirmations,
+    status: receipt.status,
+  };
+}
