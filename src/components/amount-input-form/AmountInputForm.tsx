@@ -1,10 +1,12 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
-import { Button, Form, InputGroup } from "react-bootstrap";
+import { Button, Form, InputGroup, Spinner } from "react-bootstrap";
 
 type AmountInputFormProps = {
   assetName: string;
   maxAmount: number;
   submitText: string;
+  loading?: boolean;
+  value: number;
   handleChange?: (value: number) => void;
   handleSubmit: (value: number) => void;
 };
@@ -15,8 +17,9 @@ export function AmountInputForm({
   submitText,
   handleSubmit,
   handleChange,
+  value,
+  loading = false,
 }: AmountInputFormProps) {
-  const [value, setValue] = useState(0);
   const [valueError, setValueError] = useState("");
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +30,6 @@ export function AmountInputForm({
       error = "Not enough funds available";
     }
     if (!isNaN(newValue)) {
-      setValue(newValue);
       setValueError(error);
       if (handleChange) {
         handleChange(newValue);
@@ -60,7 +62,17 @@ export function AmountInputForm({
       </Form.Group>
 
       <div className="text-center mt-4">
-        <Button variant="primary" type="submit" disabled={value <= 0}>
+        <Button variant="primary" type="submit" disabled={value <= 0 || loading}>
+          {loading ? (
+            <Spinner
+              className="mr-1"
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            />
+          ) : null}
           {submitText}
         </Button>
       </div>

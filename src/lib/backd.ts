@@ -32,15 +32,24 @@ export interface Backd {
   getPrices(symbol: string[]): Promise<Prices>;
   approve(token: Token, spender: Address, amount: number): Promise<ContractTransaction>;
   deposit(poolAddress: Address, amount: number): Promise<ContractTransaction>;
+  provider: providers.Provider;
 }
 
 export class Web3Backd implements Backd {
   private controller: Controller;
 
-  constructor(private provider: Signer | providers.Provider, private options: BackdOptions) {
+  constructor(private _provider: Signer | providers.Provider, private options: BackdOptions) {
     const contracts = this.getContracts(options.chainId);
 
-    this.controller = ControllerFactory.connect(contracts["Controller"][0], provider);
+    this.controller = ControllerFactory.connect(contracts["Controller"][0], _provider);
+  }
+
+  get provider(): providers.Provider {
+    const provider = this._provider;
+    if (provider instanceof Signer) {
+      return provider.provider!!;
+    }
+    return provider;
   }
 
   private getContracts(chainId: number): Record<string, string[]> {
@@ -53,7 +62,7 @@ export class Web3Backd implements Backd {
   }
 
   currentAccount(): Promise<string> {
-    const signer = this.provider;
+    const signer = this._provider;
     if (signer instanceof Signer) {
       return signer.getAddress();
     }
@@ -66,7 +75,7 @@ export class Web3Backd implements Backd {
   }
 
   async getTokenInfo(tokenAddress: Address): Promise<Token> {
-    const token = Eip20InterfaceFactory.connect(tokenAddress, this.provider);
+    const token = Eip20InterfaceFactory.connect(tokenAddress, this._provider);
     const [name, symbol, decimals] = await Promise.all([
       token.name(),
       token.symbol(),
@@ -76,7 +85,7 @@ export class Web3Backd implements Backd {
   }
 
   private async getPoolInfo(address: Address): Promise<Pool> {
-    const pool = LiquidityPoolFactory.connect(address, this.provider);
+    const pool = LiquidityPoolFactory.connect(address, this._provider);
     const [
       name,
       lpTokenAddress,
@@ -115,7 +124,7 @@ export class Web3Backd implements Backd {
   }
 
   async getAllowance(token: Token, spender: Address, account?: string): Promise<number> {
-    const tokenContract = Eip20InterfaceFactory.connect(token.address, this.provider);
+    const tokenContract = Eip20InterfaceFactory.connect(token.address, this._provider);
     if (!account) {
       account = await this.currentAccount();
     }
@@ -138,19 +147,19 @@ export class Web3Backd implements Backd {
   }
 
   async approve(token: Token, spender: Address, amount: number): Promise<ContractTransaction> {
-    const tokenContract = Eip20InterfaceFactory.connect(token.address, this.provider);
+    const tokenContract = Eip20InterfaceFactory.connect(token.address, this._provider);
     const scaledAmount = floatToBigNumber(amount, token.decimals);
     return tokenContract.approve(spender, scaledAmount);
   }
 
   async deposit(pool: Address, amount: number): Promise<ContractTransaction> {
-    const poolContract = LiquidityPoolFactory.connect(pool, this.provider);
+    const poolContract = LiquidityPoolFactory.connect(pool, this._provider);
     const scaledAmount = floatToBigNumber(amount);
     return poolContract.deposit(scaledAmount);
   }
 
   async getBalance(address: string, account?: string): Promise<number> {
-    const token = Eip20InterfaceFactory.connect(address, this.provider);
+    const token = Eip20InterfaceFactory.connect(address, this._provider);
     if (!account) {
       account = await this.currentAccount();
     }

@@ -1,4 +1,4 @@
-import { BigNumber, ContractTransaction } from "ethers";
+import { BigNumber, ContractTransaction, providers } from "ethers";
 import { Pool } from "..";
 import { Backd } from "../backd";
 import { bigNumberToFloat } from "../numeric";
@@ -16,6 +16,10 @@ import { balances, makeContractTransaction, masterAccount, pools, positions, pri
 
 export default class MockBackd implements Backd {
   private allowances: Record<string, Balances> = {};
+
+  get provider(): providers.Provider {
+    return providers.getDefaultProvider();
+  }
 
   currentAccount(): Promise<Address> {
     return Promise.resolve(masterAccount);

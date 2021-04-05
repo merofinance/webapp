@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AppDispatch, RootState, Selector } from "../../app/store";
+import { RootState, Selector } from "../../app/store";
 import { Backd } from "../../lib/backd";
 import { Address, Balances, Optional, Pool, Token } from "../../lib/types";
 import { getAddress } from "../pool/selectors";
+import { handleTransactionConfirmation } from "../transactions-list/transactionsUtils";
 
 interface UserState {
   balances: Balances;
@@ -31,8 +32,7 @@ export const fetchAllowances = createAsyncThunk(
 );
 
 type ApproveArgs = { backd: Backd; token: Token; spender: Address; amount: number };
-
-export const approve = createAsyncThunk("user/approve", approveAction);
+type DepositArgs = { backd: Backd; pool: Pool; amount: number };
 
 export const userSlice = createSlice({
   name: "user",
@@ -62,14 +62,33 @@ export const userSlice = createSlice({
 
 export const { increaseAllowance } = userSlice.actions;
 
-async function approveAction(
-  { backd, token, spender, amount }: ApproveArgs,
-  { dispatch }: { dispatch: AppDispatch }
-) {
-  const tx = await backd.approve(token, spender, amount);
-  tx.wait().then(() => dispatch(increaseAllowance({ token, spender, amount })));
-  return { hash: tx.hash, action: "Approve", args: { spender, amount, token } };
-}
+export const approve = createAsyncThunk(
+  "user/approve",
+  async ({ backd, token, spender, amount }: ApproveArgs, { dispatch }) => {
+    const tx = await backd.approve(token, spender, amount);
+    handleTransactionConfirmation(
+      tx,
+      { action: "Approve", args: { spender, amount, token } },
+      dispatch,
+      increaseAllowance({ token, spender, amount })
+    );
+    return tx.hash;
+  }
+);
+
+export const deposit = createAsyncThunk(
+  "user/deposit",
+  async ({ backd, pool, amount }: DepositArgs, { dispatch }) => {
+    const tx = await backd.deposit(pool.address, amount);
+    handleTransactionConfirmation(
+      tx,
+      { action: "Deposit", args: { pool, amount } },
+      dispatch,
+      fetchBalances({ backd, pools: [pool] })
+    );
+    return tx.hash;
+  }
+);
 
 export const selectBalances = (state: RootState) => state.user.balances;
 
