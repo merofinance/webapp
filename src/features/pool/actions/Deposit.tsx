@@ -20,6 +20,7 @@ export function Deposit({ pool }: DepositProps) {
   const approvedToDeposit = useSelector(selectPoolAllowance(pool));
   const [depositAmount, setDepositAmount] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [shouldResetValue, setShouldResetValue] = useState(false);
   const pendingTxCount = useSelector(pendingTransactionsCount);
 
   const handleValueChange = (value: number) => setDepositAmount(value);
@@ -27,30 +28,38 @@ export function Deposit({ pool }: DepositProps) {
   const handleTxDispatch = ({ status }: { status: string; actionType: string }) => {
     if (status === "rejected") {
       setLoading(false);
+      return false;
     }
+    return true;
   };
 
   useEffect(() => {
     const submitText = depositAmount > approvedToDeposit ? "Approve" : "Deposit";
     setSubmitText(submitText);
     setLoading(pendingTxCount > 0);
-  }, [depositAmount, approvedToDeposit, pendingTxCount]);
+    if (shouldResetValue && pendingTxCount === 0) {
+      setShouldResetValue(false);
+      setDepositAmount(0);
+    }
+  }, [depositAmount, approvedToDeposit, pendingTxCount, shouldResetValue, setShouldResetValue]);
 
   const executeApprove = (amount: number) => {
     if (!backd) return;
     setLoading(true);
     const approveAction = approve({ token: pool.underlying, spender: pool.address, amount, backd });
-    dispatch(approveAction).then((v) =>
-      handleTxDispatch({ status: v.meta.requestStatus, actionType: "approve" })
-    );
+    dispatch(approveAction).then((v) => {
+      handleTxDispatch({ status: v.meta.requestStatus, actionType: "approve" });
+    });
   };
 
   const executeDeposit = (amount: number) => {
     if (!backd) return;
     setLoading(true);
-    dispatch(deposit({ backd, pool, amount })).then((v) =>
-      handleTxDispatch({ status: v.meta.requestStatus, actionType: "deposit" })
-    );
+    dispatch(deposit({ backd, pool, amount })).then((v) => {
+      if (handleTxDispatch({ status: v.meta.requestStatus, actionType: "deposit" })) {
+        setShouldResetValue(true);
+      }
+    });
   };
 
   const handleSubmit = (amount: number) => {

@@ -9,7 +9,7 @@ export async function handleTransactionConfirmation(
   txDescription: TransactionDescription,
   dispatch: AppDispatch,
   // FIXME: Parameters<AppDispatch>[0] does not seem to work with non-thunk actions
-  action?: any
+  actions: any[] = []
 ) {
   const txInfo = {
     hash: tx.hash,
@@ -24,9 +24,7 @@ export async function handleTransactionConfirmation(
   tx.wait().then((receipt) => {
     batch(() => {
       dispatch(confirmTransaction(parseTransactionReceipt(receipt)));
-      if (action) {
-        dispatch(action);
-      }
+      actions.forEach((action) => dispatch(action));
     });
   });
 }

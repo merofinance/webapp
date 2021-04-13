@@ -38,7 +38,7 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    increaseAllowance: (
+    setAllowance: (
       state,
       action: PayloadAction<{ token: Token; spender: Address; amount: number }>
     ) => {
@@ -47,6 +47,14 @@ export const userSlice = createSlice({
         state.allowances[token.address] = {};
       }
       state.allowances[token.address][spender] = amount;
+    },
+    decreaseAllowance: (
+      state,
+      action: PayloadAction<{ token: Token; spender: Address; amount: number }>
+    ) => {
+      const { spender, token, amount } = action.payload;
+      const allowance = state.allowances[token.address][spender] || 0;
+      state.allowances[token.address][spender] = Math.max(0, allowance - amount);
     },
   },
   extraReducers: (builder) => {
@@ -60,7 +68,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const { increaseAllowance } = userSlice.actions;
+export const { setAllowance, decreaseAllowance } = userSlice.actions;
 
 export const approve = createAsyncThunk(
   "user/approve",
@@ -70,7 +78,7 @@ export const approve = createAsyncThunk(
       tx,
       { action: "Approve", args: { spender, amount, token } },
       dispatch,
-      increaseAllowance({ token, spender, amount })
+      [setAllowance({ token, spender, amount })]
     );
     return tx.hash;
   }
@@ -80,12 +88,10 @@ export const deposit = createAsyncThunk(
   "user/deposit",
   async ({ backd, pool, amount }: DepositArgs, { dispatch }) => {
     const tx = await backd.deposit(pool.address, amount);
-    handleTransactionConfirmation(
-      tx,
-      { action: "Deposit", args: { pool, amount } },
-      dispatch,
-      fetchBalances({ backd, pools: [pool] })
-    );
+    handleTransactionConfirmation(tx, { action: "Deposit", args: { pool, amount } }, dispatch, [
+      fetchBalances({ backd, pools: [pool] }),
+      decreaseAllowance({ token: pool.underlying, spender: pool.address, amount }),
+    ]);
     return tx.hash;
   }
 );
