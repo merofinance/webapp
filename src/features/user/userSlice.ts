@@ -3,6 +3,7 @@ import { RootState, Selector } from "../../app/store";
 import { Backd } from "../../lib/backd";
 import { Address, Balances, Optional, Pool, Token } from "../../lib/types";
 import { getAddress } from "../pool/selectors";
+import { fetchPool } from "../pools-list/poolsListSlice";
 import { handleTransactionConfirmation } from "../transactions-list/transactionsUtils";
 
 interface UserState {
@@ -102,6 +103,7 @@ export const deposit = createAsyncThunk(
     const tx = await backd.deposit(pool.address, amount);
     handleTransactionConfirmation(tx, { action: "Deposit", args: { pool, amount } }, dispatch, [
       fetchBalances({ backd, pools: [pool] }),
+      fetchPool({ backd, poolAddress: pool.address }),
       decreaseAllowance({ token: pool.underlying, spender: pool.address, amount }),
     ]);
     return tx.hash;
@@ -114,6 +116,7 @@ export const withdraw = createAsyncThunk(
     const tx = await backd.withdraw(pool.address, amount);
     handleTransactionConfirmation(tx, { action: "Withdraw", args: { pool, amount } }, dispatch, [
       fetchBalances({ backd, pools: [pool] }),
+      fetchPool({ backd, poolAddress: pool.address }),
     ]);
     return tx.hash;
   }

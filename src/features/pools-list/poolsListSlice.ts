@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../../app/store";
 import { Pool } from "../../lib";
 import { Backd } from "../../lib/backd";
@@ -15,6 +15,13 @@ const initialState: PoolsState = {
   prices: {},
 };
 
+export const fetchPool = createAsyncThunk(
+  "pool/fetch",
+  async ({ backd, poolAddress }: { backd: Backd; poolAddress: string }) => {
+    return backd.getPoolInfo(poolAddress);
+  }
+);
+
 export const poolsSlice = createSlice({
   name: "pools",
   initialState,
@@ -25,6 +32,16 @@ export const poolsSlice = createSlice({
     setPrices: (state, action: PayloadAction<Prices>) => {
       state.prices = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchPool.fulfilled, (state, action) => {
+      const index = state.pools.findIndex((pool) => pool.address === action.payload.address);
+      if (index >= 0) {
+        state.pools[index] = action.payload;
+      } else {
+        state.pools.push(action.payload);
+      }
+    });
   },
 });
 

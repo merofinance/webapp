@@ -24,6 +24,7 @@ export type BackdOptions = {
 export interface Backd {
   currentAccount(): Promise<Address>;
   listPools(): Promise<Pool[]>;
+  getPoolInfo(address: Address): Promise<Pool>;
   getPositions(pool: Address): Promise<Position[]>;
   getBalance(address: Address, account?: Address): Promise<number>;
   getBalances(addresses: Address[], account?: Address): Promise<Balances>;
@@ -85,7 +86,7 @@ export class Web3Backd implements Backd {
     return { address: tokenAddress, name, symbol, decimals };
   }
 
-  private async getPoolInfo(address: Address): Promise<Pool> {
+  async getPoolInfo(address: Address): Promise<Pool> {
     const pool = LiquidityPoolFactory.connect(address, this._provider);
     const [
       name,

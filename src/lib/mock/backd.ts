@@ -29,6 +29,11 @@ export default class MockBackd implements Backd {
     return Promise.resolve(pools.map((pool) => transformPool(pool, (v) => bigNumberToFloat(v))));
   }
 
+  getPoolInfo(address: Address): Promise<Pool> {
+    const pool = pools.find((pool) => pool.address === address)!!;
+    return Promise.resolve(transformPool(pool, bigNumberToFloat));
+  }
+
   getAllowance(token: Token, spender: Address, account?: string): Promise<number> {
     return Promise.resolve(this.allowances[token.address][spender] || 0);
   }
