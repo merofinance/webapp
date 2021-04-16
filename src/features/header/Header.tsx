@@ -5,7 +5,7 @@ import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import { NavLink } from "react-router-dom";
-import { AppDispatch, persistor } from "../../app/store";
+import { AppDispatch } from "../../app/store";
 import { injectedConnector } from "../../app/web3";
 import logo from "../../images/backd_logo.png";
 import { Backd } from "../../lib/backd";

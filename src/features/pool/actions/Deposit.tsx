@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import NumberFormat from "react-number-format";
 import { useDispatch, useSelector } from "react-redux";
 import { useBackd } from "../../../app/hooks/use-backd";
+import { useLoading } from "../../../app/hooks/use-loading";
 import { AppDispatch } from "../../../app/store";
 import { AmountInputForm } from "../../../components/amount-input-form/AmountInputForm";
 import { Pool } from "../../../lib";
@@ -19,19 +20,11 @@ export function Deposit({ pool }: DepositProps) {
   const availableToDeposit = useSelector(selectBalance(pool.underlying.address));
   const approvedToDeposit = useSelector(selectPoolAllowance(pool));
   const [depositAmount, setDepositAmount] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const { loading, setLoading, handleTxDispatch } = useLoading();
   const [shouldResetValue, setShouldResetValue] = useState(false);
   const pendingTxCount = useSelector(pendingTransactionsCount);
 
   const handleValueChange = (value: number) => setDepositAmount(value);
-
-  const handleTxDispatch = ({ status }: { status: string; actionType: string }) => {
-    if (status === "rejected") {
-      setLoading(false);
-      return false;
-    }
-    return true;
-  };
 
   useEffect(() => {
     const submitText = depositAmount > approvedToDeposit ? "Approve" : "Deposit";
@@ -41,7 +34,14 @@ export function Deposit({ pool }: DepositProps) {
       setShouldResetValue(false);
       setDepositAmount(0);
     }
-  }, [depositAmount, approvedToDeposit, pendingTxCount, shouldResetValue, setShouldResetValue]);
+  }, [
+    depositAmount,
+    approvedToDeposit,
+    pendingTxCount,
+    shouldResetValue,
+    setShouldResetValue,
+    setLoading,
+  ]);
 
   const executeApprove = (amount: number) => {
     if (!backd) return;
@@ -76,7 +76,7 @@ export function Deposit({ pool }: DepositProps) {
         <h5>Available to deposit</h5>
         <NumberFormat
           displayType={"text"}
-          defaultValue={availableToDeposit}
+          value={availableToDeposit}
           thousandSeparator={true}
           suffix={` ${pool.underlying.symbol}`}
         />

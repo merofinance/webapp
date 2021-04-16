@@ -35,6 +35,7 @@ export const fetchAllowances = createAsyncThunk(
 
 type ApproveArgs = { backd: Backd; token: Token; spender: Address; amount: number };
 type DepositArgs = { backd: Backd; pool: Pool; amount: number };
+type WithdrawArgs = { backd: Backd; pool: Pool; amount: number };
 
 export const userSlice = createSlice({
   name: "user",
@@ -64,11 +65,17 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchBalances.fulfilled, (state, action) => {
-      state.balances = action.payload;
+      for (const tokenAddress in action.payload) {
+        state.balances[tokenAddress] = action.payload[tokenAddress];
+      }
     });
 
     builder.addCase(fetchAllowances.fulfilled, (state, action) => {
-      state.allowances = action.payload;
+      for (const tokenAddress in action.payload) {
+        for (const spender in action.payload[tokenAddress]) {
+          state.allowances[tokenAddress][spender] = action.payload[tokenAddress][spender];
+        }
+      }
     });
   },
 });
@@ -96,6 +103,17 @@ export const deposit = createAsyncThunk(
     handleTransactionConfirmation(tx, { action: "Deposit", args: { pool, amount } }, dispatch, [
       fetchBalances({ backd, pools: [pool] }),
       decreaseAllowance({ token: pool.underlying, spender: pool.address, amount }),
+    ]);
+    return tx.hash;
+  }
+);
+
+export const withdraw = createAsyncThunk(
+  "user/withdraw",
+  async ({ backd, pool, amount }: WithdrawArgs, { dispatch }) => {
+    const tx = await backd.withdraw(pool.address, amount);
+    handleTransactionConfirmation(tx, { action: "Withdraw", args: { pool, amount } }, dispatch, [
+      fetchBalances({ backd, pools: [pool] }),
     ]);
     return tx.hash;
   }

@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NumberFormat from "react-number-format";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useBackd } from "../../../app/hooks/use-backd";
+import { useLoading } from "../../../app/hooks/use-loading";
+import { AppDispatch } from "../../../app/store";
 import { AmountInputForm } from "../../../components/amount-input-form/AmountInputForm";
 import { Pool } from "../../../lib";
-import { selectBalance } from "../../user/userSlice";
+import { pendingTransactionsCount } from "../../transactions-list/transactionsSlice";
+import { selectBalance, withdraw } from "../../user/userSlice";
 
 type WithdrawProps = {
   pool: Pool;
@@ -11,11 +15,26 @@ type WithdrawProps = {
 
 export function Withdraw({ pool }: WithdrawProps) {
   const availableToWithdraw = useSelector(selectBalance(pool));
+  const backd = useBackd();
   const [withdrawAmount, setWithdrawAmount] = useState(0);
+  const { loading, setLoading, handleTxDispatch } = useLoading();
+  const pendingTxCount = useSelector(pendingTransactionsCount);
+  const dispatch: AppDispatch = useDispatch();
   const handleValueChange = (value: number) => setWithdrawAmount(value);
 
-  const executeWithdraw = (value: number) => {
-    console.log(value);
+  useEffect(() => {
+    setLoading(pendingTxCount > 0);
+    if (pendingTxCount === 0) {
+      setWithdrawAmount(0);
+    }
+  }, [pendingTxCount, setWithdrawAmount, setLoading]);
+
+  const executeWithdraw = (amount: number) => {
+    if (!backd) return;
+    setLoading(true);
+    dispatch(withdraw({ backd, pool, amount })).then((v) => {
+      handleTxDispatch({ status: v.meta.requestStatus, actionType: "withdraw" });
+    });
   };
 
   return (
@@ -36,6 +55,7 @@ export function Withdraw({ pool }: WithdrawProps) {
           handleChange={handleValueChange}
           assetName={pool.lpToken.symbol}
           maxAmount={availableToWithdraw}
+          loading={loading}
           value={withdrawAmount}
         />
       ) : (

@@ -32,6 +32,7 @@ export interface Backd {
   getPrices(symbol: string[]): Promise<Prices>;
   approve(token: Token, spender: Address, amount: number): Promise<ContractTransaction>;
   deposit(poolAddress: Address, amount: number): Promise<ContractTransaction>;
+  withdraw(poolAddress: Address, amount: number): Promise<ContractTransaction>;
   provider: providers.Provider;
 }
 
@@ -156,6 +157,12 @@ export class Web3Backd implements Backd {
     const poolContract = LiquidityPoolFactory.connect(pool, this._provider);
     const scaledAmount = floatToBigNumber(amount);
     return poolContract.deposit(scaledAmount);
+  }
+
+  async withdraw(pool: Address, amount: number): Promise<ContractTransaction> {
+    const poolContract = LiquidityPoolFactory.connect(pool, this._provider);
+    const scaledAmount = floatToBigNumber(amount);
+    return poolContract.redeem(scaledAmount);
   }
 
   async getBalance(address: string, account?: string): Promise<number> {
