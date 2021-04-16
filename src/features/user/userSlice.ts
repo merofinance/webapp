@@ -6,11 +6,13 @@ import { getAddress } from "../pool/selectors";
 import { handleTransactionConfirmation } from "../transactions-list/transactionsUtils";
 
 interface UserState {
+  connected: boolean;
   balances: Balances;
   allowances: Record<string, Balances>;
 }
 
 const initialState: UserState = {
+  connected: false,
   balances: {},
   allowances: {},
 };
@@ -38,6 +40,9 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    setConnected: (state, action: PayloadAction<boolean>) => {
+      state.connected = action.payload;
+    },
     setAllowance: (
       state,
       action: PayloadAction<{ token: Token; spender: Address; amount: number }>
@@ -68,7 +73,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setAllowance, decreaseAllowance } = userSlice.actions;
+export const { setConnected, setAllowance, decreaseAllowance } = userSlice.actions;
 
 export const approve = createAsyncThunk(
   "user/approve",
@@ -112,6 +117,10 @@ export function selectPoolAllowance(pool: Optional<Pool>): Selector<number> {
     if (!pool) return 0;
     return state.user.allowances[pool.underlying.address]?.[pool.address] || 0;
   };
+}
+
+export function isUserConnected(state: RootState): boolean {
+  return state.user.connected;
 }
 
 export default userSlice.reducer;

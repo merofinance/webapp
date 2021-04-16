@@ -2,22 +2,31 @@ import { useWeb3React } from "@web3-react/core";
 import classnames from "classnames";
 import React, { useEffect, useState } from "react";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import { NavLink } from "react-router-dom";
+import { AppDispatch, persistor } from "../../app/store";
 import { injectedConnector } from "../../app/web3";
 import logo from "../../images/backd_logo.png";
 import { Backd } from "../../lib/backd";
 import { Address } from "../../lib/types";
 import { TransactionsIndicator } from "../transactions-list/TransactionsIndicator";
 import { transactionsCount } from "../transactions-list/transactionsSlice";
+import { isUserConnected, setConnected } from "../user/userSlice";
 
 function AppNav() {
   const { library: backd, activate, active, deactivate } = useWeb3React<Backd>();
   const [account, setAccount] = useState<Address>("");
+  const connected = useSelector(isUserConnected);
+  const dispatch = useDispatch<AppDispatch>();
 
-  const activateWallet = () => activate(injectedConnector);
-  const deactivateWallet = () => {
+  const activateWallet = () =>
+    activate(injectedConnector).then(() => {
+      dispatch(setConnected(true));
+    });
+  const logout = () => {
+    // TODO: reset state
+    dispatch(setConnected(false));
     deactivate();
   };
 
@@ -30,7 +39,7 @@ function AppNav() {
 
   return (
     <Nav className={classnames("ml-auto")}>
-      {active ? (
+      {active && connected ? (
         <>
           <NavLink className="nav-link" to="/" exact={true}>
             Pools
@@ -40,7 +49,7 @@ function AppNav() {
             title={account.slice(0, 5) + "..." + account.slice(account.length - 5)}
             id="collasible-nav-dropdown"
           >
-            <NavDropdown.Item href="#" onClick={deactivateWallet}>
+            <NavDropdown.Item href="#" onClick={logout}>
               Logout
             </NavDropdown.Item>
           </NavDropdown>
