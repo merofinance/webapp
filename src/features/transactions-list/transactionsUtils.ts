@@ -34,7 +34,15 @@ export const formatTransactionInfo = (txDescription: TransactionDescription) => 
     case "Approve":
       return txDescription.args?.amount.toLocaleString() + " " + txDescription.args?.token.symbol;
     case "Deposit":
-      return txDescription.args?.amount.toLocaleString() + " " + txDescription.args?.pool.name;
+      return (
+        txDescription.args?.amount.toLocaleString() +
+        " " +
+        txDescription.args?.pool.underlying.symbol
+      );
+    case "Withdraw":
+      return (
+        txDescription.args?.amount.toLocaleString() + " " + txDescription.args?.pool.lpToken.symbol
+      );
     default:
       return "";
   }

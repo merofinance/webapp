@@ -29,7 +29,11 @@ export function TransactionsList({ show, onClose }: TransactionsListProps) {
   };
 
   return (
-    <Toast show={show} onClose={onClose} style={{ position: "absolute", top: 60, right: 150 }}>
+    <Toast
+      show={show}
+      onClose={onClose}
+      style={{ position: "absolute", top: 60, right: 150, zIndex: 1000 }}
+    >
       <Toast.Header>
         <strong className="mr-auto">
           {txCount} {title}
