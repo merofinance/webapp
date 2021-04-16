@@ -11,6 +11,10 @@ type AmountInputFormProps = {
   handleSubmit: (value: number) => void;
 };
 
+const computeStep = (maxAmount: number): number => {
+  return maxAmount > 100 ? 1 : maxAmount / 100;
+};
+
 export function AmountInputForm({
   assetName,
   maxAmount,
@@ -22,9 +26,11 @@ export function AmountInputForm({
 }: AmountInputFormProps) {
   const [valueError, setValueError] = useState("");
 
+  const step = computeStep(maxAmount);
+
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const rawNewValue = e.target.value;
-    const newValue = parseInt(rawNewValue.replace(/,/g, ""), 10);
+    const newValue = parseFloat(rawNewValue.replace(/,/g, ""));
     let error = "";
     if (newValue > maxAmount) {
       error = "Not enough funds available";
@@ -58,7 +64,7 @@ export function AmountInputForm({
 
           <Form.Control.Feedback type="invalid">{valueError}</Form.Control.Feedback>
         </InputGroup>
-        <Form.Control type="range" value={value} max={maxAmount} onChange={onChange} />
+        <Form.Control type="range" value={value} max={maxAmount} onChange={onChange} step={step} />
       </Form.Group>
 
       <div className="text-center mt-4">
