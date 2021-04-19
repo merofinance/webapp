@@ -1,9 +1,11 @@
 import contracts from "@backdfund/protocol/build/deployments/map.json";
 import { Controller } from "@backdfund/protocol/typechain/Controller";
 import { ControllerFactory } from "@backdfund/protocol/typechain/ControllerFactory";
+import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
+import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFactory";
 import { Eip20InterfaceFactory } from "@backdfund/protocol/typechain/Eip20InterfaceFactory";
 import { LiquidityPoolFactory } from "@backdfund/protocol/typechain/LiquidityPoolFactory";
-import { ContractTransaction, providers, Signer } from "ethers";
+import { ContractTransaction, ethers, providers, Signer, utils } from "ethers";
 import { getPrices } from "./coingecko";
 import { bigNumberToFloat, floatToBigNumber, scale } from "./numeric";
 import {
@@ -34,16 +36,21 @@ export interface Backd {
   approve(token: Token, spender: Address, amount: number): Promise<ContractTransaction>;
   deposit(poolAddress: Address, amount: number): Promise<ContractTransaction>;
   withdraw(poolAddress: Address, amount: number): Promise<ContractTransaction>;
+
+  listSupportedProtocols(): Promise<string[]>;
+
   provider: providers.Provider;
 }
 
 export class Web3Backd implements Backd {
   private controller: Controller;
+  private topupAction: TopUpAction;
 
   constructor(private _provider: Signer | providers.Provider, private options: BackdOptions) {
     const contracts = this.getContracts(options.chainId);
 
     this.controller = ControllerFactory.connect(contracts["Controller"][0], _provider);
+    this.topupAction = TopUpActionFactory.connect(contracts["TopUpAction"][0], _provider);
   }
 
   get provider(): providers.Provider {
@@ -183,5 +190,10 @@ export class Web3Backd implements Backd {
 
   async getPrices(symbols: string[]): Promise<Prices> {
     return getPrices(symbols);
+  }
+
+  async listSupportedProtocols(): Promise<string[]> {
+    const protocols = await this.topupAction.getSupportedProtocols();
+    return protocols.map((p) => utils.parseBytes32String(p));
   }
 }

@@ -83,4 +83,8 @@ export default class MockBackd implements Backd {
     const poolPositions = positions[pool] || [];
     return Promise.resolve(poolPositions.map((p) => transformPosition(p, bigNumberToFloat)));
   }
+
+  listSupportedProtocols(): Promise<string[]> {
+    return Promise.resolve(["Aave", "Compound"]);
+  }
 }
