@@ -73,6 +73,9 @@ export const userSlice = createSlice({
 
     builder.addCase(fetchAllowances.fulfilled, (state, action) => {
       for (const tokenAddress in action.payload) {
+        if (!state.allowances[tokenAddress]) {
+          state.allowances[tokenAddress] = {};
+        }
         for (const spender in action.payload[tokenAddress]) {
           state.allowances[tokenAddress][spender] = action.payload[tokenAddress][spender];
         }
