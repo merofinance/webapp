@@ -5,7 +5,7 @@ import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
 import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFactory";
 import { Eip20InterfaceFactory } from "@backdfund/protocol/typechain/Eip20InterfaceFactory";
 import { LiquidityPoolFactory } from "@backdfund/protocol/typechain/LiquidityPoolFactory";
-import { ContractTransaction, ethers, providers, Signer, utils } from "ethers";
+import { ContractTransaction, providers, Signer, utils } from "ethers";
 import { getPrices } from "./coingecko";
 import { bigNumberToFloat, floatToBigNumber, scale } from "./numeric";
 import {
