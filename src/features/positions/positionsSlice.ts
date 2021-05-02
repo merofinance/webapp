@@ -2,41 +2,37 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../../app/store";
 import { Pool } from "../../lib";
 import { Backd } from "../../lib/backd";
-import { Address, Position } from "../../lib/types";
+import { Position } from "../../lib/types";
+import { logout } from "../account/accountSlice";
 
-type PositionsState = Record<Address, Position[]>;
+type PositionsState = Position[];
 
-interface PositionsWithPool {
-  poolAddress: Address;
-  positions: Position[];
-}
-
-const initialState: PositionsState = {};
+const initialState: PositionsState = [];
 
 export const positionsSlice = createSlice({
   name: "positions",
   initialState,
   reducers: {
-    setPoolPositions: (state, action: PayloadAction<PositionsWithPool>) => {
-      state[action.payload.poolAddress] = action.payload.positions;
+    setPositions: (state, action: PayloadAction<Position[]>) => {
+      return action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(logout, (state, action) => {
+      return initialState;
+    });
   },
 });
 
-export const { setPoolPositions } = positionsSlice.actions;
+export const { setPositions } = positionsSlice.actions;
 
-export const fetchPositions = (backd: Backd, pool: Pool): AppThunk => (
-  dispatch
-) => {
-  backd
-    .getPositions(pool.address)
-    .then((positions) =>
-      dispatch(setPoolPositions({ poolAddress: pool.address, positions }))
-    );
+export const fetchPositions = (backd: Backd): AppThunk => (dispatch) => {
+  backd.getPositions().then((positions) => dispatch(setPositions(positions)));
 };
 
 export function selectPositions(pool: Pool): (state: RootState) => Position[] {
-  return (state: RootState) => state.positions[pool.address] || [];
+  return (state: RootState) =>
+    state.positions.filter((p) => p.actionToken === pool.underlying.address);
 }
 
 export default positionsSlice.reducer;

@@ -79,12 +79,19 @@ export default class MockBackd implements Backd {
     );
   }
 
-  getPositions(pool: string): Promise<Position[]> {
-    const poolPositions = positions[pool] || [];
-    return Promise.resolve(poolPositions.map((p) => transformPosition(p, bigNumberToFloat)));
+  getPositions(): Promise<Position[]> {
+    return Promise.resolve(positions.map((p) => transformPosition(p, bigNumberToFloat)));
   }
 
   listSupportedProtocols(): Promise<string[]> {
     return Promise.resolve(["Aave", "Compound"]);
+  }
+
+  async registerPositions(
+    pool: Pool<number>,
+    position: Position<number>
+  ): Promise<ContractTransaction> {
+    const account = await this.currentAccount();
+    return makeContractTransaction(pool.address, account);
   }
 }

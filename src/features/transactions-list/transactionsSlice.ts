@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, Selector } from "../../app/store";
 import { Backd } from "../../lib/backd";
 import { parseTransactionReceipt, TransactionConfirmation, TransactionInfo } from "../../lib/types";
+import { logout } from "../account/accountSlice";
 
 interface TransactionsState {
   transactions: TransactionInfo[];
@@ -44,6 +45,10 @@ export const transactionsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchPendingTransactions.fulfilled, (state, action) => {
       action.payload.forEach((confirmation) => handleConfirmTransaction(state, confirmation));
+    });
+
+    builder.addCase(logout, (state, action) => {
+      return initialState;
     });
   },
 });

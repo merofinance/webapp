@@ -13,7 +13,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.scss";
 import { useMock } from "./app/config";
 import { PrivateRoute } from "./app/private-route";
-import { ConnectWallet } from "./features/connect-wallet/ConnectWallet";
+import { ConnectWallet } from "./features/account/ConnectWallet";
 import { Header } from "./features/header/Header";
 import { PoolManagement } from "./features/pool/PoolManagement";
 import { PoolsList } from "./features/pools-list/PoolsList";

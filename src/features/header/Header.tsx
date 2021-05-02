@@ -10,23 +10,24 @@ import { injectedConnector } from "../../app/web3";
 import logo from "../../images/backd_logo.png";
 import { Backd } from "../../lib/backd";
 import { Address } from "../../lib/types";
+import { isConnected, logout, setConnected } from "../account/accountSlice";
 import { TransactionsIndicator } from "../transactions-list/TransactionsIndicator";
 import { transactionsCount } from "../transactions-list/transactionsSlice";
-import { isUserConnected, setConnected } from "../user/userSlice";
 
 function AppNav() {
   const { library: backd, activate, active, deactivate } = useWeb3React<Backd>();
   const [account, setAccount] = useState<Address>("");
-  const connected = useSelector(isUserConnected);
+  const connected = useSelector(isConnected);
   const dispatch = useDispatch<AppDispatch>();
 
-  const activateWallet = () =>
+  const activateWallet = () => {
     activate(injectedConnector).then(() => {
       dispatch(setConnected(true));
     });
-  const logout = () => {
-    // TODO: reset state
-    dispatch(setConnected(false));
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
     deactivate();
   };
 
@@ -49,7 +50,7 @@ function AppNav() {
             title={account.slice(0, 5) + "..." + account.slice(account.length - 5)}
             id="collasible-nav-dropdown"
           >
-            <NavDropdown.Item href="#" onClick={logout}>
+            <NavDropdown.Item href="#" onClick={handleLogout}>
               Logout
             </NavDropdown.Item>
           </NavDropdown>

@@ -20,12 +20,14 @@ export interface Pool<Num = number> {
 }
 
 export interface Position<Num = number> {
-  key: string; // key should be a hash of (protocol, threshold, account)
   protocol: string;
   account: Address;
   threshold: Num;
   singleTopUp: Num;
   totalTopUp: Num;
+  maxGasPrice: number;
+  actionToken: Address;
+  depositToken: Address;
 }
 
 export function transformPool<T, U>(pool: Pool<T>, f: (v: T) => U): Pool<U> {
@@ -39,9 +41,11 @@ export function transformPool<T, U>(pool: Pool<T>, f: (v: T) => U): Pool<U> {
 
 export function transformPosition<T, U>(position: Position<T>, f: (v: T) => U): Position<U> {
   return {
-    key: position.key,
     protocol: position.protocol,
     account: position.account,
+    actionToken: position.actionToken,
+    depositToken: position.depositToken,
+    maxGasPrice: position.maxGasPrice,
     threshold: f(position.threshold),
     singleTopUp: f(position.singleTopUp),
     totalTopUp: f(position.totalTopUp),

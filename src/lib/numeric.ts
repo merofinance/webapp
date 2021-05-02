@@ -1,6 +1,9 @@
 import { BigNumber, BigNumberish } from "ethers";
 
-export function scale(number: BigNumberish, decimals: number = 18) {
+export const DEFAULT_DECIMALS = 18;
+export const DEFAULT_SCALE = BigNumber.from(10).pow(DEFAULT_DECIMALS);
+
+export function scale(number: BigNumberish, decimals: number = DEFAULT_DECIMALS) {
   return BigNumber.from(number).mul(BigNumber.from(10).pow(decimals));
 }
 
@@ -15,7 +18,7 @@ function flooredLog(value: BigNumber, base: number = 10): number {
 
 export function bigNumberToFloat(
   value: BigNumber,
-  decimals: number = 18,
+  decimals: number = DEFAULT_DECIMALS,
   significantDigits: number = 5
 ): number {
   const log = flooredLog(value);
@@ -35,7 +38,7 @@ function countLeadingZeros(value: number, base: number = 10): number {
 
 export function floatToBigNumber(
   value: number,
-  decimals: number = 18,
+  decimals: number = DEFAULT_DECIMALS,
   significantDigits: number = 5
 ): BigNumber {
   const leadingZeros = countLeadingZeros(value);

@@ -7,6 +7,7 @@ import {
 } from "@reduxjs/toolkit";
 import poolsReducer from "../features/pools-list/poolsListSlice";
 import userReducer from "../features/user/userSlice";
+import accountReducer from "../features/account/accountSlice";
 import positionsReducer from "../features/positions/positionsSlice";
 import transactionsReducer from "../features/transactions-list/transactionsSlice";
 import storage from "redux-persist/lib/storage";
@@ -24,6 +25,7 @@ import {
 const rootReducer = combineReducers({
   pools: poolsReducer,
   user: userReducer,
+  account: accountReducer,
   positions: positionsReducer,
   transactions: transactionsReducer,
 });

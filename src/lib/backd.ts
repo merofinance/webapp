@@ -5,9 +5,9 @@ import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
 import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFactory";
 import { Eip20InterfaceFactory } from "@backdfund/protocol/typechain/Eip20InterfaceFactory";
 import { LiquidityPoolFactory } from "@backdfund/protocol/typechain/LiquidityPoolFactory";
-import { ContractTransaction, providers, Signer, utils } from "ethers";
+import { BigNumber, ContractTransaction, providers, Signer, utils } from "ethers";
 import { getPrices } from "./coingecko";
-import { bigNumberToFloat, floatToBigNumber, scale } from "./numeric";
+import { bigNumberToFloat, DEFAULT_SCALE, floatToBigNumber, scale } from "./numeric";
 import {
   Address,
   AllowanceQuery,
@@ -17,6 +17,7 @@ import {
   Prices,
   Token,
   transformPool,
+  transformPosition,
 } from "./types";
 
 export type BackdOptions = {
@@ -27,7 +28,8 @@ export interface Backd {
   currentAccount(): Promise<Address>;
   listPools(): Promise<Pool[]>;
   getPoolInfo(address: Address): Promise<Pool>;
-  getPositions(pool: Address): Promise<Position[]>;
+  getPositions(): Promise<Position[]>;
+  registerPositions(pool: Pool, position: Position): Promise<ContractTransaction>;
   getBalance(address: Address, account?: Address): Promise<number>;
   getBalances(addresses: Address[], account?: Address): Promise<Balances>;
   getAllowance(token: Token, spender: Address, account?: string): Promise<number>;
@@ -128,8 +130,49 @@ export class Web3Backd implements Backd {
     return transformPool(rawPool, bigNumberToFloat);
   }
 
-  async getPositions(pool: string): Promise<Position[]> {
-    return [];
+  async getPositions(): Promise<Position[]> {
+    const account = await this.currentAccount();
+    const rawPositions = await this.topupAction.listPositions(account);
+    return rawPositions.map((rawPosition) => {
+      return transformPosition(
+        {
+          protocol: rawPosition.protocol,
+          actionToken: rawPosition.record.actionToken,
+          depositToken: rawPosition.record.depositToken,
+          account: rawPosition.account,
+          threshold: rawPosition.record.threshold,
+          singleTopUp: rawPosition.record.singleTopUpAmount,
+          totalTopUp: rawPosition.record.totalTopUpAmount,
+          maxGasPrice: rawPosition.record.maxGasPrice.toNumber(),
+        },
+        bigNumberToFloat
+      );
+    });
+  }
+
+  async registerPositions(pool: Pool, position: Position): Promise<ContractTransaction> {
+    const decimals = pool.underlying.decimals;
+    const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
+    const rawExchangeRate = await poolContract.currentExchangeRate();
+    const account = await this.currentAccount();
+    const protocol = utils.formatBytes32String(position.protocol);
+    const rawPosition = transformPosition(position, (v) => floatToBigNumber(v, decimals));
+    const depositAmount = rawPosition.totalTopUp.mul(rawExchangeRate).div(DEFAULT_SCALE);
+
+    // TODO: allow to customize maxGasPrice, currently 200Gwei
+    const maxGasPrice = BigNumber.from(200).mul(BigNumber.from(10).pow(9));
+
+    return this.topupAction.register(
+      account,
+      protocol,
+      rawPosition.threshold,
+      pool.lpToken.address,
+      depositAmount,
+      pool.underlying.address,
+      rawPosition.singleTopUp,
+      rawPosition.totalTopUp,
+      maxGasPrice
+    );
   }
 
   async getAllowance(token: Token, spender: Address, account?: string): Promise<number> {

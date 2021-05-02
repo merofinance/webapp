@@ -6,11 +6,11 @@ import { useHistory } from "react-router-dom";
 import { AppDispatch } from "../../app/store";
 import { activateIfAuthorized, injectedConnector } from "../../app/web3";
 import { Backd } from "../../lib/backd";
-import { isUserConnected, setConnected } from "../user/userSlice";
+import { isConnected, setConnected } from "../account/accountSlice";
 
 export function ConnectWallet() {
   const history = useHistory();
-  const connected = useSelector(isUserConnected);
+  const connected = useSelector(isConnected);
   const dispatch = useDispatch<AppDispatch>();
 
   const { activate, active } = useWeb3React<Backd>();

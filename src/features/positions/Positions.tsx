@@ -22,7 +22,7 @@ export function Positions({ pool }: PositionsProps) {
 
   useEffect(() => {
     if (!backd) return;
-    dispatch(fetchPositions(backd, pool));
+    dispatch(fetchPositions(backd));
   }, [backd, dispatch, pool]);
 
   return (
@@ -109,9 +109,9 @@ export function Positions({ pool }: PositionsProps) {
           </div>
         </div>
         <div className={styles.tbody}>
-          {positions.map((position) => {
+          {positions.map((position, i) => {
             return (
-              <div className={styles["table-row"]} key={position.key}>
+              <div className={styles["table-row"]} key={i}>
                 <div className={styles["table-cell"]}>{position.protocol}</div>
                 <div className={styles["table-cell"]}>
                   <EthAddress truncate="middle" value={position.account} maxLength={16} />
