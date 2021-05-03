@@ -11,6 +11,7 @@ export const pools: Pool<BigNumber>[] = [
     apy: scale(237, 17),
     totalAssets: scale(84180923),
     address: "0xC265707cb6Fa41b51F899000bF248A257eFB52aB",
+    stakerVaultAddress: "0x1F7EEe24524fbA780E018EDBfda0Ad4881321118",
     exchangeRate: scale(1003, 15),
     underlying: {
       address: "0x6b175474e89094c44da98b954eedeac495271d0f",
@@ -30,6 +31,7 @@ export const pools: Pool<BigNumber>[] = [
     apy: scale(193, 17),
     totalAssets: scale(91923401),
     address: "0xEA3b27fa12eBC0D562a9CCbe9611c866551d3792",
+    stakerVaultAddress: "0x733A99bADccF588ff3832e6F253fC0512e589339",
     exchangeRate: scale(1010, 15),
     underlying: {
       address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
@@ -49,6 +51,7 @@ export const pools: Pool<BigNumber>[] = [
     apy: scale(218, 17),
     totalAssets: scale(19738),
     address: "0xCa0cF7A135AC852a4d5591dC48e93e5F67425cB9",
+    stakerVaultAddress: "0x927d94DfF23dF29e1BD9C6cAc36C1F23ffafFCb6",
     exchangeRate: scale(1005, 15),
     underlying: {
       name: "Ether",

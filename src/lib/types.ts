@@ -12,6 +12,7 @@ export interface Token {
 export interface Pool<Num = number> {
   name: string;
   address: string;
+  stakerVaultAddress: string;
   lpToken: Token;
   underlying: Token;
   apy: Num;
@@ -69,7 +70,11 @@ export type Address = string;
 
 export type Balances<Num = number> = Record<string, Num>;
 export type Prices<Num = number> = Record<string, Num>;
-export type AllowanceQuery = { spender: Address; token: Token; onBehalfOf?: string };
+export type AllowanceQuery = {
+  spender: Address;
+  token: Pick<Token, "address" | "decimals">;
+  onBehalfOf?: string;
+};
 
 export type TransactionDescription = {
   action: string;

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, Selector } from "../../app/store";
 import { Backd } from "../../lib/backd";
-import { Address, Balances, Optional, Pool, Token } from "../../lib/types";
+import { Address, AllowanceQuery, Balances, Optional, Pool, Token } from "../../lib/types";
 import { getAddress } from "../pool/selectors";
 import { fetchPool } from "../pools-list/poolsListSlice";
 import { handleTransactionConfirmation } from "../transactions-list/transactionsUtils";
@@ -19,7 +19,11 @@ const initialState: UserState = {
 export const fetchBalances = createAsyncThunk(
   "user/fetchBalances",
   async ({ backd, pools }: { backd: Backd; pools: Pool[] }) => {
-    const allTokens = pools.flatMap((p) => [p.lpToken.address, p.underlying.address]);
+    const allTokens = pools.flatMap((p) => [
+      p.lpToken.address,
+      p.underlying.address,
+      p.stakerVaultAddress,
+    ]);
     return backd.getBalances(allTokens);
   }
 );
@@ -27,12 +31,20 @@ export const fetchBalances = createAsyncThunk(
 export const fetchAllowances = createAsyncThunk(
   "user/fetchAllowances",
   async ({ backd, pools }: { backd: Backd; pools: Pool[] }) => {
-    const depositQueries = pools.map((pool) => ({ spender: pool.address, token: pool.underlying }));
-    const topupQueries = pools.map((pool) => ({
-      spender: backd.topupActionAddress,
-      token: pool.lpToken,
-    }));
-    const queries = depositQueries.concat(topupQueries);
+    const queries: AllowanceQuery[] = pools.flatMap((pool) => [
+      {
+        spender: pool.address,
+        token: pool.underlying,
+      },
+      {
+        spender: backd.topupActionAddress,
+        token: pool.lpToken,
+      },
+      {
+        spender: backd.topupActionAddress,
+        token: { address: pool.stakerVaultAddress, decimals: pool.underlying.decimals },
+      },
+    ]);
     return backd.getAllowances(queries);
   }
 );
@@ -40,6 +52,7 @@ export const fetchAllowances = createAsyncThunk(
 type ApproveArgs = { backd: Backd; token: Token; spender: Address; amount: number };
 type DepositArgs = { backd: Backd; pool: Pool; amount: number };
 type WithdrawArgs = { backd: Backd; pool: Pool; amount: number };
+type UnstakeArgs = { backd: Backd; pool: Pool; amount: number };
 
 export const userSlice = createSlice({
   name: "user",
@@ -125,14 +138,32 @@ export const withdraw = createAsyncThunk(
   }
 );
 
+export const unstake = createAsyncThunk(
+  "user/unstake",
+  async ({ backd, pool, amount }: UnstakeArgs, { dispatch }) => {
+    const tx = await backd.unstake(pool.stakerVaultAddress, amount);
+    handleTransactionConfirmation(tx, { action: "Unstake", args: { pool, amount } }, dispatch, [
+      fetchBalances({ backd, pools: [pool] }),
+    ]);
+    return tx.hash;
+  }
+);
+
 export const selectBalances = (state: RootState) => state.user.balances;
 
 export function selectBalance(pool: Optional<Pool>): Selector<number>;
 export function selectBalance(address: string): Selector<number>;
 export function selectBalance(addressOrPool: string | Optional<Pool>): Selector<number> {
   return (state: RootState) => {
-    const address = getAddress(addressOrPool);
-    return (address && state.user.balances[address]) || 0;
+    if (!addressOrPool) {
+      return 0;
+    }
+    if (typeof addressOrPool === "string") {
+      return state.user.balances[addressOrPool] || 0;
+    }
+    const lpTokenBalance = state.user.balances[addressOrPool.lpToken.address] || 0;
+    const stakedBalance = state.user.balances[addressOrPool.stakerVaultAddress] || 0;
+    return lpTokenBalance + stakedBalance;
   };
 }
 
@@ -144,7 +175,11 @@ export function selectDepositAllowance(pool: Pool): Selector<number> {
 export function selectToupAllowance(backd: Backd | undefined, pool: Pool): Selector<number> {
   return (state: RootState) => {
     if (!backd) return 0;
-    return state.user.allowances[pool.lpToken.address]?.[backd.topupActionAddress] || 0;
+    const lpTokenAllowance =
+      state.user.allowances[pool.lpToken.address]?.[backd.topupActionAddress] || 0;
+    const vaultAllowance =
+      state.user.allowances[pool.stakerVaultAddress]?.[backd.topupActionAddress] || 0;
+    return lpTokenAllowance + vaultAllowance;
   };
 }
 

@@ -5,6 +5,7 @@ import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
 import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFactory";
 import { Eip20InterfaceFactory } from "@backdfund/protocol/typechain/Eip20InterfaceFactory";
 import { LiquidityPoolFactory } from "@backdfund/protocol/typechain/LiquidityPoolFactory";
+import { StakerVaultFactory } from "@backdfund/protocol/typechain/StakerVaultFactory";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
 import { getPrices } from "./coingecko";
 import { bigNumberToFloat, DEFAULT_SCALE, floatToBigNumber, scale } from "./numeric";
@@ -39,6 +40,7 @@ export interface Backd {
   approve(token: Token, spender: Address, amount: number): Promise<ContractTransaction>;
   deposit(poolAddress: Address, amount: number): Promise<ContractTransaction>;
   withdraw(poolAddress: Address, amount: number): Promise<ContractTransaction>;
+  unstake(vaultAddress: Address, amount: number): Promise<ContractTransaction>;
 
   listSupportedProtocols(): Promise<string[]>;
 
@@ -118,9 +120,10 @@ export class Web3Backd implements Backd {
       pool.computeAPY(),
       pool.currentExchangeRate(),
     ]);
-    const [lpToken, underlying] = await Promise.all([
+    const [lpToken, underlying, stakerVaultAddress] = await Promise.all([
       this.getTokenInfo(lpTokenAddress),
       this.getTokenInfo(underlyingAddress),
+      this.controller.getStakerVault(lpTokenAddress),
     ]);
     const apy = rawApy.sub(scale(1));
 
@@ -132,6 +135,7 @@ export class Web3Backd implements Backd {
       address,
       totalAssets,
       exchangeRate,
+      stakerVaultAddress,
     };
     return transformPool(rawPool, bigNumberToFloat);
   }
@@ -184,7 +188,11 @@ export class Web3Backd implements Backd {
     return this.topupAction.resetPosition(account, utils.formatBytes32String(protocol));
   }
 
-  async getAllowance(token: Token, spender: Address, account?: string): Promise<number> {
+  async getAllowance(
+    token: Pick<Token, "address" | "decimals">,
+    spender: Address,
+    account?: string
+  ): Promise<number> {
     const tokenContract = Eip20InterfaceFactory.connect(token.address, this._provider);
     if (!account) {
       account = await this.currentAccount();
@@ -223,6 +231,12 @@ export class Web3Backd implements Backd {
     const poolContract = LiquidityPoolFactory.connect(pool, this._provider);
     const scaledAmount = floatToBigNumber(amount);
     return poolContract.redeem(scaledAmount);
+  }
+
+  async unstake(vault: Address, amount: number): Promise<ContractTransaction> {
+    const vaultContract = StakerVaultFactory.connect(vault, this._provider);
+    const scaledAmount = floatToBigNumber(amount);
+    return vaultContract.unstake(scaledAmount);
   }
 
   async getBalance(address: string, account?: string): Promise<number> {

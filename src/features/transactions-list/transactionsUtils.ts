@@ -48,6 +48,10 @@ export const formatTransactionInfo = (txDescription: TransactionDescription) => 
       return (
         txDescription.args?.amount.toLocaleString() + " " + txDescription.args?.pool.lpToken.symbol
       );
+    case "Unstake":
+      return (
+        txDescription.args?.amount.toLocaleString() + " " + txDescription.args?.pool.lpToken.symbol
+      );
     case "Register": {
       const position: Position = txDescription.args?.position;
       return position.account.slice(0, 8) + "... on " + position.protocol;
