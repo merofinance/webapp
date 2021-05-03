@@ -83,15 +83,23 @@ export default class MockBackd implements Backd {
     return Promise.resolve(positions.map((p) => transformPosition(p, bigNumberToFloat)));
   }
 
+  get topupActionAddress(): string {
+    return "0x38d6f612D116dBc1411E977A5D77E02bBae58e63";
+  }
+
   listSupportedProtocols(): Promise<string[]> {
     return Promise.resolve(["Aave", "Compound"]);
   }
 
-  async registerPositions(
+  async registerPosition(
     pool: Pool<number>,
     position: Position<number>
   ): Promise<ContractTransaction> {
     const account = await this.currentAccount();
-    return makeContractTransaction(pool.address, account);
+    return makeContractTransaction(this.topupActionAddress, account);
+  }
+
+  async removePosition(account: Address, protocol: string): Promise<ContractTransaction> {
+    return makeContractTransaction(this.topupActionAddress, account);
   }
 }

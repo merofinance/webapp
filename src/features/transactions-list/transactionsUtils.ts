@@ -1,7 +1,12 @@
 import { ContractTransaction } from "@ethersproject/contracts";
 import { batch } from "react-redux";
 import { AppDispatch } from "../../app/store";
-import { parseTransactionReceipt, TransactionDescription, TransactionInfo } from "../../lib/types";
+import {
+  parseTransactionReceipt,
+  Position,
+  TransactionDescription,
+  TransactionInfo,
+} from "../../lib/types";
 import { addTransaction, confirmTransaction } from "./transactionsSlice";
 
 export async function handleTransactionConfirmation(
@@ -43,6 +48,14 @@ export const formatTransactionInfo = (txDescription: TransactionDescription) => 
       return (
         txDescription.args?.amount.toLocaleString() + " " + txDescription.args?.pool.lpToken.symbol
       );
+    case "Register": {
+      const position: Position = txDescription.args?.position;
+      return position.account.slice(0, 8) + "... on " + position.protocol;
+    }
+    case "Remove": {
+      const position: Position = txDescription.args?.position;
+      return position.account.slice(0, 8) + "... on " + position.protocol;
+    }
     default:
       return "";
   }

@@ -27,7 +27,12 @@ export const fetchBalances = createAsyncThunk(
 export const fetchAllowances = createAsyncThunk(
   "user/fetchAllowances",
   async ({ backd, pools }: { backd: Backd; pools: Pool[] }) => {
-    const queries = pools.map((pool) => ({ spender: pool.address, token: pool.underlying }));
+    const depositQueries = pools.map((pool) => ({ spender: pool.address, token: pool.underlying }));
+    const topupQueries = pools.map((pool) => ({
+      spender: backd.topupActionAddress,
+      token: pool.lpToken,
+    }));
+    const queries = depositQueries.concat(topupQueries);
     return backd.getAllowances(queries);
   }
 );
@@ -131,10 +136,15 @@ export function selectBalance(addressOrPool: string | Optional<Pool>): Selector<
   };
 }
 
-export function selectPoolAllowance(pool: Optional<Pool>): Selector<number> {
+export function selectDepositAllowance(pool: Pool): Selector<number> {
   return (state: RootState) => {
-    if (!pool) return 0;
     return state.user.allowances[pool.underlying.address]?.[pool.address] || 0;
+  };
+}
+export function selectToupAllowance(backd: Backd | undefined, pool: Pool): Selector<number> {
+  return (state: RootState) => {
+    if (!backd) return 0;
+    return state.user.allowances[pool.lpToken.address]?.[backd.topupActionAddress] || 0;
   };
 }
 

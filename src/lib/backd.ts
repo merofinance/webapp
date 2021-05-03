@@ -5,7 +5,7 @@ import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
 import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFactory";
 import { Eip20InterfaceFactory } from "@backdfund/protocol/typechain/Eip20InterfaceFactory";
 import { LiquidityPoolFactory } from "@backdfund/protocol/typechain/LiquidityPoolFactory";
-import { BigNumber, ContractTransaction, providers, Signer, utils } from "ethers";
+import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
 import { getPrices } from "./coingecko";
 import { bigNumberToFloat, DEFAULT_SCALE, floatToBigNumber, scale } from "./numeric";
 import {
@@ -29,7 +29,8 @@ export interface Backd {
   listPools(): Promise<Pool[]>;
   getPoolInfo(address: Address): Promise<Pool>;
   getPositions(): Promise<Position[]>;
-  registerPositions(pool: Pool, position: Position): Promise<ContractTransaction>;
+  registerPosition(pool: Pool, position: Position): Promise<ContractTransaction>;
+  removePosition(account: Address, protocol: string): Promise<ContractTransaction>;
   getBalance(address: Address, account?: Address): Promise<number>;
   getBalances(addresses: Address[], account?: Address): Promise<Balances>;
   getAllowance(token: Token, spender: Address, account?: string): Promise<number>;
@@ -42,6 +43,7 @@ export interface Backd {
   listSupportedProtocols(): Promise<string[]>;
 
   provider: providers.Provider;
+  topupActionAddress: string;
 }
 
 export class Web3Backd implements Backd {
@@ -53,6 +55,10 @@ export class Web3Backd implements Backd {
 
     this.controller = ControllerFactory.connect(contracts["Controller"][0], _provider);
     this.topupAction = TopUpActionFactory.connect(contracts["TopUpAction"][0], _provider);
+  }
+
+  get topupActionAddress(): string {
+    return this.topupAction.address;
   }
 
   get provider(): providers.Provider {
@@ -136,7 +142,7 @@ export class Web3Backd implements Backd {
     return rawPositions.map((rawPosition) => {
       return transformPosition(
         {
-          protocol: rawPosition.protocol,
+          protocol: ethers.utils.parseBytes32String(rawPosition.protocol),
           actionToken: rawPosition.record.actionToken,
           depositToken: rawPosition.record.depositToken,
           account: rawPosition.account,
@@ -150,11 +156,10 @@ export class Web3Backd implements Backd {
     });
   }
 
-  async registerPositions(pool: Pool, position: Position): Promise<ContractTransaction> {
+  async registerPosition(pool: Pool, position: Position): Promise<ContractTransaction> {
     const decimals = pool.underlying.decimals;
     const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
     const rawExchangeRate = await poolContract.currentExchangeRate();
-    const account = await this.currentAccount();
     const protocol = utils.formatBytes32String(position.protocol);
     const rawPosition = transformPosition(position, (v) => floatToBigNumber(v, decimals));
     const depositAmount = rawPosition.totalTopUp.mul(rawExchangeRate).div(DEFAULT_SCALE);
@@ -163,7 +168,7 @@ export class Web3Backd implements Backd {
     const maxGasPrice = BigNumber.from(200).mul(BigNumber.from(10).pow(9));
 
     return this.topupAction.register(
-      account,
+      position.account,
       protocol,
       rawPosition.threshold,
       pool.lpToken.address,
@@ -173,6 +178,10 @@ export class Web3Backd implements Backd {
       rawPosition.totalTopUp,
       maxGasPrice
     );
+  }
+
+  removePosition(account: Address, protocol: string): Promise<ContractTransaction> {
+    return this.topupAction.resetPosition(account, utils.formatBytes32String(protocol));
   }
 
   async getAllowance(token: Token, spender: Address, account?: string): Promise<number> {

@@ -1,13 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import NumberFormat from "react-number-format";
 import { useDispatch, useSelector } from "react-redux";
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
-import { EthAddress } from "../../components/eth-address/EthAddress";
 import { Pool } from "../../lib";
 import { NewPositionRow } from "./NewPositionRow";
+import { PositionRow } from "./PositionRow";
 import styles from "./Positions.module.scss";
 import { fetchPositions, selectPositions } from "./positionsSlice";
 
@@ -44,7 +43,7 @@ export function Positions({ pool }: PositionsProps) {
                   </Tooltip>
                 }
               >
-                <FontAwesomeIcon icon="info-circle" />
+                <FontAwesomeIcon className="ml-1" icon="info-circle" />
               </OverlayTrigger>
             </div>
             <div className={styles["table-cell"]}>
@@ -58,7 +57,7 @@ export function Positions({ pool }: PositionsProps) {
                   </Tooltip>
                 }
               >
-                <FontAwesomeIcon icon="info-circle" />
+                <FontAwesomeIcon className="ml-1" icon="info-circle" />
               </OverlayTrigger>
             </div>
             <div className={styles["table-cell"]}>
@@ -73,7 +72,7 @@ export function Positions({ pool }: PositionsProps) {
                   </Tooltip>
                 }
               >
-                <FontAwesomeIcon icon="info-circle" />
+                <FontAwesomeIcon className="ml-1" icon="info-circle" />
               </OverlayTrigger>
             </div>
             <div className={styles["table-cell"]}>
@@ -87,7 +86,7 @@ export function Positions({ pool }: PositionsProps) {
                   </Tooltip>
                 }
               >
-                <FontAwesomeIcon icon="info-circle" />
+                <FontAwesomeIcon className="ml-1" icon="info-circle" />
               </OverlayTrigger>
             </div>
             <div className={styles["table-cell"]}>
@@ -102,39 +101,20 @@ export function Positions({ pool }: PositionsProps) {
                   </Tooltip>
                 }
               >
-                <FontAwesomeIcon icon="info-circle" />
+                <FontAwesomeIcon className="ml-1" icon="info-circle" />
               </OverlayTrigger>
             </div>
             <div className={styles["table-cell"]}></div>
           </div>
         </div>
         <div className={styles.tbody}>
-          {positions.map((position, i) => {
+          {positions.map((position) => {
             return (
-              <div className={styles["table-row"]} key={i}>
-                <div className={styles["table-cell"]}>{position.protocol}</div>
-                <div className={styles["table-cell"]}>
-                  <EthAddress truncate="middle" value={position.account} maxLength={16} />
-                </div>
-                <div className={styles["table-cell"]}>{position.threshold}</div>
-                <div className={styles["table-cell"]}>
-                  <NumberFormat
-                    displayType={"text"}
-                    value={position.singleTopUp}
-                    thousandSeparator={true}
-                    suffix={` ${pool.underlying.symbol}`}
-                  />
-                </div>
-                <div className={styles["table-cell"]}>
-                  <NumberFormat
-                    displayType={"text"}
-                    value={position.totalTopUp}
-                    thousandSeparator={true}
-                    suffix={` ${pool.underlying.symbol}`}
-                  />
-                </div>
-                <div className={styles["table-cell"]}></div>
-              </div>
+              <PositionRow
+                position={position}
+                pool={pool}
+                key={position.account + position.protocol}
+              />
             );
           })}
           <NewPositionRow pool={pool} />

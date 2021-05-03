@@ -7,7 +7,7 @@ import { AppDispatch } from "../../../app/store";
 import { AmountInputForm } from "../../../components/amount-input-form/AmountInputForm";
 import { Pool } from "../../../lib";
 import { pendingTransactionsCount } from "../../transactions-list/transactionsSlice";
-import { approve, deposit, selectBalance, selectPoolAllowance } from "../../user/userSlice";
+import { approve, deposit, selectBalance, selectDepositAllowance } from "../../user/userSlice";
 
 type DepositProps = {
   pool: Pool;
@@ -18,7 +18,7 @@ export function Deposit({ pool }: DepositProps) {
   const dispatch: AppDispatch = useDispatch();
   const [submitText, setSubmitText] = useState("Deposit");
   const availableToDeposit = useSelector(selectBalance(pool.underlying.address));
-  const approvedToDeposit = useSelector(selectPoolAllowance(pool));
+  const approvedToDeposit = useSelector(selectDepositAllowance(pool));
   const [depositAmount, setDepositAmount] = useState(0);
   const { loading, setLoading, handleTxDispatch } = useLoading();
   const [shouldResetValue, setShouldResetValue] = useState(false);

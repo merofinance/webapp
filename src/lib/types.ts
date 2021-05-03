@@ -30,6 +30,19 @@ export interface Position<Num = number> {
   depositToken: Address;
 }
 
+export function positionFromPartial<T>(pool: Pool<T>, position: Partial<Position<T>>): Position<T> {
+  return {
+    protocol: position.protocol!!,
+    account: position.account!!,
+    threshold: position.threshold!!,
+    singleTopUp: position.singleTopUp!!,
+    totalTopUp: position.totalTopUp!!,
+    maxGasPrice: 0,
+    actionToken: pool.underlying.address,
+    depositToken: pool.lpToken.address,
+  };
+}
+
 export function transformPool<T, U>(pool: Pool<T>, f: (v: T) => U): Pool<U> {
   return {
     ...pool,

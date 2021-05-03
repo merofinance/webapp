@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
-import { Button, Form, InputGroup, Spinner } from "react-bootstrap";
+import { Button, Form, InputGroup } from "react-bootstrap";
+import { ButtonSpinner } from "../button-spinner/ButtonSpinner";
 
 type AmountInputFormProps = {
   assetName: string;
@@ -69,16 +70,7 @@ export function AmountInputForm({
 
       <div className="text-center mt-4">
         <Button variant="primary" type="submit" disabled={value <= 0 || loading}>
-          {loading ? (
-            <Spinner
-              className="mr-1"
-              as="span"
-              animation="border"
-              size="sm"
-              role="status"
-              aria-hidden="true"
-            />
-          ) : null}
+          <ButtonSpinner show={loading} />
           {submitText}
         </Button>
       </div>

@@ -5,6 +5,7 @@ import {
   faInfoCircle,
   faTimesCircle,
   faExternalLinkAlt,
+  faTrashAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { Web3ReactProvider } from "@web3-react/core";
 import { ethers } from "ethers";
@@ -20,7 +21,7 @@ import { PoolsList } from "./features/pools-list/PoolsList";
 import { createBackd } from "./lib/factory";
 import MockSigner from "./lib/mock/signer";
 
-library.add(faInfoCircle, faClock, faCheck, faTimesCircle, faExternalLinkAlt);
+library.add(faInfoCircle, faClock, faCheck, faTimesCircle, faExternalLinkAlt, faTrashAlt);
 
 function getLibrary(rawProvider: any, connector: any) {
   const provider = new ethers.providers.Web3Provider(rawProvider);
