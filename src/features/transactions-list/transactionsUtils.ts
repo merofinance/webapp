@@ -7,7 +7,12 @@ import {
   TransactionDescription,
   TransactionInfo,
 } from "../../lib/types";
+import { setError } from "../error/errorSlice";
 import { addTransaction, confirmTransaction } from "./transactionsSlice";
+
+export function formatError(err: any): string {
+  return (err.data || {}).message || err.message;
+}
 
 export async function handleTransactionConfirmation(
   tx: ContractTransaction,
@@ -26,12 +31,14 @@ export async function handleTransactionConfirmation(
   };
 
   dispatch(addTransaction(txInfo));
-  tx.wait().then((receipt) => {
-    batch(() => {
-      dispatch(confirmTransaction(parseTransactionReceipt(receipt)));
-      actions.forEach((action) => dispatch(action));
-    });
-  });
+  tx.wait()
+    .then((receipt) => {
+      batch(() => {
+        dispatch(confirmTransaction(parseTransactionReceipt(receipt)));
+        actions.forEach((action) => dispatch(action));
+      });
+    })
+    .catch((err) => dispatch(setError({ error: formatError(err) })));
 }
 
 export const formatTransactionInfo = (txDescription: TransactionDescription) => {
