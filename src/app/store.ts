@@ -8,6 +8,7 @@ import {
 import poolsReducer from "../features/pools-list/poolsListSlice";
 import userReducer from "../features/user/userSlice";
 import accountReducer from "../features/account/accountSlice";
+import errorReducer from "../features/error/errorSlice";
 import positionsReducer from "../features/positions/positionsSlice";
 import transactionsReducer from "../features/transactions-list/transactionsSlice";
 import storage from "redux-persist/lib/storage";
@@ -28,11 +29,13 @@ const rootReducer = combineReducers({
   account: accountReducer,
   positions: positionsReducer,
   transactions: transactionsReducer,
+  error: errorReducer,
 });
 
 const persistConfig = {
   key: "root",
   version: 1,
+  blacklist: ["error"],
   storage,
 };
 

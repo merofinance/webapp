@@ -28,21 +28,20 @@ export function Withdraw({ pool }: WithdrawProps) {
 
   useEffect(() => {
     setLoading(pendingTxCount > 0);
-    if (pendingTxCount === 0) {
-      setWithdrawAmount(0);
-    }
-  }, [pendingTxCount, setWithdrawAmount, setLoading]);
+  }, [pendingTxCount, setLoading]);
 
   const executeWithdraw = (amount: number) => {
     if (!backd) return;
     dispatch(withdraw({ backd, pool, amount })).then((v) => {
-      handleTxDispatch({ status: v.meta.requestStatus, actionType: "withdraw" });
+      if (handleTxDispatch({ status: v.meta.requestStatus, actionType: "withdraw" })) {
+        setWithdrawAmount(0);
+      }
     });
   };
 
-  const executeUnstake = (amount: number) => {
+  const executeUnstake = () => {
     if (!backd) return;
-    dispatch(unstake({ backd, pool, amount })).then((v) => {
+    dispatch(unstake({ backd, pool, amount: staked })).then((v) => {
       handleTxDispatch({ status: v.meta.requestStatus, actionType: "unstake" });
     });
   };
@@ -52,7 +51,7 @@ export function Withdraw({ pool }: WithdrawProps) {
     if (withdrawAmount <= availableToWithdraw) {
       executeWithdraw(amount);
     } else {
-      executeUnstake(amount);
+      executeUnstake();
     }
   };
 

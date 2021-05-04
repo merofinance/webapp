@@ -201,7 +201,7 @@ export class Web3Backd implements Backd {
       account = await this.currentAccount();
     }
     if (token.address === ETH_DUMMY_ADDRESS) {
-      return this.getBalance(token.address, account);
+      return Math.pow(10, 20);
     }
     const tokenContract = Eip20InterfaceFactory.connect(token.address, this._provider);
     const rawAllowance = await tokenContract.allowance(account, spender);

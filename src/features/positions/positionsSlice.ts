@@ -11,22 +11,21 @@ type PositionsState = Position[];
 
 const initialState: PositionsState = [];
 
+export const fetchPositions = createAsyncThunk("positions/fetch", ({ backd }: { backd: Backd }) =>
+  backd.getPositions()
+);
+
 export const positionsSlice = createSlice({
   name: "positions",
   initialState,
-  reducers: {
-    setPositions: (state, action: PayloadAction<Position[]>) => {
-      return action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(logout, (state, action) => {
-      return initialState;
+    builder.addCase(logout, (state, action) => initialState);
+    builder.addCase(fetchPositions.fulfilled, (state, action) => {
+      return action.payload;
     });
   },
 });
-
-export const { setPositions } = positionsSlice.actions;
 
 type RegisterArgs = { backd: Backd; pool: Pool; position: Position };
 type RemoveArgs = { backd: Backd; pool: Pool; position: Position };
@@ -36,7 +35,7 @@ export const registerPosition = createAsyncThunk(
   async ({ backd, pool, position }: RegisterArgs, { dispatch }) => {
     const tx = await backd.registerPosition(pool, position);
     handleTransactionConfirmation(tx, { action: "Register", args: { pool, position } }, dispatch, [
-      fetchPositions(backd),
+      fetchPositions({ backd }),
       fetchBalances({ backd, pools: [pool] }),
       fetchAllowances({ backd, pools: [pool] }),
     ]);
@@ -49,17 +48,13 @@ export const removePosition = createAsyncThunk(
   async ({ backd, pool, position }: RemoveArgs, { dispatch }) => {
     const tx = await backd.removePosition(position.account, position.protocol);
     handleTransactionConfirmation(tx, { action: "Remove", args: { position } }, dispatch, [
-      fetchPositions(backd),
+      fetchPositions({ backd }),
       fetchBalances({ backd, pools: [pool] }),
       fetchAllowances({ backd, pools: [pool] }),
     ]);
     return tx.hash;
   }
 );
-
-export const fetchPositions = (backd: Backd): AppThunk => (dispatch) => {
-  backd.getPositions().then((positions) => dispatch(setPositions(positions)));
-};
 
 export function selectPositions(pool: Pool): (state: RootState) => Position[] {
   return (state: RootState) =>

@@ -21,7 +21,7 @@ export function Positions({ pool }: PositionsProps) {
 
   useEffect(() => {
     if (!backd) return;
-    dispatch(fetchPositions(backd));
+    dispatch(fetchPositions({ backd }));
   }, [backd, dispatch, pool]);
 
   return (

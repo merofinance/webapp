@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../../app/store";
 import { Pool } from "../../lib";
 import { Backd } from "../../lib/backd";
@@ -23,18 +23,26 @@ export const fetchPool = createAsyncThunk(
   }
 );
 
+export const fetchPrices = createAsyncThunk(
+  "pool/fetch-prices",
+  async ({ backd, pools }: { backd: Backd; pools: Pool[] }) => {
+    return backd.getPrices(pools.map((p) => p.underlying.symbol));
+  }
+);
+
+export const fetchPools = createAsyncThunk("pool/fetch-all", ({ backd }: { backd: Backd }) =>
+  backd.listPools()
+);
+
 export const poolsSlice = createSlice({
   name: "pools",
   initialState,
-  reducers: {
-    setPools: (state, action: PayloadAction<Pool[]>) => {
-      state.pools = action.payload;
-    },
-    setPrices: (state, action: PayloadAction<Prices>) => {
-      state.prices = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(fetchPools.fulfilled, (state, action) => {
+      state.pools = action.payload;
+    });
+
     builder.addCase(fetchPool.fulfilled, (state, action) => {
       const index = state.pools.findIndex((pool) => pool.address === action.payload.address);
       if (index >= 0) {
@@ -44,29 +52,22 @@ export const poolsSlice = createSlice({
       }
     });
 
+    builder.addCase(fetchPrices.fulfilled, (state, action) => {
+      state.prices = action.payload;
+    });
+
     builder.addCase(logout, (state, action) => {
       return initialState;
     });
   },
 });
 
-export const { setPools, setPrices } = poolsSlice.actions;
-
-export const fetchPools = (backd: Backd): AppThunk => (dispatch) => {
-  backd.listPools().then((pools) => dispatch(setPools(pools)));
-};
-
-export const fetchPrices = (backd: Backd, pools: Pool[]): AppThunk => (dispatch) => {
-  backd
-    .getPrices(pools.map((p) => p.underlying.symbol))
-    .then((prices) => dispatch(setPrices(prices)));
-};
-
 export const fetchState = (backd: Backd): AppThunk => (dispatch) => {
-  backd.listPools().then((pools) => {
-    dispatch(setPools(pools));
+  dispatch(fetchPools({ backd })).then((v) => {
+    if (v.meta.requestStatus !== "fulfilled") return;
+    const pools = v.payload as Pool[];
     dispatch(fetchBalances({ backd, pools }));
-    dispatch(fetchPrices(backd, pools));
+    dispatch(fetchPrices({ backd, pools }));
     dispatch(fetchAllowances({ backd, pools }));
   });
 };
