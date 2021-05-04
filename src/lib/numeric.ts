@@ -1,7 +1,5 @@
 import { BigNumber, BigNumberish } from "ethers";
-
-export const DEFAULT_DECIMALS = 18;
-export const DEFAULT_SCALE = BigNumber.from(10).pow(DEFAULT_DECIMALS);
+import { DEFAULT_DECIMALS } from "./constants";
 
 export function scale(number: BigNumberish, decimals: number = DEFAULT_DECIMALS) {
   return BigNumber.from(number).mul(BigNumber.from(10).pow(decimals));

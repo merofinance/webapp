@@ -1,14 +1,15 @@
 import contracts from "@backdfund/protocol/build/deployments/map.json";
 import { Controller } from "@backdfund/protocol/typechain/Controller";
 import { ControllerFactory } from "@backdfund/protocol/typechain/ControllerFactory";
-import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
-import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFactory";
 import { Eip20InterfaceFactory } from "@backdfund/protocol/typechain/Eip20InterfaceFactory";
 import { LiquidityPoolFactory } from "@backdfund/protocol/typechain/LiquidityPoolFactory";
 import { StakerVaultFactory } from "@backdfund/protocol/typechain/StakerVaultFactory";
+import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
+import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFactory";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
 import { getPrices } from "./coingecko";
-import { bigNumberToFloat, DEFAULT_SCALE, floatToBigNumber, scale } from "./numeric";
+import { DEFAULT_SCALE, ETH_DECIMALS, ETH_DUMMY_ADDRESS } from "./constants";
+import { bigNumberToFloat, floatToBigNumber, scale } from "./numeric";
 import {
   Address,
   AllowanceQuery,
@@ -38,7 +39,7 @@ export interface Backd {
   getAllowances(queries: AllowanceQuery[]): Promise<Record<string, Balances>>;
   getPrices(symbol: string[]): Promise<Prices>;
   approve(token: Token, spender: Address, amount: number): Promise<ContractTransaction>;
-  deposit(poolAddress: Address, amount: number): Promise<ContractTransaction>;
+  deposit(pool: Pool, amount: number): Promise<ContractTransaction>;
   withdraw(poolAddress: Address, amount: number): Promise<ContractTransaction>;
   unstake(vaultAddress: Address, amount: number): Promise<ContractTransaction>;
 
@@ -94,6 +95,9 @@ export class Web3Backd implements Backd {
   }
 
   async getTokenInfo(tokenAddress: Address): Promise<Token> {
+    if (tokenAddress === ETH_DUMMY_ADDRESS) {
+      return { address: tokenAddress, name: "Ether", symbol: "ETH", decimals: ETH_DECIMALS };
+    }
     const token = Eip20InterfaceFactory.connect(tokenAddress, this._provider);
     const [name, symbol, decimals] = await Promise.all([
       token.name(),
@@ -193,10 +197,13 @@ export class Web3Backd implements Backd {
     spender: Address,
     account?: string
   ): Promise<number> {
-    const tokenContract = Eip20InterfaceFactory.connect(token.address, this._provider);
     if (!account) {
       account = await this.currentAccount();
     }
+    if (token.address === ETH_DUMMY_ADDRESS) {
+      return this.getBalance(token.address, account);
+    }
+    const tokenContract = Eip20InterfaceFactory.connect(token.address, this._provider);
     const rawAllowance = await tokenContract.allowance(account, spender);
     return bigNumberToFloat(rawAllowance, token.decimals);
   }
@@ -221,10 +228,11 @@ export class Web3Backd implements Backd {
     return tokenContract.approve(spender, scaledAmount);
   }
 
-  async deposit(pool: Address, amount: number): Promise<ContractTransaction> {
-    const poolContract = LiquidityPoolFactory.connect(pool, this._provider);
+  async deposit(pool: Pool, amount: number): Promise<ContractTransaction> {
+    const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
     const scaledAmount = floatToBigNumber(amount);
-    return poolContract.deposit(scaledAmount);
+    const value = pool.underlying.address === ETH_DUMMY_ADDRESS ? scaledAmount : 0;
+    return poolContract.deposit(scaledAmount, { value });
   }
 
   async withdraw(pool: Address, amount: number): Promise<ContractTransaction> {
@@ -240,10 +248,13 @@ export class Web3Backd implements Backd {
   }
 
   async getBalance(address: string, account?: string): Promise<number> {
-    const token = Eip20InterfaceFactory.connect(address, this._provider);
     if (!account) {
       account = await this.currentAccount();
     }
+    if (address === ETH_DUMMY_ADDRESS) {
+      return this.provider.getBalance(account).then(bigNumberToFloat);
+    }
+    const token = Eip20InterfaceFactory.connect(address, this._provider);
     const rawBalance = await token.balanceOf(account);
     return bigNumberToFloat(rawBalance);
   }

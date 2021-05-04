@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, Selector } from "../../app/store";
 import { Backd } from "../../lib/backd";
+import { ETH_DUMMY_ADDRESS } from "../../lib/constants";
 import { Address, AllowanceQuery, Balances, Optional, Pool, Token } from "../../lib/types";
-import { getAddress } from "../pool/selectors";
 import { fetchPool } from "../pools-list/poolsListSlice";
 import { handleTransactionConfirmation } from "../transactions-list/transactionsUtils";
 
@@ -73,6 +73,9 @@ export const userSlice = createSlice({
       action: PayloadAction<{ token: Token; spender: Address; amount: number }>
     ) => {
       const { spender, token, amount } = action.payload;
+      // NOTE: we do not want to touch "allowances" from Eth based pools
+      if (token.address === ETH_DUMMY_ADDRESS) return;
+
       const allowance = state.allowances[token.address][spender] || 0;
       state.allowances[token.address][spender] = Math.max(0, allowance - amount);
     },
@@ -116,7 +119,7 @@ export const approve = createAsyncThunk(
 export const deposit = createAsyncThunk(
   "user/deposit",
   async ({ backd, pool, amount }: DepositArgs, { dispatch }) => {
-    const tx = await backd.deposit(pool.address, amount);
+    const tx = await backd.deposit(pool, amount);
     handleTransactionConfirmation(tx, { action: "Deposit", args: { pool, amount } }, dispatch, [
       fetchBalances({ backd, pools: [pool] }),
       fetchPool({ backd, poolAddress: pool.address }),

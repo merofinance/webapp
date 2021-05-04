@@ -47,9 +47,9 @@ export default class MockBackd implements Backd {
     return Promise.resolve(bigNumberToFloat(number));
   }
 
-  async deposit(poolAddress: Address, amount: number): Promise<ContractTransaction> {
+  async deposit(pool: Pool, amount: number): Promise<ContractTransaction> {
     const account = await this.currentAccount();
-    return makeContractTransaction(poolAddress, account);
+    return makeContractTransaction(pool.address, account);
   }
 
   async withdraw(poolAddress: Address, amount: number): Promise<ContractTransaction> {
