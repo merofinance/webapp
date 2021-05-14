@@ -1,9 +1,15 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { Table, Toast } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import { pendingTransactionsCount, transactions, transactionsCount } from "./transactionsSlice";
+import { Button, Table, Toast } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../app/store";
+import {
+  clearTransactions,
+  pendingTransactionsCount,
+  transactions,
+  transactionsCount,
+} from "./transactionsSlice";
 import { formatTransactionInfo, getExplorerLink } from "./transactionsUtils";
 
 type TransactionsListProps = {
@@ -14,8 +20,13 @@ type TransactionsListProps = {
 export function TransactionsList({ show, onClose }: TransactionsListProps) {
   const txCount = useSelector(transactionsCount);
   const pendingTxCount = useSelector(pendingTransactionsCount);
+  const dispatch: AppDispatch = useDispatch();
   const txs = useSelector(transactions);
   const title = txCount > 1 ? "transactions" : "transaction";
+
+  const handleClearTransactions = () => {
+    dispatch(clearTransactions());
+  };
 
   const statusIcon = (status?: number): IconProp => {
     switch (status) {
@@ -37,6 +48,17 @@ export function TransactionsList({ show, onClose }: TransactionsListProps) {
       <Toast.Header>
         <strong className="mr-auto">
           {txCount} {title}
+          <small>
+            <Button
+              title="Clear transactions"
+              className="ml-2 text-body"
+              size="sm"
+              variant="link"
+              onClick={handleClearTransactions}
+            >
+              <FontAwesomeIcon icon={["fas", "trash-alt"]} />
+            </Button>
+          </small>
         </strong>
         <small>{pendingTxCount} pending</small>
       </Toast.Header>

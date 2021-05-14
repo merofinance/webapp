@@ -109,21 +109,15 @@ export class Web3Backd implements Backd {
 
   async getPoolInfo(address: Address): Promise<Pool> {
     const pool = LiquidityPoolFactory.connect(address, this._provider);
-    const [
-      name,
-      lpTokenAddress,
-      underlyingAddress,
-      totalAssets,
-      rawApy,
-      exchangeRate,
-    ] = await Promise.all([
-      pool.name(),
-      pool.getLpToken(),
-      pool.getUnderlying(),
-      pool.totalUnderlying(),
-      pool.computeAPY(),
-      pool.currentExchangeRate(),
-    ]);
+    const [name, lpTokenAddress, underlyingAddress, totalAssets, rawApy, exchangeRate] =
+      await Promise.all([
+        pool.name(),
+        pool.getLpToken(),
+        pool.getUnderlying(),
+        pool.totalUnderlying(),
+        pool.computeAPY(),
+        pool.currentExchangeRate(),
+      ]);
     const [lpToken, underlying, stakerVaultAddress] = await Promise.all([
       this.getTokenInfo(lpTokenAddress),
       this.getTokenInfo(underlyingAddress),
@@ -266,7 +260,9 @@ export class Web3Backd implements Backd {
   }
 
   async getPrices(symbols: string[]): Promise<Prices> {
-    return getPrices(symbols);
+    return getPrices(symbols).catch((e) => {
+      throw new Error(`failed to fetch prices: ${e.message}`);
+    });
   }
 
   async listSupportedProtocols(): Promise<string[]> {

@@ -39,6 +39,9 @@ export const transactionsSlice = createSlice({
     addTransaction: (state, action: PayloadAction<TransactionInfo>) => {
       state.transactions.push(action.payload);
     },
+    clearTransactions: (state, action: PayloadAction<void>) => {
+      return initialState;
+    },
     confirmTransaction: (state, action: PayloadAction<TransactionConfirmation>) =>
       handleConfirmTransaction(state, action.payload),
   },
@@ -82,6 +85,6 @@ export const transactions: Selector<TransactionInfo[]> = (state: RootState) => {
   return sortTransactions(Array.from(state.transactions.transactions));
 };
 
-export const { addTransaction, confirmTransaction } = transactionsSlice.actions;
+export const { addTransaction, confirmTransaction, clearTransactions } = transactionsSlice.actions;
 
 export default transactionsSlice.reducer;
