@@ -51,7 +51,7 @@ export function AmountInputForm({
 
   return (
     <Form onSubmit={onSubmit}>
-      <Form.Group controlId="formBasicRange">
+      <Form.Group>
         <InputGroup className="mb-2">
           <Form.Control
             type="number"
