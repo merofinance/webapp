@@ -1,7 +1,7 @@
 import contracts from "@backdfund/protocol/build/deployments/map.json";
 import { Controller } from "@backdfund/protocol/typechain/Controller";
 import { ControllerFactory } from "@backdfund/protocol/typechain/ControllerFactory";
-import { Eip20InterfaceFactory } from "@backdfund/protocol/typechain/Eip20InterfaceFactory";
+import { Ierc20FullFactory } from "@backdfund/protocol/typechain/Ierc20FullFactory";
 import { LiquidityPoolFactory } from "@backdfund/protocol/typechain/LiquidityPoolFactory";
 import { StakerVaultFactory } from "@backdfund/protocol/typechain/StakerVaultFactory";
 import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
@@ -98,7 +98,7 @@ export class Web3Backd implements Backd {
     if (tokenAddress === ETH_DUMMY_ADDRESS) {
       return { address: tokenAddress, name: "Ether", symbol: "ETH", decimals: ETH_DECIMALS };
     }
-    const token = Eip20InterfaceFactory.connect(tokenAddress, this._provider);
+    const token = Ierc20FullFactory.connect(tokenAddress, this._provider);
     const [name, symbol, decimals] = await Promise.all([
       token.name(),
       token.symbol(),
@@ -197,7 +197,7 @@ export class Web3Backd implements Backd {
     if (token.address === ETH_DUMMY_ADDRESS) {
       return Math.pow(10, 20);
     }
-    const tokenContract = Eip20InterfaceFactory.connect(token.address, this._provider);
+    const tokenContract = Ierc20FullFactory.connect(token.address, this._provider);
     const rawAllowance = await tokenContract.allowance(account, spender);
     return bigNumberToFloat(rawAllowance, token.decimals);
   }
@@ -217,7 +217,7 @@ export class Web3Backd implements Backd {
   }
 
   async approve(token: Token, spender: Address, amount: number): Promise<ContractTransaction> {
-    const tokenContract = Eip20InterfaceFactory.connect(token.address, this._provider);
+    const tokenContract = Ierc20FullFactory.connect(token.address, this._provider);
     const scaledAmount = floatToBigNumber(amount, token.decimals);
     return tokenContract.approve(spender, scaledAmount);
   }
@@ -248,7 +248,7 @@ export class Web3Backd implements Backd {
     if (address === ETH_DUMMY_ADDRESS) {
       return this.provider.getBalance(account).then(bigNumberToFloat);
     }
-    const token = Eip20InterfaceFactory.connect(address, this._provider);
+    const token = Ierc20FullFactory.connect(address, this._provider);
     const rawBalance = await token.balanceOf(account);
     return bigNumberToFloat(rawBalance);
   }
