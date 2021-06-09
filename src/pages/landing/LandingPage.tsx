@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Hero from "./Hero";
 
 const StyledLanding = styled.div`
   width: 100%;
@@ -9,7 +10,11 @@ const StyledLanding = styled.div`
 `;
 
 const LandingPage = () => {
-  return <StyledLanding></StyledLanding>;
+  return (
+    <StyledLanding>
+      <Hero />
+    </StyledLanding>
+  );
 };
 
 export default LandingPage;
