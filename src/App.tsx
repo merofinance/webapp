@@ -33,6 +33,8 @@ const StyledApp = styled.div`
   display: flex;
   flex-direction: column;
   padding: 3rem 10rem;
+  min-height: 100vh;
+  background-color: var(--bg);
 `;
 
 library.add(faInfoCircle, faClock, faCheck, faTimesCircle, faExternalLinkAlt, faTrashAlt);
