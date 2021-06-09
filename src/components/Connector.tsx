@@ -57,7 +57,7 @@ const Aura = styled.div`
 `;
 
 const Connector = () => {
-  const { library: backd, activate, active, deactivate } = useWeb3React();
+  const { library: backd, activate } = useWeb3React();
   const [account, setAccount] = useState<Address>("");
   const connected = useSelector(isConnected);
   const dispatch = useDispatch();
