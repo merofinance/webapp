@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router";
 import styled from "styled-components";
 import logo from "../assets/logo.svg";
 import NavItems from "./NavItems";
@@ -12,6 +13,7 @@ const StyledHeader = styled.div`
 
 const Logo = styled.img`
   height: 4.8rem;
+  cursor: pointer;
 `;
 
 const Actions = styled.div`
@@ -19,9 +21,11 @@ const Actions = styled.div`
 `;
 
 const Header = () => {
+  const history = useHistory();
+
   return (
     <StyledHeader>
-      <Logo src={logo} />
+      <Logo onClick={() => history.push("/")} src={logo} />
       <Actions>
         <NavItems />
       </Actions>
