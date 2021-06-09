@@ -15,6 +15,7 @@ const Button = styled.button`
   font-size: 2.1rem;
   font-weight: 700;
   text-transform: capitalize;
+  margin-top: 6rem;
 `;
 
 export default Button;
