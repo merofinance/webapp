@@ -10,8 +10,6 @@ const GlobalStyle = createGlobalStyle`
         --primary-gradient: #d127fa;
         --secondary-gradient: #24bde3;
 
-
-
         --section-margin: 8rem 0;
     }
 
