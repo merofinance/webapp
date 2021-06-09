@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import logo from "../assets/logo.svg";
 
 const StyledHeader = styled.div`
   width: 100%;
@@ -8,8 +9,16 @@ const StyledHeader = styled.div`
   justify-content: space-between;
 `;
 
+const Logo = styled.img`
+  height: 4.8rem;
+`;
+
 const Header = () => {
-  return <StyledHeader>meow</StyledHeader>;
+  return (
+    <StyledHeader>
+      <Logo src={logo} />
+    </StyledHeader>
+  );
 };
 
 export default Header;
