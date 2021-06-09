@@ -16,7 +16,7 @@ const Button = styled.button`
   font-size: 2.1rem;
   font-weight: 700;
   text-transform: capitalize;
-  margin-top: 6rem;
+  margin-top: 8rem;
   cursor: pointer;
   transition: 0.5s;
   background-size: 200% auto;
