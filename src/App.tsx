@@ -16,16 +16,24 @@ import "./App.scss";
 import { useMock } from "./app/config";
 import { PrivateRoute } from "./app/private-route";
 import { AppDispatch } from "./app/store";
+import Header from "./components/Header";
 import { ConnectWallet } from "./features/account/ConnectWallet";
 import { ErrorAlert } from "./features/error/ErrorAlert";
 import { ErrorBoundary } from "./features/error/ErrorBoundary";
 import { setError } from "./features/error/errorSlice";
-import { Header } from "./features/header/Header";
 import { PoolManagement } from "./features/pool/PoolManagement";
 import { PoolsList } from "./features/pools-list/PoolsList";
 import { createBackd } from "./lib/factory";
 import MockSigner from "./lib/mock/signer";
 import LandingPage from "./pages/landing/LandingPage";
+import styled from "styled-components";
+
+const StyledApp = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 3rem 10rem;
+`;
 
 library.add(faInfoCircle, faClock, faCheck, faTimesCircle, faExternalLinkAlt, faTrashAlt);
 
@@ -46,35 +54,37 @@ function App() {
   return (
     <ErrorBoundary dispatch={dispatch}>
       <Web3ReactProvider getLibrary={getLibrary}>
-        <Router>
-          <Header />
-          <ErrorAlert />
-          <Switch>
-            <PrivateRoute path="/:poolName/deposit">
-              <PoolManagement mode="deposit" />
-            </PrivateRoute>
+        <StyledApp>
+          <Router>
+            <Header />
+            <ErrorAlert />
+            <Switch>
+              <PrivateRoute path="/:poolName/deposit">
+                <PoolManagement mode="deposit" />
+              </PrivateRoute>
 
-            <PrivateRoute path="/:poolName/withdraw">
-              <PoolManagement mode="withdraw" />
-            </PrivateRoute>
+              <PrivateRoute path="/:poolName/withdraw">
+                <PoolManagement mode="withdraw" />
+              </PrivateRoute>
 
-            <PrivateRoute path="/:poolName/positions">
-              <PoolManagement mode="positions" />
-            </PrivateRoute>
+              <PrivateRoute path="/:poolName/positions">
+                <PoolManagement mode="positions" />
+              </PrivateRoute>
 
-            <Route path="/connect">
-              <ConnectWallet />
-            </Route>
+              <Route path="/connect">
+                <ConnectWallet />
+              </Route>
 
-            <PrivateRoute path="/pools">
-              <PoolsList />
-            </PrivateRoute>
+              <PrivateRoute path="/pools">
+                <PoolsList />
+              </PrivateRoute>
 
-            <PrivateRoute path="/">
-              <LandingPage />
-            </PrivateRoute>
-          </Switch>
-        </Router>
+              <PrivateRoute path="/">
+                <LandingPage />
+              </PrivateRoute>
+            </Switch>
+          </Router>
+        </StyledApp>
       </Web3ReactProvider>
     </ErrorBoundary>
   );
