@@ -34,12 +34,16 @@ const navItems: NavItemType[] = [
 const StyledNavItems = styled.ul`
   display: flex;
   list-style-type: none;
+  margin: 0 1rem;
 `;
 
 const NavItem = styled.li`
   font-weight: 400;
   font-size: 1.6rem;
   margin: 0 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Link = styled.button``;
