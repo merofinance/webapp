@@ -38,15 +38,16 @@ const StyledNavItems = styled.ul`
 `;
 
 const NavItem = styled.li`
-  font-weight: 400;
-  font-size: 1.6rem;
   margin: 0 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-const Link = styled.button``;
+const Link = styled.button`
+  font-weight: 400;
+  font-size: 1.6rem;
+`;
 
 const NavItems = () => {
   const history = useHistory();
