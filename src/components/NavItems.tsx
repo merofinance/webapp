@@ -47,6 +47,7 @@ const NavItem = styled.li`
 const Link = styled.button`
   font-weight: 400;
   font-size: 1.6rem;
+  cursor: pointer;
 `;
 
 const NavItems = () => {
