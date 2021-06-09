@@ -2,7 +2,6 @@ import React from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import logo from "../assets/logo.svg";
-import { ConnectWallet } from "../features/account/ConnectWallet";
 import Connector from "./Connector";
 import NavItems from "./NavItems";
 
@@ -11,6 +10,7 @@ const StyledHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 8rem;
 `;
 
 const Logo = styled.img`
