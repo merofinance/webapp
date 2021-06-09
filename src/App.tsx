@@ -26,6 +26,7 @@ import { createBackd } from "./lib/factory";
 import MockSigner from "./lib/mock/signer";
 import LandingPage from "./pages/landing/LandingPage";
 import styled from "styled-components";
+import Footer from "./components/Footer";
 
 const StyledApp = styled.div`
   width: 100%;
@@ -84,6 +85,7 @@ function App() {
                 <LandingPage />
               </PrivateRoute>
             </Switch>
+            <Footer />
           </Router>
         </StyledApp>
       </Web3ReactProvider>
