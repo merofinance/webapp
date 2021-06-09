@@ -1,5 +1,6 @@
 :root {
   --bg: #0a0622;
+  --main: #fff;
 }
 
 * {
@@ -7,6 +8,17 @@
   margin: 0;
   padding: 0;
   font-size: 10px;
+  color: var(--main);
+}
+
+button {
+  background: none;
+  border: none;
+  outline: none;
+}
+
+a {
+  text-decoration: none;
 }
 
 body {
