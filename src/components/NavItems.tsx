@@ -17,17 +17,17 @@ const navItems: NavItemType[] = [
   {
     label: "GitHub",
     link: "https://github.com/backdfund",
-    isExternal: false,
+    isExternal: true,
   },
   {
     label: "Blog",
     link: "https://backd.fund/blog/",
-    isExternal: false,
+    isExternal: true,
   },
   {
     label: "Twitter",
     link: "https://twitter.com/backdfund",
-    isExternal: false,
+    isExternal: true,
   },
 ];
 
