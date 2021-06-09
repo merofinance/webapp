@@ -7,6 +7,10 @@ const GlobalStyle = createGlobalStyle`
         --main: #fff;
         --primary: #fc28d3;
         --primary-light: #d893fc;
+        --primary-gradient: #d127fa;
+        --secondary-gradient: #24bde3;
+
+
 
         --section-margin: 8rem 0;
     }
@@ -28,14 +32,6 @@ const GlobalStyle = createGlobalStyle`
 
     a {
         text-decoration: none;
-    }
-
-    h1 {
-        font-weight: 700;
-        font-size: 7.2rem;
-        line-height: 8.64rem;
-        text-align: center;
-        color: red;
     }
 `;
 
