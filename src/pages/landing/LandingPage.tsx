@@ -1,7 +1,14 @@
 import React from "react";
 import styled from "styled-components";
+import AuditedBy from "./AuditedBy";
 import Background from "./Background";
+import Benefits from "./Benefits";
+import GetStarted from "./GetStarted";
 import Hero from "./Hero";
+import HowItWorks from "./HowItWorks";
+import JoinCommunity from "./JoinCommunity";
+import Preview from "./Preview";
+import SupportedBy from "./SupportedBy";
 
 const StyledLanding = styled.div``;
 
@@ -19,6 +26,13 @@ const LandingPage = () => {
       <Background />
       <Content>
         <Hero />
+        <Benefits />
+        <Preview />
+        <HowItWorks />
+        <SupportedBy />
+        <AuditedBy />
+        <JoinCommunity />
+        <GetStarted />
       </Content>
     </StyledLanding>
   );
