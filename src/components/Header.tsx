@@ -11,6 +11,7 @@ const StyledHeader = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 8rem;
+  z-index: 1;
 `;
 
 const Logo = styled.img`
