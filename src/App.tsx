@@ -12,7 +12,6 @@ import { ethers } from "ethers";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import "./App.scss";
 import { useMock } from "./app/config";
 import { PrivateRoute } from "./app/private-route";
 import { AppDispatch } from "./app/store";
