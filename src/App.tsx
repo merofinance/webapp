@@ -25,6 +25,7 @@ import { PoolManagement } from "./features/pool/PoolManagement";
 import { PoolsList } from "./features/pools-list/PoolsList";
 import { createBackd } from "./lib/factory";
 import MockSigner from "./lib/mock/signer";
+import LandingPage from "./pages/landing/LandingPage";
 
 library.add(faInfoCircle, faClock, faCheck, faTimesCircle, faExternalLinkAlt, faTrashAlt);
 
@@ -65,8 +66,12 @@ function App() {
               <ConnectWallet />
             </Route>
 
-            <PrivateRoute path="/">
+            <PrivateRoute path="/pools">
               <PoolsList />
+            </PrivateRoute>
+
+            <PrivateRoute path="/">
+              <LandingPage />
             </PrivateRoute>
           </Switch>
         </Router>
