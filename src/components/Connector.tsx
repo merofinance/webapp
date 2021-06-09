@@ -8,6 +8,26 @@ import { isConnected, setConnected } from "../features/account/accountSlice";
 
 const StyledConnector = styled.button`
   position: relative;
+  transition: transform 0.3s;
+
+  :hover {
+    div {
+      width: 17.5rem;
+      height: 5.6rem;
+      border-radius: 2.8rem;
+      opacity: 0.6;
+    }
+  }
+
+  :active {
+    transform: scale(0.98);
+    div {
+      width: 16.5rem;
+      height: 4.8rem;
+      border-radius: 2.4rem;
+      opacity: 0.8;
+    }
+  }
 `;
 
 const ConnectorButton = styled.button`
@@ -19,6 +39,8 @@ const ConnectorButton = styled.button`
   font-size: 1.5rem;
   color: var(--primary);
   background-color: var(--main);
+  margin: 0.6rem;
+  border: solid 1px var(--primary-light);
 `;
 
 const Aura = styled.div`
@@ -31,6 +53,7 @@ const Aura = styled.div`
   transform: translate(-50%, -50%);
   background-color: var(--primary);
   opacity: 0.7;
+  transition: all 0.3s;
 `;
 
 const Connector = () => {
