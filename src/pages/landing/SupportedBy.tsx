@@ -36,12 +36,20 @@ const StyledSupportedBy = styled.div`
 const Protocols = styled.div`
   display: flex;
   align-items: center;
+  margin: 3rem 0;
+`;
+
+const ProtocolContainer = styled.div`
+  width: 32.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 5.4rem;
 `;
 
 const Protocol = styled.img`
   max-width: 32.2rem;
   max-height: 7.7rem;
-  margin: 0 7rem;
 `;
 
 const SupportedBy = () => {
@@ -50,12 +58,14 @@ const SupportedBy = () => {
       <Header3>supported by</Header3>
       <Protocols>
         {protocols.map((protocol: ProtocolType) => (
-          <Protocol
-            onClick={() => {
-              (window as any).open(protocol.link, "_blank").focus();
-            }}
-            src={protocol.image}
-          />
+          <ProtocolContainer>
+            <Protocol
+              onClick={() => {
+                (window as any).open(protocol.link, "_blank").focus();
+              }}
+              src={protocol.image}
+            />
+          </ProtocolContainer>
         ))}
       </Protocols>
     </StyledSupportedBy>
