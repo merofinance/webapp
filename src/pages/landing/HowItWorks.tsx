@@ -1,5 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { Header3 } from "../../styles/Headers";
+import Radio, { RadioOption } from "../../components/Radio";
+
+const categories: RadioOption[] = [
+  {
+    label: "earn yeild",
+    value: "earn",
+  },
+  {
+    label: "earn & protect",
+    value: "protect",
+  },
+  {
+    label: "earn & protect",
+    value: "protect",
+  },
+];
 
 const StyledHowItWorks = styled.div`
   width: 100%;
@@ -7,7 +24,14 @@ const StyledHowItWorks = styled.div`
 `;
 
 const HowItWorks = () => {
-  return <StyledHowItWorks>how it works</StyledHowItWorks>;
+  const [category, setCategory] = useState("earn");
+
+  return (
+    <StyledHowItWorks>
+      <Header3>how it works</Header3>
+      <Radio options={categories} setOption={(value: string) => setCategory(value)} />
+    </StyledHowItWorks>
+  );
 };
 
 export default HowItWorks;
