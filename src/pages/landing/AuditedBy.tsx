@@ -19,13 +19,14 @@ const Container = styled.div`
   border-radius: 1.4rem;
   overflow: hidden;
   background-color: #19152f;
-  padding: 3.1rem 1.7rem;
+  padding: 3.1rem 3.8rem;
   display: flex;
 `;
 
 const Logo = styled.img`
   position: relative;
   width: 31.4rem;
+  margin-right: 3rem;
 `;
 
 const Content = styled.div`
@@ -40,7 +41,7 @@ const Header = styled.div`
   font-size: 2.2rem;
   text-transform: uppercase;
   letter-spacing: 2px;
-  margin-bottom: 2rem;
+  margin-bottom: 2.1rem;
 `;
 
 const Description = styled.div`
@@ -48,11 +49,13 @@ const Description = styled.div`
   font-size: 1.6rem;
   line-height: 2.4rem;
   letter-spacing: 0.15px;
+  margin-bottom: 2.9rem;
 `;
 
 const ViewReport = styled(GradientText)`
   font-weight: 700;
   font-size: 1.8rem;
+  cursor: pointer;
 `;
 
 const Background = styled.img`
