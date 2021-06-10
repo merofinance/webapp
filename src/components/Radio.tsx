@@ -18,6 +18,7 @@ const RadioOption = styled.button`
   align-items: center;
   font-size: 1.5rem;
   font-weight: 700;
+  cursor: pointer;
 `;
 
 type Props = {
