@@ -38,7 +38,6 @@ const Background = () => {
 
   const handleScroll = () => {
     const position = window.pageYOffset;
-    console.log(window.pageYOffset);
     setScrollPosition(position);
   };
 
