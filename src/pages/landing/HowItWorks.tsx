@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Header3 } from "../../styles/Headers";
-import Radio, { RadioOption } from "../../components/Radio";
+import Radio, { RadioOptionType } from "../../components/Radio";
 
-const categories: RadioOption[] = [
+const categories: RadioOptionType[] = [
   {
     label: "earn yeild",
     value: "earn",
