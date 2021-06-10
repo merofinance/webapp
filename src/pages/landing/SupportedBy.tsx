@@ -45,6 +45,12 @@ const ProtocolContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin: 0 5.4rem;
+  cursor: pointer;
+
+  transition: opacity 0.3s;
+  :hover {
+    opacity: 0.8;
+  }
 `;
 
 const Protocol = styled.img`
