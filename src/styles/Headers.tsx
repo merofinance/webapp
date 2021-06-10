@@ -17,3 +17,20 @@ export const Header4 = styled.h4`
   text-align: center;
   max-width: 84rem;
 `;
+
+export const Header5 = styled.h4`
+  font-weight: 700;
+  font-size: 2.6rem;
+  line-height: 3.4rem;
+  text-align: center;
+  margin-bottom: 1rem;
+`;
+
+export const Header6 = styled.h4`
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 2.8rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: var(--sub);
+`;
