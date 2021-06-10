@@ -53,9 +53,13 @@ const Icon = styled.img`
 const ReadMoreButton = styled.button`
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
-const ReadMoreText = styled(GradientText)``;
+const ReadMoreText = styled(GradientText)`
+  font-weight: 400;
+  font-size: 2.1rem;
+`;
 
 const ReadMoreIcon = styled.img``;
 
