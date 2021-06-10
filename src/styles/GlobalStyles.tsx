@@ -6,11 +6,12 @@ const GlobalStyle = createGlobalStyle`
         --bg: #0a0622;
         --main: #fff;
         --sub: #cecdd3;
-        --primary: #fc28d3;
+        --primary: #C532F9;
         --primary-light: #d893fc;
         --primary-gradient: #d127fa;
+        --secondary: #32B2E5;
         --secondary-gradient: #24bde3;
-        --gradient: linear-gradient(to right, var(--secondary-gradient) 0%, var(--primary-gradient) 100%);
+        --gradient: linear-gradient(to right, var(--primary) 0%, var(--secondary) 100%);
 
         --section-margin: 8rem 0;
     }
