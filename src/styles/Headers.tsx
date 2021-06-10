@@ -10,12 +10,13 @@ export const Header2 = styled.h2`
 `;
 
 export const Header3 = styled.h3`
-  text-transform: capitalize;
+  text-transform: uppercase;
   font-weight: 700;
   font-size: 2.2rem;
   line-height: 3rem;
   text-align: center;
   margin-bottom: 3rem;
+  letter-spacing: 2px;
   color: var(--sub);
 `;
 
