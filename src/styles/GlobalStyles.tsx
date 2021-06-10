@@ -5,10 +5,12 @@ const GlobalStyle = createGlobalStyle`
     :root {
         --bg: #0a0622;
         --main: #fff;
+        --sub: #cecdd3;
         --primary: #fc28d3;
         --primary-light: #d893fc;
         --primary-gradient: #d127fa;
         --secondary-gradient: #24bde3;
+        --gradient: linear-gradient(to right, var(--secondary-gradient) 0%, var(--primary-gradient) 100%);
 
         --section-margin: 8rem 0;
     }
