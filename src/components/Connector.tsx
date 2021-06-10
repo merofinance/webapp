@@ -5,6 +5,7 @@ import { Address } from "../lib/types";
 import styled from "styled-components";
 import { injectedConnector } from "../app/web3";
 import { isConnected, setConnected } from "../features/account/accountSlice";
+import GradientText from "../styles/GradientText";
 
 const StyledConnector = styled.button`
   position: relative;
@@ -35,12 +36,13 @@ const ConnectorButton = styled.button`
   height: 4.2rem;
   width: 15.8rem;
   border-radius: 2.1rem;
-  font-weight: 500;
-  font-size: 1.5rem;
-  color: var(--primary);
   background-color: var(--main);
   margin: 0.6rem;
-  border: solid 1px var(--primary-light);
+`;
+
+const ConnectorText = styled(GradientText)`
+  font-weight: 500;
+  font-size: 1.5rem;
 `;
 
 const Aura = styled.div`
@@ -51,7 +53,7 @@ const Aura = styled.div`
   height: 5.4rem;
   border-radius: 2.7rem;
   transform: translate(-50%, -50%);
-  background-color: var(--primary);
+  background: var(--gradient);
   opacity: 0.7;
   transition: all 0.3s;
 `;
@@ -77,9 +79,11 @@ const Connector = () => {
     <StyledConnector>
       <Aura />
       <ConnectorButton onClick={() => activateWallet()}>
-        {connected
-          ? account.slice(0, 5) + "..." + account.slice(account.length - 5)
-          : "Connnect wallet"}
+        <ConnectorText>
+          {connected
+            ? account.slice(0, 5) + "..." + account.slice(account.length - 5)
+            : "Connnect wallet"}
+        </ConnectorText>
       </ConnectorButton>
     </StyledConnector>
   );
