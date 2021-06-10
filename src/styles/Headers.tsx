@@ -9,6 +9,16 @@ export const Header2 = styled.h2`
   margin-bottom: 3rem;
 `;
 
+export const Header3 = styled.h3`
+  text-transform: capitalize;
+  font-weight: 700;
+  font-size: 2.2rem;
+  line-height: 3rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--sub);
+`;
+
 export const Header4 = styled.h4`
   text-transform: capitalize;
   font-weight: 400;
