@@ -21,6 +21,9 @@ const categories: RadioOption[] = [
 const StyledHowItWorks = styled.div`
   width: 100%;
   margin: var(--section-margin);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const HowItWorks = () => {
@@ -29,7 +32,11 @@ const HowItWorks = () => {
   return (
     <StyledHowItWorks>
       <Header3>how it works</Header3>
-      <Radio options={categories} setOption={(value: string) => setCategory(value)} />
+      <Radio
+        options={categories}
+        active={category}
+        setOption={(value: string) => setCategory(value)}
+      />
     </StyledHowItWorks>
   );
 };
