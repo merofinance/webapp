@@ -78,7 +78,18 @@ const AuditedBy = () => {
             Led by security experts from ETH Zurich and trusted by 85+ blockchain companies and
             corporations.
           </Description>
-          <ViewReport>View Report →</ViewReport>
+          <ViewReport
+            onClick={() => {
+              (window as any)
+                .open(
+                  "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO",
+                  "_blank"
+                )
+                .focus();
+            }}
+          >
+            View Report →
+          </ViewReport>
         </Content>
       </Container>
     </StyledAuditedBy>
