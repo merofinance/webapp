@@ -23,7 +23,7 @@ export const Header5 = styled.h4`
   font-size: 2.6rem;
   line-height: 3.4rem;
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 `;
 
 export const Header6 = styled.h4`
@@ -31,7 +31,7 @@ export const Header6 = styled.h4`
   font-size: 2rem;
   line-height: 2.8rem;
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   color: var(--sub);
   max-width: 42rem;
 `;

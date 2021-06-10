@@ -47,7 +47,7 @@ const Benefit = styled.div`
 
 const Icon = styled.img`
   width: 7.9rem;
-  margin-bottom: 2rem;
+  margin-bottom: 3.5rem;
 `;
 
 const ReadMoreButton = styled.button`
