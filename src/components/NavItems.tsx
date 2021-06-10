@@ -5,40 +5,35 @@ import styled from "styled-components";
 type NavItemType = {
   label: string;
   link: string;
-  isExternal: boolean;
 };
 
 const navItems: NavItemType[] = [
   {
-    label: "Pools",
+    label: "claim",
+    link: "/claim",
+  },
+  {
+    label: "pools",
     link: "/pools",
-    isExternal: false,
   },
   {
-    label: "GitHub",
-    link: "https://github.com/backdfund",
-    isExternal: true,
-  },
-  {
-    label: "Blog",
-    link: "https://backd.fund/blog/",
-    isExternal: true,
-  },
-  {
-    label: "Twitter",
-    link: "https://twitter.com/backdfund",
-    isExternal: true,
+    label: "more",
+    link: "/more",
   },
 ];
 
 const StyledNavItems = styled.ul`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   list-style-type: none;
   margin: 0 1rem;
 `;
 
 const NavItem = styled.li`
-  margin: 0 3rem;
+  margin: 0 4.1rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,6 +41,7 @@ const NavItem = styled.li`
 
 const Link = styled.button`
   font-weight: 400;
+  text-transform: capitalize;
   font-size: 1.6rem;
   cursor: pointer;
 `;
@@ -57,14 +53,7 @@ const NavItems = () => {
     <StyledNavItems>
       {navItems.map((navItem: NavItemType) => (
         <NavItem>
-          <Link
-            onClick={() => {
-              if (navItem.isExternal) (window as any).open(navItem.link, "_blank").focus();
-              else history.push(navItem.link);
-            }}
-          >
-            {navItem.label}
-          </Link>
+          <Link onClick={() => history.push(navItem.link)}>{navItem.label}</Link>
         </NavItem>
       ))}
     </StyledNavItems>

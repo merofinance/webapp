@@ -6,6 +6,7 @@ import Connector from "./Connector";
 import NavItems from "./NavItems";
 
 const StyledHeader = styled.div`
+  position: relative;
   width: 100%;
   display: flex;
   align-items: center;
