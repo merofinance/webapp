@@ -12,25 +12,32 @@ const StyledBackground = styled.div`
 `;
 
 type ScrollProps = {
-  scroll: number;
+  transform: string;
 };
 
-const Ovals = styled.img`
+const Ovals = styled.img.attrs((props: ScrollProps) => ({
+  style: {
+    transform: props.transform,
+  },
+}))`
   position: absolute;
+  top: ${(props: ScrollProps) => (props.transform ? 0 : 0)};
   top: 0;
   left: 0;
   width: 100%;
-  transition: transform 0.3s 0s ease-out;
-  transform: ${(props: ScrollProps) => `translateY(${-props.scroll / 4}px)`};
+  transition: transform 0.1s ease-out;
 `;
 
-const Icons = styled.img`
+const Icons = styled.img.attrs((props: ScrollProps) => ({
+  style: {
+    transform: props.transform,
+  },
+}))`
   position: absolute;
-  top: 14rem;
+  top: ${(props: ScrollProps) => (props.transform ? "14rem" : "14rem")};
   left: 0;
   width: 100%;
-  transition: transform 0.3s 0s ease-out;
-  transform: ${(props: ScrollProps) => `translateY(${-props.scroll / 2}px)`};
+  transition: transform 0.1s ease-out;
 `;
 
 const Background = () => {
@@ -51,8 +58,8 @@ const Background = () => {
 
   return (
     <StyledBackground>
-      <Ovals src={ovals} scroll={scrollPosition} />
-      <Icons src={icons} scroll={scrollPosition} />
+      <Ovals src={ovals} transform={`translateY(${-scrollPosition / 4}px)`} />
+      <Icons src={icons} transform={`translateY(${-scrollPosition / 2}px)`} />
     </StyledBackground>
   );
 };
