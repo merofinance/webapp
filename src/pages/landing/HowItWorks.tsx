@@ -12,10 +12,6 @@ const categories: RadioOption[] = [
     label: "earn & protect",
     value: "protect",
   },
-  {
-    label: "earn & protect",
-    value: "protect",
-  },
 ];
 
 const StyledHowItWorks = styled.div`
