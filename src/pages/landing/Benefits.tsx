@@ -134,7 +134,7 @@ const Benefits = () => {
           <Header5>{benefit.header}</Header5>
           <Header6>{benefit.content}</Header6>
           <ReadMoreButton>
-            <ReadMoreText>Read more</ReadMoreText>
+            <ReadMoreText>Read more →</ReadMoreText>
             <ReadMoreIcon />
           </ReadMoreButton>
         </Benefit>
