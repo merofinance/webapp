@@ -7,6 +7,9 @@ import chainSecurity from "../../assets/audit/chain-security.svg";
 const StyledAuditedBy = styled.div`
   width: 100%;
   margin: var(--section-margin);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Container = styled.div`
