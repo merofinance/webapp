@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-export type RadioOption = {
+export type RadioOptionType = {
   label: string;
   value: string;
 };
@@ -26,8 +26,9 @@ const RadioOption = styled.button`
   font-size: 1.5rem;
   cursor: pointer;
 
-  transition: all 0.3s;
-  font-weight: ${(props: OptionProps) => (props.active ? "700" : "500")};
+  transition: color 0.3s;
+  /* font-weight: ${(props: OptionProps) => (props.active ? "700" : "500")}; */
+  font-weight: 700;
   color: ${(props: OptionProps) => (props.active ? "var(--main)" : "var(--sub)")};
 
   :hover {
@@ -52,7 +53,7 @@ const ActiveIndicator = styled.div`
 `;
 
 type Props = {
-  options: RadioOption[];
+  options: RadioOptionType[];
   active: string;
   setOption: (value: string) => void;
 };
@@ -61,9 +62,11 @@ const Radio = (props: Props) => {
   return (
     <StyledRadio>
       <ActiveIndicator
-        activeIndex={props.options.map((option: RadioOption) => option.value).indexOf(props.active)}
+        activeIndex={props.options
+          .map((option: RadioOptionType) => option.value)
+          .indexOf(props.active)}
       />
-      {props.options.map((option: RadioOption) => (
+      {props.options.map((option: RadioOptionType) => (
         <RadioOption
           onClick={() => props.setOption(option.value)}
           active={option.value === props.active}
