@@ -9,9 +9,9 @@ const Button = styled.button`
   padding: 0 5rem;
   background-image: linear-gradient(
     270deg,
-    var(--secondary-gradient) 0%,
-    var(--primary-gradient) 50%,
-    var(--secondary-gradient) 100%
+    var(--primary-gradient) 0%,
+    var(--secondary-gradient) 50%,
+    var(--primary-gradient) 100%
   );
   font-size: 2.1rem;
   font-weight: 700;
