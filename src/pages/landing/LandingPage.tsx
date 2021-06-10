@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { LIVE } from "../../lib/constants";
 import AuditedBy from "./AuditedBy";
 import Background from "./Background";
 import Benefits from "./Benefits";
@@ -27,7 +28,7 @@ const LandingPage = () => {
       <Content>
         <Hero />
         <Benefits />
-        <Preview />
+        {LIVE && <Preview />}
         <HowItWorks />
         <SupportedBy />
         <AuditedBy />
