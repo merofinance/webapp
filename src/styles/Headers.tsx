@@ -33,4 +33,5 @@ export const Header6 = styled.h4`
   text-align: center;
   margin-bottom: 1rem;
   color: var(--sub);
+  max-width: 42rem;
 `;
