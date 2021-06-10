@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import GradientText from "../../styles/GradientText";
 import shield from "../../assets/benefits/shield.svg";
@@ -54,28 +54,37 @@ const Icon = styled.img`
 type IconGlassProps = {
   right: boolean;
   top: boolean;
+  transform: string;
 };
 
-const IconGlass = styled.div`
+const IconGlass = styled.div.attrs((props: IconGlassProps) => ({
+  style: {
+    transform: props.transform,
+  },
+}))`
   position: absolute;
   top: ${(props: IconGlassProps) => (props.top ? "-1rem" : "3.8rem")};
   left: 50%;
-  transform: translateX(calc(-50% + ${(props: IconGlassProps) => (props.right ? "3rem" : "-2rem")}))
-    rotate(${(props: IconGlassProps) => (!props.right ? "90" : props.top ? "-90" : "0")}deg);
   width: 4.8rem;
   height: 4.8rem;
   border-radius: 13px;
   overflow: hidden;
+  transition: transform 0.1s ease-out;
 
   backdrop-filter: blur(5px);
   /* Note: backdrop-filter has minimal browser support */
 `;
+
+type IconGlassGradientProps = {
+  rotate: number;
+};
 
 const IconGlassGradient = styled.div`
   width: 100%;
   height: 100%;
   background: linear-gradient(140.22deg, rgba(8, 200, 249, 0.55) 0%, rgba(247, 30, 204, 0.8) 100%);
   opacity: 0.6;
+  transform: rotate(${(props: IconGlassGradientProps) => props.rotate}deg);
 `;
 
 const ReadMoreButton = styled.button`
@@ -92,13 +101,35 @@ const ReadMoreText = styled(GradientText)`
 const ReadMoreIcon = styled.img``;
 
 const Benefits = () => {
+  const benefitsRef = useRef<HTMLDivElement>(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
+
+  const handleScroll = () => {
+    const position = window.pageYOffset;
+    setScrollPosition(position);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <StyledBenefits>
+    <StyledBenefits ref={benefitsRef}>
       {benefits.map((benefit: BenfitsType, index: number) => (
-        <Benefit>
+        <Benefit key={benefit.header}>
           <Icon src={benefit.icon} />
-          <IconGlass right={index % 2 === 0} top={index === 2}>
-            <IconGlassGradient />
+          <IconGlass
+            right={index % 2 === 0}
+            top={index === 2}
+            transform={`translate(calc(-50% + ${index % 2 === 0 ? "3rem" : "-2rem"}), ${
+              -(scrollPosition - 380) / (window.innerHeight / 50)
+            }px)`}
+          >
+            <IconGlassGradient rotate={index === 1 ? 90 : index === 2 ? -90 : 0} />
           </IconGlass>
           <Header5>{benefit.header}</Header5>
           <Header6>{benefit.content}</Header6>
