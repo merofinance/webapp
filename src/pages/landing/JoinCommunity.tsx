@@ -46,6 +46,7 @@ const Social = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+  cursor: pointer;
 `;
 
 const Link = styled(GradientText)`
