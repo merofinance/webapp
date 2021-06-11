@@ -16,6 +16,14 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 3.6rem;
+  width: 111rem;
+  border-radius: 1.4rem;
+  background: linear-gradient(
+    to right,
+    rgba(34, 31, 55, 0.1) 0%,
+    #221f37 50%,
+    rgba(34, 31, 55, 0.1) 100%
+  );
 
   button {
     transform: translateY(6.7rem);
