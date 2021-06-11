@@ -23,11 +23,6 @@ const Button = styled.button`
 
   :hover {
     background-position: right center;
-    transform: scale(1.01);
-  }
-
-  :active {
-    transform: scale(0.99);
   }
 `;
 
