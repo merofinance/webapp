@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+type Props = {
+  hero?: boolean;
+};
+
 const Button = styled.button`
   height: 6.2rem;
   border-radius: 3.1rem;
@@ -16,7 +20,7 @@ const Button = styled.button`
   font-size: 2.1rem;
   font-weight: 700;
   text-transform: capitalize;
-  margin-top: 8rem;
+  margin-top: ${(props: Props) => (props.hero ? "8rem" : "0")};
   cursor: pointer;
   transition: 0.5s;
   background-size: 200% auto;
