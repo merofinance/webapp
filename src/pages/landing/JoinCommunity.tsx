@@ -44,7 +44,7 @@ const Social = styled.div`
   border-radius: 1.4rem;
   background-color: #141128;
   display: flex;
-  align-items: bottom;
+  align-items: flex-end;
   justify-content: space-between;
 `;
 
