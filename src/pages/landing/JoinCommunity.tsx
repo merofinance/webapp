@@ -32,9 +32,9 @@ const StyledJoinCommunity = styled.div`
 `;
 
 const Socials = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2.3rem;
 `;
 
 const Social = styled.div`
