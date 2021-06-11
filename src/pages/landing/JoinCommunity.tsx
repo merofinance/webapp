@@ -9,20 +9,24 @@ import github from "../../assets/socials/github.svg";
 type SocialType = {
   label: string;
   icon: string;
+  link: string;
 };
 
 const socials: SocialType[] = [
   {
     label: "Telegram →",
     icon: telegram,
+    link: "https://t.me/backdchat",
   },
   {
     label: "Twitter →",
     icon: twitter,
+    link: "https://twitter.com/backdfund",
   },
   {
     label: "GitHub →",
     icon: github,
+    link: "https://github.com/backdfund",
   },
 ];
 
@@ -75,7 +79,11 @@ const JoinCommunity = () => {
       <Header3>join the community</Header3>
       <Socials>
         {socials.map((social: SocialType) => (
-          <Social>
+          <Social
+            onClick={() => {
+              (window as any).open(social.link, "_blank").focus();
+            }}
+          >
             <Link>{social.label}</Link>
             <IconContainer>
               <Icon src={social.icon} />
