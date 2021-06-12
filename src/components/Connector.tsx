@@ -21,7 +21,6 @@ const StyledConnector = styled.button`
   }
 
   :active {
-    transform: scale(0.98);
     div {
       width: 16.5rem;
       height: 4.8rem;
