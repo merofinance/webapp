@@ -36,10 +36,6 @@ const linkLists: LinkListType[] = [
         label: "Telegram Ann.",
         link: "https://t.me/backdchat",
       },
-      {
-        label: "twitter",
-        link: "",
-      },
     ],
   },
   {
