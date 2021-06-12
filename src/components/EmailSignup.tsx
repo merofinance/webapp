@@ -25,11 +25,16 @@ const Input = styled.input`
   border: ${(props: InputProps) =>
     props.valid ? "solid 1px var(--main)" : "solid 1px var(--error)"};
   width: 26rem;
-  height: 56rem;
-  background-color: none;
+  height: 5.6rem;
+  background-color: var(--bg);
+  border-radius: 1.4rem;
   padding: 0 1.2rem;
   font-size: 1.6rem;
   font-weight: 400;
+
+  ::placeholder {
+    color: var(--main);
+  }
 `;
 
 const SubmitButton = styled(Button)`
@@ -54,7 +59,7 @@ const EmailSignup = () => {
   const validateEmail = (email: string): boolean => {
     const re =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const _valid = re.test(String(email).toLowerCase());
+    const _valid = email ? re.test(String(email).toLowerCase()) : true;
     setValid(_valid);
     return _valid;
   };
@@ -75,7 +80,13 @@ const EmailSignup = () => {
     <StyledEmailSignup>
       <Header>Receive latest Backd updates</Header>
       <Form onSubmit={onSubmit}>
-        <Input valid={valid} type="email" value={email} onChange={onChange} />
+        <Input
+          placeholder="Enter your email"
+          valid={valid}
+          type="email"
+          value={email}
+          onChange={onChange}
+        />
         <SubmitButton type="submit">submit</SubmitButton>
       </Form>
       <Note>We don’t share this with anyone.</Note>
