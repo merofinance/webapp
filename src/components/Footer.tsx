@@ -46,11 +46,11 @@ const linkLists: LinkListType[] = [
     header: "resources",
     links: [
       {
-        label: "documentation",
+        label: "Documentation",
         link: "https://google.com/",
       },
       {
-        label: "blog",
+        label: "Blog",
         link: "https://google.com/",
       },
     ],
@@ -76,6 +76,7 @@ const LinkList = styled.div`
 `;
 
 const LinkHeaer = styled.div`
+  text-transform: capitalize;
   font-weight: 700;
   font-size: 1.6rem;
   margin-bottom: 1.2rem;
