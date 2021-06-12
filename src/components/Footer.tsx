@@ -55,8 +55,8 @@ const linkLists: LinkListType[] = [
 
 const StyledFooter = styled.div`
   width: 100%;
-  margin: var(--section-margin);
   margin-top: 8rem;
+  margin-bottom: 3.7rem;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
