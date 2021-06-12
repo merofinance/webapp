@@ -78,6 +78,7 @@ const AuditedBy = () => {
             Led by security experts from ETH Zurich and trusted by 85+ blockchain companies and
             corporations.
           </Description>
+          {/* TODO */}
           <ViewReport
             onClick={() => {
               (window as any)

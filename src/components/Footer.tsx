@@ -35,7 +35,7 @@ const linkLists: LinkListType[] = [
       },
       {
         label: "Telegram Ann.",
-        link: "https://t.me/backdchat",
+        link: "https://t.me/backdchat", // TODO
       },
     ],
   },
@@ -44,11 +44,11 @@ const linkLists: LinkListType[] = [
     links: [
       {
         label: "Documentation",
-        link: "https://google.com/",
+        link: "https://google.com/", // TODO
       },
       {
         label: "Blog",
-        link: "https://google.com/",
+        link: "https://google.com/", // TODO
       },
     ],
   },

@@ -60,6 +60,7 @@ const Background = () => {
     <StyledBackground>
       <Ovals src={ovals} transform={`translateY(${-scrollPosition / 4}px)`} />
       <Icons src={icons} transform={`translateY(${-scrollPosition / 2}px)`} />
+      {/* TODO */}
     </StyledBackground>
   );
 };
