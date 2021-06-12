@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import logo from "../assets/full-logo.svg";
+import EmailSignup from "./EmailSignup";
 
 type LinkType = {
   label: string;
@@ -73,7 +74,7 @@ const LinkList = styled.div`
   flex-direction: column;
 `;
 
-const LinkHeaer = styled.div`
+const LinkHeader = styled.div`
   text-transform: capitalize;
   font-weight: 700;
   font-size: 1.6rem;
@@ -93,7 +94,7 @@ const Footer = () => {
       <Logo src={logo} />
       {linkLists.map((linkList: LinkListType) => (
         <LinkList>
-          <LinkHeaer>{linkList.header}</LinkHeaer>
+          <LinkHeader>{linkList.header}</LinkHeader>
           {linkList.links.map((link: LinkType) => (
             <Link href={link.link} target="_blank">
               {link.label}
@@ -101,7 +102,7 @@ const Footer = () => {
           ))}
         </LinkList>
       ))}
-      <div>meow</div>
+      <EmailSignup />
     </StyledFooter>
   );
 };
