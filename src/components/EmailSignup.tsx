@@ -10,7 +10,7 @@ const StyledEmailSignup = styled.div`
 const Header = styled.div`
   font-weight: 700;
   font-size: 1.6rem;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.7rem;
 `;
 
 const Form = styled.form`
@@ -49,6 +49,7 @@ const SubmitButton = styled(Button)`
 const Note = styled.div`
   font-weight: 400;
   font-size: 1.2rem;
+  margin-top: 0.5rem;
 `;
 
 const EmailSignup = () => {
