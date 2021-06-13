@@ -62,15 +62,31 @@ const StyledFooter = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+
+    div:nth-child(5) {
+      order: -1;
+    }
+  }
 `;
 
 const Logo = styled.img`
   width: 13.5rem;
+
+  @media (max-width: 600px) {
+    margin-bottom: 6.2rem;
+  }
 `;
 
 const LinkList = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 600px) {
+    margin-bottom: 5.6rem;
+  }
 `;
 
 const LinkHeader = styled.div`
