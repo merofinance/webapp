@@ -27,6 +27,10 @@ const Ovals = styled.img.attrs((props: ScrollProps) => ({
   left: 0;
   width: 100%;
   transition: transform 0.1s ease-out;
+
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const Icons = styled.img.attrs((props: ScrollProps) => ({
@@ -39,6 +43,12 @@ const Icons = styled.img.attrs((props: ScrollProps) => ({
   left: 0;
   width: 100%;
   transition: transform 0.1s ease-out;
+
+  @media (max-width: 600px) {
+    width: 130%;
+    left: -15%;
+    top: 5rem;
+  }
 `;
 
 const DarkIcons = styled.img.attrs((props: ScrollProps) => ({
@@ -51,6 +61,10 @@ const DarkIcons = styled.img.attrs((props: ScrollProps) => ({
   left: 0;
   width: 100%;
   transition: transform 0.1s ease-out;
+
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const Background = () => {
