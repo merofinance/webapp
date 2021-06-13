@@ -44,7 +44,6 @@ const GetStarted = () => {
       <Container>
         <Header3>get started</Header3>
         <Body>Deposit liquidity and start earning yield.</Body>
-        {/* TODO */}
         <Button>view pools</Button>
       </Container>
     </StyledGetStarted>

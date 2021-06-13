@@ -28,7 +28,6 @@ const LandingPage = () => {
       <Content>
         <Hero />
         <Benefits />
-        {/* TODO */}
         {LIVE && <Preview />}
         <HowItWorks />
         <SupportedBy />

@@ -14,7 +14,6 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     this.props.dispatch(setError({ error: error.message }));
-    // TODO: connect with rollbar or similar
   }
 
   render() {

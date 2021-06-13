@@ -33,7 +33,6 @@ const HowItWorks = () => {
         active={category}
         setOption={(value: string) => setCategory(value)}
       />
-      {/* TODO */}
     </StyledHowItWorks>
   );
 };

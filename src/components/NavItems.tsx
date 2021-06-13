@@ -18,7 +18,7 @@ const navItems: NavItemType[] = [
   },
   {
     label: "more",
-    link: "/more", // TODO
+    link: "/more",
   },
 ];
 

@@ -74,7 +74,7 @@ const EmailSignup = () => {
     e.preventDefault();
     setValidate(true);
     const _valid = validateEmail(email);
-    if (_valid) alert("Email Signup Not Implemented"); // TODO
+    if (_valid) alert("Email Signup Not Implemented");
   };
 
   return (

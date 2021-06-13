@@ -21,7 +21,6 @@ export function EthAddress({
   ellipsis = defaultEllipsis,
   etherscanLink = false,
 }: EthAddressProps) {
-  // TODO: support other networks
   const etherscanURL = `https://etherscan.io/address/${value}`;
 
   const hasPrefix = value.startsWith(addressPrefix);
@@ -37,10 +36,7 @@ export function EthAddress({
   if (truncate === "middle") {
     const takeUntil = Math.ceil(maxLength / 2);
     const takeFrom = addressLength - Math.floor(maxLength / 2);
-    value =
-      value.slice(0, takeUntil) +
-      ellipsis +
-      value.slice(takeFrom, value.length);
+    value = value.slice(0, takeUntil) + ellipsis + value.slice(takeFrom, value.length);
   } else if (truncate === "end") {
     value = value.slice(0, maxLength);
   }
