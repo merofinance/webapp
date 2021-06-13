@@ -66,7 +66,6 @@ const StyledFooter = styled.div`
 
 const Logo = styled.img`
   width: 13.5rem;
-  margin-right: 12rem;
 `;
 
 const LinkList = styled.div`
@@ -92,6 +91,7 @@ const Footer = () => {
   return (
     <StyledFooter>
       <Logo src={logo} />
+      <div></div>
       {linkLists.map((linkList: LinkListType) => (
         <LinkList>
           <LinkHeader>{linkList.header}</LinkHeader>
