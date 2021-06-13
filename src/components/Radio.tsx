@@ -23,15 +23,40 @@ const RadioOption = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.5rem;
   cursor: pointer;
+  transition: all 0.3s;
 
+  :hover {
+    color: var(--main);
+  }
+
+  @media (max-width: 600px) {
+    height: 3.8rem;
+    width: 13.9rem;
+    border-radius: 14px;
+    background-color: ${(props: OptionProps) =>
+      props.active ? "rgba(197, 50, 249, 0.1)" : "transparent"};
+    border: solid 1px
+      ${(props: OptionProps) =>
+        props.active ? "rgba(197, 50, 249, 0.7)" : "rgba(197, 50, 249, 0.5)"};
+    margin: 0 0.8rem;
+  }
+`;
+
+const RadioText = styled.div`
+  font-size: 1.5rem;
   transition: color 0.3s;
   font-weight: 700;
   color: ${(props: OptionProps) => (props.active ? "var(--main)" : "var(--sub)")};
 
-  :hover {
-    color: var(--main);
+  @media (max-width: 600px) {
+    font-size: 1.4rem;
+    letter-spacing: 0.46px;
+    font-weight: 500;
+    background: var(--gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 `;
 
@@ -49,6 +74,10 @@ const ActiveIndicator = styled.div`
   background-color: #322c4b;
   transition: transform 0.3s;
   transform: ${(props: IndicatorProps) => `translateX(${props.activeIndex * 15.2}rem)`};
+
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 type Props = {
@@ -71,7 +100,7 @@ const Radio = (props: Props) => {
           onClick={() => props.setOption(option.value)}
           active={option.value === props.active}
         >
-          {option.label}
+          <RadioText active={option.value === props.active}>{option.label}</RadioText>
         </RadioOption>
       ))}
     </StyledRadio>
