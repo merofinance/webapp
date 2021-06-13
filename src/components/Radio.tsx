@@ -27,7 +27,6 @@ const RadioOption = styled.button`
   cursor: pointer;
 
   transition: color 0.3s;
-  /* font-weight: ${(props: OptionProps) => (props.active ? "700" : "500")}; */
   font-weight: 700;
   color: ${(props: OptionProps) => (props.active ? "var(--main)" : "var(--sub)")};
 
@@ -68,6 +67,7 @@ const Radio = (props: Props) => {
       />
       {props.options.map((option: RadioOptionType) => (
         <RadioOption
+          key={option.label}
           onClick={() => props.setOption(option.value)}
           active={option.value === props.active}
         >
