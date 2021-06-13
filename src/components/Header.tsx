@@ -25,15 +25,20 @@ const StyledHeader = styled.div`
 
   background-color: ${(props: HeaderProps) => (props.isSticky ? "#120e2c" : "transparent")};
   box-shadow: -4px 0px 4px rgba(0, 0, 0, ${(props: HeaderProps) => (props.isSticky ? "0.25" : "0")});
+
+  @media (max-width: 600px) {
+    padding: 2.3rem 3.3rem;
+    margin-bottom: 0;
+  }
 `;
 
 const Logo = styled.img`
   height: 4.8rem;
   cursor: pointer;
-`;
 
-const Actions = styled.div`
-  display: flex;
+  @media (max-width: 600px) {
+    height: 2.9rem;
+  }
 `;
 
 const Header = () => {
@@ -57,10 +62,8 @@ const Header = () => {
   return (
     <StyledHeader isSticky={scrollPosition > 40}>
       <Logo onClick={() => history.push("/")} src={logo} />
-      <Actions>
-        <NavItems />
-        <Connector />
-      </Actions>
+      <NavItems />
+      <Connector />
     </StyledHeader>
   );
 };
