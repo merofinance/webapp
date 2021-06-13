@@ -93,10 +93,10 @@ const Footer = () => {
       <Logo src={logo} />
       <div></div>
       {linkLists.map((linkList: LinkListType) => (
-        <LinkList>
+        <LinkList key={linkList.header}>
           <LinkHeader>{linkList.header}</LinkHeader>
           {linkList.links.map((link: LinkType) => (
-            <Link href={link.link} target="_blank">
+            <Link key={link.label} href={link.link} target="_blank">
               {link.label}
             </Link>
           ))}
