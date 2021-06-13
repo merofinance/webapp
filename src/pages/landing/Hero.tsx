@@ -9,6 +9,10 @@ const StyledHero = styled.div`
   flex-direction: column;
   align-items: center;
   margin: var(--section-margin);
+
+  @media (max-width: 600px) {
+    margin: var(--mobile-section-margin);
+  }
 `;
 
 const Hero = () => {
