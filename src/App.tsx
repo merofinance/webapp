@@ -32,9 +32,9 @@ const StyledApp = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 3rem 10rem;
+  padding: 0 10rem;
+  padding-bottom: 3rem;
   min-height: 100vh;
-  background-color: var(--bg);
 `;
 
 library.add(faInfoCircle, faClock, faCheck, faTimesCircle, faExternalLinkAlt, faTrashAlt);
@@ -56,9 +56,9 @@ function App() {
   return (
     <ErrorBoundary dispatch={dispatch}>
       <Web3ReactProvider getLibrary={getLibrary}>
+        <Header />
         <StyledApp>
           <Router>
-            <Header />
             <ErrorAlert />
             <Switch>
               <PrivateRoute path="/:poolName/deposit">
