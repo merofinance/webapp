@@ -7,7 +7,7 @@ import { injectedConnector } from "../app/web3";
 import { isConnected, setConnected } from "../features/account/accountSlice";
 import GradientText from "../styles/GradientText";
 
-const StyledConnector = styled.button`
+const DesktopConnector = styled.button`
   position: relative;
   transition: transform 0.3s;
 
@@ -27,6 +27,10 @@ const StyledConnector = styled.button`
       border-radius: 2.4rem;
       opacity: 0.8;
     }
+  }
+
+  @media (max-width: 600px) {
+    display: none;
   }
 `;
 
@@ -57,6 +61,47 @@ const Aura = styled.div`
   transition: all 0.3s;
 `;
 
+const MobileConnector = styled.div`
+  width: 3.2rem;
+  height: 3.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid 1px var(--subtle);
+  border-radius: 7px;
+
+  @media (min-width: 601px) {
+    display: none;
+  }
+`;
+
+const DotContainer = styled.div`
+  position: relative;
+  width: 1.2rem;
+  height: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const DotAura = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--success);
+  border-radius: 50%;
+  opacity: 0.3;
+`;
+
+const DotCenter = styled.div`
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background-color: var(--success);
+`;
+
 const Connector = () => {
   const { library: backd, activate } = useWeb3React();
   const [account, setAccount] = useState<Address>("");
@@ -75,16 +120,24 @@ const Connector = () => {
   }, [backd]);
 
   return (
-    <StyledConnector>
-      <Aura />
-      <ConnectorButton onClick={() => activateWallet()}>
-        <ConnectorText>
-          {connected
-            ? account.slice(0, 5) + "..." + account.slice(account.length - 5)
-            : "Connnect wallet"}
-        </ConnectorText>
-      </ConnectorButton>
-    </StyledConnector>
+    <>
+      <DesktopConnector>
+        <Aura />
+        <ConnectorButton onClick={() => activateWallet()}>
+          <ConnectorText>
+            {connected
+              ? account.slice(0, 5) + "..." + account.slice(account.length - 5)
+              : "Connnect wallet"}
+          </ConnectorText>
+        </ConnectorButton>
+      </DesktopConnector>
+      <MobileConnector>
+        <DotContainer>
+          <DotAura />
+          <DotCenter />
+        </DotContainer>
+      </MobileConnector>
+    </>
   );
 };
 
