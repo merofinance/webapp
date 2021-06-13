@@ -9,6 +9,10 @@ const StyledGetStarted = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 600px) {
+    margin: var(--mobile-section-margin);
+  }
 `;
 
 const Container = styled.div`
@@ -28,6 +32,14 @@ const Container = styled.div`
   button {
     transform: translateY(6.7rem);
   }
+
+  @media (max-width: 600px) {
+    width: 100%;
+
+    button {
+      transform: translateY(5.7rem);
+    }
+  }
 `;
 
 const Body = styled.p`
@@ -36,6 +48,11 @@ const Body = styled.p`
   font-weight: 700;
   line-height: 5.6rem;
   text-align: center;
+
+  @media (max-width: 600px) {
+    font-size: 3.2rem;
+    line-height: 3.7rem;
+  }
 `;
 
 const GetStarted = () => {
