@@ -28,6 +28,14 @@ const Button = styled.button`
   :hover {
     background-position: right center;
   }
+
+  @media (max-width: 600px) {
+    height: 4.8rem;
+    border-radius: 2.4rem;
+    font-size: 1.4rem;
+    padding: 0 5.2rem;
+    margin-top: ${(props: Props) => (props.hero ? "4.5rem" : "0")};
+  }
 `;
 
 export default Button;
