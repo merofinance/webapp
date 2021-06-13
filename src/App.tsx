@@ -35,6 +35,12 @@ const StyledApp = styled.div`
   padding: 0 10rem;
   padding-bottom: 3rem;
   min-height: 100vh;
+  overflow: hidden;
+
+  @media (max-width: 600px) {
+    padding: 0 3.3rem;
+    padding-bottom: 3.3rem;
+  }
 `;
 
 library.add(faInfoCircle, faClock, faCheck, faTimesCircle, faExternalLinkAlt, faTrashAlt);
