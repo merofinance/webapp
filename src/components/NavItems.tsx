@@ -37,13 +37,21 @@ const NavItem = styled.li`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 600px) {
+    margin: 0 1.7rem;
+  }
 `;
 
 const Link = styled.button`
-  font-weight: 400;
+  font-weight: 500;
   text-transform: capitalize;
   font-size: 1.6rem;
   cursor: pointer;
+
+  @media (max-width: 600px) {
+    font-size: 1.1rem;
+  }
 `;
 
 const NavItems = () => {
