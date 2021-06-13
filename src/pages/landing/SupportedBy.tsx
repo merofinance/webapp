@@ -63,8 +63,8 @@ const SupportedBy = () => {
     <StyledSupportedBy>
       <Header3>supported by</Header3>
       <Protocols>
-        {protocols.map((protocol: ProtocolType) => (
-          <ProtocolContainer>
+        {protocols.map((protocol: ProtocolType, index: number) => (
+          <ProtocolContainer key={index}>
             <Protocol
               onClick={() => {
                 (window as any).open(protocol.link, "_blank").focus();
