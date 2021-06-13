@@ -5,12 +5,22 @@ import Button from "../styles/Button";
 const StyledEmailSignup = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 600px) {
+    width: 100%;
+    margin-bottom: 12rem;
+  }
 `;
 
 const Header = styled.div`
   font-weight: 700;
   font-size: 1.6rem;
   margin-bottom: 1.7rem;
+
+  @media (max-width: 600px) {
+    font-size: 1.4rem;
+    margin-bottom: 2rem;
+  }
 `;
 
 const Form = styled.form`
@@ -35,6 +45,11 @@ const Input = styled.input`
   ::placeholder {
     color: var(--main);
   }
+
+  @media (max-width: 600px) {
+    width: auto;
+    flex: 1;
+  }
 `;
 
 const SubmitButton = styled(Button)`
@@ -44,6 +59,12 @@ const SubmitButton = styled(Button)`
   font-weight: 700;
   font-size: 1.4rem;
   margin-left: 1.6rem;
+
+  @media (max-width: 600px) {
+    width: 8.8rem;
+    height: 5.6rem;
+    margin-left: 0.8rem;
+  }
 `;
 
 const Note = styled.div`
