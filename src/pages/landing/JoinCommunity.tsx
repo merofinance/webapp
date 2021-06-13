@@ -80,6 +80,7 @@ const JoinCommunity = () => {
       <Socials>
         {socials.map((social: SocialType) => (
           <Social
+            key={social.label}
             onClick={() => {
               (window as any).open(social.link, "_blank").focus();
             }}
