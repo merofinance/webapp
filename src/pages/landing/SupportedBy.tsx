@@ -31,12 +31,29 @@ const StyledSupportedBy = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (max-width: 600px) {
+    margin: var(--mobile-section-margin);
+  }
 `;
 
 const Protocols = styled.div`
   display: flex;
   align-items: center;
   margin: 3rem 0;
+
+  @media (max-width: 600px) {
+    margin: 0;
+    flex-direction: column;
+
+    div:nth-child(1) {
+      order: 0;
+    }
+
+    div:nth-child(3) {
+      order: 1;
+    }
+  }
 `;
 
 const ProtocolContainer = styled.div`
@@ -46,16 +63,32 @@ const ProtocolContainer = styled.div`
   align-items: center;
   margin: 0 5.4rem;
   cursor: pointer;
+  order: 2;
 
   transition: opacity 0.3s;
   :hover {
     opacity: 0.8;
   }
+
+  @media (max-width: 600px) {
+    margin: 2.3rem 0;
+    width: auto;
+  }
 `;
+
+type ProtocolImageType = {
+  maxWidthMobile: string;
+};
 
 const Protocol = styled.img`
   max-width: 32.2rem;
   max-height: 7.7rem;
+
+  @media (max-width: 600px) {
+    max-width: ${(props: ProtocolImageType) =>
+      props.maxWidthMobile ? props.maxWidthMobile : "16.6rem"};
+    max-height: 4rem;
+  }
 `;
 
 const SupportedBy = () => {
@@ -70,6 +103,7 @@ const SupportedBy = () => {
                 (window as any).open(protocol.link, "_blank").focus();
               }}
               src={protocol.image}
+              maxWidthMobile={index === 2 ? "12rem" : ""}
             />
           </ProtocolContainer>
         ))}
