@@ -20,6 +20,10 @@ const StyledHowItWorks = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (max-width: 600px) {
+    margin: var(--mobile-section-margin);
+  }
 `;
 
 const HowItWorks = () => {
