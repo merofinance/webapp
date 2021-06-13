@@ -3,6 +3,7 @@ import styled from "styled-components";
 import GradientText from "../../styles/GradientText";
 import background from "../../assets/audit/background.svg";
 import chainSecurity from "../../assets/audit/chain-security.svg";
+import chainSecurityMobile from "../../assets/audit/chain-security-mobile.svg";
 
 const StyledAuditedBy = styled.div`
   width: 100%;
@@ -10,6 +11,10 @@ const StyledAuditedBy = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 600px) {
+    margin: var(--mobile-section-margin);
+  }
 `;
 
 const Container = styled.div`
@@ -21,12 +26,22 @@ const Container = styled.div`
   background-color: #19152f;
   padding: 3.1rem 3.8rem;
   display: flex;
+
+  @media (max-width: 600px) {
+    padding: 1.4rem 1.6rem;
+    width: auto;
+    height: auto;
+  }
 `;
 
 const Logo = styled.img`
   position: relative;
   width: 31.4rem;
   margin-right: 3rem;
+
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const Content = styled.div`
@@ -42,6 +57,22 @@ const Header = styled.div`
   text-transform: uppercase;
   letter-spacing: 2px;
   margin-bottom: 2.1rem;
+
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+    color: var(--sub);
+    margin-bottom: 3rem;
+    line-height: 1.6rem;
+  }
+`;
+
+const MobileLogo = styled.img`
+  width: 18.4rem;
+  margin-bottom: 2.1rem;
+
+  @media (min-width: 601px) {
+    display: none;
+  }
 `;
 
 const Description = styled.div`
@@ -50,20 +81,36 @@ const Description = styled.div`
   line-height: 2.4rem;
   letter-spacing: 0.15px;
   margin-bottom: 2.9rem;
+
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const ViewReport = styled(GradientText)`
   font-weight: 700;
   font-size: 1.8rem;
   cursor: pointer;
+
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+    margin-bottom: 1.3rem;
+  }
 `;
 
 const Background = styled.img`
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  right: 0;
+  bottom: 0;
+  height: 130%;
+
+  @media (max-width: 600px) {
+    height: auto;
+    width: 100%;
+  }
 `;
 
 const AuditedBy = () => {
@@ -74,6 +121,7 @@ const AuditedBy = () => {
         <Logo src={chainSecurity} />
         <Content>
           <Header>audited by</Header>
+          <MobileLogo src={chainSecurityMobile} />
           <Description>
             Led by security experts from ETH Zurich and trusted by 85+ blockchain companies and
             corporations.
