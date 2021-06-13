@@ -52,7 +52,7 @@ const NavItems = () => {
   return (
     <StyledNavItems>
       {navItems.map((navItem: NavItemType) => (
-        <NavItem>
+        <NavItem key={navItem.label}>
           <Link onClick={() => history.push(navItem.link)}>{navItem.label}</Link>
         </NavItem>
       ))}
