@@ -37,6 +37,11 @@ const StyledBenefits = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+
+  @media (max-width: 600px) {
+    margin: var(--mobile-section-margin);
+    flex-direction: column;
+  }
 `;
 
 const Benefit = styled.div`
@@ -44,11 +49,20 @@ const Benefit = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (max-width: 600px) {
+    margin: 2.9rem 0;
+  }
 `;
 
 const Icon = styled.img`
   width: 7.9rem;
   margin-bottom: 3.5rem;
+
+  @media (max-width: 600px) {
+    width: 4.7rem;
+    margin-bottom: 2rem;
+  }
 `;
 
 type IconGlassProps = {
@@ -63,7 +77,7 @@ const IconGlass = styled.div.attrs((props: IconGlassProps) => ({
   },
 }))`
   position: absolute;
-  top: ${(props: IconGlassProps) => (props.top ? "-1rem" : "3.8rem")};
+  top: ${(props: IconGlassProps) => (props.top ? "-1.5rem" : "1.1rem")};
   left: 50%;
   width: 4.8rem;
   height: 4.8rem;
@@ -72,7 +86,13 @@ const IconGlass = styled.div.attrs((props: IconGlassProps) => ({
   transition: transform 0.1s ease-out;
 
   backdrop-filter: blur(5px);
-  /* Note: backdrop-filter has minimal browser support */
+
+  @media (max-width: 600px) {
+    backdrop-filter: blur(3px);
+    width: 3rem;
+    height: 3rem;
+    border-radius: 8px;
+  }
 `;
 
 type IconGlassGradientProps = {
@@ -96,9 +116,11 @@ const ReadMoreButton = styled.button`
 const ReadMoreText = styled(GradientText)`
   font-weight: 400;
   font-size: 2.1rem;
-`;
 
-const ReadMoreIcon = styled.img``;
+  @media (max-width: 600px) {
+    display: none;
+  }
+`;
 
 const Benefits = () => {
   const benefitsRef = useRef<HTMLDivElement>(null);
@@ -125,7 +147,7 @@ const Benefits = () => {
           <IconGlass
             right={index % 2 === 0}
             top={index === 2}
-            transform={`translate(calc(-50% + ${index % 2 === 0 ? "3rem" : "-2rem"}), ${
+            transform={`translate(calc(-50% + ${index % 2 === 0 ? "2rem" : "-1.2rem"}), ${
               -(scrollPosition - 380) / (window.innerHeight / 50)
             }px)`}
           >
@@ -135,7 +157,6 @@ const Benefits = () => {
           <Header6>{benefit.content}</Header6>
           <ReadMoreButton>
             <ReadMoreText>Read more →</ReadMoreText>
-            <ReadMoreIcon />
           </ReadMoreButton>
         </Benefit>
       ))}
