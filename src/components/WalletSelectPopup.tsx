@@ -58,6 +58,7 @@ const WalletSelectPopup = (props: Props) => {
   const activateWallet = () => {
     activate(injectedConnector).then(() => {
       dispatch(setConnected(true));
+      props.close();
     });
   };
 
