@@ -21,12 +21,12 @@ import { ErrorAlert } from "./features/error/ErrorAlert";
 import { ErrorBoundary } from "./features/error/ErrorBoundary";
 import { setError } from "./features/error/errorSlice";
 import { PoolManagement } from "./features/pool/PoolManagement";
-import { PoolsList } from "./features/pools-list/PoolsList";
 import { createBackd } from "./lib/factory";
 import MockSigner from "./lib/mock/signer";
 import LandingPage from "./pages/landing/LandingPage";
 import styled from "styled-components";
 import Footer from "./components/Footer";
+import PoolsPage from "./pages/pools/PoolsPage";
 
 const StyledApp = styled.div`
   width: 100%;
@@ -83,7 +83,7 @@ function App() {
               </Route>
 
               <PrivateRoute path="/pools">
-                <PoolsList />
+                <PoolsPage />
               </PrivateRoute>
 
               <PrivateRoute path="/">
