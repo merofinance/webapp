@@ -31,6 +31,7 @@ const RadioOption = styled.button`
   }
 
   @media (max-width: 600px) {
+    line-height: 26px;
     height: 3.8rem;
     width: 13.9rem;
     border-radius: 14px;
