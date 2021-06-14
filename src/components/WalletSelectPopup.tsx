@@ -45,7 +45,7 @@ type OptionProps = {
   rightColor: string;
 };
 
-const Option = styled.div`
+const Option = styled.button`
   width: 100%;
   padding: 1.9rem 2.2rem;
   display: flex;
