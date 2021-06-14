@@ -84,13 +84,17 @@ const DotContainer = styled.div`
   align-items: center;
 `;
 
+type Connected = {
+  connected: boolean;
+};
+
 const DotAura = styled.div`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--success);
+  background-color: ${(props: Connected) => (props.connected ? "var(--success)" : "var(--error)")};
   border-radius: 50%;
   opacity: 0.3;
 `;
@@ -99,7 +103,7 @@ const DotCenter = styled.div`
   width: 0.6rem;
   height: 0.6rem;
   border-radius: 50%;
-  background-color: var(--success);
+  background-color: ${(props: Connected) => (props.connected ? "var(--success)" : "var(--error)")};
 `;
 
 const Connector = () => {
@@ -133,8 +137,8 @@ const Connector = () => {
       </DesktopConnector>
       <MobileConnector>
         <DotContainer>
-          <DotAura />
-          <DotCenter />
+          <DotAura connected={connected} />
+          <DotCenter connected={connected} />
         </DotContainer>
       </MobileConnector>
     </>
