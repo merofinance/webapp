@@ -1,12 +1,11 @@
 import { useWeb3React } from "@web3-react/core";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Address } from "../lib/types";
 import styled from "styled-components";
-import { injectedConnector } from "../app/web3";
-import { isConnected, setConnected } from "../features/account/accountSlice";
+import { isConnected } from "../features/account/accountSlice";
 import GradientText from "../styles/GradientText";
-import Popup from "./Popup";
+import WalletSelectorPopup from "./WalletSelectorPopup";
 
 const DesktopConnector = styled.button`
   position: relative;
@@ -108,18 +107,11 @@ const DotCenter = styled.div`
 `;
 
 const Connector = () => {
-  const dispatch = useDispatch();
-  const { library: backd, activate } = useWeb3React();
   const connected = useSelector(isConnected);
+  const { library: backd } = useWeb3React();
 
   const [account, setAccount] = useState<Address>("");
   const [connecting, setConnecting] = useState(false);
-
-  const activateWallet = () => {
-    activate(injectedConnector).then(() => {
-      dispatch(setConnected(true));
-    });
-  };
 
   useEffect(() => {
     if (!backd) return;
@@ -130,7 +122,6 @@ const Connector = () => {
     <>
       <DesktopConnector>
         <Aura />
-        {/* <ConnectorButton onClick={() => activateWallet()}> */}
         <ConnectorButton onClick={() => setConnecting(true)}>
           <ConnectorText>
             {connected
@@ -145,7 +136,7 @@ const Connector = () => {
           <DotCenter connected={connected} />
         </DotContainer>
       </MobileConnector>
-      <Popup show={connecting} close={() => setConnecting(false)} header="Connect your wallet" />
+      <WalletSelectorPopup show={connecting} close={() => setConnecting(false)} />
     </>
   );
 };
