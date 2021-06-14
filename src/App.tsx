@@ -32,8 +32,10 @@ const StyledApp = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   padding: 0 10rem;
   padding-bottom: 3rem;
+  min-height: calc(100vh - 18.2rem);
   overflow: hidden;
 
   @media (max-width: 600px) {
