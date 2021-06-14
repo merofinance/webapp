@@ -13,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
         --secondary: #32B2E5;
         --secondary-gradient: #24bde3;
         --success: #4CAF50;
-        --error: red;
+        --error: #F44336;
         --gradient: linear-gradient(to right, var(--primary) 0%, var(--secondary) 100%);
 
         --section-margin: 8rem 0;
