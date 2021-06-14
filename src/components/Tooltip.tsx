@@ -4,6 +4,7 @@ import info from "../assets/ui/info.svg";
 
 const StyledTooltip = styled.div`
   position: relative;
+  margin-left: 0.8rem;
   z-index: 2;
 `;
 
