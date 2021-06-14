@@ -20,6 +20,7 @@ const Container = styled.div`
 
 const LabelContainer = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const Label = styled.div`
