@@ -67,8 +67,17 @@ const Name = styled.div`
   line-height: 2.8rem;
 `;
 
+const IconContainer = styled.div`
+  width: 5.4rem;
+  height: 3.9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const Icon = styled.img`
-  height: 3.6rem;
+  max-height: 100%;
+  max-width: 100%;
 `;
 
 type Props = {
@@ -106,11 +115,15 @@ const WalletSelectPopup = (props: Props) => {
           </SubHeaderContainer>
           <Option leftColor="#FF5407" rightColor="#FFD523" onClick={() => activateWallet()}>
             <Name>MetaMask</Name>
-            <Icon src={metamask} />
+            <IconContainer>
+              <Icon src={metamask} />
+            </IconContainer>
           </Option>
           <Option leftColor="#8400FE" rightColor="#0C00FE" onClick={() => activateWallet()}>
             <Name>WalletConnect</Name>
-            <Icon src={walletConnect} />
+            <IconContainer>
+              <Icon src={walletConnect} />
+            </IconContainer>
           </Option>
         </Content>
       }
