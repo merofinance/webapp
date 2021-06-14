@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Tooltip from "../../components/Tooltip";
 
 const StyledPoolsOverview = styled.div`
   display: flex;
@@ -15,6 +16,10 @@ const Container = styled.div`
   background-color: #16122e;
   border-radius: 14px;
   margin: 0 0.8rem;
+`;
+
+const LabelContainer = styled.div`
+  display: flex;
 `;
 
 const Label = styled.div`
@@ -36,15 +41,24 @@ const PoolsOverview = () => {
   return (
     <StyledPoolsOverview>
       <Container>
-        <Label>Earnings Accrued</Label>
+        <LabelContainer>
+          <Label>Earnings Accrued</Label>
+          <Tooltip content="TODO" />
+        </LabelContainer>
         <Number>$1243.34</Number>
       </Container>
       <Container>
-        <Label>Your Deposits</Label>
+        <LabelContainer>
+          <Label>Your Deposits</Label>
+          <Tooltip content="TODO" />
+        </LabelContainer>
         <Number>$65,530.34</Number>
       </Container>
       <Container>
-        <Label>Locked in Position</Label>
+        <LabelContainer>
+          <Label>Locked in Position</Label>
+          <Tooltip content="TODO" />
+        </LabelContainer>
         <Number>$45,200.00</Number>
       </Container>
     </StyledPoolsOverview>
