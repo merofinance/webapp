@@ -5,7 +5,7 @@ import { Address } from "../lib/types";
 import styled from "styled-components";
 import { isConnected } from "../features/account/accountSlice";
 import GradientText from "../styles/GradientText";
-import WalletSelectorPopup from "./WalletSelectorPopup";
+import WalletSelectPopup from "./WalletSelectPopup";
 
 const DesktopConnector = styled.button`
   position: relative;
@@ -136,7 +136,7 @@ const Connector = () => {
           <DotCenter connected={connected} />
         </DotContainer>
       </MobileConnector>
-      <WalletSelectorPopup show={connecting} close={() => setConnecting(false)} />
+      <WalletSelectPopup show={connecting} close={() => setConnecting(false)} />
     </>
   );
 };

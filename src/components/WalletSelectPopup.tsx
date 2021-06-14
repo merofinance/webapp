@@ -18,7 +18,7 @@ type Props = {
   close: () => void;
 };
 
-const WalletSelectorPopup = (props: Props) => {
+const WalletSelectPopup = (props: Props) => {
   const dispatch = useDispatch();
   const { activate } = useWeb3React();
 
@@ -42,4 +42,4 @@ const WalletSelectorPopup = (props: Props) => {
   );
 };
 
-export default WalletSelectorPopup;
+export default WalletSelectPopup;
