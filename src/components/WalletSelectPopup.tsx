@@ -5,12 +5,45 @@ import styled from "styled-components";
 import { injectedConnector } from "../app/web3";
 import { setConnected } from "../features/account/accountSlice";
 import Popup from "./Popup";
+import walletConnect from "../assets/wallets/wallet-connect.svg";
+import metamask from "../assets/wallets/metamask.svg";
 
 const Content = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   align-items: center;
+`;
+
+type OptionProps = {
+  leftColor: string;
+  rightColor: string;
+};
+
+const Option = styled.div`
+  width: 100%;
+  padding: 1.9rem 2.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 1.4rem;
+  background: linear-gradient(
+    to right,
+    ${(props: OptionProps) => props.leftColor},
+    ${(props: OptionProps) => props.rightColor}
+  );
+  margin-top: 1.2rem;
+  cursor: pointer;
+`;
+
+const Name = styled.div`
+  font-weight: 700;
+  font-size: 2.1rem;
+  line-height: 2.8rem;
+`;
+
+const Icon = styled.img`
+  height: 3.6rem;
 `;
 
 type Props = {
@@ -35,7 +68,14 @@ const WalletSelectPopup = (props: Props) => {
       header="Connect your wallet"
       content={
         <Content>
-          <button onClick={() => activateWallet()}>conect</button>
+          <Option leftColor="#FF5407" rightColor="#FFD523" onClick={() => activateWallet()}>
+            <Name>MetaMask</Name>
+            <Icon src={metamask} />
+          </Option>
+          <Option leftColor="#8400FE" rightColor="#0C00FE" onClick={() => activateWallet()}>
+            <Name>WalletConnect</Name>
+            <Icon src={walletConnect} />
+          </Option>
         </Content>
       }
     />
