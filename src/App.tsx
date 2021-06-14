@@ -34,7 +34,6 @@ const StyledApp = styled.div`
   flex-direction: column;
   padding: 0 10rem;
   padding-bottom: 3rem;
-  min-height: 100vh;
   overflow: hidden;
 
   @media (max-width: 600px) {
