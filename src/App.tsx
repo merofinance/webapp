@@ -62,9 +62,9 @@ function App() {
   return (
     <ErrorBoundary dispatch={dispatch}>
       <Web3ReactProvider getLibrary={getLibrary}>
-        <Header />
-        <StyledApp>
-          <Router>
+        <Router>
+          <Header />
+          <StyledApp>
             <ErrorAlert />
             <Switch>
               <PrivateRoute path="/:poolName/deposit">
@@ -92,8 +92,8 @@ function App() {
               </PrivateRoute>
             </Switch>
             <Footer />
-          </Router>
-        </StyledApp>
+          </StyledApp>
+        </Router>
       </Web3ReactProvider>
     </ErrorBoundary>
   );
