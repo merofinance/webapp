@@ -7,12 +7,37 @@ import { setConnected } from "../features/account/accountSlice";
 import Popup from "./Popup";
 import walletConnect from "../assets/wallets/wallet-connect.svg";
 import metamask from "../assets/wallets/metamask.svg";
+import GradientText from "../styles/GradientText";
 
 const Content = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   align-items: center;
+`;
+
+const SubHeaderContainer = styled.div`
+  display: flex;
+  margin: auto;
+  margin-bottom: 6rem;
+`;
+
+const SubHeader = styled.div`
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  letter-spacing: 0.15px;
+  text-align: center;
+  margin-right: 0.5rem;
+`;
+
+const Highlight = styled(GradientText)`
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  letter-spacing: 0.15px;
+  text-align: center;
+  cursor: pointer;
 `;
 
 type OptionProps = {
@@ -69,6 +94,16 @@ const WalletSelectPopup = (props: Props) => {
       header="Connect your wallet"
       content={
         <Content>
+          <SubHeaderContainer>
+            <SubHeader>New to Ethereum?</SubHeader>
+            <Highlight
+              onClick={() => {
+                (window as any).open("https://google.com/", "_blank").focus();
+              }}
+            >
+              Find out about wallets
+            </Highlight>
+          </SubHeaderContainer>
           <Option leftColor="#FF5407" rightColor="#FFD523" onClick={() => activateWallet()}>
             <Name>MetaMask</Name>
             <Icon src={metamask} />
