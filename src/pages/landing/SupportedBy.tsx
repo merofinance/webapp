@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Header3 } from "../../styles/Headers";
+import { Header3 } from "../../components/styles/Headers";
 import divergence from "../../assets/protocols/divergence.svg";
 import curve from "../../assets/protocols/curve.svg";
 import aave from "../../assets/protocols/aave.svg";

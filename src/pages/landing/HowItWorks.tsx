@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Header3 } from "../../styles/Headers";
+import { Header3 } from "../../components/styles/Headers";
 import Radio, { RadioOptionType } from "../../components/Radio";
 
 const categories: RadioOptionType[] = [

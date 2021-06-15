@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import GradientText from "../../styles/GradientText";
+import GradientText from "../../components/styles/GradientText";
 import background from "../../assets/audit/background.svg";
 import chainSecurity from "../../assets/audit/chain-security.svg";
 import chainSecurityMobile from "../../assets/audit/chain-security-mobile.svg";

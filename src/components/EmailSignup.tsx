@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import styled from "styled-components";
-import Button from "../styles/Button";
+import Button from "./styles/Button";
 
 const StyledEmailSignup = styled.div`
   display: flex;

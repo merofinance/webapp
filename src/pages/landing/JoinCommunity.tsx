@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import GradientText from "../../styles/GradientText";
-import { Header3 } from "../../styles/Headers";
+import GradientText from "../../components/styles/GradientText";
+import { Header3 } from "../../components/styles/Headers";
 import telegram from "../../assets/socials/telegram.svg";
 import twitter from "../../assets/socials/twitter.svg";
 import github from "../../assets/socials/github.svg";

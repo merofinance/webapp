@@ -7,7 +7,7 @@ import { setConnected } from "../features/account/accountSlice";
 import Popup from "./Popup";
 import walletConnect from "../assets/wallets/wallet-connect.svg";
 import metamask from "../assets/wallets/metamask.svg";
-import GradientText from "../styles/GradientText";
+import GradientText from "./styles/GradientText";
 
 const Content = styled.div`
   display: flex;

@@ -5,7 +5,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import App from "./App";
 import { persistor, store } from "./app/store";
 import * as serviceWorker from "./serviceWorker";
-import GlobalStyles from "./styles/GlobalStyles";
+import GlobalStyles from "./components/styles/GlobalStyles";
 
 ReactDOM.render(
   <React.StrictMode>

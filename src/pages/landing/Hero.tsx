@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Button from "../../styles/Button";
-import { Header2, Header4 } from "../../styles/Headers";
+import Button from "../../components/styles/Button";
+import { Header2, Header4 } from "../../components/styles/Headers";
 
 const StyledHero = styled.div`
   width: 100%;

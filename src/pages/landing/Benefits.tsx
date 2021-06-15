@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import GradientText from "../../styles/GradientText";
+import GradientText from "../../components/styles/GradientText";
 import shield from "../../assets/benefits/shield.svg";
 import plus from "../../assets/benefits/plus.svg";
 import percent from "../../assets/benefits/percent.svg";
-import { Header5, Header6 } from "../../styles/Headers";
+import { Header5, Header6 } from "../../components/styles/Headers";
 
 type BenfitsType = {
   icon: string;
