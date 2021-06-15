@@ -24,7 +24,7 @@ const Row = styled.tr`
   height: 7.2rem;
   display: flex;
   justify-content: space-between;
-  margin: 0.4rem 0;
+  margin-top: 0.8rem;
   background-color: #141128;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
