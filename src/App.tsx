@@ -12,19 +12,37 @@ import { ethers } from "ethers";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import "./App.scss";
 import { useMock } from "./app/config";
 import { PrivateRoute } from "./app/private-route";
 import { AppDispatch } from "./app/store";
+import Header from "./components/Header";
 import { ConnectWallet } from "./features/account/ConnectWallet";
 import { ErrorAlert } from "./features/error/ErrorAlert";
 import { ErrorBoundary } from "./features/error/ErrorBoundary";
 import { setError } from "./features/error/errorSlice";
-import { Header } from "./features/header/Header";
 import { PoolManagement } from "./features/pool/PoolManagement";
-import { PoolsList } from "./features/pools-list/PoolsList";
 import { createBackd } from "./lib/factory";
 import MockSigner from "./lib/mock/signer";
+import LandingPage from "./pages/landing/LandingPage";
+import styled from "styled-components";
+import Footer from "./components/Footer";
+import PoolsPage from "./pages/pools/PoolsPage";
+
+const StyledApp = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0 10rem;
+  padding-bottom: 3rem;
+  min-height: calc(100vh - 18.2rem);
+  overflow: hidden;
+
+  @media (max-width: 600px) {
+    padding: 0 3.3rem;
+    padding-bottom: 3.3rem;
+  }
+`;
 
 library.add(faInfoCircle, faClock, faCheck, faTimesCircle, faExternalLinkAlt, faTrashAlt);
 
@@ -47,28 +65,35 @@ function App() {
       <Web3ReactProvider getLibrary={getLibrary}>
         <Router>
           <Header />
-          <ErrorAlert />
-          <Switch>
-            <PrivateRoute path="/:poolName/deposit">
-              <PoolManagement mode="deposit" />
-            </PrivateRoute>
+          <StyledApp>
+            <ErrorAlert />
+            <Switch>
+              <PrivateRoute path="/:poolName/deposit">
+                <PoolManagement mode="deposit" />
+              </PrivateRoute>
 
-            <PrivateRoute path="/:poolName/withdraw">
-              <PoolManagement mode="withdraw" />
-            </PrivateRoute>
+              <PrivateRoute path="/:poolName/withdraw">
+                <PoolManagement mode="withdraw" />
+              </PrivateRoute>
 
-            <PrivateRoute path="/:poolName/positions">
-              <PoolManagement mode="positions" />
-            </PrivateRoute>
+              <PrivateRoute path="/:poolName/positions">
+                <PoolManagement mode="positions" />
+              </PrivateRoute>
 
-            <Route path="/connect">
-              <ConnectWallet />
-            </Route>
+              <Route path="/connect">
+                <ConnectWallet />
+              </Route>
 
-            <PrivateRoute path="/">
-              <PoolsList />
-            </PrivateRoute>
-          </Switch>
+              <PrivateRoute path="/pools">
+                <PoolsPage />
+              </PrivateRoute>
+
+              <PrivateRoute path="/">
+                <LandingPage />
+              </PrivateRoute>
+            </Switch>
+            <Footer />
+          </StyledApp>
         </Router>
       </Web3ReactProvider>
     </ErrorBoundary>
