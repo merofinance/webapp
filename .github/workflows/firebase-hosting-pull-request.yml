@@ -10,7 +10,5 @@ jobs:
           node-version: "10.x"
       - name: Installing Client Dependencies
         run: yarn
-        working-directory: client
       - name: Building
         run: yarn run build
-        working-directory: client

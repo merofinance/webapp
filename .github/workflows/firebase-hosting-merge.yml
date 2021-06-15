@@ -13,10 +13,8 @@ jobs:
           node-version: "10.x"
       - name: Installing Client Dependencies
         run: yarn
-        working-directory: client
       - name: Building
         run: yarn run build
-        working-directory: client
       - name: Install Firebase Tools
         run: npm install -g firebase-tools
       - name: Deploying to Firebase
