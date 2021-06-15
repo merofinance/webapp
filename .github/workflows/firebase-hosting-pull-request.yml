@@ -1,0 +1,16 @@
+name: Build on PR
+"on": pull_request
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@master
+        with:
+          node-version: "10.x"
+      - name: Installing Client Dependencies
+        run: npm install
+        working-directory: client
+      - name: Building
+        run: npm run build
+        working-directory: client
