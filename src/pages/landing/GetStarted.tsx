@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router";
 import styled from "styled-components";
 import Button from "../../components/styles/Button";
 import { Header3 } from "../../components/styles/Headers";
@@ -56,12 +57,14 @@ const Body = styled.p`
 `;
 
 const GetStarted = () => {
+  const history = useHistory();
+
   return (
     <StyledGetStarted>
       <Container>
         <Header3>get started</Header3>
         <Body>Deposit liquidity and start earning yield.</Body>
-        <Button large>view pools</Button>
+        <Button text="view pools" click={() => history.push("/pools")} large />
       </Container>
     </StyledGetStarted>
   );

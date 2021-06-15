@@ -68,7 +68,7 @@ const PoolsList = () => {
         <Data>Data</Data>
         <Data>Data</Data>
         <Data>
-          <Button>button</Button>
+          <Button text="button" click={() => console.log("meow")} />
         </Data>
       </Row>
       <Row>
@@ -77,7 +77,7 @@ const PoolsList = () => {
         <Data>Data</Data>
         <Data>Data</Data>
         <Data>
-          <Button>button</Button>
+          <Button text="button" click={() => console.log("meow")} />
         </Data>
       </Row>
     </Table>

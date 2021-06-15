@@ -52,7 +52,22 @@ const Input = styled.input`
   }
 `;
 
-const SubmitButton = styled(Button)`
+const SubmitButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(
+    270deg,
+    var(--primary-gradient) 0%,
+    var(--secondary-gradient) 50%,
+    var(--primary-gradient) 100%
+  );
+  text-transform: capitalize;
+  cursor: pointer;
+  transition: 0.5s;
+  background-size: 200% auto;
+  // space
+
   width: 11.3rem;
   height: 5.6rem;
   border-radius: 14px;

@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router";
 import styled from "styled-components";
 import Button from "../../components/styles/Button";
 import { Header2, Header4 } from "../../components/styles/Headers";
@@ -16,6 +17,8 @@ const StyledHero = styled.div`
 `;
 
 const Hero = () => {
+  const history = useHistory();
+
   return (
     <StyledHero>
       <Header2>reactive liquidity</Header2>
@@ -23,9 +26,7 @@ const Hero = () => {
         A trustless and interest generating protocol designed to prevent collateralized loans from
         becoming liquidable.
       </Header4>
-      <Button hero large>
-        view pools
-      </Button>
+      <Button text="view pools" click={() => history.push("/pools")} hero large />
     </StyledHero>
   );
 };
