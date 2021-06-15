@@ -61,7 +61,7 @@ const GetStarted = () => {
       <Container>
         <Header3>get started</Header3>
         <Body>Deposit liquidity and start earning yield.</Body>
-        <Button>view pools</Button>
+        <Button large>view pools</Button>
       </Container>
     </StyledGetStarted>
   );

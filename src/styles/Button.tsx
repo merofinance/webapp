@@ -2,28 +2,32 @@ import styled from "styled-components";
 
 type Props = {
   hero?: boolean;
+  large?: boolean;
 };
 
 const Button = styled.button`
-  height: 6.2rem;
-  border-radius: 3.1rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 5rem;
   background-image: linear-gradient(
     270deg,
     var(--primary-gradient) 0%,
     var(--secondary-gradient) 50%,
     var(--primary-gradient) 100%
   );
-  font-size: 2.1rem;
-  font-weight: 700;
   text-transform: capitalize;
-  margin-top: ${(props: Props) => (props.hero ? "8rem" : "0")};
   cursor: pointer;
   transition: 0.5s;
   background-size: 200% auto;
+
+  letter-spacing: ${(props: Props) => (props.large ? "0" : "0.46px")};
+  line-height: ${(props: Props) => (props.large ? "2.8rem" : "2.6rem")};
+  font-size: ${(props: Props) => (props.large ? "2.1rem" : "1.5rem")};
+  font-weight: ${(props: Props) => (props.large ? "700" : "500")};
+  height: ${(props: Props) => (props.large ? "6.2rem" : "3.8rem")};
+  border-radius: ${(props: Props) => (props.large ? "3.1rem" : "1.9rem")};
+  padding: 0 ${(props: Props) => (props.large ? "5rem" : "2.6rem")};
+  margin-top: ${(props: Props) => (props.hero ? "8rem" : "0")};
 
   :hover {
     background-position: right center;

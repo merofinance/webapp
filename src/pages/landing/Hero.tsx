@@ -23,7 +23,9 @@ const Hero = () => {
         A trustless and interest generating protocol designed to prevent collateralized loans from
         becoming liquidable.
       </Header4>
-      <Button hero>view pools</Button>
+      <Button hero large>
+        view pools
+      </Button>
     </StyledHero>
   );
 };
