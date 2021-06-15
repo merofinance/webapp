@@ -37,6 +37,7 @@ const Row = styled.tr`
 
   td:last-child {
     flex: 2;
+    justify-content: flex-end;
   }
 `;
 
