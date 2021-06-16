@@ -16,10 +16,6 @@ const navItems: NavItemType[] = [
     label: "pools",
     link: "/pools",
   },
-  {
-    label: "more",
-    link: "/more",
-  },
 ];
 
 const StyledNavItems = styled.ul`
