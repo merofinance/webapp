@@ -5,7 +5,7 @@ import Radio, { RadioOptionType } from "../../components/Radio";
 
 const categories: RadioOptionType[] = [
   {
-    label: "earn yeild",
+    label: "earn yield",
     value: "earn",
   },
   {
