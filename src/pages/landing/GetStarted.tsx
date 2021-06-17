@@ -3,6 +3,7 @@ import { useHistory } from "react-router";
 import styled from "styled-components";
 import Button from "../../components/styles/Button";
 import { Header3 } from "../../components/styles/Headers";
+import { LIVE } from "../../lib/constants";
 
 const StyledGetStarted = styled.div`
   width: 100%;
@@ -64,7 +65,14 @@ const GetStarted = () => {
       <Container>
         <Header3>get started</Header3>
         <Body>Deposit liquidity and start earning yield.</Body>
-        <Button text="view pools" click={() => history.push("/pools")} large />
+        <Button
+          text={LIVE ? "view pools" : "coming soon"}
+          click={() => {
+            if (!LIVE) return;
+            history.push("/pools");
+          }}
+          large
+        />
       </Container>
     </StyledGetStarted>
   );
