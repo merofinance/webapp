@@ -16,8 +16,6 @@ import { useMock } from "./app/config";
 import { PrivateRoute } from "./app/private-route";
 import { AppDispatch } from "./app/store";
 import Header from "./components/Header";
-import { ConnectWallet } from "./features/account/ConnectWallet";
-import { ErrorAlert } from "./features/error/ErrorAlert";
 import { ErrorBoundary } from "./features/error/ErrorBoundary";
 import { setError } from "./features/error/errorSlice";
 import { PoolManagement } from "./features/pool/PoolManagement";
@@ -28,6 +26,7 @@ import styled from "styled-components";
 import Footer from "./components/Footer";
 import PoolsPage from "./pages/pools/PoolsPage";
 import LitepaperPage from "./pages/litepaper/LitepaperPage";
+import { ConnectWallet } from "./features/account/ConnectWallet";
 
 const StyledApp = styled.div`
   width: 100%;
@@ -67,7 +66,6 @@ function App() {
         <Router>
           <Header />
           <StyledApp>
-            <ErrorAlert />
             <Switch>
               <PrivateRoute path="/:poolName/deposit">
                 <PoolManagement mode="deposit" />
@@ -89,13 +87,13 @@ function App() {
                 <PoolsPage />
               </PrivateRoute>
 
-              <PrivateRoute path="/litepaper">
+              <Route path="/litepaper">
                 <LitepaperPage />
-              </PrivateRoute>
+              </Route>
 
-              <PrivateRoute path="/">
+              <Route path="/">
                 <LandingPage />
-              </PrivateRoute>
+              </Route>
             </Switch>
             <Footer />
           </StyledApp>
