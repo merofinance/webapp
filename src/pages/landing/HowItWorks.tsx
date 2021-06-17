@@ -87,6 +87,12 @@ const CardContainer = styled.div`
   width: 100%;
   display: ${(props: CardContainerType) => (props.show ? "flex" : "none")};
   margin: 2.5rem 0;
+
+  @media (max-width: 600px) {
+    margin: 0;
+    margin-top: 2.4rem;
+    flex-direction: column;
+  }
 `;
 
 const Card = styled.div`
@@ -98,6 +104,12 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
   backdrop-filter: blur(8px);
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    margin: 0;
+    margin-bottom: 1.2rem;
+  }
 `;
 
 const Number = styled.div`
