@@ -42,9 +42,9 @@ const Protocols = styled.div`
   align-items: center;
   margin: 3rem 0;
 
-  @media (max-width: 600px) {
-    margin: 0;
+  @media (max-width: 1224px) {
     flex-direction: column;
+    margin: 0;
 
     div:nth-child(1) {
       order: 0;
@@ -70,7 +70,7 @@ const ProtocolContainer = styled.div`
     opacity: 0.8;
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 1224px) {
     margin: 2.3rem 0;
     width: auto;
   }
