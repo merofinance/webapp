@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
+import { LIVE } from "../lib/constants";
 
 type NavItemType = {
   label: string;
@@ -55,11 +56,28 @@ const NavItems = () => {
 
   return (
     <StyledNavItems>
-      {navItems.map((navItem: NavItemType) => (
-        <NavItem key={navItem.label}>
-          <Link onClick={() => history.push(navItem.link)}>{navItem.label}</Link>
-        </NavItem>
-      ))}
+      {LIVE &&
+        navItems.map((navItem: NavItemType) => (
+          <NavItem key={navItem.label}>
+            <Link onClick={() => history.push(navItem.link)}>{navItem.label}</Link>
+          </NavItem>
+        ))}
+      {!LIVE && (
+        <>
+          <NavItem>
+            <Link
+              onClick={() => {
+                (window as any).open("https://backdfund.medium.com/", "_blank").focus();
+              }}
+            >
+              blog
+            </Link>
+          </NavItem>
+          <NavItem>
+            <Link onClick={() => history.push("/docs")}>docs</Link>
+          </NavItem>
+        </>
+      )}
     </StyledNavItems>
   );
 };
