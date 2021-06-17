@@ -43,8 +43,8 @@ const linkLists: LinkListType[] = [
     header: "resources",
     links: [
       {
-        label: "Documentation",
-        link: "https://google.com/",
+        label: "Litepaper",
+        link: "/litepaper",
       },
       {
         label: "Blog",
