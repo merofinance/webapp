@@ -101,6 +101,7 @@ const Card = styled.div`
   background-color: rgba(34, 31, 55, 0.6);
   border-radius: 1.4rem;
   padding: 2.4rem 1.6rem;
+  padding-right: 3rem;
   display: flex;
   flex-direction: column;
   backdrop-filter: blur(8px);
@@ -117,6 +118,12 @@ const Number = styled.div`
   font-size: 1.8rem;
   line-height: 2.2rem;
   margin-bottom: 1.4rem;
+
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+    margin-bottom: 1.2rem;
+  }
 `;
 
 const Body = styled.p`
@@ -124,11 +131,20 @@ const Body = styled.p`
   font-size: 1.6rem;
   line-height: 2.4rem;
   letter-spacing: 0.15px;
+
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+  }
 `;
 
 const Header = styled(Header5)`
   text-align: left;
   margin-bottom: 1rem;
+
+  @media (max-width: 600px) {
+    margin-bottom: 1.4rem;
+  }
 `;
 
 const HowItWorks = () => {
