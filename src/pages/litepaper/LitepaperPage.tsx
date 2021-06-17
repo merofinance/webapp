@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import GradientText from "../../components/styles/GradientText";
+// import GradientText from "../../components/styles/GradientText";
 import { Header2, Header3, Header6, Paragraph } from "../../components/styles/Headers";
 
 const StyledLitepaperPage = styled.div`
@@ -40,6 +40,14 @@ const Item = styled.li`
     background-color: var(--main);
   }
 `;
+
+// const Link = styled(GradientText)`
+//   font-weight: 400;
+//   font-size: 1.6rem;
+//   line-height: 2.4rem;
+//   letter-spacing: 0.15px;
+//   cursor: pointer;
+// `;
 
 const LitepaperPage = () => {
   return (
@@ -209,12 +217,9 @@ const LitepaperPage = () => {
       </List>
       <Paragraph>
         For backd v1, strategies and vaults are unique to a liquidity pool and therefore pools exist
-        in isolation of one another. For a more technical overview of each backd component check out
-        the official{" "}
-        <a href="">
-          <GradientText>docs</GradientText>
-        </a>
-        .
+        in isolation of one another.
+        {/* For a more technical overview of each backd component check out
+        the official <GradientText onClick={() => }>docs</GradientText>. */}
       </Paragraph>
       <Header>Understanding Liquidity Pools</Header>
       <Paragraph>Liquidity pools on backd differ in several ways from one another.</Paragraph>
