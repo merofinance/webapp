@@ -85,4 +85,9 @@ export const Paragraph = styled.p`
   line-height: 2.4rem;
   letter-spacing: 0.15px;
   margin-bottom: 1rem;
+
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+  }
 `;
