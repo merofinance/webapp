@@ -4,6 +4,7 @@ import GradientText from "../../components/styles/GradientText";
 import background from "../../assets/audit/background.svg";
 import chainSecurity from "../../assets/audit/chain-security.svg";
 import chainSecurityMobile from "../../assets/audit/chain-security-mobile.svg";
+import { LIVE } from "../../lib/constants";
 
 const StyledAuditedBy = styled.div`
   width: 100%;
@@ -120,24 +121,26 @@ const AuditedBy = () => {
         <Background src={background} />
         <Logo src={chainSecurity} />
         <Content>
-          <Header>audited by</Header>
+          <Header>{LIVE ? "audited by" : "audit in progress"}</Header>
           <MobileLogo src={chainSecurityMobile} />
           <Description>
             Led by security experts from ETH Zurich and trusted by 85+ blockchain companies and
             corporations.
           </Description>
-          <ViewReport
-            onClick={() => {
-              (window as any)
-                .open(
-                  "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO",
-                  "_blank"
-                )
-                .focus();
-            }}
-          >
-            View Report →
-          </ViewReport>
+          {LIVE && (
+            <ViewReport
+              onClick={() => {
+                (window as any)
+                  .open(
+                    "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO",
+                    "_blank"
+                  )
+                  .focus();
+              }}
+            >
+              View Report →
+            </ViewReport>
+          )}
         </Content>
       </Container>
     </StyledAuditedBy>
