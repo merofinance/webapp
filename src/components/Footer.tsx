@@ -48,7 +48,7 @@ const linkLists: LinkListType[] = [
       },
       {
         label: "Blog",
-        link: "https://google.com/",
+        link: "https://backdfund.medium.com/",
       },
     ],
   },
