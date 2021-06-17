@@ -20,6 +20,27 @@ const SubHeader = styled(Header6)`
   margin-bottom: 1rem;
 `;
 
+const List = styled.ul`
+  margin-left: 3rem;
+  font-size: 20rem;
+  list-style-type: none;
+`;
+
+const Item = styled.li`
+  position: relative;
+
+  :before {
+    content: "";
+    position: absolute;
+    top: 0.8rem;
+    left: -2rem;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    background-color: var(--main);
+  }
+`;
+
 const LitepaperPage = () => {
   return (
     <StyledLitepaperPage>
@@ -153,8 +174,8 @@ const LitepaperPage = () => {
         The backd protocol consists of several key components, perhaps most notably liquidity pools,
         vaults and strategies. Let’s briefly examine each of these in a bit more detail:
       </Paragraph>
-      <ul>
-        <li>
+      <List>
+        <Item>
           <Paragraph>
             Liquidity pools: When an LP deposits funds on backd, he has to choose a single asset
             liquidity pool to deposit into. If an LP wants some (or all) of his deposits to be used
@@ -164,8 +185,8 @@ const LitepaperPage = () => {
             as back up collateral, plus a proportion of the registered back up collateral to a
             pool-specific vault.
           </Paragraph>
-        </li>
-        <li>
+        </Item>
+        <Item>
           <Paragraph>
             Vaults: Each liquidity pool has a vault, which handles all deposit and withdrawal
             interaction with a strategy. For backd v1, single strategy vaults are supported. Vaults
@@ -173,8 +194,8 @@ const LitepaperPage = () => {
             should be allocated to the associated strategy. Hence, a vault typically holds an amount
             of idle funds for reduced gas costs.
           </Paragraph>
-        </li>
-        <li>
+        </Item>
+        <Item>
           <Paragraph>
             Strategies: A strategy contains the logic for yield-farming using the funds which it is
             being allocated from the vault. The performance of a strategy is tracked by the
@@ -184,8 +205,8 @@ const LitepaperPage = () => {
             is paid to a strategy’s strategist in LP tokens. The remainder of the performance fee is
             directed to the protocol’s treasury, which is essentially controlled by governance.
           </Paragraph>
-        </li>
-      </ul>
+        </Item>
+      </List>
       <Paragraph>
         For backd v1, strategies and vaults are unique to a liquidity pool and therefore pools exist
         in isolation of one another. For a more technical overview of each backd component check out
@@ -197,14 +218,14 @@ const LitepaperPage = () => {
       </Paragraph>
       <Header>Understanding Liquidity Pools</Header>
       <Paragraph>Liquidity pools on backd differ in several ways from one another.</Paragraph>
-      <ul>
-        <li>
+      <List>
+        <Item>
           <Paragraph>
             Assets: Pools are single-asset pools. Furthermore, for backd v1, there will be only one
             pool per asset type to prevent liquidity fragmentation.
           </Paragraph>
-        </li>
-        <li>
+        </Item>
+        <Item>
           <Paragraph>
             Parameterization: Pools are very customizable. For instance, each pool has a required
             reserve ratio, which specifies the percentage of the backing funds that need to remain
@@ -214,14 +235,14 @@ const LitepaperPage = () => {
             insolvency risk, i.e., insufficient funds available for top up. Furthermore, pools can
             differ in terms of fees charged on top ups and strategy performance.
           </Paragraph>
-        </li>
-        <li>
+        </Item>
+        <Item>
           <Paragraph>
             Strategy: The yield farming strategy used by a pool may differ to the ones used by other
             pools. However, strategies can be activated, deactivated and replaced by governance.
           </Paragraph>
-        </li>
-      </ul>
+        </Item>
+      </List>
       <Header>Governance</Header>
       <Paragraph>
         The backd protocol will rely on a decentralized governance scheme, which will be introduced
