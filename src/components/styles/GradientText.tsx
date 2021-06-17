@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const GradientText = styled.p`
+const GradientText = styled.span`
   background: var(--gradient);
   background-clip: text;
   -webkit-background-clip: text;
