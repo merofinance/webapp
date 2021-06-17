@@ -3,6 +3,7 @@ import { useHistory } from "react-router";
 import styled from "styled-components";
 import Button from "../../components/styles/Button";
 import { Header2, Header4 } from "../../components/styles/Headers";
+import { LIVE } from "../../lib/constants";
 
 const StyledHero = styled.div`
   width: 100%;
@@ -26,7 +27,15 @@ const Hero = () => {
         A trustless and interest generating protocol designed to prevent collateralized loans from
         becoming liquidable.
       </Header4>
-      <Button text="view pools" click={() => history.push("/pools")} hero large />
+      <Button
+        text={LIVE ? "view pools" : "coming soon"}
+        click={() => {
+          if (!LIVE) return;
+          history.push("/pools");
+        }}
+        hero
+        large
+      />
     </StyledHero>
   );
 };
