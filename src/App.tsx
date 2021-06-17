@@ -27,6 +27,7 @@ import LandingPage from "./pages/landing/LandingPage";
 import styled from "styled-components";
 import Footer from "./components/Footer";
 import PoolsPage from "./pages/pools/PoolsPage";
+import LitepaperPage from "./pages/litepaper/LitepaperPage";
 
 const StyledApp = styled.div`
   width: 100%;
@@ -86,6 +87,10 @@ function App() {
 
               <PrivateRoute path="/pools">
                 <PoolsPage />
+              </PrivateRoute>
+
+              <PrivateRoute path="/litepaper">
+                <LitepaperPage />
               </PrivateRoute>
 
               <PrivateRoute path="/">
