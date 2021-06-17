@@ -49,9 +49,14 @@ const Benefit = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0 3.9rem;
 
   @media (max-width: 600px) {
     margin: 2.9rem 0;
+  }
+
+  @media (min-width: 601px) and (max-width: 1224px) {
+    margin: 0 1rem;
   }
 `;
 
