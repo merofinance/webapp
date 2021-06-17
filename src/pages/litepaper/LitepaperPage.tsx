@@ -7,11 +7,19 @@ const StyledLitepaperPage = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 600px) {
+    margin-top: 4rem;
+  }
 `;
 
 const Header = styled(Header3)`
   text-align: left;
   margin-top: 8rem;
+
+  @media (max-width: 600px) {
+    margin-top: 4rem;
+  }
 `;
 
 const SubHeader = styled(Header6)`
