@@ -78,3 +78,11 @@ export const Header6 = styled.h4`
     margin-bottom: 0;
   }
 `;
+
+export const Paragraph = styled.p`
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  letter-spacing: 0.15px;
+  margin-bottom: 1rem;
+`;
