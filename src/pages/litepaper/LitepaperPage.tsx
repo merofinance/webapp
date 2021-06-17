@@ -4,9 +4,10 @@ import styled from "styled-components";
 import { Header2, Header3, Header6, Paragraph } from "../../components/styles/Headers";
 
 const StyledLitepaperPage = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
+  max-width: 770px;
+  margin: auto;
 
   @media (max-width: 600px) {
     margin-top: 4rem;
