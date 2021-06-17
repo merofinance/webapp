@@ -42,6 +42,10 @@ const StyledApp = styled.div`
     padding: 0 3.3rem;
     padding-bottom: 3.3rem;
   }
+
+  @media (min-width: 601px) and (max-width: 1224px) {
+    padding: 0 4rem;
+  }
 `;
 
 library.add(faInfoCircle, faClock, faCheck, faTimesCircle, faExternalLinkAlt, faTrashAlt);
