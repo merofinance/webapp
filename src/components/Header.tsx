@@ -31,6 +31,10 @@ const StyledHeader = styled.div`
     padding: 2.3rem 3.3rem;
     margin-bottom: 0;
   }
+
+  @media (min-width: 601px) and (max-width: 1224px) {
+    padding: 2.4rem 4rem;
+  }
 `;
 
 const Logo = styled.img`
