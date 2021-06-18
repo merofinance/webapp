@@ -12,12 +12,11 @@ const StyledContentSection = styled.div`
 `;
 
 const Header = styled.h2`
-  padding: 1.2rem 1.6rem;
+  padding: 2rem 1.6rem;
   background-color: rgba(252, 40, 211, 0.05);
   box-shadow: 0px 0px 12px rgba(23, 18, 22, 0.05);
   font-weight: 700;
   font-size: 2.4rem;
-  line-height: 4.2rem;
   letter-spacing: 0.25px;
 `;
 
@@ -27,7 +26,7 @@ type LineProps = {
 
 const Line = styled.div`
   width: 100%;
-  height: ${(props: LineProps) => (props.large ? "6px" : "3px")};
+  height: ${(props: LineProps) => (props.large ? "5px" : "2px")};
   background: linear-gradient(to right, rgba(197, 50, 249, 1), rgba(50, 178, 229, 1));
   opacity: 0.2;
 `;
@@ -35,6 +34,15 @@ const Line = styled.div`
 const Statistics = styled.div`
   width: 100%;
   display: flex;
+  padding: 2.2rem 1.6rem;
+  padding-bottom: 2.6rem;
+`;
+
+const Content = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 2.2rem 1.6rem;
 `;
 
 type Props = {
@@ -54,7 +62,7 @@ const ContentSection = (props: Props) => {
         ))}
       </Statistics>
       <Line />
-      {props.content}
+      <Content>{props.content}</Content>
     </StyledContentSection>
   );
 };
