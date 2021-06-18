@@ -27,6 +27,7 @@ import Footer from "./components/Footer";
 import PoolsPage from "./pages/pools/PoolsPage";
 import LitepaperPage from "./pages/litepaper/LitepaperPage";
 import { ConnectWallet } from "./features/account/ConnectWallet";
+import ClaimPage from "./pages/claim/ClaimPage";
 
 const StyledApp = styled.div`
   width: 100%;
@@ -90,6 +91,10 @@ function App() {
               <PrivateRoute path="/pools">
                 <PoolsPage />
               </PrivateRoute>
+
+              <Route path="/claim">
+                <ClaimPage />
+              </Route>
 
               <Route path="/litepaper">
                 <LitepaperPage />
