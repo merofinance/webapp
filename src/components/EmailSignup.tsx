@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import styled from "styled-components";
 import Button from "./styles/Button";
 
@@ -63,6 +63,7 @@ const EmailSignup = () => {
   const [email, setEmail] = useState("");
   const [valid, setValid] = useState(true);
   const [validate, setValidate] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const validateEmail = (email: string): boolean => {
     const re =
@@ -77,10 +78,12 @@ const EmailSignup = () => {
     setEmail(e.target.value);
   };
 
-  const onSubmit = async () => {
+  const onSubmit = async (e: FormEvent) => {
+    e.preventDefault();
     setValidate(true);
     const _valid = validateEmail(email);
     if (!_valid) return;
+    setLoading(true);
     try {
       const response = await fetch("https://register.backd.fund", {
         method: "POST",
@@ -94,6 +97,7 @@ const EmailSignup = () => {
     } catch {
       // Handle Exception
     }
+    setLoading(false);
   };
 
   return (
@@ -107,7 +111,7 @@ const EmailSignup = () => {
           value={email}
           onChange={onChange}
         />
-        <Button square text="submit" click={() => onSubmit()} />
+        <Button submit square text="submit" loading={loading} />
       </Form>
       <Note>We don’t share this with anyone.</Note>
     </StyledEmailSignup>
