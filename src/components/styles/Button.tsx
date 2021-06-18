@@ -107,18 +107,20 @@ const ProgressContainer = styled.div`
 
 type Props = {
   text: string;
-  click: () => void;
+  click?: () => void;
   hero?: boolean;
   large?: boolean;
   square?: boolean;
   loading?: boolean;
+  submit?: boolean;
 };
 
 const Button = (props: Props) => {
   return (
     <StyledButton
+      type={props.submit ? "submit" : "button"}
       onClick={() => {
-        if (!props.loading) props.click();
+        if (!props.loading && props.click) props.click();
       }}
       hero={props.hero}
       large={props.large}
