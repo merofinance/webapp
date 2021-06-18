@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import styled from "styled-components";
+import { apiPost } from "../services/apiService";
 import Button from "./styles/Button";
 
 const StyledEmailSignup = styled.div`
@@ -81,22 +82,10 @@ const EmailSignup = () => {
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setValidate(true);
-    const _valid = validateEmail(email);
-    if (!_valid) return;
+    if (!validateEmail(email)) return;
     setLoading(true);
-    try {
-      const response = await fetch("https://register.backd.fund", {
-        method: "POST",
-        body: JSON.stringify({ email }),
-        headers: { "Content-Type": "application/json" },
-      });
-      if (response.status === 200) {
-        // Good case
-      }
-      // Bad Case
-    } catch {
-      // Handle Exception
-    }
+    await apiPost("https://register.backd.fund", JSON.stringify({ email }));
+    // TODO: Add error handing
     setLoading(false);
   };
 
