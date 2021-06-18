@@ -105,11 +105,24 @@ const EmailSignup = () => {
     setEmail(e.target.value);
   };
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setValidate(true);
     const _valid = validateEmail(email);
-    if (_valid) alert("Email Signup Not Implemented");
+    if (!_valid) return;
+    try {
+      const response = await fetch("https://register.backd.fund", {
+        method: "POST",
+        body: JSON.stringify({ email }),
+        headers: { "Content-Type": "application/json" },
+      });
+      if (response.status === 200) {
+        // Good case
+      }
+      // Bad Case
+    } catch {
+      // Handle Exception
+    }
   };
 
   return (
