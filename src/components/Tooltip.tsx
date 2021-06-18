@@ -6,7 +6,7 @@ const StyledTooltip = styled.div`
   position: relative;
   margin-left: 0.9rem;
   z-index: 2;
-  transform: translateY(1px);
+  margin-top: 2px;
 `;
 
 const Icon = styled.img`
