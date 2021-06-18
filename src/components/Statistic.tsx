@@ -16,6 +16,8 @@ const StyledStatistic = styled.div`
 
 const HeaderContaner = styled.div`
   display: flex;
+  align-items: center;
+  margin-bottom: 0.7rem;
 `;
 
 const Header = styled.div`
