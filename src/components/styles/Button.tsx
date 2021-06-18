@@ -36,23 +36,28 @@ const StyledButton = styled.button`
   }};
   font-size: ${(props: ButtonProps) => {
     if (props.large) return "2.1rem";
+    if (props.square) return "1.4rem";
     return "1.5rem";
   }};
   font-weight: ${(props: ButtonProps) => {
     if (props.large) return "700";
+    if (props.square) return "700";
     return "500";
   }};
   height: ${(props: ButtonProps) => {
     if (props.large) return "6.2rem";
+    if (props.square) return "5.6rem";
     return "3.8rem";
   }};
   border-radius: ${(props: ButtonProps) => {
     if (props.large) return "3.1rem";
+    if (props.square) return "1.4rem";
     return "1.9rem";
   }};
   padding: 0
     ${(props: ButtonProps) => {
       if (props.large) return "5rem";
+      if (props.square) return "3rem";
       return "2.6rem";
     }};
   margin-top: ${(props: ButtonProps) => {
@@ -61,15 +66,25 @@ const StyledButton = styled.button`
   }};
 
   @media (max-width: 600px) {
-    height: 4.8rem;
-    border-radius: 2.4rem;
     font-size: 1.4rem;
-    padding: 0 5.2rem;
 
     margin-top: ${(props: ButtonProps) => {
       if (props.hero) return "4.5rem";
       return "0";
     }};
+    height: ${(props: ButtonProps) => {
+      if (props.square) return "5.6rem";
+      return "4.8rem";
+    }};
+    border-radius: ${(props: ButtonProps) => {
+      if (props.square) return "1.4rem";
+      return "2.4rem";
+    }};
+    padding: 0
+      ${(props: ButtonProps) => {
+        if (props.square) return "1.8rem";
+        return "5.2rem";
+      }};
   }
 `;
 
@@ -78,11 +93,17 @@ type Props = {
   click: () => void;
   hero?: boolean;
   large?: boolean;
+  square?: boolean;
 };
 
 const Button = (props: Props) => {
   return (
-    <StyledButton onClick={() => props.click()} hero={props.hero} large={props.large}>
+    <StyledButton
+      onClick={() => props.click()}
+      hero={props.hero}
+      large={props.large}
+      square={props.square}
+    >
       {props.text}
     </StyledButton>
   );
