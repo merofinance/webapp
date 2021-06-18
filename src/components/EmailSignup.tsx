@@ -1,5 +1,6 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import styled from "styled-components";
+import Button from "./styles/Button";
 
 const StyledEmailSignup = styled.div`
   display: flex;
@@ -40,6 +41,7 @@ const Input = styled.input`
   padding: 0 1.2rem;
   font-size: 1.6rem;
   font-weight: 400;
+  margin-right: 1.6rem;
 
   ::placeholder {
     color: var(--main);
@@ -48,36 +50,6 @@ const Input = styled.input`
   @media (max-width: 600px) {
     width: auto;
     flex: 1;
-  }
-`;
-
-const SubmitButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-image: linear-gradient(
-    270deg,
-    var(--primary-gradient) 0%,
-    var(--secondary-gradient) 50%,
-    var(--primary-gradient) 100%
-  );
-  text-transform: capitalize;
-  cursor: pointer;
-  transition: 0.5s;
-  background-size: 200% auto;
-  // space
-
-  width: 11.3rem;
-  height: 5.6rem;
-  border-radius: 14px;
-  font-weight: 700;
-  font-size: 1.4rem;
-  margin-left: 1.6rem;
-
-  @media (max-width: 600px) {
-    width: 8.8rem;
-    height: 5.6rem;
-    margin-left: 0.8rem;
   }
 `;
 
@@ -105,8 +77,7 @@ const EmailSignup = () => {
     setEmail(e.target.value);
   };
 
-  const onSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async () => {
     setValidate(true);
     const _valid = validateEmail(email);
     if (!_valid) return;
@@ -136,7 +107,7 @@ const EmailSignup = () => {
           value={email}
           onChange={onChange}
         />
-        <SubmitButton type="submit">submit</SubmitButton>
+        <Button square text="submit" click={() => onSubmit()} />
       </Form>
       <Note>We don’t share this with anyone.</Note>
     </StyledEmailSignup>
