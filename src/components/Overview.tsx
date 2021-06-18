@@ -11,6 +11,7 @@ const StyledOverview = styled.div`
   background-color: rgba(37, 33, 64, 0.4);
   border-radius: 1.4rem;
   box-shadow: 0px 0px 12px rgba(23, 18, 22, 0.05);
+  margin-left: 1.6rem;
 `;
 
 const Header = styled.div`
@@ -18,6 +19,7 @@ const Header = styled.div`
   font-size: 2.4rem;
   line-height: 4.2rem;
   letter-spacing: 0.25px;
+  margin-bottom: 1.6rem;
 `;
 
 const StatisticContainer = styled.div`
@@ -28,6 +30,8 @@ const StatisticContainer = styled.div`
 
 const LabelContainer = styled.div`
   display: flex;
+  align-items: center;
+  margin-bottom: 1.4rem;
 `;
 
 const Label = styled.div`
