@@ -52,7 +52,7 @@ type Props = {
 const PoolsRow = (props: Props) => {
   const history = useHistory();
   return (
-    <Row onClick={() => history.push(`/b${props.asset}/deposit`)}>
+    <Row onClick={() => history.push(`/pool/b${props.asset}`)}>
       <Data>
         <Asset asset={props.asset} />
       </Data>
