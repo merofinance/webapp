@@ -7,7 +7,7 @@ import { isConnected } from "../features/account/accountSlice";
 import GradientText from "./styles/GradientText";
 import WalletSelectPopup from "./WalletSelectPopup";
 
-const DesktopConnector = styled.button`
+const DesktopConnector = styled.div`
   position: relative;
   transition: transform 0.3s;
 
