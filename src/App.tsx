@@ -33,6 +33,7 @@ const StyledApp = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: space-between;
   padding: 0 10rem;
   padding-bottom: 3rem;
@@ -47,6 +48,14 @@ const StyledApp = styled.div`
   @media (min-width: 601px) and (max-width: 1224px) {
     padding: 0 4rem;
   }
+`;
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1400px;
 `;
 
 library.add(faInfoCircle, faClock, faCheck, faTimesCircle, faExternalLinkAlt, faTrashAlt);
@@ -71,39 +80,41 @@ function App() {
         <Router>
           <Header />
           <StyledApp>
-            <Switch>
-              <PrivateRoute path="/:poolName/deposit">
-                <PoolManagement mode="deposit" />
-              </PrivateRoute>
+            <Content>
+              <Switch>
+                <PrivateRoute path="/:poolName/deposit">
+                  <PoolManagement mode="deposit" />
+                </PrivateRoute>
 
-              <PrivateRoute path="/:poolName/withdraw">
-                <PoolManagement mode="withdraw" />
-              </PrivateRoute>
+                <PrivateRoute path="/:poolName/withdraw">
+                  <PoolManagement mode="withdraw" />
+                </PrivateRoute>
 
-              <PrivateRoute path="/:poolName/positions">
-                <PoolManagement mode="positions" />
-              </PrivateRoute>
+                <PrivateRoute path="/:poolName/positions">
+                  <PoolManagement mode="positions" />
+                </PrivateRoute>
 
-              <Route path="/connect">
-                <ConnectWallet />
-              </Route>
+                <Route path="/connect">
+                  <ConnectWallet />
+                </Route>
 
-              <PrivateRoute path="/pools">
-                <PoolsPage />
-              </PrivateRoute>
+                <PrivateRoute path="/pools">
+                  <PoolsPage />
+                </PrivateRoute>
 
-              <Route path="/claim">
-                <ClaimPage />
-              </Route>
+                <Route path="/claim">
+                  <ClaimPage />
+                </Route>
 
-              <Route path="/litepaper">
-                <LitepaperPage />
-              </Route>
+                <Route path="/litepaper">
+                  <LitepaperPage />
+                </Route>
 
-              <Route path="/">
-                <LandingPage />
-              </Route>
-            </Switch>
+                <Route path="/">
+                  <LandingPage />
+                </Route>
+              </Switch>
+            </Content>
             <Footer />
           </StyledApp>
         </Router>
