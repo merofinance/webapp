@@ -7,6 +7,10 @@ import { isConnected } from "../features/account/accountSlice";
 import GradientText from "./styles/GradientText";
 import WalletSelectPopup from "./WalletSelectPopup";
 
+type ConnectedType = {
+  connected: boolean;
+};
+
 const DesktopConnector = styled.div`
   position: relative;
   transition: transform 0.3s;
@@ -37,18 +41,22 @@ const DesktopConnector = styled.div`
 const ConnectorButton = styled.button`
   position: relative;
   height: 4.2rem;
-  width: 15.8rem;
-  border-radius: 2.1rem;
-  background-color: var(--main);
+  width: ${(props: ConnectedType) => (props.connected ? "13.3rem" : "15.8rem")};
+  border-radius: ${(props: ConnectedType) => (props.connected ? "1.4rem" : "2.1rem")};
+  background-color: ${(props: ConnectedType) => (props.connected ? "none" : "var(--main)")};
+  border: ${(props: ConnectedType) =>
+    props.connected ? "solid 1px rgba(197, 50, 249, 0.5)" : "none"};
   margin: 0.6rem;
 `;
 
 const ConnectorText = styled(GradientText)`
   font-weight: 500;
   font-size: 1.5rem;
+  letter-spacing: 0.46px;
 `;
 
 const Aura = styled.div`
+  display: ${(props: ConnectedType) => (props.connected ? "none" : "flex")};
   position: absolute;
   top: 50%;
   left: 50%;
@@ -121,11 +129,11 @@ const Connector = () => {
   return (
     <>
       <DesktopConnector>
-        <Aura />
-        <ConnectorButton onClick={() => setConnecting(true)}>
+        <Aura connected={connected} />
+        <ConnectorButton onClick={() => setConnecting(true)} connected={connected}>
           <ConnectorText>
             {connected
-              ? account.slice(0, 5) + "..." + account.slice(account.length - 5)
+              ? account.slice(0, 4) + "..." + account.slice(account.length - 4)
               : "Connnect wallet"}
           </ConnectorText>
         </ConnectorButton>
