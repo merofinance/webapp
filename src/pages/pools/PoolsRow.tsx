@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router";
 import styled from "styled-components";
 import chevron from "../../assets/ui/chevron.svg";
 import Asset from "../../components/Asset";
@@ -49,8 +50,9 @@ type Props = {
 };
 
 const PoolsRow = (props: Props) => {
+  const history = useHistory();
   return (
-    <Row>
+    <Row onClick={() => history.push(`/b${props.asset}/deposit`)}>
       <Data>
         <Asset asset={props.asset} />
       </Data>
