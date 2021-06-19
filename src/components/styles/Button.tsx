@@ -1,6 +1,7 @@
 import { CircularProgress } from "@material-ui/core";
 import React from "react";
 import styled from "styled-components";
+import GradientText from "./GradientText";
 
 type ButtonProps = {
   primary?: boolean;
@@ -92,6 +93,22 @@ const Text = styled.div`
     if (props.square) return "700";
     return "500";
   }};
+  background: ${(props: ButtonProps) => {
+    if (props.primary) return "none";
+    return "var(--gradient)";
+  }};
+  background-clip: ${(props: ButtonProps) => {
+    if (props.primary) return "none";
+    return "text";
+  }};
+  -webkit-background-clip: ${(props: ButtonProps) => {
+    if (props.primary) return "none";
+    return "text";
+  }};
+  -webkit-text-fill-color: ${(props: ButtonProps) => {
+    if (props.primary) return "none";
+    return "transparent";
+  }};
 
   @media (max-width: 600px) {
     font-size: 1.4rem;
@@ -133,7 +150,13 @@ const Button = (props: Props) => {
           <CircularProgress size={props.large ? 31 : 25} />
         </ProgressContainer>
       )}
-      <Text hero={props.hero} large={props.large} square={props.square} loading={props.loading}>
+      <Text
+        primary={props.primary}
+        hero={props.hero}
+        large={props.large}
+        square={props.square}
+        loading={props.loading}
+      >
         {props.text}
       </Text>
     </StyledButton>
