@@ -7,7 +7,6 @@ const StyledContentSection = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 1.4rem;
-  overflow: hidden;
   background-color: rgba(21, 14, 59, 0.5);
 `;
 
@@ -18,6 +17,8 @@ const Header = styled.h2`
   font-weight: 700;
   font-size: 2.4rem;
   letter-spacing: 0.25px;
+  border-top-right-radius: 1.4rem;
+  border-top-left-radius: 1.4rem;
 `;
 
 type LineProps = {
