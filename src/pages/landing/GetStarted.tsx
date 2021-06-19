@@ -66,12 +66,13 @@ const GetStarted = () => {
         <Header3>get started</Header3>
         <Body>Deposit liquidity and start earning yield.</Body>
         <Button
+          primary
+          large
           text={LIVE ? "view pools" : "coming soon"}
           click={() => {
             if (!LIVE) return;
             history.push("/pools");
           }}
-          large
         />
       </Container>
     </StyledGetStarted>

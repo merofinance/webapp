@@ -115,7 +115,7 @@ const EmailSignup = () => {
             value={email}
             onChange={onChange}
           />
-          <Button submit square text="submit" loading={loading} />
+          <Button primary submit square text="submit" loading={loading} />
         </Form>
         <Note>We don’t share this with anyone.</Note>
       </Content>

@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 
 type ButtonProps = {
+  primary?: boolean;
   hero?: boolean;
   large?: boolean;
   square?: boolean;
@@ -14,12 +15,6 @@ const StyledButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient(
-    270deg,
-    var(--primary-gradient) 0%,
-    var(--secondary-gradient) 50%,
-    var(--primary-gradient) 100%
-  );
   cursor: pointer;
   transition: 0.5s;
   background-size: 200% auto;
@@ -28,6 +23,11 @@ const StyledButton = styled.button`
     background-position: right center;
   }
 
+  background-image: ${(props: ButtonProps) => {
+    if (props.primary)
+      return "linear-gradient(270deg, var(--primary-gradient) 0%, var(--secondary-gradient) 50%, var(--primary-gradient) 100%);";
+    return "linear-gradient(to right, transparent)";
+  }};
   height: ${(props: ButtonProps) => {
     if (props.large) return "6.2rem";
     if (props.square) return "5.6rem";
@@ -108,6 +108,7 @@ const ProgressContainer = styled.div`
 type Props = {
   text: string;
   click?: () => void;
+  primary?: boolean;
   hero?: boolean;
   large?: boolean;
   square?: boolean;
@@ -122,6 +123,7 @@ const Button = (props: Props) => {
       onClick={() => {
         if (!props.loading && props.click) props.click();
       }}
+      primary={props.primary}
       hero={props.hero}
       large={props.large}
       square={props.square}

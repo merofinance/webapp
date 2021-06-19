@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Radio, { RadioOptionType } from "../../components/Radio";
+import Button from "../../components/styles/Button";
 import PoolDeposit from "./PoolDeposit";
 import PoolOverview from "./PoolOverview";
 import PoolPositions from "./PoolPositions";
@@ -32,6 +33,16 @@ const Content = styled.div`
   display: flex;
 `;
 
+const RightColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const ButtonContainer = styled.div`
+  margin-top: 2.4rem;
+`;
+
 const PoolPage = () => {
   const [tab, setTab] = useState("deposit");
   const token = "dai"; // TODO
@@ -43,7 +54,12 @@ const PoolPage = () => {
         {tab === "deposit" && <PoolDeposit token={token} />}
         {tab === "withdraw" && <PoolWithdraw token={token} />}
         {tab === "positions" && <PoolPositions token={token} />}
-        <PoolOverview pool={token} />
+        <RightColumn>
+          <PoolOverview pool={token} />
+          <ButtonContainer>
+            <Button text="+ Create a Top-up Position" click={() => setTab("positions")} />
+          </ButtonContainer>
+        </RightColumn>
       </Content>
     </StyledPoolPage>
   );

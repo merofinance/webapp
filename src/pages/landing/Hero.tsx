@@ -28,13 +28,14 @@ const Hero = () => {
         becoming liquidable.
       </Header4>
       <Button
+        primary
+        hero
+        large
         text={LIVE ? "view pools" : "coming soon"}
         click={() => {
           if (!LIVE) return;
           history.push("/pools");
         }}
-        hero
-        large
       />
     </StyledHero>
   );
