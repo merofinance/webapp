@@ -9,6 +9,7 @@ export type RadioOptionType = {
 const StyledRadio = styled.div`
   position: relative;
   display: flex;
+  margin-bottom: 1.5rem;
 `;
 
 type OptionProps = {

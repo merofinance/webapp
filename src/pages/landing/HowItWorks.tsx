@@ -86,7 +86,7 @@ type CardContainerType = {
 const CardContainer = styled.div`
   width: 100%;
   display: ${(props: CardContainerType) => (props.show ? "flex" : "none")};
-  margin: 2.5rem 0;
+  margin: 1rem 0;
 
   @media (max-width: 600px) {
     margin: 0;
