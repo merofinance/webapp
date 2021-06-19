@@ -2,10 +2,36 @@ import React from "react";
 import styled from "styled-components";
 import ContentSection from "../../components/ContentSection";
 import PoolsOverview from "./PoolsOverview";
+import PoolsRow from "./PoolsRow";
+import { AssetType } from "../../components/Asset";
 
 const StyledPoolsPage = styled.div`
   width: 100%;
   display: flex;
+`;
+
+const Table = styled.table`
+  width: 100%;
+`;
+
+const HeaderRow = styled.tr`
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1.7rem;
+`;
+
+const Header = styled.th`
+  flex: 1;
+  text-align: left;
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 2.4rem;
+  letter-spacing: 0.15px;
+  opacity: 0.6;
+`;
+
+const ChevronHeader = styled.th`
+  width: 2.4rem;
 `;
 
 const PoolsPage = () => {
@@ -33,7 +59,20 @@ const PoolsPage = () => {
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
           },
         ]}
-        content={<p>test</p>}
+        content={
+          <Table>
+            <HeaderRow>
+              <Header>Asset</Header>
+              <Header>APY</Header>
+              <Header>TVL</Header>
+              <Header>Your deposits</Header>
+              <ChevronHeader />
+            </HeaderRow>
+            <PoolsRow asset={AssetType.ETH} />
+            <PoolsRow asset={AssetType.USDC} />
+            <PoolsRow asset={AssetType.DAI} />
+          </Table>
+        }
       />
       <PoolsOverview />
     </StyledPoolsPage>
