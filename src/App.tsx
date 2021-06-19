@@ -18,7 +18,6 @@ import { AppDispatch } from "./app/store";
 import Header from "./components/Header";
 import { ErrorBoundary } from "./features/error/ErrorBoundary";
 import { setError } from "./features/error/errorSlice";
-import { PoolManagement } from "./features/pool/PoolManagement";
 import { createBackd } from "./lib/factory";
 import MockSigner from "./lib/mock/signer";
 import LandingPage from "./pages/landing/LandingPage";

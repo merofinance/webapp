@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Overview from "../../components/Overview";
 import Radio, { RadioOptionType } from "../../components/Radio";
-import Statistic from "../../components/Statistic";
 import PoolDeposit from "./PoolDeposit";
 import PoolOverview from "./PoolOverview";
 import PoolPositions from "./PoolPositions";
