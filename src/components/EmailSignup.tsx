@@ -1,14 +1,27 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
+import { useLocation } from "react-router";
 import styled from "styled-components";
 import { apiPost } from "../services/apiService";
 import Button from "./styles/Button";
 
 const StyledEmailSignup = styled.div`
-  display: flex;
-  flex-direction: column;
+  width: 38.8rem;
 
   @media (max-width: 600px) {
     width: 100%;
+  }
+`;
+
+type ContentProps = {
+  show: boolean;
+};
+
+const Content = styled.div`
+  width: 100%;
+  display: ${(props: ContentProps) => (props.show ? "flex" : "none")};
+  flex-direction: column;
+
+  @media (max-width: 600px) {
     margin-bottom: 12rem;
   }
 `;
@@ -61,6 +74,7 @@ const Note = styled.div`
 `;
 
 const EmailSignup = () => {
+  const location = useLocation();
   const [email, setEmail] = useState("");
   const [valid, setValid] = useState(true);
   const [validate, setValidate] = useState(false);
@@ -91,18 +105,20 @@ const EmailSignup = () => {
 
   return (
     <StyledEmailSignup>
-      <Header>Receive latest Backd updates</Header>
-      <Form onSubmit={onSubmit}>
-        <Input
-          placeholder="Enter your email"
-          valid={valid}
-          type="email"
-          value={email}
-          onChange={onChange}
-        />
-        <Button submit square text="submit" loading={loading} />
-      </Form>
-      <Note>We don’t share this with anyone.</Note>
+      <Content show={location.pathname === "/"}>
+        <Header>Receive latest Backd updates</Header>
+        <Form onSubmit={onSubmit}>
+          <Input
+            placeholder="Enter your email"
+            valid={valid}
+            type="email"
+            value={email}
+            onChange={onChange}
+          />
+          <Button submit square text="submit" loading={loading} />
+        </Form>
+        <Note>We don’t share this with anyone.</Note>
+      </Content>
     </StyledEmailSignup>
   );
 };
