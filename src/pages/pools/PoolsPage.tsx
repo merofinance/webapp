@@ -3,7 +3,6 @@ import styled from "styled-components";
 import ContentSection from "../../components/ContentSection";
 import PoolsOverview from "./PoolsOverview";
 import PoolsRow from "./PoolsRow";
-import { AssetType } from "../../components/Asset";
 
 const StyledPoolsPage = styled.div`
   width: 100%;
@@ -68,9 +67,9 @@ const PoolsPage = () => {
               <Header>Your deposits</Header>
               <ChevronHeader />
             </HeaderRow>
-            <PoolsRow asset={AssetType.ETH} />
-            <PoolsRow asset={AssetType.USDC} />
-            <PoolsRow asset={AssetType.DAI} />
+            <PoolsRow asset={"eth"} />
+            <PoolsRow asset={"usdc"} />
+            <PoolsRow asset={"dai"} />
           </Table>
         }
       />

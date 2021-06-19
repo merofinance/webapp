@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import chevron from "../../assets/ui/chevron.svg";
-import Asset, { AssetType } from "../../components/Asset";
+import Asset from "../../components/Asset";
 import GradientText from "../../components/styles/GradientText";
 
 const Row = styled.tr`
@@ -45,7 +45,7 @@ const Chevron = styled.img`
 `;
 
 type Props = {
-  asset: AssetType;
+  asset: "eth" | "usdc" | "dai";
 };
 
 const PoolsRow = (props: Props) => {
