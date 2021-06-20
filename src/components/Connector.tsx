@@ -40,6 +40,7 @@ const DesktopConnector = styled.div`
 
 const ConnectorButton = styled.button`
   position: relative;
+  cursor: pointer;
   height: 4.2rem;
   width: ${(props: ConnectedType) => (props.connected ? "13.3rem" : "15.8rem")};
   border-radius: ${(props: ConnectedType) => (props.connected ? "1.4rem" : "2.1rem")};
