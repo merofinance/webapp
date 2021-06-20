@@ -15,6 +15,8 @@ const Available = styled.div`
   font-size: 1.4rem;
   line-height: 2rem;
   letter-spacing: 0.15px;
+  margin-bottom: 0.6rem;
+  padding-right: 0.5rem;
 `;
 
 const InputContainer = styled.div`
