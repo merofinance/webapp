@@ -2,6 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import AmountInput from "../../components/AmountInput";
 import ContentSection from "../../components/ContentSection";
+import ProgressButtons from "../../components/ProgressButtons";
+
+const Content = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
 
 type Props = {
   token: string;
@@ -31,7 +38,12 @@ const PoolDeposit = (props: Props) => {
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
         },
       ]}
-      content={<AmountInput label="Enter an amount of USDC to deposit" max={100} />}
+      content={
+        <Content>
+          <AmountInput label="Enter an amount of USDC to deposit" max={100} />
+          <ProgressButtons token={""} symbol={"dai"} buttonText="Deposit and Stake" />
+        </Content>
+      }
     />
   );
 };
