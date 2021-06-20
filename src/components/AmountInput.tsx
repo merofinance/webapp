@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import AmountSlider from "./AmountSlider";
 import Button from "./styles/Button";
 
 const StyledAmountInput = styled.div`
@@ -25,6 +26,7 @@ const InputContainer = styled.div`
   padding: 4px;
   background: linear-gradient(to right, rgba(197, 50, 249, 0.25), rgba(50, 178, 229, 0.25));
   border-radius: 4px;
+  margin-bottom: 1.4rem;
 `;
 
 const InputBorder = styled.div`
@@ -98,6 +100,7 @@ const AmountInput = (props: Props) => {
           <Button primary small text="max" click={() => setValue(props.max.toString())} />
         </ButtonContainer>
       </InputContainer>
+      <AmountSlider value={value} max={props.max} setValue={(v: string) => setValue(v)} />
     </StyledAmountInput>
   );
 };
