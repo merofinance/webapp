@@ -43,6 +43,14 @@ const Input = styled.input`
   display: flex;
   align-items: center;
   letter-spacing: 0.15px;
+  -moz-appearance: textfield;
+
+  ::-webkit-outer-spin-button {
+    display: none;
+  }
+  ::-webkit-inner-spin-button {
+    display: none;
+  }
 `;
 
 const Label = styled.label`
