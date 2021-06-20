@@ -57,7 +57,7 @@ const PoolPage = () => {
         <RightColumn>
           <PoolOverview pool={token} />
           <ButtonContainer>
-            <Button text="+ Create a Top-up Position" click={() => setTab("positions")} />
+            <Button medium text="+ Create a Top-up Position" click={() => setTab("positions")} />
           </ButtonContainer>
         </RightColumn>
       </Content>
