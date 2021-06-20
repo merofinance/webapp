@@ -86,7 +86,12 @@ const AmountInput = (props: Props) => {
       <Available>{`Available: ${props.max}`}</Available>
       <InputContainer>
         <InputBorder>
-          <Input type="number" placeholder={"0"} value={value} />
+          <Input
+            type="number"
+            placeholder={"0"}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
         </InputBorder>
         <Label>{props.label}</Label>
         <ButtonContainer>
