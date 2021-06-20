@@ -7,6 +7,7 @@ type ButtonProps = {
   hero?: boolean;
   large?: boolean;
   medium?: boolean;
+  small?: boolean;
   square?: boolean;
   loading?: boolean;
 };
@@ -62,12 +63,14 @@ const Content = styled.div`
   height: ${(props: ButtonProps) => {
     if (props.large) return "6.2rem";
     if (props.medium) return "4.8rem";
+    if (props.small) return "2.8rem";
     if (props.square) return "5.6rem";
     return "3.8rem";
   }};
   border-radius: ${(props: ButtonProps) => {
     if (props.large) return "3.1rem";
     if (props.medium) return "1.4rem";
+    if (props.small) return "0.4rem";
     if (props.square) return "1.4rem";
     return "1.9rem";
   }};
@@ -75,6 +78,7 @@ const Content = styled.div`
     ${(props: ButtonProps) => {
       if (props.large) return "5rem";
       if (props.medium) return "1.9rem";
+      if (props.small) return "1.1rem";
       if (props.square) return "3rem";
       return "2.6rem";
     }};
@@ -101,6 +105,7 @@ const Text = styled.div`
 
   text-transform: ${(props: ButtonProps) => {
     if (props.medium) return "none";
+    if (props.small) return "uppercase";
     return "capitalise";
   }};
   letter-spacing: ${(props: ButtonProps) => {
@@ -113,6 +118,7 @@ const Text = styled.div`
   }};
   font-size: ${(props: ButtonProps) => {
     if (props.large) return "2.1rem";
+    if (props.small) return "1.3rem";
     if (props.square) return "1.4rem";
     return "1.5rem";
   }};
@@ -156,10 +162,11 @@ type Props = {
   primary?: boolean;
   hero?: boolean;
   large?: boolean;
+  medium?: boolean;
+  small?: boolean;
   square?: boolean;
   loading?: boolean;
   submit?: boolean;
-  medium?: boolean;
 };
 
 const Button = (props: Props) => {
@@ -179,6 +186,7 @@ const Button = (props: Props) => {
         primary={props.primary}
         large={props.large}
         medium={props.medium}
+        small={props.small}
         square={props.square}
       >
         {props.loading && (
