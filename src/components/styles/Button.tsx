@@ -6,12 +6,12 @@ type ButtonProps = {
   primary?: boolean;
   hero?: boolean;
   large?: boolean;
+  medium?: boolean;
   square?: boolean;
   loading?: boolean;
 };
 
 const StyledButton = styled.button`
-  background-color: pink;
   cursor: pointer;
   transition: 0.5s;
 
@@ -24,9 +24,10 @@ const StyledButton = styled.button`
     return "1px";
   }};
   border-radius: ${(props: ButtonProps) => {
-    if (props.large) return "3.1rem";
-    if (props.square) return "1.4rem";
-    return "1.9rem";
+    if (props.large) return "3.2rem";
+    if (props.medium) return "1.5rem";
+    if (props.square) return "1.5rem";
+    return "2rem";
   }};
   margin-top: ${(props: ButtonProps) => {
     if (props.hero) return "8rem";
@@ -60,17 +61,20 @@ const Content = styled.div`
   }};
   height: ${(props: ButtonProps) => {
     if (props.large) return "6.2rem";
+    if (props.medium) return "4.8rem";
     if (props.square) return "5.6rem";
     return "3.8rem";
   }};
   border-radius: ${(props: ButtonProps) => {
     if (props.large) return "3.1rem";
+    if (props.medium) return "1.4rem";
     if (props.square) return "1.4rem";
     return "1.9rem";
   }};
   padding: 0
     ${(props: ButtonProps) => {
       if (props.large) return "5rem";
+      if (props.medium) return "1.9rem";
       if (props.square) return "3rem";
       return "2.6rem";
     }};
@@ -93,9 +97,12 @@ const Content = styled.div`
 `;
 
 const Text = styled.div`
-  text-transform: capitalize;
   opacity: ${(props: ButtonProps) => (props.loading ? "0" : "1")};
 
+  text-transform: ${(props: ButtonProps) => {
+    if (props.medium) return "none";
+    return "capitalise";
+  }};
   letter-spacing: ${(props: ButtonProps) => {
     if (props.large) return "0";
     return "0.46px";
@@ -152,6 +159,7 @@ type Props = {
   square?: boolean;
   loading?: boolean;
   submit?: boolean;
+  medium?: boolean;
 };
 
 const Button = (props: Props) => {
@@ -161,6 +169,7 @@ const Button = (props: Props) => {
       primary={props.primary}
       hero={props.hero}
       large={props.large}
+      medium={props.medium}
       square={props.square}
     >
       <Content
@@ -169,6 +178,7 @@ const Button = (props: Props) => {
         }}
         primary={props.primary}
         large={props.large}
+        medium={props.medium}
         square={props.square}
       >
         {props.loading && (
@@ -180,6 +190,7 @@ const Button = (props: Props) => {
           primary={props.primary}
           hero={props.hero}
           large={props.large}
+          medium={props.medium}
           square={props.square}
           loading={props.loading}
         >
