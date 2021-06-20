@@ -199,6 +199,7 @@ const Button = (props: Props) => {
           hero={props.hero}
           large={props.large}
           medium={props.medium}
+          small={props.small}
           square={props.square}
           loading={props.loading}
         >
