@@ -43,7 +43,7 @@ const Content = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 2.2rem 1.6rem;
+  padding: 2.4rem 1.6rem;
 `;
 
 type Props = {
