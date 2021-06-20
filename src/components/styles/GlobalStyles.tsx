@@ -34,6 +34,10 @@ const GlobalStyle = createGlobalStyle`
         border: none;
         outline: none;
     }
+    
+    input {
+        border: none;
+    }
 
     a {
         text-decoration: none;
