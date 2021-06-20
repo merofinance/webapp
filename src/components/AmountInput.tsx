@@ -6,6 +6,7 @@ const StyledAmountInput = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  margin: 0.6rem 0;
 `;
 
 const Available = styled.div`
