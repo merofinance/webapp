@@ -56,9 +56,11 @@ const PoolPage = () => {
         {tab === "positions" && <PoolPositions token={token} />}
         <RightColumn>
           <PoolOverview pool={token} />
-          <ButtonContainer>
-            <Button medium text="+ Create a Top-up Position" click={() => setTab("positions")} />
-          </ButtonContainer>
+          {tab !== "positions" && (
+            <ButtonContainer>
+              <Button medium text="+ Create a Top-up Position" click={() => setTab("positions")} />
+            </ButtonContainer>
+          )}
         </RightColumn>
       </Content>
     </StyledPoolPage>
