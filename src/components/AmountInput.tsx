@@ -95,7 +95,7 @@ const AmountInput = (props: Props) => {
         </InputBorder>
         <Label>{props.label}</Label>
         <ButtonContainer>
-          <Button primary small text="max" />
+          <Button primary small text="max" click={() => setValue(props.max.toString())} />
         </ButtonContainer>
       </InputContainer>
     </StyledAmountInput>
