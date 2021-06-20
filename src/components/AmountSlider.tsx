@@ -1,10 +1,13 @@
 import { Slider, withStyles } from "@material-ui/core";
 import React from "react";
-import styled from "styled-components";
 
 const Gradient = "linear-gradient(to right, rgba(197, 50, 249, 1), rgba(50, 178, 229, 1))";
 
 const BackdSlider = withStyles({
+  root: {
+    color: "#52af77",
+    height: 8,
+  },
   thumb: {
     height: 16,
     width: 16,
@@ -17,6 +20,16 @@ const BackdSlider = withStyles({
     height: 3,
     borderRadius: 2,
     background: Gradient,
+  },
+  valueLabel: {
+    left: -8,
+    "& span": {
+      background: Gradient,
+      fontSize: 11,
+    },
+    "& span > span": {
+      background: "transparent",
+    },
   },
   rail: {
     height: 3,
@@ -31,6 +44,8 @@ const BackdSlider = withStyles({
     opacity: 0.4,
   },
 })(Slider);
+
+const valuetext = (value: any) => `${value}%`;
 
 type Props = {
   value: string;
@@ -50,6 +65,8 @@ const AmountSlider = (props: Props) => {
       max={100}
       value={percent}
       onChange={(e: any, value: any) => props.setValue(((value * props.max) / 100).toString())}
+      valueLabelDisplay="auto"
+      valueLabelFormat={valuetext}
     />
   );
 };
