@@ -46,7 +46,7 @@ const Number = styled.div`
       ? "#C532F9"
       : "rgba(83, 80, 104, 1)"};
   color: ${(props: NumberProps) =>
-    props.complete || props.current ? "var(--main)" : "rgba(0, 0, 0, 0.87)"};
+    props.complete || props.current ? "var(--main)" : "rgba(0, 0, 0, 0.43)"};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -89,8 +89,9 @@ const ProgressButtons = (props: Props) => {
           wide
           text={`Approve ${props.symbol.toUpperCase()}`}
           click={() => setApproved(true)}
+          disabled={approved}
         />
-        <Button primary medium wide text={props.buttonText} />
+        <Button primary medium wide text={props.buttonText} disabled={!approved} />
       </Buttons>
       <ProgressContainer>
         <ProgressSection>
