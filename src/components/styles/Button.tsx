@@ -11,6 +11,7 @@ type ButtonProps = {
   square?: boolean;
   loading?: boolean;
   wide?: boolean;
+  disabled?: boolean;
 };
 
 const StyledButton = styled.button`
@@ -46,6 +47,10 @@ const StyledButton = styled.button`
       return "0";
     }};
   }
+
+  :disabled {
+    cursor: not-allowed;
+  }
 `;
 
 const Content = styled.div`
@@ -61,6 +66,8 @@ const Content = styled.div`
   }
 
   background-image: ${(props: ButtonProps) => {
+    if (props.disabled)
+      return "linear-gradient(to right, rgba(83, 80, 104, 1), rgba(83, 80, 104, 1))";
     if (props.primary)
       return "linear-gradient(270deg, var(--primary-gradient) 0%, var(--secondary-gradient) 50%, var(--primary-gradient) 100%);";
     return "linear-gradient(to right, var(--bg), var(--bg))";
@@ -108,6 +115,10 @@ const Content = styled.div`
 const Text = styled.div`
   opacity: ${(props: ButtonProps) => (props.loading ? "0" : "1")};
 
+  color: ${(props: ButtonProps) => {
+    if (props.disabled) return "rgba(0, 0, 0, 0.43)";
+    return "var(--main)";
+  }};
   text-transform: ${(props: ButtonProps) => {
     if (props.medium) return "none";
     if (props.small) return "uppercase";
@@ -173,6 +184,7 @@ type Props = {
   loading?: boolean;
   submit?: boolean;
   wide?: boolean;
+  disabled?: boolean;
 };
 
 const Button = (props: Props) => {
@@ -185,6 +197,7 @@ const Button = (props: Props) => {
       medium={props.medium}
       square={props.square}
       wide={props.wide}
+      disabled={props.disabled}
     >
       <Content
         onClick={() => {
@@ -195,6 +208,7 @@ const Button = (props: Props) => {
         medium={props.medium}
         small={props.small}
         square={props.square}
+        disabled={props.disabled}
       >
         {props.loading && (
           <ProgressContainer>
@@ -209,6 +223,7 @@ const Button = (props: Props) => {
           small={props.small}
           square={props.square}
           loading={props.loading}
+          disabled={props.disabled}
         >
           {props.text}
         </Text>
