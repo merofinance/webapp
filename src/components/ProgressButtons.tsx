@@ -65,7 +65,7 @@ const Line = styled.div`
   transform: translate(50%, calc(-50% - 1px));
   background: ${(props: NumberProps) =>
     props.complete
-      ? "linear-gradient(to right, #C532F9, #32B2E5)"
+      ? "#C532F9"
       : props.current
       ? "linear-gradient(to right, #32B2E5, rgba(83, 80, 104, 1))"
       : "rgba(83, 80, 104, 1)"};
