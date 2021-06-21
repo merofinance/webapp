@@ -10,11 +10,10 @@ const StyledProgressButtons = styled.div`
 
 const Buttons = styled.div`
   width: 100%;
-  display: flex;
-`;
-
-const ButtonContainer = styled.div`
-  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1.5rem;
+  margin-bottom: 1rem;
 `;
 
 const ProgressContainer = styled.div`
@@ -84,16 +83,14 @@ const ProgressButtons = (props: Props) => {
   return (
     <StyledProgressButtons>
       <Buttons>
-        <ButtonContainer>
-          <Button
-            primary
-            text={`Approve ${props.symbol.toUpperCase()}`}
-            click={() => setApproved(true)}
-          />
-        </ButtonContainer>
-        <ButtonContainer>
-          <Button primary text={props.buttonText} />
-        </ButtonContainer>
+        <Button
+          primary
+          medium
+          wide
+          text={`Approve ${props.symbol.toUpperCase()}`}
+          click={() => setApproved(true)}
+        />
+        <Button primary medium wide text={props.buttonText} />
       </Buttons>
       <ProgressContainer>
         <ProgressSection>
