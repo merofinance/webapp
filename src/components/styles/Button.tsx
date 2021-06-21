@@ -10,12 +10,17 @@ type ButtonProps = {
   small?: boolean;
   square?: boolean;
   loading?: boolean;
+  wide?: boolean;
 };
 
 const StyledButton = styled.button`
   cursor: pointer;
   transition: 0.5s;
 
+  width: ${(props: ButtonProps) => {
+    if (props.wide) return "100%";
+    return "auto";
+  }};
   background-image: ${(props: ButtonProps) => {
     if (props.primary) return "linear-gradient(to right, transparent)";
     return "linear-gradient(to right, var(--primary-gradient) 0%, var(--secondary-gradient) 100%);";
@@ -167,6 +172,7 @@ type Props = {
   square?: boolean;
   loading?: boolean;
   submit?: boolean;
+  wide?: boolean;
 };
 
 const Button = (props: Props) => {
@@ -178,6 +184,7 @@ const Button = (props: Props) => {
       large={props.large}
       medium={props.medium}
       square={props.square}
+      wide={props.wide}
     >
       <Content
         onClick={() => {
