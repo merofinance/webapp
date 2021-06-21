@@ -198,11 +198,11 @@ const Button = (props: Props) => {
       square={props.square}
       wide={props.wide}
       disabled={props.disabled}
+      onClick={() => {
+        if (!props.loading && !props.disabled && props.click) props.click();
+      }}
     >
       <Content
-        onClick={() => {
-          if (!props.loading && props.click) props.click();
-        }}
         primary={props.primary}
         large={props.large}
         medium={props.medium}
