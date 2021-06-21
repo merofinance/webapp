@@ -106,7 +106,7 @@ const Text = styled.div`
   text-transform: ${(props: ButtonProps) => {
     if (props.medium) return "none";
     if (props.small) return "uppercase";
-    return "capitalise";
+    return "capitalize";
   }};
   letter-spacing: ${(props: ButtonProps) => {
     if (props.large) return "0";
