@@ -6,6 +6,7 @@ const StyledProgressButtons = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  margin-top: 1.7rem;
 `;
 
 const Buttons = styled.div`
