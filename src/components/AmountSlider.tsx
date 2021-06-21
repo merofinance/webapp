@@ -24,7 +24,7 @@ const BackdSlider = withStyles({
   valueLabel: {
     left: -8,
     "& span": {
-      background: Gradient,
+      background: "#433b6b",
       fontSize: 11,
     },
     "& span > span": {
