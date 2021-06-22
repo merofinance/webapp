@@ -116,11 +116,12 @@ const DotCenter = styled.div`
 `;
 
 const Connector = () => {
-  const connected = useSelector(isConnected);
   const { library: backd } = useWeb3React();
 
   const [account, setAccount] = useState<Address>("");
   const [connecting, setConnecting] = useState(false);
+
+  const connected = useSelector(isConnected) && account.length > 0;
 
   useEffect(() => {
     if (!backd) return;
