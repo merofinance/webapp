@@ -55,11 +55,16 @@ const Social = styled.div`
   padding: 2rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 1.4rem;
-  background-color: #141128;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   cursor: pointer;
+  background-color: #141128;
+  transition: background-color 0.3s;
+
+  :hover {
+    background-color: #1a1438;
+  }
 
   @media (max-width: 600px) {
     padding: 0.6rem 0.7rem;
