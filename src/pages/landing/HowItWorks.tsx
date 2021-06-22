@@ -29,17 +29,17 @@ const cardsList: CardType[][] = [
     },
     {
       number: "02",
-      header: "Earn yield",
+      header: "Earn Yield",
       body: "Earn compounded yield from strategy profits and protocol fees as LP tokens appreciate over the underlying tokens.",
     },
     {
       number: "03",
-      header: "Stake to earn rewards",
+      header: "Stake to Earn Rewards",
       body: "Stake your pool LP tokens to receive Backd rewards.",
     },
     {
       number: "04",
-      header: "Unstake any time",
+      header: "Unstake Any Time",
       body: "Unstake your LP tokens or claim your Backd rewards at any time.",
     },
   ],
@@ -51,7 +51,7 @@ const cardsList: CardType[][] = [
     },
     {
       number: "02",
-      header: "Register loan on-chain",
+      header: "Register Loan on-Chain",
       body: "Register Compound or Aave loans on-chain to receive collateral top-ups, and stake your pool LP tokens to earn Backd rewards.",
     },
     {
@@ -61,7 +61,7 @@ const cardsList: CardType[][] = [
     },
     {
       number: "04",
-      header: "Unstake any time",
+      header: "Unstake Any Time",
       body: "Unregister or update a position, withdraw LP tokens or claim Backd rewards at any time.",
     },
   ],
