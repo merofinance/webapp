@@ -34,7 +34,6 @@ export const Header3 = styled.h3`
 `;
 
 export const Header4 = styled.h4`
-  text-transform: capitalize;
   font-weight: 400;
   font-size: 2.8rem;
   line-height: 4.2rem;
