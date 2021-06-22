@@ -36,9 +36,10 @@ const StyledBenefits = styled.div`
   margin: var(--section-margin);
   display: flex;
   justify-content: space-evenly;
-  align-items: center;
+  align-items: flex-start;
 
   @media (max-width: 600px) {
+    align-items: center;
     margin: var(--mobile-section-margin);
     flex-direction: column;
   }
@@ -60,13 +61,25 @@ const Benefit = styled.div`
   }
 `;
 
-const Icon = styled.img`
-  width: 7.9rem;
+const IconContainer = styled.div`
+  height: 7.9rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+
   margin-bottom: 3.5rem;
 
   @media (max-width: 600px) {
-    width: 4.7rem;
+    height: 4.7rem;
     margin-bottom: 2rem;
+  }
+`;
+
+const Icon = styled.img`
+  width: 7.9rem;
+
+  @media (max-width: 600px) {
+    width: 4.7rem;
   }
 `;
 
@@ -82,8 +95,8 @@ const IconGlass = styled.div.attrs((props: IconGlassProps) => ({
   },
 }))`
   position: absolute;
-  top: ${(props: IconGlassProps) => (props.top ? "-1.5rem" : "1.1rem")};
-  left: 50%;
+  top: ${(props: IconGlassProps) => (props.top ? "1rem" : "3.8rem")};
+  left: calc(50% + ${(props: IconGlassProps) => (props.right ? "0.5rem" : "-4.5rem")});
   width: 4.8rem;
   height: 4.8rem;
   border-radius: 13px;
@@ -93,6 +106,8 @@ const IconGlass = styled.div.attrs((props: IconGlassProps) => ({
   backdrop-filter: blur(5px);
 
   @media (max-width: 600px) {
+    top: ${(props: IconGlassProps) => (props.top ? "0rem" : "0.7rem")};
+    left: calc(50% + ${(props: IconGlassProps) => (props.right ? "0.3rem" : "-2.7rem")});
     backdrop-filter: blur(3px);
     width: 3rem;
     height: 3rem;
@@ -148,13 +163,13 @@ const Benefits = () => {
     <StyledBenefits ref={benefitsRef}>
       {benefits.map((benefit: BenfitsType, index: number) => (
         <Benefit key={benefit.header}>
-          <Icon src={benefit.icon} />
+          <IconContainer>
+            <Icon src={benefit.icon} />
+          </IconContainer>
           <IconGlass
             right={index % 2 === 0}
             top={index === 2}
-            transform={`translate(calc(-50% + ${index % 2 === 0 ? "2rem" : "-1.2rem"}), ${
-              -(scrollPosition - 380) / (window.innerHeight / 50)
-            }px)`}
+            transform={`translateY(${-(scrollPosition - 380) / (window.innerHeight / 50)}px)`}
           >
             <IconGlassGradient rotate={index === 1 ? 90 : index === 2 ? -90 : 0} />
           </IconGlass>
