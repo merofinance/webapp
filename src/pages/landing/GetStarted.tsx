@@ -68,6 +68,7 @@ const GetStarted = () => {
         <Button
           primary
           large
+          inactive={!LIVE}
           text={LIVE ? "view pools" : "coming soon"}
           click={() => {
             if (!LIVE) return;

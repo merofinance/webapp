@@ -31,6 +31,7 @@ const Hero = () => {
         primary
         hero
         large
+        inactive={!LIVE}
         text={LIVE ? "view pools" : "coming soon"}
         click={() => {
           if (!LIVE) return;
