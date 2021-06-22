@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ContentSection from "../../components/ContentSection";
-import DeleteIcon from "@material-ui/icons/Delete";
+import deleteIcon from "../../assets/ui/delete.svg";
 
 const StyledPositions = styled.div`
   width: 100%;
@@ -33,14 +33,32 @@ const Position = styled.div`
   border-radius: 1.2rem;
   padding: 1.7rem 2rem;
   margin-top: 0.6rem;
+
+  div:last-child {
+    justify-content: flex-end;
+  }
 `;
 
 const Value = styled.div`
   flex: 1;
   font-weight: 400;
   font-size: 1.4rem;
-  line-height: 2rem;
   letter-spacing: 0.15px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
+const DeleteButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  cursor: pointer;
+`;
+
+const Delete = styled.img`
+  height: 1.4rem;
 `;
 
 type Props = {
@@ -88,7 +106,21 @@ const PoolPositions = (props: Props) => {
             <Value>3,000 DAI</Value>
             <Value>8,000 DAI</Value>
             <Value>
-              <DeleteIcon style={{ fontSize: 18 }} />
+              <DeleteButton>
+                <Delete src={deleteIcon} />
+              </DeleteButton>
+            </Value>
+          </Position>
+          <Position>
+            <Value>Aave</Value>
+            <Value>0xf76...5255</Value>
+            <Value>1.03</Value>
+            <Value>3,000 DAI</Value>
+            <Value>8,000 DAI</Value>
+            <Value>
+              <DeleteButton>
+                <Delete src={deleteIcon} />
+              </DeleteButton>
             </Value>
           </Position>
         </StyledPositions>
