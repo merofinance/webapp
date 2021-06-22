@@ -60,7 +60,7 @@ const AmountSlider = (props: Props) => {
     <BackdSlider
       marks
       defaultValue={0}
-      step={10}
+      step={25}
       min={0}
       max={100}
       value={percent}
