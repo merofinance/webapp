@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ContentSection from "../../components/ContentSection";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const StyledPositions = styled.div`
   width: 100%;
@@ -86,7 +87,9 @@ const PoolPositions = (props: Props) => {
             <Value>1.03</Value>
             <Value>3,000 DAI</Value>
             <Value>8,000 DAI</Value>
-            <Value>M</Value>
+            <Value>
+              <DeleteIcon style={{ fontSize: 18 }} />
+            </Value>
           </Position>
         </StyledPositions>
       }
