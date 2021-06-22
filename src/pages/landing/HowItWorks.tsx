@@ -101,7 +101,6 @@ const Card = styled.div`
   background-color: rgba(34, 31, 55, 0.6);
   border-radius: 1.4rem;
   padding: 2.4rem 1.6rem;
-  padding-right: 3rem;
   display: flex;
   flex-direction: column;
   backdrop-filter: blur(8px);
