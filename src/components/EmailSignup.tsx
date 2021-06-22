@@ -56,9 +56,15 @@ const Input = styled.input`
   font-size: 1.6rem;
   font-weight: 400;
   margin-right: 1.6rem;
+  transition: border 0.3s;
 
   ::placeholder {
     color: var(--main);
+  }
+
+  :focus {
+    border: ${(props: InputProps) =>
+      props.valid ? "solid 1px #CF2BF9" : "solid 1px var(--error)"};
   }
 
   @media (max-width: 600px) {
