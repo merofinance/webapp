@@ -28,7 +28,7 @@ const RadioOption = styled.button`
   transition: all 0.3s;
 
   :hover {
-    color: var(--main);
+    opacity: ${(props: OptionProps) => (props.active ? "1" : "0.7")};
   }
 
   @media (max-width: 600px) {
