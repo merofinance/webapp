@@ -11,7 +11,9 @@ import JoinCommunity from "./JoinCommunity";
 import Preview from "./Preview";
 import SupportedBy from "./SupportedBy";
 
-const StyledLanding = styled.div``;
+const StyledLanding = styled.div`
+  width: 100%;
+`;
 
 const Content = styled.div`
   position: relative;
