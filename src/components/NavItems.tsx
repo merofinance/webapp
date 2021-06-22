@@ -34,6 +34,11 @@ const NavItem = styled.li`
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: opacity 0.3s;
+
+  :hover {
+    opacity: 0.7;
+  }
 
   @media (max-width: 600px) {
     margin: 0 1.7rem;
