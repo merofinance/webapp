@@ -12,11 +12,13 @@ type ButtonProps = {
   loading?: boolean;
   wide?: boolean;
   disabled?: boolean;
+  inactive?: boolean;
 };
 
 const StyledButton = styled.button`
   cursor: pointer;
   transition: 0.5s;
+  pointer-events: ${(props: ButtonProps) => (props.inactive ? "none" : "auto")};
 
   width: ${(props: ButtonProps) => {
     if (props.wide) return "100%";
@@ -185,6 +187,7 @@ type Props = {
   submit?: boolean;
   wide?: boolean;
   disabled?: boolean;
+  inactive?: boolean;
 };
 
 const Button = (props: Props) => {
@@ -198,6 +201,7 @@ const Button = (props: Props) => {
       square={props.square}
       wide={props.wide}
       disabled={props.disabled}
+      inactive={props.inactive}
       onClick={() => {
         if (!props.loading && !props.disabled && props.click) props.click();
       }}
