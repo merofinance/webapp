@@ -131,6 +131,11 @@ const ReadMoreButton = styled.button`
   display: flex;
   align-items: center;
   cursor: pointer;
+  transition: all 0.3s;
+
+  :hover {
+    opacity: 0.7;
+  }
 `;
 
 const ReadMoreText = styled(GradientText)`
