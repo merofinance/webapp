@@ -22,12 +22,12 @@ const benefits: BenfitsType[] = [
   {
     icon: plus,
     header: "Earn Yield",
-    content: "Earn interest on liquidity via yield-farming strategies such as Curve and Convex.",
+    content: "Earn interest on liquidity via yield-farming strategies based on Curve and Convex.",
   },
   {
     icon: percent,
-    header: "Fee share",
-    content: "Fixed percentage fee of x% is charged on the top-up amount & distributed among LPs",
+    header: "Fee Share",
+    content: "A small fee charged on the collateral top-up amount is distributed among LPs.",
   },
 ];
 
