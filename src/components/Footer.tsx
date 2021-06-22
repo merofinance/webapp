@@ -101,6 +101,11 @@ const Link = styled.a`
   font-weight: 400;
   color: var(--sub);
   line-height: 2.4rem;
+  transition: opacity 0.3s;
+
+  :hover {
+    opacity: 0.7;
+  }
 `;
 
 const Footer = () => {
