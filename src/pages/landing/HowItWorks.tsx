@@ -160,10 +160,11 @@ const HowItWorks = () => {
       />
       {cardsList.map((cards: CardType[], index: number) => (
         <CardContainer
+          key={index}
           show={categories.map((a: RadioOptionType) => a.value).indexOf(category) === index}
         >
           {cards.map((card: CardType) => (
-            <Card>
+            <Card key={card.number}>
               <Number>{card.number}</Number>
               <Header>{card.header}</Header>
               <Body>{card.body}</Body>
