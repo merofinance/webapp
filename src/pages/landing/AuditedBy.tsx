@@ -130,12 +130,7 @@ const AuditedBy = () => {
           {LIVE && (
             <ViewReport
               onClick={() => {
-                (window as any)
-                  .open(
-                    "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO",
-                    "_blank"
-                  )
-                  .focus();
+                (window as any).open("", "_blank").focus();
               }}
             >
               View Report →
