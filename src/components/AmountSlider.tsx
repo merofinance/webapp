@@ -79,7 +79,7 @@ const AmountSlider = (props: Props) => {
         max={100}
         value={percent}
         onChange={(e: any, value: any) => props.setValue(((value * props.max) / 100).toString())}
-        valueLabelDisplay="on"
+        valueLabelDisplay="auto"
         valueLabelFormat={valuetext}
       />
       {steps.map((step: number) => (
