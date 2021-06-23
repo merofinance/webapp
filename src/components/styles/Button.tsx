@@ -17,7 +17,7 @@ type ButtonProps = {
 };
 
 const StyledButton = styled.button`
-  cursor: pointer;
+  cursor: ${(props: ButtonProps) => (props.complete ? "auto" : "pointer")};
   transition: 0.5s;
   pointer-events: ${(props: ButtonProps) => (props.inactive ? "none" : "auto")};
 
@@ -204,6 +204,7 @@ const Button = (props: Props) => {
       wide={props.wide}
       disabled={props.disabled}
       inactive={props.inactive}
+      complete={props.complete}
       onClick={() => {
         if (!props.loading && !props.disabled && props.click) props.click();
       }}
