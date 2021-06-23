@@ -13,6 +13,7 @@ type ButtonProps = {
   wide?: boolean;
   disabled?: boolean;
   inactive?: boolean;
+  complete?: boolean;
 };
 
 const StyledButton = styled.button`
@@ -68,8 +69,8 @@ const Content = styled.div`
   }
 
   background-image: ${(props: ButtonProps) => {
-    if (props.disabled)
-      return "linear-gradient(to right, rgba(83, 80, 104, 1), rgba(83, 80, 104, 1))";
+    if (props.disabled) return "linear-gradient(#535068, #535068)";
+    if (props.complete) return "linear-gradient(#16C784, #16C784)";
     if (props.primary)
       return "linear-gradient(270deg, var(--primary-gradient) 0%, var(--secondary-gradient) 50%, var(--primary-gradient) 100%);";
     return "linear-gradient(to right, var(--bg), var(--bg))";
@@ -188,6 +189,7 @@ type Props = {
   wide?: boolean;
   disabled?: boolean;
   inactive?: boolean;
+  complete?: boolean;
 };
 
 const Button = (props: Props) => {
@@ -213,6 +215,7 @@ const Button = (props: Props) => {
         small={props.small}
         square={props.square}
         disabled={props.disabled}
+        complete={props.complete}
       >
         {props.loading && (
           <ProgressContainer>
