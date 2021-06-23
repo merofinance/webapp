@@ -1,6 +1,7 @@
 import { Slider, withStyles } from "@material-ui/core";
 import React from "react";
 import styled from "styled-components";
+import SliderStep from "./SliderStep";
 
 const Gradient = "linear-gradient(to right, rgba(197, 50, 249, 1), rgba(50, 178, 229, 1))";
 const GradientLight =
@@ -16,20 +17,6 @@ type StepProps = {
   percent: string;
   active: boolean;
 };
-
-const Step = styled.button`
-  position: absolute;
-  bottom: 1.4rem;
-  left: ${(props: StepProps) => props.percent};
-  transform: translateX(-50%);
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background: ${(props: StepProps) =>
-    props.active ? "linear-gradient(to right, #80499F, #517497)" : "#57536f"};
-  border: 2px solid #10092e;
-  cursor: pointer;
-`;
 
 const BackdSlider = withStyles({
   root: {
@@ -92,13 +79,13 @@ const AmountSlider = (props: Props) => {
         max={100}
         value={percent}
         onChange={(e: any, value: any) => props.setValue(((value * props.max) / 100).toString())}
-        valueLabelDisplay="auto"
+        valueLabelDisplay="on"
         valueLabelFormat={valuetext}
       />
       {steps.map((step: number) => (
-        <Step
+        <SliderStep
           percent={`${step * 100}%`}
-          onClick={() => props.setValue((step * props.max).toString())}
+          click={() => props.setValue((step * props.max).toString())}
           active={Number(props.value) / props.max > step}
         />
       ))}
