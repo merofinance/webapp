@@ -1,7 +1,35 @@
 import { Slider, withStyles } from "@material-ui/core";
 import React from "react";
+import styled from "styled-components";
 
 const Gradient = "linear-gradient(to right, rgba(197, 50, 249, 1), rgba(50, 178, 229, 1))";
+const GradientLight =
+  "linear-gradient(to right, rgba(197, 50, 249, 0.38), rgba(50, 178, 229, 0.38))";
+const steps: number[] = [0.25, 0.5, 0.75, 1];
+
+const StyledAmountSlider = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+type StepProps = {
+  percent: string;
+  active: boolean;
+};
+
+const Step = styled.button`
+  position: absolute;
+  bottom: 1.4rem;
+  left: ${(props: StepProps) => props.percent};
+  transform: translateX(-50%);
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: ${(props: StepProps) =>
+    props.active ? "linear-gradient(to right, #80499F, #517497)" : "#57536f"};
+  border: 2px solid #10092e;
+  cursor: pointer;
+`;
 
 const BackdSlider = withStyles({
   root: {
@@ -10,17 +38,18 @@ const BackdSlider = withStyles({
     marginTop: 18,
   },
   thumb: {
-    height: 16,
-    width: 16,
+    height: 18,
+    width: 18,
     marginTop: -7,
-    marginLeft: -7,
-    borderRadius: 6,
+    marginLeft: -9,
+    borderRadius: 9,
     background: Gradient,
+    zIndex: 1,
   },
   track: {
     height: 3,
     borderRadius: 2,
-    background: Gradient,
+    background: GradientLight,
   },
   valueLabel: {
     left: -8,
@@ -35,14 +64,10 @@ const BackdSlider = withStyles({
   rail: {
     height: 3,
     borderRadius: 2,
-    background: Gradient,
+    background: "#C4C4C4",
   },
   mark: {
-    backgroundColor: "var(--main)",
-    height: 3,
-    width: 1,
-    marginTop: 0,
-    opacity: 0.4,
+    display: "none",
   },
 })(Slider);
 
@@ -58,17 +83,26 @@ const AmountSlider = (props: Props) => {
   const percent = (Number(props.value) / props.max) * 100;
 
   return (
-    <BackdSlider
-      marks
-      defaultValue={0}
-      step={25}
-      min={0}
-      max={100}
-      value={percent}
-      onChange={(e: any, value: any) => props.setValue(((value * props.max) / 100).toString())}
-      valueLabelDisplay="auto"
-      valueLabelFormat={valuetext}
-    />
+    <StyledAmountSlider>
+      <BackdSlider
+        marks
+        defaultValue={0}
+        step={25}
+        min={0}
+        max={100}
+        value={percent}
+        onChange={(e: any, value: any) => props.setValue(((value * props.max) / 100).toString())}
+        valueLabelDisplay="auto"
+        valueLabelFormat={valuetext}
+      />
+      {steps.map((step: number) => (
+        <Step
+          percent={`${step * 100}%`}
+          onClick={() => props.setValue((step * props.max).toString())}
+          active={Number(props.value) / props.max > step}
+        />
+      ))}
+    </StyledAmountSlider>
   );
 };
 
