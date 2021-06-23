@@ -125,7 +125,11 @@ const Input = (props: Props) => {
         hover={hover}
         focused={focused}
       />
-      <Label onClick={() => inputRef.current?.focus()} focused={focused || !!props.value}>
+      <Label
+        onClick={() => inputRef.current?.focus()}
+        focused={focused || !!props.value}
+        background={props.background}
+      >
         {props.label}
       </Label>
       {props.buttonText && props.buttonAction && (
