@@ -1,7 +1,8 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { useLocation } from "react-router";
 import styled from "styled-components";
 import { apiPost } from "../services/apiService";
+import Input from "./Input";
 import Button from "./styles/Button";
 
 const StyledEmailSignup = styled.div`
@@ -39,37 +40,9 @@ const Header = styled.div`
 
 const Form = styled.form`
   display: flex;
-`;
 
-type InputProps = {
-  valid: boolean;
-};
-
-const Input = styled.input`
-  border: ${(props: InputProps) =>
-    props.valid ? "solid 1px var(--main)" : "solid 1px var(--error)"};
-  width: 26rem;
-  height: 5.6rem;
-  background-color: var(--bg);
-  border-radius: 1.4rem;
-  padding: 0 1.2rem;
-  font-size: 1.6rem;
-  font-weight: 400;
-  margin-right: 1.6rem;
-  transition: border 0.3s;
-
-  ::placeholder {
-    color: var(--main);
-  }
-
-  :focus {
-    border: ${(props: InputProps) =>
-      props.valid ? "solid 1px #CF2BF9" : "solid 1px var(--error)"};
-  }
-
-  @media (max-width: 600px) {
-    width: auto;
-    flex: 1;
+  > div:first-child {
+    margin-right: 1.6rem;
   }
 `;
 
@@ -94,9 +67,9 @@ const EmailSignup = () => {
     return _valid;
   };
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (validate) setValid(validateEmail(e.target.value));
-    setEmail(e.target.value);
+  const onChange = (value: string) => {
+    if (validate) setValid(validateEmail(value));
+    setEmail(value);
   };
 
   const onSubmit = async (e: FormEvent) => {
@@ -115,11 +88,11 @@ const EmailSignup = () => {
         <Header>Receive latest Backd updates</Header>
         <Form onSubmit={onSubmit}>
           <Input
-            placeholder="Enter your email"
+            label="Enter your email"
             valid={valid}
-            type="email"
             value={email}
-            onChange={onChange}
+            onChange={(v: string) => onChange(v)}
+            type="email"
           />
           <Button primary submit square text="submit" loading={loading} />
         </Form>
