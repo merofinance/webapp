@@ -7,7 +7,6 @@ const StyledAmountInput = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin: 0.6rem 0;
 `;
 
 const Available = styled.div`
@@ -17,7 +16,7 @@ const Available = styled.div`
   font-size: 1.4rem;
   line-height: 2rem;
   letter-spacing: 0.15px;
-  margin-bottom: 0.6rem;
+  margin-bottom: 1rem;
   padding-right: 0.5rem;
 `;
 
