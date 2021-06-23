@@ -7,6 +7,7 @@ const BackdSlider = withStyles({
   root: {
     color: "#52af77",
     height: 8,
+    marginTop: 18,
   },
   thumb: {
     height: 16,
