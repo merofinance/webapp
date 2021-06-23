@@ -89,7 +89,7 @@ const Label = styled.label`
 
 const ButtonContainer = styled.div`
   position: absolute;
-  right: 2.4rem;
+  right: 1.8rem;
   top: 50%;
   transform: translateY(-50%);
 `;
