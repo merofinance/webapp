@@ -79,7 +79,13 @@ const NavItems = () => {
             </Link>
           </NavItem>
           <NavItem>
-            <Link onClick={() => history.push("/docs")}>docs</Link>
+            <Link
+              onClick={() => {
+                (window as any).open("https://backd-1.gitbook.io/backd/", "_blank").focus();
+              }}
+            >
+              docs
+            </Link>
           </NavItem>
         </>
       )}
