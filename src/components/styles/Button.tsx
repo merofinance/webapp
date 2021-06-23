@@ -52,7 +52,7 @@ const StyledButton = styled.button`
   }
 
   :disabled {
-    cursor: not-allowed;
+    cursor: auto;
   }
 `;
 
