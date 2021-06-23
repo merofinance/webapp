@@ -34,7 +34,7 @@ const Step = styled.button`
 
 const PercentContainer = styled.div`
   position: absolute;
-  left: -9px;
+  left: -8px;
   width: 32px;
   height: 32px;
   top: -34px;
