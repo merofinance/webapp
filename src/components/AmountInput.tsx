@@ -37,6 +37,7 @@ const AmountInput = (props: Props) => {
         label={props.label}
         value={value}
         onChange={(v: string) => setValue(v)}
+        background="#10092e"
         buttonText="max"
         buttonAction={() => setValue(props.max.toString())}
       />
