@@ -46,12 +46,6 @@ const Form = styled.form`
   }
 `;
 
-const Note = styled.div`
-  font-weight: 400;
-  font-size: 1.2rem;
-  margin-top: 0.5rem;
-`;
-
 const EmailSignup = () => {
   const location = useLocation();
   const [email, setEmail] = useState("");
@@ -93,10 +87,11 @@ const EmailSignup = () => {
             value={email}
             onChange={(v: string) => onChange(v)}
             type="email"
+            note="We don’t share this with anyone."
+            errorMessage="This email is incorrect."
           />
           <Button primary submit square text="submit" loading={loading} />
         </Form>
-        <Note>We don’t share this with anyone.</Note>
       </Content>
     </StyledEmailSignup>
   );

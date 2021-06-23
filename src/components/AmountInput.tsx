@@ -40,6 +40,7 @@ const AmountInput = (props: Props) => {
         background="#10092e"
         buttonText="max"
         buttonAction={() => setValue(props.max.toString())}
+        errorMessage="Invalid amount"
       />
       <AmountSlider value={value} max={props.max} setValue={(v: string) => setValue(v)} />
     </StyledAmountInput>
