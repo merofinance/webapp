@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import Button from "./styles/Button";
 
@@ -72,14 +72,19 @@ const StyledInput = styled.input`
 
 const Label = styled.label`
   position: absolute;
-  left: 1.6rem;
-  top: -2px;
-  background-color: #10092e;
-  padding: 0 4px;
-  font-weight: 700;
-  font-size: 1.2rem;
-  line-height: 1.2;
+  left: 0.7rem;
+  top: 1.5rem;
+  padding: 0 5px;
+  font-size: 1.6rem;
   letter-spacing: 0.15px;
+
+  transition: transform 0.3s;
+  transform-origin: left;
+  background-color: ${(props: InputProps) => props.background ?? "var(--bg)"};
+  font-weight: ${(props: InputProps) => (props.focused ? "600" : "400")};
+  transform: ${(props: InputProps) =>
+    props.focused ? "translate(0.4rem, -2.7rem) scale(0.75)" : "translate(0, 0) scale(1)"};
+  cursor: ${(props: InputProps) => (props.focused ? "auto" : "text")};
 `;
 
 const ButtonContainer = styled.div`
@@ -103,12 +108,14 @@ type Props = {
 const Input = (props: Props) => {
   const [focused, setFocused] = useState(false);
   const [hover, setHover] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   return (
     <Container onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
       <Glow focused={focused} />
       <Border hover={hover} focused={focused} />
       <StyledInput
+        ref={inputRef}
         type={props.type ?? "text"}
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)}
@@ -118,7 +125,9 @@ const Input = (props: Props) => {
         hover={hover}
         focused={focused}
       />
-      <Label>{props.label}</Label>
+      <Label onClick={() => inputRef.current?.focus()} focused={focused || !!props.value}>
+        {props.label}
+      </Label>
       {props.buttonText && props.buttonAction && (
         <ButtonContainer>
           <Button primary small text={props.buttonText} click={() => props.buttonAction!()} />
