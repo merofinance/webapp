@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Button from "./styles/Button";
+import tick from "../assets/ui/tick.svg";
 
 const StyledProgressButtons = styled.div`
   width: 100%;
@@ -41,20 +42,17 @@ const Number = styled.div`
   height: 3.1rem;
   border-radius: 50%;
   background: ${(props: NumberProps) =>
-    props.current
-      ? "linear-gradient(to right, #C532F9, #32B2E5)"
-      : props.complete
-      ? "#C532F9"
-      : "rgba(83, 80, 104, 1)"};
-  color: ${(props: NumberProps) =>
-    props.complete || props.current ? "var(--main)" : "rgba(0, 0, 0, 0.43)"};
+    props.current ? "#C532F9" : props.complete ? "#16C784" : "#535068"};
+  color: var(--main);
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: 700;
   font-size: 1.4rem;
-  line-height: 2.2rem;
-  letter-spacing: 0.15px;
+`;
+
+const Tick = styled.img`
+  height: 1.1rem;
 `;
 
 const Line = styled.div`
@@ -66,10 +64,10 @@ const Line = styled.div`
   transform: translate(50%, calc(-50% - 1px));
   background: ${(props: NumberProps) =>
     props.complete
-      ? "#C532F9"
+      ? "linear-gradient(to right, #16C784, #C532F9)"
       : props.current
-      ? "linear-gradient(to right, #32B2E5, rgba(83, 80, 104, 1))"
-      : "rgba(83, 80, 104, 1)"};
+      ? "linear-gradient(to right, #C532F9, #535068)"
+      : "#535068"};
 `;
 
 type Props = {
@@ -90,7 +88,7 @@ const ProgressButtons = (props: Props) => {
           wide
           text={`Approve ${props.symbol.toUpperCase()}`}
           click={() => setApproved(true)}
-          disabled={approved}
+          complete={approved}
         />
         <Button primary medium wide text={props.buttonText} disabled={!approved} />
       </Buttons>
@@ -98,7 +96,7 @@ const ProgressButtons = (props: Props) => {
         <ProgressSection>
           <Line complete={approved} current={!approved} />
           <Number complete={approved} current={!approved}>
-            1
+            {approved ? <Tick src={tick} /> : "1"}
           </Number>
         </ProgressSection>
         <ProgressSection>
