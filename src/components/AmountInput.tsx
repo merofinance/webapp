@@ -36,6 +36,7 @@ const AmountInput = (props: Props) => {
         valid={true}
         label={props.label}
         value={value}
+        type="number"
         onChange={(v: string) => setValue(v)}
         background="#10092e"
         buttonText="max"
