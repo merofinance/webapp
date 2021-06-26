@@ -54,6 +54,7 @@ const Label = styled.div`
   font-weight: 500;
   font-size: 1.8rem;
   letter-spacing: 0.15px;
+  text-transform: capitalize;
 `;
 
 const AddressLabel = styled(GradientText)`
