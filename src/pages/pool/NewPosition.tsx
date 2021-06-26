@@ -138,7 +138,17 @@ const NewPosition = () => {
           />
         </Value>
       </StyledNewPosition>
-      <NewPositionConfirmation show={confirming} close={() => setConfirming(false)} />
+      <NewPositionConfirmation
+        show={confirming}
+        close={() => setConfirming(false)}
+        position={{
+          protocol,
+          borrower,
+          threshold: Number(threshold),
+          single: Number(single),
+          total: Number(total),
+        }}
+      />
     </Border>
   );
 };
