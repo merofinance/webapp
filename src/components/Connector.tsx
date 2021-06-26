@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { isConnected } from "../features/account/accountSlice";
 import GradientText from "./styles/GradientText";
 import WalletSelectPopup from "./WalletSelectPopup";
+import { shortenAddress } from "../lib/text";
 
 type ConnectedType = {
   connected: boolean;
@@ -134,9 +135,7 @@ const Connector = () => {
         <Aura connected={connected} />
         <ConnectorButton onClick={() => setConnecting(true)} connected={connected}>
           <ConnectorText>
-            {connected
-              ? account.slice(0, 4) + "..." + account.slice(account.length - 4)
-              : "Connnect wallet"}
+            {connected ? shortenAddress(account, 8) : "Connnect wallet"}
           </ConnectorText>
         </ConnectorButton>
       </DesktopConnector>
