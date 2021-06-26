@@ -1,3 +1,4 @@
+import { AlternateEmail } from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
 import Popup from "../../components/Popup";
@@ -76,6 +77,8 @@ const NewPositionConfirmation = (props: Props) => {
       show={props.show}
       close={props.close}
       header="Confirm top-up position"
+      confirm
+      submit={() => alert("Not implemented yet")}
       content={
         <Content>
           <Summary>
