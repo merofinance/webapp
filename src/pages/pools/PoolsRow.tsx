@@ -17,6 +17,10 @@ const Row = styled.tr`
   border-radius: 14px;
   padding: 0 1.7rem;
   cursor: pointer;
+
+  :hover {
+    background-color: #1a1438;
+  }
 `;
 
 const Data = styled.td`
