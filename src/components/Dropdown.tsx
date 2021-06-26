@@ -9,6 +9,7 @@ const StyledDropdown = styled.div`
 const Button = styled.button`
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 const Label = styled.div`
@@ -16,6 +17,7 @@ const Label = styled.div`
   font-size: 1.6rem;
   letter-spacing: 0.15px;
   margin-right: 1rem;
+  text-transform: capitalize;
 `;
 
 type ArrowProps = {
@@ -24,8 +26,7 @@ type ArrowProps = {
 
 const Arrow = styled.img`
   width: 10px;
-  transition: all 0.3s;
-  transform: ${(props: ArrowProps) => (props.open ? "transform(0deg)" : "transform(180deg)")};
+  transform: ${(props: ArrowProps) => (props.open ? "rotate(0deg)" : "rotate(180deg)")};
 `;
 
 const ExitEvent = styled.div`
@@ -56,6 +57,8 @@ const Option = styled.button`
   transition: all 0.1s;
   text-align: left;
   text-transform: capitalize;
+  line-height: 24px;
+  cursor: pointer;
 
   :hover {
     background-color: rgba(255, 255, 255, 0.2);
@@ -82,7 +85,14 @@ const Dropdown = (props: Props) => {
           <ExitEvent onClick={() => setPopupOpen(false)} />
           <Popup>
             {props.options.map((option: string) => (
-              <Option>{option}</Option>
+              <Option
+                onClick={() => {
+                  props.setValue(option);
+                  setPopupOpen(false);
+                }}
+              >
+                {option}
+              </Option>
             ))}
           </Popup>
         </>
