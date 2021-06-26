@@ -2,12 +2,28 @@ import React from "react";
 import styled from "styled-components";
 import { Value } from "./NewPosition";
 
+const StyledNewPositionInput = styled.div`
+  width: 67%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+type InputBorderProps = {
+  valid: boolean;
+};
+
 const InputBorder = styled.div`
-  background: linear-gradient(to right, #c532f9, #32b2e5);
+  position: relative;
+  width: 100%;
   padding: 1px;
   border-radius: 7px;
   height: 3.2rem;
-  width: 67%;
+
+  background: ${(props: InputBorderProps) =>
+    props.valid
+      ? "linear-gradient(to right, #c532f9, #32b2e5)"
+      : "linear-gradient(to right, var(--error), var(--error))"};
 `;
 
 const Input = styled.input`
@@ -35,23 +51,39 @@ const Input = styled.input`
   }
 `;
 
+const Error = styled.div`
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 0.6rem);
+  transform: translateX(-50%);
+  background-color: var(--error);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-weight: 500;
+  font-size: 1rem;
+`;
+
 type Props = {
   type: string;
   value: string;
+  error: string;
   setValue: (v: string) => void;
 };
 
 const NewPositionInput = (props: Props) => {
   return (
     <Value>
-      <InputBorder>
-        <Input
-          type={props.type}
-          value={props.value}
-          placeholder="0"
-          onChange={(e) => props.setValue(e.target.value)}
-        />
-      </InputBorder>
+      <StyledNewPositionInput>
+        <InputBorder valid={!props.error}>
+          <Input
+            type={props.type}
+            value={props.value}
+            placeholder="0"
+            onChange={(e) => props.setValue(e.target.value)}
+          />
+          {props.error && <Error>{props.error}</Error>}
+        </InputBorder>
+      </StyledNewPositionInput>
     </Value>
   );
 };
