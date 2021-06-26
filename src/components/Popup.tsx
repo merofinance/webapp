@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import close from "../assets/ui/close.svg";
+import Button from "./styles/Button";
 
 const StyledPopup = styled.div`
   position: fixed;
@@ -48,11 +49,21 @@ const Header = styled.div`
   margin-bottom: 2.5rem;
 `;
 
+const ButtonContainer = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1.7rem;
+  margin-top: 2.4rem;
+`;
+
 type Props = {
   show: boolean;
   close: () => void;
   header?: string;
   content?: JSX.Element;
+  confirm?: boolean;
+  submit?: () => void;
 };
 
 const Popup = (props: Props): JSX.Element => {
@@ -65,6 +76,19 @@ const Popup = (props: Props): JSX.Element => {
         <Exit src={close} onClick={props.close} />
         {props.header && <Header>{props.header}</Header>}
         {props.content && props.content}
+        {props.confirm && props.submit && (
+          <ButtonContainer>
+            <Button medium background="#252140" text="cancel" click={props.close} />
+            <Button
+              primary
+              medium
+              text="confirm"
+              click={() => {
+                if (props.submit) props.submit();
+              }}
+            />
+          </ButtonContainer>
+        )}
       </PopupContainer>
     </StyledPopup>
   );
