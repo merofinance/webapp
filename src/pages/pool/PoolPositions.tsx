@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import ContentSection from "../../components/ContentSection";
 import deleteIcon from "../../assets/ui/delete.svg";
+import NewPosition from "./NewPosition";
 
 const StyledPositions = styled.div`
   width: 100%;
@@ -14,6 +15,10 @@ const Headers = styled.div`
   display: flex;
   padding: 0 2rem;
   margin-bottom: 0.2rem;
+
+  div:last-child {
+    flex: 0.5;
+  }
 `;
 
 const Header = styled.div`
@@ -36,6 +41,7 @@ const Position = styled.div`
 
   div:last-child {
     justify-content: flex-end;
+    flex: 0.5;
   }
 `;
 
@@ -99,6 +105,7 @@ const PoolPositions = (props: Props) => {
             <Header>Total topup</Header>
             <Header></Header>
           </Headers>
+          <NewPosition />
           <Position>
             <Value>Compound</Value>
             <Value>0xf76...5255</Value>
