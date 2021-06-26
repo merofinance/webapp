@@ -40,6 +40,7 @@ const Header = styled.div`
 
 const Form = styled.form`
   display: flex;
+  align-items: flex-start;
 
   > div:first-child {
     margin-right: 1.6rem;
