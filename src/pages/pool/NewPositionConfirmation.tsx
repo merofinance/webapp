@@ -23,6 +23,7 @@ const Address = styled(GradientText)`
   font-size: 1.6rem;
   line-height: 2.4rem;
   letter-spacing: 0.15px;
+  cursor: pointer;
 `;
 
 type Props = {
@@ -40,7 +41,17 @@ const NewPositionConfirmation = (props: Props) => {
       content={
         <Content>
           <Summary>
-            {`When the collateralization of ${props.position.borrower} drops below ${props.position.threshold}, it will
+            {`When the collateralization of `}
+            <Address
+              onClick={() => {
+                (window as any)
+                  .open(`https://etherscan.io/address/${props.position.borrower}`, "_blank")
+                  .focus();
+              }}
+            >
+              {props.position.borrower}
+            </Address>
+            {` drops below ${props.position.threshold}, it will
             be topped up with ${props.position.single} DAI ($3000). This will be repeated each time the
             collateralization ratio drops below ${props.position.threshold}, until a total of ${props.position.total} DAI ($8000) is topped
             up.`}
