@@ -4,6 +4,7 @@ import Popup from "../../components/Popup";
 import GradientText from "../../components/styles/GradientText";
 import Tooltip from "../../components/Tooltip";
 import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
+import { shortenAddress } from "../../lib/text";
 import { PositionType } from "./PoolPositions";
 
 const Content = styled.div`
@@ -87,7 +88,7 @@ const NewPositionConfirmation = (props: Props) => {
                   .focus();
               }}
             >
-              {props.position.borrower}
+              {shortenAddress(props.position.borrower, 26)}
             </Address>
             {` drops below ${props.position.threshold}, it will
             be topped up with ${props.position.single} DAI ($3000). This will be repeated each time the
@@ -113,9 +114,7 @@ const NewPositionConfirmation = (props: Props) => {
                     .focus();
                 }}
               >
-                {props.position.borrower.slice(0, 4) +
-                  "..." +
-                  props.position.borrower.slice(props.position.borrower.length - 4)}
+                {shortenAddress(props.position.borrower, 8)}
               </AddressLabel>
             </SummaryRow>
             <SummaryRow>
