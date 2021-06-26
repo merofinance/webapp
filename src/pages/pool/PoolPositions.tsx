@@ -4,6 +4,14 @@ import ContentSection from "../../components/ContentSection";
 import deleteIcon from "../../assets/ui/delete.svg";
 import NewPosition from "./NewPosition";
 
+export type PositionType = {
+  protocol: string;
+  borrower: string;
+  threshold: number;
+  single: number;
+  total: number;
+};
+
 const StyledPositions = styled.div`
   width: 100%;
   display: flex;
