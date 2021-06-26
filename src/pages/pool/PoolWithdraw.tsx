@@ -40,7 +40,7 @@ const PoolWithdraw = (props: Props) => {
       ]}
       content={
         <Content>
-          <AmountInput label="Enter an amount of USDC to deposit" max={100} />
+          <AmountInput label="Enter an amount of USDC to withdraw" max={100} />
           <ProgressButtons token={""} symbol={"dai"} buttonText="Deposit and Stake" />
         </Content>
       }
