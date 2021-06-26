@@ -69,7 +69,7 @@ const NewPosition = () => {
   const validateThreshold = (value: string) => {
     const number = Number(value);
     if (number <= 1) setThresholdError("Must be above 1");
-    else setBorrowerError("");
+    else setThresholdError("");
   };
 
   // Single Topup
@@ -78,8 +78,7 @@ const NewPosition = () => {
   const validateSingle = (value: string) => {
     const number = Number(value);
     if (number <= 0) setSingleError("Must be positive number");
-    else if (totalError && number > Number(totalError))
-      setTotalError("Must be less than total topup");
+    else if (total && number > Number(total)) setSingleError("Must be less than total topup");
     else setSingleError("");
   };
 
@@ -89,8 +88,7 @@ const NewPosition = () => {
   const validateTotal = (value: string) => {
     const number = Number(value);
     if (number <= 0) setTotalError("Must be positive number");
-    else if (singleError && number < Number(singleError))
-      setTotalError("Must be greater than single topup");
+    else if (single && number < Number(single)) setTotalError("Must be greater than single topup");
     else setTotalError("");
   };
 
