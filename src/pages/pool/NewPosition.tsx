@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Dropdown from "../../components/Dropdown";
 import Button from "../../components/styles/Button";
+import NewPositionConfirmation from "./NewPositionConfirmation";
 
 const Border = styled.div`
   width: 100%;
@@ -72,6 +73,8 @@ const NewPosition = () => {
   const [threshold, setThreshold] = useState("");
   const [single, setSingle] = useState("");
   const [total, setTotal] = useState("");
+  const [confirming, setConfirming] = useState(false);
+  const [approved, setApproved] = useState(false);
 
   return (
     <Border>
@@ -124,9 +127,18 @@ const NewPosition = () => {
           </InputBorder>
         </Value>
         <Value>
-          <Button primary disabled text="Create 1/2" />
+          <Button
+            primary
+            disabled={!(protocol && borrower && threshold && single && total)}
+            text={approved ? "create 2/2" : "approve 1/2"}
+            click={() => {
+              if (approved) setConfirming(true);
+              else setApproved(true);
+            }}
+          />
         </Value>
       </StyledNewPosition>
+      <NewPositionConfirmation show={confirming} close={() => setConfirming(false)} />
     </Border>
   );
 };
