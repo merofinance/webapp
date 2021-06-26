@@ -55,10 +55,10 @@ const EmailSignup = () => {
   const [loading, setLoading] = useState(false);
 
   const validateEmail = (email: string): boolean => {
+    if (!email) return false;
     const re =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const _valid = email ? re.test(String(email).toLowerCase()) : true;
-    setValid(_valid);
     return _valid;
   };
 
@@ -70,9 +70,15 @@ const EmailSignup = () => {
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setValidate(true);
-    if (!validateEmail(email)) return;
+
+    const emailValid = validateEmail(email);
+    if (!emailValid) {
+      setValid(false);
+      return;
+    }
+
     setLoading(true);
-    await apiPost("https://register.backd.fund", JSON.stringify({ email }));
+    const success = await apiPost("https://register.backd.fund", JSON.stringify({ email }));
     // TODO: Add error handing
     setLoading(false);
   };
@@ -91,7 +97,14 @@ const EmailSignup = () => {
             note="We don’t share this with anyone."
             errorMessage="This email is incorrect."
           />
-          <Button primary submit square text="submit" loading={loading} />
+          <Button
+            disabled={!validateEmail(email)}
+            primary
+            submit
+            square
+            text="submit"
+            loading={loading}
+          />
         </Form>
       </Content>
     </StyledEmailSignup>
