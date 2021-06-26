@@ -104,7 +104,15 @@ const NewPositionConfirmation = (props: Props) => {
                 Borrower
                 <Tooltip content={PLACEHOLDER_TOOLTIP} />
               </Label>
-              <Label>{props.position.borrower}</Label>
+              <AddressLabel
+                onClick={() => {
+                  (window as any)
+                    .open(`https://etherscan.io/address/${props.position.borrower}`, "_blank")
+                    .focus();
+                }}
+              >
+                {props.position.borrower}
+              </AddressLabel>
             </SummaryRow>
             <SummaryRow>
               <Label>
