@@ -137,7 +137,7 @@ const Input = (props: Props) => {
     <Container>
       <InputContainer onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
         <Glow focused={focused} valid={props.valid} />
-        <Border hover={hover} focused={focused} valid={props.valid} />
+        <Border hover={hover} focused={focused || !!props.value} valid={props.valid} />
         <StyledInput
           ref={inputRef}
           type={props.type ?? "text"}
@@ -147,7 +147,7 @@ const Input = (props: Props) => {
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           hover={hover}
-          focused={focused}
+          focused={focused || !!props.value}
           valid={props.valid}
         />
         <Label
