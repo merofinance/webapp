@@ -28,7 +28,7 @@ const ExitEvent = styled.div`
 const PopupContainer = styled.div`
   position: relative;
   width: 55.4rem;
-  padding: 3.7rem 1.6rem;
+  padding: 3.7rem 1.6rem 2.3rem 1.6rem;
   border-radius: 1.4rem;
   background-color: #252140;
 `;
@@ -78,11 +78,11 @@ const Popup = (props: Props): JSX.Element => {
         {props.content && props.content}
         {props.confirm && props.submit && (
           <ButtonContainer>
-            <Button medium background="#252140" text="cancel" click={props.close} />
+            <Button medium background="#252140" text="Cancel" click={props.close} />
             <Button
               primary
               medium
-              text="confirm"
+              text="Confirm"
               click={() => {
                 if (props.submit) props.submit();
               }}
