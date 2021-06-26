@@ -16,6 +16,14 @@ const StyledPopup = styled.div`
   backdrop-filter: blur(10px);
 `;
 
+const ExitEvent = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+`;
+
 const PopupContainer = styled.div`
   position: relative;
   width: 55.4rem;
@@ -52,6 +60,7 @@ const Popup = (props: Props): JSX.Element => {
 
   return (
     <StyledPopup>
+      <ExitEvent onClick={props.close} />
       <PopupContainer>
         <Exit src={close} onClick={props.close} />
         {props.header && <Header>{props.header}</Header>}
