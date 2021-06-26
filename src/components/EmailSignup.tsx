@@ -111,6 +111,7 @@ const EmailSignup = () => {
             square
             text={complete ? "success!" : "submit"}
             loading={loading}
+            hoverText={validateEmail(email) ? "" : "Enter valid email"}
           />
         </Form>
       </Content>
