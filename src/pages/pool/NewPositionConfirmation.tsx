@@ -112,7 +112,9 @@ const NewPositionConfirmation = (props: Props) => {
                     .focus();
                 }}
               >
-                {props.position.borrower}
+                {props.position.borrower.slice(0, 4) +
+                  "..." +
+                  props.position.borrower.slice(props.position.borrower.length - 4)}
               </AddressLabel>
             </SummaryRow>
             <SummaryRow>
