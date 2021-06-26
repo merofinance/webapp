@@ -16,13 +16,23 @@ const Border = styled.div`
 const StyledNewPosition = styled.div`
   width: 100%;
   display: flex;
+  flex-direction: column;
   background: linear-gradient(to right, #451467, #173d63);
   border-radius: 1.2rem;
   padding: 0.9rem 2rem;
+`;
+
+const Content = styled.div`
+  width: 100%;
+  display: flex;
 
   > div:last-child {
     justify-content: flex-end;
   }
+`;
+
+const ErrorSpacing = styled.div`
+  height: 2.8rem;
 `;
 
 export const Value = styled.div`
@@ -37,42 +47,73 @@ export const Value = styled.div`
 
 const NewPosition = () => {
   const [protocol, setProtocol] = useState("");
+  const [protocolError, setProtocolError] = useState("");
+
   const [borrower, setBorrower] = useState("");
+  const [borrowerError, setBorrowerError] = useState("");
+
   const [threshold, setThreshold] = useState("");
+  const [thresholdError, setThresholdError] = useState("");
+
   const [single, setSingle] = useState("");
+  const [singleError, setSingleError] = useState("");
+
   const [total, setTotal] = useState("");
+  const [totalError, setTotalError] = useState("");
+
   const [confirming, setConfirming] = useState(false);
   const [approved, setApproved] = useState(false);
+
+  const hasError = protocolError || borrowerError || thresholdError || singleError || totalError;
 
   return (
     <Border>
       <StyledNewPosition>
-        <Value>
-          <Dropdown
-            value={protocol}
-            options={["aave", "compound"]}
-            setValue={(v: string) => setProtocol(v)}
+        <Content>
+          <Value>
+            <Dropdown
+              value={protocol}
+              options={["aave", "compound"]}
+              setValue={(v: string) => setProtocol(v)}
+            />
+          </Value>
+          <NewPositionInput
+            type="text"
+            value={borrower}
+            setValue={(v: string) => setBorrower(v)}
+            error={borrowerError}
           />
-        </Value>
-        <NewPositionInput type="text" value={borrower} setValue={(v: string) => setBorrower(v)} />
-        <NewPositionInput
-          type="number"
-          value={threshold}
-          setValue={(v: string) => setThreshold(v)}
-        />
-        <NewPositionInput type="number" value={single} setValue={(v: string) => setSingle(v)} />
-        <NewPositionInput type="number" value={total} setValue={(v: string) => setTotal(v)} />
-        <Value>
-          <Button
-            primary
-            disabled={!(protocol && borrower && threshold && single && total)}
-            text={approved ? "create 2/2" : "approve 1/2"}
-            click={() => {
-              if (approved) setConfirming(true);
-              else setApproved(true);
-            }}
+          <NewPositionInput
+            type="number"
+            value={threshold}
+            setValue={(v: string) => setThreshold(v)}
+            error={thresholdError}
           />
-        </Value>
+          <NewPositionInput
+            type="number"
+            value={single}
+            setValue={(v: string) => setSingle(v)}
+            error={singleError}
+          />
+          <NewPositionInput
+            type="number"
+            value={total}
+            setValue={(v: string) => setTotal(v)}
+            error={totalError}
+          />
+          <Value>
+            <Button
+              primary
+              disabled={!(protocol && borrower && threshold && single && total)}
+              text={approved ? "create 2/2" : "approve 1/2"}
+              click={() => {
+                if (approved) setConfirming(true);
+                else setApproved(true);
+              }}
+            />
+          </Value>
+        </Content>
+        {hasError && <ErrorSpacing />}
       </StyledNewPosition>
       <NewPositionConfirmation
         show={confirming}
