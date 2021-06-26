@@ -3,6 +3,8 @@ import styled from "styled-components";
 import ContentSection from "../../components/ContentSection";
 import deleteIcon from "../../assets/ui/delete.svg";
 import NewPosition from "./NewPosition";
+import Tooltip from "../../components/Tooltip";
+import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 
 export type PositionType = {
   protocol: string;
@@ -11,6 +13,34 @@ export type PositionType = {
   single: number;
   total: number;
 };
+
+type HeaderType = {
+  label: string;
+  tooltip: string;
+};
+
+const headers: HeaderType[] = [
+  {
+    label: "Protocol",
+    tooltip: PLACEHOLDER_TOOLTIP,
+  },
+  {
+    label: "Borrower",
+    tooltip: PLACEHOLDER_TOOLTIP,
+  },
+  {
+    label: "Threshold",
+    tooltip: PLACEHOLDER_TOOLTIP,
+  },
+  {
+    label: "Single topup",
+    tooltip: PLACEHOLDER_TOOLTIP,
+  },
+  {
+    label: "Total topup",
+    tooltip: PLACEHOLDER_TOOLTIP,
+  },
+];
 
 const StyledPositions = styled.div`
   width: 100%;
@@ -27,6 +57,11 @@ const Headers = styled.div`
 
 const Header = styled.div`
   flex: 1;
+  display: flex;
+  align-items: center;
+`;
+
+const HeaderText = styled.div`
   font-weight: 500;
   font-size: 1.4rem;
   line-height: 2.4rem;
@@ -82,30 +117,27 @@ const PoolPositions = (props: Props) => {
         {
           header: "Your deposits",
           value: "$130,000.00",
-          tooltip:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
+          tooltip: PLACEHOLDER_TOOLTIP,
         },
         {
           header: "Locked in position",
           value: "$90,000.00",
-          tooltip:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
+          tooltip: PLACEHOLDER_TOOLTIP,
         },
         {
           header: "Rewards accrued",
           value: "$14,000.00",
-          tooltip:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
+          tooltip: PLACEHOLDER_TOOLTIP,
         },
       ]}
       content={
         <StyledPositions>
           <Headers>
-            <Header>Protocol</Header>
-            <Header>Borrower</Header>
-            <Header>Threshold</Header>
-            <Header>Single topup</Header>
-            <Header>Total topup</Header>
+            {headers.map((header: HeaderType) => (
+              <Header>
+                <HeaderText>{header.label}</HeaderText> <Tooltip content={header.tooltip} />
+              </Header>
+            ))}
             <Header></Header>
           </Headers>
           <NewPosition />
