@@ -13,11 +13,6 @@ const StyledAmountSlider = styled.div`
   width: 100%;
 `;
 
-type StepProps = {
-  percent: string;
-  active: boolean;
-};
-
 const BackdSlider = withStyles({
   root: {
     color: "#52af77",
