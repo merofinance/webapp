@@ -49,11 +49,13 @@ const Popup = styled.div`
 
 const Option = styled.button`
   width: 100%;
-  padding: 1.6rem 0.6rem 2.4rem 0.6rem;
+  padding: 0.6rem 2.4rem 0.6rem 1.6rem;
   font-weight: 400;
   font-size: 1.6rem;
   letter-spacing: 0.15px;
   transition: all 0.1s;
+  text-align: left;
+  text-transform: capitalize;
 
   :hover {
     background-color: rgba(255, 255, 255, 0.2);
