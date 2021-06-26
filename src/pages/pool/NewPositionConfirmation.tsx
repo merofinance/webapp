@@ -44,7 +44,7 @@ const SummaryRow = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin: 0.8rem 0;
+  margin: 0.6rem 0;
 `;
 
 const Label = styled.div`
