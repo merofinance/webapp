@@ -24,7 +24,7 @@ const StyledNewPosition = styled.div`
   }
 `;
 
-const Value = styled.div`
+export const Value = styled.div`
   flex: 1;
   font-weight: 400;
   font-size: 1.4rem;
