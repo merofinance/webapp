@@ -53,6 +53,7 @@ const EmailSignup = () => {
   const [valid, setValid] = useState(true);
   const [validate, setValidate] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [complete, setComplete] = useState(false);
 
   const validateEmail = (email: string): boolean => {
     if (!email) return false;
@@ -68,6 +69,8 @@ const EmailSignup = () => {
   };
 
   const onSubmit = async (e: FormEvent) => {
+    if (complete) return;
+
     e.preventDefault();
     setValidate(true);
 
@@ -79,6 +82,9 @@ const EmailSignup = () => {
 
     setLoading(true);
     const success = await apiPost("https://register.backd.fund", JSON.stringify({ email }));
+    if (success) {
+      setComplete(true);
+    }
     // TODO: Add error handing
     setLoading(false);
   };
@@ -98,11 +104,12 @@ const EmailSignup = () => {
             errorMessage="This email is incorrect."
           />
           <Button
-            disabled={!validateEmail(email)}
+            disabled={!complete && !validateEmail(email)}
+            complete={complete}
             primary
             submit
             square
-            text="submit"
+            text={complete ? "success!" : "submit"}
             loading={loading}
           />
         </Form>
