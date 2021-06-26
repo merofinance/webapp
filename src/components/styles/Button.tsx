@@ -117,6 +117,7 @@ const Content = styled.div`
 
 const Text = styled.div`
   opacity: ${(props: ButtonProps) => (props.loading ? "0" : "1")};
+  white-space: nowrap;
 
   color: ${(props: ButtonProps) => {
     if (props.disabled) return "rgba(0, 0, 0, 0.43)";
