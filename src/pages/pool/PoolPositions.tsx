@@ -15,10 +15,6 @@ const Headers = styled.div`
   display: flex;
   padding: 0 2rem;
   margin-bottom: 0.2rem;
-
-  div:last-child {
-    flex: 0.5;
-  }
 `;
 
 const Header = styled.div`
@@ -39,9 +35,8 @@ const Position = styled.div`
   padding: 1.7rem 2rem;
   margin-top: 0.6rem;
 
-  div:last-child {
+  > div:last-child {
     justify-content: flex-end;
-    flex: 0.5;
   }
 `;
 
