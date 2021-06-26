@@ -1,39 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import Select from "@material-ui/core/Select";
-import { makeStyles, MenuItem } from "@material-ui/core";
+import arrow from "../assets/ui/arrow.svg";
 
-const useStyles = makeStyles(() => ({
-  selectEmpty: {
-    color: "var(--main)",
-    fontSize: 16,
-    letterSpacing: 0.15,
-    fontWeight: 400,
-    textTransform: "capitalize",
-    padding: 0,
-  },
-  menuStyle: {
-    borderRadius: 4,
-    backgroundColor: "#433B6B",
-  },
-  menuItem: {
-    fontSize: 16,
-    letterSpacing: 0.15,
-    fontWeight: 400,
-    textTransform: "capitalize",
-    "&:focus": {
-      backgroundColor: "rgba(255,255,255,0)",
-    },
-    "&:hover": {
-      backgroundColor: "rgba(255,255,255,0.2)",
-    },
-  },
-  icon: {
-    fill: "var(--main)",
-    transform: "scale(1.5) translateX(-3px)",
-    marginTop: 4,
-  },
-}));
+const StyledDropdown = styled.div`
+  position: relative;
+`;
+
+const Button = styled.button`
+  display: flex;
+  align-items: center;
+`;
+
+const Label = styled.div`
+  font-weight: 400;
+  font-size: 1.6rem;
+  letter-spacing: 0.15px;
+  margin-right: 1rem;
+`;
+
+type ArrowProps = {
+  open: boolean;
+};
+
+const Arrow = styled.img`
+  width: 10px;
+  transition: all 0.3s;
+  transform: ${(props: ArrowProps) => (props.open ? "transform(0deg)" : "transform(180deg)")};
+`;
+
+const ExitEvent = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+`;
+
+const Popup = styled.div`
+  position: absolute;
+  left: 0;
+  top: 50%;
+  background-color: #433b6b;
+  border-radius: 4px;
+  padding: 0.8rem 0;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Option = styled.button`
+  width: 100%;
+  padding: 1.6rem 0.6rem 2.4rem 0.6rem;
+  font-weight: 400;
+  font-size: 1.6rem;
+  letter-spacing: 0.15px;
+  transition: all 0.1s;
+
+  :hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+`;
 
 type Props = {
   value: string;
@@ -42,26 +67,25 @@ type Props = {
 };
 
 const Dropdown = (props: Props) => {
-  const classes = useStyles();
+  const [popupOpen, setPopupOpen] = useState(false);
 
   return (
-    <Select
-      value={props.value}
-      onChange={(e: any) => props.setValue(e.target.value)}
-      displayEmpty
-      className={classes.selectEmpty}
-      inputProps={{ classes: { icon: classes.icon } }}
-      MenuProps={{ classes: { paper: classes.menuStyle } }}
-    >
-      <MenuItem value="" disabled className={classes.menuItem}>
-        Choose
-      </MenuItem>
-      {props.options.map((option: string) => (
-        <MenuItem value={option} className={classes.menuItem}>
-          {option}
-        </MenuItem>
-      ))}
-    </Select>
+    <StyledDropdown>
+      <Button onClick={() => setPopupOpen(true)}>
+        <Label>{props.value ? props.value : "Choose"}</Label>
+        <Arrow src={arrow} open={popupOpen} />
+      </Button>
+      {popupOpen && (
+        <>
+          <ExitEvent onClick={() => setPopupOpen(false)} />
+          <Popup>
+            {props.options.map((option: string) => (
+              <Option>{option}</Option>
+            ))}
+          </Popup>
+        </>
+      )}
+    </StyledDropdown>
   );
 };
 
