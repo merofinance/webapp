@@ -2,7 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import Popup from "../../components/Popup";
 import GradientText from "../../components/styles/GradientText";
+import Tooltip from "../../components/Tooltip";
 import { PositionType } from "./PoolPositions";
+
+const PLACEHOLDER_TOOLTIP =
+  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris";
 
 const Content = styled.div`
   width: 100%;
@@ -24,6 +28,37 @@ const Address = styled(GradientText)`
   line-height: 2.4rem;
   letter-spacing: 0.15px;
   cursor: pointer;
+`;
+
+const PositionSummary = styled.div`
+  margin-top: 4.8rem;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid #3c3c3c;
+  border-radius: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1.6rem;
+`;
+
+const SummaryRow = styled.div`
+  width: 100%;
+  display: flex;
+  margin: 0.8rem 0;
+`;
+
+const Label = styled.div`
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 1.8rem;
+  letter-spacing: 0.15px;
+`;
+
+const AddressLabel = styled(GradientText)`
+  font-weight: 500;
+  font-size: 1.8rem;
+  letter-spacing: 0.15px;
 `;
 
 type Props = {
@@ -56,6 +91,42 @@ const NewPositionConfirmation = (props: Props) => {
             collateralization ratio drops below ${props.position.threshold}, until a total of ${props.position.total} DAI ($8000) is topped
             up.`}
           </Summary>
+          <PositionSummary>
+            <SummaryRow>
+              <Label>
+                Protocol <Tooltip content={PLACEHOLDER_TOOLTIP} />
+              </Label>
+              <Label>{props.position.protocol}</Label>
+            </SummaryRow>
+            <SummaryRow>
+              <Label>
+                Borrower
+                <Tooltip content={PLACEHOLDER_TOOLTIP} />
+              </Label>
+              <Label>{props.position.borrower}</Label>
+            </SummaryRow>
+            <SummaryRow>
+              <Label>
+                Threshold
+                <Tooltip content={PLACEHOLDER_TOOLTIP} />
+              </Label>
+              <Label>{props.position.threshold}</Label>
+            </SummaryRow>
+            <SummaryRow>
+              <Label>
+                Singe top-up
+                <Tooltip content={PLACEHOLDER_TOOLTIP} />
+              </Label>
+              <Label>{props.position.single}</Label>
+            </SummaryRow>
+            <SummaryRow>
+              <Label>
+                Total top-up
+                <Tooltip content={PLACEHOLDER_TOOLTIP} />
+                <Label>{props.position.total}</Label>
+              </Label>
+            </SummaryRow>
+          </PositionSummary>
         </Content>
       }
     />
