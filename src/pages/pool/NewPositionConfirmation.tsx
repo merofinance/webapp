@@ -34,7 +34,7 @@ const PositionSummary = styled.div`
   margin-top: 4.8rem;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.3);
-  border: 1px solid #3c3c3c;
+  border: 1px solid rgba(60, 60, 60, 0.5);
   border-radius: 1.4rem;
   display: flex;
   flex-direction: column;
@@ -44,6 +44,7 @@ const PositionSummary = styled.div`
 const SummaryRow = styled.div`
   width: 100%;
   display: flex;
+  justify-content: space-between;
   margin: 0.8rem 0;
 `;
 
@@ -123,8 +124,8 @@ const NewPositionConfirmation = (props: Props) => {
               <Label>
                 Total top-up
                 <Tooltip content={PLACEHOLDER_TOOLTIP} />
-                <Label>{props.position.total}</Label>
               </Label>
+              <Label>{props.position.total}</Label>
             </SummaryRow>
           </PositionSummary>
         </Content>
