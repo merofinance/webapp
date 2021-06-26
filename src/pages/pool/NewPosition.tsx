@@ -111,6 +111,15 @@ const NewPosition = () => {
     total: Number(total),
   };
 
+  const buttonHoverText = () => {
+    if (!protocol) return "Select Protocol";
+    else if (!borrower) return "Enter Borrower";
+    else if (!threshold) return "Enter Threshold";
+    else if (!single) return "Enter Single topup";
+    else if (!total) return "Enter Total topup";
+    else return "";
+  };
+
   return (
     <Border>
       <StyledNewPosition>
@@ -170,6 +179,7 @@ const NewPosition = () => {
                 if (approved) setConfirming(true);
                 else setApproved(true);
               }}
+              hoverText={buttonHoverText()}
             />
           </Value>
         </Content>
