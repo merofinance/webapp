@@ -3,10 +3,8 @@ import styled from "styled-components";
 import Popup from "../../components/Popup";
 import GradientText from "../../components/styles/GradientText";
 import Tooltip from "../../components/Tooltip";
+import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 import { PositionType } from "./PoolPositions";
-
-const PLACEHOLDER_TOOLTIP =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris";
 
 const Content = styled.div`
   width: 100%;
