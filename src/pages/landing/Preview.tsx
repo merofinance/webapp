@@ -1,8 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import PoolsRow from "../pools/PoolsRow";
+import swirl1 from "../../assets/background/swirl-1.svg";
+import swirl2 from "../../assets/background/swirl-2.svg";
 
 const StyledPreview = styled.div`
+  position: relative;
   width: 100%;
   margin: var(--section-margin);
   display: flex;
@@ -14,6 +17,7 @@ const StyledPreview = styled.div`
 `;
 
 const Table = styled.table`
+  position: relative;
   width: 79%;
 `;
 
@@ -33,9 +37,19 @@ const Header = styled.th`
   opacity: 0.6;
 `;
 
+const Swirl = styled.img`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+`;
+
 const Preview = () => {
   return (
     <StyledPreview>
+      <Swirl src={swirl1} />
+      <Swirl src={swirl2} />
       <Table>
         <HeaderRow>
           <Header>Asset</Header>
