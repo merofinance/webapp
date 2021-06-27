@@ -5,8 +5,12 @@ import chevron from "../../assets/ui/chevron.svg";
 import Asset from "../../components/Asset";
 import GradientText from "../../components/styles/GradientText";
 
+type RowProps = {
+  preview?: boolean;
+};
+
 const Row = styled.tr`
-  height: 7.2rem;
+  height: ${(props: RowProps) => (props.preview ? "5.6rem" : "7.2rem")};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -51,12 +55,13 @@ const Chevron = styled.img`
 
 type Props = {
   asset: "eth" | "usdc" | "dai";
+  preview?: boolean;
 };
 
 const PoolsRow = (props: Props) => {
   const history = useHistory();
   return (
-    <Row onClick={() => history.push(`/pool/b${props.asset}`)}>
+    <Row onClick={() => history.push(`/pool/b${props.asset}`)} preview={props.preview}>
       <Data>
         <Asset asset={props.asset} />
       </Data>
@@ -64,10 +69,15 @@ const PoolsRow = (props: Props) => {
         <Apy>5.2%</Apy>
       </Data>
       <Data>$3.34m</Data>
-      <Data>$0.00</Data>
-      <ChevronData>
-        <Chevron src={chevron} />
-      </ChevronData>
+      {!props.preview && (
+        <>
+          <Data>$0.00</Data>
+
+          <ChevronData>
+            <Chevron src={chevron} />
+          </ChevronData>
+        </>
+      )}
     </Row>
   );
 };
