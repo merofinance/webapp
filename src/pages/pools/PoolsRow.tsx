@@ -3,6 +3,7 @@ import { useHistory } from "react-router";
 import styled from "styled-components";
 import chevron from "../../assets/ui/chevron.svg";
 import Asset from "../../components/Asset";
+import Button from "../../components/styles/Button";
 import GradientText from "../../components/styles/GradientText";
 
 type RowProps = {
@@ -27,6 +28,10 @@ const Row = styled.tr`
   }
 `;
 
+type DataProps = {
+  right?: boolean;
+};
+
 const Data = styled.td`
   display: flex;
   flex: 1;
@@ -35,6 +40,7 @@ const Data = styled.td`
   font-size: 1.6rem;
   line-height: 1.4rem;
   letter-spacing: 0.15px;
+  justify-content: ${(props: DataProps) => (props.right ? "flex-end" : "flex-start")};
 `;
 
 const Apy = styled(GradientText)`
@@ -60,6 +66,7 @@ type Props = {
 
 const PoolsRow = (props: Props) => {
   const history = useHistory();
+
   return (
     <Row onClick={() => history.push(`/pool/b${props.asset}`)} preview={props.preview}>
       <Data>
@@ -77,6 +84,11 @@ const PoolsRow = (props: Props) => {
             <Chevron src={chevron} />
           </ChevronData>
         </>
+      )}
+      {props.preview && (
+        <Data right>
+          <Button text="deposit" background="#141128" />
+        </Data>
       )}
     </Row>
   );
