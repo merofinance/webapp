@@ -5,6 +5,8 @@ import PoolsRow from "../pools/PoolsRow";
 const StyledPreview = styled.div`
   width: 100%;
   margin: var(--section-margin);
+  display: flex;
+  justify-content: center;
 
   @media (max-width: 600px) {
     margin: var(--mobile-section-margin);
@@ -12,7 +14,7 @@ const StyledPreview = styled.div`
 `;
 
 const Table = styled.table`
-  width: 100%;
+  width: 79%;
 `;
 
 const HeaderRow = styled.tr`
@@ -39,6 +41,7 @@ const Preview = () => {
           <Header>Asset</Header>
           <Header>APY</Header>
           <Header>TVL</Header>
+          <Header></Header>
         </HeaderRow>
         <PoolsRow preview asset={"eth"} />
         <PoolsRow preview asset={"usdc"} />
