@@ -19,7 +19,7 @@ const ExitEvent = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(5, 1, 32, 0.5);
+  background-color: rgba(5, 1, 32, 0);
   z-index: 1;
 `;
 
