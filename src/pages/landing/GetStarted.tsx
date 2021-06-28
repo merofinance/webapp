@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import Button from "../../components/styles/Button";
-import { Header3 } from "../../components/styles/Headers";
+import { Header2 } from "../../components/styles/Headers";
 import { LIVE } from "../../lib/constants";
 
 const StyledGetStarted = styled.div`
@@ -63,7 +63,7 @@ const GetStarted = () => {
   return (
     <StyledGetStarted>
       <Container>
-        <Header3>get started</Header3>
+        <Header2>get started</Header2>
         <Body>Deposit liquidity and start earning yield.</Body>
         <Button
           primary

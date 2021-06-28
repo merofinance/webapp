@@ -16,7 +16,7 @@ export const Header1 = styled.h1`
   }
 `;
 
-export const Header3 = styled.h3`
+export const Header2 = styled.h2`
   text-transform: uppercase;
   font-weight: 700;
   font-size: 2.2rem;

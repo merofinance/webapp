@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 // import GradientText from "../../components/styles/GradientText";
-import { Header1, Header3, Header6, Paragraph } from "../../components/styles/Headers";
+import { Header1, Header2, Header6, Paragraph } from "../../components/styles/Headers";
 
 const StyledLitepaperPage = styled.div`
   display: flex;
@@ -14,7 +14,7 @@ const StyledLitepaperPage = styled.div`
   }
 `;
 
-const Header = styled(Header3)`
+const Header = styled(Header2)`
   text-align: left;
   margin-top: 8rem;
 

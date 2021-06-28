@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Header3, Header5 } from "../../components/styles/Headers";
+import { Header2, Header5 } from "../../components/styles/Headers";
 import Radio, { RadioOptionType } from "../../components/Radio";
 
 const categories: RadioOptionType[] = [
@@ -151,7 +151,7 @@ const HowItWorks = () => {
 
   return (
     <StyledHowItWorks>
-      <Header3>how it works</Header3>
+      <Header2>how it works</Header2>
       <Radio
         options={categories}
         active={category}

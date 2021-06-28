@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import GradientText from "../../components/styles/GradientText";
-import { Header3 } from "../../components/styles/Headers";
+import { Header2 } from "../../components/styles/Headers";
 import telegram from "../../assets/socials/telegram.svg";
 import twitter from "../../assets/socials/twitter.svg";
 import github from "../../assets/socials/github.svg";
@@ -109,7 +109,7 @@ const Icon = styled.img`
 const JoinCommunity = () => {
   return (
     <StyledJoinCommunity>
-      <Header3>join the community</Header3>
+      <Header2>join the community</Header2>
       <Socials>
         {socials.map((social: SocialType) => (
           <Social

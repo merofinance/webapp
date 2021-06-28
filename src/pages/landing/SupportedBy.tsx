@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Header3 } from "../../components/styles/Headers";
+import { Header2 } from "../../components/styles/Headers";
 import divergence from "../../assets/protocols/divergence.svg";
 import curve from "../../assets/protocols/curve.svg";
 import aave from "../../assets/protocols/aave.svg";
@@ -94,7 +94,7 @@ const Protocol = styled.img`
 const SupportedBy = () => {
   return (
     <StyledSupportedBy>
-      <Header3>supported by</Header3>
+      <Header2>supported by</Header2>
       <Protocols>
         {protocols.map((protocol: ProtocolType, index: number) => (
           <ProtocolContainer key={index}>
