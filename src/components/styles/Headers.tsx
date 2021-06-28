@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Header2 = styled.h2`
+export const Header1 = styled.h1`
   text-transform: capitalize;
   font-weight: 700;
   font-size: 7.2rem;

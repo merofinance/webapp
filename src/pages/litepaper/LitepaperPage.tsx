@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 // import GradientText from "../../components/styles/GradientText";
-import { Header2, Header3, Header6, Paragraph } from "../../components/styles/Headers";
+import { Header1, Header3, Header6, Paragraph } from "../../components/styles/Headers";
 
 const StyledLitepaperPage = styled.div`
   display: flex;
@@ -61,7 +61,7 @@ const Item = styled.li`
 const LitepaperPage = () => {
   return (
     <StyledLitepaperPage>
-      <Header2>Backd: Litepaper</Header2>
+      <Header1>Backd: Litepaper</Header1>
       <Header>Introduction</Header>
       <Paragraph>
         Over-collateralization is one of the most critical pillars of DeFi. The pseudonymous nature
