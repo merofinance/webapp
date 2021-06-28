@@ -3,6 +3,7 @@ import styled from "styled-components";
 import AmountInput from "../../components/AmountInput";
 import ContentSection from "../../components/ContentSection";
 import ProgressButtons from "../../components/ProgressButtons";
+import { Pool } from "../../lib";
 
 const Content = styled.div`
   width: 100%;
@@ -11,13 +12,13 @@ const Content = styled.div`
 `;
 
 type Props = {
-  token: string;
+  pool: Pool;
 };
 
 const PoolWithdraw = (props: Props) => {
   return (
     <ContentSection
-      header={`Withdraw ${props.token.toUpperCase()}`}
+      header={`Withdraw ${props.pool.underlying.symbol.toUpperCase()}`}
       statistics={[
         {
           header: "Your deposits",

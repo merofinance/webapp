@@ -5,6 +5,7 @@ import deleteIcon from "../../assets/ui/delete.svg";
 import NewPosition from "./NewPosition";
 import Tooltip from "../../components/Tooltip";
 import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
+import { Pool } from "../../lib";
 
 export type PositionType = {
   protocol: string;
@@ -106,7 +107,7 @@ const Delete = styled.img`
 `;
 
 type Props = {
-  token: string;
+  pool: Pool;
 };
 
 const PoolPositions = (props: Props) => {

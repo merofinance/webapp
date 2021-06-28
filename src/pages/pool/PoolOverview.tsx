@@ -1,8 +1,9 @@
 import React from "react";
 import Overview from "../../components/Overview";
+import { Pool } from "../../lib";
 
 type Props = {
-  pool: string;
+  pool: Pool;
 };
 
 const PoolOverview = (props: Props) => {

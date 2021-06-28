@@ -1,11 +1,19 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { Redirect, useParams } from "react-router";
 import styled from "styled-components";
 import Radio, { RadioOptionType } from "../../components/Radio";
 import Button from "../../components/styles/Button";
+import { selectPool, selectPrice } from "../../features/pool/selectors";
+import { selectBalance } from "../../features/user/userSlice";
 import PoolDeposit from "./PoolDeposit";
 import PoolOverview from "./PoolOverview";
 import PoolPositions from "./PoolPositions";
 import PoolWithdraw from "./PoolWithdraw";
+
+type DepositWithdrawParams = {
+  poolName: string;
+};
 
 const tabs: RadioOptionType[] = [
   {
@@ -44,18 +52,26 @@ const ButtonContainer = styled.div`
 `;
 
 const PoolPage = () => {
+  let { poolName } = useParams<DepositWithdrawParams>();
+  const pool = useSelector(selectPool(poolName));
+  const balance = useSelector(selectBalance(pool));
+  const price = useSelector(selectPrice(pool));
+
   const [tab, setTab] = useState("deposit");
-  const token = "dai"; // TODO
+
+  if (!pool) {
+    return <Redirect to="/" />; // TODO Implement pool not found
+  }
 
   return (
     <StyledPoolPage>
       <Radio options={tabs} active={tab} setOption={(value: string) => setTab(value)} />
       <Content>
-        {tab === "deposit" && <PoolDeposit token={token} />}
-        {tab === "withdraw" && <PoolWithdraw token={token} />}
-        {tab === "positions" && <PoolPositions token={token} />}
+        {tab === "deposit" && <PoolDeposit pool={pool} />}
+        {tab === "withdraw" && <PoolWithdraw pool={pool} />}
+        {tab === "positions" && <PoolPositions pool={pool} />}
         <RightColumn>
-          <PoolOverview pool={token} />
+          <PoolOverview pool={pool} />
           {tab !== "positions" && (
             <ButtonContainer>
               <Button medium text="+ Create a Top-up Position" click={() => setTab("positions")} />
