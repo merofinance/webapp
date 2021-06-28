@@ -118,11 +118,11 @@ const AuditedBy = () => {
   return (
     <StyledAuditedBy>
       <Container>
-        <Background src={background} />
-        <Logo src={chainSecurity} />
+        <Background src={background} alt="decorative background" />
+        <Logo src={chainSecurity} alt="Chain Security logo" />
         <Content>
           <Header>{LIVE ? "audited by" : "audit in progress"}</Header>
-          <MobileLogo src={chainSecurityMobile} />
+          <MobileLogo src={chainSecurityMobile} alt="Chain Security logo" />
           <Description>
             Led by security experts from ETH Zurich and trusted by 85+ blockchain companies and
             corporations.

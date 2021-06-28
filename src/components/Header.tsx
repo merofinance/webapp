@@ -66,7 +66,7 @@ const Header = () => {
 
   return (
     <StyledHeader isSticky={scrollPosition > 40}>
-      <Logo onClick={() => history.push("/")} src={logo} />
+      <Logo onClick={() => history.push("/")} src={logo} alt="Backd logo" />
       <NavItems />
       {LIVE && <Connector />}
     </StyledHeader>

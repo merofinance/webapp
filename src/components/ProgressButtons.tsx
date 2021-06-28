@@ -96,7 +96,7 @@ const ProgressButtons = (props: Props) => {
         <ProgressSection>
           <Line complete={approved} current={!approved} />
           <Number complete={approved} current={!approved}>
-            {approved ? <Tick src={tick} /> : "1"}
+            {approved ? <Tick src={tick} alt="tick" /> : "1"}
           </Number>
         </ProgressSection>
         <ProgressSection>

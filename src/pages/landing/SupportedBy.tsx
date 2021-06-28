@@ -6,20 +6,24 @@ import curve from "../../assets/protocols/curve.svg";
 import aave from "../../assets/protocols/aave.svg";
 
 type ProtocolType = {
+  name: string;
   image: string;
   link: string;
 };
 
 const protocols: ProtocolType[] = [
   {
+    name: "Divergence",
     image: divergence,
     link: "https://www.div.vc/",
   },
   {
+    name: "Curve",
     image: curve,
     link: "https://curve.fi/",
   },
   {
+    name: "Aave",
     image: aave,
     link: "http://aave.com/",
   },
@@ -104,6 +108,7 @@ const SupportedBy = () => {
               }}
               src={protocol.image}
               maxWidthMobile={index === 2 ? "12rem" : ""}
+              alt={`${protocol.name} logo`}
             />
           </ProtocolContainer>
         ))}

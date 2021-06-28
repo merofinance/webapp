@@ -48,8 +48,8 @@ const Swirl = styled.img`
 const Preview = () => {
   return (
     <StyledPreview>
-      <Swirl src={swirl1} />
-      <Swirl src={swirl2} />
+      <Swirl src={swirl1} alt="decorative swirl" />
+      <Swirl src={swirl2} alt="decorative swirl" />
       <Table>
         <HeaderRow>
           <Header>Asset</Header>

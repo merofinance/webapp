@@ -169,7 +169,7 @@ const Benefits = () => {
       {benefits.map((benefit: BenfitsType, index: number) => (
         <Benefit key={benefit.header}>
           <IconContainer>
-            <Icon src={benefit.icon} />
+            <Icon src={benefit.icon} alt="benefit icon" />
           </IconContainer>
           <IconGlass
             right={index % 2 === 0}

@@ -120,7 +120,7 @@ const JoinCommunity = () => {
           >
             <Link>{social.label}</Link>
             <IconContainer>
-              <Icon src={social.icon} />
+              <Icon src={social.icon} alt={`${social.label} logo`} />
             </IconContainer>
           </Social>
         ))}

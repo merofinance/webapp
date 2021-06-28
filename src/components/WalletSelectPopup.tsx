@@ -116,13 +116,13 @@ const WalletSelectPopup = (props: Props) => {
           <Option leftColor="#FF5407" rightColor="#FFD523" onClick={() => activateWallet()}>
             <Name>MetaMask</Name>
             <IconContainer>
-              <Icon src={metamask} />
+              <Icon src={metamask} alt="Metamask logo" />
             </IconContainer>
           </Option>
           <Option leftColor="#8400FE" rightColor="#0C00FE" onClick={() => activateWallet()}>
             <Name>WalletConnect</Name>
             <IconContainer>
-              <Icon src={walletConnect} />
+              <Icon src={walletConnect} alt="Walletconnect logo" />
             </IconContainer>
           </Option>
         </Content>

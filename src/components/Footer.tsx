@@ -111,7 +111,7 @@ const Link = styled.a`
 const Footer = () => {
   return (
     <StyledFooter>
-      <Logo src={logo} />
+      <Logo src={logo} alt="Backd logo" />
       <div></div>
       {linkLists.map((linkList: LinkListType) => (
         <LinkList key={linkList.header}>
