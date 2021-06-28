@@ -4,7 +4,7 @@ import GradientText from "../../components/styles/GradientText";
 import shield from "../../assets/benefits/shield.svg";
 import plus from "../../assets/benefits/plus.svg";
 import percent from "../../assets/benefits/percent.svg";
-import { Header5, Header6 } from "../../components/styles/Headers";
+import { Header4, Header6 } from "../../components/styles/Headers";
 
 type BenfitsType = {
   icon: string;
@@ -178,7 +178,7 @@ const Benefits = () => {
           >
             <IconGlassGradient rotate={index === 1 ? 90 : index === 2 ? -90 : 0} />
           </IconGlass>
-          <Header5>{benefit.header}</Header5>
+          <Header4>{benefit.header}</Header4>
           <Header6>{benefit.content}</Header6>
           <ReadMoreButton>
             <ReadMoreText>Read more →</ReadMoreText>
