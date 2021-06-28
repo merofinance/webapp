@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import Button from "../../components/styles/Button";
-import { Header1, Header4 } from "../../components/styles/Headers";
+import { Header1, Header3 } from "../../components/styles/Headers";
 import { LIVE } from "../../lib/constants";
 
 const StyledHero = styled.div`
@@ -23,10 +23,10 @@ const Hero = () => {
   return (
     <StyledHero>
       <Header1>reactive liquidity</Header1>
-      <Header4>
+      <Header3>
         A trustless and interest generating protocol designed to prevent collateralized loans from
         becoming liquidable.
-      </Header4>
+      </Header3>
       <Button
         primary
         hero

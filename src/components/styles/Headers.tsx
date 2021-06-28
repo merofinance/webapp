@@ -33,7 +33,7 @@ export const Header2 = styled.h2`
   }
 `;
 
-export const Header4 = styled.h4`
+export const Header3 = styled.h3`
   font-weight: 400;
   font-size: 2.8rem;
   line-height: 4.2rem;
