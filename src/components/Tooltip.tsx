@@ -59,7 +59,7 @@ const Tooltip = (props: Props) => {
 
   return (
     <StyledTooltip>
-      <Icon src={info} onClick={() => setOpen(true)} />
+      <Icon src={info} onClick={() => setOpen(true)} alt="help icon" />
       {open && (
         <>
           <ExitEvent onClick={() => setOpen(false)} />

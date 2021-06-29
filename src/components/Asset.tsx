@@ -35,7 +35,7 @@ const Asset = (props: Props) => {
 
   return (
     <StyledAsset>
-      <Icon src={icon()} />
+      <Icon src={icon()} alt={`${props.asset} icon`} />
       <Label>{props.asset}</Label>
     </StyledAsset>
   );

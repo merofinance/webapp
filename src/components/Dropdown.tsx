@@ -78,7 +78,7 @@ const Dropdown = (props: Props) => {
     <StyledDropdown>
       <Button onClick={() => setPopupOpen(true)}>
         <Label>{props.value ? props.value : "Choose"}</Label>
-        <Arrow src={arrow} open={popupOpen} />
+        <Arrow src={arrow} open={popupOpen} alt="arrow" />
       </Button>
       {popupOpen && (
         <>
