@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import AmountInput from "../../components/AmountInput";
 import ContentSection from "../../components/ContentSection";
 import ProgressButtons from "../../components/ProgressButtons";
+import { selectBalance } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
 
 const Content = styled.div`
@@ -16,6 +18,12 @@ type Props = {
 };
 
 const PoolWithdraw = (props: Props) => {
+  const totalBalance = useSelector(selectBalance(props.pool));
+  const staked = useSelector(selectBalance(props.pool.stakerVaultAddress));
+  const availableToWithdraw = totalBalance - staked;
+
+  const [withdrawAmount, setWithdrawAmount] = useState(0);
+
   return (
     <ContentSection
       header={`Withdraw ${props.pool.underlying.symbol.toUpperCase()}`}
@@ -41,8 +49,13 @@ const PoolWithdraw = (props: Props) => {
       ]}
       content={
         <Content>
-          <AmountInput label="Enter an amount of USDC to withdraw" max={100} />
-          <ProgressButtons token={""} symbol={"dai"} buttonText="Deposit and Stake" />
+          <AmountInput
+            value={withdrawAmount}
+            setValue={(v: number) => setWithdrawAmount(v)}
+            label={`Enter an amount of ${props.pool.underlying.symbol.toUpperCase()} to withdraw`}
+            max={availableToWithdraw}
+          />
+          <ProgressButtons pool={props.pool} value={withdrawAmount} />
         </Content>
       }
     />

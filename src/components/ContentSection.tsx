@@ -8,7 +8,6 @@ const StyledContentSection = styled.div`
   flex-direction: column;
   border-radius: 1.4rem;
   background-color: rgba(21, 14, 59, 0.5);
-  min-height: 48.7rem;
 `;
 
 const Header = styled.h2`

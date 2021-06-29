@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import AmountSlider from "./AmountSlider";
 import Input from "./Input";
@@ -21,28 +21,32 @@ const Available = styled.div`
 `;
 
 type Props = {
+  value: number;
+  setValue: (v: number) => void;
   label: string;
   max: number;
 };
 
 const AmountInput = (props: Props) => {
-  const [value, setValue] = useState("");
-
   return (
     <StyledAmountInput>
       <Available>{`Available: ${props.max}`}</Available>
       <Input
         valid={true}
         label={props.label}
-        value={value}
+        value={props.value.toString()}
         type="number"
-        onChange={(v: string) => setValue(v)}
+        onChange={(v: string) => props.setValue(Number(v))}
         background="#10092e"
         buttonText="max"
-        buttonAction={() => setValue(props.max.toString())}
+        buttonAction={() => props.setValue(props.max)}
         errorMessage="Invalid amount"
       />
-      <AmountSlider value={value} max={props.max} setValue={(v: string) => setValue(v)} />
+      <AmountSlider
+        value={props.value}
+        max={props.max}
+        setValue={(v: number) => props.setValue(v)}
+      />
     </StyledAmountInput>
   );
 };
