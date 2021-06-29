@@ -28,6 +28,7 @@ import LitepaperPage from "./pages/litepaper/LitepaperPage";
 import { ConnectWallet } from "./features/account/ConnectWallet";
 import ClaimPage from "./pages/claim/ClaimPage";
 import PoolPage from "./pages/pool/PoolPage";
+import { LIVE } from "./lib/constants";
 
 const StyledApp = styled.div`
   width: 100%;
@@ -82,29 +83,25 @@ function App() {
           <StyledApp>
             <Content>
               <Switch>
-                <PrivateRoute path="/pool/:poolName">
-                  <PoolPage />
-                </PrivateRoute>
+                {LIVE && (
+                  <>
+                    <PrivateRoute path="/pool/:poolName">
+                      <PoolPage />
+                    </PrivateRoute>
 
-                <PrivateRoute path="/pool/:poolName">
-                  <PoolPage />
-                </PrivateRoute>
+                    <Route path="/connect">
+                      <ConnectWallet />
+                    </Route>
 
-                <PrivateRoute path="/pool/:poolName">
-                  <PoolPage />
-                </PrivateRoute>
+                    <PrivateRoute path="/pools">
+                      <PoolsPage />
+                    </PrivateRoute>
 
-                <Route path="/connect">
-                  <ConnectWallet />
-                </Route>
-
-                <PrivateRoute path="/pools">
-                  <PoolsPage />
-                </PrivateRoute>
-
-                <Route path="/claim">
-                  <ClaimPage />
-                </Route>
+                    <Route path="/claim">
+                      <ClaimPage />
+                    </Route>
+                  </>
+                )}
 
                 <Route path="/litepaper">
                   <LitepaperPage />
