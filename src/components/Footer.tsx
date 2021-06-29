@@ -21,10 +21,10 @@ const linkLists: LinkListType[] = [
         label: "Twitter",
         link: "https://twitter.com/backdfund",
       },
-      {
-        label: "Discord",
-        link: "https://google.com/",
-      },
+      // {
+      //   label: "Discord",
+      //   link: "https://google.com/",
+      // },
       {
         label: "GitHub",
         link: "https://github.com/backdfund",
