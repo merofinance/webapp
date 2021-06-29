@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import GradientText from "../../components/styles/GradientText";
 import background from "../../assets/audit/background.svg";
-import chainSecurity from "../../assets/audit/chain-security.svg";
 import chainSecurityMobile from "../../assets/audit/chain-security-mobile.svg";
+import chainSecurity from "../../assets/audit/chain-security.svg";
+import GradientText from "../../components/styles/GradientText";
+import { openAndFocusWindow } from "../../lib/browser";
 import { LIVE } from "../../lib/constants";
 
 const StyledAuditedBy = styled.div`
@@ -130,7 +131,7 @@ const AuditedBy = () => {
           {LIVE && (
             <ViewReport
               onClick={() => {
-                (window as any).open("", "_blank").focus();
+                openAndFocusWindow("", "_blank");
               }}
             >
               View Report →

@@ -4,6 +4,7 @@ import { Header2 } from "../../components/styles/Headers";
 import divergence from "../../assets/protocols/divergence.svg";
 import curve from "../../assets/protocols/curve.svg";
 import aave from "../../assets/protocols/aave.svg";
+import { openAndFocusWindow } from "../../lib/browser";
 
 type ProtocolType = {
   name: string;
@@ -104,7 +105,7 @@ const SupportedBy = () => {
           <ProtocolContainer key={index}>
             <Protocol
               onClick={() => {
-                (window as any).open(protocol.link, "_blank").focus();
+                openAndFocusWindow(protocol.link, "_blank");
               }}
               src={protocol.image}
               maxWidthMobile={index === 2 ? "12rem" : ""}
