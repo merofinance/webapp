@@ -5,6 +5,7 @@ import { Header2 } from "../../components/styles/Headers";
 import telegram from "../../assets/socials/telegram.svg";
 import twitter from "../../assets/socials/twitter.svg";
 import github from "../../assets/socials/github.svg";
+import { openAndFocusWindow } from "../../lib/browser";
 
 type SocialType = {
   label: string;
@@ -115,7 +116,7 @@ const JoinCommunity = () => {
           <Social
             key={social.label}
             onClick={() => {
-              (window as any).open(social.link, "_blank").focus();
+              openAndFocusWindow(social.link, "_blank");
             }}
           >
             <Link>{social.label}</Link>

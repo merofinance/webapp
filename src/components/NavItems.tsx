@@ -2,6 +2,7 @@ import React from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import { LIVE } from "../lib/constants";
+import { openAndFocusWindow } from "../lib/browser";
 
 type NavItemType = {
   label: string;
@@ -71,7 +72,7 @@ const NavItems = () => {
         <NavItem>
           <Link
             onClick={() => {
-              (window as any).open("https://backdfund.medium.com/", "_blank").focus();
+              openAndFocusWindow("https://backdfund.medium.com/", "_blank");
             }}
           >
             blog

@@ -3,10 +3,11 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { injectedConnector } from "../app/web3";
-import { setConnected } from "../features/account/accountSlice";
-import Popup from "./Popup";
-import walletConnect from "../assets/wallets/wallet-connect.svg";
 import metamask from "../assets/wallets/metamask.svg";
+import walletConnect from "../assets/wallets/wallet-connect.svg";
+import { setConnected } from "../features/account/accountSlice";
+import { openAndFocusWindow } from "../lib/browser";
+import Popup from "./Popup";
 import GradientText from "./styles/GradientText";
 
 const Content = styled.div`
@@ -107,7 +108,7 @@ const WalletSelectPopup = (props: Props) => {
             <SubHeader>New to Ethereum?</SubHeader>
             <Highlight
               onClick={() => {
-                (window as any).open("https://google.com/", "_blank").focus();
+                openAndFocusWindow("https://google.com/", "_blank");
               }}
             >
               Find out about wallets
