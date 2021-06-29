@@ -25,7 +25,7 @@ const Hero = () => {
       <Header1>reactive liquidity</Header1>
       <Header3>
         A trustless and interest generating protocol designed to prevent collateralized loans from
-        becoming liquidable.
+        becoming liquidatable.
       </Header3>
       <Button
         primary
