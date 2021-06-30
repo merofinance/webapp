@@ -62,7 +62,7 @@ type Props = {
 };
 
 const AmountSlider = (props: Props) => {
-  const percent = (props.value / props.max) * 100;
+  const percent = props.max === 0 ? 0 : (props.value / props.max) * 100;
 
   return (
     <StyledAmountSlider>
