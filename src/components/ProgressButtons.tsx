@@ -179,7 +179,13 @@ const ProgressButtons = (props: Props) => {
           }}
           disabled={!approved || props.value === 0}
           loading={loading && approved}
-          hoverText={props.value === 0 ? "Enter Amount" : ""}
+          hoverText={
+            props.value === 0
+              ? "Enter Amount"
+              : !approved
+              ? `Approve ${props.pool.underlying.symbol.toUpperCase()}`
+              : ""
+          }
         />
       </Buttons>
       {requiresApproval && (
