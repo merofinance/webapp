@@ -5,6 +5,7 @@ import chevron from "../../assets/ui/chevron.svg";
 import Asset from "../../components/Asset";
 import Button from "../../components/styles/Button";
 import GradientText from "../../components/styles/GradientText";
+import { Pool } from "../../lib";
 
 type RowProps = {
   preview?: boolean;
@@ -60,23 +61,23 @@ const Chevron = styled.img`
 `;
 
 type Props = {
-  asset: "eth" | "usdc" | "dai";
+  pool: Pool;
   preview?: boolean;
 };
 
-const PoolsRow = (props: Props) => {
+const PoolsRow = ({ pool, preview }: Props) => {
   const history = useHistory();
 
   return (
-    <Row onClick={() => history.push(`/pool/b${props.asset}`)} preview={props.preview}>
+    <Row onClick={() => history.push(`/pool/${pool.lpToken.symbol}`)} preview={preview}>
       <Data>
-        <Asset asset={props.asset} />
+        <Asset token={pool.underlying} />
       </Data>
       <Data>
-        <Apy>5.2%</Apy>
+        <Apy>{`${pool.apy}%`}</Apy>
       </Data>
-      <Data>$3.34m</Data>
-      {!props.preview && (
+      <Data>{pool.totalAssets.toLocaleString()}</Data>
+      {!preview && (
         <>
           <Data>$0.00</Data>
 
@@ -85,7 +86,7 @@ const PoolsRow = (props: Props) => {
           </ChevronData>
         </>
       )}
-      {props.preview && (
+      {preview && (
         <Data right>
           <Button text="deposit" background="#141128" />
         </Data>

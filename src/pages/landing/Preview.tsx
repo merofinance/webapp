@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import PoolsRow from "../pools/PoolsRow";
 import swirl1 from "../../assets/background/swirl-1.svg";
 import swirl2 from "../../assets/background/swirl-2.svg";
+import { useBackd } from "../../app/hooks/use-backd";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchState, selectPools } from "../../features/pools-list/poolsListSlice";
+import { Pool } from "../../lib";
 
 const StyledPreview = styled.div`
   position: relative;
@@ -46,6 +50,15 @@ const Swirl = styled.img`
 `;
 
 const Preview = () => {
+  const backd = useBackd();
+  const dispatch = useDispatch();
+  const pools = useSelector(selectPools);
+
+  useEffect(() => {
+    if (!backd) return;
+    dispatch(fetchState(backd));
+  }, [backd, dispatch]);
+
   return (
     <StyledPreview>
       <Swirl src={swirl1} alt="decorative swirl" />
@@ -57,9 +70,9 @@ const Preview = () => {
           <Header>TVL</Header>
           <Header></Header>
         </HeaderRow>
-        <PoolsRow preview asset={"eth"} />
-        <PoolsRow preview asset={"usdc"} />
-        <PoolsRow preview asset={"dai"} />
+        {pools.map((pool: Pool) => (
+          <PoolsRow preview pool={pool} />
+        ))}
       </Table>
     </StyledPreview>
   );

@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { useBackd } from "../../app/hooks/use-backd";
 import ContentSection from "../../components/ContentSection";
+import { fetchState, selectPools, selectPrices } from "../../features/pools-list/poolsListSlice";
+import { selectBalances } from "../../features/user/userSlice";
+import { Pool } from "../../lib";
 import PoolsOverview from "./PoolsOverview";
 import PoolsRow from "./PoolsRow";
 
@@ -34,6 +39,20 @@ const ChevronHeader = styled.th`
 `;
 
 const PoolsPage = () => {
+  const backd = useBackd();
+  const dispatch = useDispatch();
+  const pools = useSelector(selectPools);
+  const prices = useSelector(selectPrices);
+  const balances = useSelector(selectBalances);
+
+  const getBalance = (pool: Pool) => balances[pool.lpToken.address] || 0;
+  const getPrice = (pool: Pool) => prices[pool.underlying.symbol] || 0;
+
+  useEffect(() => {
+    if (!backd) return;
+    dispatch(fetchState(backd));
+  }, [backd, dispatch]);
+
   return (
     <StyledPoolsPage>
       <ContentSection
@@ -67,9 +86,9 @@ const PoolsPage = () => {
               <Header>Your deposits</Header>
               <ChevronHeader />
             </HeaderRow>
-            <PoolsRow asset={"eth"} />
-            <PoolsRow asset={"usdc"} />
-            <PoolsRow asset={"dai"} />
+            {pools.map((pool: Pool) => (
+              <PoolsRow pool={pool} />
+            ))}
           </Table>
         }
       />

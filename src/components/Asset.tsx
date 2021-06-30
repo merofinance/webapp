@@ -3,6 +3,7 @@ import styled from "styled-components";
 import eth from "../assets/tokens/eth.png";
 import usdc from "../assets/tokens/usdc.png";
 import dai from "../assets/tokens/dai.png";
+import { Token } from "../lib/types";
 
 const StyledAsset = styled.div`
   display: flex;
@@ -23,20 +24,20 @@ const Label = styled.div`
 `;
 
 type Props = {
-  asset: "eth" | "usdc" | "dai";
+  token: Token;
 };
 
-const Asset = (props: Props) => {
+const Asset = ({ token }: Props) => {
   const icon = () => {
-    if (props.asset === "eth") return eth;
-    if (props.asset === "usdc") return usdc;
-    if (props.asset === "dai") return dai;
+    if (token.symbol.toLowerCase() === "eth") return eth;
+    if (token.symbol.toLowerCase() === "usdc") return usdc;
+    if (token.symbol.toLowerCase() === "dai") return dai;
   };
 
   return (
     <StyledAsset>
-      <Icon src={icon()} alt={`${props.asset} icon`} />
-      <Label>{props.asset}</Label>
+      <Icon src={icon()} alt={`${token.symbol} icon`} />
+      <Label>{token.symbol.toUpperCase()}</Label>
     </StyledAsset>
   );
 };
