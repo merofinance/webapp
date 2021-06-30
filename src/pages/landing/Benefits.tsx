@@ -1,15 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import GradientText from "../../components/styles/GradientText";
-import shield from "../../assets/benefits/shield.svg";
-import plus from "../../assets/benefits/plus.svg";
 import percent from "../../assets/benefits/percent.svg";
-import { Header5, Header6 } from "../../components/styles/Headers";
+import plus from "../../assets/benefits/plus.svg";
+import shield from "../../assets/benefits/shield.svg";
+import GradientText from "../../components/styles/GradientText";
+import { Header4, Header5 } from "../../components/styles/Headers";
+import { openAndFocusWindow } from "../../lib/browser";
 
 type BenfitsType = {
   icon: string;
   header: string;
   content: string;
+  url: string;
 };
 
 const benefits: BenfitsType[] = [
@@ -18,16 +20,19 @@ const benefits: BenfitsType[] = [
     header: "Avoid Liquidation",
     content:
       "Liquidity deposited in Backd and marked as back-up collateral will be automatically shifted when needed for collateral top-ups.",
+    url: "https://backdfund.medium.com/introducing-the-backd-protocol-95020816cee5",
   },
   {
     icon: plus,
     header: "Earn Yield",
     content: "Earn interest on liquidity via yield-farming strategies based on Curve and Convex.",
+    url: "https://backdfund.medium.com/introducing-the-backd-protocol-95020816cee5",
   },
   {
     icon: percent,
     header: "Fee Share",
     content: "A small fee charged on the collateral top-up amount is distributed among LPs.",
+    url: "https://backdfund.medium.com/introducing-the-backd-protocol-95020816cee5",
   },
 ];
 
@@ -169,7 +174,7 @@ const Benefits = () => {
       {benefits.map((benefit: BenfitsType, index: number) => (
         <Benefit key={benefit.header}>
           <IconContainer>
-            <Icon src={benefit.icon} />
+            <Icon src={benefit.icon} alt="benefit icon" />
           </IconContainer>
           <IconGlass
             right={index % 2 === 0}
@@ -178,9 +183,13 @@ const Benefits = () => {
           >
             <IconGlassGradient rotate={index === 1 ? 90 : index === 2 ? -90 : 0} />
           </IconGlass>
-          <Header5>{benefit.header}</Header5>
-          <Header6>{benefit.content}</Header6>
-          <ReadMoreButton>
+          <Header4>{benefit.header}</Header4>
+          <Header5>{benefit.content}</Header5>
+          <ReadMoreButton
+            onClick={() => {
+              openAndFocusWindow(benefit.url, "_blank");
+            }}
+          >
             <ReadMoreText>Read more →</ReadMoreText>
           </ReadMoreButton>
         </Benefit>

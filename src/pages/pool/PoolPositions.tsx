@@ -150,7 +150,7 @@ const PoolPositions = (props: Props) => {
             <Value>8,000 DAI</Value>
             <Value>
               <DeleteButton>
-                <Delete src={deleteIcon} />
+                <Delete src={deleteIcon} alt="delete button" />
               </DeleteButton>
             </Value>
           </Position>
@@ -162,7 +162,7 @@ const PoolPositions = (props: Props) => {
             <Value>8,000 DAI</Value>
             <Value>
               <DeleteButton>
-                <Delete src={deleteIcon} />
+                <Delete src={deleteIcon} alt="delete button" />
               </DeleteButton>
             </Value>
           </Position>

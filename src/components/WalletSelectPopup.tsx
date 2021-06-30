@@ -3,10 +3,11 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { injectedConnector } from "../app/web3";
-import { setConnected } from "../features/account/accountSlice";
-import Popup from "./Popup";
-import walletConnect from "../assets/wallets/wallet-connect.svg";
 import metamask from "../assets/wallets/metamask.svg";
+import walletConnect from "../assets/wallets/wallet-connect.svg";
+import { setConnected } from "../features/account/accountSlice";
+import { openAndFocusWindow } from "../lib/browser";
+import Popup from "./Popup";
 import GradientText from "./styles/GradientText";
 
 const Content = styled.div`
@@ -107,7 +108,7 @@ const WalletSelectPopup = (props: Props) => {
             <SubHeader>New to Ethereum?</SubHeader>
             <Highlight
               onClick={() => {
-                (window as any).open("https://google.com/", "_blank").focus();
+                openAndFocusWindow("https://google.com/", "_blank");
               }}
             >
               Find out about wallets
@@ -116,13 +117,13 @@ const WalletSelectPopup = (props: Props) => {
           <Option leftColor="#FF5407" rightColor="#FFD523" onClick={() => activateWallet()}>
             <Name>MetaMask</Name>
             <IconContainer>
-              <Icon src={metamask} />
+              <Icon src={metamask} alt="Metamask logo" />
             </IconContainer>
           </Option>
           <Option leftColor="#8400FE" rightColor="#0C00FE" onClick={() => activateWallet()}>
             <Name>WalletConnect</Name>
             <IconContainer>
-              <Icon src={walletConnect} />
+              <Icon src={walletConnect} alt="Walletconnect logo" />
             </IconContainer>
           </Option>
         </Content>

@@ -81,7 +81,7 @@ const PoolsRow = (props: Props) => {
           <Data>$0.00</Data>
 
           <ChevronData>
-            <Chevron src={chevron} />
+            <Chevron src={chevron} alt="right arrow" />
           </ChevronData>
         </>
       )}

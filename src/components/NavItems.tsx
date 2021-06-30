@@ -2,6 +2,7 @@ import React from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import { LIVE } from "../lib/constants";
+import { openAndFocusWindow } from "../lib/browser";
 
 type NavItemType = {
   label: string;
@@ -68,26 +69,15 @@ const NavItems = () => {
           </NavItem>
         ))}
       {!LIVE && (
-        <>
-          <NavItem>
-            <Link
-              onClick={() => {
-                (window as any).open("https://backdfund.medium.com/", "_blank").focus();
-              }}
-            >
-              blog
-            </Link>
-          </NavItem>
-          <NavItem>
-            <Link
-              onClick={() => {
-                (window as any).open("https://backd-1.gitbook.io/backd/", "_blank").focus();
-              }}
-            >
-              docs
-            </Link>
-          </NavItem>
-        </>
+        <NavItem>
+          <Link
+            onClick={() => {
+              openAndFocusWindow("https://backdfund.medium.com/", "_blank");
+            }}
+          >
+            blog
+          </Link>
+        </NavItem>
       )}
     </StyledNavItems>
   );

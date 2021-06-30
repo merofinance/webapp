@@ -1,25 +1,30 @@
 import React from "react";
 import styled from "styled-components";
-import { Header3 } from "../../components/styles/Headers";
+import { Header2 } from "../../components/styles/Headers";
 import divergence from "../../assets/protocols/divergence.svg";
 import curve from "../../assets/protocols/curve.svg";
 import aave from "../../assets/protocols/aave.svg";
+import { openAndFocusWindow } from "../../lib/browser";
 
 type ProtocolType = {
+  name: string;
   image: string;
   link: string;
 };
 
 const protocols: ProtocolType[] = [
   {
+    name: "Divergence",
     image: divergence,
     link: "https://www.div.vc/",
   },
   {
+    name: "Curve",
     image: curve,
     link: "https://curve.fi/",
   },
   {
+    name: "Aave",
     image: aave,
     link: "http://aave.com/",
   },
@@ -94,16 +99,17 @@ const Protocol = styled.img`
 const SupportedBy = () => {
   return (
     <StyledSupportedBy>
-      <Header3>supported by</Header3>
+      <Header2>supported by</Header2>
       <Protocols>
         {protocols.map((protocol: ProtocolType, index: number) => (
           <ProtocolContainer key={index}>
             <Protocol
               onClick={() => {
-                (window as any).open(protocol.link, "_blank").focus();
+                openAndFocusWindow(protocol.link, "_blank");
               }}
               src={protocol.image}
               maxWidthMobile={index === 2 ? "12rem" : ""}
+              alt={`${protocol.name} logo`}
             />
           </ProtocolContainer>
         ))}

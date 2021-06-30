@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Popup from "../../components/Popup";
 import GradientText from "../../components/styles/GradientText";
 import Tooltip from "../../components/Tooltip";
+import { openAndFocusWindow } from "../../lib/browser";
 import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 import { shortenAddress } from "../../lib/text";
 import { PositionType } from "./PoolPositions";
@@ -83,9 +84,10 @@ const NewPositionConfirmation = (props: Props) => {
             {`When the collateralization of `}
             <Address
               onClick={() => {
-                (window as any)
-                  .open(`https://etherscan.io/address/${props.position.borrower}`, "_blank")
-                  .focus();
+                openAndFocusWindow(
+                  `https://etherscan.io/address/${props.position.borrower}`,
+                  "_blank"
+                );
               }}
             >
               {shortenAddress(props.position.borrower, 26)}
@@ -109,9 +111,10 @@ const NewPositionConfirmation = (props: Props) => {
               </Label>
               <AddressLabel
                 onClick={() => {
-                  (window as any)
-                    .open(`https://etherscan.io/address/${props.position.borrower}`, "_blank")
-                    .focus();
+                  openAndFocusWindow(
+                    `https://etherscan.io/address/${props.position.borrower}`,
+                    "_blank"
+                  );
                 }}
               >
                 {shortenAddress(props.position.borrower, 8)}

@@ -85,9 +85,21 @@ const Background = () => {
 
   return (
     <StyledBackground>
-      <Ovals src={ovals} transform={`translateY(${-scrollPosition / 4}px)`} />
-      <Icons src={icons} transform={`translateY(${-scrollPosition / 2}px)`} />
-      <DarkIcons src={darkIcons} transform={`translateY(${-scrollPosition / 2}px)`} />
+      <Ovals
+        src={ovals}
+        transform={`translateY(${-scrollPosition / 4}px)`}
+        alt="decorative ovals"
+      />
+      <Icons
+        src={icons}
+        transform={`translateY(${-scrollPosition / 2}px)`}
+        alt="decorative icons"
+      />
+      <DarkIcons
+        src={darkIcons}
+        transform={`translateY(${-scrollPosition / 2}px)`}
+        alt="decorative dark icons"
+      />
     </StyledBackground>
   );
 };

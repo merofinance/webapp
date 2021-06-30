@@ -21,10 +21,10 @@ const linkLists: LinkListType[] = [
         label: "Twitter",
         link: "https://twitter.com/backdfund",
       },
-      {
-        label: "Discord",
-        link: "https://google.com/",
-      },
+      // {
+      //   label: "Discord",
+      //   link: "https://google.com/",
+      // },
       {
         label: "GitHub",
         link: "https://github.com/backdfund",
@@ -111,7 +111,7 @@ const Link = styled.a`
 const Footer = () => {
   return (
     <StyledFooter>
-      <Logo src={logo} />
+      <Logo src={logo} alt="Backd logo" />
       <div></div>
       {linkLists.map((linkList: LinkListType) => (
         <LinkList key={linkList.header}>

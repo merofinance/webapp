@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Header2 = styled.h2`
+export const Header1 = styled.h1`
   text-transform: capitalize;
   font-weight: 700;
   font-size: 7.2rem;
@@ -16,7 +16,7 @@ export const Header2 = styled.h2`
   }
 `;
 
-export const Header3 = styled.h3`
+export const Header2 = styled.h2`
   text-transform: uppercase;
   font-weight: 700;
   font-size: 2.2rem;
@@ -33,7 +33,7 @@ export const Header3 = styled.h3`
   }
 `;
 
-export const Header4 = styled.h4`
+export const Header3 = styled.h3`
   font-weight: 400;
   font-size: 2.8rem;
   line-height: 4.2rem;
@@ -47,7 +47,7 @@ export const Header4 = styled.h4`
   }
 `;
 
-export const Header5 = styled.h4`
+export const Header4 = styled.h4`
   font-weight: 700;
   font-size: 2.6rem;
   line-height: 3.4rem;
@@ -61,7 +61,7 @@ export const Header5 = styled.h4`
   }
 `;
 
-export const Header6 = styled.h4`
+export const Header5 = styled.h5`
   font-weight: 500;
   font-size: 2rem;
   line-height: 2.8rem;
