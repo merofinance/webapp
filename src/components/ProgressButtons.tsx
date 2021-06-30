@@ -156,6 +156,8 @@ const ProgressButtons = (props: Props) => {
             }}
             complete={approved}
             loading={loading && !approved}
+            disabled={props.value === 0}
+            hoverText={props.value === 0 ? "Enter Amount" : ""}
           />
         )}
         <Button
@@ -175,8 +177,9 @@ const ProgressButtons = (props: Props) => {
             else if (props.value <= availableToWithdraw) executeWithdraw(props.value);
             else executeUnstake();
           }}
-          disabled={!approved}
+          disabled={!approved || props.value === 0}
           loading={loading && approved}
+          hoverText={props.value === 0 ? "Enter Amount" : ""}
         />
       </Buttons>
       {requiresApproval && (
