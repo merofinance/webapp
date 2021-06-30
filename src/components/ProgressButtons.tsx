@@ -185,13 +185,19 @@ const ProgressButtons = (props: Props) => {
       {requiresApproval && (
         <ProgressContainer>
           <ProgressSection>
-            <Line complete={approved} current={!approved} />
-            <Number complete={approved} current={!approved}>
+            <Line
+              complete={approved && props.value !== 0}
+              current={!approved && props.value !== 0}
+            />
+            <Number
+              complete={approved && props.value !== 0}
+              current={!approved && props.value !== 0}
+            >
               {approved ? <Tick src={tick} alt="tick" /> : "1"}
             </Number>
           </ProgressSection>
           <ProgressSection>
-            <Number complete={false} current={approved}>
+            <Number complete={false} current={approved && props.value !== 0}>
               2
             </Number>
           </ProgressSection>
