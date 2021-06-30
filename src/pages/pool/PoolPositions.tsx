@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import ContentSection from "../../components/ContentSection";
-import deleteIcon from "../../assets/ui/delete.svg";
 import NewPosition from "./NewPosition";
 import Tooltip from "../../components/Tooltip";
 import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 import { Pool } from "../../lib";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPositions, selectPositions } from "../../features/positions/positionsSlice";
+import { AppDispatch } from "../../app/store";
+import { useBackd } from "../../app/hooks/use-backd";
+import { Position } from "../../lib/types";
+import PositionRow from "./PositionRow";
 
 export type PositionType = {
   protocol: string;
@@ -70,47 +75,20 @@ const HeaderText = styled.div`
   opacity: 0.6;
 `;
 
-const Position = styled.div`
-  width: 100%;
-  display: flex;
-  background: #2c2846;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 1.2rem;
-  padding: 1.7rem 2rem;
-  margin-top: 0.6rem;
-
-  > div:last-child {
-    justify-content: flex-end;
-  }
-`;
-
-const Value = styled.div`
-  flex: 1;
-  font-weight: 400;
-  font-size: 1.4rem;
-  letter-spacing: 0.15px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-`;
-
-const DeleteButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  cursor: pointer;
-`;
-
-const Delete = styled.img`
-  height: 1.4rem;
-`;
-
 type Props = {
   pool: Pool;
 };
 
 const PoolPositions = (props: Props) => {
+  const positions = useSelector(selectPositions(props.pool));
+  const dispatch = useDispatch<AppDispatch>();
+  const backd = useBackd();
+
+  useEffect(() => {
+    if (!backd) return;
+    dispatch(fetchPositions({ backd }));
+  }, [backd, dispatch, props.pool]);
+
   return (
     <ContentSection
       header="Top-up positions"
@@ -142,30 +120,9 @@ const PoolPositions = (props: Props) => {
             <Header></Header>
           </Headers>
           <NewPosition />
-          <Position>
-            <Value>Compound</Value>
-            <Value>0xf76...5255</Value>
-            <Value>1.03</Value>
-            <Value>3,000 DAI</Value>
-            <Value>8,000 DAI</Value>
-            <Value>
-              <DeleteButton>
-                <Delete src={deleteIcon} alt="delete button" />
-              </DeleteButton>
-            </Value>
-          </Position>
-          <Position>
-            <Value>Aave</Value>
-            <Value>0xf76...5255</Value>
-            <Value>1.03</Value>
-            <Value>3,000 DAI</Value>
-            <Value>8,000 DAI</Value>
-            <Value>
-              <DeleteButton>
-                <Delete src={deleteIcon} alt="delete button" />
-              </DeleteButton>
-            </Value>
-          </Position>
+          {positions.map((position: Position) => (
+            <PositionRow position={position} pool={props.pool} />
+          ))}
         </StyledPositions>
       }
     />
