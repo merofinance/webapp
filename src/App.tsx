@@ -84,23 +84,27 @@ function App() {
             <Content>
               <Switch>
                 {LIVE && (
-                  <>
-                    <PrivateRoute path="/pool/:poolName">
-                      <PoolPage />
-                    </PrivateRoute>
+                  <PrivateRoute path="/pool/:poolName">
+                    <PoolPage />
+                  </PrivateRoute>
+                )}
 
-                    <Route path="/connect">
-                      <ConnectWallet />
-                    </Route>
+                {LIVE && (
+                  <Route path="/connect">
+                    <ConnectWallet />
+                  </Route>
+                )}
 
-                    <PrivateRoute path="/pools">
-                      <PoolsPage />
-                    </PrivateRoute>
+                {LIVE && (
+                  <PrivateRoute path="/pools">
+                    <PoolsPage />
+                  </PrivateRoute>
+                )}
 
-                    <Route path="/claim">
-                      <ClaimPage />
-                    </Route>
-                  </>
+                {LIVE && (
+                  <Route path="/claim">
+                    <ClaimPage />
+                  </Route>
                 )}
 
                 <Route path="/litepaper">
