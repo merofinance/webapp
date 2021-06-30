@@ -43,6 +43,19 @@ const Item = styled.li`
   }
 `;
 
+const Bold = styled.span`
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  letter-spacing: 0.15px;
+  margin-bottom: 1rem;
+
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+  }
+`;
+
 const LitepaperPage = () => {
   return (
     <StyledLitepaperPage>
@@ -96,25 +109,26 @@ const LitepaperPage = () => {
       <List>
         <Item>
           <Paragraph>
-            Assets: Pools are single-asset pools. Furthermore, for Backd v1, there will be only one
-            pool per asset to prevent liquidity fragmentation.
+            <Bold>Assets:</Bold> Pools are single-asset pools. Furthermore, for Backd v1, there will
+            be only one pool per asset to prevent liquidity fragmentation.
           </Paragraph>
         </Item>
         <Item>
           <Paragraph>
-            Parameterization: Pools are very customizable. For instance, each pool has a required
-            reserve ratio, which specifies the percentage of the backing funds that need to remain
-            idle in the pool, i.e., funds which cannot be allocated to strategies but are reserved
-            solely for the purpose of top ups. Intuitively, a lower reserve ratio comes with higher
-            expected earnings (as more funds are allocated to a strategy), at the cost of increased
-            insolvency risk, i.e., insufficient funds available for top up. Furthermore, pools can
-            differ in terms of fees charged on top ups and strategy performance.
+            <Bold>Parameterization:</Bold> Pools are very customizable. For instance, each pool has
+            a required reserve ratio, which specifies the percentage of the backing funds that need
+            to remain idle in the pool, i.e., funds which cannot be allocated to strategies but are
+            reserved solely for the purpose of top ups. Intuitively, a lower reserve ratio comes
+            with higher expected earnings (as more funds are allocated to a strategy), at the cost
+            of increased insolvency risk, i.e., insufficient funds available for top up.
+            Furthermore, pools can differ in terms of fees charged on top ups and strategy
+            performance.
           </Paragraph>
         </Item>
         <Item>
           <Paragraph>
-            Strategy: The yield farming strategy used by a pool may differ to the ones used by other
-            pools.
+            <Bold>Strategy:</Bold> The yield farming strategy used by a pool may differ to the ones
+            used by other pools.
           </Paragraph>
         </Item>
       </List>
@@ -177,38 +191,39 @@ const LitepaperPage = () => {
         in a bit more detail:
       </Paragraph>
       <Paragraph>
-        Liquidity pools: When LPs deposit funds on Backd, they have to chose a single-asset pool to
-        deposit into. If an LP wants some (or all) of their deposits to be used as backup collateral
-        on some other protocol, they can register their top up positions via the pool’s registry. A
-        liquidity pool maintains a running total of the deposits which are registered as backup
-        collateral. A pool allocates deposits that are not registered as backup collateral, plus a
-        proportion of the registered backup collateral to a pool-specific vault.
+        <Bold>Liquidity pools:</Bold> When LPs deposit funds on Backd, they have to chose a
+        single-asset pool to deposit into. If an LP wants some (or all) of their deposits to be used
+        as backup collateral on some other protocol, they can register their top up positions via
+        the pool’s registry. A liquidity pool maintains a running total of the deposits which are
+        registered as backup collateral. A pool allocates deposits that are not registered as backup
+        collateral, plus a proportion of the registered backup collateral to a pool-specific vault.
       </Paragraph>
       <Paragraph>
-        Vaults: Each liquidity pool has a vault, which handles all deposit and withdrawal
-        interaction with a strategy. For backd v1, single strategy vaults are supported. Vaults
-        contain a target allocation factor, which specifies the ratio of Vault deposits that should
-        be allocated to the associated strategy. Hence, a vault typically holds an amount of idle
-        funds for reduced gas costs.
+        <Bold>Vaults:</Bold> Each liquidity pool has a vault, which handles all deposit and
+        withdrawal interaction with a strategy. For backd v1, single strategy vaults are supported.
+        Vaults contain a target allocation factor, which specifies the ratio of Vault deposits that
+        should be allocated to the associated strategy. Hence, a vault typically holds an amount of
+        idle funds for reduced gas costs.
       </Paragraph>
       <Paragraph>
-        Strategies: A strategy contains logic for yield-farming using the funds allocated from the
-        vault. The performance of a strategy is tracked by the depositing vault and allocations are
-        rebalanced according to the vault parameters (e.g. debt limits). Profits can be harvested
-        and any unrealized profits are compounded by the strategy. The protocol charges a
-        performance fee on strategy profits. Part of this fee is paid to a strategy’s strategist in
-        LP tokens. The remainder of the performance fee is directed to the Backd treasury.
+        <Bold>Strategies:</Bold> A strategy contains logic for yield-farming using the funds
+        allocated from the vault. The performance of a strategy is tracked by the depositing vault
+        and allocations are rebalanced according to the vault parameters (e.g. debt limits). Profits
+        can be harvested and any unrealized profits are compounded by the strategy. The protocol
+        charges a performance fee on strategy profits. Part of this fee is paid to a strategy’s
+        strategist in LP tokens. The remainder of the performance fee is directed to the Backd
+        treasury.
       </Paragraph>
       <Paragraph>
-        Top Up Handlers: These are the contracts that contain the logic for performing a collateral
-        top up for a particular protocol, such as Aave.
+        <Bold>Top Up Handlers:</Bold> These are the contracts that contain the logic for performing
+        a collateral top up for a particular protocol, such as Aave.
       </Paragraph>
       <Paragraph>
-        Keepers: As on-chain monitoring is not feasible on Ethereum, Backd relies on off-chain
-        keepers to report registered positions eligible for top up. An open source out of the box
-        Backd keeper implementation will made available prior launch. However, it is encouraged that
-        operators of Backd keepers further improve upon the initial keeper version (or create their
-        own).
+        <Bold>Keepers:</Bold> As on-chain monitoring is not feasible on Ethereum, Backd relies on
+        off-chain keepers to report registered positions eligible for top up. An open source out of
+        the box Backd keeper implementation will made available prior launch. However, it is
+        encouraged that operators of Backd keepers further improve upon the initial keeper version
+        (or create their own).
       </Paragraph>
       <Header>Governance</Header>
       <Paragraph>
@@ -219,8 +234,10 @@ const LitepaperPage = () => {
         be added via governance.
       </Paragraph>
       <Paragraph>
-        Disclaimer: a Backd governance token does not exist at this point, so please do not fall for
-        scams.
+        <Bold>
+          Disclaimer: a Backd governance token does not exist at this point, so please do not fall
+          for scams.
+        </Bold>
       </Paragraph>
     </StyledLitepaperPage>
   );
