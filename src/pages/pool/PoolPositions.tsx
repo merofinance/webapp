@@ -79,15 +79,15 @@ type Props = {
   pool: Pool;
 };
 
-const PoolPositions = (props: Props) => {
-  const positions = useSelector(selectPositions(props.pool));
+const PoolPositions = ({ pool }: Props) => {
+  const positions = useSelector(selectPositions(pool));
   const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();
 
   useEffect(() => {
     if (!backd) return;
     dispatch(fetchPositions({ backd }));
-  }, [backd, dispatch, props.pool]);
+  }, [backd, dispatch, pool]);
 
   return (
     <ContentSection
@@ -119,9 +119,9 @@ const PoolPositions = (props: Props) => {
             ))}
             <Header></Header>
           </Headers>
-          <NewPosition />
+          <NewPosition pool={pool} />
           {positions.map((position: Position) => (
-            <PositionRow position={position} pool={props.pool} />
+            <PositionRow position={position} pool={pool} />
           ))}
         </StyledPositions>
       }

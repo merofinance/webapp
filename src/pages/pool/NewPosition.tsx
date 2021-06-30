@@ -1,7 +1,11 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { useBackd } from "../../app/hooks/use-backd";
 import Dropdown from "../../components/Dropdown";
 import Button from "../../components/styles/Button";
+import { approve, selectToupAllowance } from "../../features/user/userSlice";
+import { Pool } from "../../lib";
 import NewPositionConfirmation from "./NewPositionConfirmation";
 import NewPositionInput from "./NewPositionInput";
 import { PositionType } from "./PoolPositions";
@@ -46,7 +50,17 @@ export const Value = styled.div`
   align-items: center;
 `;
 
-const NewPosition = () => {
+type Props = {
+  pool: Pool;
+};
+
+const NewPosition = ({ pool }: Props) => {
+  const dispatch = useDispatch();
+  const backd = useBackd();
+  const allowance = useSelector(selectToupAllowance(backd, pool));
+  const [loading, setLoading] = useState(false);
+  const [confirming, setConfirming] = useState(false);
+
   // Protocol
   const [protocol, setProtocol] = useState("");
   const [protocolError, setProtocolError] = useState("");
@@ -92,8 +106,7 @@ const NewPosition = () => {
     else setTotalError("");
   };
 
-  const [confirming, setConfirming] = useState(false);
-  const [approved, setApproved] = useState(false);
+  const approved = allowance >= Number(total || "0");
 
   const hasError = !!(
     protocolError ||
@@ -118,6 +131,17 @@ const NewPosition = () => {
     else if (!single) return "Enter Single topup";
     else if (!total) return "Enter Total topup";
     else return "";
+  };
+
+  const executeApprove = () => {
+    if (!backd) return;
+    const approveArgs = {
+      amount: Number(total),
+      backd,
+      spender: backd.topupActionAddress,
+      token: pool.lpToken,
+    };
+    dispatch(approve(approveArgs));
   };
 
   return (
@@ -177,9 +201,10 @@ const NewPosition = () => {
               text={approved ? "create 2/2" : "approve 1/2"}
               click={() => {
                 if (approved) setConfirming(true);
-                else setApproved(true);
+                else executeApprove();
               }}
               hoverText={buttonHoverText()}
+              loading={loading}
             />
           </Value>
         </Content>
