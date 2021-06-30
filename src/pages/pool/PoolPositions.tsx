@@ -12,14 +12,6 @@ import { useBackd } from "../../app/hooks/use-backd";
 import { Position } from "../../lib/types";
 import PositionRow from "./PositionRow";
 
-export type PositionType = {
-  protocol: string;
-  borrower: string;
-  threshold: number;
-  single: number;
-  total: number;
-};
-
 type HeaderType = {
   label: string;
   tooltip: string;
