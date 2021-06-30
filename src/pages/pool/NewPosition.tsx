@@ -198,7 +198,7 @@ const NewPosition = ({ pool }: Props) => {
             <Button
               primary
               disabled={!(protocol && borrower && threshold && single && total) || hasError}
-              text={approved ? "create 2/2" : "approve 1/2"}
+              text={approved && total !== "" ? "create 2/2" : "approve 1/2"}
               click={() => {
                 if (approved) setConfirming(true);
                 else executeApprove();
