@@ -6,9 +6,9 @@ import Dropdown from "../../components/Dropdown";
 import Button from "../../components/styles/Button";
 import { approve, selectToupAllowance } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
+import { Position } from "../../lib/types";
 import NewPositionConfirmation from "./NewPositionConfirmation";
 import NewPositionInput from "./NewPositionInput";
-import { PositionType } from "./PoolPositions";
 
 const Border = styled.div`
   width: 100%;
@@ -116,12 +116,15 @@ const NewPosition = ({ pool }: Props) => {
     totalError
   );
 
-  const position: PositionType = {
+  const position: Position = {
     protocol,
-    borrower,
+    account: borrower,
     threshold: Number(threshold),
-    single: Number(single),
-    total: Number(total),
+    singleTopUp: Number(single),
+    totalTopUp: Number(total),
+    maxGasPrice: 0,
+    actionToken: pool.underlying.address,
+    depositToken: pool.lpToken.address,
   };
 
   const buttonHoverText = () => {
@@ -214,6 +217,7 @@ const NewPosition = ({ pool }: Props) => {
         show={confirming}
         close={() => setConfirming(false)}
         position={position}
+        pool={pool}
       />
     </Border>
   );
