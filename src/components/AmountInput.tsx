@@ -34,7 +34,7 @@ const AmountInput = (props: Props) => {
       <Input
         valid={true}
         label={props.label}
-        value={props.value.toString()}
+        value={props.value === 0 ? "" : props.value.toString()}
         type="number"
         onChange={(v: string) => props.setValue(Number(v))}
         background="#10092e"
