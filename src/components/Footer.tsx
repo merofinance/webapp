@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import logo from "../assets/full-logo.svg";
-import EmailSignup from "./EmailSignup";
 
 type LinkType = {
   label: string;
@@ -21,10 +20,6 @@ const linkLists: LinkListType[] = [
         label: "Twitter",
         link: "https://twitter.com/backdfund",
       },
-      // {
-      //   label: "Discord",
-      //   link: "https://google.com/",
-      // },
       {
         label: "GitHub",
         link: "https://github.com/backdfund",
@@ -32,10 +27,6 @@ const linkLists: LinkListType[] = [
       {
         label: "Telegram Chat",
         link: "https://t.me/backdchat",
-      },
-      {
-        label: "Telegram Ann.",
-        link: "https://t.me/backdfund",
       },
     ],
   },
@@ -49,6 +40,19 @@ const linkLists: LinkListType[] = [
       {
         label: "Blog",
         link: "https://backdfund.medium.com/",
+      },
+    ],
+  },
+  {
+    header: "updates",
+    links: [
+      {
+        label: "Newsletter",
+        link: "https://backd.substack.com/welcome",
+      },
+      {
+        label: "Telegram Ann.",
+        link: "https://t.me/backdfund",
       },
     ],
   },
@@ -123,7 +127,7 @@ const Footer = () => {
           ))}
         </LinkList>
       ))}
-      <EmailSignup />
+      <div></div>
     </StyledFooter>
   );
 };
