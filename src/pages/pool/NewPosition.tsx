@@ -154,7 +154,7 @@ const NewPosition = ({ pool }: Props) => {
           <Value>
             <Dropdown
               value={protocol}
-              options={["aave", "compound"]}
+              options={["Aave", "Compound"]}
               setValue={(v: string) => {
                 validateProtocol(v);
                 setProtocol(v);
