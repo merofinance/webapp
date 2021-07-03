@@ -54,8 +54,6 @@ const ButtonContainer = styled.div`
 const PoolPage = () => {
   let { poolName } = useParams<DepositWithdrawParams>();
   const pool = useSelector(selectPool(poolName));
-  const balance = useSelector(selectBalance(pool));
-  const price = useSelector(selectPrice(pool));
 
   const [tab, setTab] = useState("deposit");
 

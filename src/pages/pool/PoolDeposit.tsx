@@ -17,42 +17,23 @@ type Props = {
   pool: Pool;
 };
 
-const PoolDeposit = (props: Props) => {
-  const availableToDeposit = useSelector(selectBalance(props.pool.underlying.address));
+const PoolDeposit = ({ pool }: Props) => {
+  const availableToDeposit = useSelector(selectBalance(pool.underlying.address));
   const [depositAmount, setDepositAmount] = useState(0);
 
   return (
     <ContentSection
-      header={`Deposit ${props.pool.underlying.symbol.toUpperCase()}`}
-      statistics={[
-        {
-          header: "Your deposits",
-          value: "$130,000.00",
-          tooltip:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
-        },
-        {
-          header: "Locked in position",
-          value: "$90,000.00",
-          tooltip:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
-        },
-        {
-          header: "Rewards accrued",
-          value: "$14,000.00",
-          tooltip:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
-        },
-      ]}
+      header={`Deposit ${pool.underlying.symbol.toUpperCase()}`}
+      pool={pool}
       content={
         <Content>
           <AmountInput
             value={depositAmount}
             setValue={(v: number) => setDepositAmount(v)}
-            label={`Enter an amount of ${props.pool.underlying.symbol.toUpperCase()} to deposit`}
+            label={`Enter an amount of ${pool.underlying.symbol.toUpperCase()} to deposit`}
             max={availableToDeposit}
           />
-          <ProgressButtons deposit pool={props.pool} value={depositAmount} />
+          <ProgressButtons deposit pool={pool} value={depositAmount} />
         </Content>
       }
     />

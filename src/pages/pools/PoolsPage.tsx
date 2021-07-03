@@ -57,26 +57,6 @@ const PoolsPage = () => {
     <StyledPoolsPage>
       <ContentSection
         header="All pools"
-        statistics={[
-          {
-            header: "Your deposits",
-            value: "$0.00",
-            tooltip:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
-          },
-          {
-            header: "Locked in position",
-            value: "$0.00",
-            tooltip:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
-          },
-          {
-            header: "Rewards accrued",
-            value: "$0.00",
-            tooltip:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
-          },
-        ]}
         content={
           <Table>
             <HeaderRow>

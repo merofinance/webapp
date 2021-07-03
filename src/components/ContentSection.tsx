@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Statistic, { StatisticType } from "./Statistic";
+import { Pool } from "../lib";
+import Statistics from "./Statistics";
 
 const StyledContentSection = styled.div`
   flex: 1;
@@ -32,13 +33,6 @@ const Line = styled.div`
   opacity: 0.2;
 `;
 
-const Statistics = styled.div`
-  width: 100%;
-  display: flex;
-  padding: 2.2rem 1.6rem;
-  padding-bottom: 2.6rem;
-`;
-
 const Content = styled.div`
   width: 100%;
   display: flex;
@@ -48,20 +42,16 @@ const Content = styled.div`
 
 type Props = {
   header: string;
-  statistics: StatisticType[];
   content: JSX.Element;
+  pool?: Pool;
 };
 
 const ContentSection = (props: Props) => {
   return (
     <StyledContentSection>
       <Header>{props.header}</Header>
+      <Statistics pool={props.pool} />
       <Line large />
-      <Statistics>
-        {props.statistics.map((statistic: StatisticType) => (
-          <Statistic statistic={statistic} />
-        ))}
-      </Statistics>
       <Line />
       <Content>{props.content}</Content>
     </StyledContentSection>

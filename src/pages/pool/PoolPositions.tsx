@@ -84,23 +84,7 @@ const PoolPositions = ({ pool }: Props) => {
   return (
     <ContentSection
       header="Top-up positions"
-      statistics={[
-        {
-          header: "Your deposits",
-          value: "$130,000.00",
-          tooltip: PLACEHOLDER_TOOLTIP,
-        },
-        {
-          header: "Locked in position",
-          value: "$90,000.00",
-          tooltip: PLACEHOLDER_TOOLTIP,
-        },
-        {
-          header: "Rewards accrued",
-          value: "$14,000.00",
-          tooltip: PLACEHOLDER_TOOLTIP,
-        },
-      ]}
+      pool={pool}
       content={
         <StyledPositions>
           <Headers>
