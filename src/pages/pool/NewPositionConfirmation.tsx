@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useBackd } from "../../app/hooks/use-backd";
+import { AppDispatch } from "../../app/store";
 import Popup from "../../components/Popup";
 import GradientText from "../../components/styles/GradientText";
 import Tooltip from "../../components/Tooltip";
+import { setError } from "../../features/error/errorSlice";
 import { registerPosition } from "../../features/positions/positionsSlice";
 import { openAndFocusWindow } from "../../lib/browser";
 import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
@@ -74,20 +76,25 @@ type Props = {
   pool: Pool;
 };
 
-const NewPositionConfirmation = (props: Props) => {
+const NewPositionConfirmation = ({ show, close, position, pool }: Props) => {
   const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();
 
   const executeRegister = () => {
     if (!backd) return;
-    dispatch(registerPosition({ position: props.position, pool: props.pool, backd }));
+
+    dispatch(registerPosition({ position, pool, backd })).then((v: any) => {
+      if (v.meta.requestStatus == "rejected")
+        dispatch(setError({ error: "Position creation failed" }));
+      else close();
+    });
   };
 
   return (
     <Popup
-      show={props.show}
-      close={props.close}
+      show={show}
+      close={close}
       header="Confirm top-up position"
       confirm
       submit={() => executeRegister()}
@@ -97,17 +104,14 @@ const NewPositionConfirmation = (props: Props) => {
             {`When the collateralization of `}
             <Address
               onClick={() => {
-                openAndFocusWindow(
-                  `https://etherscan.io/address/${props.position.account}`,
-                  "_blank"
-                );
+                openAndFocusWindow(`https://etherscan.io/address/${position.account}`, "_blank");
               }}
             >
-              {shortenAddress(props.position.account, 26)}
+              {shortenAddress(position.account, 26)}
             </Address>
-            {` drops below ${props.position.threshold}, it will
-            be topped up with ${props.position.singleTopUp} DAI ($3000). This will be repeated each time the
-            collateralization ratio drops below ${props.position.threshold}, until a total of ${props.position.totalTopUp} DAI ($8000) is topped
+            {` drops below ${position.threshold}, it will
+            be topped up with ${position.singleTopUp} DAI ($3000). This will be repeated each time the
+            collateralization ratio drops below ${position.threshold}, until a total of ${position.totalTopUp} DAI ($8000) is topped
             up.`}
           </Summary>
           <PositionSummary>
@@ -115,7 +119,7 @@ const NewPositionConfirmation = (props: Props) => {
               <Label>
                 Protocol <Tooltip content={PLACEHOLDER_TOOLTIP} />
               </Label>
-              <Label>{props.position.protocol}</Label>
+              <Label>{position.protocol}</Label>
             </SummaryRow>
             <SummaryRow>
               <Label>
@@ -124,13 +128,10 @@ const NewPositionConfirmation = (props: Props) => {
               </Label>
               <AddressLabel
                 onClick={() => {
-                  openAndFocusWindow(
-                    `https://etherscan.io/address/${props.position.account}`,
-                    "_blank"
-                  );
+                  openAndFocusWindow(`https://etherscan.io/address/${position.account}`, "_blank");
                 }}
               >
-                {shortenAddress(props.position.account, 8)}
+                {shortenAddress(position.account, 8)}
               </AddressLabel>
             </SummaryRow>
             <SummaryRow>
@@ -138,21 +139,21 @@ const NewPositionConfirmation = (props: Props) => {
                 Threshold
                 <Tooltip content={PLACEHOLDER_TOOLTIP} />
               </Label>
-              <Label>{props.position.threshold}</Label>
+              <Label>{position.threshold}</Label>
             </SummaryRow>
             <SummaryRow>
               <Label>
                 Singe top-up
                 <Tooltip content={PLACEHOLDER_TOOLTIP} />
               </Label>
-              <Label>{props.position.singleTopUp}</Label>
+              <Label>{position.singleTopUp}</Label>
             </SummaryRow>
             <SummaryRow>
               <Label>
                 Total top-up
                 <Tooltip content={PLACEHOLDER_TOOLTIP} />
               </Label>
-              <Label>{props.position.totalTopUp}</Label>
+              <Label>{position.totalTopUp}</Label>
             </SummaryRow>
           </PositionSummary>
         </Content>
