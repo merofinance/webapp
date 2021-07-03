@@ -116,7 +116,7 @@ export class Web3Backd implements Backd {
         pool.getUnderlying(),
         pool.totalUnderlying(),
         pool.computeAPY(),
-        pool.currentExchangeRate(),
+        pool.lastExchangeRate(),
       ]);
     const [lpToken, underlying, stakerVaultAddress] = await Promise.all([
       this.getTokenInfo(lpTokenAddress),
