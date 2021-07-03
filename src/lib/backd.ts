@@ -161,7 +161,7 @@ export class Web3Backd implements Backd {
   async registerPosition(pool: Pool, position: Position): Promise<ContractTransaction> {
     const decimals = pool.underlying.decimals;
     const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
-    const rawExchangeRate = await poolContract.currentExchangeRate();
+    const rawExchangeRate = await poolContract.lastExchangeRate();
     const protocol = utils.formatBytes32String(position.protocol);
     const rawPosition = transformPosition(position, (v) => floatToBigNumber(v, decimals));
     const depositAmount = rawPosition.totalTopUp.mul(rawExchangeRate).div(DEFAULT_SCALE);
