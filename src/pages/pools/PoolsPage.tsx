@@ -87,7 +87,7 @@ const PoolsPage = () => {
               <ChevronHeader />
             </HeaderRow>
             {pools.map((pool: Pool) => (
-              <PoolsRow pool={pool} />
+              <PoolsRow key={pool.address} pool={pool} />
             ))}
           </Table>
         }
