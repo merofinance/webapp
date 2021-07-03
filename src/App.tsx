@@ -29,6 +29,7 @@ import { ConnectWallet } from "./features/account/ConnectWallet";
 import ClaimPage from "./pages/claim/ClaimPage";
 import PoolPage from "./pages/pool/PoolPage";
 import { LIVE } from "./lib/constants";
+import { ErrorAlert } from "./features/error/ErrorAlert";
 
 const StyledApp = styled.div`
   width: 100%;
@@ -117,6 +118,7 @@ function App() {
               </Switch>
             </Content>
             <Footer />
+            <ErrorAlert />
           </StyledApp>
         </Router>
       </Web3ReactProvider>
