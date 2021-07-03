@@ -2,7 +2,7 @@ import { useWeb3React } from "@web3-react/core";
 import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { injectedConnector } from "../app/web3";
+import { injectedConnector, walletConnectConnector } from "../app/web3";
 import metamask from "../assets/wallets/metamask.svg";
 import walletConnect from "../assets/wallets/wallet-connect.svg";
 import { setConnected } from "../features/account/accountSlice";
@@ -90,8 +90,15 @@ const WalletSelectPopup = (props: Props) => {
   const dispatch = useDispatch();
   const { activate } = useWeb3React();
 
-  const activateWallet = () => {
+  const connectMetamask = () => {
     activate(injectedConnector).then(() => {
+      dispatch(setConnected(true));
+      props.close();
+    });
+  };
+
+  const connectWalletConnect = () => {
+    activate(walletConnectConnector).then(() => {
       dispatch(setConnected(true));
       props.close();
     });
@@ -114,13 +121,13 @@ const WalletSelectPopup = (props: Props) => {
               Find out about wallets
             </Highlight>
           </SubHeaderContainer>
-          <Option leftColor="#FF5407" rightColor="#FFD523" onClick={() => activateWallet()}>
+          <Option leftColor="#FF5407" rightColor="#FFD523" onClick={() => connectMetamask()}>
             <Name>MetaMask</Name>
             <IconContainer>
               <Icon src={metamask} alt="Metamask logo" />
             </IconContainer>
           </Option>
-          <Option leftColor="#8400FE" rightColor="#0C00FE" onClick={() => activateWallet()}>
+          <Option leftColor="#8400FE" rightColor="#0C00FE" onClick={() => connectWalletConnect()}>
             <Name>WalletConnect</Name>
             <IconContainer>
               <Icon src={walletConnect} alt="Walletconnect logo" />
