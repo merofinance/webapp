@@ -4,10 +4,9 @@ import { Redirect, useParams } from "react-router";
 import styled from "styled-components";
 import Radio, { RadioOptionType } from "../../components/Radio";
 import Button from "../../components/styles/Button";
-import { selectPool, selectPrice } from "../../features/pool/selectors";
-import { selectBalance } from "../../features/user/userSlice";
+import { selectPool } from "../../features/pool/selectors";
 import PoolDeposit from "./PoolDeposit";
-import PoolOverview from "./PoolOverview";
+import Overview from "../../components/Overview";
 import PoolPositions from "./PoolPositions";
 import PoolWithdraw from "./PoolWithdraw";
 
@@ -69,7 +68,7 @@ const PoolPage = () => {
         {tab === "withdraw" && <PoolWithdraw pool={pool} />}
         {tab === "positions" && <PoolPositions pool={pool} />}
         <RightColumn>
-          <PoolOverview pool={pool} />
+          <Overview pool={pool} />
           {tab !== "positions" && (
             <ButtonContainer>
               <Button medium text="+ Create a Top-up Position" click={() => setTab("positions")} />

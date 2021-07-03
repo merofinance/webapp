@@ -6,7 +6,7 @@ import ContentSection from "../../components/ContentSection";
 import { fetchState, selectPools, selectPrices } from "../../features/pools-list/poolsListSlice";
 import { selectBalances } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
-import PoolsOverview from "./PoolsOverview";
+import Overview from "../../components/Overview";
 import PoolsRow from "./PoolsRow";
 
 const StyledPoolsPage = styled.div`
@@ -72,7 +72,7 @@ const PoolsPage = () => {
           </Table>
         }
       />
-      <PoolsOverview />
+      <Overview />
     </StyledPoolsPage>
   );
 };

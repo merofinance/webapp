@@ -1,6 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { StatisticType } from "./Statistic";
+import { selectPools, selectPrices } from "../features/pools-list/poolsListSlice";
+import { selectBalances } from "../features/user/userSlice";
+import { Pool } from "../lib";
+import { PLACEHOLDER_TOOLTIP } from "../lib/constants";
 import Tooltip from "./Tooltip";
 
 const StyledOverview = styled.div`
@@ -49,24 +53,54 @@ const Value = styled.div`
 `;
 
 type Props = {
-  header: string;
-  statistics: StatisticType[];
+  pool?: Pool;
 };
 
-const Overview = (props: Props) => {
+const Overview = ({ pool }: Props) => {
+  const pools = useSelector(selectPools);
+  const prices = useSelector(selectPrices);
+  const balances = useSelector(selectBalances);
+
+  const getBalance = (pool: Pool) => balances[pool.lpToken.address] || 0;
+  const getPrice = (pool: Pool) => prices[pool.underlying.symbol] || 0;
+
+  const deposits = pool
+    ? getBalance(pool) * getPrice(pool)
+    : pools.reduce((a: number, b: Pool) => a + getBalance(b) * getPrice(b), 0);
+
+  const locked = pool
+    ? pool.totalAssets * getPrice(pool)
+    : pools.reduce((a: number, b: Pool) => a + b.totalAssets * getPrice(b), 0);
+
+  const averageApy = pool
+    ? pool.apy
+    : pools.reduce((a: number, b: Pool) => a + b.apy, 0) / pools.length;
+
   return (
     <div>
       <StyledOverview>
-        <Header>{props.header}</Header>
-        {props.statistics.map((statistic: StatisticType) => (
-          <StatisticContainer>
-            <LabelContainer>
-              <Label>{statistic.header}</Label>
-              <Tooltip content={statistic.tooltip} />
-            </LabelContainer>
-            <Value>{statistic.value}</Value>
-          </StatisticContainer>
-        ))}
+        <Header>{pool ? "Pool Overview" : "Pools Overview"}</Header>
+        <StatisticContainer>
+          <LabelContainer>
+            <Label>{pool ? "Pool TVL" : "Platform TVL"}</Label>
+            <Tooltip content={PLACEHOLDER_TOOLTIP} />
+          </LabelContainer>
+          <Value>{`$${locked.toLocaleString()}`}</Value>
+        </StatisticContainer>
+        <StatisticContainer>
+          <LabelContainer>
+            <Label>{pool ? "APY" : "Average APY"}</Label>
+            <Tooltip content={PLACEHOLDER_TOOLTIP} />
+          </LabelContainer>
+          <Value>{`${averageApy.toLocaleString()}%`}</Value>
+        </StatisticContainer>
+        <StatisticContainer>
+          <LabelContainer>
+            <Label>{pool ? "Strategy" : "Revenue"}</Label>
+            <Tooltip content={PLACEHOLDER_TOOLTIP} />
+          </LabelContainer>
+          <Value>{pool ? pool.name : `${(0).toLocaleString()}`}</Value>
+        </StatisticContainer>
       </StyledOverview>
     </div>
   );
