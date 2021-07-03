@@ -105,7 +105,7 @@ const ProgressButtons = (props: Props) => {
   const staked = useSelector(selectBalance(props.pool.stakerVaultAddress));
 
   const availableToWithdraw = totalBalance - staked;
-  const approved = approvedToDeposit >= props.value;
+  const approved = !props.deposit || approvedToDeposit >= props.value;
   const requiresApproval = props.deposit && props.pool.underlying.address !== ETH_DUMMY_ADDRESS;
 
   useEffect(() => {
@@ -174,10 +174,11 @@ const ProgressButtons = (props: Props) => {
             if (!approved) return;
             setLoading(true);
             if (props.deposit) executeDeposit(props.value);
-            else if (props.value <= availableToWithdraw) executeWithdraw(props.value);
+            else if (!props.deposit || props.value <= availableToWithdraw)
+              executeWithdraw(props.value);
             else executeUnstake();
           }}
-          disabled={!approved || props.value === 0}
+          disabled={props.deposit && (!approved || props.value === 0)}
           loading={loading && approved}
           hoverText={
             props.value === 0
