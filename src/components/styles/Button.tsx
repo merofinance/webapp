@@ -273,7 +273,7 @@ const Button = (props: Props) => {
           {props.text}
         </Text>
       </Content>
-      {props.hoverText && (
+      {props.hoverText && props.disabled && (
         <HoverTextContainer>
           <HoverText>{props.hoverText}</HoverText>
         </HoverTextContainer>
