@@ -1,10 +1,13 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import chevron from "../../assets/ui/chevron.svg";
 import Asset from "../../components/Asset";
 import Button from "../../components/styles/Button";
 import GradientText from "../../components/styles/GradientText";
+import { selectPrices } from "../../features/pools-list/poolsListSlice";
+import { selectBalances } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
 
 type RowProps = {
@@ -68,6 +71,12 @@ type Props = {
 const PoolsRow = ({ pool, preview }: Props) => {
   const history = useHistory();
 
+  const prices = useSelector(selectPrices);
+  const balances = useSelector(selectBalances);
+
+  const getBalance = (pool: Pool) => balances[pool.lpToken.address] || 0;
+  const getPrice = (pool: Pool) => prices[pool.underlying.symbol] || 0;
+
   return (
     <Row onClick={() => history.push(`/pool/${pool.lpToken.symbol}`)} preview={preview}>
       <Data>
@@ -79,7 +88,7 @@ const PoolsRow = ({ pool, preview }: Props) => {
       <Data>{pool.totalAssets.toLocaleString()}</Data>
       {!preview && (
         <>
-          <Data>$0.00</Data>
+          <Data>{`$${(getBalance(pool) * getPrice(pool)).toLocaleString()}`}</Data>
 
           <ChevronData>
             <Chevron src={chevron} alt="right arrow" />
