@@ -85,7 +85,7 @@ const PoolsRow = ({ pool, preview }: Props) => {
       <Data>
         <Apy>{`${pool.apy}%`}</Apy>
       </Data>
-      <Data>{pool.totalAssets.toLocaleString()}</Data>
+      <Data>{`$${(pool.totalAssets * getPrice(pool)).toLocaleString()}`}</Data>
       {!preview && (
         <>
           <Data>{`$${(getBalance(pool) * getPrice(pool)).toLocaleString()}`}</Data>
