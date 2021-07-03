@@ -90,7 +90,7 @@ export class Web3Backd implements Backd {
   }
 
   async listPools(): Promise<Pool[]> {
-    const markets = await this.controller.allMarkets();
+    const markets = await this.controller.allPools();
     return Promise.all(markets.map((v: any) => this.getPoolInfo(v)));
   }
 
