@@ -64,6 +64,7 @@ type Props = {
   content?: JSX.Element;
   confirm?: boolean;
   submit?: () => void;
+  loading?: boolean;
 };
 
 const Popup = (props: Props): JSX.Element => {
@@ -86,6 +87,7 @@ const Popup = (props: Props): JSX.Element => {
               click={() => {
                 if (props.submit) props.submit();
               }}
+              loading={props.loading}
             />
           </ButtonContainer>
         )}

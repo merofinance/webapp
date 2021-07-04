@@ -91,8 +91,10 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
 
   const executeRegister = () => {
     if (!backd) return;
+    setLoading(true);
 
     dispatch(registerPosition({ position, pool, backd })).then((v: any) => {
+      setLoading(false);
       if (v.meta.requestStatus == "rejected")
         dispatch(setError({ error: "Position creation failed" }));
       else {
@@ -109,6 +111,7 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
       header="Confirm top-up position"
       confirm
       submit={() => executeRegister()}
+      loading={loading}
       content={
         <Content>
           <Summary>
