@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
 import Popup from "../../components/Popup";
-import GradientText from "../../components/styles/GradientText";
+import GradientText from "../../styles/GradientText";
 import Tooltip from "../../components/Tooltip";
 import { setError } from "../../features/error/errorSlice";
 import { registerPosition } from "../../features/positions/positionsSlice";

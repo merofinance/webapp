@@ -3,8 +3,8 @@ import styled from "styled-components";
 import percent from "../../assets/benefits/percent.svg";
 import plus from "../../assets/benefits/plus.svg";
 import shield from "../../assets/benefits/shield.svg";
-import GradientText from "../../components/styles/GradientText";
-import { Header4, Header5 } from "../../components/styles/Headers";
+import GradientText from "../../styles/GradientText";
+import { Header4, Header5 } from "../../styles/Headers";
 import { openAndFocusWindow } from "../../lib/browser";
 
 type BenfitsType = {

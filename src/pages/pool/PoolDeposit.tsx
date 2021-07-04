@@ -33,7 +33,12 @@ const PoolDeposit = ({ pool }: Props) => {
             label={`Enter an amount of ${pool.underlying.symbol.toUpperCase()} to deposit`}
             max={availableToDeposit}
           />
-          <ProgressButtons deposit pool={pool} value={depositAmount} />
+          <ProgressButtons
+            deposit
+            pool={pool}
+            value={depositAmount}
+            complete={() => setDepositAmount(0)}
+          />
         </Content>
       }
     />

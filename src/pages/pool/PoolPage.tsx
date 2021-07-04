@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router";
 import styled from "styled-components";
 import Radio, { RadioOptionType } from "../../components/Radio";
-import Button from "../../components/styles/Button";
+import Button from "../../components/Button";
 import { selectPool } from "../../features/pool/selectors";
 import PoolDeposit from "./PoolDeposit";
 import Overview from "../../components/Overview";

@@ -36,7 +36,11 @@ const PoolWithdraw = ({ pool }: Props) => {
             label={`Enter an amount of ${pool.underlying.symbol.toUpperCase()} to withdraw`}
             max={availableToWithdraw}
           />
-          <ProgressButtons pool={pool} value={withdrawAmount} />
+          <ProgressButtons
+            pool={pool}
+            value={withdrawAmount}
+            complete={() => setWithdrawAmount(0)}
+          />
         </Content>
       }
     />

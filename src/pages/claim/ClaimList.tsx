@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Button from "../../components/styles/Button";
+import Button from "../../components/Button";
 
 const Table = styled.table`
   width: 100%;

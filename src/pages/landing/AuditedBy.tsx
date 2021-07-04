@@ -3,7 +3,7 @@ import styled from "styled-components";
 import background from "../../assets/audit/background.svg";
 import chainSecurityMobile from "../../assets/audit/chain-security-mobile.svg";
 import chainSecurity from "../../assets/audit/chain-security.svg";
-import GradientText from "../../components/styles/GradientText";
+import GradientText from "../../styles/GradientText";
 import { openAndFocusWindow } from "../../lib/browser";
 import { LIVE } from "../../lib/constants";
 

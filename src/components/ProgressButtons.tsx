@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import Button from "./styles/Button";
+import Button from "./Button";
 import tick from "../assets/ui/tick.svg";
 import { Pool } from "../lib";
 import { useLoading } from "../app/hooks/use-loading";
@@ -93,6 +93,7 @@ type Props = {
   value: number;
   deposit?: boolean;
   pool: Pool;
+  complete: () => void;
 };
 
 const ProgressButtons = (props: Props) => {
@@ -127,18 +128,21 @@ const ProgressButtons = (props: Props) => {
   const executeDeposit = (amount: number) => {
     dispatch(deposit({ backd: backd!, pool: props.pool, amount })).then((v) => {
       handleTxDispatch({ status: v.meta.requestStatus, actionType: "deposit" });
+      props.complete();
     });
   };
 
   const executeWithdraw = (amount: number) => {
     dispatch(withdraw({ backd: backd!, pool: props.pool, amount })).then((v) => {
       handleTxDispatch({ status: v.meta.requestStatus, actionType: "withdraw" });
+      props.complete();
     });
   };
 
   const executeUnstake = () => {
     dispatch(unstake({ backd: backd!, pool: props.pool, amount: staked })).then((v) => {
       handleTxDispatch({ status: v.meta.requestStatus, actionType: "unstake" });
+      props.complete();
     });
   };
 

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import close from "../assets/ui/close.svg";
-import Button from "./styles/Button";
+import Button from "./Button";
 
 const StyledPopup = styled.div`
   position: fixed;

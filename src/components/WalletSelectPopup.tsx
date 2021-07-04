@@ -8,7 +8,7 @@ import walletConnect from "../assets/wallets/wallet-connect.svg";
 import { setConnected } from "../features/account/accountSlice";
 import { openAndFocusWindow } from "../lib/browser";
 import Popup from "./Popup";
-import GradientText from "./styles/GradientText";
+import GradientText from "../styles/GradientText";
 
 const Content = styled.div`
   display: flex;

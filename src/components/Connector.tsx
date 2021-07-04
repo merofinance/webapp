@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Address } from "../lib/types";
 import styled from "styled-components";
 import { isConnected } from "../features/account/accountSlice";
-import GradientText from "./styles/GradientText";
+import GradientText from "../styles/GradientText";
 import WalletSelectPopup from "./WalletSelectPopup";
 import { shortenAddress } from "../lib/text";
 

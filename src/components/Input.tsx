@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import Button from "./styles/Button";
+import Button from "./Button";
 
 const Container = styled.div`
   display: flex;

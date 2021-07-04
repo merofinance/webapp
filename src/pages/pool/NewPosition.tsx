@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { useBackd } from "../../app/hooks/use-backd";
 import Dropdown from "../../components/Dropdown";
-import Button from "../../components/styles/Button";
+import Button from "../../components/Button";
 import { approve, selectToupAllowance } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
 import { Position } from "../../lib/types";

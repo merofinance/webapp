@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Header1, Header2, Paragraph } from "../../components/styles/Headers";
+import { Header1, Header2, Paragraph } from "../../styles/Headers";
 
 const StyledLitepaperPage = styled.div`
   display: flex;
