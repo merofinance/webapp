@@ -9,6 +9,7 @@ import { Pool } from "../../lib";
 import { Position } from "../../lib/types";
 import NewPositionConfirmation from "./NewPositionConfirmation";
 import NewPositionInput from "./NewPositionInput";
+import { AppDispatch } from "../../app/store";
 
 const Border = styled.div`
   width: 100%;
@@ -55,7 +56,7 @@ type Props = {
 };
 
 const NewPosition = ({ pool }: Props) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();
   const allowance = useSelector(selectToupAllowance(backd, pool));
   const [loading, setLoading] = useState(false);
@@ -138,13 +139,16 @@ const NewPosition = ({ pool }: Props) => {
 
   const executeApprove = () => {
     if (!backd) return;
+    setLoading(true);
     const approveArgs = {
       amount: Number(total),
       backd,
       spender: backd.topupActionAddress,
       token: pool.lpToken,
     };
-    dispatch(approve(approveArgs));
+    dispatch(approve(approveArgs)).then(() => {
+      setLoading(false);
+    });
   };
 
   const clearInputs = () => {
