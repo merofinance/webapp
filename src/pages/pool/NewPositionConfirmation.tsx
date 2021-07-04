@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
@@ -12,6 +12,7 @@ import { openAndFocusWindow } from "../../lib/browser";
 import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 import { shortenAddress } from "../../lib/text";
 import { Pool, Position } from "../../lib/types";
+import { selectPrices } from "../../features/pools-list/poolsListSlice";
 
 const Content = styled.div`
   width: 100%;
@@ -77,9 +78,15 @@ type Props = {
 };
 
 const NewPositionConfirmation = ({ show, close, position, pool }: Props) => {
-  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();
+
+  const prices = useSelector(selectPrices);
+
+  const [loading, setLoading] = useState(false);
+
+  const getPrice = (pool: Pool) => prices[pool.underlying.symbol] || 0;
+  const getUsd = (amount: number) => `$${(getPrice(pool) * amount).toLocaleString()}`;
 
   const executeRegister = () => {
     if (!backd) return;
@@ -110,8 +117,12 @@ const NewPositionConfirmation = ({ show, close, position, pool }: Props) => {
               {shortenAddress(position.account, 26)}
             </Address>
             {` drops below ${position.threshold}, it will
-            be topped up with ${position.singleTopUp} DAI ($3000). This will be repeated each time the
-            collateralization ratio drops below ${position.threshold}, until a total of ${position.totalTopUp} DAI ($8000) is topped
+            be topped up with ${position.singleTopUp} DAI (${getUsd(
+              position.singleTopUp
+            )}). This will be repeated each time the
+            collateralization ratio drops below ${position.threshold}, until a total of ${
+              position.totalTopUp
+            } DAI (${getUsd(position.totalTopUp)}) is topped
             up.`}
           </Summary>
           <PositionSummary>
