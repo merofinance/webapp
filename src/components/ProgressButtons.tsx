@@ -182,7 +182,7 @@ const ProgressButtons = (props: Props) => {
               executeWithdraw(props.value);
             else executeUnstake();
           }}
-          disabled={props.deposit && (!approved || props.value === 0)}
+          disabled={(props.deposit && !approved) || props.value === 0}
           loading={loading && approved}
           hoverText={
             props.value === 0
