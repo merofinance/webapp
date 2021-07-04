@@ -147,6 +147,14 @@ const NewPosition = ({ pool }: Props) => {
     dispatch(approve(approveArgs));
   };
 
+  const clearInputs = () => {
+    setProtocol("");
+    setBorrower("");
+    setThreshold("");
+    setSingle("");
+    setTotal("");
+  };
+
   return (
     <Border>
       <StyledNewPosition>
@@ -218,6 +226,7 @@ const NewPosition = ({ pool }: Props) => {
         close={() => setConfirming(false)}
         position={position}
         pool={pool}
+        complete={() => clearInputs()}
       />
     </Border>
   );

@@ -75,9 +75,10 @@ type Props = {
   close: () => void;
   position: Position;
   pool: Pool;
+  complete: () => void;
 };
 
-const NewPositionConfirmation = ({ show, close, position, pool }: Props) => {
+const NewPositionConfirmation = ({ show, close, position, pool, complete }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();
 
@@ -94,7 +95,10 @@ const NewPositionConfirmation = ({ show, close, position, pool }: Props) => {
     dispatch(registerPosition({ position, pool, backd })).then((v: any) => {
       if (v.meta.requestStatus == "rejected")
         dispatch(setError({ error: "Position creation failed" }));
-      else close();
+      else {
+        complete();
+        close();
+      }
     });
   };
 
