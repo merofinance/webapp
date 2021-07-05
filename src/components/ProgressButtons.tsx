@@ -204,7 +204,7 @@ const ProgressButtons = (props: Props) => {
               complete={approved && props.value !== 0}
               current={!approved && props.value !== 0}
             >
-              {approved ? <Tick src={tick} alt="tick" /> : "1"}
+              {approved && props.value !== 0 ? <Tick src={tick} alt="tick" /> : "1"}
             </Number>
           </ProgressSection>
           <ProgressSection>
