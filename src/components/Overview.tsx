@@ -2,7 +2,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { selectPools, selectPrices } from "../features/pools-list/poolsListSlice";
-import { selectBalances } from "../features/user/userSlice";
 import { Pool } from "../lib";
 import { PLACEHOLDER_TOOLTIP } from "../lib/constants";
 import Tooltip from "./Tooltip";
@@ -59,7 +58,6 @@ type Props = {
 const Overview = ({ pool }: Props) => {
   const pools = useSelector(selectPools);
   const prices = useSelector(selectPrices);
-  const balances = useSelector(selectBalances);
 
   const getPrice = (pool: Pool) => prices[pool.underlying.symbol] || 0;
 
