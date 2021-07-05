@@ -27,26 +27,22 @@ type Props = {
   max: number;
 };
 
-const AmountInput = (props: Props) => {
+const AmountInput = ({ value, setValue, label, max }: Props) => {
   return (
     <StyledAmountInput>
-      <Available>{`Available: ${props.max}`}</Available>
+      <Available>{`Available: ${max}`}</Available>
       <Input
         valid={true}
-        label={props.label}
-        value={props.value === 0 ? "" : props.value.toString()}
+        label={label}
+        value={value === 0 ? "" : value.toString()}
         type="number"
-        onChange={(v: string) => props.setValue(Number(v))}
+        onChange={(v: string) => setValue(Number(v))}
         background="#10092e"
         buttonText="max"
-        buttonAction={() => props.setValue(props.max)}
+        buttonAction={() => setValue(max)}
         errorMessage="Invalid amount"
       />
-      <AmountSlider
-        value={props.value}
-        max={props.max}
-        setValue={(v: number) => props.setValue(v)}
-      />
+      <AmountSlider value={value} max={max} setValue={(v: number) => setValue(v)} />
     </StyledAmountInput>
   );
 };
