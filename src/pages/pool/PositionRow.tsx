@@ -61,7 +61,7 @@ type Props = {
 
 const PositionRow = ({ position, pool }: Props) => {
   const backd = useBackd();
-  const { loading, setLoading, handleTxDispatch } = useLoading();
+  const { setLoading, handleTxDispatch } = useLoading();
   const dispatch: AppDispatch = useDispatch();
 
   const handleRemovePosition = () => {
