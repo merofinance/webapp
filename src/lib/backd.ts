@@ -232,7 +232,7 @@ export class Web3Backd implements Backd {
   async withdraw(pool: Address, amount: number): Promise<ContractTransaction> {
     const poolContract = LiquidityPoolFactory.connect(pool, this._provider);
     const scaledAmount = floatToBigNumber(amount);
-    return poolContract.redeem(scaledAmount);
+    return poolContract["redeem(uint256)"](scaledAmount);
   }
 
   async unstake(vault: Address, amount: number): Promise<ContractTransaction> {
