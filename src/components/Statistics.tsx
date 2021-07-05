@@ -2,9 +2,9 @@ import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { selectPools, selectPrices } from "../features/pools-list/poolsListSlice";
-import { deposit, selectBalances } from "../features/user/userSlice";
+import { selectBalances } from "../features/user/userSlice";
 import { Pool } from "../lib";
-import Statistic, { StatisticType } from "./Statistic";
+import Statistic from "./Statistic";
 
 const StyledStatistics = styled.div`
   width: 100%;
