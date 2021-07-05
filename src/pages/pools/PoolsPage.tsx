@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { useBackd } from "../../app/hooks/use-backd";
 import ContentSection from "../../components/ContentSection";
-import { fetchState, selectPools, selectPrices } from "../../features/pools-list/poolsListSlice";
-import { selectBalances } from "../../features/user/userSlice";
+import { fetchState, selectPools } from "../../features/pools-list/poolsListSlice";
 import { Pool } from "../../lib";
 import Overview from "../../components/Overview";
 import PoolsRow from "./PoolsRow";
@@ -42,11 +41,6 @@ const PoolsPage = () => {
   const backd = useBackd();
   const dispatch = useDispatch();
   const pools = useSelector(selectPools);
-  const prices = useSelector(selectPrices);
-  const balances = useSelector(selectBalances);
-
-  const getBalance = (pool: Pool) => balances[pool.lpToken.address] || 0;
-  const getPrice = (pool: Pool) => prices[pool.underlying.symbol] || 0;
 
   useEffect(() => {
     if (!backd) return;
