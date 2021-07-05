@@ -61,12 +61,7 @@ const Overview = ({ pool }: Props) => {
   const prices = useSelector(selectPrices);
   const balances = useSelector(selectBalances);
 
-  const getBalance = (pool: Pool) => balances[pool.lpToken.address] || 0;
   const getPrice = (pool: Pool) => prices[pool.underlying.symbol] || 0;
-
-  const deposits = pool
-    ? getBalance(pool) * getPrice(pool)
-    : pools.reduce((a: number, b: Pool) => a + getBalance(b) * getPrice(b), 0);
 
   const locked = pool
     ? pool.totalAssets * getPrice(pool)
