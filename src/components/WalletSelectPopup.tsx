@@ -2,6 +2,7 @@ import { useWeb3React } from "@web3-react/core";
 import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { AbstractConnector } from "@web3-react/abstract-connector";
 import { injectedConnector, walletConnectConnector } from "../app/web3";
 import metamask from "../assets/wallets/metamask.svg";
 import walletConnect from "../assets/wallets/wallet-connect.svg";
@@ -9,6 +10,31 @@ import { setConnected } from "../features/account/accountSlice";
 import { openAndFocusWindow } from "../lib/browser";
 import Popup from "./Popup";
 import GradientText from "./styles/GradientText";
+
+type WalletOption = {
+  name: string;
+  icon: string;
+  leftColor: string;
+  rightColor: string;
+  connector: AbstractConnector;
+};
+
+const walletOptions: WalletOption[] = [
+  {
+    name: "MetaMask",
+    icon: metamask,
+    leftColor: "#FF5407",
+    rightColor: "#FFD523",
+    connector: injectedConnector,
+  },
+  {
+    name: "WalletConnect",
+    icon: walletConnect,
+    leftColor: "#8400FE",
+    rightColor: "#0C00FE",
+    connector: walletConnectConnector,
+  },
+];
 
 const Content = styled.div`
   display: flex;
@@ -90,18 +116,10 @@ const WalletSelectPopup = (props: Props) => {
   const dispatch = useDispatch();
   const { activate } = useWeb3React();
 
-  const connectMetamask = () => {
-    activate(injectedConnector).then(() => {
-      dispatch(setConnected(true));
-      props.close();
-    });
-  };
-
-  const connectWalletConnect = () => {
-    activate(walletConnectConnector).then(() => {
-      dispatch(setConnected(true));
-      props.close();
-    });
+  const connect = async (connector: AbstractConnector) => {
+    await activate(connector);
+    dispatch(setConnected(true));
+    props.close();
   };
 
   return (
@@ -121,18 +139,18 @@ const WalletSelectPopup = (props: Props) => {
               Find out about wallets
             </Highlight>
           </SubHeaderContainer>
-          <Option leftColor="#FF5407" rightColor="#FFD523" onClick={() => connectMetamask()}>
-            <Name>MetaMask</Name>
-            <IconContainer>
-              <Icon src={metamask} alt="Metamask logo" />
-            </IconContainer>
-          </Option>
-          <Option leftColor="#8400FE" rightColor="#0C00FE" onClick={() => connectWalletConnect()}>
-            <Name>WalletConnect</Name>
-            <IconContainer>
-              <Icon src={walletConnect} alt="Walletconnect logo" />
-            </IconContainer>
-          </Option>
+          {walletOptions.map((option: WalletOption) => (
+            <Option
+              leftColor={option.leftColor}
+              rightColor={option.rightColor}
+              onClick={() => connect(option.connector)}
+            >
+              <Name>{option.name}</Name>
+              <IconContainer>
+                <Icon src={option.icon} alt={`${option.name} logo`} />
+              </IconContainer>
+            </Option>
+          ))}
         </Content>
       }
     />
