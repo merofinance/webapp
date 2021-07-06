@@ -7,9 +7,7 @@ import { injectedConnector, walletConnectConnector } from "../app/web3";
 import metamask from "../assets/wallets/metamask.svg";
 import walletConnect from "../assets/wallets/wallet-connect.svg";
 import { setConnected } from "../features/account/accountSlice";
-import { openAndFocusWindow } from "../lib/browser";
 import Popup from "./Popup";
-import GradientText from "./styles/GradientText";
 
 type WalletOption = {
   name: string;
