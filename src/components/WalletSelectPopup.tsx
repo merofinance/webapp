@@ -58,13 +58,17 @@ const SubHeader = styled.div`
   margin-right: 0.5rem;
 `;
 
-const Highlight = styled(GradientText)`
+const Highlight = styled.a`
   font-weight: 400;
   font-size: 1.6rem;
   line-height: 2.4rem;
   letter-spacing: 0.15px;
   text-align: center;
   cursor: pointer;
+  background: var(--gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 `;
 
 type OptionProps = {
@@ -132,13 +136,13 @@ const WalletSelectPopup = (props: Props) => {
           <SubHeaderContainer>
             <SubHeader>New to Ethereum?</SubHeader>
             <Highlight
-              onClick={() => {
-                openAndFocusWindow("https://google.com/", "_blank");
-              }}
+              href="https://backd-1.gitbook.io/backd/resources/faq/general"
+              target="_blank"
             >
               Find out about wallets
             </Highlight>
           </SubHeaderContainer>
+
           {walletOptions.map((option: WalletOption) => (
             <Option
               leftColor={option.leftColor}
