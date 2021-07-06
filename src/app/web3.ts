@@ -16,17 +16,16 @@ export const injectedConnector = new InjectedConnector({
 
 export const walletConnectConnector = new WalletConnectConnector({
   rpc: {
-     1: process.env.RPC_URL_1 as string,
-     3:  process.env.RPC_URL_3 as string,
-     4:  process.env.RPC_URL_4 as string,
-     5:  process.env.RPC_URL_5 as string,
-     42:  process.env.RPC_URL_42 as string,
-     1337:  process.env.RPC_URL_1337 as string
+    1: process.env.RPC_URL_1 as string,
+    3: process.env.RPC_URL_3 as string,
+    4: process.env.RPC_URL_4 as string,
+    5: process.env.RPC_URL_5 as string,
+    42: process.env.RPC_URL_42 as string,
+    1337: process.env.RPC_URL_1337 as string,
   },
   qrcode: true,
-  pollingInterval: 12000
-})
-
+  pollingInterval: 12000,
+});
 
 export async function activateIfAuthorized({
   active,
