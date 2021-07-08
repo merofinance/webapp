@@ -46,14 +46,14 @@ type Props = {
   pool?: Pool;
 };
 
-const ContentSection = (props: Props) => {
+const ContentSection = ({ header, content, pool }: Props) => {
   return (
     <StyledContentSection>
-      <Header>{props.header}</Header>
-      <Statistics pool={props.pool} />
+      <Header>{header}</Header>
+      <Statistics pool={pool} />
       <Line large />
       <Line />
-      <Content>{props.content}</Content>
+      <Content>{content}</Content>
     </StyledContentSection>
   );
 };
