@@ -2,6 +2,7 @@ import { Web3ReactContextInterface } from "@web3-react/core/dist/types";
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { Backd } from "../lib/backd";
+import { INFURA_ID } from "../lib/constants";
 
 export const injectedConnector = new InjectedConnector({
   supportedChainIds: [
@@ -16,12 +17,12 @@ export const injectedConnector = new InjectedConnector({
 
 export const walletConnectConnector = new WalletConnectConnector({
   rpc: {
-    1: process.env.RPC_URL_1 as string,
-    3: process.env.RPC_URL_3 as string,
-    4: process.env.RPC_URL_4 as string,
-    5: process.env.RPC_URL_5 as string,
-    42: process.env.RPC_URL_42 as string,
-    1337: process.env.RPC_URL_1337 as string,
+    1: `https://mainnet.infura.io/v3/${INFURA_ID}`,
+    3: `https://ropsten.infura.io/v3/${INFURA_ID}`,
+    4: `https://rinkeby.infura.io/v3/${INFURA_ID}`,
+    5: `https://goerli.infura.io/v3/${INFURA_ID}`,
+    42: `https://kovan.infura.io/v3/${INFURA_ID}`,
+    1337: ``,
   },
   qrcode: true,
   pollingInterval: 12000,
