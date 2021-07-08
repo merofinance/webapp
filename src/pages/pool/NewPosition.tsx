@@ -10,6 +10,7 @@ import { Position } from "../../lib/types";
 import NewPositionConfirmation from "./NewPositionConfirmation";
 import NewPositionInput from "./NewPositionInput";
 import { AppDispatch } from "../../app/store";
+import { ethers } from "ethers";
 
 const Border = styled.div`
   width: 100%;
@@ -74,7 +75,7 @@ const NewPosition = ({ pool }: Props) => {
   const [borrower, setBorrower] = useState("");
   const [borrowerError, setBorrowerError] = useState("");
   const validateBorrower = (value: string) => {
-    if (value.length !== 42) setBorrowerError("Invalid Address");
+    if (!ethers.utils.isAddress(value)) setBorrowerError("Invalid Address");
     else setBorrowerError("");
   };
 
