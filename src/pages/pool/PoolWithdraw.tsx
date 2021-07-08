@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import AmountInput from "../../components/AmountInput";
 import ContentSection from "../../components/ContentSection";
-import ProgressButtons from "../../components/ProgressButtons";
 import { selectBalance } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
+import WithdrawalButton from "./WithdrawButton";
 
 const Content = styled.div`
   width: 100%;
@@ -36,7 +36,7 @@ const PoolWithdraw = ({ pool }: Props) => {
             label={`Enter an amount of ${pool.underlying.symbol.toUpperCase()} to withdraw`}
             max={availableToWithdraw}
           />
-          <ProgressButtons
+          <WithdrawalButton
             pool={pool}
             value={withdrawAmount}
             complete={() => setWithdrawAmount(0)}
