@@ -5,6 +5,16 @@ import usdc from "../assets/tokens/usdc.png";
 import dai from "../assets/tokens/dai.png";
 import { Token } from "../lib/types";
 
+type AssetType = {
+  [key: string]: string;
+};
+
+const assets: AssetType = {
+  ETH: eth,
+  USDC: usdc,
+  DAI: dai,
+};
+
 const StyledAsset = styled.div`
   display: flex;
 `;
@@ -28,15 +38,9 @@ type Props = {
 };
 
 const Asset = ({ token }: Props) => {
-  const icon = () => {
-    if (token.symbol.toLowerCase() === "eth") return eth;
-    if (token.symbol.toLowerCase() === "usdc") return usdc;
-    if (token.symbol.toLowerCase() === "dai") return dai;
-  };
-
   return (
     <StyledAsset>
-      <Icon src={icon()} alt={`${token.symbol} icon`} />
+      <Icon src={assets[token.symbol]} alt={`${token.symbol} icon`} />
       <Label>{token.symbol.toUpperCase()}</Label>
     </StyledAsset>
   );
