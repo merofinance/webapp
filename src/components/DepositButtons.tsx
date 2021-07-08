@@ -1,21 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import Button from "./Button";
 import tick from "../assets/ui/tick.svg";
 import { Pool } from "../lib";
 import { useLoading } from "../app/hooks/use-loading";
-import {
-  approve,
-  deposit,
-  selectBalance,
-  selectDepositAllowance,
-  unstake,
-  withdraw,
-} from "../features/user/userSlice";
+import { approve, deposit, selectDepositAllowance } from "../features/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useBackd } from "../app/hooks/use-backd";
 import { AppDispatch } from "../app/store";
-import { pendingTransactionsCount } from "../features/transactions-list/transactionsSlice";
 import { ETH_DUMMY_ADDRESS } from "../lib/constants";
 
 const StyledProgressButtons = styled.div`
@@ -91,27 +83,18 @@ const Line = styled.div`
 
 type Props = {
   value: number;
-  deposit?: boolean;
   pool: Pool;
   complete: () => void;
 };
 
-const ProgressButtons = (props: Props) => {
+const DepositButtons = (props: Props) => {
   const dispatch: AppDispatch = useDispatch();
   const backd = useBackd();
   const { loading, setLoading, handleTxDispatch } = useLoading();
   const approvedToDeposit = useSelector(selectDepositAllowance(props.pool));
-  const pendingTxCount = useSelector(pendingTransactionsCount);
-  const totalBalance = useSelector(selectBalance(props.pool));
-  const staked = useSelector(selectBalance(props.pool.stakerVaultAddress));
 
-  const availableToWithdraw = totalBalance - staked;
-  const approved = !props.deposit || approvedToDeposit >= props.value;
-  const requiresApproval = props.deposit && props.pool.underlying.address !== ETH_DUMMY_ADDRESS;
-
-  useEffect(() => {
-    setLoading(pendingTxCount > 0);
-  }, [pendingTxCount, setLoading]);
+  const approved = approvedToDeposit >= props.value;
+  const requiresApproval = props.pool.underlying.address !== ETH_DUMMY_ADDRESS;
 
   const executeApprove = (amount: number) => {
     const approveAction = approve({
@@ -122,6 +105,7 @@ const ProgressButtons = (props: Props) => {
     });
     dispatch(approveAction).then((v) => {
       handleTxDispatch({ status: v.meta.requestStatus, actionType: "approve" });
+      setLoading(false);
     });
   };
 
@@ -129,20 +113,7 @@ const ProgressButtons = (props: Props) => {
     dispatch(deposit({ backd: backd!, pool: props.pool, amount })).then((v) => {
       handleTxDispatch({ status: v.meta.requestStatus, actionType: "deposit" });
       props.complete();
-    });
-  };
-
-  const executeWithdraw = (amount: number) => {
-    dispatch(withdraw({ backd: backd!, pool: props.pool, amount })).then((v) => {
-      handleTxDispatch({ status: v.meta.requestStatus, actionType: "withdraw" });
-      props.complete();
-    });
-  };
-
-  const executeUnstake = () => {
-    dispatch(unstake({ backd: backd!, pool: props.pool, amount: staked })).then((v) => {
-      handleTxDispatch({ status: v.meta.requestStatus, actionType: "unstake" });
-      props.complete();
+      setLoading(false);
     });
   };
 
@@ -168,21 +139,13 @@ const ProgressButtons = (props: Props) => {
           primary
           medium
           wide
-          text={
-            props.deposit
-              ? "Deposit and Stake"
-              : `Withdraw ${props.pool.underlying.symbol.toUpperCase()}`
-          }
+          text={"Deposit and Stake"}
           click={() => {
-            if (!backd) return;
-            if (!approved) return;
+            if (!backd || !approved) return;
             setLoading(true);
-            if (props.deposit) executeDeposit(props.value);
-            else if (!props.deposit || props.value <= availableToWithdraw)
-              executeWithdraw(props.value);
-            else executeUnstake();
+            executeDeposit(props.value);
           }}
-          disabled={(props.deposit && !approved) || props.value === 0}
+          disabled={!approved || props.value === 0}
           loading={loading && approved}
           hoverText={
             props.value === 0
@@ -218,4 +181,4 @@ const ProgressButtons = (props: Props) => {
   );
 };
 
-export default ProgressButtons;
+export default DepositButtons;
