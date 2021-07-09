@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { selectPools, selectPrices } from "../features/pools-list/poolsListSlice";
 import { Pool } from "../lib";
 import { PLACEHOLDER_TOOLTIP } from "../lib/constants";
+import { numberToCompactString } from "../lib/numeric";
 import Tooltip from "./Tooltip";
 
 const StyledOverview = styled.div`
@@ -78,7 +79,7 @@ const Overview = ({ pool }: Props) => {
             <Label>{pool ? "Pool TVL" : "Platform TVL"}</Label>
             <Tooltip content={PLACEHOLDER_TOOLTIP} />
           </LabelContainer>
-          <Value>{`$${locked.toLocaleString()}`}</Value>
+          <Value>{numberToCompactString(locked)}</Value>
         </StatisticContainer>
         <StatisticContainer>
           <LabelContainer>
@@ -92,7 +93,7 @@ const Overview = ({ pool }: Props) => {
             <Label>{pool ? "Strategy" : "Revenue"}</Label>
             <Tooltip content={PLACEHOLDER_TOOLTIP} />
           </LabelContainer>
-          <Value>{pool ? pool.name : `${(0).toLocaleString()}`}</Value>
+          <Value>{pool ? pool.name : numberToCompactString(0)}</Value>
         </StatisticContainer>
       </StyledOverview>
     </div>
