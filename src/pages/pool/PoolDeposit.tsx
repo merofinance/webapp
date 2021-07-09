@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import AmountInput from "../../components/AmountInput";
 import ContentSection from "../../components/ContentSection";
-import ProgressButtons from "../../components/DepositButtons";
+import DepositButtons from "../../components/DepositButtons";
 import { selectBalance } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
 
@@ -33,7 +33,7 @@ const PoolDeposit = ({ pool }: Props) => {
             label={`Enter an amount of ${pool.underlying.symbol.toUpperCase()} to deposit`}
             max={availableToDeposit}
           />
-          <ProgressButtons pool={pool} value={depositAmount} complete={() => setDepositAmount(0)} />
+          <DepositButtons pool={pool} value={depositAmount} complete={() => setDepositAmount(0)} />
         </Content>
       }
     />
