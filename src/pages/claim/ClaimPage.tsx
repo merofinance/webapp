@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Seo from "../../components/Seo";
 import ClaimList from "./ClaimList";
 import ClaimOverview from "./ClaimOverview";
 
@@ -12,6 +13,7 @@ const StyledPoolsPage = styled.div`
 const ClaimPage = () => {
   return (
     <StyledPoolsPage>
+      <Seo title="Claims" description="test" />
       <ClaimOverview />
       <ClaimList />
     </StyledPoolsPage>

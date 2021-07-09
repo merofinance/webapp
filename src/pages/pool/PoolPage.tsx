@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Radio, { RadioOptionType } from "../../components/Radio";
+import Seo from "../../components/Seo";
 import Button from "../../components/styles/Button";
 import PoolDeposit from "./PoolDeposit";
 import PoolOverview from "./PoolOverview";
@@ -49,6 +50,7 @@ const PoolPage = () => {
 
   return (
     <StyledPoolPage>
+      <Seo title="Pool" description="test" />
       <Radio options={tabs} active={tab} setOption={(value: string) => setTab(value)} />
       <Content>
         {tab === "deposit" && <PoolDeposit token={token} />}
