@@ -13,7 +13,10 @@ const StyledPoolsPage = styled.div`
 const ClaimPage = () => {
   return (
     <StyledPoolsPage>
-      <Seo title="Claims" description="test" />
+      <Seo
+        title="Claim Rewards & Yield"
+        description="Claim rewards from Backd yield farming strategies and collateral top up fees"
+      />
       <ClaimOverview />
       <ClaimList />
     </StyledPoolsPage>
