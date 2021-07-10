@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Seo from "../../components/Seo";
-import ClaimList from "./ClaimList";
 import ClaimOverview from "./ClaimOverview";
+import ClaimAccordion from "./ClaimAccordion";
+
+const claims: string[] = ["meow", "woof"];
 
 const StyledPoolsPage = styled.div`
   width: 100%;
@@ -11,6 +13,8 @@ const StyledPoolsPage = styled.div`
 `;
 
 const ClaimPage = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
   return (
     <StyledPoolsPage>
       <Seo
@@ -18,7 +22,15 @@ const ClaimPage = () => {
         description="Claim rewards from Backd yield farming strategies and collateral top up fees"
       />
       <ClaimOverview />
-      <ClaimList />
+      {claims.map((claim: string, index: number) => (
+        <ClaimAccordion
+          open={!!openIndex && openIndex === index}
+          toggle={() => {
+            if (!!openIndex && openIndex === index) setOpenIndex(null);
+            setOpenIndex(index);
+          }}
+        />
+      ))}
     </StyledPoolsPage>
   );
 };
