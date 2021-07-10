@@ -1,11 +1,9 @@
 import { useWeb3React } from "@web3-react/core";
 import React from "react";
-import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { injectedConnector } from "../app/web3";
 import metamask from "../assets/wallets/metamask.svg";
 import walletConnect from "../assets/wallets/wallet-connect.svg";
-import { setConnected } from "../features/account/accountSlice";
 import { openAndFocusWindow } from "../lib/browser";
 import Popup from "./Popup";
 import GradientText from "../styles/GradientText";
@@ -84,15 +82,14 @@ const Icon = styled.img`
 type Props = {
   show: boolean;
   close: () => void;
+  exit?: () => void;
 };
 
 const WalletSelectPopup = (props: Props) => {
-  const dispatch = useDispatch();
   const { activate } = useWeb3React();
 
   const activateWallet = () => {
     activate(injectedConnector).then(() => {
-      dispatch(setConnected(true));
       props.close();
     });
   };
@@ -101,6 +98,7 @@ const WalletSelectPopup = (props: Props) => {
     <Popup
       show={props.show}
       close={props.close}
+      exit={props.exit}
       header="Connect your wallet"
       content={
         <Content>
