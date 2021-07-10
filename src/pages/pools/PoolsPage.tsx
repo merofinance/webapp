@@ -37,7 +37,10 @@ const ChevronHeader = styled.th`
 const PoolsPage = () => {
   return (
     <StyledPoolsPage>
-      <Seo title="Pools" description="test" />
+      <Seo
+        title="Backd Pools"
+        description="Increase leverage, farm yield, & prevent DeFi loans (Aave, Compound, etc.) from liquidation"
+      />
       <ContentSection
         header="All pools"
         statistics={[
