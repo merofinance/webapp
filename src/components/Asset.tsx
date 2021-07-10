@@ -26,11 +26,18 @@ const Icon = styled.img`
 
 const Label = styled.div`
   text-transform: uppercase;
-  font-weight: 700;
-  font-size: 1.6rem;
-  line-height: 2.4rem;
   letter-spacing: 0.15px;
+
+  line-height: 2.4rem;
+  font-size: 1.6rem;
   margin-left: 1.2rem;
+  font-weight: 700;
+  @media (max-width: 600px) {
+    margin-left: 1rem;
+    font-size: 1.4rem;
+    line-height: 2.1rem;
+    font-weight: 400;
+  }
 `;
 
 type Props = {
