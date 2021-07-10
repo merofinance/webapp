@@ -60,7 +60,10 @@ const Bold = styled.span`
 const LitepaperPage = () => {
   return (
     <StyledLitepaperPage>
-      <Seo title="Litepaper" description="test" />
+      <Seo
+        title="Backd Litepaper"
+        description="DeFi collateralized debt positions made capital efficient (reactive liquidity)"
+      />
       <Header1>Backd Litepaper</Header1>
       <Header>Introduction</Header>
       <Paragraph>
