@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Header1, Header2, Paragraph } from "../../components/styles/Headers";
+import Seo from "../../components/Seo";
 
 const StyledLitepaperPage = styled.div`
   display: flex;
@@ -59,6 +60,10 @@ const Bold = styled.span`
 const LitepaperPage = () => {
   return (
     <StyledLitepaperPage>
+      <Seo
+        title="Backd Litepaper"
+        description="DeFi collateralized debt positions made capital efficient (reactive liquidity)"
+      />
       <Header1>Backd Litepaper</Header1>
       <Header>Introduction</Header>
       <Paragraph>

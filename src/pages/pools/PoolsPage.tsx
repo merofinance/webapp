@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ContentSection from "../../components/ContentSection";
+import Seo from "../../components/Seo";
 import PoolsOverview from "./PoolsOverview";
 import PoolsRow from "./PoolsRow";
 
@@ -36,6 +37,10 @@ const ChevronHeader = styled.th`
 const PoolsPage = () => {
   return (
     <StyledPoolsPage>
+      <Seo
+        title="Backd Pools"
+        description="Increase leverage, farm yield, & prevent DeFi loans (Aave, Compound, etc.) from liquidation"
+      />
       <ContentSection
         header="All pools"
         statistics={[
