@@ -41,6 +41,16 @@ const Header = styled.th`
   opacity: 0.6;
 `;
 
+const ChevronHeader = styled.th`
+  @media (max-width: 600px) {
+    width: 2.4rem;
+  }
+
+  @media (min-width: 601px) {
+    flex: 1;
+  }
+`;
+
 const Swirl = styled.img`
   position: absolute;
   top: 50%;
@@ -68,7 +78,7 @@ const Preview = () => {
           <Header>Asset</Header>
           <Header>APY</Header>
           <Header>TVL</Header>
-          <Header></Header>
+          <ChevronHeader />
         </HeaderRow>
         {pools.map((pool: Pool) => (
           <PoolsRow key={pool.name} preview pool={pool} />
