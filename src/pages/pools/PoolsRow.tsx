@@ -16,6 +16,7 @@ type RowProps = {
 };
 
 const Row = styled.tr`
+  position: relative;
   height: ${(props: RowProps) => (props.preview ? "5.6rem" : "7.2rem")};
   display: flex;
   justify-content: space-between;
@@ -31,6 +32,18 @@ const Row = styled.tr`
   :hover {
     background-color: #1a1438;
   }
+
+  @media (max-width: 600px) {
+    height: ${(props: RowProps) => (props.preview ? "4.8rem" : "7.2rem")};
+    padding: 0 1.6rem;
+
+    td:nth-child(1) {
+      flex: 1.1;
+    }
+    td:nth-child(2) {
+      flex: 0.9;
+    }
+  }
 `;
 
 type DataProps = {
@@ -43,22 +56,30 @@ const Data = styled.td`
   flex: 1;
   align-items: center;
   font-weight: 400;
-  font-size: 1.6rem;
-  line-height: 1.4rem;
   letter-spacing: 0.15px;
   justify-content: ${(props: DataProps) => (props.right ? "flex-end" : "flex-start")};
   display: ${(props: DataProps) => (!props.preview && props.right ? "none" : "flex")};
 
+  font-size: 1.6rem;
+  line-height: 1.4rem;
   @media (max-width: 600px) {
+    font-size: 1.4rem;
+    line-height: 2.1rem;
     display: ${(props: DataProps) => (props.preview && props.right ? "none" : "flex")};
   }
 `;
 
 const Apy = styled(GradientText)`
+  letter-spacing: 0.15px;
+
   font-weight: 900;
   font-size: 1.6rem;
   line-height: 2rem;
-  letter-spacing: 0.15px;
+  @media (max-width: 600px) {
+    font-weight: 700;
+    font-size: 1.4rem;
+    line-height: 2.1rem;
+  }
 `;
 
 interface ChevronProps {
@@ -70,6 +91,13 @@ const ChevronData = styled.td`
 
   @media (min-width: 601px) {
     display: ${(props: ChevronProps) => (props.preview ? "none" : "block")};
+  }
+
+  @media (max-width: 600px) {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
   }
 `;
 
