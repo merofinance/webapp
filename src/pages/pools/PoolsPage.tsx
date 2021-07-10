@@ -6,6 +6,7 @@ import ContentSection from "../../components/ContentSection";
 import { fetchState, selectPools } from "../../features/pools-list/poolsListSlice";
 import { Pool } from "../../lib";
 import Overview from "../../components/Overview";
+import Seo from "../../components/Seo";
 import PoolsRow from "./PoolsRow";
 
 const StyledPoolsPage = styled.div`
@@ -49,6 +50,10 @@ const PoolsPage = () => {
 
   return (
     <StyledPoolsPage>
+      <Seo
+        title="Backd Pools"
+        description="Increase leverage, farm yield, & prevent DeFi loans (Aave, Compound, etc.) from liquidation"
+      />
       <ContentSection
         header="All pools"
         content={

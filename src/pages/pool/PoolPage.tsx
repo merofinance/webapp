@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Radio, { RadioOptionType } from "../../components/Radio";
 import Button from "../../components/Button";
 import { selectPool } from "../../features/pool/selectors";
+import Seo from "../../components/Seo";
 import PoolDeposit from "./PoolDeposit";
 import Overview from "../../components/Overview";
 import PoolPositions from "./PoolPositions";
@@ -62,6 +63,10 @@ const PoolPage = () => {
 
   return (
     <StyledPoolPage>
+      <Seo
+        title="DAI Pool"
+        description="Deposit DAI to farm yield while protecting your DeFi loan (Aave, Compound, etc.) from liquidation"
+      />
       <Radio options={tabs} active={tab} setOption={(value: string) => setTab(value)} />
       <Content>
         {tab === "deposit" && <PoolDeposit pool={pool} />}
