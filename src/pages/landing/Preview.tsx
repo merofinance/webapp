@@ -23,31 +23,46 @@ const StyledPreview = styled.div`
 const Table = styled.table`
   position: relative;
   width: 79%;
+
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 const HeaderRow = styled.tr`
   display: flex;
   justify-content: space-between;
   padding: 0 1.7rem;
+
+  @media (max-width: 600px) {
+    th:nth-child(1) {
+      flex: 1.1;
+    }
+    th:nth-child(2) {
+      flex: 0.9;
+    }
+  }
 `;
 
 const Header = styled.th`
   flex: 1;
   text-align: left;
   font-weight: 700;
-  font-size: 1.4rem;
   line-height: 2.4rem;
   letter-spacing: 0.15px;
   opacity: 0.6;
+
+  font-size: 1.4rem;
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+  }
 `;
 
 const ChevronHeader = styled.th`
-  @media (max-width: 600px) {
-    width: 2.4rem;
-  }
+  flex: 1;
 
-  @media (min-width: 601px) {
-    flex: 1;
+  @media (max-width: 600px) {
+    display: none;
   }
 `;
 
