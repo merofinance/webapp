@@ -9,6 +9,7 @@ import GradientText from "../../styles/GradientText";
 import { selectPrices } from "../../features/pools-list/poolsListSlice";
 import { selectBalances } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
+import { numberToCompactString } from "../../lib/numeric";
 
 type RowProps = {
   preview?: boolean;
@@ -34,6 +35,7 @@ const Row = styled.tr`
 
 type DataProps = {
   right?: boolean;
+  preview?: boolean;
 };
 
 const Data = styled.td`
@@ -45,6 +47,11 @@ const Data = styled.td`
   line-height: 1.4rem;
   letter-spacing: 0.15px;
   justify-content: ${(props: DataProps) => (props.right ? "flex-end" : "flex-start")};
+  display: ${(props: DataProps) => (!props.preview && props.right ? "none" : "flex")};
+
+  @media (max-width: 600px) {
+    display: ${(props: DataProps) => (props.preview && props.right ? "none" : "flex")};
+  }
 `;
 
 const Apy = styled(GradientText)`
@@ -54,8 +61,16 @@ const Apy = styled(GradientText)`
   letter-spacing: 0.15px;
 `;
 
+interface ChevronProps {
+  preview?: boolean;
+}
+
 const ChevronData = styled.td`
   width: 2.4rem;
+
+  @media (min-width: 601px) {
+    display: ${(props: ChevronProps) => (props.preview ? "none" : "block")};
+  }
 `;
 
 const Chevron = styled.img`
@@ -85,21 +100,14 @@ const PoolsRow = ({ pool, preview }: Props) => {
       <Data>
         <Apy>{`${pool.apy}%`}</Apy>
       </Data>
-      <Data>{`$${(pool.totalAssets * getPrice(pool)).toLocaleString()}`}</Data>
-      {!preview && (
-        <>
-          <Data>{`$${(getBalance(pool) * getPrice(pool)).toLocaleString()}`}</Data>
-
-          <ChevronData>
-            <Chevron src={chevron} alt="right arrow" />
-          </ChevronData>
-        </>
-      )}
-      {preview && (
-        <Data right>
-          <Button text="deposit" background="#141128" />
-        </Data>
-      )}
+      <Data>{numberToCompactString(pool.totalAssets * getPrice(pool))}</Data>
+      {!preview && <Data>{`$${(getBalance(pool) * getPrice(pool)).toLocaleString()}`}</Data>}
+      <ChevronData preview={preview}>
+        <Chevron src={chevron} alt="right arrow" />
+      </ChevronData>
+      <Data right preview={preview}>
+        <Button text="deposit" background="#141128" />
+      </Data>
     </Row>
   );
 };
