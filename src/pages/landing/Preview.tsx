@@ -57,6 +57,10 @@ const Swirl = styled.img`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100vw;
+
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const Preview = () => {
