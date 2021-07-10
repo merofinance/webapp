@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import Tooltip from "../../components/Tooltip";
+import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 
 const StyledPoolsOverview = styled.div`
   display: flex;
   margin: 0 8rem;
+  justify-content: center;
 `;
 
 const Container = styled.div`
@@ -16,6 +18,7 @@ const Container = styled.div`
   background-color: #16122e;
   border-radius: 14px;
   margin: 0 0.8rem;
+  max-width: 40.7rem;
 `;
 
 const LabelContainer = styled.div`
@@ -43,24 +46,17 @@ const ClaimOverview = () => {
     <StyledPoolsOverview>
       <Container>
         <LabelContainer>
-          <Label>Earnings Accrued</Label>
-          <Tooltip content="TODO" />
+          <Label>Claimable</Label>
+          <Tooltip content={PLACEHOLDER_TOOLTIP} />
         </LabelContainer>
-        <Number>$1243.34</Number>
+        <Number>$1,243.34</Number>
       </Container>
       <Container>
         <LabelContainer>
           <Label>Your Deposits</Label>
-          <Tooltip content="TODO" />
+          <Tooltip content={PLACEHOLDER_TOOLTIP} />
         </LabelContainer>
         <Number>$65,530.34</Number>
-      </Container>
-      <Container>
-        <LabelContainer>
-          <Label>Locked in Position</Label>
-          <Tooltip content="TODO" />
-        </LabelContainer>
-        <Number>$45,200.00</Number>
       </Container>
     </StyledPoolsOverview>
   );
