@@ -111,9 +111,9 @@ export function Positions({ pool }: PositionsProps) {
           {positions.map((position) => {
             return (
               <PositionRow
+                key={position.account + position.protocol}
                 position={position}
                 pool={pool}
-                key={position.account + position.protocol}
               />
             );
           })}

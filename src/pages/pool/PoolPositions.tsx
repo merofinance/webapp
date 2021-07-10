@@ -89,15 +89,15 @@ const PoolPositions = ({ pool }: Props) => {
         <StyledPositions>
           <Headers>
             {headers.map((header: HeaderType) => (
-              <Header>
+              <Header key={header.label}>
                 <HeaderText>{header.label}</HeaderText> <Tooltip content={header.tooltip} />
               </Header>
             ))}
             <Header></Header>
           </Headers>
           <NewPosition pool={pool} />
-          {positions.map((position: Position) => (
-            <PositionRow position={position} pool={pool} />
+          {positions.map((position: Position, index: number) => (
+            <PositionRow key={index} position={position} pool={pool} />
           ))}
         </StyledPositions>
       }

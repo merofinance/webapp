@@ -79,6 +79,7 @@ const AmountSlider = ({ value, max, setValue }: Props) => {
       />
       {steps.map((step: number) => (
         <SliderStep
+          key={step}
           percent={`${step * 100}%`}
           click={() => setValue(step * max)}
           active={value / max > step}
