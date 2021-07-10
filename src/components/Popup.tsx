@@ -65,6 +65,7 @@ type Props = {
   confirm?: boolean;
   submit?: () => void;
   loading?: boolean;
+  exit?: () => void;
 };
 
 const Popup = (props: Props): JSX.Element => {
@@ -72,9 +73,16 @@ const Popup = (props: Props): JSX.Element => {
 
   return (
     <StyledPopup>
-      <ExitEvent onClick={props.close} />
+      <ExitEvent onClick={() => props.close()} />
       <PopupContainer>
-        <Exit src={close} onClick={props.close} alt="exit button" />
+        <Exit
+          src={close}
+          onClick={() => {
+            if (props.exit) props.exit();
+            props.close();
+          }}
+          alt="exit button"
+        />
         {props.header && <Header>{props.header}</Header>}
         {props.content && props.content}
         {props.confirm && props.submit && (
