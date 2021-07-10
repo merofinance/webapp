@@ -50,7 +50,10 @@ const PoolPage = () => {
 
   return (
     <StyledPoolPage>
-      <Seo title="Pool" description="test" />
+      <Seo
+        title="DAI Pool"
+        description="Deposit DAI to farm yield while protecting your DeFi loan (Aave, Compound, etc.) from liquidation"
+      />
       <Radio options={tabs} active={tab} setOption={(value: string) => setTab(value)} />
       <Content>
         {tab === "deposit" && <PoolDeposit token={token} />}
