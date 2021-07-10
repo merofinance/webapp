@@ -13,7 +13,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { useMock } from "./app/config";
-import { PrivateRoute } from "./app/private-route";
+import { PrivateRoute } from "./components/PrivateRoute";
 import { AppDispatch } from "./app/store";
 import Header from "./components/Header";
 import { ErrorBoundary } from "./features/error/ErrorBoundary";
@@ -25,7 +25,6 @@ import styled from "styled-components";
 import Footer from "./components/Footer";
 import PoolsPage from "./pages/pools/PoolsPage";
 import LitepaperPage from "./pages/litepaper/LitepaperPage";
-import { ConnectWallet } from "./features/account/ConnectWallet";
 import ClaimPage from "./pages/claim/ClaimPage";
 import PoolPage from "./pages/pool/PoolPage";
 import { LIVE } from "./lib/constants";
@@ -88,12 +87,6 @@ function App() {
                   <PrivateRoute path="/pool/:poolName">
                     <PoolPage />
                   </PrivateRoute>
-                )}
-
-                {LIVE && (
-                  <Route path="/connect">
-                    <ConnectWallet />
-                  </Route>
                 )}
 
                 {LIVE && (

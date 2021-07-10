@@ -3,7 +3,6 @@ import { RootState } from "../../app/store";
 import { Pool } from "../../lib";
 import { Backd } from "../../lib/backd";
 import { Position } from "../../lib/types";
-import { logout } from "../account/accountSlice";
 import { handleTransactionConfirmation } from "../transactions-list/transactionsUtils";
 import { fetchAllowances, fetchBalances } from "../user/userSlice";
 
@@ -20,7 +19,6 @@ export const positionsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(logout, (state, action) => initialState);
     builder.addCase(fetchPositions.fulfilled, (state, action) => {
       return action.payload;
     });

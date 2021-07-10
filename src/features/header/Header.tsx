@@ -10,24 +10,19 @@ import { injectedConnector } from "../../app/web3";
 import logo from "../../images/backd_logo.png";
 import { Backd } from "../../lib/backd";
 import { Address } from "../../lib/types";
-import { isConnected, logout, setConnected } from "../account/accountSlice";
 import { TransactionsIndicator } from "../transactions-list/TransactionsIndicator";
 import { transactionsCount } from "../transactions-list/transactionsSlice";
 
 function AppNav() {
   const { library: backd, activate, active, deactivate } = useWeb3React<Backd>();
   const [account, setAccount] = useState<Address>("");
-  const connected = useSelector(isConnected);
   const dispatch = useDispatch<AppDispatch>();
 
   const activateWallet = () => {
-    activate(injectedConnector).then(() => {
-      dispatch(setConnected(true));
-    });
+    activate(injectedConnector);
   };
 
   const handleLogout = () => {
-    dispatch(logout());
     deactivate();
   };
 
@@ -40,7 +35,7 @@ function AppNav() {
 
   return (
     <Nav className={classnames("ml-auto")}>
-      {active && connected ? (
+      {active ? (
         <>
           <NavLink className="nav-link" to="/" exact={true}>
             Pools
