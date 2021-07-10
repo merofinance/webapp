@@ -143,6 +143,7 @@ const WalletSelectPopup = (props: Props) => {
 
           {walletOptions.map((option: WalletOption) => (
             <Option
+              key={option.name}
               leftColor={option.leftColor}
               rightColor={option.rightColor}
               onClick={() => connect(option.connector)}
