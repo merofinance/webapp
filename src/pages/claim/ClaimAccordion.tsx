@@ -56,6 +56,8 @@ const Arrow = styled.img`
   margin-left: 3.2rem;
   transition: transform 0.3s;
   transform: ${(props: ArrowProps) => (props.open ? "rotate(0deg)" : "rotate(180deg)")};
+  user-drag: none;
+  user-select: none;
 `;
 
 const ContentContainer = styled.div`
