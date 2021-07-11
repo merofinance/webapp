@@ -13,15 +13,11 @@ interface HeaderProps {
 }
 
 const Header = styled.div`
+  position: relative;
   width: 100%;
   box-shadow: 0px 0px 12px rgba(23, 18, 22, 0.05);
   border-top-right-radius: 1.4rem;
   border-top-left-radius: 1.4rem;
-  padding: 0 1.6rem;
-  height: 6.6rem;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
 
   transition: background-color 0.3s, border 0.3s,
     border-bottom-left-radius 0s ${(props: HeaderProps) => (props.open ? "0s" : "0.3s")},
@@ -78,15 +74,12 @@ interface Props {
   header: JSX.Element;
   content: JSX.Element;
   open: boolean;
-  toggle: () => void;
 }
 
-const Accordion = ({ header, content, open, toggle }: Props) => {
+const Accordion = ({ header, content, open }: Props) => {
   return (
     <StyledAccordion>
-      <Header open={open} onClick={toggle}>
-        {header}
-      </Header>
+      <Header open={open}>{header}</Header>
       <Body open={open}>
         <BodyContent>
           <Line />

@@ -8,9 +8,22 @@ import accordionChevron from "../../assets/ui/accordion-chevron.svg";
 import ClaimRow from "./ClaimRow";
 
 const Header = styled.div`
+  position: relative;
   width: 100%;
+  padding: 0 1.6rem;
+  height: 6.6rem;
   display: flex;
   align-items: center;
+`;
+
+const HeaderButton = styled.button`
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
 `;
 
 const AssetContainer = styled.div`
@@ -88,6 +101,7 @@ const ClaimAccordion = ({ open, toggle, rows }: Props) => {
     <Accordion
       header={
         <Header>
+          <HeaderButton onClick={toggle} />
           <AssetContainer>
             <Asset
               token={{
@@ -119,7 +133,6 @@ const ClaimAccordion = ({ open, toggle, rows }: Props) => {
         </ContentContainer>
       }
       open={open}
-      toggle={toggle}
     />
   );
 };
