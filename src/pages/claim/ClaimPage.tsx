@@ -51,6 +51,7 @@ const ClaimPage = () => {
       </Headers>
       {claims.map((claim: string, index: number) => (
         <ClaimAccordion
+          key={claim}
           open={openIndex !== null && openIndex === index}
           toggle={() => {
             if (openIndex !== null && openIndex === index) setOpenIndex(null);
