@@ -58,8 +58,8 @@ const ClaimRow = () => {
         />
       </ValueContainer>
       <EndContainer>
-        <Button text="Claim" background="#10092f" />
-        <Button primary text="Claim & Stake" />
+        <Button text="Claim" background="#10092f" width="12rem" />
+        <Button primary text="Claim & Stake" width="18rem" />
       </EndContainer>
     </StyledClaimRow>
   );

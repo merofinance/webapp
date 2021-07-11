@@ -101,8 +101,8 @@ const ClaimAccordion = ({ open, toggle }: Props) => {
           </ClaimableContainer>
           <Apr>5.2%</Apr>
           <EndContainer>
-            <Button text="Claim all" background="#1c0c37" />
-            <Button primary text="Claim all & Stake" />
+            <Button text="Claim all" background="#1c0c37" width="12rem" />
+            <Button primary text="Claim all & Stake" width="18rem" />
             <Arrow open={open} src={accordionChevron} />
           </EndContainer>
         </Header>
