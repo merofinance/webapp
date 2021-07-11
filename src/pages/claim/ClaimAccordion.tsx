@@ -65,6 +65,16 @@ const ContentContainer = styled.div`
   padding: 1.9rem 0;
 `;
 
+const Breakdown = styled.div`
+  font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  letter-spacing: 0.15px;
+  opacity: 0.6;
+  margin-bottom: 2.4rem;
+  margin-left: 1.6rem;
+`;
+
 interface Props {
   open: boolean;
   toggle: () => void;
@@ -99,6 +109,7 @@ const ClaimAccordion = ({ open, toggle }: Props) => {
       }
       content={
         <ContentContainer>
+          <Breakdown>Breakdown of claimable earnings:</Breakdown>
           <ClaimRow />
           <ClaimRow />
           <ClaimRow />
