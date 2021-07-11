@@ -114,7 +114,7 @@ const ClaimAccordion = ({ open, toggle, rows }: Props) => {
         <ContentContainer>
           <Breakdown>Breakdown of claimable earnings:</Breakdown>
           {rows.map((row: string, index: number) => (
-            <ClaimRow index={index} />
+            <ClaimRow key={row} index={index} />
           ))}
         </ContentContainer>
       }
