@@ -24,24 +24,29 @@ const Icon = styled.img`
   height: 2.4rem;
 `;
 
+interface LabelProps {
+  large?: boolean;
+}
+
 const Label = styled.div`
   text-transform: uppercase;
   font-weight: 700;
-  font-size: 1.6rem;
+  font-size: ${(props: LabelProps) => (props.large ? "2.4rem" : "1.6rem")};
   line-height: 2.4rem;
-  letter-spacing: 0.15px;
+  letter-spacing: ${(props: LabelProps) => (props.large ? "0.25px" : "0.15px")};
   margin-left: 1.2rem;
 `;
 
 type Props = {
   token: Token;
+  large?: boolean;
 };
 
-const Asset = ({ token }: Props) => {
+const Asset = ({ token, large }: Props) => {
   return (
     <StyledAsset>
       <Icon src={assets[token.symbol]} alt={`${token.symbol} icon`} />
-      <Label>{token.symbol.toUpperCase()}</Label>
+      <Label large={large}>{token.symbol.toUpperCase()}</Label>
     </StyledAsset>
   );
 };
