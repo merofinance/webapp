@@ -33,6 +33,17 @@ const ButtonHeader = styled.div`
   flex: 1.8;
 `;
 
+const Note = styled.a`
+  align-self: flex-end;
+  margin-right: 0.5rem;
+  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: 4.2rem;
+  letter-spacing: 0.25px;
+  transform: translateY(-4.5rem);
+  cursor: pointer;
+`;
+
 const ClaimPage = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
@@ -60,6 +71,9 @@ const ClaimPage = () => {
           rows={["meow", "woof", "cat"]}
         />
       ))}
+      <Note href="https://google.com/" target="_blank">
+        Where are my pool rewards?
+      </Note>
     </StyledPoolsPage>
   );
 };
