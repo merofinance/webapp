@@ -14,19 +14,22 @@ interface HeaderProps {
 
 const Header = styled.div`
   width: 100%;
-  background-color: #1c0c37;
   box-shadow: 0px 0px 12px rgba(23, 18, 22, 0.05);
   border-top-right-radius: 1.4rem;
   border-top-left-radius: 1.4rem;
-  border-bottom-left-radius: ${(props: HeaderProps) => (props.open ? "0" : "1.4rem")};
-  border-bottom-right-radius: ${(props: HeaderProps) => (props.open ? "0" : "1.4rem")};
   padding: 0 1.6rem;
   height: 6.6rem;
   display: flex;
   align-items: center;
   cursor: pointer;
 
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, border 0.3s,
+    border-bottom-left-radius 0s ${(props: HeaderProps) => (props.open ? "0s" : "0.3s")},
+    border-bottom-right-radius 0s ${(props: HeaderProps) => (props.open ? "0s" : "0.3s")};
+  border-bottom-left-radius: ${(props: HeaderProps) => (props.open ? "0" : "1.4rem")};
+  border-bottom-right-radius: ${(props: HeaderProps) => (props.open ? "0" : "1.4rem")};
+
+  background-color: #1c0c37;
   border: 1px solid rgba(255, 255, 255, 0);
   :hover {
     background-color: #191431;
