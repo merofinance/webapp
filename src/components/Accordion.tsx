@@ -26,7 +26,7 @@ const Header = styled.div`
   align-items: center;
   cursor: pointer;
 
-  transition: all 0.3s;
+  transition: background-color 0.3s;
   border: 1px solid rgba(255, 255, 255, 0);
   :hover {
     background-color: #191431;
