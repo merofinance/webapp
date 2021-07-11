@@ -75,6 +75,7 @@ const ClaimAccordion = ({ open, toggle }: Props) => {
                 symbol: "DAI",
                 decimals: 16,
               }}
+              large
             />
           </AssetContainer>
           <ClaimableContainer>
