@@ -45,7 +45,16 @@ const Note = styled.a`
 `;
 
 const ClaimPage = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openAccordions, setOpenAccordions] = useState<number[]>([0]);
+
+  const isOpen = (index: number): boolean => openAccordions.indexOf(index) >= 0;
+
+  const toggle = (index: number): void => {
+    const _openAccordions = [...openAccordions];
+    if (isOpen(index)) _openAccordions.splice(openAccordions.indexOf(index), 1);
+    else _openAccordions.push(index);
+    setOpenAccordions(_openAccordions);
+  };
 
   return (
     <StyledPoolsPage>
@@ -63,11 +72,8 @@ const ClaimPage = () => {
       {claims.map((claim: string, index: number) => (
         <ClaimAccordion
           key={claim}
-          open={openIndex !== null && openIndex === index}
-          toggle={() => {
-            if (openIndex !== null && openIndex === index) setOpenIndex(null);
-            else setOpenIndex(index);
-          }}
+          open={isOpen(index)}
+          toggle={() => toggle(index)}
           rows={["meow", "woof", "cat"]}
         />
       ))}
