@@ -57,6 +57,7 @@ const ClaimPage = () => {
             if (openIndex !== null && openIndex === index) setOpenIndex(null);
             else setOpenIndex(index);
           }}
+          rows={["meow", "woof", "cat"]}
         />
       ))}
     </StyledPoolsPage>

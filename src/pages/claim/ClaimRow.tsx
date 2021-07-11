@@ -3,15 +3,17 @@ import styled from "styled-components";
 import Asset from "../../components/Asset";
 import Button from "../../components/Button";
 
+interface ClaimRowProps {
+  index: number;
+}
+
 const StyledClaimRow = styled.div`
   display: flex;
   align-items: center;
   padding: 0.5rem 1.6rem;
 
-  transition: background-color 0.3s;
-  :hover {
-    background-color: rgba(21, 14, 59, 1);
-  }
+  background-color: ${(props: ClaimRowProps) =>
+    props.index % 2 === 0 ? "none" : "rgba(21, 14, 59, 1)"};
 `;
 
 const Label = styled.div`
@@ -51,9 +53,13 @@ const EndContainer = styled.div`
   }
 `;
 
-const ClaimRow = () => {
+interface Props {
+  index: number;
+}
+
+const ClaimRow = ({ index }: Props) => {
   return (
-    <StyledClaimRow>
+    <StyledClaimRow index={index}>
       <Label>ETH pool</Label>
       <ValueContainer>
         <Asset

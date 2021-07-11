@@ -80,9 +80,10 @@ const Breakdown = styled.div`
 interface Props {
   open: boolean;
   toggle: () => void;
+  rows: string[];
 }
 
-const ClaimAccordion = ({ open, toggle }: Props) => {
+const ClaimAccordion = ({ open, toggle, rows }: Props) => {
   return (
     <Accordion
       header={
@@ -112,9 +113,9 @@ const ClaimAccordion = ({ open, toggle }: Props) => {
       content={
         <ContentContainer>
           <Breakdown>Breakdown of claimable earnings:</Breakdown>
-          <ClaimRow />
-          <ClaimRow />
-          <ClaimRow />
+          {rows.map((row: string, index: number) => (
+            <ClaimRow index={index} />
+          ))}
         </ContentContainer>
       }
       open={open}
