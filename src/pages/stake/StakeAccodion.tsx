@@ -4,6 +4,7 @@ import Accordion from "../../components/Accordion";
 import Asset from "../../components/Asset";
 import GradientText from "../../styles/GradientText";
 import accordionChevron from "../../assets/ui/accordion-chevron.svg";
+import Tabs from "../../components/Tabs";
 
 const Header = styled.div`
   position: relative;
@@ -145,7 +146,22 @@ const StakeAccordion = ({ open, toggle, rows }: Props) => {
           </EndContainer>
         </Header>
       }
-      content={<ContentContainer></ContentContainer>}
+      content={
+        <ContentContainer>
+          <Tabs
+            tabs={[
+              {
+                label: "stake",
+                content: <p>test</p>,
+              },
+              {
+                label: "unstake",
+                content: <p>test</p>,
+              },
+            ]}
+          />
+        </ContentContainer>
+      }
       open={open}
     />
   );
