@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Seo from "../../components/Seo";
-import ClaimOverview from "./ClaimOverview";
+import ClaimSummary from "./ClaimSummary";
 import ClaimAccordion from "./ClaimAccordion";
 
 const claims: string[] = ["meow", "woof"];
@@ -62,7 +62,7 @@ const ClaimPage = () => {
         title="Claim Rewards & Yield"
         description="Claim rewards from Backd yield farming strategies and collateral top up fees"
       />
-      <ClaimOverview />
+      <ClaimSummary />
       <Headers>
         <Header>Asset</Header>
         <Header>Claimable (USD)</Header>
