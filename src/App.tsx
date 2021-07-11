@@ -24,6 +24,7 @@ import LandingPage from "./pages/landing/LandingPage";
 import styled from "styled-components";
 import Footer from "./components/Footer";
 import PoolsPage from "./pages/pools/PoolsPage";
+import StakePage from "./pages/stake/StakePage";
 import LitepaperPage from "./pages/litepaper/LitepaperPage";
 import { ConnectWallet } from "./features/account/ConnectWallet";
 import ClaimPage from "./pages/claim/ClaimPage";
@@ -105,6 +106,12 @@ function App() {
                 {LIVE && (
                   <Route path="/claim">
                     <ClaimPage />
+                  </Route>
+                )}
+
+                {LIVE && (
+                  <Route path="/stake">
+                    <StakePage />
                   </Route>
                 )}
 
