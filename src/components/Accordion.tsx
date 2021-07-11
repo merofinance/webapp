@@ -66,7 +66,7 @@ interface Props {
 const Accordion = ({ header, content, open, toggle }: Props) => {
   return (
     <StyledAccordion>
-      <Header open={open} onClick={() => toggle}>
+      <Header open={open} onClick={toggle}>
         {header}
       </Header>
       <Body>
