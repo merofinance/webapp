@@ -28,6 +28,15 @@ const ValueContainer = styled.div`
   align-items: center;
 `;
 
+const ValueUsd = styled.div`
+  font-weight: 400;
+  font-size: 1.8rem;
+  line-height: 2.7rem;
+  letter-spacing: 0.15px;
+  opacity: 0.6;
+  margin-left: 1.3rem;
+`;
+
 const EndContainer = styled.div`
   flex: 1.8;
   display: flex;
@@ -57,6 +66,7 @@ const ClaimRow = () => {
           value={18}
           small
         />
+        <ValueUsd>=$120.00</ValueUsd>
       </ValueContainer>
       <EndContainer>
         <Button text="Claim" background="#10092f" width="12rem" />
