@@ -34,16 +34,9 @@ const ButtonHeader = styled.div`
 `;
 
 const StakePage = () => {
-  const [openAccordions, setOpenAccordions] = useState<number[]>([0]);
+  const [activePool, setActivePool] = useState<number | null>(0);
 
-  const isOpen = (index: number): boolean => openAccordions.indexOf(index) >= 0;
-
-  const toggle = (index: number): void => {
-    const _openAccordions = [...openAccordions];
-    if (isOpen(index)) _openAccordions.splice(openAccordions.indexOf(index), 1);
-    else _openAccordions.push(index);
-    setOpenAccordions(_openAccordions);
-  };
+  const isOpen = (index: number): boolean => activePool !== null && activePool === index;
 
   return (
     <StyledPoolsPage>
@@ -59,7 +52,10 @@ const StakePage = () => {
         <StakeAccordion
           key={pool}
           open={isOpen(index)}
-          toggle={() => toggle(index)}
+          toggle={() => {
+            if (isOpen(index)) setActivePool(null);
+            else setActivePool(index);
+          }}
           rows={["meow", "woof", "cat"]}
         />
       ))}
