@@ -40,12 +40,22 @@ interface BodyProps {
 
 const Body = styled.div`
   width: 100%;
-  display: ${(props: BodyProps) => (props.open ? "flex" : "none")};
+  display: flex;
   flex-direction: column;
   background: rgba(21, 14, 59, 0.5);
   border-bottom-right-radius: 1.4rem;
   border-bottom-left-radius: 1.4rem;
   box-shadow: 0px 0px 12px rgba(23, 18, 22, 0.05);
+  overflow: hidden;
+
+  transition: max-height 0.3s ease-out;
+  max-height: ${(props: BodyProps) => (props.open ? "300px" : "0")};
+`;
+
+const BodyContent = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Line = styled.div`
@@ -75,8 +85,10 @@ const Accordion = ({ header, content, open, toggle }: Props) => {
         {header}
       </Header>
       <Body open={open}>
-        <Line />
-        <Content>{content}</Content>
+        <BodyContent>
+          <Line />
+          <Content>{content}</Content>
+        </BodyContent>
       </Body>
     </StyledAccordion>
   );
