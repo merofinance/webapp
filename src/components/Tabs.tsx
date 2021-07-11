@@ -32,6 +32,11 @@ interface OptionTextProps {
 }
 
 const OptionText = styled(GradientText)`
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: 0.46px;
+  text-transform: uppercase;
+
   color: ${(props: OptionTextProps) => (props.active ? "auto" : "rgba(255, 255, 255, 0.54)")};
 `;
 
