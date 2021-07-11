@@ -34,9 +34,13 @@ const Header = styled.div`
   }
 `;
 
+interface BodyProps {
+  open: boolean;
+}
+
 const Body = styled.div`
   width: 100%;
-  display: flex;
+  display: ${(props: BodyProps) => (props.open ? "flex" : "none")};
   flex-direction: column;
   background: rgba(21, 14, 59, 0.5);
   border-bottom-right-radius: 1.4rem;
@@ -70,7 +74,7 @@ const Accordion = ({ header, content, open, toggle }: Props) => {
       <Header open={open} onClick={toggle}>
         {header}
       </Header>
-      <Body>
+      <Body open={open}>
         <Line />
         <Content>{content}</Content>
       </Body>
