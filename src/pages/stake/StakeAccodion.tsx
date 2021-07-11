@@ -152,11 +152,11 @@ const StakeAccordion = ({ open, toggle, rows }: Props) => {
             tabs={[
               {
                 label: "stake",
-                content: <p>test</p>,
+                content: <p>test 1</p>,
               },
               {
                 label: "unstake",
-                content: <p>test</p>,
+                content: <p>test 2</p>,
               },
             ]}
           />

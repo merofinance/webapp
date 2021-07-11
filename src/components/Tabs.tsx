@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import GradientText from "../styles/GradientText";
 
@@ -19,12 +19,13 @@ const Options = styled.div`
   background-color: rgba(10, 6, 33, 0.45);
 `;
 
-const Option = styled.div`
+const Option = styled.button`
   width: 18rem;
   padding: 1.6rem 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 
 interface OptionTextProps {
@@ -54,10 +55,13 @@ interface ActiveLineProps {
 const ActiveLine = styled.div`
   position: absolute;
   top: 0;
+  left: 0;
   width: 18rem;
   height: 2px;
-  left: ${(props: ActiveLineProps) => `${props.activeIndex * 18}rem`};
   background: var(--gradient);
+
+  transition: transform 0.3s;
+  transform: translateX(${(props: ActiveLineProps) => `${props.activeIndex * 18}rem`});
 `;
 
 const Content = styled.div`
@@ -70,19 +74,21 @@ interface Props {
 }
 
 const Tabs = ({ tabs }: Props) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+
   return (
     <StyledTabs>
       <Options>
         {tabs.map((tab: TabType, index: number) => (
-          <Option>
-            <OptionText active={index === 0}>{tab.label}</OptionText>
+          <Option onClick={() => setActiveIndex(index)}>
+            <OptionText active={activeIndex === index}>{tab.label}</OptionText>
           </Option>
         ))}
       </Options>
       <LineContainer>
-        <ActiveLine activeIndex={0} />
+        <ActiveLine activeIndex={activeIndex} />
       </LineContainer>
-      <Content>{tabs[0].content}</Content>
+      <Content>{tabs[activeIndex].content}</Content>
     </StyledTabs>
   );
 };
