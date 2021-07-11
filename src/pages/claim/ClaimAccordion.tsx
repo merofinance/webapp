@@ -5,6 +5,7 @@ import Asset from "../../components/Asset";
 import Button from "../../components/Button";
 import GradientText from "../../styles/GradientText";
 import accordionChevron from "../../assets/ui/accordion-chevron.svg";
+import ClaimRow from "./ClaimRow";
 
 const Header = styled.div`
   width: 100%;
@@ -57,6 +58,13 @@ const Arrow = styled.img`
   transform: ${(props: ArrowProps) => (props.open ? "rotate(0deg)" : "rotate(180deg)")};
 `;
 
+const ContentContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1.9rem 0;
+`;
+
 interface Props {
   open: boolean;
   toggle: () => void;
@@ -89,7 +97,13 @@ const ClaimAccordion = ({ open, toggle }: Props) => {
           </EndContainer>
         </Header>
       }
-      content={<p>meow</p>}
+      content={
+        <ContentContainer>
+          <ClaimRow />
+          <ClaimRow />
+          <ClaimRow />
+        </ContentContainer>
+      }
       open={open}
       toggle={toggle}
     />
