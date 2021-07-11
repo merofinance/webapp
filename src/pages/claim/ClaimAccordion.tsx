@@ -10,7 +10,12 @@ const Header = styled.div`
   align-items: center;
 `;
 
+const AssetContainer = styled.div`
+  flex: 1;
+`;
+
 const Claimable = styled(GradientText)`
+  flex: 1;
   font-weight: 700;
   font-size: 1.8rem;
   line-height: 2.7rem;
@@ -18,6 +23,7 @@ const Claimable = styled(GradientText)`
 `;
 
 const Apr = styled.div`
+  flex: 1;
   font-weight: 900;
   font-size: 1.8rem;
   line-height: 2rem;
@@ -34,15 +40,18 @@ const ClaimAccordion = ({ open, toggle }: Props) => {
     <Accordion
       header={
         <Header>
-          <Asset
-            token={{
-              address: "skdfj",
-              name: "DAI",
-              symbol: "DAI",
-              decimals: 16,
-            }}
-          />
+          <AssetContainer>
+            <Asset
+              token={{
+                address: "skdfj",
+                name: "DAI",
+                symbol: "DAI",
+                decimals: 16,
+              }}
+            />
+          </AssetContainer>
           <Claimable>$430.00</Claimable>
+          <Apr>5.2%</Apr>
         </Header>
       }
       content={<p>meow</p>}
