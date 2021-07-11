@@ -24,10 +24,10 @@ const ClaimPage = () => {
       <ClaimOverview />
       {claims.map((claim: string, index: number) => (
         <ClaimAccordion
-          open={!!openIndex && openIndex === index}
+          open={openIndex !== null && openIndex === index}
           toggle={() => {
-            if (!!openIndex && openIndex === index) setOpenIndex(null);
-            setOpenIndex(index);
+            if (openIndex !== null && openIndex === index) setOpenIndex(null);
+            else setOpenIndex(index);
           }}
         />
       ))}
