@@ -7,6 +7,7 @@ const StyledPoolsOverview = styled.div`
   display: flex;
   margin: 0 8rem;
   justify-content: center;
+  margin-bottom: 7.4rem;
 `;
 
 const Container = styled.div`
