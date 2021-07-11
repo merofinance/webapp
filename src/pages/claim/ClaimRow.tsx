@@ -54,6 +54,7 @@ const ClaimRow = () => {
             symbol: "DAI",
             decimals: 16,
           }}
+          value={18}
           small
         />
       </ValueContainer>
