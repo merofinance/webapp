@@ -39,7 +39,7 @@ const Claimable = styled(GradientText)`
   letter-spacing: 0.15px;
 `;
 
-const Apr = styled.div`
+const Value = styled.div`
   flex: 1;
   font-weight: 900;
   font-size: 1.8rem;
@@ -47,8 +47,30 @@ const Apr = styled.div`
   letter-spacing: 0.15px;
 `;
 
+const ValueContainer = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+`;
+
+const ValueToken = styled.div`
+  font-weight: 700;
+  font-size: 1.8rem;
+  line-height: 2.7rem;
+  letter-spacing: 0.15px;
+`;
+
+const ValueUsd = styled.div`
+  font-weight: 400;
+  font-size: 1.8rem;
+  line-height: 2.7rem;
+  letter-spacing: 0.15px;
+  opacity: 0.6;
+  margin-left: 0.8rem;
+`;
+
 const EndContainer = styled.div`
-  flex: 1.8;
+  flex: 0.2;
   display: flex;
   justify-content: flex-end;
 
@@ -104,7 +126,12 @@ const StakeAccordion = ({ open, toggle, rows }: Props) => {
           <ClaimableContainer>
             <Claimable>$430.00</Claimable>
           </ClaimableContainer>
-          <Apr>5.2%</Apr>
+          <Value>5.2%</Value>
+          <ValueContainer>
+            <ValueToken>40 BKD</ValueToken>
+            <ValueUsd>=$3200.93</ValueUsd>
+          </ValueContainer>
+          <Value>$30,034</Value>
           <EndContainer>
             <Arrow open={open} src={accordionChevron} />
           </EndContainer>

@@ -29,8 +29,8 @@ const Header = styled.div`
   opacity: 0.6;
 `;
 
-const ButtonHeader = styled.div`
-  flex: 1.8;
+const ArrowHeader = styled.div`
+  flex: 0.2;
 `;
 
 const StakePage = () => {
@@ -46,7 +46,9 @@ const StakePage = () => {
         <Header>Asset</Header>
         <Header>Claimable (USD)</Header>
         <Header>APR</Header>
-        <ButtonHeader />
+        <Header>Staked</Header>
+        <Header>TVL</Header>
+        <ArrowHeader />
       </Headers>
       {pools.map((pool: string, index: number) => (
         <StakeAccordion
