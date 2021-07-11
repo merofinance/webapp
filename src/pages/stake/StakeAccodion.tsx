@@ -106,7 +106,7 @@ const ContentContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 1.9rem 0;
+  padding-bottom: 1.9rem;
 `;
 
 interface Props {
