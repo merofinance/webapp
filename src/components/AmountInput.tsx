@@ -25,9 +25,10 @@ type Props = {
   setValue: (v: number) => void;
   label: string;
   max: number;
+  noSlider?: boolean;
 };
 
-const AmountInput = ({ value, setValue, label, max }: Props) => {
+const AmountInput = ({ value, setValue, label, max, noSlider }: Props) => {
   return (
     <StyledAmountInput>
       <Available>{`Available: ${max}`}</Available>
@@ -42,7 +43,7 @@ const AmountInput = ({ value, setValue, label, max }: Props) => {
         buttonAction={() => setValue(max)}
         errorMessage="Invalid amount"
       />
-      <AmountSlider value={value} max={max} setValue={(v: number) => setValue(v)} />
+      {!noSlider && <AmountSlider value={value} max={max} setValue={(v: number) => setValue(v)} />}
     </StyledAmountInput>
   );
 };

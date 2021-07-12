@@ -51,6 +51,7 @@ const StakeTokens = ({ token }: Props) => {
       </Description>
       <Content>
         <AmountInput
+          noSlider
           value={value}
           setValue={(v: number) => setValue(v)}
           label="Enter an amount of BKD to stake"
