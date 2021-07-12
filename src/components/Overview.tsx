@@ -1,10 +1,12 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { selectPools, selectPrices } from "../features/pools-list/poolsListSlice";
-import { Pool } from "../lib";
-import { PLACEHOLDER_TOOLTIP } from "../lib/constants";
 import Tooltip from "./Tooltip";
+
+export interface OverviewRow {
+  label: string;
+  tooltip: string;
+  value: string;
+}
 
 const StyledOverview = styled.div`
   width: 40rem;
@@ -52,48 +54,24 @@ const Value = styled.div`
 `;
 
 type Props = {
-  pool?: Pool;
+  header: string;
+  rows: OverviewRow[];
 };
 
-const Overview = ({ pool }: Props) => {
-  const pools = useSelector(selectPools);
-  const prices = useSelector(selectPrices);
-
-  const getPrice = (pool: Pool) => prices[pool.underlying.symbol] || 0;
-
-  const locked = pool
-    ? pool.totalAssets * getPrice(pool)
-    : pools.reduce((a: number, b: Pool) => a + b.totalAssets * getPrice(b), 0);
-
-  const averageApy = pool
-    ? pool.apy
-    : pools.reduce((a: number, b: Pool) => a + b.apy, 0) / pools.length;
-
+const Overview = ({ header, rows }: Props) => {
   return (
     <div>
       <StyledOverview>
-        <Header>{pool ? "Pool Overview" : "Pools Overview"}</Header>
-        <StatisticContainer>
-          <LabelContainer>
-            <Label>{pool ? "Pool TVL" : "Platform TVL"}</Label>
-            <Tooltip content={PLACEHOLDER_TOOLTIP} />
-          </LabelContainer>
-          <Value>{`$${locked.toLocaleString()}`}</Value>
-        </StatisticContainer>
-        <StatisticContainer>
-          <LabelContainer>
-            <Label>{pool ? "APY" : "Average APY"}</Label>
-            <Tooltip content={PLACEHOLDER_TOOLTIP} />
-          </LabelContainer>
-          <Value>{`${averageApy.toLocaleString()}%`}</Value>
-        </StatisticContainer>
-        <StatisticContainer>
-          <LabelContainer>
-            <Label>{pool ? "Strategy" : "Revenue"}</Label>
-            <Tooltip content={PLACEHOLDER_TOOLTIP} />
-          </LabelContainer>
-          <Value>{pool ? pool.name : `${(0).toLocaleString()}`}</Value>
-        </StatisticContainer>
+        <Header>{header}</Header>
+        {rows.map((row: OverviewRow) => (
+          <StatisticContainer key={row.label}>
+            <LabelContainer>
+              <Label>{row.label}</Label>
+              <Tooltip content={row.tooltip} />
+            </LabelContainer>
+            <Value>{row.value}</Value>
+          </StatisticContainer>
+        ))}
       </StyledOverview>
     </div>
   );
