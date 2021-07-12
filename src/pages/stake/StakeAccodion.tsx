@@ -5,6 +5,9 @@ import Asset from "../../components/Asset";
 import GradientText from "../../styles/GradientText";
 import accordionChevron from "../../assets/ui/accordion-chevron.svg";
 import Tabs from "../../components/Tabs";
+import StakeTokens from "./StakeTokens";
+import { Token } from "../../lib/types";
+import { ETH_DUMMY_ADDRESS } from "../../lib/constants";
 
 const Header = styled.div`
   position: relative;
@@ -112,25 +115,23 @@ const ContentContainer = styled.div`
 interface Props {
   open: boolean;
   toggle: () => void;
-  rows: string[];
 }
 
-const StakeAccordion = ({ open, toggle, rows }: Props) => {
+const StakeAccordion = ({ open, toggle }: Props) => {
+  const token: Token = {
+    address: ETH_DUMMY_ADDRESS,
+    name: "DAI",
+    symbol: "DAI",
+    decimals: 16,
+  };
+
   return (
     <Accordion
       header={
         <Header>
           <HeaderButton onClick={toggle} />
           <AssetContainer>
-            <Asset
-              token={{
-                address: "skdfj",
-                name: "DAI",
-                symbol: "DAI",
-                decimals: 16,
-              }}
-              large
-            />
+            <Asset token={token} large />
           </AssetContainer>
           <ClaimableContainer>
             <Claimable>$430.00</Claimable>
@@ -152,7 +153,7 @@ const StakeAccordion = ({ open, toggle, rows }: Props) => {
             tabs={[
               {
                 label: "stake",
-                content: <p>test 1</p>,
+                content: <StakeTokens token={token} />,
               },
               {
                 label: "unstake",

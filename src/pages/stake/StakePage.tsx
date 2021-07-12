@@ -58,7 +58,6 @@ const StakePage = () => {
             if (isOpen(index)) setActivePool(null);
             else setActivePool(index);
           }}
-          rows={["meow", "woof", "cat"]}
         />
       ))}
     </StyledPoolsPage>
