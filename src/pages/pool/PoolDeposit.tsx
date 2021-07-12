@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import AmountInput from "../../components/AmountInput";
 import ContentSection from "../../components/ContentSection";
-import ProgressButtons from "../../components/DepositButtons";
+import ProgressButtons from "./DepositButtons";
 import { selectBalance } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
 

@@ -1,13 +1,13 @@
 import React from "react";
-import { Pool } from "../lib";
-import { useLoading } from "../app/hooks/use-loading";
-import { approve, deposit, selectDepositAllowance } from "../features/user/userSlice";
+import { Pool } from "../../lib";
+import { useLoading } from "../../app/hooks/use-loading";
+import { approve, deposit, selectDepositAllowance } from "../../features/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useBackd } from "../app/hooks/use-backd";
-import { AppDispatch } from "../app/store";
-import MultiStepButtons from "./MultiStepButtons";
-import { ETH_DUMMY_ADDRESS } from "../lib/constants";
-import Button from "./Button";
+import { useBackd } from "../../app/hooks/use-backd";
+import { AppDispatch } from "../../app/store";
+import MultiStepButtons from "../../components/MultiStepButtons";
+import { ETH_DUMMY_ADDRESS } from "../../lib/constants";
+import Button from "../../components/Button";
 
 type Props = {
   value: number;
