@@ -22,6 +22,7 @@ const Description = styled.div`
 const Content = styled.div`
   width: 100%;
   display: grid;
+  align-items: flex-end;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 1.8rem;
 `;
@@ -58,6 +59,7 @@ const StakeTokens = ({ token }: Props) => {
           max={balance}
         />
         <MultiStepButtons
+          stepsOnTop
           disabled={value === 0}
           firstText={`Approve ${token.symbol}`}
           firstAction={approve}

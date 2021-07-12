@@ -4,10 +4,14 @@ import Button from "./Button";
 import tick from "../assets/ui/tick.svg";
 import { useLoading } from "../app/hooks/use-loading";
 
+interface ButtonsProps {
+  stepsOnTop?: boolean;
+}
+
 const StyledMuliStepButtons = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: ${(props: ButtonsProps) => (props.stepsOnTop ? "column-reverse" : "column")};
   margin-top: 1.7rem;
 `;
 
@@ -16,7 +20,8 @@ const Buttons = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: ${(props: ButtonsProps) => (props.stepsOnTop ? "0" : "1rem")};
+  margin-top: ${(props: ButtonsProps) => (props.stepsOnTop ? "1.1rem" : "0")};
 `;
 
 const ProgressContainer = styled.div`
@@ -80,6 +85,7 @@ interface Props {
   secondText: string;
   secondAction: () => Promise<void>;
   secondHoverText: string;
+  stepsOnTop?: boolean;
 }
 
 const MultiStepButtons = ({
@@ -91,6 +97,7 @@ const MultiStepButtons = ({
   secondText,
   secondAction,
   secondHoverText,
+  stepsOnTop,
 }: Props) => {
   const { loading, setLoading } = useLoading();
 
@@ -101,8 +108,8 @@ const MultiStepButtons = ({
   };
 
   return (
-    <StyledMuliStepButtons>
-      <Buttons>
+    <StyledMuliStepButtons stepsOnTop={stepsOnTop}>
+      <Buttons stepsOnTop={stepsOnTop}>
         <Button
           primary
           medium
