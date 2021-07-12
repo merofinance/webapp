@@ -20,6 +20,7 @@ const Options = styled.div`
 `;
 
 const Option = styled.button`
+  position: relative;
   width: 18rem;
   padding: 1.6rem 0;
   display: flex;
@@ -28,17 +29,30 @@ const Option = styled.button`
   cursor: pointer;
 `;
 
+const OptionText = styled.div`
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: 0.46px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.54);
+`;
+
 interface OptionTextProps {
   active: boolean;
 }
 
-const OptionText = styled(GradientText)`
+const GradientOptionText = styled(GradientText)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-weight: 700;
   font-size: 1.6rem;
   letter-spacing: 0.46px;
   text-transform: uppercase;
 
-  color: ${(props: OptionTextProps) => (props.active ? "auto" : "rgba(255, 255, 255, 0.54)")};
+  transition: opacity 0.3s;
+  opacity: ${(props: OptionTextProps) => (props.active ? "1" : "0")};
 `;
 
 const LineContainer = styled.div`
@@ -81,7 +95,8 @@ const Tabs = ({ tabs }: Props) => {
       <Options>
         {tabs.map((tab: TabType, index: number) => (
           <Option onClick={() => setActiveIndex(index)}>
-            <OptionText active={activeIndex === index}>{tab.label}</OptionText>
+            <OptionText>{tab.label}</OptionText>
+            <GradientOptionText active={activeIndex === index}>{tab.label}</GradientOptionText>
           </Option>
         ))}
       </Options>
