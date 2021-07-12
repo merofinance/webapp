@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Tooltip from "./Tooltip";
 
-export interface OverviewRow {
+interface OverviewRow {
   label: string;
   tooltip: string;
   value: string;
