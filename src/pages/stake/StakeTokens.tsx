@@ -5,6 +5,7 @@ import AmountInput from "../../components/AmountInput";
 import MultiStepButtons from "../../components/MultiStepButtons";
 import { selectBalance } from "../../features/user/userSlice";
 import { Token } from "../../lib/types";
+import GradientText from "../../styles/GradientText";
 
 const StyledStakeTokens = styled.div`
   width: 100%;
@@ -18,6 +19,14 @@ const Description = styled.div`
   line-height: 2.6rem;
   letter-spacing: 0.46px;
   margin-bottom: 2rem;
+`;
+
+const MoreLink = styled(GradientText)`
+  font-weight: 500;
+  font-size: 1.8rem;
+  line-height: 2.6rem;
+  letter-spacing: 0.46px;
+  cursor: pointer;
 `;
 
 const Content = styled.div`
@@ -49,7 +58,8 @@ const StakeTokens = ({ token }: Props) => {
   return (
     <StyledStakeTokens>
       <Description>
-        Stake BKD and earn a share in x% of platform revenue, paid out in bkdDAI tokens. More
+        Stake BKD and earn a share in x% of platform revenue, paid out in bkdDAI tokens.{" "}
+        <MoreLink>More</MoreLink>
       </Description>
       <Content>
         <AmountInput
