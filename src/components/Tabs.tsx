@@ -80,7 +80,7 @@ const ActiveLine = styled.div`
 
 const Content = styled.div`
   width: 100%;
-  padding-top: 3.4rem;
+  padding: 2.4rem 1.6rem;
 `;
 
 interface Props {
