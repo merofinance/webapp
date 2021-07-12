@@ -8,7 +8,7 @@ import GradientText from "../../styles/GradientText";
 import Tooltip from "../../components/Tooltip";
 import { setError } from "../../features/error/errorSlice";
 import { registerPosition } from "../../features/positions/positionsSlice";
-import { openAndFocusWindow } from "../../lib/browser";
+import { openEtherscanAddress } from "../../lib/browser";
 import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 import { shortenAddress } from "../../lib/text";
 import { Pool, Position } from "../../lib/types";
@@ -114,11 +114,7 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
         <Content>
           <Summary>
             {`When the collateralization of `}
-            <Address
-              onClick={() => {
-                openAndFocusWindow(`https://etherscan.io/address/${position.account}`, "_blank");
-              }}
-            >
+            <Address onClick={() => openEtherscanAddress(position.account, "_blank")}>
               {shortenAddress(position.account, 26)}
             </Address>
             {` drops below ${position.threshold}, it will
@@ -142,11 +138,7 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
                 Borrower
                 <Tooltip content={PLACEHOLDER_TOOLTIP} />
               </Label>
-              <AddressLabel
-                onClick={() => {
-                  openAndFocusWindow(`https://etherscan.io/address/${position.account}`, "_blank");
-                }}
-              >
+              <AddressLabel onClick={() => openEtherscanAddress(position.account, "_blank")}>
                 {shortenAddress(position.account, 8)}
               </AddressLabel>
             </SummaryRow>
