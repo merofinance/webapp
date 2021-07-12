@@ -8,6 +8,7 @@ import Tabs from "../../components/Tabs";
 import StakeTokens from "./StakeTokens";
 import { Token } from "../../lib/types";
 import { ETH_DUMMY_ADDRESS } from "../../lib/constants";
+import UnstakeTokens from "./UnstakeTokens";
 
 const Header = styled.div`
   position: relative;
@@ -156,7 +157,7 @@ const StakeAccordion = ({ open, toggle }: Props) => {
               },
               {
                 label: "unstake",
-                content: <p>test 2</p>,
+                content: <UnstakeTokens token={token} />,
               },
             ]}
           />
