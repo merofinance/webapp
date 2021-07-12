@@ -30,23 +30,23 @@ const linkLists: LinkListType[] = [
       },
     ],
   },
-  {
-    header: "resources",
-    links: [
-      {
-        label: "Litepaper",
-        link: "/litepaper",
-      },
-      {
-        label: "Blog",
-        link: "https://backdfund.medium.com/",
-      },
-      {
-        label: "Fact Sheet",
-        link: "/fact-sheet.pdf",
-      },
-    ],
-  },
+  // {
+  //   header: "resources",
+  //   links: [
+  //     {
+  //       label: "Litepaper",
+  //       link: "/litepaper",
+  //     },
+  //     {
+  //       label: "Blog",
+  //       link: "https://backdfund.medium.com/",
+  //     },
+  //     {
+  //       label: "Fact Sheet",
+  //       link: "/fact-sheet.pdf",
+  //     },
+  //   ],
+  // },
   {
     header: "updates",
     links: [
