@@ -1,21 +1,17 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { selectPrices } from "../../features/pools-list/poolsListSlice";
 import { Pool } from "../../lib";
 import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 import Overview from "../../components/Overview";
+import { selectPrice } from "../../features/pool/selectors";
 
 interface Props {
   pool: Pool;
 }
 
 const PoolOverview = ({ pool }: Props) => {
-  const prices = useSelector(selectPrices);
-
-  const getPrice = (pool: Pool) => prices[pool.underlying.symbol] || 0;
-  const locked = pool.totalAssets * getPrice(pool);
-
-  const averageApy = pool.apy;
+  const price = useSelector(selectPrice(pool));
+  const locked = pool.totalAssets * price;
 
   return (
     <Overview
@@ -29,7 +25,7 @@ const PoolOverview = ({ pool }: Props) => {
         {
           label: "APY",
           tooltip: PLACEHOLDER_TOOLTIP,
-          value: `${averageApy.toLocaleString()}%`,
+          value: `${pool.apy.toLocaleString()}%`,
         },
         {
           label: "Strategy",
