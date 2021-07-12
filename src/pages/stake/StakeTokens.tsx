@@ -21,7 +21,9 @@ const Description = styled.div`
 
 const Content = styled.div`
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1.8rem;
 `;
 
 type Props = {
