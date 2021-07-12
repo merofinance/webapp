@@ -11,6 +11,7 @@ import { AppDispatch } from "../../app/store";
 import { useBackd } from "../../app/hooks/use-backd";
 import { Position } from "../../lib/types";
 import PositionRow from "./PositionRow";
+import PoolStatistics from "./PoolStatistics";
 
 type HeaderType = {
   label: string;
@@ -84,7 +85,7 @@ const PoolPositions = ({ pool }: Props) => {
   return (
     <ContentSection
       header="Top-up positions"
-      pool={pool}
+      statistics={<PoolStatistics pool={pool} />}
       content={
         <StyledPositions>
           <Headers>

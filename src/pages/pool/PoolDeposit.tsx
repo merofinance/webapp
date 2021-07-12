@@ -6,6 +6,7 @@ import ContentSection from "../../components/ContentSection";
 import ProgressButtons from "../../components/DepositButtons";
 import { selectBalance } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
+import PoolStatistics from "./PoolStatistics";
 
 const Content = styled.div`
   width: 100%;
@@ -24,7 +25,7 @@ const PoolDeposit = ({ pool }: Props) => {
   return (
     <ContentSection
       header={`Deposit ${pool.underlying.symbol.toUpperCase()}`}
-      pool={pool}
+      statistics={<PoolStatistics pool={pool} />}
       content={
         <Content>
           <AmountInput

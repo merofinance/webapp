@@ -8,6 +8,7 @@ import { Pool } from "../../lib";
 import Seo from "../../components/Seo";
 import PoolsRow from "./PoolsRow";
 import PoolsOverview from "./PoolsOverview";
+import PoolsStatistics from "./PoolsStatistics";
 
 const StyledPoolsPage = styled.div`
   width: 100%;
@@ -56,6 +57,7 @@ const PoolsPage = () => {
       />
       <ContentSection
         header="All pools"
+        statistics={<PoolsStatistics />}
         content={
           <Table>
             <HeaderRow>
