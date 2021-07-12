@@ -17,6 +17,7 @@ const Description = styled.div`
   font-size: 1.8rem;
   line-height: 2.6rem;
   letter-spacing: 0.46px;
+  margin-bottom: 2rem;
 `;
 
 const Content = styled.div`
