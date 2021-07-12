@@ -12,7 +12,7 @@ import { openAndFocusWindow } from "../../lib/browser";
 import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 import { shortenAddress } from "../../lib/text";
 import { Pool, Position } from "../../lib/types";
-import { selectPrices } from "../../features/pools-list/poolsListSlice";
+import { selectPrice } from "../../features/pool/selectors";
 
 const Content = styled.div`
   width: 100%;
@@ -80,14 +80,12 @@ type Props = {
 
 const NewPositionConfirmation = ({ show, close, position, pool, complete }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
+  const price = useSelector(selectPrice(pool));
   const backd = useBackd();
-
-  const prices = useSelector(selectPrices);
 
   const [loading, setLoading] = useState(false);
 
-  const getPrice = (pool: Pool) => prices[pool.underlying.symbol] || 0;
-  const getUsd = (amount: number) => `$${(getPrice(pool) * amount).toLocaleString()}`;
+  const getUsd = (amount: number) => `$${(price * amount).toLocaleString()}`;
 
   const executeRegister = () => {
     if (!backd) return;
