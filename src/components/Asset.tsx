@@ -24,7 +24,6 @@ interface IconProps {
 }
 
 const Icon = styled.img`
-  width: ${(props: IconProps) => (props.large ? "3.4rem" : "2.4rem")};
   height: ${(props: IconProps) => (props.large ? "3.4rem" : "2.4rem")};
 `;
 
