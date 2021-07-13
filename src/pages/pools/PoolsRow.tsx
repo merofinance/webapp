@@ -6,10 +6,12 @@ import chevron from "../../assets/ui/chevron.svg";
 import Asset from "../../components/Asset";
 import Button from "../../components/Button";
 import GradientText from "../../styles/GradientText";
-import { selectPrices } from "../../features/pools-list/poolsListSlice";
 import { selectBalances } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
 import { numberToCompactString } from "../../lib/numeric";
+import { selectPoolPositions } from "../../features/positions/positionsSlice";
+import { Position } from "../../lib/types";
+import { selectPrice } from "../../features/pool/selectors";
 
 type RowProps = {
   preview?: boolean;
@@ -114,11 +116,12 @@ type Props = {
 const PoolsRow = ({ pool, preview }: Props) => {
   const history = useHistory();
 
-  const prices = useSelector(selectPrices);
+  const price = useSelector(selectPrice(pool));
   const balances = useSelector(selectBalances);
+  const positions = useSelector(selectPoolPositions(pool));
 
   const getBalance = (pool: Pool) => balances[pool.lpToken.address] || 0;
-  const getPrice = (pool: Pool) => prices[pool.underlying.symbol] || 0;
+  const locked = positions.reduce((a: number, b: Position) => b.totalTopUp + a, 0);
 
   return (
     <Row onClick={() => history.push(`/pool/${pool.lpToken.symbol}`)} preview={preview}>
@@ -128,8 +131,8 @@ const PoolsRow = ({ pool, preview }: Props) => {
       <Data>
         <Apy>{`${pool.apy}%`}</Apy>
       </Data>
-      <Data>{numberToCompactString(pool.totalAssets * getPrice(pool))}</Data>
-      {!preview && <Data>{`$${(getBalance(pool) * getPrice(pool)).toLocaleString()}`}</Data>}
+      <Data>{numberToCompactString(pool.totalAssets * price)}</Data>
+      {!preview && <Data>{`$${((getBalance(pool) + locked) * price).toLocaleString()}`}</Data>}
       <ChevronData preview={preview}>
         <Chevron src={chevron} alt="right arrow" />
       </ChevronData>

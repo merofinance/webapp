@@ -6,11 +6,12 @@ import Tooltip from "../../components/Tooltip";
 import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 import { Pool } from "../../lib";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPositions, selectPositions } from "../../features/positions/positionsSlice";
+import { fetchPositions, selectPoolPositions } from "../../features/positions/positionsSlice";
 import { AppDispatch } from "../../app/store";
 import { useBackd } from "../../app/hooks/use-backd";
 import { Position } from "../../lib/types";
 import PositionRow from "./PositionRow";
+import PoolStatistics from "./PoolStatistics";
 
 type HeaderType = {
   label: string;
@@ -72,7 +73,7 @@ type Props = {
 };
 
 const PoolPositions = ({ pool }: Props) => {
-  const positions = useSelector(selectPositions(pool));
+  const positions = useSelector(selectPoolPositions(pool));
   const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();
 
@@ -84,7 +85,7 @@ const PoolPositions = ({ pool }: Props) => {
   return (
     <ContentSection
       header="Top-up positions"
-      pool={pool}
+      statistics={<PoolStatistics pool={pool} />}
       content={
         <StyledPositions>
           <Headers>
