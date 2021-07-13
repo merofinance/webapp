@@ -54,7 +54,9 @@ export const removePosition = createAsyncThunk(
   }
 );
 
-export function selectPositions(pool: Pool): (state: RootState) => Position[] {
+export const selectPositions = (state: RootState) => state.positions;
+
+export function selectPoolPositions(pool: Pool): (state: RootState) => Position[] {
   return (state: RootState) =>
     state.positions.filter((p) => p.actionToken === pool.underlying.address);
 }

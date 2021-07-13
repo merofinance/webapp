@@ -1,7 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { Pool } from "../lib";
-import Statistics from "./Statistics";
 
 const StyledContentSection = styled.div`
   flex: 1;
@@ -29,7 +27,7 @@ type LineProps = {
 const Line = styled.div`
   width: 100%;
   height: ${(props: LineProps) => (props.large ? "5px" : "2px")};
-  background: linear-gradient(to right, rgba(197, 50, 249, 1), rgba(50, 178, 229, 1));
+  background: var(--gradient);
   opacity: 0.2;
 `;
 
@@ -42,16 +40,16 @@ const Content = styled.div`
 
 type Props = {
   header: string;
+  statistics: JSX.Element;
   content: JSX.Element;
-  pool?: Pool;
 };
 
-const ContentSection = ({ header, content, pool }: Props) => {
+const ContentSection = ({ header, statistics, content }: Props) => {
   return (
     <StyledContentSection>
       <Header>{header}</Header>
-      <Statistics pool={pool} />
       <Line large />
+      {statistics}
       <Line />
       <Content>{content}</Content>
     </StyledContentSection>
