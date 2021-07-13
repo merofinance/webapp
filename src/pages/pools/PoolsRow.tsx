@@ -8,7 +8,7 @@ import Button from "../../components/Button";
 import GradientText from "../../styles/GradientText";
 import { selectBalances } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
-import { numberToCompactString } from "../../lib/numeric";
+import { numberToCompactCurrency } from "../../lib/numeric";
 import { selectPoolPositions } from "../../features/positions/positionsSlice";
 import { Position } from "../../lib/types";
 import { selectPrice } from "../../features/pool/selectors";
@@ -131,7 +131,7 @@ const PoolsRow = ({ pool, preview }: Props) => {
       <Data>
         <Apy>{`${pool.apy}%`}</Apy>
       </Data>
-      <Data>{numberToCompactString(pool.totalAssets * price)}</Data>
+      <Data>{numberToCompactCurrency(pool.totalAssets * price)}</Data>
       {!preview && <Data>{`$${((getBalance(pool) + locked) * price).toLocaleString()}`}</Data>}
       <ChevronData preview={preview}>
         <Chevron src={chevron} alt="right arrow" />
