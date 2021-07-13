@@ -14,7 +14,7 @@ export function PrivateRoute({ children }: PrivateRouteProps) {
   return (
     <Route>
       {children}
-      <WalletSelectPopup show={!active} close={() => {}} exit={() => history.push("/")} />
+      <WalletSelectPopup disableBackgroundClose show={!active} close={() => history.push("/")} />
     </Route>
   );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import close from "../assets/ui/close.svg";
+import closeIcon from "../assets/ui/close.svg";
 import Button from "./Button";
 
 const StyledPopup = styled.div`
@@ -65,37 +65,43 @@ type Props = {
   confirm?: boolean;
   submit?: () => void;
   loading?: boolean;
-  exit?: () => void;
+  disableBackgroundClose?: boolean;
 };
 
-const Popup = (props: Props): JSX.Element => {
-  if (!props.show) return <></>;
+const Popup = ({
+  show,
+  close,
+  header,
+  content,
+  confirm,
+  submit,
+  loading,
+  disableBackgroundClose,
+}: Props): JSX.Element => {
+  if (!show) return <></>;
 
   return (
     <StyledPopup>
-      <ExitEvent onClick={() => props.close()} />
+      <ExitEvent
+        onClick={() => {
+          if (!disableBackgroundClose) close();
+        }}
+      />
       <PopupContainer>
-        <Exit
-          src={close}
-          onClick={() => {
-            if (props.exit) props.exit();
-            props.close();
-          }}
-          alt="exit button"
-        />
-        {props.header && <Header>{props.header}</Header>}
-        {props.content && props.content}
-        {props.confirm && props.submit && (
+        <Exit src={closeIcon} onClick={() => close()} alt="exit button" />
+        {header && <Header>{header}</Header>}
+        {content && content}
+        {confirm && submit && (
           <ButtonContainer>
-            <Button medium background="#252140" text="Cancel" click={props.close} />
+            <Button medium background="#252140" text="Cancel" click={close} />
             <Button
               primary
               medium
               text="Confirm"
               click={() => {
-                if (props.submit) props.submit();
+                if (submit) submit();
               }}
-              loading={props.loading}
+              loading={loading}
             />
           </ButtonContainer>
         )}

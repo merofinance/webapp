@@ -107,25 +107,25 @@ const Icon = styled.img`
   max-width: 100%;
 `;
 
-type Props = {
+interface Props {
   show: boolean;
   close: () => void;
-  exit?: () => void;
-};
+  disableBackgroundClose?: boolean;
+}
 
-const WalletSelectPopup = (props: Props) => {
+const WalletSelectPopup = ({ show, close, disableBackgroundClose }: Props) => {
   const { activate } = useWeb3React();
 
   const connect = async (connector: AbstractConnector) => {
     await activate(connector);
-    props.close();
+    if (!disableBackgroundClose) close();
   };
 
   return (
     <Popup
-      show={props.show}
-      close={props.close}
-      exit={props.exit}
+      disableBackgroundClose={disableBackgroundClose}
+      show={show}
+      close={close}
       header="Connect your wallet"
       content={
         <Content>
