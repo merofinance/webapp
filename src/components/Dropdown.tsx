@@ -87,6 +87,7 @@ const Dropdown = (props: Props) => {
           <Popup>
             {props.options.map((option: string) => (
               <Option
+                key={option}
                 onClick={() => {
                   props.setValue(option);
                   setPopupOpen(false);

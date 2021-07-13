@@ -8,14 +8,14 @@ import { Pool } from "../../lib";
 import { NewPositionRow } from "./NewPositionRow";
 import { PositionRow } from "./PositionRow";
 import styles from "./Positions.module.scss";
-import { fetchPositions, selectPositions } from "./positionsSlice";
+import { fetchPositions, selectPoolPositions } from "./positionsSlice";
 
 type PositionsProps = {
   pool: Pool;
 };
 
 export function Positions({ pool }: PositionsProps) {
-  const positions = useSelector(selectPositions(pool));
+  const positions = useSelector(selectPoolPositions(pool));
   const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();
 
@@ -111,9 +111,9 @@ export function Positions({ pool }: PositionsProps) {
           {positions.map((position) => {
             return (
               <PositionRow
+                key={position.account + position.protocol}
                 position={position}
                 pool={pool}
-                key={position.account + position.protocol}
               />
             );
           })}
