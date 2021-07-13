@@ -5,6 +5,7 @@ import AmountInput from "../../components/AmountInput";
 import ContentSection from "../../components/ContentSection";
 import { selectBalance } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
+import PoolStatistics from "./PoolStatistics";
 import WithdrawalButton from "./WithdrawButton";
 
 const Content = styled.div`
@@ -27,7 +28,7 @@ const PoolWithdraw = ({ pool }: Props) => {
   return (
     <ContentSection
       header={`Withdraw ${pool.underlying.symbol.toUpperCase()}`}
-      pool={pool}
+      statistics={<PoolStatistics pool={pool} />}
       content={
         <Content>
           <AmountInput

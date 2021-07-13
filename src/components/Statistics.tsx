@@ -1,10 +1,12 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { selectPools, selectPrices } from "../features/pools-list/poolsListSlice";
-import { selectBalances } from "../features/user/userSlice";
-import { Pool } from "../lib";
-import Statistic from "./Statistic";
+import Tooltip from "./Tooltip";
+
+interface StatisticType {
+  header: string;
+  tooltip: string;
+  value: string;
+}
 
 const StyledStatistics = styled.div`
   width: 100%;
@@ -13,52 +15,49 @@ const StyledStatistics = styled.div`
   padding-bottom: 2.6rem;
 `;
 
+const Statistic = styled.div`
+  width: 23.6rem;
+  display: flex;
+  flex-direction: column;
+`;
+
+const HeaderContaner = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.7rem;
+`;
+
+const Header = styled.div`
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  letter-spacing: 0.15px;
+  opacity: 0.5;
+`;
+
+const Value = styled.div`
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 2.8rem;
+  letter-spacing: 0.15px;
+`;
+
 type Props = {
-  pool?: Pool;
+  statistics: StatisticType[];
 };
 
-const Statistics = ({ pool }: Props) => {
-  const pools = useSelector(selectPools);
-  const prices = useSelector(selectPrices);
-  const balances = useSelector(selectBalances);
-
-  const getBalance = (pool: Pool) => balances[pool.lpToken.address] || 0;
-  const getPrice = (pool: Pool) => prices[pool.underlying.symbol] || 0;
-
-  const deposits = pool
-    ? getBalance(pool) * getPrice(pool)
-    : pools.reduce((a: number, b: Pool) => a + getBalance(b) * getPrice(b), 0);
-
-  const locked = pool
-    ? pool.totalAssets * getPrice(pool)
-    : pools.reduce((a: number, b: Pool) => a + b.totalAssets * getPrice(b), 0);
-
+const Statistics = ({ statistics }: Props) => {
   return (
     <StyledStatistics>
-      <Statistic
-        statistic={{
-          header: "Your deposits",
-          value: `$${deposits.toLocaleString()}`,
-          tooltip:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
-        }}
-      />
-      <Statistic
-        statistic={{
-          header: "Locked in position",
-          value: `$${locked.toLocaleString()}`,
-          tooltip:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
-        }}
-      />
-      <Statistic
-        statistic={{
-          header: "Rewards accrued",
-          value: "$0.00",
-          tooltip:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
-        }}
-      />
+      {statistics.map((statistic: StatisticType) => (
+        <Statistic key={statistic.header}>
+          <HeaderContaner>
+            <Header>{statistic.header}</Header>
+            <Tooltip content={statistic.tooltip} />
+          </HeaderContaner>
+          <Value>{statistic.value}</Value>
+        </Statistic>
+      ))}
     </StyledStatistics>
   );
 };
