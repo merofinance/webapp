@@ -30,8 +30,8 @@ type Props = {
 const AmountInput = ({ value, setValue, label, max }: Props) => {
   const error = () => {
     if (value < 0) return "Amount must be a positive number";
-    else if (value > max) return "Amount exceeds available balance";
-    else return "";
+    if (value > max) return "Amount exceeds available balance";
+    return "";
   };
 
   return (
