@@ -48,7 +48,7 @@ const AmountInput = ({ value, setValue, label, max }: Props) => {
         buttonAction={() => setValue(max)}
         errorMessage={error()}
       />
-      <AmountSlider value={value} max={max} setValue={(v: number) => setValue(v)} />
+      <AmountSlider value={value} max={max} setValue={setValue} />
     </StyledAmountInput>
   );
 };

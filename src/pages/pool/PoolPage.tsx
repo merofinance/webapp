@@ -5,10 +5,11 @@ import styled from "styled-components";
 import Radio, { RadioOptionType } from "../../components/Radio";
 import Button from "../../components/Button";
 import { selectPool } from "../../features/pool/selectors";
+import Seo from "../../components/Seo";
 import PoolDeposit from "./PoolDeposit";
-import Overview from "../../components/Overview";
 import PoolPositions from "./PoolPositions";
 import PoolWithdraw from "./PoolWithdraw";
+import PoolOverview from "./PoolOverview";
 
 type DepositWithdrawParams = {
   poolName: string;
@@ -62,13 +63,17 @@ const PoolPage = () => {
 
   return (
     <StyledPoolPage>
+      <Seo
+        title="DAI Pool"
+        description="Deposit DAI to farm yield while protecting your DeFi loan (Aave, Compound, etc.) from liquidation"
+      />
       <Radio options={tabs} active={tab} setOption={(value: string) => setTab(value)} />
       <Content>
         {tab === "deposit" && <PoolDeposit pool={pool} />}
         {tab === "withdraw" && <PoolWithdraw pool={pool} />}
         {tab === "positions" && <PoolPositions pool={pool} />}
         <RightColumn>
-          <Overview pool={pool} />
+          <PoolOverview pool={pool} />
           {tab !== "positions" && (
             <ButtonContainer>
               <Button medium text="+ Create a Top-up Position" click={() => setTab("positions")} />
