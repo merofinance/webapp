@@ -4,6 +4,7 @@ import { selectPools, selectPrices } from "../../features/pools-list/poolsListSl
 import { Pool } from "../../lib";
 import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 import Overview from "../../components/Overview";
+import { numberToCompactCurrency } from "../../lib/numeric";
 
 const PoolsOverview = () => {
   const pools = useSelector(selectPools);
@@ -20,7 +21,7 @@ const PoolsOverview = () => {
         {
           label: "Platform TVL",
           tooltip: PLACEHOLDER_TOOLTIP,
-          value: `$${locked.toLocaleString()}`,
+          value: numberToCompactCurrency(locked),
         },
         {
           label: "Average APY",
