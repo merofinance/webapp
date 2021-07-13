@@ -1,4 +1,5 @@
 import React from "react";
+import { ETHERSCAN_URL } from "../../lib/constants";
 import { Address } from "../../lib/types";
 
 const defaultMaxLength = 10;
@@ -21,7 +22,7 @@ export function EthAddress({
   ellipsis = defaultEllipsis,
   etherscanLink = false,
 }: EthAddressProps) {
-  const etherscanURL = `https://etherscan.io/address/${value}`;
+  const etherscanURL = `${ETHERSCAN_URL}${value}`;
 
   const hasPrefix = value.startsWith(addressPrefix);
   if (hasPrefix) {

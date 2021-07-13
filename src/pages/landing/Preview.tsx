@@ -71,7 +71,7 @@ const Preview = () => {
           <Header></Header>
         </HeaderRow>
         {pools.map((pool: Pool) => (
-          <PoolsRow preview pool={pool} />
+          <PoolsRow key={pool.name} preview pool={pool} />
         ))}
       </Table>
     </StyledPreview>
