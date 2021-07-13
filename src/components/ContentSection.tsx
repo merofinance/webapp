@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Statistic, { StatisticType } from "./Statistic";
 
 const StyledContentSection = styled.div`
   flex: 1;
@@ -8,7 +7,6 @@ const StyledContentSection = styled.div`
   flex-direction: column;
   border-radius: 1.4rem;
   background-color: rgba(21, 14, 59, 0.5);
-  min-height: 48.7rem;
 `;
 
 const Header = styled.h2`
@@ -29,15 +27,8 @@ type LineProps = {
 const Line = styled.div`
   width: 100%;
   height: ${(props: LineProps) => (props.large ? "5px" : "2px")};
-  background: linear-gradient(to right, rgba(197, 50, 249, 1), rgba(50, 178, 229, 1));
+  background: var(--gradient);
   opacity: 0.2;
-`;
-
-const Statistics = styled.div`
-  width: 100%;
-  display: flex;
-  padding: 2.2rem 1.6rem;
-  padding-bottom: 2.6rem;
 `;
 
 const Content = styled.div`
@@ -49,22 +40,18 @@ const Content = styled.div`
 
 type Props = {
   header: string;
-  statistics: StatisticType[];
+  statistics: JSX.Element;
   content: JSX.Element;
 };
 
-const ContentSection = (props: Props) => {
+const ContentSection = ({ header, statistics, content }: Props) => {
   return (
     <StyledContentSection>
-      <Header>{props.header}</Header>
+      <Header>{header}</Header>
       <Line large />
-      <Statistics>
-        {props.statistics.map((statistic: StatisticType) => (
-          <Statistic statistic={statistic} />
-        ))}
-      </Statistics>
+      {statistics}
       <Line />
-      <Content>{props.content}</Content>
+      <Content>{content}</Content>
     </StyledContentSection>
   );
 };

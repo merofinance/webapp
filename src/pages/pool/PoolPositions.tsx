@@ -1,18 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import ContentSection from "../../components/ContentSection";
-import deleteIcon from "../../assets/ui/delete.svg";
 import NewPosition from "./NewPosition";
 import Tooltip from "../../components/Tooltip";
 import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
-
-export type PositionType = {
-  protocol: string;
-  borrower: string;
-  threshold: number;
-  single: number;
-  total: number;
-};
+import { Pool } from "../../lib";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPositions, selectPoolPositions } from "../../features/positions/positionsSlice";
+import { AppDispatch } from "../../app/store";
+import { useBackd } from "../../app/hooks/use-backd";
+import { Position } from "../../lib/types";
+import PositionRow from "./PositionRow";
+import PoolStatistics from "./PoolStatistics";
 
 type HeaderType = {
   label: string;
@@ -69,102 +68,38 @@ const HeaderText = styled.div`
   opacity: 0.6;
 `;
 
-const Position = styled.div`
-  width: 100%;
-  display: flex;
-  background: #2c2846;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 1.2rem;
-  padding: 1.7rem 2rem;
-  margin-top: 0.6rem;
-
-  > div:last-child {
-    justify-content: flex-end;
-  }
-`;
-
-const Value = styled.div`
-  flex: 1;
-  font-weight: 400;
-  font-size: 1.4rem;
-  letter-spacing: 0.15px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-`;
-
-const DeleteButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  cursor: pointer;
-`;
-
-const Delete = styled.img`
-  height: 1.4rem;
-`;
-
 type Props = {
-  token: string;
+  pool: Pool;
 };
 
-const PoolPositions = (props: Props) => {
+const PoolPositions = ({ pool }: Props) => {
+  const positions = useSelector(selectPoolPositions(pool));
+  const dispatch = useDispatch<AppDispatch>();
+  const backd = useBackd();
+
+  useEffect(() => {
+    if (!backd) return;
+    dispatch(fetchPositions({ backd }));
+  }, [backd, dispatch, pool]);
+
   return (
     <ContentSection
       header="Top-up positions"
-      statistics={[
-        {
-          header: "Your deposits",
-          value: "$130,000.00",
-          tooltip: PLACEHOLDER_TOOLTIP,
-        },
-        {
-          header: "Locked in position",
-          value: "$90,000.00",
-          tooltip: PLACEHOLDER_TOOLTIP,
-        },
-        {
-          header: "Rewards accrued",
-          value: "$14,000.00",
-          tooltip: PLACEHOLDER_TOOLTIP,
-        },
-      ]}
+      statistics={<PoolStatistics pool={pool} />}
       content={
         <StyledPositions>
           <Headers>
             {headers.map((header: HeaderType) => (
-              <Header>
+              <Header key={header.label}>
                 <HeaderText>{header.label}</HeaderText> <Tooltip content={header.tooltip} />
               </Header>
             ))}
             <Header></Header>
           </Headers>
-          <NewPosition />
-          <Position>
-            <Value>Compound</Value>
-            <Value>0xf76...5255</Value>
-            <Value>1.03</Value>
-            <Value>3,000 DAI</Value>
-            <Value>8,000 DAI</Value>
-            <Value>
-              <DeleteButton>
-                <Delete src={deleteIcon} alt="delete button" />
-              </DeleteButton>
-            </Value>
-          </Position>
-          <Position>
-            <Value>Aave</Value>
-            <Value>0xf76...5255</Value>
-            <Value>1.03</Value>
-            <Value>3,000 DAI</Value>
-            <Value>8,000 DAI</Value>
-            <Value>
-              <DeleteButton>
-                <Delete src={deleteIcon} alt="delete button" />
-              </DeleteButton>
-            </Value>
-          </Position>
+          <NewPosition pool={pool} />
+          {positions.map((position: Position, index: number) => (
+            <PositionRow key={index} position={position} pool={pool} />
+          ))}
         </StyledPositions>
       }
     />

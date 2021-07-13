@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import AmountInput from "../../components/AmountInput";
 import ContentSection from "../../components/ContentSection";
-import ProgressButtons from "../../components/ProgressButtons";
+import { selectBalance } from "../../features/user/userSlice";
+import { Pool } from "../../lib";
+import PoolStatistics from "./PoolStatistics";
+import WithdrawalButton from "./WithdrawButton";
 
 const Content = styled.div`
   width: 100%;
@@ -11,37 +15,33 @@ const Content = styled.div`
 `;
 
 type Props = {
-  token: string;
+  pool: Pool;
 };
 
-const PoolWithdraw = (props: Props) => {
+const PoolWithdraw = ({ pool }: Props) => {
+  const totalBalance = useSelector(selectBalance(pool));
+  const staked = useSelector(selectBalance(pool.stakerVaultAddress));
+  const availableToWithdraw = totalBalance - staked;
+
+  const [withdrawAmount, setWithdrawAmount] = useState(0);
+
   return (
     <ContentSection
-      header={`Withdraw ${props.token.toUpperCase()}`}
-      statistics={[
-        {
-          header: "Your deposits",
-          value: "$130,000.00",
-          tooltip:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
-        },
-        {
-          header: "Locked in position",
-          value: "$90,000.00",
-          tooltip:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
-        },
-        {
-          header: "Rewards accrued",
-          value: "$14,000.00",
-          tooltip:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
-        },
-      ]}
+      header={`Withdraw ${pool.underlying.symbol.toUpperCase()}`}
+      statistics={<PoolStatistics pool={pool} />}
       content={
         <Content>
-          <AmountInput label="Enter an amount of USDC to withdraw" max={100} />
-          <ProgressButtons token={""} symbol={"dai"} buttonText="Deposit and Stake" />
+          <AmountInput
+            value={withdrawAmount}
+            setValue={(v: number) => setWithdrawAmount(v)}
+            label={`Enter an amount of ${pool.underlying.symbol.toUpperCase()} to withdraw`}
+            max={availableToWithdraw}
+          />
+          <WithdrawalButton
+            pool={pool}
+            value={withdrawAmount}
+            complete={() => setWithdrawAmount(0)}
+          />
         </Content>
       }
     />

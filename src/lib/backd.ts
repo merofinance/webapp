@@ -90,7 +90,7 @@ export class Web3Backd implements Backd {
   }
 
   async listPools(): Promise<Pool[]> {
-    const markets = await this.controller.allMarkets();
+    const markets = await this.controller.allPools();
     return Promise.all(markets.map((v: any) => this.getPoolInfo(v)));
   }
 
@@ -116,7 +116,7 @@ export class Web3Backd implements Backd {
         pool.getUnderlying(),
         pool.totalUnderlying(),
         pool.computeAPY(),
-        pool.currentExchangeRate(),
+        pool.lastExchangeRate(),
       ]);
     const [lpToken, underlying, stakerVaultAddress] = await Promise.all([
       this.getTokenInfo(lpTokenAddress),
@@ -161,7 +161,7 @@ export class Web3Backd implements Backd {
   async registerPosition(pool: Pool, position: Position): Promise<ContractTransaction> {
     const decimals = pool.underlying.decimals;
     const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
-    const rawExchangeRate = await poolContract.currentExchangeRate();
+    const rawExchangeRate = await poolContract.lastExchangeRate();
     const protocol = utils.formatBytes32String(position.protocol);
     const rawPosition = transformPosition(position, (v) => floatToBigNumber(v, decimals));
     const depositAmount = rawPosition.totalTopUp.mul(rawExchangeRate).div(DEFAULT_SCALE);
@@ -232,7 +232,7 @@ export class Web3Backd implements Backd {
   async withdraw(pool: Address, amount: number): Promise<ContractTransaction> {
     const poolContract = LiquidityPoolFactory.connect(pool, this._provider);
     const scaledAmount = floatToBigNumber(amount);
-    return poolContract.redeem(scaledAmount);
+    return poolContract["redeem(uint256)"](scaledAmount);
   }
 
   async unstake(vault: Address, amount: number): Promise<ContractTransaction> {

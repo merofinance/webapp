@@ -1,28 +1,36 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { selectPools, selectPrices } from "../../features/pools-list/poolsListSlice";
+import { Pool } from "../../lib";
+import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 import Overview from "../../components/Overview";
 
 const PoolsOverview = () => {
+  const pools = useSelector(selectPools);
+  const prices = useSelector(selectPrices);
+
+  const getPrice = (pool: Pool) => prices[pool.underlying.symbol] || 0;
+  const locked = pools.reduce((a: number, b: Pool) => a + b.totalAssets * getPrice(b), 0);
+  const averageApy = pools.reduce((a: number, b: Pool) => a + b.apy, 0) / pools.length;
+
   return (
     <Overview
-      header="Backd statistics"
-      statistics={[
+      header="Pools Overview"
+      rows={[
         {
-          header: "Platform TVL",
-          value: "$142m",
-          tooltip:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
+          label: "Platform TVL",
+          tooltip: PLACEHOLDER_TOOLTIP,
+          value: `$${locked.toLocaleString()}`,
         },
         {
-          header: "Average APY",
-          value: "32.24%",
-          tooltip:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
+          label: "Average APY",
+          tooltip: PLACEHOLDER_TOOLTIP,
+          value: `${averageApy.toLocaleString()}%`,
         },
         {
-          header: "Revenue",
-          value: "$10.3m",
-          tooltip:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
+          label: "Revenue",
+          tooltip: PLACEHOLDER_TOOLTIP,
+          value: "$0",
         },
       ]}
     />

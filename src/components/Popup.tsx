@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import close from "../assets/ui/close.svg";
-import Button from "./styles/Button";
+import Button from "./Button";
 
 const StyledPopup = styled.div`
   position: fixed;
@@ -64,6 +64,7 @@ type Props = {
   content?: JSX.Element;
   confirm?: boolean;
   submit?: () => void;
+  loading?: boolean;
 };
 
 const Popup = (props: Props): JSX.Element => {
@@ -86,6 +87,7 @@ const Popup = (props: Props): JSX.Element => {
               click={() => {
                 if (props.submit) props.submit();
               }}
+              loading={props.loading}
             />
           </ButtonContainer>
         )}

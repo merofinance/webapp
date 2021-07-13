@@ -1,26 +1,67 @@
-import classnames from "classnames";
 import React from "react";
-import { Alert } from "react-bootstrap";
+import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../app/store";
-
-import styles from "./error.module.scss";
+import Popup from "../../components/Popup";
+import { Paragraph } from "../../styles/Headers";
 import { selectError, setError } from "./errorSlice";
+import GradientText from "../../styles/GradientText";
+import Button from "../../components/Button";
+
+const Content = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Text = styled(Paragraph)`
+  margin-bottom: 3rem;
+`;
+
+const Link = styled.a`
+  margin-left: 0.5rem;
+`;
+
+const LinkText = styled(GradientText)`
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  letter-spacing: 0.15px;
+  margin-bottom: 1rem;
+
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+  }
+`;
 
 export function ErrorAlert() {
   const error = useSelector(selectError);
   const dispatch: AppDispatch = useDispatch();
 
-  return error ? (
-    <Alert
-      className={classnames(["fixed-top", styles["global-alert"]])}
-      variant="danger"
-      onClose={() => dispatch(setError({ error: "" }))}
-      dismissible
-    >
-      An error has occured: "{error}". <br />
-      Please try again in a moment. If the error persists, you can contact us{" "}
-      <a href="https://t.me/backdchat">on Telegram</a>
-    </Alert>
-  ) : null;
+  return (
+    <Popup
+      show={!!error}
+      close={() => dispatch(setError({ error: "" }))}
+      header="An Error Occured"
+      content={
+        <Content>
+          <Text>{`Error: ${error}`}</Text>
+          <Text>
+            Please try again in a moment. If the error persists, you can contact us on
+            <Link href="https://t.me/backdchat" target="_blank">
+              <LinkText>Telegram</LinkText>
+            </Link>
+          </Text>
+          <Button
+            medium
+            primary
+            background="#252140"
+            text="Close"
+            click={() => dispatch(setError({ error: "" }))}
+          />
+        </Content>
+      }
+    />
+  );
 }

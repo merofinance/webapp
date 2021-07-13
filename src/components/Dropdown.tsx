@@ -46,6 +46,7 @@ const Popup = styled.div`
   padding: 0.8rem 0;
   display: flex;
   flex-direction: column;
+  z-index: 1;
 `;
 
 const Option = styled.button`
@@ -86,6 +87,7 @@ const Dropdown = (props: Props) => {
           <Popup>
             {props.options.map((option: string) => (
               <Option
+                key={option}
                 onClick={() => {
                   props.setValue(option);
                   setPopupOpen(false);

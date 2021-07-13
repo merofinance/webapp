@@ -1,10 +1,16 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { useBackd } from "../../app/hooks/use-backd";
 import Dropdown from "../../components/Dropdown";
-import Button from "../../components/styles/Button";
+import Button from "../../components/Button";
+import { approve, selectToupAllowance } from "../../features/user/userSlice";
+import { Pool } from "../../lib";
+import { Position } from "../../lib/types";
 import NewPositionConfirmation from "./NewPositionConfirmation";
 import NewPositionInput from "./NewPositionInput";
-import { PositionType } from "./PoolPositions";
+import { AppDispatch } from "../../app/store";
+import { ethers } from "ethers";
 
 const Border = styled.div`
   width: 100%;
@@ -46,7 +52,17 @@ export const Value = styled.div`
   align-items: center;
 `;
 
-const NewPosition = () => {
+type Props = {
+  pool: Pool;
+};
+
+const NewPosition = ({ pool }: Props) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const backd = useBackd();
+  const allowance = useSelector(selectToupAllowance(backd, pool));
+  const [loading, setLoading] = useState(false);
+  const [confirming, setConfirming] = useState(false);
+
   // Protocol
   const [protocol, setProtocol] = useState("");
   const [protocolError, setProtocolError] = useState("");
@@ -59,7 +75,7 @@ const NewPosition = () => {
   const [borrower, setBorrower] = useState("");
   const [borrowerError, setBorrowerError] = useState("");
   const validateBorrower = (value: string) => {
-    if (value.length !== 42) setBorrowerError("Invalid Address");
+    if (!ethers.utils.isAddress(value)) setBorrowerError("Invalid Address");
     else setBorrowerError("");
   };
 
@@ -92,8 +108,7 @@ const NewPosition = () => {
     else setTotalError("");
   };
 
-  const [confirming, setConfirming] = useState(false);
-  const [approved, setApproved] = useState(false);
+  const approved = allowance >= Number(total || "0");
 
   const hasError = !!(
     protocolError ||
@@ -103,12 +118,15 @@ const NewPosition = () => {
     totalError
   );
 
-  const position: PositionType = {
+  const position: Position = {
     protocol,
-    borrower,
+    account: borrower,
     threshold: Number(threshold),
-    single: Number(single),
-    total: Number(total),
+    singleTopUp: Number(single),
+    totalTopUp: Number(total),
+    maxGasPrice: 0,
+    actionToken: pool.underlying.address,
+    depositToken: pool.lpToken.address,
   };
 
   const buttonHoverText = () => {
@@ -120,6 +138,28 @@ const NewPosition = () => {
     else return "";
   };
 
+  const executeApprove = () => {
+    if (!backd) return;
+    setLoading(true);
+    const approveArgs = {
+      amount: Number(total),
+      backd,
+      spender: backd.topupActionAddress,
+      token: pool.lpToken,
+    };
+    dispatch(approve(approveArgs)).then(() => {
+      setLoading(false);
+    });
+  };
+
+  const clearInputs = () => {
+    setProtocol("");
+    setBorrower("");
+    setThreshold("");
+    setSingle("");
+    setTotal("");
+  };
+
   return (
     <Border>
       <StyledNewPosition>
@@ -127,7 +167,7 @@ const NewPosition = () => {
           <Value>
             <Dropdown
               value={protocol}
-              options={["aave", "compound"]}
+              options={["Aave", "Compound"]}
               setValue={(v: string) => {
                 validateProtocol(v);
                 setProtocol(v);
@@ -174,12 +214,13 @@ const NewPosition = () => {
             <Button
               primary
               disabled={!(protocol && borrower && threshold && single && total) || hasError}
-              text={approved ? "create 2/2" : "approve 1/2"}
+              text={approved && total !== "" ? "create 2/2" : "approve 1/2"}
               click={() => {
                 if (approved) setConfirming(true);
-                else setApproved(true);
+                else executeApprove();
               }}
               hoverText={buttonHoverText()}
+              loading={loading}
             />
           </Value>
         </Content>
@@ -189,6 +230,8 @@ const NewPosition = () => {
         show={confirming}
         close={() => setConfirming(false)}
         position={position}
+        pool={pool}
+        complete={() => clearInputs()}
       />
     </Border>
   );

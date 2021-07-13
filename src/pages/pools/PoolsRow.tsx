@@ -1,10 +1,16 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import chevron from "../../assets/ui/chevron.svg";
 import Asset from "../../components/Asset";
-import Button from "../../components/styles/Button";
-import GradientText from "../../components/styles/GradientText";
+import Button from "../../components/Button";
+import GradientText from "../../styles/GradientText";
+import { selectBalances } from "../../features/user/userSlice";
+import { Pool } from "../../lib";
+import { selectPoolPositions } from "../../features/positions/positionsSlice";
+import { Position } from "../../lib/types";
+import { selectPrice } from "../../features/pool/selectors";
 
 type RowProps = {
   preview?: boolean;
@@ -60,32 +66,39 @@ const Chevron = styled.img`
 `;
 
 type Props = {
-  asset: "eth" | "usdc" | "dai";
+  pool: Pool;
   preview?: boolean;
 };
 
-const PoolsRow = (props: Props) => {
+const PoolsRow = ({ pool, preview }: Props) => {
   const history = useHistory();
 
+  const price = useSelector(selectPrice(pool));
+  const balances = useSelector(selectBalances);
+  const positions = useSelector(selectPoolPositions(pool));
+
+  const getBalance = (pool: Pool) => balances[pool.lpToken.address] || 0;
+  const locked = positions.reduce((a: number, b: Position) => b.totalTopUp + a, 0);
+
   return (
-    <Row onClick={() => history.push(`/pool/b${props.asset}`)} preview={props.preview}>
+    <Row onClick={() => history.push(`/pool/${pool.lpToken.symbol}`)} preview={preview}>
       <Data>
-        <Asset asset={props.asset} />
+        <Asset token={pool.underlying} />
       </Data>
       <Data>
-        <Apy>5.2%</Apy>
+        <Apy>{`${pool.apy}%`}</Apy>
       </Data>
-      <Data>$3.34m</Data>
-      {!props.preview && (
+      <Data>{`$${(pool.totalAssets * price).toLocaleString()}`}</Data>
+      {!preview && (
         <>
-          <Data>$0.00</Data>
+          <Data>{`$${((getBalance(pool) + locked) * price).toLocaleString()}`}</Data>
 
           <ChevronData>
             <Chevron src={chevron} alt="right arrow" />
           </ChevronData>
         </>
       )}
-      {props.preview && (
+      {preview && (
         <Data right>
           <Button text="deposit" background="#141128" />
         </Data>

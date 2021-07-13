@@ -29,6 +29,7 @@ import { ConnectWallet } from "./features/account/ConnectWallet";
 import ClaimPage from "./pages/claim/ClaimPage";
 import PoolPage from "./pages/pool/PoolPage";
 import { LIVE } from "./lib/constants";
+import { ErrorAlert } from "./features/error/ErrorAlert";
 
 const StyledApp = styled.div`
   width: 100%;
@@ -84,23 +85,27 @@ function App() {
             <Content>
               <Switch>
                 {LIVE && (
-                  <>
-                    <PrivateRoute path="/pool/:poolName">
-                      <PoolPage />
-                    </PrivateRoute>
+                  <PrivateRoute path="/pool/:poolName">
+                    <PoolPage />
+                  </PrivateRoute>
+                )}
 
-                    <Route path="/connect">
-                      <ConnectWallet />
-                    </Route>
+                {LIVE && (
+                  <Route path="/connect">
+                    <ConnectWallet />
+                  </Route>
+                )}
 
-                    <PrivateRoute path="/pools">
-                      <PoolsPage />
-                    </PrivateRoute>
+                {LIVE && (
+                  <PrivateRoute path="/pools">
+                    <PoolsPage />
+                  </PrivateRoute>
+                )}
 
-                    <Route path="/claim">
-                      <ClaimPage />
-                    </Route>
-                  </>
+                {LIVE && (
+                  <Route path="/claim">
+                    <ClaimPage />
+                  </Route>
                 )}
 
                 <Route path="/litepaper">
@@ -113,6 +118,7 @@ function App() {
               </Switch>
             </Content>
             <Footer />
+            <ErrorAlert />
           </StyledApp>
         </Router>
       </Web3ReactProvider>

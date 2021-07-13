@@ -1,32 +1,36 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { Pool } from "../../lib";
+import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 import Overview from "../../components/Overview";
+import { selectPrice } from "../../features/pool/selectors";
 
-type Props = {
-  pool: string;
-};
+interface Props {
+  pool: Pool;
+}
 
-const PoolOverview = (props: Props) => {
+const PoolOverview = ({ pool }: Props) => {
+  const price = useSelector(selectPrice(pool));
+  const locked = pool.totalAssets * price;
+
   return (
     <Overview
       header="Pool Overview"
-      statistics={[
+      rows={[
         {
-          header: "Pool TVL",
-          value: "$135m",
-          tooltip:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
+          label: "Pool TVL",
+          tooltip: PLACEHOLDER_TOOLTIP,
+          value: `$${locked.toLocaleString()}`,
         },
         {
-          header: "APY",
-          value: "12.3%",
-          tooltip:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
+          label: "APY",
+          tooltip: PLACEHOLDER_TOOLTIP,
+          value: `${pool.apy.toLocaleString()}%`,
         },
         {
-          header: "Strategy",
-          value: "3CRV",
-          tooltip:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
+          label: "Strategy",
+          tooltip: PLACEHOLDER_TOOLTIP,
+          value: pool.name,
         },
       ]}
     />

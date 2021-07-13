@@ -1,8 +1,8 @@
 import React from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import Button from "../../components/styles/Button";
-import { Header2 } from "../../components/styles/Headers";
+import Button from "../../components/Button";
+import { Header2 } from "../../styles/Headers";
 import { LIVE } from "../../lib/constants";
 
 const StyledGetStarted = styled.div`

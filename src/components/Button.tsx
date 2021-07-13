@@ -192,6 +192,7 @@ const HoverTextContainer = styled.div`
   width: 100%;
   transition: transform 0.2s;
   transform: scale(0) translateY(-1rem);
+  z-index: 1;
 `;
 
 const HoverText = styled.div`
@@ -272,7 +273,7 @@ const Button = (props: Props) => {
           {props.text}
         </Text>
       </Content>
-      {props.hoverText && (
+      {props.hoverText && props.disabled && (
         <HoverTextContainer>
           <HoverText>{props.hoverText}</HoverText>
         </HoverTextContainer>

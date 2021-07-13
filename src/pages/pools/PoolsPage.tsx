@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { useBackd } from "../../app/hooks/use-backd";
 import ContentSection from "../../components/ContentSection";
+import { fetchState, selectPools } from "../../features/pools-list/poolsListSlice";
+import { Pool } from "../../lib";
 import Seo from "../../components/Seo";
-import PoolsOverview from "./PoolsOverview";
 import PoolsRow from "./PoolsRow";
+import PoolsOverview from "./PoolsOverview";
+import PoolsStatistics from "./PoolsStatistics";
 
 const StyledPoolsPage = styled.div`
   width: 100%;
@@ -35,6 +40,15 @@ const ChevronHeader = styled.th`
 `;
 
 const PoolsPage = () => {
+  const backd = useBackd();
+  const dispatch = useDispatch();
+  const pools = useSelector(selectPools);
+
+  useEffect(() => {
+    if (!backd) return;
+    dispatch(fetchState(backd));
+  }, [backd, dispatch]);
+
   return (
     <StyledPoolsPage>
       <Seo
@@ -43,26 +57,7 @@ const PoolsPage = () => {
       />
       <ContentSection
         header="All pools"
-        statistics={[
-          {
-            header: "Your deposits",
-            value: "$0.00",
-            tooltip:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
-          },
-          {
-            header: "Locked in position",
-            value: "$0.00",
-            tooltip:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
-          },
-          {
-            header: "Rewards accrued",
-            value: "$0.00",
-            tooltip:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
-          },
-        ]}
+        statistics={<PoolsStatistics />}
         content={
           <Table>
             <HeaderRow>
@@ -72,9 +67,9 @@ const PoolsPage = () => {
               <Header>Your deposits</Header>
               <ChevronHeader />
             </HeaderRow>
-            <PoolsRow asset={"eth"} />
-            <PoolsRow asset={"usdc"} />
-            <PoolsRow asset={"dai"} />
+            {pools.map((pool: Pool) => (
+              <PoolsRow key={pool.address} pool={pool} />
+            ))}
           </Table>
         }
       />

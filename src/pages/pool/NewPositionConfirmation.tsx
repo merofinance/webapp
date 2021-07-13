@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { useBackd } from "../../app/hooks/use-backd";
+import { AppDispatch } from "../../app/store";
 import Popup from "../../components/Popup";
-import GradientText from "../../components/styles/GradientText";
+import GradientText from "../../styles/GradientText";
 import Tooltip from "../../components/Tooltip";
-import { openAndFocusWindow } from "../../lib/browser";
+import { setError } from "../../features/error/errorSlice";
+import { registerPosition } from "../../features/positions/positionsSlice";
+import { openEtherscanAddress } from "../../lib/browser";
 import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 import { shortenAddress } from "../../lib/text";
-import { PositionType } from "./PoolPositions";
+import { Pool, Position } from "../../lib/types";
+import { selectPrice } from "../../features/pool/selectors";
 
 const Content = styled.div`
   width: 100%;
@@ -67,34 +73,57 @@ const AddressLabel = styled(GradientText)`
 type Props = {
   show: boolean;
   close: () => void;
-  position: PositionType;
+  position: Position;
+  pool: Pool;
+  complete: () => void;
 };
 
-const NewPositionConfirmation = (props: Props) => {
+const NewPositionConfirmation = ({ show, close, position, pool, complete }: Props) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const price = useSelector(selectPrice(pool));
+  const backd = useBackd();
+
+  const [loading, setLoading] = useState(false);
+
+  const getUsd = (amount: number) => `$${(price * amount).toLocaleString()}`;
+
+  const executeRegister = () => {
+    if (!backd) return;
+    setLoading(true);
+
+    dispatch(registerPosition({ position, pool, backd })).then((v: any) => {
+      setLoading(false);
+      if (v.meta.requestStatus === "rejected")
+        dispatch(setError({ error: "Position creation failed" }));
+      else {
+        complete();
+        close();
+      }
+    });
+  };
+
   return (
     <Popup
-      show={props.show}
-      close={props.close}
+      show={show}
+      close={close}
       header="Confirm top-up position"
       confirm
-      submit={() => alert("Not implemented yet")}
+      submit={() => executeRegister()}
+      loading={loading}
       content={
         <Content>
           <Summary>
             {`When the collateralization of `}
-            <Address
-              onClick={() => {
-                openAndFocusWindow(
-                  `https://etherscan.io/address/${props.position.borrower}`,
-                  "_blank"
-                );
-              }}
-            >
-              {shortenAddress(props.position.borrower, 26)}
+            <Address onClick={() => openEtherscanAddress(position.account, "_blank")}>
+              {shortenAddress(position.account, 26)}
             </Address>
-            {` drops below ${props.position.threshold}, it will
-            be topped up with ${props.position.single} DAI ($3000). This will be repeated each time the
-            collateralization ratio drops below ${props.position.threshold}, until a total of ${props.position.total} DAI ($8000) is topped
+            {` drops below ${position.threshold}, it will
+            be topped up with ${position.singleTopUp} DAI (${getUsd(
+              position.singleTopUp
+            )}). This will be repeated each time the
+            collateralization ratio drops below ${position.threshold}, until a total of ${
+              position.totalTopUp
+            } DAI (${getUsd(position.totalTopUp)}) is topped
             up.`}
           </Summary>
           <PositionSummary>
@@ -102,22 +131,15 @@ const NewPositionConfirmation = (props: Props) => {
               <Label>
                 Protocol <Tooltip content={PLACEHOLDER_TOOLTIP} />
               </Label>
-              <Label>{props.position.protocol}</Label>
+              <Label>{position.protocol}</Label>
             </SummaryRow>
             <SummaryRow>
               <Label>
                 Borrower
                 <Tooltip content={PLACEHOLDER_TOOLTIP} />
               </Label>
-              <AddressLabel
-                onClick={() => {
-                  openAndFocusWindow(
-                    `https://etherscan.io/address/${props.position.borrower}`,
-                    "_blank"
-                  );
-                }}
-              >
-                {shortenAddress(props.position.borrower, 8)}
+              <AddressLabel onClick={() => openEtherscanAddress(position.account, "_blank")}>
+                {shortenAddress(position.account, 8)}
               </AddressLabel>
             </SummaryRow>
             <SummaryRow>
@@ -125,21 +147,21 @@ const NewPositionConfirmation = (props: Props) => {
                 Threshold
                 <Tooltip content={PLACEHOLDER_TOOLTIP} />
               </Label>
-              <Label>{props.position.threshold}</Label>
+              <Label>{position.threshold}</Label>
             </SummaryRow>
             <SummaryRow>
               <Label>
                 Singe top-up
                 <Tooltip content={PLACEHOLDER_TOOLTIP} />
               </Label>
-              <Label>{props.position.single}</Label>
+              <Label>{position.singleTopUp}</Label>
             </SummaryRow>
             <SummaryRow>
               <Label>
                 Total top-up
                 <Tooltip content={PLACEHOLDER_TOOLTIP} />
               </Label>
-              <Label>{props.position.total}</Label>
+              <Label>{position.totalTopUp}</Label>
             </SummaryRow>
           </PositionSummary>
         </Content>

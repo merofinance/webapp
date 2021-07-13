@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Header1, Header2, Paragraph } from "../../components/styles/Headers";
+import { Header1, Header2, Paragraph } from "../../styles/Headers";
 import Seo from "../../components/Seo";
 
 const StyledLitepaperPage = styled.div`

@@ -1,7 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { StatisticType } from "./Statistic";
 import Tooltip from "./Tooltip";
+
+interface OverviewRow {
+  label: string;
+  tooltip: string;
+  value: string;
+}
 
 const StyledOverview = styled.div`
   width: 40rem;
@@ -50,21 +55,21 @@ const Value = styled.div`
 
 type Props = {
   header: string;
-  statistics: StatisticType[];
+  rows: OverviewRow[];
 };
 
-const Overview = (props: Props) => {
+const Overview = ({ header, rows }: Props) => {
   return (
     <div>
       <StyledOverview>
-        <Header>{props.header}</Header>
-        {props.statistics.map((statistic: StatisticType) => (
-          <StatisticContainer>
+        <Header>{header}</Header>
+        {rows.map((row: OverviewRow) => (
+          <StatisticContainer key={row.label}>
             <LabelContainer>
-              <Label>{statistic.header}</Label>
-              <Tooltip content={statistic.tooltip} />
+              <Label>{row.label}</Label>
+              <Tooltip content={row.tooltip} />
             </LabelContainer>
-            <Value>{statistic.value}</Value>
+            <Value>{row.value}</Value>
           </StatisticContainer>
         ))}
       </StyledOverview>

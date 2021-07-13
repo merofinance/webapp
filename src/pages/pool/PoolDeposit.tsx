@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import AmountInput from "../../components/AmountInput";
 import ContentSection from "../../components/ContentSection";
-import ProgressButtons from "../../components/ProgressButtons";
+import ProgressButtons from "../../components/DepositButtons";
+import { selectBalance } from "../../features/user/userSlice";
+import { Pool } from "../../lib";
+import PoolStatistics from "./PoolStatistics";
 
 const Content = styled.div`
   width: 100%;
@@ -11,37 +15,26 @@ const Content = styled.div`
 `;
 
 type Props = {
-  token: string;
+  pool: Pool;
 };
 
-const PoolDeposit = (props: Props) => {
+const PoolDeposit = ({ pool }: Props) => {
+  const availableToDeposit = useSelector(selectBalance(pool.underlying.address));
+  const [depositAmount, setDepositAmount] = useState(0);
+
   return (
     <ContentSection
-      header={`Deposit ${props.token.toUpperCase()}`}
-      statistics={[
-        {
-          header: "Your deposits",
-          value: "$130,000.00",
-          tooltip:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
-        },
-        {
-          header: "Locked in position",
-          value: "$90,000.00",
-          tooltip:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
-        },
-        {
-          header: "Rewards accrued",
-          value: "$14,000.00",
-          tooltip:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
-        },
-      ]}
+      header={`Deposit ${pool.underlying.symbol.toUpperCase()}`}
+      statistics={<PoolStatistics pool={pool} />}
       content={
         <Content>
-          <AmountInput label="Enter an amount of USDC to deposit" max={100} />
-          <ProgressButtons token={""} symbol={"dai"} buttonText="Deposit and Stake" />
+          <AmountInput
+            value={depositAmount}
+            setValue={(v: number) => setDepositAmount(v)}
+            label={`Enter an amount of ${pool.underlying.symbol.toUpperCase()} to deposit`}
+            max={availableToDeposit}
+          />
+          <ProgressButtons pool={pool} value={depositAmount} complete={() => setDepositAmount(0)} />
         </Content>
       }
     />
