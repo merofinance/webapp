@@ -47,3 +47,10 @@ export function floatToBigNumber(
   const scaledSignificant = Math.round(value * Math.pow(10, decimalScale));
   return scale(scaledSignificant, decimals - decimalScale);
 }
+
+export const formatCurrency = (number: number) => {
+  return `$${number.toLocaleString("en-US", {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+  })}`;
+};
