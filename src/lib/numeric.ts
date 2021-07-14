@@ -58,3 +58,8 @@ export const formatCurrency = (number: number) => {
 export const formatPercent = (number: number) => {
   return `${number.toLocaleString("en-US", { maximumFractionDigits: 2 })}%`;
 };
+
+export const formatCrypto = (number: number) => {
+  const decimals = Math.max(5 - Math.floor(Math.pow(number, 1 / 10)), 0);
+  return number.toLocaleString("en-US", { maximumFractionDigits: decimals });
+};
