@@ -4,7 +4,7 @@ import Seo from "../../components/Seo";
 import ClaimSummary from "./ClaimSummary";
 import ClaimAccordion from "./ClaimAccordion";
 
-const claims: string[] = ["meow", "woof"];
+const claims: string[] = ["test-claim-01", "test-claim-02"];
 
 const StyledPoolsPage = styled.div`
   width: 100%;
@@ -74,7 +74,7 @@ const ClaimPage = () => {
           key={claim}
           open={isOpen(index)}
           toggle={() => toggle(index)}
-          rows={["meow", "woof", "cat"]}
+          rows={["test-row-01", "test-row-02", "test-row-03"]}
         />
       ))}
       <Note href="https://google.com/" target="_blank">
