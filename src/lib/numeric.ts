@@ -49,17 +49,21 @@ export function floatToBigNumber(
 }
 
 export const formatCurrency = (number: number) => {
-  return `$${number.toLocaleString("en-US", {
+  return number.toLocaleString(undefined, {
     maximumFractionDigits: 2,
     minimumFractionDigits: 2,
-  })}`;
+    style: "currency",
+    currency: "USD",
+  });
 };
 
 export const formatPercent = (number: number) => {
-  return `${number.toLocaleString("en-US", { maximumFractionDigits: 2 })}%`;
+  return number.toLocaleString(undefined, { maximumFractionDigits: 2, style: "percent" });
 };
 
 export const formatCrypto = (number: number) => {
   const decimals = Math.max(5 - Math.floor(Math.pow(number, 1 / 10)), 0);
-  return number.toLocaleString("en-US", { maximumFractionDigits: decimals });
+  return number.toLocaleString(undefined, {
+    maximumFractionDigits: decimals,
+  });
 };
