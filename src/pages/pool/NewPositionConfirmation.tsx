@@ -118,11 +118,11 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
             </Address>
             {` drops below ${position.threshold}, it will
             be topped up with ${position.singleTopUp} DAI (${formatCurrency(
-              position.singleTopUp
+              position.singleTopUp * price
             )}). This will be repeated each time the
             collateralization ratio drops below ${position.threshold}, until a total of ${
               position.totalTopUp
-            } DAI (${formatCurrency(position.totalTopUp)}) is topped
+            } DAI (${formatCurrency(position.totalTopUp * price)}) is topped
             up.`}
           </Summary>
           <PositionSummary>
