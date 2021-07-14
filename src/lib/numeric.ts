@@ -54,3 +54,7 @@ export const formatCurrency = (number: number) => {
     minimumFractionDigits: 2,
   })}`;
 };
+
+export const formatPercent = (number: number) => {
+  return `${number.toLocaleString("en-US", { maximumFractionDigits: 2 })}%`;
+};
