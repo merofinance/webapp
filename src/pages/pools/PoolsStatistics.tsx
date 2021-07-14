@@ -7,6 +7,7 @@ import Statistics from "../../components/Statistics";
 import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 import { selectPositions } from "../../features/positions/positionsSlice";
 import { Position } from "../../lib/types";
+import { formatCurrency } from "../../lib/numeric";
 
 const PoolsStatistics = () => {
   const pools = useSelector(selectPools);
@@ -32,12 +33,12 @@ const PoolsStatistics = () => {
         {
           header: "Your deposits",
           tooltip: PLACEHOLDER_TOOLTIP,
-          value: `$${deposits.toLocaleString()}`,
+          value: formatCurrency(deposits),
         },
         {
           header: "Locked in position",
           tooltip: PLACEHOLDER_TOOLTIP,
-          value: `$${locked.toLocaleString()}`,
+          value: formatCurrency(locked),
         },
         {
           header: "Rewards accrued",

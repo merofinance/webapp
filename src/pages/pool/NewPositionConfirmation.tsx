@@ -13,6 +13,7 @@ import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 import { shortenAddress } from "../../lib/text";
 import { Pool, Position } from "../../lib/types";
 import { selectPrice } from "../../features/pool/selectors";
+import { formatCurrency } from "../../lib/numeric";
 
 const Content = styled.div`
   width: 100%;
@@ -85,8 +86,6 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
 
   const [loading, setLoading] = useState(false);
 
-  const getUsd = (amount: number) => `$${(price * amount).toLocaleString()}`;
-
   const executeRegister = () => {
     if (!backd) return;
     setLoading(true);
@@ -118,12 +117,12 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
               {shortenAddress(position.account, 26)}
             </Address>
             {` drops below ${position.threshold}, it will
-            be topped up with ${position.singleTopUp} DAI (${getUsd(
+            be topped up with ${position.singleTopUp} DAI (${formatCurrency(
               position.singleTopUp
             )}). This will be repeated each time the
             collateralization ratio drops below ${position.threshold}, until a total of ${
               position.totalTopUp
-            } DAI (${getUsd(position.totalTopUp)}) is topped
+            } DAI (${formatCurrency(position.totalTopUp)}) is topped
             up.`}
           </Summary>
           <PositionSummary>
