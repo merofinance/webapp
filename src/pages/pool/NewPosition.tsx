@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useBackd } from "../../app/hooks/use-backd";
 import Dropdown from "../../components/Dropdown";
 import Button from "../../components/Button";
-import { approve, selectToupAllowance } from "../../features/user/userSlice";
+import { approve, selectBalance, selectToupAllowance } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
 import { Position } from "../../lib/types";
 import NewPositionConfirmation from "./NewPositionConfirmation";
@@ -60,6 +60,8 @@ const NewPosition = ({ pool }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();
   const allowance = useSelector(selectToupAllowance(backd, pool));
+  const balance = useSelector(selectBalance(pool));
+
   const [loading, setLoading] = useState(false);
   const [confirming, setConfirming] = useState(false);
 
@@ -105,6 +107,7 @@ const NewPosition = ({ pool }: Props) => {
     const number = Number(value);
     if (number <= 0) setTotalError("Must be positive number");
     else if (single && number < Number(single)) setTotalError("Must be greater than single topup");
+    else if (number > balance) setTotalError("Exceeds deposited balance");
     else setTotalError("");
   };
 
