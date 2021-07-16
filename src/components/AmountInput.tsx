@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { formatAmountInput } from "../lib/text";
 import AmountSlider from "./AmountSlider";
 import Input from "./Input";
 
@@ -40,7 +39,7 @@ const AmountInput = ({ value, setValue, label, max }: Props) => {
         onChange={(v: string) => setValue(v)}
         background="#10092e"
         buttonText="max"
-        buttonAction={() => setValue(formatAmountInput(max))}
+        buttonAction={() => setValue(max.toString())}
         errorMessage="Invalid amount"
       />
       <AmountSlider value={value} max={max} setValue={setValue} />
