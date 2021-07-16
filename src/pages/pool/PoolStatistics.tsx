@@ -32,12 +32,11 @@ const PoolStatistics = ({ pool }: Props) => {
           tooltip: PLACEHOLDER_TOOLTIP,
           value: `$${locked.toLocaleString()}`,
         },
-
-        {
-          header: "Rewards accrued",
-          tooltip: PLACEHOLDER_TOOLTIP,
-          value: "$0.00",
-        },
+        // {
+        //   header: "Rewards accrued",
+        //   tooltip: PLACEHOLDER_TOOLTIP,
+        //   value: "$0.00",
+        // },
       ]}
     />
   );
