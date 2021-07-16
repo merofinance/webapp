@@ -1,6 +1,7 @@
 import { Slider, withStyles } from "@material-ui/core";
 import React from "react";
 import styled from "styled-components";
+import { formatAmountInput } from "../lib/text";
 import SliderStep from "./SliderStep";
 
 const Gradient = "linear-gradient(to right, rgba(197, 50, 249, 1), rgba(50, 178, 229, 1))";
@@ -56,13 +57,13 @@ const BackdSlider = withStyles({
 const valuetext = (value: any) => `${value}%`;
 
 type Props = {
-  value: number;
+  value: string;
   max: number;
-  setValue: (value: number) => void;
+  setValue: (value: string) => void;
 };
 
 const AmountSlider = ({ value, max, setValue }: Props) => {
-  const percent = Math.round(max === 0 ? 0 : (value / max) * 100);
+  const percent = Math.round(max === 0 ? 0 : (Number(value) / max) * 100);
 
   return (
     <StyledAmountSlider>
@@ -73,7 +74,7 @@ const AmountSlider = ({ value, max, setValue }: Props) => {
         min={0}
         max={100}
         value={percent}
-        onChange={(e: any, value: any) => setValue((value * max) / 100)}
+        onChange={(e: any, value: any) => setValue(formatAmountInput((Number(value) * max) / 100))}
         valueLabelDisplay="auto"
         valueLabelFormat={valuetext}
       />
@@ -81,8 +82,8 @@ const AmountSlider = ({ value, max, setValue }: Props) => {
         <SliderStep
           key={step}
           percent={`${step * 100}%`}
-          click={() => setValue(step * max)}
-          active={value / max > step}
+          click={() => setValue(formatAmountInput(step * max))}
+          active={Number(value) / max > step}
         />
       ))}
     </StyledAmountSlider>
