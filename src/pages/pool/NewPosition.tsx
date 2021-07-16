@@ -11,6 +11,7 @@ import NewPositionConfirmation from "./NewPositionConfirmation";
 import NewPositionInput from "./NewPositionInput";
 import { AppDispatch } from "../../app/store";
 import { ethers } from "ethers";
+import { selectPositions } from "../../features/positions/positionsSlice";
 
 const Border = styled.div`
   width: 100%;
@@ -52,74 +53,64 @@ export const Value = styled.div`
   align-items: center;
 `;
 
-type Props = {
+interface Props {
   pool: Pool;
-};
+}
 
 const NewPosition = ({ pool }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();
   const allowance = useSelector(selectToupAllowance(backd, pool));
   const balance = useSelector(selectBalance(pool));
+  const positions = useSelector(selectPositions);
 
   const [loading, setLoading] = useState(false);
   const [confirming, setConfirming] = useState(false);
-
-  // Protocol
   const [protocol, setProtocol] = useState("");
-  const [protocolError, setProtocolError] = useState("");
-  const validateProtocol = (value: string) => {
-    if (!value) setProtocolError("Select Protocol");
-    else setProtocolError("");
-  };
-
-  // Borrower
   const [borrower, setBorrower] = useState("");
-  const [borrowerError, setBorrowerError] = useState("");
-  const validateBorrower = (value: string) => {
-    if (!ethers.utils.isAddress(value)) setBorrowerError("Invalid Address");
-    else setBorrowerError("");
-  };
-
-  // Threshold
   const [threshold, setThreshold] = useState("");
-  const [thresholdError, setThresholdError] = useState("");
-  const validateThreshold = (value: string) => {
-    const number = Number(value);
-    if (number <= 1) setThresholdError("Must be above 1");
-    else setThresholdError("");
-  };
-
-  // Single Topup
   const [single, setSingle] = useState("");
-  const [singleError, setSingleError] = useState("");
-  const validateSingle = (value: string) => {
-    const number = Number(value);
-    if (number <= 0) setSingleError("Must be positive number");
-    else if (total && number > Number(total)) setSingleError("Must be less than total topup");
-    else setSingleError("");
-  };
-
-  // Total Topup
   const [total, setTotal] = useState("");
-  const [totalError, setTotalError] = useState("");
-  const validateTotal = (value: string) => {
-    const number = Number(value);
-    if (number <= 0) setTotalError("Must be positive number");
-    else if (single && number < Number(single)) setTotalError("Must be greater than single topup");
-    else if (number > balance) setTotalError("Exceeds deposited balance");
-    else setTotalError("");
-  };
 
   const approved = allowance >= Number(total || "0");
 
-  const hasError = !!(
-    protocolError ||
-    borrowerError ||
-    thresholdError ||
-    singleError ||
-    totalError
-  );
+  const borrowerError = () => {
+    if (!borrower) return "";
+    if (!ethers.utils.isAddress(borrower)) return "Invalid sddress";
+    if (
+      protocol &&
+      positions.filter(
+        (position: Position) => position.protocol === protocol && position.account === borrower
+      ).length > 0
+    )
+      return "Max of one position per protocol and address";
+    return "";
+  };
+
+  const thresholdError = () => {
+    if (!threshold) return "";
+    const number = Number(threshold);
+    if (number <= 1) return "Must be above 1";
+    return "";
+  };
+
+  const singleError = () => {
+    if (!single) return "";
+    const number = Number(single);
+    if (number <= 0) return "Must be positive number";
+    if (total && number > Number(total)) return "Must be less than total topup";
+    return "";
+  };
+
+  const totalError = () => {
+    if (!total) return "";
+    const number = Number(total);
+    if (number <= 0) return "Must be positive number";
+    if (number > balance) return "Exceeds deposited balance";
+    else return "";
+  };
+
+  const hasError = !!(borrowerError() || thresholdError() || singleError() || totalError());
 
   const position: Position = {
     protocol,
@@ -134,11 +125,11 @@ const NewPosition = ({ pool }: Props) => {
 
   const buttonHoverText = () => {
     if (!protocol) return "Select Protocol";
-    else if (!borrower) return "Enter Borrower";
-    else if (!threshold) return "Enter Threshold";
-    else if (!single) return "Enter Single topup";
-    else if (!total) return "Enter Total topup";
-    else return "";
+    if (!borrower) return "Enter Borrower";
+    if (!threshold) return "Enter Threshold";
+    if (!single) return "Enter Single topup";
+    if (!total) return "Enter Total topup";
+    return "";
   };
 
   const executeApprove = () => {
@@ -171,47 +162,32 @@ const NewPosition = ({ pool }: Props) => {
             <Dropdown
               value={protocol}
               options={["Aave", "Compound"]}
-              setValue={(v: string) => {
-                validateProtocol(v);
-                setProtocol(v);
-              }}
+              setValue={(v: string) => setProtocol(v)}
             />
           </Value>
           <NewPositionInput
             type="text"
             value={borrower}
-            setValue={(v: string) => {
-              validateBorrower(v);
-              setBorrower(v);
-            }}
-            error={borrowerError}
+            setValue={(v: string) => setBorrower(v)}
+            error={borrowerError()}
           />
           <NewPositionInput
             type="number"
             value={threshold}
-            setValue={(v: string) => {
-              validateThreshold(v);
-              setThreshold(v);
-            }}
-            error={thresholdError}
+            setValue={(v: string) => setThreshold(v)}
+            error={thresholdError()}
           />
           <NewPositionInput
             type="number"
             value={single}
-            setValue={(v: string) => {
-              validateSingle(v);
-              setSingle(v);
-            }}
-            error={singleError}
+            setValue={(v: string) => setSingle(v)}
+            error={singleError()}
           />
           <NewPositionInput
             type="number"
             value={total}
-            setValue={(v: string) => {
-              validateTotal(v);
-              setTotal(v);
-            }}
-            error={totalError}
+            setValue={(v: string) => setTotal(v)}
+            error={totalError()}
           />
           <Value>
             <Button
