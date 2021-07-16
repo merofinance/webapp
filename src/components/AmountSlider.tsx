@@ -62,9 +62,7 @@ type Props = {
 };
 
 const AmountSlider = ({ value, max, setValue }: Props) => {
-  console.log("meow: " + Number(value));
-  const percent = Math.round(max === 0 || value === "" ? 0 : (Number(value) / max) * 100);
-  console.log(percent);
+  const percent = max === 0 || value === "" ? 0 : Math.round((Number(value) / max) * 100);
 
   return (
     <StyledAmountSlider>
