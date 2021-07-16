@@ -27,11 +27,11 @@ const PoolsOverview = () => {
           tooltip: PLACEHOLDER_TOOLTIP,
           value: `${averageApy.toLocaleString()}%`,
         },
-        {
-          label: "Revenue",
-          tooltip: PLACEHOLDER_TOOLTIP,
-          value: "$0",
-        },
+        // {
+        //   label: "Revenue",
+        //   tooltip: PLACEHOLDER_TOOLTIP,
+        //   value: "$0",
+        // },
       ]}
     />
   );
