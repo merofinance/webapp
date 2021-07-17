@@ -15,6 +15,7 @@ type ButtonProps = {
   inactive?: boolean;
   complete?: boolean;
   background?: string;
+  width?: string;
 };
 
 const StyledButton = styled.button`
@@ -24,6 +25,7 @@ const StyledButton = styled.button`
   pointer-events: ${(props: ButtonProps) => (props.inactive ? "none" : "auto")};
 
   width: ${(props: ButtonProps) => {
+    if (props.width) return props.width;
     if (props.wide) return "100%";
     return "auto";
   }};
@@ -227,6 +229,7 @@ type Props = {
   complete?: boolean;
   background?: string;
   hoverText?: string;
+  width?: string;
 };
 
 const Button = (props: Props) => {
@@ -242,6 +245,7 @@ const Button = (props: Props) => {
       disabled={props.disabled}
       inactive={props.inactive}
       complete={props.complete}
+      width={props.width}
       onClick={() => {
         if (!props.loading && !props.disabled && props.click) props.click();
       }}

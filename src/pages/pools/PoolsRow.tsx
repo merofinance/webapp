@@ -11,6 +11,7 @@ import { Pool } from "../../lib";
 import { selectPoolPositions } from "../../features/positions/positionsSlice";
 import { Position } from "../../lib/types";
 import { selectPrice } from "../../features/pool/selectors";
+import { formatCurrency } from "../../lib/numeric";
 
 type RowProps = {
   preview?: boolean;
@@ -88,10 +89,10 @@ const PoolsRow = ({ pool, preview }: Props) => {
       <Data>
         <Apy>{`${pool.apy}%`}</Apy>
       </Data>
-      <Data>{`$${(pool.totalAssets * price).toLocaleString()}`}</Data>
+      <Data>{formatCurrency(pool.totalAssets * price)}</Data>
       {!preview && (
         <>
-          <Data>{`$${((getBalance(pool) + locked) * price).toLocaleString()}`}</Data>
+          <Data>{formatCurrency((getBalance(pool) + locked) * price)}</Data>
 
           <ChevronData>
             <Chevron src={chevron} alt="right arrow" />

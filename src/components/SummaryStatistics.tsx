@@ -1,10 +1,18 @@
 import React from "react";
 import styled from "styled-components";
-import Tooltip from "../../components/Tooltip";
+import Tooltip from "./Tooltip";
+
+export interface SummaryStatisticType {
+  label: string;
+  tooltip: string;
+  value: string;
+}
 
 const StyledPoolsOverview = styled.div`
   display: flex;
   margin: 0 8rem;
+  justify-content: center;
+  margin-bottom: 7.4rem;
 `;
 
 const Container = styled.div`
@@ -16,6 +24,7 @@ const Container = styled.div`
   background-color: #16122e;
   border-radius: 14px;
   margin: 0 0.8rem;
+  max-width: 40.7rem;
 `;
 
 const LabelContainer = styled.div`
@@ -29,6 +38,7 @@ const Label = styled.div`
   line-height: 2rem;
   letter-spacing: 0.15px;
   color: var(--sub);
+  text-transform: capitalize;
 `;
 
 const Number = styled.div`
@@ -38,32 +48,24 @@ const Number = styled.div`
   letter-spacing: 0.25px;
 `;
 
-const ClaimOverview = () => {
+interface Props {
+  statistics: SummaryStatisticType[];
+}
+
+const SummaryStatistics = ({ statistics }: Props) => {
   return (
     <StyledPoolsOverview>
-      <Container>
-        <LabelContainer>
-          <Label>Earnings Accrued</Label>
-          <Tooltip content="TODO" />
-        </LabelContainer>
-        <Number>$1243.34</Number>
-      </Container>
-      <Container>
-        <LabelContainer>
-          <Label>Your Deposits</Label>
-          <Tooltip content="TODO" />
-        </LabelContainer>
-        <Number>$65,530.34</Number>
-      </Container>
-      <Container>
-        <LabelContainer>
-          <Label>Locked in Position</Label>
-          <Tooltip content="TODO" />
-        </LabelContainer>
-        <Number>$45,200.00</Number>
-      </Container>
+      {statistics.map((statistic: SummaryStatisticType) => (
+        <Container key={statistic.label}>
+          <LabelContainer>
+            <Label>{statistic.label}</Label>
+            <Tooltip content={statistic.tooltip} />
+          </LabelContainer>
+          <Number>{statistic.value}</Number>
+        </Container>
+      ))}
     </StyledPoolsOverview>
   );
 };
 
-export default ClaimOverview;
+export default SummaryStatistics;

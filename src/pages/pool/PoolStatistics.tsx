@@ -6,6 +6,7 @@ import { selectPrice } from "../../features/pool/selectors";
 import { selectBalance } from "../../features/user/userSlice";
 import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 import { selectPoolPositions } from "../../features/positions/positionsSlice";
+import { formatCurrency } from "../../lib/numeric";
 
 type Props = {
   pool: Pool;
@@ -25,19 +26,18 @@ const PoolStatistics = ({ pool }: Props) => {
         {
           header: "Your deposits",
           tooltip: PLACEHOLDER_TOOLTIP,
-          value: `$${deposits.toLocaleString()}`,
+          value: formatCurrency(deposits),
         },
         {
           header: "Locked in position",
           tooltip: PLACEHOLDER_TOOLTIP,
-          value: `$${locked.toLocaleString()}`,
+          value: formatCurrency(locked),
         },
-
-        {
-          header: "Rewards accrued",
-          tooltip: PLACEHOLDER_TOOLTIP,
-          value: "$0.00",
-        },
+        // {
+        //   header: "Rewards accrued",
+        //   tooltip: PLACEHOLDER_TOOLTIP,
+        //   value: formatCurrency(0),
+        // },
       ]}
     />
   );
