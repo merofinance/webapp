@@ -15,6 +15,7 @@ type ButtonProps = {
   inactive?: boolean;
   complete?: boolean;
   background?: string;
+  width?: string;
 };
 
 const StyledButton = styled.button`
@@ -24,6 +25,7 @@ const StyledButton = styled.button`
   pointer-events: ${(props: ButtonProps) => (props.inactive ? "none" : "auto")};
 
   width: ${(props: ButtonProps) => {
+    if (props.width) return props.width;
     if (props.wide) return "100%";
     return "auto";
   }};
@@ -124,8 +126,16 @@ const Content = styled.div`
   }
 `;
 
+const TextContainer = styled.div`
+  display: flex;
+  align-items: center;
+
+  div:nth-child(2) {
+    margin-left: 1.9rem;
+  }
+`;
+
 const Text = styled.div`
-  opacity: ${(props: ButtonProps) => (props.loading ? "0" : "1")};
   white-space: nowrap;
 
   color: ${(props: ButtonProps) => {
@@ -178,13 +188,6 @@ const Text = styled.div`
   }
 `;
 
-const ProgressContainer = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
-
 const HoverTextContainer = styled.div`
   position: absolute;
   left: 0;
@@ -226,6 +229,7 @@ type Props = {
   complete?: boolean;
   background?: string;
   hoverText?: string;
+  width?: string;
 };
 
 const Button = (props: Props) => {
@@ -241,6 +245,7 @@ const Button = (props: Props) => {
       disabled={props.disabled}
       inactive={props.inactive}
       complete={props.complete}
+      width={props.width}
       onClick={() => {
         if (!props.loading && !props.disabled && props.click) props.click();
       }}
@@ -255,23 +260,20 @@ const Button = (props: Props) => {
         complete={props.complete}
         background={props.background}
       >
-        {props.loading && (
-          <ProgressContainer>
-            <CircularProgress size={props.large ? 31 : 25} />
-          </ProgressContainer>
-        )}
-        <Text
-          primary={props.primary}
-          hero={props.hero}
-          large={props.large}
-          medium={props.medium}
-          small={props.small}
-          square={props.square}
-          loading={props.loading}
-          disabled={props.disabled}
-        >
-          {props.text}
-        </Text>
+        <TextContainer>
+          {props.loading && <CircularProgress size={props.large ? 31 : 17} />}
+          <Text
+            primary={props.primary}
+            hero={props.hero}
+            large={props.large}
+            medium={props.medium}
+            small={props.small}
+            square={props.square}
+            disabled={props.disabled}
+          >
+            {props.text}
+          </Text>
+        </TextContainer>
       </Content>
       {props.hoverText && props.disabled && (
         <HoverTextContainer>
