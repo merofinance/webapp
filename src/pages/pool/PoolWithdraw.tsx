@@ -23,7 +23,7 @@ const PoolWithdraw = ({ pool }: Props) => {
   const staked = useSelector(selectBalance(pool.stakerVaultAddress));
   const availableToWithdraw = totalBalance - staked;
 
-  const [withdrawAmount, setWithdrawAmount] = useState(0);
+  const [withdrawAmount, setWithdrawAmount] = useState("");
 
   return (
     <ContentSection
@@ -33,14 +33,14 @@ const PoolWithdraw = ({ pool }: Props) => {
         <Content>
           <AmountInput
             value={withdrawAmount}
-            setValue={(v: number) => setWithdrawAmount(v)}
+            setValue={(v: string) => setWithdrawAmount(v)}
             label={`Enter an amount of ${pool.underlying.symbol.toUpperCase()} to withdraw`}
             max={availableToWithdraw}
           />
           <WithdrawalButton
             pool={pool}
-            value={withdrawAmount}
-            complete={() => setWithdrawAmount(0)}
+            value={Number(withdrawAmount)}
+            complete={() => setWithdrawAmount("")}
           />
         </Content>
       }
