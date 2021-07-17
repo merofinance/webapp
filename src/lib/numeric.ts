@@ -48,6 +48,13 @@ export function floatToBigNumber(
   return scale(scaledSignificant, decimals - decimalScale);
 }
 
+export const numberToCompactCurrency = (value: number) => {
+  if (value >= 1_000_000_000) return `$${(value / 1_000_000_000).toFixed(1)}b`;
+  if (value >= 1_000_000) return `$${(value / 1_000_000).toFixed(1)}m`;
+  if (value >= 1_000) return `$${(value / 1_000).toFixed(1)}k`;
+  return value.toFixed(0);
+};
+
 export const formatCurrency = (number: number) => {
   return number.toLocaleString(undefined, {
     maximumFractionDigits: 2,

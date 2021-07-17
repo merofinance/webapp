@@ -8,6 +8,7 @@ import Button from "../../components/Button";
 import GradientText from "../../styles/GradientText";
 import { selectBalances } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
+import { numberToCompactCurrency } from "../../lib/numeric";
 import { selectPoolPositions } from "../../features/positions/positionsSlice";
 import { Position } from "../../lib/types";
 import { selectPrice } from "../../features/pool/selectors";
@@ -18,6 +19,7 @@ type RowProps = {
 };
 
 const Row = styled.tr`
+  position: relative;
   height: ${(props: RowProps) => (props.preview ? "5.6rem" : "7.2rem")};
   display: flex;
   justify-content: space-between;
@@ -33,10 +35,23 @@ const Row = styled.tr`
   :hover {
     background-color: #1a1438;
   }
+
+  @media (max-width: 600px) {
+    height: ${(props: RowProps) => (props.preview ? "4.8rem" : "7.2rem")};
+    padding: 0 1.6rem;
+
+    td:nth-child(1) {
+      flex: 1.1;
+    }
+    td:nth-child(2) {
+      flex: 0.9;
+    }
+  }
 `;
 
 type DataProps = {
   right?: boolean;
+  preview?: boolean;
 };
 
 const Data = styled.td`
@@ -44,21 +59,49 @@ const Data = styled.td`
   flex: 1;
   align-items: center;
   font-weight: 400;
-  font-size: 1.6rem;
-  line-height: 1.4rem;
   letter-spacing: 0.15px;
   justify-content: ${(props: DataProps) => (props.right ? "flex-end" : "flex-start")};
+  display: ${(props: DataProps) => (!props.preview && props.right ? "none" : "flex")};
+
+  font-size: 1.6rem;
+  line-height: 1.4rem;
+  @media (max-width: 600px) {
+    font-size: 1.4rem;
+    line-height: 2.1rem;
+    display: ${(props: DataProps) => (props.preview && props.right ? "none" : "flex")};
+  }
 `;
 
 const Apy = styled(GradientText)`
+  letter-spacing: 0.15px;
+
   font-weight: 900;
   font-size: 1.6rem;
   line-height: 2rem;
-  letter-spacing: 0.15px;
+  @media (max-width: 600px) {
+    font-weight: 700;
+    font-size: 1.4rem;
+    line-height: 2.1rem;
+  }
 `;
+
+interface ChevronProps {
+  preview?: boolean;
+}
 
 const ChevronData = styled.td`
   width: 2.4rem;
+
+  @media (min-width: 601px) {
+    display: ${(props: ChevronProps) => (props.preview ? "none" : "block")};
+  }
+
+  @media (max-width: 600px) {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 `;
 
 const Chevron = styled.img`
@@ -89,21 +132,14 @@ const PoolsRow = ({ pool, preview }: Props) => {
       <Data>
         <Apy>{`${pool.apy}%`}</Apy>
       </Data>
-      <Data>{formatCurrency(pool.totalAssets * price)}</Data>
-      {!preview && (
-        <>
-          <Data>{formatCurrency((getBalance(pool) + locked) * price)}</Data>
-
-          <ChevronData>
-            <Chevron src={chevron} alt="right arrow" />
-          </ChevronData>
-        </>
-      )}
-      {preview && (
-        <Data right>
-          <Button text="deposit" background="#141128" />
-        </Data>
-      )}
+      <Data>{numberToCompactCurrency(pool.totalAssets * price)}</Data>
+      {!preview && <Data>{formatCurrency((getBalance(pool) + locked) * price)}</Data>}
+      <ChevronData preview={preview}>
+        <Chevron src={chevron} alt="right arrow" />
+      </ChevronData>
+      <Data right preview={preview}>
+        <Button text="deposit" background="#141128" />
+      </Data>
     </Row>
   );
 };
