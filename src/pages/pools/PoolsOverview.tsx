@@ -28,11 +28,11 @@ const PoolsOverview = () => {
           tooltip: PLACEHOLDER_TOOLTIP,
           value: formatPercent(averageApy),
         },
-        {
-          label: "Revenue",
-          tooltip: PLACEHOLDER_TOOLTIP,
-          value: "$0",
-        },
+        // {
+        //   label: "Revenue",
+        //   tooltip: PLACEHOLDER_TOOLTIP,
+        //   value: "$0",
+        // },
       ]}
     />
   );

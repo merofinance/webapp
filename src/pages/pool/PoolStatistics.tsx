@@ -33,12 +33,11 @@ const PoolStatistics = ({ pool }: Props) => {
           tooltip: PLACEHOLDER_TOOLTIP,
           value: formatCurrency(locked),
         },
-
-        {
-          header: "Rewards accrued",
-          tooltip: PLACEHOLDER_TOOLTIP,
-          value: formatCurrency(0),
-        },
+        // {
+        //   header: "Rewards accrued",
+        //   tooltip: PLACEHOLDER_TOOLTIP,
+        //   value: formatCurrency(0),
+        // },
       ]}
     />
   );

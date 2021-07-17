@@ -20,7 +20,7 @@ type Props = {
 
 const PoolDeposit = ({ pool }: Props) => {
   const availableToDeposit = useSelector(selectBalance(pool.underlying.address));
-  const [depositAmount, setDepositAmount] = useState(0);
+  const [depositAmount, setDepositAmount] = useState("");
 
   return (
     <ContentSection
@@ -30,11 +30,15 @@ const PoolDeposit = ({ pool }: Props) => {
         <Content>
           <AmountInput
             value={depositAmount}
-            setValue={(v: number) => setDepositAmount(v)}
+            setValue={(v: string) => setDepositAmount(v)}
             label={`Enter an amount of ${pool.underlying.symbol.toUpperCase()} to deposit`}
             max={availableToDeposit}
           />
-          <ProgressButtons pool={pool} value={depositAmount} complete={() => setDepositAmount(0)} />
+          <ProgressButtons
+            pool={pool}
+            value={Number(depositAmount)}
+            complete={() => setDepositAmount("")}
+          />
         </Content>
       }
     />

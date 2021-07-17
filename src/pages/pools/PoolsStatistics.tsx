@@ -40,11 +40,11 @@ const PoolsStatistics = () => {
           tooltip: PLACEHOLDER_TOOLTIP,
           value: formatCurrency(locked),
         },
-        {
-          header: "Rewards accrued",
-          tooltip: PLACEHOLDER_TOOLTIP,
-          value: "$0.00",
-        },
+        // {
+        //   header: "Rewards accrued",
+        //   tooltip: PLACEHOLDER_TOOLTIP,
+        //   value: "$0.00",
+        // },
       ]}
     />
   );
