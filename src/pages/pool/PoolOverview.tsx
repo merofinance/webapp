@@ -4,6 +4,7 @@ import { Pool } from "../../lib";
 import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 import Overview from "../../components/Overview";
 import { selectPrice } from "../../features/pool/selectors";
+import { formatCurrency, formatPercent } from "../../lib/numeric";
 
 interface Props {
   pool: Pool;
@@ -20,12 +21,12 @@ const PoolOverview = ({ pool }: Props) => {
         {
           label: "Pool TVL",
           tooltip: PLACEHOLDER_TOOLTIP,
-          value: `$${locked.toLocaleString()}`,
+          value: formatCurrency(locked),
         },
         {
           label: "APY",
           tooltip: PLACEHOLDER_TOOLTIP,
-          value: `${pool.apy.toLocaleString()}%`,
+          value: formatPercent(pool.apy),
         },
         {
           label: "Strategy",

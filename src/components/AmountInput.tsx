@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { formatCrypto } from "../lib/numeric";
 import AmountSlider from "./AmountSlider";
 import Input from "./Input";
 
@@ -30,7 +31,7 @@ type Props = {
 const AmountInput = ({ value, setValue, label, max }: Props) => {
   return (
     <StyledAmountInput>
-      <Available>{`Available: ${max}`}</Available>
+      <Available>{`Available: ${formatCrypto(max)}`}</Available>
       <Input
         valid={true}
         label={label}

@@ -47,3 +47,23 @@ export function floatToBigNumber(
   const scaledSignificant = Math.round(value * Math.pow(10, decimalScale));
   return scale(scaledSignificant, decimals - decimalScale);
 }
+
+export const formatCurrency = (number: number) => {
+  return number.toLocaleString(undefined, {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+    style: "currency",
+    currency: "USD",
+  });
+};
+
+export const formatPercent = (number: number) => {
+  return number.toLocaleString(undefined, { maximumFractionDigits: 2, style: "percent" });
+};
+
+export const formatCrypto = (number: number) => {
+  const decimals = Math.max(5 - Math.floor(Math.pow(number, 1 / 10)), 0);
+  return number.toLocaleString(undefined, {
+    maximumFractionDigits: decimals,
+  });
+};
