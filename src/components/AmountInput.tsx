@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { formatCrypto } from "../lib/numeric";
 import AmountSlider from "./AmountSlider";
 import Input from "./Input";
 
@@ -21,8 +22,8 @@ const Available = styled.div`
 `;
 
 type Props = {
-  value: number;
-  setValue: (v: number) => void;
+  value: string;
+  setValue: (v: string) => void;
   label: string;
   max: number;
 };
@@ -30,16 +31,16 @@ type Props = {
 const AmountInput = ({ value, setValue, label, max }: Props) => {
   return (
     <StyledAmountInput>
-      <Available>{`Available: ${max}`}</Available>
+      <Available>{`Available: ${formatCrypto(max)}`}</Available>
       <Input
         valid={true}
         label={label}
-        value={value === 0 ? "" : value.toString()}
+        value={value}
         type="number"
-        onChange={(v: string) => setValue(Number(v))}
+        onChange={(v: string) => setValue(v)}
         background="#10092e"
         buttonText="max"
-        buttonAction={() => setValue(max)}
+        buttonAction={() => setValue(max.toString())}
         errorMessage="Invalid amount"
       />
       <AmountSlider value={value} max={max} setValue={setValue} />

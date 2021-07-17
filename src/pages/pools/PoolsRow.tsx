@@ -12,6 +12,7 @@ import { numberToCompactCurrency } from "../../lib/numeric";
 import { selectPoolPositions } from "../../features/positions/positionsSlice";
 import { Position } from "../../lib/types";
 import { selectPrice } from "../../features/pool/selectors";
+import { formatCurrency } from "../../lib/numeric";
 
 type RowProps = {
   preview?: boolean;
@@ -132,7 +133,7 @@ const PoolsRow = ({ pool, preview }: Props) => {
         <Apy>{`${pool.apy}%`}</Apy>
       </Data>
       <Data>{numberToCompactCurrency(pool.totalAssets * price)}</Data>
-      {!preview && <Data>{`$${((getBalance(pool) + locked) * price).toLocaleString()}`}</Data>}
+      {!preview && <Data>{formatCurrency((getBalance(pool) + locked) * price)}</Data>}
       <ChevronData preview={preview}>
         <Chevron src={chevron} alt="right arrow" />
       </ChevronData>

@@ -19,17 +19,25 @@ const StyledAsset = styled.div`
   display: flex;
 `;
 
+interface IconProps {
+  large?: boolean;
+}
+
 const Icon = styled.img`
-  width: 2.4rem;
-  height: 2.4rem;
+  height: ${(props: IconProps) => (props.large ? "3.4rem" : "2.4rem")};
 `;
+
+interface LabelProps {
+  large?: boolean;
+  small?: boolean;
+}
 
 const Label = styled.div`
   text-transform: uppercase;
-  letter-spacing: 0.15px;
-
+  font-weight: ${(props: LabelProps) => (props.small ? "500" : "700")};
+  font-size: ${(props: LabelProps) => (props.large ? "2.4rem" : props.small ? "1.8rem" : "1.6rem")};
   line-height: 2.4rem;
-  font-size: 1.6rem;
+  letter-spacing: ${(props: LabelProps) => (props.large ? "0.25px" : "0.15px")};
   margin-left: 1.2rem;
   font-weight: 700;
   @media (max-width: 600px) {
@@ -42,13 +50,16 @@ const Label = styled.div`
 
 type Props = {
   token: Token;
+  large?: boolean;
+  small?: boolean;
+  value?: number;
 };
 
-const Asset = ({ token }: Props) => {
+const Asset = ({ token, large, small, value }: Props) => {
   return (
     <StyledAsset>
       <Icon src={assets[token.symbol]} alt={`${token.symbol} icon`} />
-      <Label>{token.symbol.toUpperCase()}</Label>
+      <Label large={large} small={small}>{`${value ? `${value} ` : ""}${token.symbol}`}</Label>
     </StyledAsset>
   );
 };
