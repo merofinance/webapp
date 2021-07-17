@@ -97,6 +97,8 @@ const DepositButtons = (props: Props) => {
   const requiresApproval = props.pool.underlying.address !== ETH_DUMMY_ADDRESS;
 
   const executeApprove = (amount: number) => {
+    if (approved) return;
+    setLoading(true);
     const approveAction = approve({
       token: props.pool.underlying,
       spender: props.pool.address,
@@ -110,6 +112,7 @@ const DepositButtons = (props: Props) => {
   };
 
   const executeDeposit = (amount: number) => {
+    setLoading(true);
     dispatch(deposit({ backd: backd!, pool: props.pool, amount })).then((v) => {
       handleTxDispatch({ status: v.meta.requestStatus, actionType: "deposit" });
       props.complete();
@@ -126,9 +129,7 @@ const DepositButtons = (props: Props) => {
             medium
             wide
             text={`Approve ${props.pool.underlying.symbol.toUpperCase()}`}
-            click={() => {
-              if (!approved) executeApprove(props.value);
-            }}
+            click={() => executeApprove(props.value)}
             complete={approved}
             loading={loading && !approved}
             disabled={props.value === 0}
@@ -140,11 +141,7 @@ const DepositButtons = (props: Props) => {
           medium
           wide
           text={"Deposit and Stake"}
-          click={() => {
-            if (!backd || !approved) return;
-            setLoading(true);
-            executeDeposit(props.value);
-          }}
+          click={() => executeDeposit(props.value)}
           disabled={!approved || props.value === 0}
           loading={loading && approved}
           hoverText={
