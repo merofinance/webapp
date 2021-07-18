@@ -29,11 +29,18 @@ type Props = {
 };
 
 const AmountInput = ({ value, setValue, label, max }: Props) => {
+  const error = () => {
+    const amount = Number(value);
+    if (amount < 0) return "Amount must be a positive number";
+    if (amount > max) return "Amount exceeds available balance";
+    return "";
+  };
+
   return (
     <StyledAmountInput>
       <Available>{`Available: ${formatCrypto(max)}`}</Available>
       <Input
-        valid={true}
+        valid={!error()}
         label={label}
         value={value}
         type="number"
@@ -41,7 +48,7 @@ const AmountInput = ({ value, setValue, label, max }: Props) => {
         background="#10092e"
         buttonText="max"
         buttonAction={() => setValue(max.toString())}
-        errorMessage="Invalid amount"
+        errorMessage={error()}
       />
       <AmountSlider value={value} max={max} setValue={setValue} />
     </StyledAmountInput>

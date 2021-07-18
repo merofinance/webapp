@@ -110,6 +110,8 @@ const Note = styled.div`
   font-weight: 400;
   font-size: 1.2rem;
   margin-top: 0.6rem;
+  margin-left: 1.2rem;
+  letter-spacing: 0.4px;
 
   transition: color 0.3s;
   color: ${(props: InputProps) => (props.valid ? "var(--main)" : "var(--error)")};
