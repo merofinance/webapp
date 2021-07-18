@@ -7,9 +7,10 @@ import Button from "../../components/Button";
 import { selectPool } from "../../features/pool/selectors";
 import Seo from "../../components/Seo";
 import PoolDeposit from "./PoolDeposit";
-import Overview from "../../components/Overview";
 import PoolPositions from "./PoolPositions";
 import PoolWithdraw from "./PoolWithdraw";
+import PoolOverview from "./PoolOverview";
+import { selectBalance } from "../../features/user/userSlice";
 
 type DepositWithdrawParams = {
   poolName: string;
@@ -54,6 +55,7 @@ const ButtonContainer = styled.div`
 const PoolPage = () => {
   let { poolName } = useParams<DepositWithdrawParams>();
   const pool = useSelector(selectPool(poolName));
+  const balance = useSelector(selectBalance(pool));
 
   const [tab, setTab] = useState("deposit");
 
@@ -73,8 +75,8 @@ const PoolPage = () => {
         {tab === "withdraw" && <PoolWithdraw pool={pool} />}
         {tab === "positions" && <PoolPositions pool={pool} />}
         <RightColumn>
-          <Overview pool={pool} />
-          {tab !== "positions" && (
+          <PoolOverview pool={pool} />
+          {tab !== "positions" && balance > 0 && (
             <ButtonContainer>
               <Button medium text="+ Create a Top-up Position" click={() => setTab("positions")} />
             </ButtonContainer>

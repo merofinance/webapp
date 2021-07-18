@@ -8,11 +8,12 @@ import GradientText from "../../styles/GradientText";
 import Tooltip from "../../components/Tooltip";
 import { setError } from "../../features/error/errorSlice";
 import { registerPosition } from "../../features/positions/positionsSlice";
-import { openAndFocusWindow } from "../../lib/browser";
+import { openEtherscanAddress } from "../../lib/browser";
 import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 import { shortenAddress } from "../../lib/text";
 import { Pool, Position } from "../../lib/types";
-import { selectPrices } from "../../features/pools-list/poolsListSlice";
+import { selectPrice } from "../../features/pool/selectors";
+import { formatCurrency } from "../../lib/numeric";
 
 const Content = styled.div`
   width: 100%;
@@ -80,14 +81,10 @@ type Props = {
 
 const NewPositionConfirmation = ({ show, close, position, pool, complete }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
+  const price = useSelector(selectPrice(pool));
   const backd = useBackd();
 
-  const prices = useSelector(selectPrices);
-
   const [loading, setLoading] = useState(false);
-
-  const getPrice = (pool: Pool) => prices[pool.underlying.symbol] || 0;
-  const getUsd = (amount: number) => `$${(getPrice(pool) * amount).toLocaleString()}`;
 
   const executeRegister = () => {
     if (!backd) return;
@@ -116,20 +113,16 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
         <Content>
           <Summary>
             {`When the collateralization of `}
-            <Address
-              onClick={() => {
-                openAndFocusWindow(`https://etherscan.io/address/${position.account}`, "_blank");
-              }}
-            >
+            <Address onClick={() => openEtherscanAddress(position.account, "_blank")}>
               {shortenAddress(position.account, 26)}
             </Address>
             {` drops below ${position.threshold}, it will
-            be topped up with ${position.singleTopUp} DAI (${getUsd(
-              position.singleTopUp
+            be topped up with ${position.singleTopUp} DAI (${formatCurrency(
+              position.singleTopUp * price
             )}). This will be repeated each time the
             collateralization ratio drops below ${position.threshold}, until a total of ${
               position.totalTopUp
-            } DAI (${getUsd(position.totalTopUp)}) is topped
+            } DAI (${formatCurrency(position.totalTopUp * price)}) is topped
             up.`}
           </Summary>
           <PositionSummary>
@@ -144,11 +137,7 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
                 Borrower
                 <Tooltip content={PLACEHOLDER_TOOLTIP} />
               </Label>
-              <AddressLabel
-                onClick={() => {
-                  openAndFocusWindow(`https://etherscan.io/address/${position.account}`, "_blank");
-                }}
-              >
+              <AddressLabel onClick={() => openEtherscanAddress(position.account, "_blank")}>
                 {shortenAddress(position.account, 8)}
               </AddressLabel>
             </SummaryRow>

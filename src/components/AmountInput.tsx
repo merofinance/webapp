@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { formatCrypto } from "../lib/numeric";
 import AmountSlider from "./AmountSlider";
 import Input from "./Input";
 
@@ -21,29 +22,36 @@ const Available = styled.div`
 `;
 
 type Props = {
-  value: number;
-  setValue: (v: number) => void;
+  value: string;
+  setValue: (v: string) => void;
   label: string;
   max: number;
   noSlider?: boolean;
 };
 
 const AmountInput = ({ value, setValue, label, max, noSlider }: Props) => {
+  const error = () => {
+    const amount = Number(value);
+    if (amount < 0) return "Amount must be a positive number";
+    if (amount > max) return "Amount exceeds available balance";
+    return "";
+  };
+
   return (
     <StyledAmountInput>
-      <Available>{`Available: ${max}`}</Available>
+      <Available>{`Available: ${formatCrypto(max)}`}</Available>
       <Input
-        valid={true}
+        valid={!error()}
         label={label}
-        value={value === 0 ? "" : value.toString()}
+        value={value}
         type="number"
-        onChange={(v: string) => setValue(Number(v))}
+        onChange={(v: string) => setValue(v)}
         background="#10092e"
         buttonText="max"
-        buttonAction={() => setValue(max)}
-        errorMessage="Invalid amount"
+        buttonAction={() => setValue(max.toString())}
+        errorMessage={error()}
       />
-      {!noSlider && <AmountSlider value={value} max={max} setValue={(v: number) => setValue(v)} />}
+      {!noSlider && <AmountSlider value={value} max={max} setValue={setValue} />}
     </StyledAmountInput>
   );
 };

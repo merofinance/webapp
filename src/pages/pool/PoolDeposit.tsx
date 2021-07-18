@@ -3,9 +3,10 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import AmountInput from "../../components/AmountInput";
 import ContentSection from "../../components/ContentSection";
-import ProgressButtons from "./DepositButtons";
+import DepositButtons from "../../components/DepositButtons";
 import { selectBalance } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
+import PoolStatistics from "./PoolStatistics";
 
 const Content = styled.div`
   width: 100%;
@@ -19,21 +20,25 @@ type Props = {
 
 const PoolDeposit = ({ pool }: Props) => {
   const availableToDeposit = useSelector(selectBalance(pool.underlying.address));
-  const [depositAmount, setDepositAmount] = useState(0);
+  const [depositAmount, setDepositAmount] = useState("");
 
   return (
     <ContentSection
       header={`Deposit ${pool.underlying.symbol.toUpperCase()}`}
-      pool={pool}
+      statistics={<PoolStatistics pool={pool} />}
       content={
         <Content>
           <AmountInput
             value={depositAmount}
-            setValue={(v: number) => setDepositAmount(v)}
+            setValue={(v: string) => setDepositAmount(v)}
             label={`Enter an amount of ${pool.underlying.symbol.toUpperCase()} to deposit`}
             max={availableToDeposit}
           />
-          <ProgressButtons pool={pool} value={depositAmount} complete={() => setDepositAmount(0)} />
+          <DepositButtons
+            pool={pool}
+            value={Number(depositAmount)}
+            complete={() => setDepositAmount("")}
+          />
         </Content>
       }
     />

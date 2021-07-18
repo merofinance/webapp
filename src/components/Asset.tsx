@@ -24,7 +24,6 @@ interface IconProps {
 }
 
 const Icon = styled.img`
-  width: ${(props: IconProps) => (props.large ? "3.4rem" : "2.4rem")};
   height: ${(props: IconProps) => (props.large ? "3.4rem" : "2.4rem")};
 `;
 
@@ -40,6 +39,13 @@ const Label = styled.div`
   line-height: 2.4rem;
   letter-spacing: ${(props: LabelProps) => (props.large ? "0.25px" : "0.15px")};
   margin-left: 1.2rem;
+  font-weight: 700;
+  @media (max-width: 600px) {
+    margin-left: 1rem;
+    font-size: 1.4rem;
+    line-height: 2.1rem;
+    font-weight: 400;
+  }
 `;
 
 type Props = {

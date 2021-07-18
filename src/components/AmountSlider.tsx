@@ -56,13 +56,13 @@ const BackdSlider = withStyles({
 const valuetext = (value: any) => `${value}%`;
 
 type Props = {
-  value: number;
+  value: string;
   max: number;
-  setValue: (value: number) => void;
+  setValue: (value: string) => void;
 };
 
 const AmountSlider = ({ value, max, setValue }: Props) => {
-  const percent = Math.round(max === 0 ? 0 : (value / max) * 100);
+  const percent = max === 0 || value === "" ? 0 : Math.round((Number(value) / max) * 100);
 
   return (
     <StyledAmountSlider>
@@ -73,7 +73,7 @@ const AmountSlider = ({ value, max, setValue }: Props) => {
         min={0}
         max={100}
         value={percent}
-        onChange={(e: any, value: any) => setValue((value * max) / 100)}
+        onChange={(e: any, value: any) => setValue(((value * max) / 100).toString())}
         valueLabelDisplay="auto"
         valueLabelFormat={valuetext}
       />
@@ -81,8 +81,8 @@ const AmountSlider = ({ value, max, setValue }: Props) => {
         <SliderStep
           key={step}
           percent={`${step * 100}%`}
-          click={() => setValue(step * max)}
-          active={value / max > step}
+          click={() => setValue((step * max).toString())}
+          active={Number(value || 0) / max > step}
         />
       ))}
     </StyledAmountSlider>

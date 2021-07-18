@@ -5,6 +5,7 @@ import AmountInput from "../../components/AmountInput";
 import ContentSection from "../../components/ContentSection";
 import { selectBalance } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
+import PoolStatistics from "./PoolStatistics";
 import WithdrawalButton from "./WithdrawButton";
 
 const Content = styled.div`
@@ -22,24 +23,24 @@ const PoolWithdraw = ({ pool }: Props) => {
   const staked = useSelector(selectBalance(pool.stakerVaultAddress));
   const availableToWithdraw = totalBalance - staked;
 
-  const [withdrawAmount, setWithdrawAmount] = useState(0);
+  const [withdrawAmount, setWithdrawAmount] = useState("");
 
   return (
     <ContentSection
       header={`Withdraw ${pool.underlying.symbol.toUpperCase()}`}
-      pool={pool}
+      statistics={<PoolStatistics pool={pool} />}
       content={
         <Content>
           <AmountInput
             value={withdrawAmount}
-            setValue={(v: number) => setWithdrawAmount(v)}
+            setValue={(v: string) => setWithdrawAmount(v)}
             label={`Enter an amount of ${pool.underlying.symbol.toUpperCase()} to withdraw`}
             max={availableToWithdraw}
           />
           <WithdrawalButton
             pool={pool}
-            value={withdrawAmount}
-            complete={() => setWithdrawAmount(0)}
+            value={Number(withdrawAmount)}
+            complete={() => setWithdrawAmount("")}
           />
         </Content>
       }
