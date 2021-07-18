@@ -21,7 +21,7 @@ const PoolsStatistics = () => {
     pools.filter((pool: Pool) => pool.underlying.address === tokenAddress)[0];
 
   const locked = positions.reduce(
-    (a: number, b: Position) => b.totalTopUp * getPrice(getPool(b.actionToken)) + a,
+    (a: number, b: Position) => b.maxTopUp * getPrice(getPool(b.actionToken)) + a,
     0
   );
   const deposits =

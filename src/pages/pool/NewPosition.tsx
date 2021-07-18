@@ -67,20 +67,20 @@ const NewPosition = ({ pool }: Props) => {
   const [loading, setLoading] = useState(false);
   const [confirming, setConfirming] = useState(false);
   const [protocol, setProtocol] = useState("");
-  const [borrower, setBorrower] = useState("");
+  const [address, setAddress] = useState("");
   const [threshold, setThreshold] = useState("");
   const [single, setSingle] = useState("");
-  const [total, setTotal] = useState("");
+  const [max, setMax] = useState("");
 
-  const approved = allowance >= Number(total || "0");
+  const approved = allowance >= Number(max || "0");
 
-  const borrowerError = () => {
-    if (!borrower) return "";
-    if (!ethers.utils.isAddress(borrower)) return "Invalid sddress";
+  const addressError = () => {
+    if (!address) return "";
+    if (!ethers.utils.isAddress(address)) return "Invalid Address";
     if (
       protocol &&
       positions.filter(
-        (position: Position) => position.protocol === protocol && position.account === borrower
+        (position: Position) => position.protocol === protocol && position.account === address
       ).length > 0
     )
       return "Max of one position per protocol and address";
@@ -98,26 +98,26 @@ const NewPosition = ({ pool }: Props) => {
     if (!single) return "";
     const number = Number(single);
     if (number <= 0) return "Must be positive number";
-    if (total && number > Number(total)) return "Must be less than total topup";
+    if (max && number > Number(max)) return "Must be less than max top up";
     return "";
   };
 
-  const totalError = () => {
-    if (!total) return "";
-    const number = Number(total);
+  const maxError = () => {
+    if (!max) return "";
+    const number = Number(max);
     if (number <= 0) return "Must be positive number";
     if (number > balance) return "Exceeds deposited balance";
     else return "";
   };
 
-  const hasError = !!(borrowerError() || thresholdError() || singleError() || totalError());
+  const hasError = !!(addressError() || thresholdError() || singleError() || maxError());
 
   const position: Position = {
     protocol,
-    account: borrower,
+    account: address,
     threshold: Number(threshold),
     singleTopUp: Number(single),
-    totalTopUp: Number(total),
+    maxTopUp: Number(max),
     maxGasPrice: 0,
     actionToken: pool.underlying.address,
     depositToken: pool.lpToken.address,
@@ -125,10 +125,10 @@ const NewPosition = ({ pool }: Props) => {
 
   const buttonHoverText = () => {
     if (!protocol) return "Select Protocol";
-    if (!borrower) return "Enter Borrower";
+    if (!address) return "Enter Address";
     if (!threshold) return "Enter Threshold";
-    if (!single) return "Enter Single topup";
-    if (!total) return "Enter Total topup";
+    if (!single) return "Enter Single Top Up";
+    if (!max) return "Enter Max Top Up";
     return "";
   };
 
@@ -136,7 +136,7 @@ const NewPosition = ({ pool }: Props) => {
     if (!backd) return;
     setLoading(true);
     const approveArgs = {
-      amount: Number(total),
+      amount: Number(max),
       backd,
       spender: backd.topupActionAddress,
       token: pool.lpToken,
@@ -148,10 +148,10 @@ const NewPosition = ({ pool }: Props) => {
 
   const clearInputs = () => {
     setProtocol("");
-    setBorrower("");
+    setAddress("");
     setThreshold("");
     setSingle("");
-    setTotal("");
+    setMax("");
   };
 
   return (
@@ -167,9 +167,9 @@ const NewPosition = ({ pool }: Props) => {
           </Value>
           <NewPositionInput
             type="text"
-            value={borrower}
-            setValue={(v: string) => setBorrower(v)}
-            error={borrowerError()}
+            value={address}
+            setValue={(v: string) => setAddress(v)}
+            error={addressError()}
           />
           <NewPositionInput
             type="number"
@@ -185,15 +185,15 @@ const NewPosition = ({ pool }: Props) => {
           />
           <NewPositionInput
             type="number"
-            value={total}
-            setValue={(v: string) => setTotal(v)}
-            error={totalError()}
+            value={max}
+            setValue={(v: string) => setMax(v)}
+            error={maxError()}
           />
           <Value>
             <Button
               primary
-              disabled={!(protocol && borrower && threshold && single && total) || hasError}
-              text={approved && total !== "" ? "create 2/2" : "approve 1/2"}
+              disabled={!(protocol && address && threshold && single && max) || hasError}
+              text={approved && max !== "" ? "create 2/2" : "approve 1/2"}
               click={() => {
                 if (approved) setConfirming(true);
                 else executeApprove();

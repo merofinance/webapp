@@ -122,7 +122,7 @@ const PoolsRow = ({ pool, preview }: Props) => {
   const positions = useSelector(selectPoolPositions(pool));
 
   const getBalance = (pool: Pool) => balances[pool.lpToken.address] || 0;
-  const locked = positions.reduce((a: number, b: Position) => b.totalTopUp + a, 0);
+  const locked = positions.reduce((a: number, b: Position) => b.maxTopUp + a, 0);
 
   return (
     <Row onClick={() => history.push(`/pool/${pool.lpToken.symbol}`)} preview={preview}>

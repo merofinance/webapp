@@ -24,7 +24,7 @@ const headers: HeaderType[] = [
     tooltip: PLACEHOLDER_TOOLTIP,
   },
   {
-    label: "Borrower",
+    label: "Address",
     tooltip: PLACEHOLDER_TOOLTIP,
   },
   {
@@ -32,11 +32,11 @@ const headers: HeaderType[] = [
     tooltip: PLACEHOLDER_TOOLTIP,
   },
   {
-    label: "Single topup",
+    label: "Single Top Up",
     tooltip: PLACEHOLDER_TOOLTIP,
   },
   {
-    label: "Total topup",
+    label: "Max Top Up",
     tooltip: PLACEHOLDER_TOOLTIP,
   },
 ];

@@ -28,7 +28,7 @@ const validationSchema = yup.object().shape({
     ),
   threshold: yup.number().required().moreThan(1.0),
   singleTopUp: yup.number().required().positive(),
-  totalTopUp: yup.number().required().positive(),
+  maxTopUp: yup.number().required().positive(),
 });
 
 const initialValues: Partial<Position> = {
@@ -96,20 +96,20 @@ export function NewPositionRow({ pool }: NewPositionRowProps) {
 
   const validate = (values: Partial<Position>): Record<string, string> => {
     const errors: Record<string, string> = {};
-    const totalTopUp = values.totalTopUp || 0;
+    const maxTopUp = values.maxTopUp || 0;
     const singleTopUp = values.singleTopUp || 0;
-    if (totalTopUp > balance) {
-      errors.totalTopUp = "Not enough funds available";
+    if (maxTopUp > balance) {
+      errors.maxTopUp = "Not enough funds available";
     }
-    if (totalTopUp < singleTopUp) {
-      errors.totalTopUp = "Must be greater than single topup";
+    if (maxTopUp < singleTopUp) {
+      errors.maxTopUp = "Must be greater than single topup";
     }
     return errors;
   };
 
   const onSubmit = (values: Partial<Position>) => {
     formik.setSubmitting(true);
-    const topupValue = values.totalTopUp || 0;
+    const topupValue = values.maxTopUp || 0;
     if (allowance >= topupValue) {
       setShowConfirmModal(true);
     } else {
@@ -119,7 +119,7 @@ export function NewPositionRow({ pool }: NewPositionRowProps) {
 
   const formik = useFormik({ initialValues, validationSchema, onSubmit, validate });
 
-  const topupValue = formik.values.totalTopUp || 0;
+  const topupValue = formik.values.maxTopUp || 0;
   const submitText = allowance >= topupValue ? "Register" : "Approve";
 
   const handleClose = () => {
@@ -159,7 +159,7 @@ export function NewPositionRow({ pool }: NewPositionRowProps) {
 
       <CellControl formik={formik} type="number" name="singleTopUp" placeHolder="1,500" />
 
-      <CellControl formik={formik} type="number" name="totalTopUp" placeHolder="4,500" />
+      <CellControl formik={formik} type="number" name="maxTopUp" placeHolder="4,500" />
 
       <div className={styles["table-cell"]}>
         <Button disabled={!formik.dirty || !formik.isValid || formik.isSubmitting} type="submit">

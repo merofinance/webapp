@@ -52,7 +52,7 @@ export function NewPositionModal({
           <b>
             <AssetAmount
               asset={pool.underlying.symbol}
-              amount={position.totalTopUp!!}
+              amount={position.maxTopUp!!}
               price={price}
               parenthesis={true}
               nativeFirst={true}

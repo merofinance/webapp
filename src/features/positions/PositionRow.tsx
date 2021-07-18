@@ -52,7 +52,7 @@ export function PositionRow({ position, pool }: PositionRowProps) {
       <div className={styles["table-cell"]}>
         <NumberFormat
           displayType={"text"}
-          value={position.totalTopUp}
+          value={position.maxTopUp}
           thousandSeparator={true}
           suffix={` ${pool.underlying.symbol}`}
         />

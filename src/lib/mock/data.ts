@@ -96,7 +96,7 @@ const positionKeys = [
 export const positions: Position<BigNumber>[] = [
   {
     singleTopUp: scale(1500),
-    totalTopUp: scale(4500),
+    maxTopUp: scale(4500),
     maxGasPrice: Math.pow(10, 10),
     actionToken: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
     depositToken: "0x99A77926B3FB49619DC3A1DAc18565bcB5A98b93",
@@ -104,7 +104,7 @@ export const positions: Position<BigNumber>[] = [
   },
   {
     singleTopUp: scale(10_000),
-    totalTopUp: scale(50_000),
+    maxTopUp: scale(50_000),
     maxGasPrice: 5 * Math.pow(10, 10),
     actionToken: "0x6b175474e89094c44da98b954eedeac495271d0f",
     depositToken: "0x25FF22De379B644BD5C2263404baC6FeE5a4b8de",
