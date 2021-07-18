@@ -75,7 +75,7 @@ const ClaimRow = ({ index }: Props) => {
         <ValueUsd>=$120.00</ValueUsd>
       </ValueContainer>
       <EndContainer>
-        <Button text="Claim" background="#10092f" width="12rem" />
+        <Button text="Claim" background="#100830" width="12rem" />
         <Button primary text="Claim & Stake" width="18rem" />
       </EndContainer>
     </StyledClaimRow>

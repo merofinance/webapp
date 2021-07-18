@@ -46,7 +46,7 @@ const AmountInput = ({ value, setValue, label, max, noSlider }: Props) => {
         value={value}
         type="number"
         onChange={(v: string) => setValue(v)}
-        background="#10092e"
+        background="#100830"
         buttonText="max"
         buttonAction={() => setValue(max.toString())}
         errorMessage={error()}

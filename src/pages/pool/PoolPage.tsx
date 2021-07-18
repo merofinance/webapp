@@ -78,7 +78,12 @@ const PoolPage = () => {
           <PoolOverview pool={pool} />
           {tab !== "positions" && balance > 0 && (
             <ButtonContainer>
-              <Button medium text="+ Create a Top-up Position" click={() => setTab("positions")} />
+              <Button
+                medium
+                text="+ Create a Top-up Position"
+                click={() => setTab("positions")}
+                background="#0A0525"
+              />
             </ButtonContainer>
           )}
         </RightColumn>
