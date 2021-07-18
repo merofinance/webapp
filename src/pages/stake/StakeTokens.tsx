@@ -43,7 +43,7 @@ type Props = {
 
 const StakeTokens = ({ token }: Props) => {
   const balance = useSelector(selectBalance(token.address));
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState("");
   const [approved, setApproved] = useState(false);
 
   const approve = async () => {
@@ -52,7 +52,7 @@ const StakeTokens = ({ token }: Props) => {
 
   const stake = async () => {
     setApproved(false);
-    setValue(0);
+    setValue("");
   };
 
   return (
@@ -65,13 +65,13 @@ const StakeTokens = ({ token }: Props) => {
         <AmountInput
           noSlider
           value={value}
-          setValue={(v: number) => setValue(v)}
+          setValue={(v: string) => setValue(v)}
           label="Enter an amount of BKD to stake"
           max={balance}
         />
         <MultiStepButtons
           stepsOnTop
-          disabled={value === 0}
+          disabled={!value}
           firstText={`Approve ${token.symbol}`}
           firstAction={approve}
           firstComplete={approved}
