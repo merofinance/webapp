@@ -18,6 +18,10 @@ const navItems: NavItemType[] = [
     label: "pools",
     link: "/pools",
   },
+  {
+    label: "stake BKD",
+    link: "/stake",
+  },
 ];
 
 const StyledNavItems = styled.ul`

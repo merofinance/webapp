@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import AmountInput from "../../components/AmountInput";
 import ContentSection from "../../components/ContentSection";
-import DepositButtons from "../../components/DepositButtons";
 import { selectBalance } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
+import DepositButtons from "./DepositButtons";
 import PoolStatistics from "./PoolStatistics";
 
 const Content = styled.div`

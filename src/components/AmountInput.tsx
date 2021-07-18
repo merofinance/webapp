@@ -26,9 +26,10 @@ type Props = {
   setValue: (v: string) => void;
   label: string;
   max: number;
+  noSlider?: boolean;
 };
 
-const AmountInput = ({ value, setValue, label, max }: Props) => {
+const AmountInput = ({ value, setValue, label, max, noSlider }: Props) => {
   const error = () => {
     const amount = Number(value);
     if (amount < 0) return "Amount must be a positive number";
@@ -50,7 +51,7 @@ const AmountInput = ({ value, setValue, label, max }: Props) => {
         buttonAction={() => setValue(max.toString())}
         errorMessage={error()}
       />
-      <AmountSlider value={value} max={max} setValue={setValue} />
+      {!noSlider && <AmountSlider value={value} max={max} setValue={setValue} />}
     </StyledAmountInput>
   );
 };
