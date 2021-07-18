@@ -32,7 +32,7 @@ const headers: HeaderType[] = [
     tooltip: PLACEHOLDER_TOOLTIP,
   },
   {
-    label: "Single topup",
+    label: "Single Top Up",
     tooltip: PLACEHOLDER_TOOLTIP,
   },
   {
