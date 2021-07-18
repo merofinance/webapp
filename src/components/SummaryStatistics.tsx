@@ -1,10 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Tooltip from "./Tooltip";
-
 export interface SummaryStatisticType {
   label: string;
-  tooltip: string;
   value: string;
 }
 
@@ -25,11 +22,6 @@ const Container = styled.div`
   border-radius: 14px;
   margin: 0 0.8rem;
   max-width: 40.7rem;
-`;
-
-const LabelContainer = styled.div`
-  display: flex;
-  align-items: center;
 `;
 
 const Label = styled.div`
@@ -57,10 +49,7 @@ const SummaryStatistics = ({ statistics }: Props) => {
     <StyledPoolsOverview>
       {statistics.map((statistic: SummaryStatisticType) => (
         <Container key={statistic.label}>
-          <LabelContainer>
-            <Label>{statistic.label}</Label>
-            <Tooltip content={statistic.tooltip} />
-          </LabelContainer>
+          <Label>{statistic.label}</Label>
           <Number>{statistic.value}</Number>
         </Container>
       ))}

@@ -1,5 +1,4 @@
 import React from "react";
-import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 import SummaryStatistics from "../../components/SummaryStatistics";
 
 const StakeSummary = () => {
@@ -8,12 +7,10 @@ const StakeSummary = () => {
       statistics={[
         {
           label: "claimable",
-          tooltip: PLACEHOLDER_TOOLTIP,
           value: "$1,243.34",
         },
         {
-          label: "your deposits",
-          tooltip: PLACEHOLDER_TOOLTIP,
+          label: "your total deposits",
           value: "$65,530.34",
         },
       ]}
