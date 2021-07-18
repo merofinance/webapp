@@ -10,7 +10,7 @@ const StakeSummary = () => {
           value: "$1,243.34",
         },
         {
-          label: "your deposits",
+          label: "your total deposits",
           value: "$65,530.34",
         },
       ]}
