@@ -121,8 +121,8 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
               position.singleTopUp * price
             )}). This will be repeated each time the
             collateralization ratio drops below ${position.threshold}, until a total of ${
-              position.totalTopUp
-            } DAI (${formatCurrency(position.totalTopUp * price)}) is topped
+              position.maxTopUp
+            } DAI (${formatCurrency(position.maxTopUp * price)}) is topped
             up.`}
           </Summary>
           <PositionSummary>
@@ -160,7 +160,7 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
                 Total top-up
                 <Tooltip content={PLACEHOLDER_TOOLTIP} />
               </Label>
-              <Label>{position.totalTopUp}</Label>
+              <Label>{position.maxTopUp}</Label>
             </SummaryRow>
           </PositionSummary>
         </Content>

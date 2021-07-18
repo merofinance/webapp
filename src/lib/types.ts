@@ -25,7 +25,7 @@ export interface Position<Num = number> {
   account: Address;
   threshold: Num;
   singleTopUp: Num;
-  totalTopUp: Num;
+  maxTopUp: Num;
   maxGasPrice: number;
   actionToken: Address;
   depositToken: Address;
@@ -37,7 +37,7 @@ export function positionFromPartial<T>(pool: Pool<T>, position: Partial<Position
     account: position.account!!,
     threshold: position.threshold!!,
     singleTopUp: position.singleTopUp!!,
-    totalTopUp: position.totalTopUp!!,
+    maxTopUp: position.maxTopUp!!,
     maxGasPrice: 0,
     actionToken: pool.underlying.address,
     depositToken: pool.lpToken.address,
@@ -62,7 +62,7 @@ export function transformPosition<T, U>(position: Position<T>, f: (v: T) => U): 
     maxGasPrice: position.maxGasPrice,
     threshold: f(position.threshold),
     singleTopUp: f(position.singleTopUp),
-    totalTopUp: f(position.totalTopUp),
+    maxTopUp: f(position.maxTopUp),
   };
 }
 

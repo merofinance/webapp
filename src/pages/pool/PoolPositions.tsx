@@ -36,7 +36,7 @@ const headers: HeaderType[] = [
     tooltip: PLACEHOLDER_TOOLTIP,
   },
   {
-    label: "Total topup",
+    label: "Max Top Up",
     tooltip: PLACEHOLDER_TOOLTIP,
   },
 ];

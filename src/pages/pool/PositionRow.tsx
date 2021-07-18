@@ -79,7 +79,7 @@ const PositionRow = ({ position, pool }: Props) => {
       <Value>{shortenAddress(position.account, 10)}</Value>
       <Value>{position.threshold}</Value>
       <Value>{`${position.singleTopUp} ${pool.underlying.symbol.toUpperCase()}`}</Value>
-      <Value>{`${position.totalTopUp} ${pool.underlying.symbol.toUpperCase()}`}</Value>
+      <Value>{`${position.maxTopUp} ${pool.underlying.symbol.toUpperCase()}`}</Value>
       <Value>
         <DeleteButton>
           <Delete src={deleteIcon} alt="delete button" onClick={() => handleRemovePosition()} />
