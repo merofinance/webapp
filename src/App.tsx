@@ -32,6 +32,10 @@ import PoolPage from "./pages/pool/PoolPage";
 import { LIVE } from "./lib/constants";
 import { ErrorAlert } from "./features/error/ErrorAlert";
 
+const Background = styled.div`
+  background: radial-gradient(rgba(11, 3, 60, 0.2), rgba(10, 5, 38, 0.3));
+`;
+
 const StyledApp = styled.div`
   width: 100%;
   display: flex;
@@ -81,52 +85,54 @@ function App() {
     <ErrorBoundary dispatch={dispatch}>
       <Web3ReactProvider getLibrary={getLibrary}>
         <Router>
-          <Header />
-          <StyledApp>
-            <Content>
-              <Switch>
-                {LIVE && (
-                  <PrivateRoute path="/pool/:poolName">
-                    <PoolPage />
-                  </PrivateRoute>
-                )}
+          <Background>
+            <Header />
+            <StyledApp>
+              <Content>
+                <Switch>
+                  {LIVE && (
+                    <PrivateRoute path="/pool/:poolName">
+                      <PoolPage />
+                    </PrivateRoute>
+                  )}
 
-                {LIVE && (
-                  <Route path="/connect">
-                    <ConnectWallet />
+                  {LIVE && (
+                    <Route path="/connect">
+                      <ConnectWallet />
+                    </Route>
+                  )}
+
+                  {LIVE && (
+                    <PrivateRoute path="/pools">
+                      <PoolsPage />
+                    </PrivateRoute>
+                  )}
+
+                  {LIVE && (
+                    <Route path="/claim">
+                      <ClaimPage />
+                    </Route>
+                  )}
+
+                  {LIVE && (
+                    <Route path="/stake">
+                      <StakePage />
+                    </Route>
+                  )}
+
+                  <Route path="/litepaper">
+                    <LitepaperPage />
                   </Route>
-                )}
 
-                {LIVE && (
-                  <PrivateRoute path="/pools">
-                    <PoolsPage />
-                  </PrivateRoute>
-                )}
-
-                {LIVE && (
-                  <Route path="/claim">
-                    <ClaimPage />
+                  <Route path="/">
+                    <LandingPage />
                   </Route>
-                )}
-
-                {LIVE && (
-                  <Route path="/stake">
-                    <StakePage />
-                  </Route>
-                )}
-
-                <Route path="/litepaper">
-                  <LitepaperPage />
-                </Route>
-
-                <Route path="/">
-                  <LandingPage />
-                </Route>
-              </Switch>
-            </Content>
-            <Footer />
-            <ErrorAlert />
-          </StyledApp>
+                </Switch>
+              </Content>
+              <Footer />
+              <ErrorAlert />
+            </StyledApp>
+          </Background>
         </Router>
       </Web3ReactProvider>
     </ErrorBoundary>
