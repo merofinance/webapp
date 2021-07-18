@@ -24,7 +24,7 @@ const headers: HeaderType[] = [
     tooltip: PLACEHOLDER_TOOLTIP,
   },
   {
-    label: "Borrower",
+    label: "Address",
     tooltip: PLACEHOLDER_TOOLTIP,
   },
   {

@@ -67,20 +67,20 @@ const NewPosition = ({ pool }: Props) => {
   const [loading, setLoading] = useState(false);
   const [confirming, setConfirming] = useState(false);
   const [protocol, setProtocol] = useState("");
-  const [borrower, setBorrower] = useState("");
+  const [address, setAddress] = useState("");
   const [threshold, setThreshold] = useState("");
   const [single, setSingle] = useState("");
   const [total, setTotal] = useState("");
 
   const approved = allowance >= Number(total || "0");
 
-  const borrowerError = () => {
-    if (!borrower) return "";
-    if (!ethers.utils.isAddress(borrower)) return "Invalid sddress";
+  const addressError = () => {
+    if (!address) return "";
+    if (!ethers.utils.isAddress(address)) return "Invalid sddress";
     if (
       protocol &&
       positions.filter(
-        (position: Position) => position.protocol === protocol && position.account === borrower
+        (position: Position) => position.protocol === protocol && position.account === address
       ).length > 0
     )
       return "Max of one position per protocol and address";
@@ -110,11 +110,11 @@ const NewPosition = ({ pool }: Props) => {
     else return "";
   };
 
-  const hasError = !!(borrowerError() || thresholdError() || singleError() || totalError());
+  const hasError = !!(addressError() || thresholdError() || singleError() || totalError());
 
   const position: Position = {
     protocol,
-    account: borrower,
+    account: address,
     threshold: Number(threshold),
     singleTopUp: Number(single),
     totalTopUp: Number(total),
@@ -125,7 +125,7 @@ const NewPosition = ({ pool }: Props) => {
 
   const buttonHoverText = () => {
     if (!protocol) return "Select Protocol";
-    if (!borrower) return "Enter Borrower";
+    if (!address) return "Enter Address";
     if (!threshold) return "Enter Threshold";
     if (!single) return "Enter Single topup";
     if (!total) return "Enter Total topup";
@@ -148,7 +148,7 @@ const NewPosition = ({ pool }: Props) => {
 
   const clearInputs = () => {
     setProtocol("");
-    setBorrower("");
+    setAddress("");
     setThreshold("");
     setSingle("");
     setTotal("");
@@ -167,9 +167,9 @@ const NewPosition = ({ pool }: Props) => {
           </Value>
           <NewPositionInput
             type="text"
-            value={borrower}
-            setValue={(v: string) => setBorrower(v)}
-            error={borrowerError()}
+            value={address}
+            setValue={(v: string) => setAddress(v)}
+            error={addressError()}
           />
           <NewPositionInput
             type="number"
@@ -192,7 +192,7 @@ const NewPosition = ({ pool }: Props) => {
           <Value>
             <Button
               primary
-              disabled={!(protocol && borrower && threshold && single && total) || hasError}
+              disabled={!(protocol && address && threshold && single && total) || hasError}
               text={approved && total !== "" ? "create 2/2" : "approve 1/2"}
               click={() => {
                 if (approved) setConfirming(true);
