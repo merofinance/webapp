@@ -2,6 +2,7 @@ import React from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import Button from "../../components/Button";
+import { useIsLive } from "../../lib/hooks";
 import { Header2 } from "../../styles/Headers";
 
 const StyledGetStarted = styled.div`
@@ -58,6 +59,7 @@ const Body = styled.p`
 
 const GetStarted = () => {
   const history = useHistory();
+  const live = useIsLive();
 
   return (
     <StyledGetStarted>
