@@ -5,7 +5,7 @@ import chainSecurityMobile from "../../assets/audit/chain-security-mobile.svg";
 import chainSecurity from "../../assets/audit/chain-security.svg";
 import GradientText from "../../styles/GradientText";
 import { openAndFocusWindow } from "../../lib/browser";
-import { LIVE } from "../../lib/constants";
+import { useIsLive } from "../../lib/hooks";
 
 const StyledAuditedBy = styled.div`
   width: 100%;
@@ -116,19 +116,21 @@ const Background = styled.img`
 `;
 
 const AuditedBy = () => {
+  const live = useIsLive();
+
   return (
     <StyledAuditedBy>
       <Container>
         <Background src={background} alt="decorative background" />
         <Logo src={chainSecurity} alt="Chain Security logo" />
         <Content>
-          <Header>{LIVE ? "audited by" : "audit in progress"}</Header>
+          <Header>{live ? "audited by" : "audit in progress"}</Header>
           <MobileLogo src={chainSecurityMobile} alt="Chain Security logo" />
           <Description>
             Led by security experts from ETH Zurich and trusted by 85+ blockchain companies and
             corporations.
           </Description>
-          {LIVE && (
+          {live && (
             <ViewReport
               onClick={() => {
                 openAndFocusWindow("", "_blank");

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { LIVE } from "../../lib/constants";
+import { useIsLive } from "../../lib/hooks";
 import AuditedBy from "./AuditedBy";
 import Background from "./Background";
 import Benefits from "./Benefits";
@@ -24,13 +24,15 @@ const Content = styled.div`
 `;
 
 const LandingPage = () => {
+  const live = useIsLive();
+
   return (
     <StyledLanding>
       <Background />
       <Content>
         <Hero />
         <Benefits />
-        {LIVE && <Preview />}
+        {live && <Preview />}
         <HowItWorks />
         <SupportedBy />
         <AuditedBy />

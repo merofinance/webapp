@@ -29,8 +29,8 @@ import LitepaperPage from "./pages/litepaper/LitepaperPage";
 import { ConnectWallet } from "./features/account/ConnectWallet";
 import ClaimPage from "./pages/claim/ClaimPage";
 import PoolPage from "./pages/pool/PoolPage";
-import { LIVE } from "./lib/constants";
 import { ErrorAlert } from "./features/error/ErrorAlert";
+import { useIsLive } from "./lib/hooks";
 
 const Background = styled.div`
   background: radial-gradient(rgba(11, 3, 60, 0.2), rgba(10, 5, 38, 0.3));
@@ -69,6 +69,7 @@ library.add(faInfoCircle, faClock, faCheck, faTimesCircle, faExternalLinkAlt, fa
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
+  const live = useIsLive();
 
   const getLibrary = (rawProvider: any, connector: any) => {
     const provider = new ethers.providers.Web3Provider(rawProvider);
@@ -90,31 +91,31 @@ function App() {
             <StyledApp>
               <Content>
                 <Switch>
-                  {LIVE && (
+                  {live && (
                     <PrivateRoute path="/pool/:poolName">
                       <PoolPage />
                     </PrivateRoute>
                   )}
 
-                  {LIVE && (
+                  {live && (
                     <Route path="/connect">
                       <ConnectWallet />
                     </Route>
                   )}
 
-                  {LIVE && (
+                  {live && (
                     <PrivateRoute path="/pools">
                       <PoolsPage />
                     </PrivateRoute>
                   )}
 
-                  {LIVE && (
+                  {live && (
                     <Route path="/claim">
                       <ClaimPage />
                     </Route>
                   )}
 
-                  {LIVE && (
+                  {live && (
                     <Route path="/stake">
                       <StakePage />
                     </Route>

@@ -1,8 +1,8 @@
 import React from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import { LIVE } from "../lib/constants";
 import { openAndFocusWindow } from "../lib/browser";
+import { useIsLive } from "../lib/hooks";
 
 type NavItemType = {
   label: string;
@@ -63,16 +63,17 @@ const Link = styled.button`
 
 const NavItems = () => {
   const history = useHistory();
+  const live = useIsLive();
 
   return (
     <StyledNavItems>
-      {LIVE &&
+      {live &&
         navItems.map((navItem: NavItemType) => (
           <NavItem key={navItem.label}>
             <Link onClick={() => history.push(navItem.link)}>{navItem.label}</Link>
           </NavItem>
         ))}
-      {!LIVE && (
+      {!live && (
         <NavItem>
           <Link
             onClick={() => {

@@ -2,8 +2,8 @@ import React from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import Button from "../../components/Button";
+import { useIsLive } from "../../lib/hooks";
 import { Header1, Header3 } from "../../styles/Headers";
-import { LIVE } from "../../lib/constants";
 
 const StyledHero = styled.div`
   width: 100%;
@@ -19,6 +19,7 @@ const StyledHero = styled.div`
 
 const Hero = () => {
   const history = useHistory();
+  const live = useIsLive();
 
   return (
     <StyledHero>
@@ -31,10 +32,10 @@ const Hero = () => {
         primary
         hero
         large
-        inactive={!LIVE}
-        text={LIVE ? "view pools" : "coming soon"}
+        inactive={!live}
+        text={live ? "view pools" : "coming soon"}
         click={() => {
-          if (!LIVE) return;
+          if (!live) return;
           history.push("/pools");
         }}
       />
