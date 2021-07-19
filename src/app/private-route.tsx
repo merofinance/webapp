@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { Redirect, Route, RouteProps } from "react-router-dom";
 import { isConnected } from "../features/account/accountSlice";
 import { Backd } from "../lib/backd";
+import { useIsLive } from "../lib/hooks";
 import { activateIfAuthorized } from "./web3";
 
 type PrivateRouteProps = {
@@ -13,6 +14,7 @@ type PrivateRouteProps = {
 export function PrivateRoute({ children, ...rest }: PrivateRouteProps) {
   const [loadingStatus, setLoadingStatus] = useState(true);
   const connected = useSelector(isConnected);
+  const live = useIsLive();
 
   const { activate, active } = useWeb3React<Backd>();
 
@@ -32,7 +34,7 @@ export function PrivateRoute({ children, ...rest }: PrivateRouteProps) {
     <Route
       {...rest}
       render={({ location }) =>
-        loggedIn ? (
+        loggedIn && live ? (
           children
         ) : (
           <Redirect
