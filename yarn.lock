@@ -1350,10 +1350,10 @@
     "@babel/helper-validator-identifier" "^7.14.5"
     to-fast-properties "^2.0.0"
 
-"@backdfund/protocol@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@backdfund/protocol/-/protocol-0.1.0.tgz#508cb5475f506e80a5dfe0f2ff8168e8ab0d2e52"
-  integrity sha512-M/IOEpnVHyKUMiiovwSLiMRHLm81XByAYpm23jotacFhtr2oq333YrdfEJQzbHDTnxqQlXe9gfs9DyJx1ZrSHw==
+"@backdfund/protocol@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@backdfund/protocol/-/protocol-0.1.3.tgz#5593bdd29a15042126c2d921eb8d347577856a9a"
+  integrity sha512-sP4D8uzp8Hkdq36KSPMttxSs6suf8I7vC6HVnNRyaHvLw0RyqS1u5J9EhjCFAsi8W/zaJh9r1b8G31bsYXwb5w==
 
 "@bcoe/v8-coverage@^0.2.3":
   version "0.2.3"
