@@ -57,7 +57,7 @@ export class Web3Backd implements Backd {
     const contracts = this.getContracts(options.chainId);
 
     this.controller = ControllerFactory.connect(contracts["Controller"][0], _provider);
-    this.topupAction = TopUpActionFactory.connect(contracts["TopUpAction"][0], _provider);
+    this.topupAction = TopUpActionFactory.connect(contracts["MockTopUpAction"][0], _provider);
   }
 
   get topupActionAddress(): string {
@@ -116,7 +116,7 @@ export class Web3Backd implements Backd {
         pool.getUnderlying(),
         pool.totalUnderlying(),
         pool.computeAPY(),
-        pool.lastExchangeRate(),
+        pool.exchangeRate(),
       ]);
     const [lpToken, underlying, stakerVaultAddress] = await Promise.all([
       this.getTokenInfo(lpTokenAddress),
@@ -161,7 +161,7 @@ export class Web3Backd implements Backd {
   async registerPosition(pool: Pool, position: Position): Promise<ContractTransaction> {
     const decimals = pool.underlying.decimals;
     const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
-    const rawExchangeRate = await poolContract.lastExchangeRate();
+    const rawExchangeRate = await poolContract.exchangeRate();
     const protocol = utils.formatBytes32String(position.protocol);
     const rawPosition = transformPosition(position, (v) => floatToBigNumber(v, decimals));
     const depositAmount = rawPosition.maxTopUp.mul(rawExchangeRate).div(DEFAULT_SCALE);
@@ -226,7 +226,7 @@ export class Web3Backd implements Backd {
     const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
     const scaledAmount = floatToBigNumber(amount);
     const value = pool.underlying.address === ETH_DUMMY_ADDRESS ? scaledAmount : 0;
-    return poolContract.deposit(scaledAmount, { value });
+    return poolContract["deposit(uint256)"](scaledAmount, { value });
   }
 
   async withdraw(pool: Address, amount: number): Promise<ContractTransaction> {
