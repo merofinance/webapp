@@ -76,8 +76,10 @@ export class Web3Backd implements Backd {
     switch (chainId) {
       case 1337:
         return contracts["1337"];
+      case 42:
+        return contracts["1337"]; // Update with Kovan Contracts when deployed
       default:
-        throw new Error("Wrong network selected, please use a development network");
+        return contracts["1337"];
     }
   }
 
