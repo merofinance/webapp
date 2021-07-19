@@ -29,7 +29,7 @@ import LitepaperPage from "./pages/litepaper/LitepaperPage";
 import { ConnectWallet } from "./features/account/ConnectWallet";
 import ClaimPage from "./pages/claim/ClaimPage";
 import PoolPage from "./pages/pool/PoolPage";
-import { LIVE } from "./lib/constants";
+import { LIVE, STAKING_LIVE } from "./lib/constants";
 import { ErrorAlert } from "./features/error/ErrorAlert";
 
 const Background = styled.div`
@@ -108,13 +108,13 @@ function App() {
                     </PrivateRoute>
                   )}
 
-                  {LIVE && (
+                  {STAKING_LIVE && (
                     <Route path="/claim">
                       <ClaimPage />
                     </Route>
                   )}
 
-                  {LIVE && (
+                  {STAKING_LIVE && (
                     <Route path="/stake">
                       <StakePage />
                     </Route>
