@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import { LIVE } from "../lib/constants";
+import { LIVE, STAKING_LIVE } from "../lib/constants";
 import { openAndFocusWindow } from "../lib/browser";
 
 type NavItemType = {
@@ -66,7 +66,13 @@ const NavItems = () => {
 
   return (
     <StyledNavItems>
+      {LIVE && !STAKING_LIVE && (
+        <NavItem>
+          <Link onClick={() => history.push("/pools")}>pools</Link>
+        </NavItem>
+      )}
       {LIVE &&
+        STAKING_LIVE &&
         navItems.map((navItem: NavItemType) => (
           <NavItem key={navItem.label}>
             <Link onClick={() => history.push(navItem.link)}>{navItem.label}</Link>
