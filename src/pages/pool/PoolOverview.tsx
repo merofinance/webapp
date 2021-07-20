@@ -20,17 +20,17 @@ const PoolOverview = ({ pool }: Props) => {
       rows={[
         {
           label: "Pool TVL",
-          tooltip: PLACEHOLDER_TOOLTIP,
+          tooltip: "The market capitalization of assets held in the pool (total value locked)",
           value: numberToCompactCurrency(locked),
         },
         {
           label: "APY",
-          tooltip: PLACEHOLDER_TOOLTIP,
+          tooltip: "The current annual percent yield earned by pool LPs",
           value: formatPercent(pool.apy),
         },
         {
           label: "Strategy",
-          tooltip: PLACEHOLDER_TOOLTIP,
+          tooltip: "The current protocol funds are allocated to for yield farming strategies",
           value: pool.name,
         },
       ]}
