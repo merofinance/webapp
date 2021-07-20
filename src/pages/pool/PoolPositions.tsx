@@ -3,7 +3,6 @@ import styled from "styled-components";
 import ContentSection from "../../components/ContentSection";
 import NewPosition from "./NewPosition";
 import Tooltip from "../../components/Tooltip";
-import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 import { Pool } from "../../lib";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPositions, selectPoolPositions } from "../../features/positions/positionsSlice";
