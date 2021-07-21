@@ -5,14 +5,27 @@ export class TokenValue {
   private _value: BigNumber;
   private _decimals: number;
 
-  constructor(value: string | number, decimals: number = 18) {
+  constructor(value: string | number | BigNumber, decimals: number = 18) {
     this._decimals = decimals;
-    const stringValue = isString(value) ? value : value.toString();
-    this._value = this.stringToBigNumber(stringValue);
+    if (isString(value)) this._value = this.stringToBigNumber(value);
+    else if (typeof value === "number") this._value = this.stringToBigNumber(value.toString());
+    else this._value = value;
   }
 
   get base(): BigNumber {
     return BigNumber.from(10).pow(BigNumber.from(this._decimals));
+  }
+
+  get value(): BigNumber {
+    return this._value;
+  }
+
+  get decimals(): number {
+    return this._decimals;
+  }
+
+  get isZero(): boolean {
+    return !this.toString();
   }
 
   private stringToBigNumber = (value: string) => {
@@ -39,5 +52,12 @@ export class TokenValue {
 
   toNumber = () => {
     return Number(this.toString());
+  };
+
+  toCryptoString = () => {
+    const decimals = Math.max(5 - Math.floor(Math.pow(this.toNumber(), 1 / 10)), 0);
+    return this.toNumber().toLocaleString(undefined, {
+      maximumFractionDigits: decimals,
+    });
   };
 }
