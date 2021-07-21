@@ -15,6 +15,18 @@ test("should create from number", () => {
   });
 });
 
+test("should create from big number", () => {
+  const testCases = [
+    BigNumber.from(1),
+    BigNumber.from(10000000000),
+    BigNumber.from(123102),
+    BigNumber.from(0),
+  ];
+  testCases.forEach((value: BigNumber) => {
+    new TokenValue(value);
+  });
+});
+
 test("should export as string", () => {
   const testCases = [
     { value: "1", expected: "1" },
