@@ -3,7 +3,6 @@ import styled from "styled-components";
 import ContentSection from "../../components/ContentSection";
 import NewPosition from "./NewPosition";
 import Tooltip from "../../components/Tooltip";
-import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 import { Pool } from "../../lib";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPositions, selectPoolPositions } from "../../features/positions/positionsSlice";
@@ -21,23 +20,25 @@ type HeaderType = {
 const headers: HeaderType[] = [
   {
     label: "Protocol",
-    tooltip: PLACEHOLDER_TOOLTIP,
+    tooltip:
+      "The lending protocol on which the user is borrowing funds (currently compatible with Aave and Compound)",
   },
   {
     label: "Address",
-    tooltip: PLACEHOLDER_TOOLTIP,
+    tooltip:
+      "The address of the owner of the position to top up (e.g. if Alice is the borrower on Aave that should be topped up then this would be Alice’s address)",
   },
   {
     label: "Threshold",
-    tooltip: PLACEHOLDER_TOOLTIP,
+    tooltip: "The health factor threshold a collateral top up should occur at",
   },
   {
     label: "Single Top Up",
-    tooltip: PLACEHOLDER_TOOLTIP,
+    tooltip: "Amount of a single top up increment (e.g. top up increments of 2,500 DAI)",
   },
   {
     label: "Max Top Up",
-    tooltip: PLACEHOLDER_TOOLTIP,
+    tooltip: "Maximum top up amount (value of your liquidity allocated for top ups)",
   },
 ];
 
