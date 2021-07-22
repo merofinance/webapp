@@ -2,6 +2,7 @@ import { BigNumber, ContractTransaction, providers } from "ethers";
 import { Pool } from "..";
 import { Backd } from "../backd";
 import { bigNumberToFloat } from "../numeric";
+import { TokenValue } from "../token-value";
 import {
   Address,
   AllowanceQuery,
@@ -10,7 +11,6 @@ import {
   Prices,
   Token,
   transformPool,
-  transformPosition,
 } from "../types";
 import { balances, makeContractTransaction, masterAccount, pools, positions, prices } from "./data";
 
@@ -34,7 +34,7 @@ export default class MockBackd implements Backd {
     return Promise.resolve(transformPool(pool, bigNumberToFloat));
   }
 
-  getAllowance(token: Token, spender: Address, account?: string): Promise<number> {
+  getAllowance(token: Token, spender: Address, account?: string): Promise<TokenValue> {
     return Promise.resolve(this.allowances[token.address][spender] || 0);
   }
 
@@ -42,27 +42,27 @@ export default class MockBackd implements Backd {
     return Promise.resolve(this.allowances);
   }
 
-  getBalance(pool: Address, account?: Address): Promise<number> {
+  getBalance(pool: Address, account?: Address): Promise<TokenValue> {
     const number = pool in balances ? balances[pool] : BigNumber.from(0);
-    return Promise.resolve(bigNumberToFloat(number));
+    return Promise.resolve(new TokenValue(number));
   }
 
-  async deposit(pool: Pool, amount: number): Promise<ContractTransaction> {
+  async deposit(pool: Pool, amount: TokenValue): Promise<ContractTransaction> {
     const account = await this.currentAccount();
     return makeContractTransaction(pool.address, account);
   }
 
-  async withdraw(poolAddress: Address, amount: number): Promise<ContractTransaction> {
+  async withdraw(poolAddress: Address, amount: TokenValue): Promise<ContractTransaction> {
     const account = await this.currentAccount();
     return makeContractTransaction(poolAddress, account);
   }
 
-  async unstake(poolAddress: Address, amount: number): Promise<ContractTransaction> {
+  async unstake(poolAddress: Address, amount: TokenValue): Promise<ContractTransaction> {
     const account = await this.currentAccount();
     return makeContractTransaction(poolAddress, account);
   }
 
-  async approve(token: Token, spender: Address, amount: number): Promise<ContractTransaction> {
+  async approve(token: Token, spender: Address, amount: TokenValue): Promise<ContractTransaction> {
     const account = await this.currentAccount();
     if (!this.allowances[token.address]) {
       this.allowances[token.address] = {};
@@ -85,7 +85,7 @@ export default class MockBackd implements Backd {
   }
 
   getPositions(): Promise<Position[]> {
-    return Promise.resolve(positions.map((p) => transformPosition(p, bigNumberToFloat)));
+    return Promise.resolve(positions);
   }
 
   get topupActionAddress(): string {

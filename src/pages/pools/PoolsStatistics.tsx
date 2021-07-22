@@ -8,6 +8,7 @@ import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 import { selectPositions } from "../../features/positions/positionsSlice";
 import { Position } from "../../lib/types";
 import { formatCurrency } from "../../lib/numeric";
+import { TokenValue } from "../../lib/token-value";
 
 const PoolsStatistics = () => {
   const pools = useSelector(selectPools);
@@ -15,17 +16,17 @@ const PoolsStatistics = () => {
   const balances = useSelector(selectBalances);
   const positions = useSelector(selectPositions);
 
-  const getBalance = (pool: Pool) => balances[pool.lpToken.address] || 0;
+  const getBalance = (pool: Pool) => balances[pool.lpToken.address] || new TokenValue(0);
   const getPrice = (pool: Pool) => prices[pool.underlying.symbol] || 0;
   const getPool = (tokenAddress: string) =>
     pools.filter((pool: Pool) => pool.underlying.address === tokenAddress)[0];
 
   const locked = positions.reduce(
-    (a: number, b: Position) => b.maxTopUp * getPrice(getPool(b.actionToken)) + a,
+    (a: number, b: Position) => b.maxTopUp.toNumber() * getPrice(getPool(b.actionToken)) + a,
     0
   );
   const deposits =
-    pools.reduce((a: number, b: Pool) => a + getBalance(b) * getPrice(b), 0) + locked;
+    pools.reduce((a: number, b: Pool) => a + getBalance(b).toNumber() * getPrice(b), 0) + locked;
 
   return (
     <Statistics

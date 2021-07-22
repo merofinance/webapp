@@ -7,6 +7,7 @@ import { selectBalance, unstake, withdraw } from "../../features/user/userSlice"
 import { useDispatch, useSelector } from "react-redux";
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
+import { TokenValue } from "../../lib/token-value";
 
 const StyledProgressButtons = styled.div`
   width: 100%;
@@ -16,7 +17,7 @@ const StyledProgressButtons = styled.div`
 `;
 
 type Props = {
-  value: number;
+  value: TokenValue;
   pool: Pool;
   complete: () => void;
 };
@@ -27,9 +28,9 @@ const WithdrawalButton = (props: Props) => {
   const { loading, setLoading, handleTxDispatch } = useLoading();
   const totalBalance = useSelector(selectBalance(props.pool));
   const staked = useSelector(selectBalance(props.pool.stakerVaultAddress));
-  const availableToWithdraw = totalBalance - staked;
+  const availableToWithdraw = new TokenValue(totalBalance.value.sub(staked.value), staked.decimals);
 
-  const executeWithdraw = async (amount: number) => {
+  const executeWithdraw = async (amount: TokenValue) => {
     dispatch(withdraw({ backd: backd!, pool: props.pool, amount })).then((v) => {
       handleTxDispatch({ status: v.meta.requestStatus, actionType: "withdraw" });
       props.complete();
@@ -55,10 +56,10 @@ const WithdrawalButton = (props: Props) => {
         click={() => {
           if (!backd) return;
           setLoading(true);
-          if (props.value <= availableToWithdraw) executeWithdraw(props.value);
+          if (props.value.value.lte(availableToWithdraw.value)) executeWithdraw(props.value);
           else executeUnstake();
         }}
-        disabled={props.value === 0}
+        disabled={props.value.isZero}
         loading={loading}
         hoverText={"Enter Amount"}
       />

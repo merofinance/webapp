@@ -1,12 +1,14 @@
 import { Slider, withStyles } from "@material-ui/core";
+import { BigNumber } from "ethers";
 import React from "react";
 import styled from "styled-components";
+import { TokenValue } from "../lib/token-value";
 import SliderStep from "./SliderStep";
 
 const Gradient = "linear-gradient(to right, rgba(197, 50, 249, 1), rgba(50, 178, 229, 1))";
 const GradientLight =
   "linear-gradient(to right, rgba(197, 50, 249, 0.38), rgba(50, 178, 229, 0.38))";
-const steps: number[] = [0.25, 0.5, 0.75, 1];
+const steps: number[] = [25, 50, 75, 100];
 
 const StyledAmountSlider = styled.div`
   position: relative;
@@ -57,12 +59,12 @@ const valuetext = (value: any) => `${value}%`;
 
 type Props = {
   value: string;
-  max: number;
+  max: TokenValue;
   setValue: (value: string) => void;
 };
 
 const AmountSlider = ({ value, max, setValue }: Props) => {
-  const percent = max === 0 || value === "" ? 0 : Math.round((Number(value) / max) * 100);
+  const percent = max.isZero ? 0 : Math.round((Number(value || "0") / max.toNumber()) * 100);
 
   return (
     <StyledAmountSlider>
@@ -73,16 +75,22 @@ const AmountSlider = ({ value, max, setValue }: Props) => {
         min={0}
         max={100}
         value={percent}
-        onChange={(e: any, value: any) => setValue(((value * max) / 100).toString())}
+        onChange={(e: any, value: any) => {
+          let newValue = max.value.mul(BigNumber.from(value)).div(BigNumber.from(100));
+          setValue(new TokenValue(newValue, max.decimals).toString());
+        }}
         valueLabelDisplay="auto"
         valueLabelFormat={valuetext}
       />
       {steps.map((step: number) => (
         <SliderStep
           key={step}
-          percent={`${step * 100}%`}
-          click={() => setValue((step * max).toString())}
-          active={Number(value || 0) / max > step}
+          percent={`${step}%`}
+          click={() => {
+            let newValue = max.value.mul(BigNumber.from(step)).div(BigNumber.from(100));
+            setValue(new TokenValue(newValue, max.decimals).toString());
+          }}
+          active={Number(value || 0) / max.toNumber() > step / 100}
         />
       ))}
     </StyledAmountSlider>

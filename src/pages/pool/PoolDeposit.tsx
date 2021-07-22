@@ -5,6 +5,7 @@ import AmountInput from "../../components/AmountInput";
 import ContentSection from "../../components/ContentSection";
 import { selectBalance } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
+import { TokenValue } from "../../lib/token-value";
 import DepositButtons from "./DepositButtons";
 import PoolStatistics from "./PoolStatistics";
 
@@ -36,7 +37,7 @@ const PoolDeposit = ({ pool }: Props) => {
           />
           <DepositButtons
             pool={pool}
-            value={Number(depositAmount)}
+            value={new TokenValue(depositAmount, pool.underlying.decimals)}
             complete={() => setDepositAmount("")}
           />
         </Content>

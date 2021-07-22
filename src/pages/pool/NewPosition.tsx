@@ -10,8 +10,9 @@ import { Position } from "../../lib/types";
 import NewPositionConfirmation from "./NewPositionConfirmation";
 import NewPositionInput from "./NewPositionInput";
 import { AppDispatch } from "../../app/store";
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import { selectPositions } from "../../features/positions/positionsSlice";
+import { TokenValue } from "../../lib/token-value";
 
 const Border = styled.div`
   width: 100%;
@@ -72,7 +73,7 @@ const NewPosition = ({ pool }: Props) => {
   const [single, setSingle] = useState("");
   const [max, setMax] = useState("");
 
-  const approved = allowance >= Number(max || "0");
+  const approved = allowance.value.gte(BigNumber.from(max || "0"));
 
   const addressError = () => {
     if (!address) return "";
@@ -104,9 +105,9 @@ const NewPosition = ({ pool }: Props) => {
 
   const maxError = () => {
     if (!max) return "";
-    const number = Number(max);
-    if (number <= 0) return "Must be positive number";
-    if (number > balance) return "Exceeds deposited balance";
+    const number = new TokenValue(max, pool.underlying.decimals);
+    if (number.value.isNegative()) return "Must be positive number";
+    if (number.value.gt(balance.value)) return "Exceeds deposited balance";
     else return "";
   };
 
@@ -116,8 +117,8 @@ const NewPosition = ({ pool }: Props) => {
     protocol,
     account: address,
     threshold: Number(threshold),
-    singleTopUp: Number(single),
-    maxTopUp: Number(max),
+    singleTopUp: new TokenValue(single, pool.underlying.decimals),
+    maxTopUp: new TokenValue(max, pool.underlying.decimals),
     maxGasPrice: 0,
     actionToken: pool.underlying.address,
     depositToken: pool.lpToken.address,
@@ -136,7 +137,7 @@ const NewPosition = ({ pool }: Props) => {
     if (!backd) return;
     setLoading(true);
     const approveArgs = {
-      amount: Number(max),
+      amount: new TokenValue(max, pool.underlying.decimals),
       backd,
       spender: backd.topupActionAddress,
       token: pool.lpToken,

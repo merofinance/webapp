@@ -1,5 +1,6 @@
 import { BigNumber, ContractReceipt, ContractTransaction } from "ethers";
 import { scale } from "../numeric";
+import { TokenValue } from "../token-value";
 import { Address, Pool, Position } from "../types";
 
 export const masterAccount = "0xbacE8e7f276FD2Ee5ecE5C1df18BF381148862A6";
@@ -84,27 +85,27 @@ const positionKeys = [
   {
     protocol: "Compound",
     account: "0xE9998d2C082c340D9b7023FA27a54c14f0Bb3F9c",
-    threshold: scale(105, 16),
+    threshold: 105,
   },
   {
     protocol: "Aave",
     account: "0xb47b5D45CDBa7D1114A632c010E0bC9B2053B1c1",
-    threshold: scale(110, 16),
+    threshold: 110,
   },
 ];
 
-export const positions: Position<BigNumber>[] = [
+export const positions: Position[] = [
   {
-    singleTopUp: scale(1500),
-    maxTopUp: scale(4500),
+    singleTopUp: new TokenValue(1500),
+    maxTopUp: new TokenValue(4500),
     maxGasPrice: Math.pow(10, 10),
     actionToken: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
     depositToken: "0x99A77926B3FB49619DC3A1DAc18565bcB5A98b93",
     ...positionKeys[0],
   },
   {
-    singleTopUp: scale(10_000),
-    maxTopUp: scale(50_000),
+    singleTopUp: new TokenValue(10_000),
+    maxTopUp: new TokenValue(50_000),
     maxGasPrice: 5 * Math.pow(10, 10),
     actionToken: "0x6b175474e89094c44da98b954eedeac495271d0f",
     depositToken: "0x25FF22De379B644BD5C2263404baC6FeE5a4b8de",

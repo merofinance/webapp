@@ -1,4 +1,5 @@
 import { TransactionReceipt } from "@ethersproject/providers";
+import { TokenValue } from "./token-value";
 
 export type Optional<T> = T | null;
 
@@ -24,8 +25,8 @@ export interface Position<Num = number> {
   protocol: string;
   account: Address;
   threshold: Num;
-  singleTopUp: Num;
-  maxTopUp: Num;
+  singleTopUp: TokenValue;
+  maxTopUp: TokenValue;
   maxGasPrice: number;
   actionToken: Address;
   depositToken: Address;
@@ -53,22 +54,9 @@ export function transformPool<T, U>(pool: Pool<T>, f: (v: T) => U): Pool<U> {
   };
 }
 
-export function transformPosition<T, U>(position: Position<T>, f: (v: T) => U): Position<U> {
-  return {
-    protocol: position.protocol,
-    account: position.account,
-    actionToken: position.actionToken,
-    depositToken: position.depositToken,
-    maxGasPrice: position.maxGasPrice,
-    threshold: f(position.threshold),
-    singleTopUp: f(position.singleTopUp),
-    maxTopUp: f(position.maxTopUp),
-  };
-}
-
 export type Address = string;
 
-export type Balances<Num = number> = Record<string, Num>;
+export type Balances = Record<string, TokenValue>;
 export type Prices<Num = number> = Record<string, Num>;
 export type AllowanceQuery = {
   spender: Address;

@@ -60,4 +60,54 @@ export class TokenValue {
       maximumFractionDigits: decimals,
     });
   };
+
+  toUsdValue = (price: number) => {
+    const usd = this.value.mul(BigNumber.from(price));
+    return usd.toNumber().toLocaleString(undefined, {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2,
+      style: "currency",
+      currency: "USD",
+    });
+  };
 }
+
+// function shiftDecimal(value, decimals) {
+//   if (decimals === 0) return value;
+
+//   const str = `${value}`;
+//   const eAt = str.indexOf("e");
+//   if (eAt > -1) {
+//     decimals += parseInt(str.substr(eAt + 1));
+//     str = str.substr(0, eAt);
+//     if (decimals === 0) return str;
+//   }
+
+//   let int, flt;
+//   const decimalAt = str.indexOf(".");
+//   if (decimalAt === -1) {
+//     int = str.trimStart("0");
+//     flt = "";
+//   } else {
+//     int = str.substr(0, decimalAt).trimStart("0");
+//     flt = str.substr(decimalAt + 1).trimEnd("0");
+//   }
+
+//   if (decimals > 0) {
+//     if (flt.length < decimals) flt = flt.padEnd(decimals, "0");
+
+//     int += flt.substr(0, decimals);
+//     flt = flt.substr(decimals);
+//   } else {
+//     decimals = Math.abs(decimals);
+//     if (int.length < decimals) int = int.padStart(decimals, "0");
+
+//     flt = int.substr(-decimals) + flt;
+//     int = int.substr(0, int.length - decimals);
+//   }
+
+//   if (int && flt) return `${int}.${flt}`;
+//   else if (int) return `${int}`;
+//   else if (flt) return `0.${flt}`;
+//   else return "0";
+// }
