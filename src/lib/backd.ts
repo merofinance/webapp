@@ -18,6 +18,7 @@ import {
   Pool,
   Position,
   Prices,
+  SerialisedPosition,
   Token,
   transformPool,
 } from "./types";
@@ -30,7 +31,7 @@ export interface Backd {
   currentAccount(): Promise<Address>;
   listPools(): Promise<Pool[]>;
   getPoolInfo(address: Address): Promise<Pool>;
-  getPositions(): Promise<Position[]>;
+  getPositions(): Promise<SerialisedPosition[]>;
   registerPosition(pool: Pool, position: Position): Promise<ContractTransaction>;
   removePosition(account: Address, protocol: string): Promise<ContractTransaction>;
   getBalance(address: Address, account?: Address): Promise<TokenValue>;
@@ -138,18 +139,18 @@ export class Web3Backd implements Backd {
     return transformPool(rawPool, bigNumberToFloat);
   }
 
-  async getPositions(): Promise<Position[]> {
+  async getPositions(): Promise<SerialisedPosition[]> {
     const account = await this.currentAccount();
     const rawPositions = await this.topupAction.listPositions(account);
     return rawPositions.map((rawPosition) => {
-      const position: Position = {
+      const position: SerialisedPosition = {
         protocol: ethers.utils.parseBytes32String(rawPosition.protocol),
         actionToken: rawPosition.record.actionToken,
         depositToken: rawPosition.record.depositToken,
         account: rawPosition.account,
         threshold: bigNumberToFloat(rawPosition.record.threshold),
-        singleTopUp: new TokenValue(rawPosition.record.singleTopUpAmount),
-        maxTopUp: new TokenValue(rawPosition.record.totalTopUpAmount),
+        singleTopUp: new TokenValue(rawPosition.record.singleTopUpAmount).serialized,
+        maxTopUp: new TokenValue(rawPosition.record.totalTopUpAmount).serialized,
         maxGasPrice: rawPosition.record.maxGasPrice.toNumber(),
       };
       return position;

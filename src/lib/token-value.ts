@@ -1,15 +1,28 @@
 import { BigNumber } from "ethers";
 import { isString } from "formik";
 
+export interface SerializedTokenValue {
+  value: string;
+  decimals: number;
+}
+
 export class TokenValue {
   private _value: BigNumber;
   private _decimals: number;
 
-  constructor(value: string | number | BigNumber, decimals: number = 18) {
+  constructor(
+    value: string | number | BigNumber | SerializedTokenValue = 0,
+    decimals: number = 18
+  ) {
     this._decimals = decimals;
-    if (isString(value)) this._value = this.stringToBigNumber(value);
+    if (!value) this._value = BigNumber.from(0);
+    else if (isString(value)) this._value = this.stringToBigNumber(value);
     else if (typeof value === "number") this._value = this.stringToBigNumber(value.toString());
-    else this._value = value;
+    else if (value && (value as BigNumber)._isBigNumber) this._value = value as BigNumber;
+    else {
+      this._value = BigNumber.from((value as SerializedTokenValue).value);
+      this._decimals = (value as SerializedTokenValue).decimals;
+    }
   }
 
   get base(): BigNumber {
@@ -26,6 +39,13 @@ export class TokenValue {
 
   get isZero(): boolean {
     return !this.toString();
+  }
+
+  get serialized(): SerializedTokenValue {
+    return {
+      value: this.toString(),
+      decimals: this._decimals,
+    };
   }
 
   private stringToBigNumber = (value: string) => {

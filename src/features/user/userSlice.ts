@@ -3,13 +3,22 @@ import { RootState, Selector } from "../../app/store";
 import { Backd } from "../../lib/backd";
 import { ETH_DUMMY_ADDRESS } from "../../lib/constants";
 import { TokenValue } from "../../lib/token-value";
-import { Address, AllowanceQuery, Balances, Optional, Pool, Token } from "../../lib/types";
+import {
+  Address,
+  AllowanceQuery,
+  Balances,
+  deserializeBalances,
+  Optional,
+  Pool,
+  SerializedBalances,
+  Token,
+} from "../../lib/types";
 import { fetchPool } from "../pools-list/poolsListSlice";
 import { handleTransactionConfirmation } from "../transactions-list/transactionsUtils";
 
 interface UserState {
-  balances: Balances;
-  allowances: Record<string, Balances>;
+  balances: SerializedBalances;
+  allowances: Record<string, SerializedBalances>;
 }
 
 const initialState: UserState = {
@@ -67,7 +76,7 @@ export const userSlice = createSlice({
       if (!state.allowances[token.address]) {
         state.allowances[token.address] = {};
       }
-      state.allowances[token.address][spender] = amount;
+      state.allowances[token.address][spender] = amount.serialized;
     },
     decreaseAllowance: (
       state,
@@ -77,17 +86,17 @@ export const userSlice = createSlice({
       // NOTE: we do not want to touch "allowances" from Eth based pools
       if (token.address === ETH_DUMMY_ADDRESS) return;
 
-      const allowance = state.allowances[token.address][spender] || new TokenValue(0);
+      const allowance = new TokenValue(state.allowances[token.address][spender] || 0);
       const value = allowance.value.sub(amount.value);
       state.allowances[token.address][spender] = value.isNegative()
-        ? new TokenValue(0)
-        : new TokenValue(value, allowance.decimals);
+        ? new TokenValue().serialized
+        : new TokenValue(value, allowance.decimals).serialized;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchBalances.fulfilled, (state, action) => {
       for (const tokenAddress in action.payload) {
-        state.balances[tokenAddress] = action.payload[tokenAddress];
+        state.balances[tokenAddress] = action.payload[tokenAddress].serialized;
       }
     });
 
@@ -97,7 +106,8 @@ export const userSlice = createSlice({
           state.allowances[tokenAddress] = {};
         }
         for (const spender in action.payload[tokenAddress]) {
-          state.allowances[tokenAddress][spender] = action.payload[tokenAddress][spender];
+          state.allowances[tokenAddress][spender] =
+            action.payload[tokenAddress][spender].serialized;
         }
       }
     });
@@ -156,19 +166,19 @@ export const unstake = createAsyncThunk(
   }
 );
 
-export const selectBalances = (state: RootState) => state.user.balances;
+export const selectBalances = (state: RootState): Balances =>
+  deserializeBalances(state.user.balances);
 
 export function selectBalance(pool: Optional<Pool>): Selector<TokenValue>;
 export function selectBalance(address: string): Selector<TokenValue>;
 export function selectBalance(addressOrPool: string | Optional<Pool>): Selector<TokenValue> {
   return (state: RootState) => {
-    if (!addressOrPool) return new TokenValue(0);
+    if (!addressOrPool) return new TokenValue();
     if (typeof addressOrPool === "string")
-      return state.user.balances[addressOrPool] || new TokenValue(0);
+      return new TokenValue(state.user.balances[addressOrPool]);
 
-    const lpTokenBalance = state.user.balances[addressOrPool.lpToken.address] || new TokenValue(0);
-    const stakedBalance =
-      state.user.balances[addressOrPool.stakerVaultAddress] || new TokenValue(0);
+    const lpTokenBalance = new TokenValue(state.user.balances[addressOrPool.lpToken.address]);
+    const stakedBalance = new TokenValue(state.user.balances[addressOrPool.stakerVaultAddress]);
 
     const newValue = lpTokenBalance.value.add(stakedBalance.value);
     return new TokenValue(newValue, lpTokenBalance.decimals);
@@ -177,18 +187,19 @@ export function selectBalance(addressOrPool: string | Optional<Pool>): Selector<
 
 export function selectDepositAllowance(pool: Pool): Selector<TokenValue> {
   return (state: RootState) => {
-    return state.user.allowances[pool.underlying.address]?.[pool.address] || 0;
+    return new TokenValue(state.user.allowances[pool.underlying.address]?.[pool.address]);
   };
 }
 export function selectToupAllowance(backd: Backd | undefined, pool: Pool): Selector<TokenValue> {
   return (state: RootState) => {
-    if (!backd) return new TokenValue(0);
+    if (!backd) return new TokenValue();
 
-    const lpTokenAllowance =
-      state.user.allowances[pool.lpToken.address]?.[backd.topupActionAddress] || new TokenValue(0);
-    const vaultAllowance =
-      state.user.allowances[pool.stakerVaultAddress]?.[backd.topupActionAddress] ||
-      new TokenValue(0);
+    const lpTokenAllowance = new TokenValue(
+      state.user.allowances[pool.lpToken.address]?.[backd.topupActionAddress]
+    );
+    const vaultAllowance = new TokenValue(
+      state.user.allowances[pool.stakerVaultAddress]?.[backd.topupActionAddress]
+    );
 
     const newValue = lpTokenAllowance.value.add(vaultAllowance.value);
     return new TokenValue(newValue, lpTokenAllowance.decimals);

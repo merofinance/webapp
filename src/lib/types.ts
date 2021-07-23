@@ -1,5 +1,5 @@
 import { TransactionReceipt } from "@ethersproject/providers";
-import { TokenValue } from "./token-value";
+import { SerializedTokenValue, TokenValue } from "./token-value";
 
 export type Optional<T> = T | null;
 
@@ -32,6 +32,33 @@ export interface Position<Num = number> {
   depositToken: Address;
 }
 
+export interface SerialisedPosition<Num = number> {
+  protocol: string;
+  account: Address;
+  threshold: Num;
+  singleTopUp: SerializedTokenValue;
+  maxTopUp: SerializedTokenValue;
+  maxGasPrice: number;
+  actionToken: Address;
+  depositToken: Address;
+}
+
+export const serializePosition = (position: Position): SerialisedPosition => {
+  return {
+    ...position,
+    singleTopUp: position.singleTopUp.serialized,
+    maxTopUp: position.maxTopUp.serialized,
+  };
+};
+
+export const deserializePosition = (position: SerialisedPosition): Position => {
+  return {
+    ...position,
+    singleTopUp: new TokenValue(position.singleTopUp),
+    maxTopUp: new TokenValue(position.maxTopUp),
+  };
+};
+
 export function positionFromPartial<T>(pool: Pool<T>, position: Partial<Position<T>>): Position<T> {
   return {
     protocol: position.protocol!!,
@@ -57,6 +84,22 @@ export function transformPool<T, U>(pool: Pool<T>, f: (v: T) => U): Pool<U> {
 export type Address = string;
 
 export type Balances = Record<string, TokenValue>;
+export type SerializedBalances = Record<string, SerializedTokenValue>;
+
+export const serializeBalances = (balances: Balances): SerializedBalances => {
+  const serializedBalances: SerializedBalances = {};
+  Object.entries(balances).forEach(([key, value]) => (serializedBalances[key] = value.serialized));
+  return serializedBalances;
+};
+
+export const deserializeBalances = (serializedBalances: SerializedBalances): Balances => {
+  const balances: Balances = {};
+  Object.entries(serializedBalances).forEach(
+    ([key, value]) => (balances[key] = new TokenValue(value))
+  );
+  return balances;
+};
+
 export type Prices<Num = number> = Record<string, Num>;
 export type AllowanceQuery = {
   spender: Address;
