@@ -9,7 +9,6 @@ import Tooltip from "../../components/Tooltip";
 import { setError } from "../../features/error/errorSlice";
 import { registerPosition } from "../../features/positions/positionsSlice";
 import { openEtherscanAddress } from "../../lib/browser";
-import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 import { shortenAddress } from "../../lib/text";
 import { Pool, Position } from "../../lib/types";
 import { selectPrice } from "../../features/pool/selectors";
@@ -127,14 +126,15 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
           <PositionSummary>
             <SummaryRow>
               <Label>
-                Protocol <Tooltip content={PLACEHOLDER_TOOLTIP} />
+                Protocol
+                <Tooltip content="The lending protocol on which the user is borrowing funds (currently compatible with Aave and Compound)" />
               </Label>
               <Label>{position.protocol}</Label>
             </SummaryRow>
             <SummaryRow>
               <Label>
                 Borrower
-                <Tooltip content={PLACEHOLDER_TOOLTIP} />
+                <Tooltip content="The address of the owner of the position to top up (e.g. if Alice is the borrower on Aave that should be topped up then this would be Alice’s address)" />
               </Label>
               <AddressLabel onClick={() => openEtherscanAddress(position.account, "_blank")}>
                 {shortenAddress(position.account, 8)}
@@ -143,21 +143,21 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
             <SummaryRow>
               <Label>
                 Threshold
-                <Tooltip content={PLACEHOLDER_TOOLTIP} />
+                <Tooltip content="The health factor threshold a collateral top up should occur at" />
               </Label>
               <Label>{position.threshold}</Label>
             </SummaryRow>
             <SummaryRow>
               <Label>
                 Singe top-up
-                <Tooltip content={PLACEHOLDER_TOOLTIP} />
+                <Tooltip content="Amount of a single top up increment (e.g. top up increments of 2,500 DAI)" />
               </Label>
               <Label>{position.singleTopUp}</Label>
             </SummaryRow>
             <SummaryRow>
               <Label>
                 Total top-up
-                <Tooltip content={PLACEHOLDER_TOOLTIP} />
+                <Tooltip content="Maximum top up amount (value of your liquidity allocated for top ups)" />
               </Label>
               <Label>{position.maxTopUp}</Label>
             </SummaryRow>

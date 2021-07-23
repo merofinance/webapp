@@ -4,7 +4,6 @@ import Statistics from "../../components/Statistics";
 import { Pool, Position } from "../../lib/types";
 import { selectPrice } from "../../features/pool/selectors";
 import { selectBalance } from "../../features/user/userSlice";
-import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 import { selectPoolPositions } from "../../features/positions/positionsSlice";
 import { formatCurrency } from "../../lib/numeric";
 
@@ -25,17 +24,18 @@ const PoolStatistics = ({ pool }: Props) => {
       statistics={[
         {
           header: "Your deposits",
-          tooltip: PLACEHOLDER_TOOLTIP,
+          tooltip: "The current value of your assets held in Backd liquidity pools",
           value: formatCurrency(deposits),
         },
         {
           header: "Locked in position",
-          tooltip: PLACEHOLDER_TOOLTIP,
+          tooltip:
+            "The current value of your assets registered for top-ups (liquidation protection)",
           value: formatCurrency(locked),
         },
         // {
         //   header: "Rewards accrued",
-        //   tooltip: PLACEHOLDER_TOOLTIP,
+        //   tooltip: "The current value of earned rewards that have yet to be claimed",
         //   value: formatCurrency(0),
         // },
       ]}
