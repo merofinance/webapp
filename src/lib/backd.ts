@@ -250,8 +250,11 @@ export class Web3Backd implements Backd {
       return new TokenValue(rawBalance, decimals);
     } catch {
       const vault = IStakerVaultFactory.connect(address, this._provider);
+      const rawBalance = await token.balanceOf(account);
       const vaultTokenAddress = await vault.getToken();
-      return this.getBalance(vaultTokenAddress, account);
+      const vaultToken = Ierc20FullFactory.connect(vaultTokenAddress, this._provider);
+      const decimals = await vaultToken.decimals();
+      return new TokenValue(rawBalance, decimals);
     }
   }
 
