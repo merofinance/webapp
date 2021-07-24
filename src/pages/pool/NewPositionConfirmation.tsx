@@ -152,14 +152,14 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
                 Singe top-up
                 <Tooltip content="Amount of a single top up increment (e.g. top up increments of 2,500 DAI)" />
               </Label>
-              <Label>{position.singleTopUp}</Label>
+              <Label>{position.singleTopUp.toCryptoString()}</Label>
             </SummaryRow>
             <SummaryRow>
               <Label>
                 Total top-up
                 <Tooltip content="Maximum top up amount (value of your liquidity allocated for top ups)" />
               </Label>
-              <Label>{position.maxTopUp}</Label>
+              <Label>{position.maxTopUp.toCryptoString()}</Label>
             </SummaryRow>
           </PositionSummary>
         </Content>
