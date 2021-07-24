@@ -86,11 +86,11 @@ export const userSlice = createSlice({
       // NOTE: we do not want to touch "allowances" from Eth based pools
       if (token.address === ETH_DUMMY_ADDRESS) return;
 
-      const allowance = new TokenValue(state.allowances[token.address][spender] || 0);
+      const allowance = new TokenValue(state.allowances[token.address][spender], token.decimals);
       const value = allowance.value.sub(amount.value);
       state.allowances[token.address][spender] = value.isNegative()
         ? new TokenValue().serialized
-        : new TokenValue(value, allowance.decimals).serialized;
+        : new TokenValue(value, token.decimals).serialized;
     },
   },
   extraReducers: (builder) => {
