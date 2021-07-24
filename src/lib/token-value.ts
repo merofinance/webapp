@@ -18,9 +18,9 @@ export class TokenValue {
     if (!value) this._value = BigNumber.from(0);
     else if (isString(value)) this._value = this.stringToBigNumber(value);
     else if (typeof value === "number") this._value = this.stringToBigNumber(value.toString());
-    else if (value && (value as BigNumber)._isBigNumber) this._value = value as BigNumber;
+    else if ((value as BigNumber)._isBigNumber) this._value = value as BigNumber;
     else {
-      this._value = BigNumber.from((value as SerializedTokenValue).value);
+      this._value = this.stringToBigNumber((value as SerializedTokenValue).value);
       this._decimals = (value as SerializedTokenValue).decimals;
     }
   }
