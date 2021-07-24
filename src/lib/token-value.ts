@@ -38,7 +38,7 @@ export class TokenValue {
   }
 
   get isZero(): boolean {
-    return !this.toString();
+    return !this.toString() || this.toString() === "0";
   }
 
   get serialized(): SerializedTokenValue {
