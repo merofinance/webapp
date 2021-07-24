@@ -97,9 +97,10 @@ const NewPosition = ({ pool }: Props) => {
 
   const singleError = () => {
     if (!single) return "";
-    const number = Number(single);
-    if (number <= 0) return "Must be positive number";
-    if (max && number > Number(max)) return "Must be less than max top up";
+    const number = new TokenValue(single, pool.underlying.decimals);
+    if (number.isZero) return "Must be positive number";
+    const maxNumber = new TokenValue(max, pool.underlying.decimals);
+    if (max && number.value.gt(maxNumber.value)) return "Must be less than max top up";
     return "";
   };
 
