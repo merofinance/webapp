@@ -143,19 +143,23 @@ export class Web3Backd implements Backd {
   async getPositions(): Promise<SerialisedPosition[]> {
     const account = await this.currentAccount();
     const rawPositions = await this.topupAction.listPositions(account);
-    return rawPositions.map((rawPosition) => {
-      const position: SerialisedPosition = {
-        protocol: ethers.utils.parseBytes32String(rawPosition.protocol),
-        actionToken: rawPosition.record.actionToken,
-        depositToken: rawPosition.record.depositToken,
-        account: rawPosition.account,
-        threshold: bigNumberToFloat(rawPosition.record.threshold),
-        singleTopUp: new TokenValue(rawPosition.record.singleTopUpAmount).serialized,
-        maxTopUp: new TokenValue(rawPosition.record.totalTopUpAmount).serialized,
-        maxGasPrice: rawPosition.record.maxGasPrice.toNumber(),
-      };
-      return position;
-    });
+    return Promise.all(rawPositions.map((v: any) => this.getPositionInfo(v)));
+  }
+
+  async getPositionInfo(rawPosition: any): Promise<SerialisedPosition> {
+    const token = Ierc20FullFactory.connect(rawPosition.record.depositToken, this._provider);
+    const decimals = await token.decimals();
+    const position: SerialisedPosition = {
+      protocol: ethers.utils.parseBytes32String(rawPosition.protocol),
+      actionToken: rawPosition.record.actionToken,
+      depositToken: rawPosition.record.depositToken,
+      account: rawPosition.account,
+      threshold: bigNumberToFloat(rawPosition.record.threshold),
+      singleTopUp: new TokenValue(rawPosition.record.singleTopUpAmount, decimals).serialized,
+      maxTopUp: new TokenValue(rawPosition.record.totalTopUpAmount, decimals).serialized,
+      maxGasPrice: rawPosition.record.maxGasPrice.toNumber(),
+    };
+    return position;
   }
 
   async registerPosition(pool: Pool, position: Position): Promise<ContractTransaction> {
