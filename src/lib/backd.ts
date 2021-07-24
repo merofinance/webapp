@@ -2,6 +2,7 @@ import contracts from "@backdfund/protocol/build/deployments/map.json";
 import { Controller } from "@backdfund/protocol/typechain/Controller";
 import { ControllerFactory } from "@backdfund/protocol/typechain/ControllerFactory";
 import { Ierc20FullFactory } from "@backdfund/protocol/typechain/Ierc20FullFactory";
+import { IStakerVaultFactory } from "@backdfund/protocol/typechain/IStakerVaultFactory";
 import { LiquidityPoolFactory } from "@backdfund/protocol/typechain/LiquidityPoolFactory";
 import { StakerVaultFactory } from "@backdfund/protocol/typechain/StakerVaultFactory";
 import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
@@ -243,9 +244,15 @@ export class Web3Backd implements Backd {
       return new TokenValue(await this.provider.getBalance(account));
     }
     const token = Ierc20FullFactory.connect(address, this._provider);
-    const decimals = await token.decimals();
-    const rawBalance = await token.balanceOf(account);
-    return new TokenValue(rawBalance, decimals);
+    try {
+      const decimals = await token.decimals();
+      const rawBalance = await token.balanceOf(account);
+      return new TokenValue(rawBalance, decimals);
+    } catch {
+      const vault = IStakerVaultFactory.connect(address, this._provider);
+      const vaultTokenAddress = await vault.getToken();
+      return this.getBalance(vaultTokenAddress, account);
+    }
   }
 
   async getBalances(addresses: string[], account?: string): Promise<Balances> {
