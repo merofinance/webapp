@@ -82,8 +82,8 @@ export class TokenValue {
   };
 
   toUsdValue = (price: number) => {
-    const usd = this.value.mul(BigNumber.from(price));
-    return usd.toNumber().toLocaleString(undefined, {
+    const usd = this.toNumber() * price;
+    return usd.toLocaleString(undefined, {
       maximumFractionDigits: 2,
       minimumFractionDigits: 2,
       style: "currency",
