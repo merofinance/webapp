@@ -33,6 +33,7 @@ const PoolWithdraw = ({ pool }: Props) => {
       content={
         <Content>
           <AmountInput
+            token={pool.underlying}
             value={withdrawAmount}
             setValue={(v: string) => setWithdrawAmount(v)}
             label={`Enter an amount of ${pool.underlying.symbol.toUpperCase()} to withdraw`}

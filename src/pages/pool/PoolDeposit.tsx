@@ -30,6 +30,7 @@ const PoolDeposit = ({ pool }: Props) => {
       content={
         <Content>
           <AmountInput
+            token={pool.underlying}
             value={depositAmount}
             setValue={(v: string) => setDepositAmount(v)}
             label={`Enter an amount of ${pool.underlying.symbol.toUpperCase()} to deposit`}

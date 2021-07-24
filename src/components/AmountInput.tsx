@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { TokenValue } from "../lib/token-value";
+import { Token } from "../lib/types";
 import AmountSlider from "./AmountSlider";
 import Input from "./Input";
 
@@ -22,6 +23,7 @@ const Available = styled.div`
 `;
 
 type Props = {
+  token: Token;
   value: string;
   setValue: (v: string) => void;
   label: string;
@@ -29,9 +31,9 @@ type Props = {
   noSlider?: boolean;
 };
 
-const AmountInput = ({ value, setValue, label, max, noSlider }: Props) => {
+const AmountInput = ({ token, value, setValue, label, max, noSlider }: Props) => {
   const error = () => {
-    const amount = new TokenValue(value);
+    const amount = new TokenValue(value, token.decimals);
     if (amount.toNumber() < 0) return "Amount must be a positive number";
     if (amount.value.gt(max.value)) return "Amount exceeds available balance";
     return "";
