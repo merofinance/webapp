@@ -122,7 +122,7 @@ const PoolsRow = ({ pool, preview }: Props) => {
   const balances = useSelector(selectBalances);
   const positions = useSelector(selectPoolPositions(pool));
 
-  const getBalance = (pool: Pool) => balances[pool.lpToken.address] || new TokenValue(0);
+  const getBalance = (pool: Pool) => balances[pool.lpToken.address] || new TokenValue();
   const locked = positions.reduce((a: number, b: Position) => b.maxTopUp.toNumber() + a, 0);
 
   return (

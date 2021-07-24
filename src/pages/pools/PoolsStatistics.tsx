@@ -15,7 +15,7 @@ const PoolsStatistics = () => {
   const balances = useSelector(selectBalances);
   const positions = useSelector(selectPositions);
 
-  const getBalance = (pool: Pool) => balances[pool.lpToken.address] || new TokenValue(0);
+  const getBalance = (pool: Pool) => balances[pool.lpToken.address] || new TokenValue();
   const getPrice = (pool: Pool) => prices[pool.underlying.symbol] || 0;
   const getPool = (tokenAddress: string) =>
     pools.filter((pool: Pool) => pool.underlying.address === tokenAddress)[0];
