@@ -10,7 +10,7 @@ import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFac
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
 import { getPrices } from "./coingecko";
 import { DEFAULT_SCALE, ETH_DECIMALS, ETH_DUMMY_ADDRESS } from "./constants";
-import { bigNumberToFloat, scale } from "./numeric";
+import { bigNumberToFloat, floatToBigNumber, scale } from "./numeric";
 import { TokenValue } from "./token-value";
 import {
   Address,
@@ -159,7 +159,7 @@ export class Web3Backd implements Backd {
   }
 
   async registerPosition(pool: Pool, position: Position): Promise<ContractTransaction> {
-    // const decimals = pool.underlying.decimals;
+    const decimals = pool.underlying.decimals;
     const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
     const rawExchangeRate = await poolContract.exchangeRate();
     const protocol = utils.formatBytes32String(position.protocol);
@@ -171,7 +171,7 @@ export class Web3Backd implements Backd {
     return this.topupAction.register(
       position.account,
       protocol,
-      position.threshold,
+      floatToBigNumber(position.threshold, decimals),
       pool.lpToken.address,
       depositAmount,
       pool.underlying.address,
