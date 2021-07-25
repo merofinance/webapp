@@ -9,6 +9,12 @@ interface OverviewRow {
   value: string;
 }
 
+const Container = styled.div`
+  @media (max-width: 993px) {
+    width: 100%;
+  }
+`;
+
 interface OverviewProps {
   open: boolean;
 }
@@ -129,7 +135,7 @@ const Overview = ({ header, rows }: Props) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div>
+    <Container>
       <StyledOverview open={open}>
         <ChevronContainer>
           <AccordionChevron open={open} />
@@ -147,7 +153,7 @@ const Overview = ({ header, rows }: Props) => {
           ))}
         </Statistics>
       </StyledOverview>
-    </div>
+    </Container>
   );
 };
 
