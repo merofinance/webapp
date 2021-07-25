@@ -112,15 +112,18 @@ const Content = styled.div`
   @media (max-width: 600px) {
     height: ${(props: ButtonProps) => {
       if (props.square) return "5.6rem";
+      if (props.small) return "2.8rem";
       if (props.primary) return "4.8rem";
     }};
     border-radius: ${(props: ButtonProps) => {
       if (props.square) return "1.4rem";
+      if (props.small) return "0.4rem";
       if (props.primary) return "2.4rem";
     }};
     padding: 0
       ${(props: ButtonProps) => {
         if (props.square) return "1.8rem";
+        if (props.small) return "1.1rem";
         if (props.primary) return "5.2rem";
       }};
   }
