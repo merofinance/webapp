@@ -79,7 +79,8 @@ export const formatPercent = (number: number) => {
 };
 
 export const formatCrypto = (number: number) => {
-  const decimals = Math.max(5 - Math.floor(Math.pow(number, 1 / 10)), 0);
+  let decimals = Math.max(5 - Math.floor(Math.pow(number, 1 / 10)), 0);
+  if (number < 0.0001) decimals = 18;
   return number.toLocaleString(undefined, {
     maximumFractionDigits: decimals,
   });
