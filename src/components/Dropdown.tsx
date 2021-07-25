@@ -14,10 +14,14 @@ const Button = styled.button`
 
 const Label = styled.div`
   font-weight: 400;
-  font-size: 1.6rem;
   letter-spacing: 0.15px;
   margin-right: 1rem;
   text-transform: capitalize;
+
+  font-size: 1.6rem;
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+  }
 `;
 
 type ArrowProps = {
@@ -25,8 +29,12 @@ type ArrowProps = {
 };
 
 const Arrow = styled.img`
-  width: 10px;
   transform: ${(props: ArrowProps) => (props.open ? "rotate(0deg)" : "rotate(180deg)")};
+
+  width: 1rem;
+  @media (max-width: 600px) {
+    width: 0.8rem;
+  }
 `;
 
 const ExitEvent = styled.div`
@@ -47,19 +55,29 @@ const Popup = styled.div`
   display: flex;
   flex-direction: column;
   z-index: 1;
+
+  padding: 0.8rem 0;
+  @media (max-width: 600px) {
+    padding: 0.6rem 0;
+  }
 `;
 
 const Option = styled.button`
   width: 100%;
-  padding: 0.6rem 2.4rem 0.6rem 1.6rem;
   font-weight: 400;
-  font-size: 1.6rem;
   letter-spacing: 0.15px;
   transition: all 0.1s;
   text-align: left;
   text-transform: capitalize;
   line-height: 24px;
   cursor: pointer;
+
+  font-size: 1.6rem;
+  padding: 0.6rem 2.4rem 0.6rem 1.6rem;
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+    padding: 0.4rem 1.3rem 0.4rem 1.1rem;
+  }
 
   :hover {
     background-color: rgba(255, 255, 255, 0.2);
