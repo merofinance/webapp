@@ -10,7 +10,7 @@ import { Position } from "../../lib/types";
 import NewPositionConfirmation from "./NewPositionConfirmation";
 import NewPositionInput from "./NewPositionInput";
 import { AppDispatch } from "../../app/store";
-import { BigNumber, ethers } from "ethers";
+import { ethers } from "ethers";
 import { selectPositions } from "../../features/positions/positionsSlice";
 import { TokenValue } from "../../lib/token-value";
 
