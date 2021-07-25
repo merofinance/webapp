@@ -1,4 +1,4 @@
-import { bigNumberToFloat, floatToBigNumber, scale } from "./numeric";
+import { bigNumberToFloat, floatToBigNumber, numberToCompactCurrency, scale } from "./numeric";
 
 const epsilon = 0.000000001;
 
@@ -26,4 +26,23 @@ test("converts floats numbers to big numbers", () => {
     const actual = floatToBigNumber(value, decimals, digits);
     expect(actual.sub(expected).abs().toNumber()).toEqual(0);
   });
+});
+
+test("converts number to compact currency", () => {
+  const testCases = [
+    { value: 1_203_912, expected: "$1.2m" },
+    { value: 1_125_234_230, expected: "$1.1b" },
+    { value: 1, expected: "$1.00" },
+    { value: 0.213123, expected: "$0.21" },
+    { value: 700.123, expected: "$700.12" },
+    { value: 0, expected: "$0.00" },
+    { value: 12_544, expected: "$12.5k" },
+    { value: 456_000, expected: "$456k" },
+    { value: 988_912_123_123, expected: "$988.9b" },
+    { value: 989_988_912_123_123, expected: "$990t" },
+    { value: 889_989_988_912_123_123, expected: "$889,990t" },
+  ];
+  testCases.forEach(({ value, expected }) =>
+    expect(numberToCompactCurrency(value)).toEqual(expected)
+  );
 });
