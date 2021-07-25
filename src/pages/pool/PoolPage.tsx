@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router";
 import styled from "styled-components";
-import Radio, { RadioOptionType } from "../../components/Radio";
+import Radio from "../../components/Radio";
 import Button from "../../components/Button";
 import { selectPool } from "../../features/pool/selectors";
 import Seo from "../../components/Seo";
@@ -11,25 +11,11 @@ import PoolPositions from "./PoolPositions";
 import PoolWithdraw from "./PoolWithdraw";
 import PoolOverview from "./PoolOverview";
 import { selectBalance } from "../../features/user/userSlice";
+import { useDevice } from "../../lib/hooks";
 
 type DepositWithdrawParams = {
   poolName: string;
 };
-
-const tabs: RadioOptionType[] = [
-  {
-    label: "Deposit",
-    value: "deposit",
-  },
-  {
-    label: "Withdraw",
-    value: "withdraw",
-  },
-  {
-    label: "Top-up Positions",
-    value: "positions",
-  },
-];
 
 const StyledPoolPage = styled.div`
   width: 100%;
@@ -69,12 +55,11 @@ const PoolPage = () => {
   let { poolName } = useParams<DepositWithdrawParams>();
   const pool = useSelector(selectPool(poolName));
   const balance = useSelector(selectBalance(pool));
+  const { isMobile } = useDevice();
 
   const [tab, setTab] = useState("deposit");
 
-  if (!pool) {
-    return <Redirect to="/" />; // TODO Implement pool not found
-  }
+  if (!pool) return <Redirect to="/" />;
 
   return (
     <StyledPoolPage>
@@ -83,7 +68,24 @@ const PoolPage = () => {
         description="Deposit DAI to farm yield while protecting your DeFi loan (Aave, Compound, etc.) from liquidation"
       />
       <Content>
-        <Radio options={tabs} active={tab} setOption={(value: string) => setTab(value)} />
+        <Radio
+          options={[
+            {
+              label: "Deposit",
+              value: "deposit",
+            },
+            {
+              label: "Withdraw",
+              value: "withdraw",
+            },
+            {
+              label: isMobile ? "Positions" : "Top-up Positions",
+              value: "positions",
+            },
+          ]}
+          active={tab}
+          setOption={(value: string) => setTab(value)}
+        />
         {tab === "deposit" && <PoolDeposit pool={pool} />}
         {tab === "withdraw" && <PoolWithdraw pool={pool} />}
         {tab === "positions" && <PoolPositions pool={pool} />}
