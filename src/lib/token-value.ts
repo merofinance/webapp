@@ -1,5 +1,6 @@
 import { BigNumber } from "ethers";
 import { isString } from "formik";
+import { bigNumberToString, formatCrypto, formatCurrency, stringToBigNumber } from "./numeric";
 
 export interface SerializedTokenValue {
   value: string;
@@ -16,11 +17,11 @@ export class TokenValue {
   ) {
     this._decimals = decimals;
     if (!value) this._value = BigNumber.from(0);
-    else if (isString(value)) this._value = this.stringToBigNumber(value);
-    else if (typeof value === "number") this._value = this.stringToBigNumber(value.toString());
+    else if (isString(value)) this._value = stringToBigNumber(value, decimals);
+    else if (typeof value === "number") this._value = stringToBigNumber(value.toString(), decimals);
     else if ((value as BigNumber)._isBigNumber) this._value = value as BigNumber;
     else {
-      this._value = this.stringToBigNumber((value as SerializedTokenValue).value);
+      this._value = stringToBigNumber((value as SerializedTokenValue).value, decimals);
       this._decimals = (value as SerializedTokenValue).decimals;
     }
   }
@@ -48,48 +49,13 @@ export class TokenValue {
     };
   }
 
-  private stringToBigNumber = (value: string) => {
-    if (!value || value === ".") throw new Error("Not a valid number");
-    if (value.substring(0, 1) === "-") throw new Error("Negative numbers not supported");
+  toString = () => bigNumberToString(this._value, this._decimals);
 
-    let comps = value.split(".");
-    let whole = comps[0] || "0";
-    let fraction = comps[1] || "0";
-    while (fraction.length < this._decimals) {
-      fraction += "0";
-    }
+  toNumber = () => Number(this.toString());
 
-    return BigNumber.from(whole).mul(this.base).add(fraction);
-  };
+  toCryptoString = () => formatCrypto(this.toNumber());
 
-  toString = () => {
-    let string = this._value.toString();
-    let decimalLocation = string.length - this._decimals;
-    let whole = string.slice(0, decimalLocation) || "0";
-    let fraction = string.slice(decimalLocation).replace(/0+$/, "");
-    return whole + (fraction ? "." + fraction : "");
-  };
-
-  toNumber = () => {
-    return Number(this.toString());
-  };
-
-  toCryptoString = () => {
-    const decimals = Math.max(5 - Math.floor(Math.pow(this.toNumber(), 1 / 10)), 0);
-    return this.toNumber().toLocaleString(undefined, {
-      maximumFractionDigits: decimals,
-    });
-  };
-
-  toUsdValue = (price: number) => {
-    const usd = this.toNumber() * price;
-    return usd.toLocaleString(undefined, {
-      maximumFractionDigits: 2,
-      minimumFractionDigits: 2,
-      style: "currency",
-      currency: "USD",
-    });
-  };
+  toUsdValue = (price: number) => formatCurrency(this.toNumber() * price);
 }
 
 // function shiftDecimal(value, decimals) {
