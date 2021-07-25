@@ -37,7 +37,7 @@ const Row = styled.tr`
   }
 
   @media (max-width: 600px) {
-    height: ${(props: RowProps) => (props.preview ? "4.8rem" : "7.2rem")};
+    height: 4.8rem;
     padding: 0 1.6rem;
 
     td:nth-child(1) {
