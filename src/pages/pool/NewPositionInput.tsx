@@ -17,27 +17,37 @@ const InputBorder = styled.div`
   position: relative;
   width: 100%;
   padding: 1px;
-  border-radius: 7px;
-  height: 3.2rem;
 
   background: ${(props: InputBorderProps) =>
     props.valid
       ? "linear-gradient(to right, #c532f9, #32b2e5)"
       : "linear-gradient(to right, var(--error), var(--error))"};
+
+  height: 3.2rem;
+  border-radius: 7px;
+  @media (max-width: 600px) {
+    height: 2.4rem;
+    border-radius: 4px;
+  }
 `;
 
 const Input = styled.input`
   width: 100%;
   background-color: #252140;
-  border-radius: 6px;
   height: 100%;
   padding: 0 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.6rem;
   letter-spacing: 0.15px;
   font-weight: 400;
+
+  font-size: 1.2rem;
+  border-radius: 6px;
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+    border-radius: 3px;
+  }
 
   ::-webkit-outer-spin-button {
     display: none;
