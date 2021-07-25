@@ -34,22 +34,35 @@ const tabs: RadioOptionType[] = [
 const StyledPoolPage = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: column;
+
+  @media (max-width: 993px) {
+    flex-direction: column-reverse;
+  }
 `;
 
 const Content = styled.div`
   width: 100%;
   display: flex;
+  flex-direction: column;
 `;
 
 const RightColumn = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  margin-top: 6.4rem;
+  @media (max-width: 993px) {
+    margin-top: 0;
+  }
 `;
 
 const ButtonContainer = styled.div`
   margin-top: 2.4rem;
+
+  @media (max-width: 993px) {
+    display: none;
+  }
 `;
 
 const PoolPage = () => {
@@ -69,25 +82,25 @@ const PoolPage = () => {
         title="DAI Pool"
         description="Deposit DAI to farm yield while protecting your DeFi loan (Aave, Compound, etc.) from liquidation"
       />
-      <Radio options={tabs} active={tab} setOption={(value: string) => setTab(value)} />
       <Content>
+        <Radio options={tabs} active={tab} setOption={(value: string) => setTab(value)} />
         {tab === "deposit" && <PoolDeposit pool={pool} />}
         {tab === "withdraw" && <PoolWithdraw pool={pool} />}
         {tab === "positions" && <PoolPositions pool={pool} />}
-        <RightColumn>
-          <PoolOverview pool={pool} />
-          {tab !== "positions" && balance > 0 && (
-            <ButtonContainer>
-              <Button
-                medium
-                text="+ Create a Top-up Position"
-                click={() => setTab("positions")}
-                background="#0A0525"
-              />
-            </ButtonContainer>
-          )}
-        </RightColumn>
       </Content>
+      <RightColumn>
+        <PoolOverview pool={pool} />
+        {tab !== "positions" && balance > 0 && (
+          <ButtonContainer>
+            <Button
+              medium
+              text="+ Create a Top-up Position"
+              click={() => setTab("positions")}
+              background="#0A0525"
+            />
+          </ButtonContainer>
+        )}
+      </RightColumn>
     </StyledPoolPage>
   );
 };
