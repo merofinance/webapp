@@ -8,7 +8,7 @@ import Button from "../../components/Button";
 import GradientText from "../../styles/GradientText";
 import { selectBalances } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
-import { numberToCompactCurrency } from "../../lib/numeric";
+import { formatPercent, numberToCompactCurrency } from "../../lib/numeric";
 import { selectPoolPositions } from "../../features/positions/positionsSlice";
 import { Position } from "../../lib/types";
 import { selectPrice } from "../../features/pool/selectors";
@@ -130,7 +130,7 @@ const PoolsRow = ({ pool, preview }: Props) => {
         <Asset token={pool.underlying} />
       </Data>
       <Data>
-        <Apy>{`${pool.apy}%`}</Apy>
+        <Apy>{formatPercent(pool.apy)}</Apy>
       </Data>
       <Data>{numberToCompactCurrency(pool.totalAssets * price)}</Data>
       {!preview && <Data>{formatCurrency((getBalance(pool) + locked) * price)}</Data>}
