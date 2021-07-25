@@ -131,10 +131,10 @@ const Overview = ({ header, rows }: Props) => {
   return (
     <div>
       <StyledOverview open={open}>
-        <Header onClick={() => setOpen(!open)}>{header}</Header>
         <ChevronContainer>
           <AccordionChevron open={open} />
         </ChevronContainer>
+        <Header onClick={() => setOpen(!open)}>{header}</Header>
         <Statistics>
           {rows.map((row: OverviewRow) => (
             <StatisticContainer key={row.label}>
