@@ -21,8 +21,8 @@ export class TokenValue {
     else if (typeof value === "number") this._value = stringToBigNumber(value.toString(), decimals);
     else if ((value as BigNumber)._isBigNumber) this._value = value as BigNumber;
     else {
-      this._value = stringToBigNumber((value as SerializedTokenValue).value, decimals);
       this._decimals = (value as SerializedTokenValue).decimals;
+      this._value = stringToBigNumber((value as SerializedTokenValue).value, this._decimals);
     }
   }
 
