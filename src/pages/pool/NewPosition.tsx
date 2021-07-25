@@ -12,13 +12,18 @@ import NewPositionInput from "./NewPositionInput";
 import { AppDispatch } from "../../app/store";
 import { ethers } from "ethers";
 import { selectPositions } from "../../features/positions/positionsSlice";
+import { useDevice } from "../../lib/hooks";
 
 const Border = styled.div`
   width: 100%;
   background: linear-gradient(to right, #c532f9 1%, #32b2e5 101%);
   margin-top: 0.6rem;
-  border-radius: 1.3rem;
   padding: 1px;
+
+  border-radius: 1.3rem;
+  @media (max-width: 600px) {
+    border-radius: 0;
+  }
 `;
 
 const StyledNewPosition = styled.div`
@@ -26,13 +31,22 @@ const StyledNewPosition = styled.div`
   display: flex;
   flex-direction: column;
   background: linear-gradient(to right, #451467, #173d63);
-  border-radius: 1.2rem;
+
   padding: 0.9rem 2rem;
+  border-radius: 1.2rem;
+  @media (max-width: 600px) {
+    align-items: center;
+    justify-content: center;
+    padding: 0 1.6rem;
+    height: 3.8rem;
+    border-radius: 0;
+  }
 `;
 
 const Content = styled.div`
   width: 100%;
   display: flex;
+  align-items: center;
 
   > div:last-child {
     justify-content: flex-end;
@@ -60,6 +74,7 @@ interface Props {
 const NewPosition = ({ pool }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();
+  const { isMobile } = useDevice();
   const allowance = useSelector(selectToupAllowance(backd, pool));
   const balance = useSelector(selectBalance(pool));
   const positions = useSelector(selectPositions);
@@ -192,6 +207,7 @@ const NewPosition = ({ pool }: Props) => {
           <Value>
             <Button
               primary
+              small={isMobile}
               disabled={!(protocol && address && threshold && single && max) || hasError}
               text={approved && max !== "" ? "create 2/2" : "approve 1/2"}
               click={() => {
