@@ -39,7 +39,7 @@ const PoolWithdraw = ({ pool }: Props) => {
             label={
               isMobile
                 ? "Enter amount to withdraw"
-                : `Enter an amount of ${pool.underlying.symbol.toUpperCase()} to withdraw`
+                : `Enter an amount of ${pool.underlying.symbol} to withdraw`
             }
             max={availableToWithdraw}
           />

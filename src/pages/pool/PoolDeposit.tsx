@@ -36,7 +36,7 @@ const PoolDeposit = ({ pool }: Props) => {
             label={
               isMobile
                 ? "Enter amount to deposit"
-                : `Enter an amount of ${pool.underlying.symbol.toUpperCase()} to deposit`
+                : `Enter an amount of ${pool.underlying.symbol} to deposit`
             }
             max={availableToDeposit}
           />
