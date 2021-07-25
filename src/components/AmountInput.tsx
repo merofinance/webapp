@@ -33,10 +33,14 @@ type Props = {
 
 const AmountInput = ({ token, value, setValue, label, max, noSlider }: Props) => {
   const error = () => {
-    const amount = new TokenValue(value, token.decimals);
-    if (amount.toNumber() < 0) return "Amount must be a positive number";
-    if (amount.value.gt(max.value)) return "Amount exceeds available balance";
-    return "";
+    if (Number(value) <= 0) return "Amount must be a positive number";
+    try {
+      const amount = new TokenValue(value, token.decimals);
+      if (amount.value.gt(max.value)) return "Amount exceeds available balance";
+      return "";
+    } catch {
+      return "Invalid number";
+    }
   };
 
   return (
