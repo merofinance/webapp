@@ -13,6 +13,10 @@ import PoolsStatistics from "./PoolsStatistics";
 const StyledPoolsPage = styled.div`
   width: 100%;
   display: flex;
+
+  @media (max-width: 600px) {
+    flex-direction: column-reverse;
+  }
 `;
 
 const Table = styled.table`
