@@ -118,7 +118,9 @@ const Content = styled.div`
     border-radius: ${(props: ButtonProps) => {
       if (props.square) return "1.4rem";
       if (props.small) return "0.4rem";
+      if (props.medium) return "1.4rem";
       if (props.primary) return "2.4rem";
+      return "1.9rem";
     }};
     padding: 0
       ${(props: ButtonProps) => {
