@@ -43,16 +43,47 @@ const headers: HeaderType[] = [
 ];
 
 const StyledPositions = styled.div`
+  position: relative;
   width: 100%;
+
+  @media (max-width: 600px) {
+    width: calc(100% + 3.2rem);
+    overflow-x: auto;
+    transform: translateX(-1.6rem);
+  }
+`;
+
+const ScrollShadow = styled.div`
+  position: absolute;
+  right: 0;
+  top: 50%;
+  background-color: #10082f;
+  filter: blur(5px);
+  width: 20px;
+  transform: translate(50%, -50%);
+  height: 90%;
+`;
+
+const PositionContent = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 600px) {
+    width: 720px;
+    overflow-x: auto;
+  }
 `;
 
 const Headers = styled.div`
   width: 100%;
   display: flex;
   padding: 0 2rem;
+  white-space: nowrap;
+
   margin-bottom: 0.2rem;
+  @media (max-width: 600px) {
+    margin-bottom: 0;
+  }
 `;
 
 const Header = styled.div`
@@ -62,11 +93,16 @@ const Header = styled.div`
 `;
 
 const HeaderText = styled.div`
-  font-weight: 500;
-  font-size: 1.4rem;
   line-height: 2.4rem;
   letter-spacing: 0.15px;
   opacity: 0.6;
+
+  font-weight: 500;
+  font-size: 1.4rem;
+  @media (max-width: 600px) {
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
 `;
 
 type Props = {
@@ -88,20 +124,25 @@ const PoolPositions = ({ pool }: Props) => {
       header="Top-up positions"
       statistics={<PoolStatistics pool={pool} />}
       content={
-        <StyledPositions>
-          <Headers>
-            {headers.map((header: HeaderType) => (
-              <Header key={header.label}>
-                <HeaderText>{header.label}</HeaderText> <Tooltip content={header.tooltip} />
-              </Header>
-            ))}
-            <Header></Header>
-          </Headers>
-          <NewPosition pool={pool} />
-          {positions.map((position: Position, index: number) => (
-            <PositionRow key={index} position={position} pool={pool} />
-          ))}
-        </StyledPositions>
+        <>
+          <StyledPositions>
+            <PositionContent>
+              <Headers>
+                {headers.map((header: HeaderType) => (
+                  <Header key={header.label}>
+                    <HeaderText>{header.label}</HeaderText> <Tooltip content={header.tooltip} />
+                  </Header>
+                ))}
+                <Header></Header>
+              </Headers>
+              <NewPosition pool={pool} />
+              {positions.map((position: Position, index: number) => (
+                <PositionRow key={index} position={position} pool={pool} />
+              ))}
+            </PositionContent>
+          </StyledPositions>
+          <ScrollShadow />
+        </>
       }
     />
   );

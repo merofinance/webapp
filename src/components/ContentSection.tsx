@@ -37,6 +37,7 @@ const Line = styled.div`
 `;
 
 const Content = styled.div`
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
