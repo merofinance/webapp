@@ -73,7 +73,7 @@ const NewPosition = ({ pool }: Props) => {
   const [single, setSingle] = useState("");
   const [max, setMax] = useState("");
 
-  const approved = allowance.value.gte(BigNumber.from(max || "0"));
+  const approved = allowance.value.gte(new TokenValue(max || "0", pool.underlying.decimals).value);
 
   const addressError = () => {
     if (!address) return "";
