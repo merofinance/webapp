@@ -77,6 +77,7 @@ export const formatCrypto = (number: number) => {
 
 export const bigNumberToString = (number: BigNumber, decimals: number) => {
   let string = number.toString();
+  while (string.length < decimals) string = "0" + string;
   let decimalLocation = string.length - decimals;
   let whole = string.slice(0, decimalLocation) || "0";
   let fraction = string.slice(decimalLocation).replace(/0+$/, "");
