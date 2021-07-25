@@ -68,7 +68,15 @@ const Data = styled.td`
   @media (max-width: 600px) {
     font-size: 1.4rem;
     line-height: 2.1rem;
-    display: ${(props: DataProps) => (props.preview && props.right ? "none" : "flex")};
+    display: ${(props: DataProps) => (props.right ? "none" : "flex")};
+  }
+`;
+
+const DepositedData = styled(Data)`
+  display: ${(props: DataProps) => (props.preview ? "none" : "flex")};
+
+  @media (max-width: 600px) {
+    display: none;
   }
 `;
 
@@ -133,7 +141,9 @@ const PoolsRow = ({ pool, preview }: Props) => {
         <Apy>{formatPercent(pool.apy)}</Apy>
       </Data>
       <Data>{numberToCompactCurrency(pool.totalAssets * price)}</Data>
-      {!preview && <Data>{formatCurrency((getBalance(pool) + locked) * price)}</Data>}
+      <DepositedData preview={preview}>
+        {formatCurrency((getBalance(pool) + locked) * price)}
+      </DepositedData>
       <ChevronData preview={preview}>
         <Chevron src={chevron} alt="right arrow" />
       </ChevronData>

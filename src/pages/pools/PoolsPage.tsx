@@ -27,20 +27,42 @@ const HeaderRow = styled.tr`
   display: flex;
   justify-content: space-between;
   padding: 0 1.7rem;
+
+  @media (max-width: 600px) {
+    th:nth-child(1) {
+      flex: 1.1;
+    }
+    th:nth-child(2) {
+      flex: 0.9;
+    }
+  }
 `;
+
+interface HeaderProps {
+  hideOnMobile?: boolean;
+}
 
 const Header = styled.th`
   flex: 1;
   text-align: left;
   font-weight: 700;
-  font-size: 1.4rem;
   line-height: 2.4rem;
   letter-spacing: 0.15px;
   opacity: 0.6;
+
+  font-size: 1.4rem;
+  @media (max-width: 600px) {
+    display: ${(props: HeaderProps) => (props.hideOnMobile ? "none" : "flex")};
+    font-size: 1.2rem;
+  }
 `;
 
 const ChevronHeader = styled.th`
   width: 2.4rem;
+
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const PoolsPage = () => {
@@ -68,7 +90,7 @@ const PoolsPage = () => {
               <Header>Asset</Header>
               <Header>APY</Header>
               <Header>TVL</Header>
-              <Header>Your deposits</Header>
+              <Header hideOnMobile>Your deposits</Header>
               <ChevronHeader />
             </HeaderRow>
             {pools.map((pool: Pool) => (
