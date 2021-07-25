@@ -26,10 +26,6 @@ export class TokenValue {
     }
   }
 
-  get base(): BigNumber {
-    return BigNumber.from(10).pow(BigNumber.from(this._decimals));
-  }
-
   get value(): BigNumber {
     return this._value;
   }
