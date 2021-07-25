@@ -91,9 +91,7 @@ export const stringToBigNumber = (value: string, decimals: number) => {
   let comps = value.split(".");
   let whole = comps[0] || "0";
   let fraction = comps[1] || "0";
-  while (fraction.length < decimals) {
-    fraction += "0";
-  }
+  while (fraction.length < decimals) fraction += "0";
 
   const base = BigNumber.from(10).pow(BigNumber.from(decimals));
   return BigNumber.from(whole).mul(base).add(fraction);
