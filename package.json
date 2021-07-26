@@ -54,7 +54,8 @@
   "scripts": {
     "start": "BROWSER=none craco start",
     "build": "craco build",
-    "test": "craco test"
+    "test": "craco test",
+    "cypress:open": "cypress open"
   },
   "eslintConfig": {
     "extends": "react-app"
