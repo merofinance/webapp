@@ -101,7 +101,12 @@ const SupportedBy = () => {
       <Header2>supported by</Header2>
       <Protocols>
         {protocols.map((protocol: ProtocolType, index: number) => (
-          <ProtocolContainer key={index} href={protocol.link} target="_blank">
+          <ProtocolContainer
+            key={index}
+            id={`Supported By - ${protocol.name}`}
+            href={protocol.link}
+            target="_blank"
+          >
             <Protocol
               src={protocol.image}
               maxWidthMobile={index === 2 ? "12rem" : ""}
