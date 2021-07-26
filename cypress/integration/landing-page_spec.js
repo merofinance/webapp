@@ -35,3 +35,34 @@ describe("Benefits", () => {
       );
   });
 });
+
+describe("How it Works", () => {
+  it("Should Show Earn Yeild Options", () => {
+    cy.get('[id="How It Works - 01"]').contains("Deposit Liquidity");
+    cy.get('[id="How It Works - 02"]').contains("Earn Yield");
+    cy.get('[id="How It Works - 03"]').contains("Stake to Earn Rewards");
+    cy.get('[id="How It Works - 04"]').contains("Unstake Any Time");
+  });
+
+  it("Should Chang to Earn & Protect Tab", () => {
+    cy.get('[id="Radio Option - protect"]').click();
+  });
+
+  it("Should Show Earn & Protect Options", () => {
+    cy.get('[id="How It Works - 01"]').contains("Deposit Liquidity");
+    cy.get('[id="How It Works - 02"]').contains("Register Loan on-Chain");
+    cy.get('[id="How It Works - 03"]').contains("Protect & Earn");
+    cy.get('[id="How It Works - 04"]').contains("Unstake Any Time");
+  });
+
+  it("Should Chang to Earn Yield Tab", () => {
+    cy.get('[id="Radio Option - protect"]').click();
+  });
+
+  it("Should Show Earn Yeild Options", () => {
+    cy.get('[id="How It Works - 01"]').contains("Deposit Liquidity");
+    cy.get('[id="How It Works - 02"]').contains("Earn Yield");
+    cy.get('[id="How It Works - 03"]').contains("Stake to Earn Rewards");
+    cy.get('[id="How It Works - 04"]').contains("Unstake Any Time");
+  });
+});
