@@ -86,3 +86,23 @@ describe("Supported By", () => {
       .should("have.attr", "href", "http://aave.com/");
   });
 });
+
+describe("Join The Community", () => {
+  it("Should have Telegram Link", () => {
+    cy.get('[id="Join Community - Telegram →"]')
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "https://t.me/backdchat");
+  });
+
+  it("Should have Twitter Link", () => {
+    cy.get('[id="Join Community - Twitter →"]')
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "https://twitter.com/backdfund");
+  });
+
+  it("Should have Telegram Link", () => {
+    cy.get('[id="Join Community - GitHub →"]')
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "https://github.com/backdfund");
+  });
+});
