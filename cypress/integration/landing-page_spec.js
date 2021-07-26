@@ -66,3 +66,23 @@ describe("How it Works", () => {
     cy.get('[id="How It Works - 04"]').contains("Unstake Any Time");
   });
 });
+
+describe("Supported By", () => {
+  it("Should have Divergence Link", () => {
+    cy.get('[id="Supported By - Divergence"]')
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "https://www.div.vc/");
+  });
+
+  it("Should have Curve Link", () => {
+    cy.get('[id="Supported By - Curve"]')
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "https://curve.fi/");
+  });
+
+  it("Should have Aave Link", () => {
+    cy.get('[id="Supported By - Aave"]')
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "http://aave.com/");
+  });
+});
