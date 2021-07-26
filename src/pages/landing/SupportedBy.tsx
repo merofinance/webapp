@@ -4,7 +4,6 @@ import { Header2 } from "../../styles/Headers";
 import divergence from "../../assets/protocols/divergence.svg";
 import curve from "../../assets/protocols/curve.svg";
 import aave from "../../assets/protocols/aave.svg";
-import { openAndFocusWindow } from "../../lib/browser";
 
 type ProtocolType = {
   name: string;
@@ -61,7 +60,7 @@ const Protocols = styled.div`
   }
 `;
 
-const ProtocolContainer = styled.div`
+const ProtocolContainer = styled.a`
   width: 32.2rem;
   display: flex;
   justify-content: center;
@@ -102,11 +101,8 @@ const SupportedBy = () => {
       <Header2>supported by</Header2>
       <Protocols>
         {protocols.map((protocol: ProtocolType, index: number) => (
-          <ProtocolContainer key={index}>
+          <ProtocolContainer key={index} href={protocol.link} target="_blank">
             <Protocol
-              onClick={() => {
-                openAndFocusWindow(protocol.link, "_blank");
-              }}
               src={protocol.image}
               maxWidthMobile={index === 2 ? "12rem" : ""}
               alt={`${protocol.name} logo`}
