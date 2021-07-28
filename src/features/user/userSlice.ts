@@ -87,10 +87,10 @@ export const userSlice = createSlice({
       if (token.address === ETH_DUMMY_ADDRESS) return;
 
       const allowance = new TokenValue(state.allowances[token.address][spender], token.decimals);
-      const value = allowance.value.sub(amount.value);
+      const value = allowance.sub(amount);
       state.allowances[token.address][spender] = value.isNegative()
         ? new TokenValue().serialized
-        : new TokenValue(value, token.decimals).serialized;
+        : value.serialized;
     },
   },
   extraReducers: (builder) => {
@@ -179,9 +179,7 @@ export function selectBalance(addressOrPool: string | Optional<Pool>): Selector<
 
     const lpTokenBalance = new TokenValue(state.user.balances[addressOrPool.lpToken.address]);
     const stakedBalance = new TokenValue(state.user.balances[addressOrPool.stakerVaultAddress]);
-
-    const newValue = lpTokenBalance.value.add(stakedBalance.value);
-    return new TokenValue(newValue, lpTokenBalance.decimals);
+    return lpTokenBalance.add(stakedBalance);
   };
 }
 
@@ -200,9 +198,7 @@ export function selectToupAllowance(backd: Backd | undefined, pool: Pool): Selec
     const vaultAllowance = new TokenValue(
       state.user.allowances[pool.stakerVaultAddress]?.[backd.topupActionAddress]
     );
-
-    const newValue = lpTokenAllowance.value.add(vaultAllowance.value);
-    return new TokenValue(newValue, lpTokenAllowance.decimals);
+    return lpTokenAllowance.add(vaultAllowance);
   };
 }
 

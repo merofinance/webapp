@@ -73,7 +73,7 @@ const NewPosition = ({ pool }: Props) => {
   const [single, setSingle] = useState("");
   const [max, setMax] = useState("");
 
-  const approved = allowance.value.gte(new TokenValue(max || "0", pool.underlying.decimals).value);
+  const approved = allowance.gte(new TokenValue(max || "0", pool.underlying.decimals));
 
   const addressError = () => {
     if (!address) return "";
@@ -99,9 +99,9 @@ const NewPosition = ({ pool }: Props) => {
     if (!single) return "";
     try {
       const number = new TokenValue(single, pool.underlying.decimals);
-      if (number.isZero) return "Must be positive number";
+      if (number.isZero()) return "Must be positive number";
       const maxNumber = new TokenValue(max, pool.underlying.decimals);
-      if (max && number.value.gt(maxNumber.value)) return "Must be less than max top up";
+      if (max && number.gt(maxNumber)) return "Must be less than max top up";
       return "";
     } catch {
       return "Invalid number";
@@ -112,8 +112,8 @@ const NewPosition = ({ pool }: Props) => {
     if (!max) return "";
     try {
       const number = new TokenValue(max, pool.underlying.decimals);
-      if (number.value.isNegative()) return "Must be positive number";
-      if (number.value.gt(balance.value)) return "Exceeds deposited balance";
+      if (number.isNegative()) return "Must be positive number";
+      if (number.gt(balance)) return "Exceeds deposited balance";
       else return "";
     } catch {
       return "Invalid number";

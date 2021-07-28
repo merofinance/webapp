@@ -34,15 +34,49 @@ export class TokenValue {
     return this._decimals;
   }
 
-  get isZero(): boolean {
-    return !this.toString() || this.toString() === "0";
-  }
-
   get serialized(): SerializedTokenValue {
     return {
       value: this.toString(),
       decimals: this._decimals,
     };
+  }
+
+  isZero = () => this.value.isZero();
+
+  isNegative = () => this.value.isNegative();
+
+  assertSameDecimals(other: TokenValue) {
+    console.assert(this.decimals === other.decimals, "should have the same number of decimals");
+  }
+
+  add(other: TokenValue) {
+    this.assertSameDecimals(other);
+    return new TokenValue(this.value.add(other.value), this.decimals);
+  }
+
+  sub(other: TokenValue) {
+    this.assertSameDecimals(other);
+    return new TokenValue(this.value.sub(other.value), this.decimals);
+  }
+
+  gt(other: TokenValue) {
+    this.assertSameDecimals(other);
+    return this.value.gt(other.value);
+  }
+
+  gte(other: TokenValue) {
+    this.assertSameDecimals(other);
+    return this.value.gte(other.value);
+  }
+
+  lt(other: TokenValue) {
+    this.assertSameDecimals(other);
+    return this.value.lt(other.value);
+  }
+
+  lte(other: TokenValue) {
+    this.assertSameDecimals(other);
+    return this.value.lte(other.value);
   }
 
   toString = () => bigNumberToString(this._value, this._decimals);

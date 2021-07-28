@@ -64,7 +64,7 @@ type Props = {
 };
 
 const AmountSlider = ({ value, max, setValue }: Props) => {
-  const percent = max.isZero ? 0 : Math.round((Number(value || "0") / max.toNumber()) * 100);
+  const percent = max.isZero() ? 0 : Math.round((Number(value || "0") / max.toNumber()) * 100);
 
   return (
     <StyledAmountSlider>

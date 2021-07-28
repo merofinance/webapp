@@ -22,7 +22,7 @@ type Props = {
 const PoolWithdraw = ({ pool }: Props) => {
   const totalBalance = useSelector(selectBalance(pool));
   const staked = useSelector(selectBalance(pool.stakerVaultAddress));
-  const availableToWithdraw = new TokenValue(totalBalance.value.sub(staked.value), staked.decimals);
+  const availableToWithdraw = totalBalance.sub(staked);
 
   const [withdrawAmount, setWithdrawAmount] = useState("");
 

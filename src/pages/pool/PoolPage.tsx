@@ -76,7 +76,7 @@ const PoolPage = () => {
         {tab === "positions" && <PoolPositions pool={pool} />}
         <RightColumn>
           <PoolOverview pool={pool} />
-          {tab !== "positions" && !balance.isZero && (
+          {tab !== "positions" && !balance.isZero() && (
             <ButtonContainer>
               <Button
                 medium

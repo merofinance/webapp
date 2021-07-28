@@ -21,7 +21,7 @@ const DepositButtons = ({ value, pool, complete }: Props) => {
   const backd = useBackd();
   const { loading, setLoading, handleTxDispatch } = useLoading();
   const approvedToDeposit = useSelector(selectDepositAllowance(pool));
-  const approved = approvedToDeposit.value.gte(value.value);
+  const approved = approvedToDeposit.gte(value);
 
   const executeApprove = async () => {
     if (!backd || approved) return;
@@ -46,7 +46,7 @@ const DepositButtons = ({ value, pool, complete }: Props) => {
     <>
       {pool.underlying.address !== ETH_DUMMY_ADDRESS && (
         <MultiStepButtons
-          disabled={value.isZero}
+          disabled={value.isZero()}
           firstText={`Approve ${pool.underlying.symbol}`}
           firstAction={executeApprove}
           firstComplete={approved}
@@ -67,7 +67,7 @@ const DepositButtons = ({ value, pool, complete }: Props) => {
             await executeDeposit();
             setLoading(false);
           }}
-          disabled={value.isZero}
+          disabled={value.isZero()}
           loading={loading}
           hoverText="Enter Amount"
         />
