@@ -87,17 +87,30 @@ export type Balances = Record<string, TokenValue>;
 export type SerializedBalances = Record<string, SerializedTokenValue>;
 
 export const serializeBalances = (balances: Balances): SerializedBalances => {
-  const serializedBalances: SerializedBalances = {};
-  Object.entries(balances).forEach(([key, value]) => (serializedBalances[key] = value.serialized));
-  return serializedBalances;
+  return Object.fromEntries(
+    Object.entries(balances).map(([key, value]) => [key, value.serialized])
+  );
 };
 
-export const deserializeBalances = (serializedBalances: SerializedBalances): Balances => {
-  const balances: Balances = {};
-  Object.entries(serializedBalances).forEach(
-    ([key, value]) => (balances[key] = new TokenValue(value))
+export const deserializeBalances = (balances: SerializedBalances): Balances => {
+  return Object.fromEntries(
+    Object.entries(balances).map(([key, value]) => [key, new TokenValue(value)])
   );
-  return balances;
+};
+
+export type Allowances = Record<string, Balances>;
+export type SerializedAllowances = Record<string, SerializedBalances>;
+
+export const serializeAllowances = (allowances: Allowances): SerializedAllowances => {
+  return Object.fromEntries(
+    Object.entries(allowances).map(([key, value]) => [key, serializeBalances(value)])
+  );
+};
+
+export const deserializeAllowances = (allowances: SerializedAllowances): Allowances => {
+  return Object.fromEntries(
+    Object.entries(allowances).map(([key, value]) => [key, deserializeBalances(value)])
+  );
 };
 
 export type Prices<Num = number> = Record<string, Num>;

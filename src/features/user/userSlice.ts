@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, Selector } from "../../app/store";
 import { Backd } from "../../lib/backd";
 import { ETH_DUMMY_ADDRESS } from "../../lib/constants";
-import { TokenValue } from "../../lib/token-value";
+import { SerializedTokenValue, TokenValue } from "../../lib/token-value";
 import {
   Address,
   AllowanceQuery,
@@ -10,6 +10,9 @@ import {
   deserializeBalances,
   Optional,
   Pool,
+  serializeAllowances,
+  serializeBalances,
+  SerializedAllowances,
   SerializedBalances,
   Token,
 } from "../../lib/types";
@@ -18,7 +21,7 @@ import { handleTransactionConfirmation } from "../transactions-list/transactions
 
 interface UserState {
   balances: SerializedBalances;
-  allowances: Record<string, SerializedBalances>;
+  allowances: SerializedAllowances;
 }
 
 const initialState: UserState = {
@@ -34,7 +37,8 @@ export const fetchBalances = createAsyncThunk(
       p.underlying.address,
       p.stakerVaultAddress,
     ]);
-    return backd.getBalances(allTokens);
+    const balances = await backd.getBalances(allTokens);
+    return serializeBalances(balances);
   }
 );
 
@@ -55,7 +59,8 @@ export const fetchAllowances = createAsyncThunk(
         token: { address: pool.stakerVaultAddress, decimals: pool.underlying.decimals },
       },
     ]);
-    return backd.getAllowances(queries);
+    const allowances = await backd.getAllowances(queries);
+    return serializeAllowances(allowances);
   }
 );
 
@@ -70,24 +75,24 @@ export const userSlice = createSlice({
   reducers: {
     setAllowance: (
       state,
-      action: PayloadAction<{ token: Token; spender: Address; amount: TokenValue }>
+      action: PayloadAction<{ token: Token; spender: Address; amount: SerializedTokenValue }>
     ) => {
       const { spender, token, amount } = action.payload;
       if (!state.allowances[token.address]) {
         state.allowances[token.address] = {};
       }
-      state.allowances[token.address][spender] = amount.serialized;
+      state.allowances[token.address][spender] = amount;
     },
     decreaseAllowance: (
       state,
-      action: PayloadAction<{ token: Token; spender: Address; amount: TokenValue }>
+      action: PayloadAction<{ token: Token; spender: Address; amount: SerializedTokenValue }>
     ) => {
       const { spender, token, amount } = action.payload;
       // NOTE: we do not want to touch "allowances" from Eth based pools
       if (token.address === ETH_DUMMY_ADDRESS) return;
 
       const allowance = new TokenValue(state.allowances[token.address][spender], token.decimals);
-      const value = allowance.sub(amount);
+      const value = allowance.sub(new TokenValue(amount));
       state.allowances[token.address][spender] = value.isNegative()
         ? new TokenValue().serialized
         : value.serialized;
@@ -96,7 +101,7 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchBalances.fulfilled, (state, action) => {
       for (const tokenAddress in action.payload) {
-        state.balances[tokenAddress] = action.payload[tokenAddress].serialized;
+        state.balances[tokenAddress] = action.payload[tokenAddress];
       }
     });
 
@@ -106,8 +111,7 @@ export const userSlice = createSlice({
           state.allowances[tokenAddress] = {};
         }
         for (const spender in action.payload[tokenAddress]) {
-          state.allowances[tokenAddress][spender] =
-            action.payload[tokenAddress][spender].serialized;
+          state.allowances[tokenAddress][spender] = action.payload[tokenAddress][spender];
         }
       }
     });
@@ -124,7 +128,7 @@ export const approve = createAsyncThunk(
       tx,
       { action: "Approve", args: { spender, amount: amount.serialized, token } },
       dispatch,
-      [setAllowance({ token, spender, amount })]
+      [setAllowance({ token, spender, amount: amount.serialized })]
     );
     return tx.hash;
   }
@@ -141,7 +145,11 @@ export const deposit = createAsyncThunk(
       [
         fetchBalances({ backd, pools: [pool] }),
         fetchPool({ backd, poolAddress: pool.address }),
-        decreaseAllowance({ token: pool.underlying, spender: pool.address, amount }),
+        decreaseAllowance({
+          token: pool.underlying,
+          spender: pool.address,
+          amount: amount.serialized,
+        }),
       ]
     );
     return tx.hash;
