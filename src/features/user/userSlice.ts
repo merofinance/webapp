@@ -122,7 +122,7 @@ export const approve = createAsyncThunk(
     const tx = await backd.approve(token, spender, amount);
     handleTransactionConfirmation(
       tx,
-      { action: "Approve", args: { spender, amount, token } },
+      { action: "Approve", args: { spender, amount: amount.serialized, token } },
       dispatch,
       [setAllowance({ token, spender, amount })]
     );
@@ -134,11 +134,16 @@ export const deposit = createAsyncThunk(
   "user/deposit",
   async ({ backd, pool, amount }: DepositArgs, { dispatch }) => {
     const tx = await backd.deposit(pool, amount);
-    handleTransactionConfirmation(tx, { action: "Deposit", args: { pool, amount } }, dispatch, [
-      fetchBalances({ backd, pools: [pool] }),
-      fetchPool({ backd, poolAddress: pool.address }),
-      decreaseAllowance({ token: pool.underlying, spender: pool.address, amount }),
-    ]);
+    handleTransactionConfirmation(
+      tx,
+      { action: "Deposit", args: { pool, amount: amount.serialized } },
+      dispatch,
+      [
+        fetchBalances({ backd, pools: [pool] }),
+        fetchPool({ backd, poolAddress: pool.address }),
+        decreaseAllowance({ token: pool.underlying, spender: pool.address, amount }),
+      ]
+    );
     return tx.hash;
   }
 );
@@ -147,10 +152,12 @@ export const withdraw = createAsyncThunk(
   "user/withdraw",
   async ({ backd, pool, amount }: WithdrawArgs, { dispatch }) => {
     const tx = await backd.withdraw(pool.address, amount);
-    handleTransactionConfirmation(tx, { action: "Withdraw", args: { pool, amount } }, dispatch, [
-      fetchBalances({ backd, pools: [pool] }),
-      fetchPool({ backd, poolAddress: pool.address }),
-    ]);
+    handleTransactionConfirmation(
+      tx,
+      { action: "Withdraw", args: { pool, amount: amount.serialized } },
+      dispatch,
+      [fetchBalances({ backd, pools: [pool] }), fetchPool({ backd, poolAddress: pool.address })]
+    );
     return tx.hash;
   }
 );
@@ -159,9 +166,12 @@ export const unstake = createAsyncThunk(
   "user/unstake",
   async ({ backd, pool, amount }: UnstakeArgs, { dispatch }) => {
     const tx = await backd.unstake(pool.stakerVaultAddress, amount);
-    handleTransactionConfirmation(tx, { action: "Unstake", args: { pool, amount } }, dispatch, [
-      fetchBalances({ backd, pools: [pool] }),
-    ]);
+    handleTransactionConfirmation(
+      tx,
+      { action: "Unstake", args: { pool, amount: amount.serialized } },
+      dispatch,
+      [fetchBalances({ backd, pools: [pool] })]
+    );
     return tx.hash;
   }
 );
