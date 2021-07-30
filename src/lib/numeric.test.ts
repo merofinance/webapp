@@ -69,6 +69,25 @@ test("should format numbers as crypto", () => {
   testCases.forEach(({ value, expected }) => expect(formatCrypto(value)).toEqual(expected));
 });
 
+test("stringToBigNumber should convert strings to big numbers", () => {
+  const testCases = [
+    { value: "1.23", decimals: 5, expected: BigNumber.from(123000) },
+    { value: "0.000000000000000001", decimals: 18, expected: BigNumber.from(1) },
+    { value: "0.0000000000000000001", decimals: 18, expected: BigNumber.from(0) },
+    { value: "0.00000000000000000001", decimals: 20, expected: BigNumber.from(1) },
+    { value: "123.45", decimals: 1, expected: BigNumber.from(1234) },
+    { value: "28319", decimals: 4, expected: BigNumber.from(283190000) },
+    {
+      value: "10000000000000000000000",
+      decimals: 4,
+      expected: BigNumber.from(10).pow(26),
+    },
+  ];
+  testCases.forEach(({ value, decimals, expected }) => {
+    expect(stringToBigNumber(value, decimals).eq(expected)).toBeTruthy();
+  });
+});
+
 test("stringToBigNumber should truncate", () => {
   const testCases = [
     { value: "1.2345", decimals: 2, expected: BigNumber.from(123) },
@@ -77,5 +96,44 @@ test("stringToBigNumber should truncate", () => {
   ];
   testCases.forEach(({ value, decimals, expected }) => {
     expect(stringToBigNumber(value, decimals).eq(expected)).toBeTruthy();
+  });
+});
+
+test("stringToBigNumber should accept scientific notation", () => {
+  const testCases = [
+    { value: "3.456e11", decimals: 3, expected: BigNumber.from(345600000000000) },
+    { value: "934e5", decimals: 0, expected: BigNumber.from(93400000) },
+    { value: "12.45e0", decimals: 2, expected: BigNumber.from(1245) },
+    { value: "0.45e1", decimals: 4, expected: BigNumber.from(45000) },
+    {
+      value: "10e2",
+      decimals: 18,
+      expected: BigNumber.from(1000).mul(BigNumber.from(10).pow(18)),
+    },
+  ];
+  testCases.forEach(({ value, decimals, expected }) => {
+    expect(stringToBigNumber(value, decimals).eq(expected)).toBeTruthy();
+  });
+});
+
+test("stringToBigNumber should error for negative numbers", () => {
+  const testCases = [
+    { value: "-100", decimals: 2 },
+    { value: "-0", decimals: 2 },
+    { value: "-1", decimals: 2 },
+    { value: (100 - 300).toString(), decimals: 2 },
+  ];
+  testCases.forEach(({ value, decimals }) => {
+    expect(() => stringToBigNumber(value, decimals)).toThrowError("Negative numbers not supported");
+  });
+});
+
+test("stringToBigNumber should error for invalid numbers", () => {
+  const testCases = [
+    { value: "", decimals: 2 },
+    { value: ".", decimals: 2 },
+  ];
+  testCases.forEach(({ value, decimals }) => {
+    expect(() => stringToBigNumber(value, decimals)).toThrowError("Not a valid number");
   });
 });
