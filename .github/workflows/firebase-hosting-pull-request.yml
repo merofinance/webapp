@@ -2,15 +2,20 @@ name: Build on PR
 "on": pull_request
 jobs:
   unit_test:
+    displayName: Run Unit Tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - run: yarn && yarn run test
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - name: Installing Client Dependencies
+      - name: Installing Dependencies
         run: yarn
-      - name: Building
+      - name: Running Unit Tests
+        run: yarn run test
+  build:
+    displayName: Build App
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Installing Dependencies
+        run: yarn
+      - name: Building App
         run: yarn run build
