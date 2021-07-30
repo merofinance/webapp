@@ -47,6 +47,7 @@
     "@types/react-router-bootstrap": "^0.24.5",
     "@types/react-router-dom": "^5.1.7",
     "@types/styled-components": "^5.1.10",
+    "fast-check": "^2.17.0",
     "node-sass": "^5.0.0",
     "ts-loader": "^8.0.18"
   },
