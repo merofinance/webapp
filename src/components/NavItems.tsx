@@ -55,6 +55,7 @@ const Link = styled.button`
   text-transform: capitalize;
   font-size: 1.6rem;
   cursor: pointer;
+  white-space: nowrap;
 
   @media (max-width: 600px) {
     font-size: 1.1rem;

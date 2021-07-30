@@ -4,13 +4,22 @@ import info from "../assets/ui/info.svg";
 
 const StyledTooltip = styled.div`
   position: relative;
-  margin-left: 0.9rem;
+
   margin-top: 2px;
+  margin-left: 0.9rem;
+  @media (max-width: 600px) {
+    margin-top: 2.2px;
+    margin-left: 0.6rem;
+  }
 `;
 
 const Icon = styled.img`
-  height: 1.2rem;
   cursor: pointer;
+
+  height: 1.2rem;
+  @media (max-width: 600px) {
+    height: 1rem;
+  }
 `;
 
 const ExitEvent = styled.div`

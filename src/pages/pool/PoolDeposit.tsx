@@ -5,6 +5,7 @@ import AmountInput from "../../components/AmountInput";
 import ContentSection from "../../components/ContentSection";
 import { selectBalance } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
+import { useDevice } from "../../lib/hooks";
 import DepositButtons from "./DepositButtons";
 import PoolStatistics from "./PoolStatistics";
 
@@ -21,6 +22,7 @@ type Props = {
 const PoolDeposit = ({ pool }: Props) => {
   const availableToDeposit = useSelector(selectBalance(pool.underlying.address));
   const [depositAmount, setDepositAmount] = useState("");
+  const { isMobile } = useDevice();
 
   return (
     <ContentSection
@@ -31,7 +33,11 @@ const PoolDeposit = ({ pool }: Props) => {
           <AmountInput
             value={depositAmount}
             setValue={(v: string) => setDepositAmount(v)}
-            label={`Enter an amount of ${pool.underlying.symbol.toUpperCase()} to deposit`}
+            label={
+              isMobile
+                ? "Enter amount to deposit"
+                : `Enter an amount of ${pool.underlying.symbol} to deposit`
+            }
             max={availableToDeposit}
           />
           <DepositButtons

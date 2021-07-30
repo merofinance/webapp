@@ -86,7 +86,6 @@ const Label = styled.label`
   left: 0.7rem;
   top: 1.5rem;
   padding: 0 5px;
-  font-size: 1.6rem;
   letter-spacing: 0.15px;
 
   transition: transform 0.3s, color 0.3s;
@@ -97,6 +96,12 @@ const Label = styled.label`
     props.focused ? "translate(0.4rem, -2.7rem) scale(0.75)" : "translate(0, 0) scale(1)"};
   cursor: ${(props: InputProps) => (props.focused ? "auto" : "text")};
   color: ${(props: InputProps) => (props.valid ? "var(--main)" : "var(--error)")};
+
+  font-size: 1.6rem;
+  @media (max-width: 600px) {
+    font-size: 1.4rem;
+    line-height: 2.1rem;
+  }
 `;
 
 const ButtonContainer = styled.div`
