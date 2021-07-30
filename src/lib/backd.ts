@@ -197,7 +197,7 @@ export class Web3Backd implements Backd {
       account = await this.currentAccount();
     }
     if (token.address === ETH_DUMMY_ADDRESS) {
-      return new TokenValue(BigNumber.from(10).pow(BigNumber.from(20)));
+      return new TokenValue(Math.pow(10, 20));
     }
     const tokenContract = Ierc20FullFactory.connect(token.address, this._provider);
     const rawAllowance = await tokenContract.allowance(account, spender);
