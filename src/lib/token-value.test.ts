@@ -1,5 +1,6 @@
 import { BigNumber } from "ethers";
 import { PlainTokenValue, TokenValue } from "./token-value";
+import fc from "fast-check";
 
 test("should create from string", () => {
   const testCases = ["1", "12.34", "0.123", "1010020102102", "10100201202.2334234293"];
@@ -18,7 +19,9 @@ test("should create from big number", () => {
     BigNumber.from(123102),
     BigNumber.from(0),
   ];
-  testCases.forEach((value: BigNumber) => new TokenValue(value));
+  testCases.forEach((value: BigNumber) =>
+    expect(new TokenValue(value).value.eq(value)).toBeTruthy()
+  );
 });
 
 test("should create from plain token value", () => {
@@ -62,10 +65,39 @@ test("should export as string", () => {
     { value: BigNumber.from("123450000000000000000"), expected: "123.45" },
     { value: { value: "7.1819", decimals: 4 }, expected: "7.1819" },
     { value: { value: "0.001910293", decimals: 10 }, expected: "0.001910293" },
+    { value: { value: "0.001910293", decimals: 5 }, expected: "0.00191" },
   ];
 
   testCases.forEach(({ value, expected }) => {
     const tokenValue = new TokenValue(value);
     expect(tokenValue.toString()).toBe(expected);
   });
+});
+
+test("toPlain/fromPlain should be symmetric for integers", () => {
+  fc.assert(
+    fc.property(
+      fc.integer({ min: 0 }),
+      fc.integer({ min: 0, max: 27 }),
+      (value: number, decimals: number) => {
+        const tokenValue = new TokenValue(value, decimals);
+        const backAndForth = new TokenValue(tokenValue.toPlain());
+        expect(tokenValue.eq(backAndForth)).toBeTruthy();
+      }
+    )
+  );
+});
+
+test("toPlain/fromPlain should be symmetric for floats", () => {
+  fc.assert(
+    fc.property(
+      fc.float({ min: 0 }),
+      fc.integer({ min: 0, max: 27 }),
+      (value: number, decimals: number) => {
+        const tokenValue = new TokenValue(value, decimals);
+        const backAndForth = new TokenValue(tokenValue.toPlain());
+        expect(tokenValue.eq(backAndForth)).toBeTruthy();
+      }
+    )
+  );
 });

@@ -1,9 +1,11 @@
+import { BigNumber } from "ethers";
 import {
   bigNumberToFloat,
   floatToBigNumber,
   formatCrypto,
   numberToCompactCurrency,
   scale,
+  stringToBigNumber,
 } from "./numeric";
 
 const epsilon = 0.000000001;
@@ -65,4 +67,15 @@ test("should format numbers as crypto", () => {
     { value: 12.000000111, expected: "12" },
   ];
   testCases.forEach(({ value, expected }) => expect(formatCrypto(value)).toEqual(expected));
+});
+
+test("stringToBigNumber should truncate", () => {
+  const testCases = [
+    { value: "1.2345", decimals: 2, expected: BigNumber.from(123) },
+    { value: "0.001", decimals: 2, expected: BigNumber.from(0) },
+    { value: "1.1", decimals: 2, expected: BigNumber.from("110") },
+  ];
+  testCases.forEach(({ value, decimals, expected }) => {
+    expect(stringToBigNumber(value, decimals).eq(expected)).toBeTruthy();
+  });
 });

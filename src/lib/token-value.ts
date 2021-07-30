@@ -16,10 +16,10 @@ export class TokenValue {
     if (!value) this._value = BigNumber.from(0);
     else if (isString(value)) this._value = stringToBigNumber(value, decimals);
     else if (typeof value === "number") this._value = stringToBigNumber(value.toString(), decimals);
-    else if ((value as BigNumber)._isBigNumber) this._value = value as BigNumber;
+    else if (value instanceof BigNumber) this._value = value;
     else {
-      this._decimals = (value as PlainTokenValue).decimals;
-      this._value = stringToBigNumber((value as PlainTokenValue).value, this._decimals);
+      this._decimals = value.decimals;
+      this._value = stringToBigNumber(value.value, this._decimals);
     }
   }
 
@@ -56,6 +56,10 @@ export class TokenValue {
     return new TokenValue(this.value.sub(other.value), this.decimals);
   }
 
+  eq(other: TokenValue) {
+    return this.value.eq(other.value) && this.decimals === other.decimals;
+  }
+
   gt(other: TokenValue) {
     this.assertSameDecimals(other);
     return this.value.gt(other.value);
@@ -76,10 +80,10 @@ export class TokenValue {
     return this.value.lte(other.value);
   }
 
-  multiplyByPrice = (price: number) => {
+  multiplyByPrice(price: number) {
     const priceScaled = Math.round(price * 100);
     return new TokenValue(this.value.mul(priceScaled).div(100), this.decimals);
-  };
+  }
 
   toString = () => bigNumberToString(this._value, this._decimals);
 
