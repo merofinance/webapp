@@ -1,7 +1,7 @@
 name: Build on PR
 "on": pull_request
 jobs:
-  - job: "Run Unit Tests"
+  unit_test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -9,7 +9,7 @@ jobs:
         run: yarn
       - name: Running Unit Tests
         run: yarn run test
-  - job: "Build App"
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
