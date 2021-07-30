@@ -1,5 +1,4 @@
 import { BigNumber } from "ethers";
-import { isString } from "formik";
 import { bigNumberToString, formatCrypto, formatCurrency, stringToBigNumber } from "./numeric";
 
 export interface PlainTokenValue {
@@ -17,8 +16,7 @@ export class TokenValue {
   }
 
   static fromUnscaled(value: number | string, decimals: number = 18) {
-    const valueString = isString(value) ? value : value.toString();
-    return new TokenValue(stringToBigNumber(valueString || "0", decimals), decimals);
+    return new TokenValue(stringToBigNumber(value.toString() || "0", decimals), decimals);
   }
 
   static fromPlain(value: PlainTokenValue) {
@@ -83,9 +81,10 @@ export class TokenValue {
     return this.value.lte(other.value);
   }
 
-  multiplyByPrice(price: number) {
-    const priceScaled = Math.round(price * 100);
-    return new TokenValue(this.value.mul(priceScaled).div(100), this.decimals);
+  mul(value: number | string) {
+    const scale = BigNumber.from(10).pow(this.decimals);
+    const scaledValue = stringToBigNumber(value.toString(), this.decimals);
+    return new TokenValue(this.value.mul(scaledValue).div(scale), this.decimals);
   }
 
   toString = () => bigNumberToString(this._value, this._decimals);

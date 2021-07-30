@@ -18,10 +18,10 @@ const PoolStatistics = ({ pool }: Props) => {
   const positions = useSelector(selectPoolPositions(pool));
 
   const locked = positions.reduce(
-    (a: TokenValue, b: Position) => a.add(b.maxTopUp.multiplyByPrice(price)),
+    (a: TokenValue, b: Position) => a.add(b.maxTopUp.mul(price)),
     new TokenValue()
   );
-  const deposits = locked.add(balance.multiplyByPrice(price));
+  const deposits = locked.add(balance.mul(price));
 
   return (
     <Statistics
