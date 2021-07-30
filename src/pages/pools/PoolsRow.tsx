@@ -8,7 +8,7 @@ import Button from "../../components/Button";
 import GradientText from "../../styles/GradientText";
 import { selectBalances } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
-import { numberToCompactCurrency } from "../../lib/numeric";
+import { formatPercent, numberToCompactCurrency } from "../../lib/numeric";
 import { selectPoolPositions } from "../../features/positions/positionsSlice";
 import { Position } from "../../lib/types";
 import { selectPrice } from "../../features/pool/selectors";
@@ -38,7 +38,7 @@ const Row = styled.tr`
   }
 
   @media (max-width: 600px) {
-    height: ${(props: RowProps) => (props.preview ? "4.8rem" : "7.2rem")};
+    height: 4.8rem;
     padding: 0 1.6rem;
 
     td:nth-child(1) {
@@ -69,7 +69,15 @@ const Data = styled.td`
   @media (max-width: 600px) {
     font-size: 1.4rem;
     line-height: 2.1rem;
-    display: ${(props: DataProps) => (props.preview && props.right ? "none" : "flex")};
+    display: ${(props: DataProps) => (props.right ? "none" : "flex")};
+  }
+`;
+
+const DepositedData = styled(Data)`
+  display: ${(props: DataProps) => (props.preview ? "none" : "flex")};
+
+  @media (max-width: 600px) {
+    display: none;
   }
 `;
 
@@ -133,10 +141,12 @@ const PoolsRow = ({ pool, preview }: Props) => {
         <Asset token={pool.underlying} />
       </Data>
       <Data>
-        <Apy>{`${pool.apy}%`}</Apy>
+        <Apy>{formatPercent(pool.apy)}</Apy>
       </Data>
       <Data>{numberToCompactCurrency(pool.totalAssets * price)}</Data>
-      {!preview && <Data>{formatCurrency(Number(locked.toString()) * price)}</Data>}
+      <DepositedData preview={preview}>
+        {formatCurrency(Number(locked.toString()) * price)}
+      </DepositedData>
       <ChevronData preview={preview}>
         <Chevron src={chevron} alt="right arrow" />
       </ChevronData>

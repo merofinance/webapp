@@ -5,6 +5,7 @@ import AmountInput from "../../components/AmountInput";
 import ContentSection from "../../components/ContentSection";
 import { selectBalance } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
+import { useDevice } from "../../lib/hooks";
 import { TokenValue } from "../../lib/token-value";
 import PoolStatistics from "./PoolStatistics";
 import WithdrawalButton from "./WithdrawButton";
@@ -23,6 +24,7 @@ const PoolWithdraw = ({ pool }: Props) => {
   const totalBalance = useSelector(selectBalance(pool));
   const staked = useSelector(selectBalance(pool.stakerVaultAddress));
   const availableToWithdraw = totalBalance.sub(staked);
+  const { isMobile } = useDevice();
 
   const [withdrawAmount, setWithdrawAmount] = useState("");
 
@@ -36,7 +38,11 @@ const PoolWithdraw = ({ pool }: Props) => {
             token={pool.underlying}
             value={withdrawAmount}
             setValue={(v: string) => setWithdrawAmount(v)}
-            label={`Enter an amount of ${pool.underlying.symbol.toUpperCase()} to withdraw`}
+            label={
+              isMobile
+                ? "Enter amount to withdraw"
+                : `Enter an amount of ${pool.underlying.symbol} to withdraw`
+            }
             max={availableToWithdraw}
           />
           <WithdrawalButton

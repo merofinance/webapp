@@ -10,14 +10,19 @@ const StyledContentSection = styled.div`
 `;
 
 const Header = styled.h2`
-  padding: 2rem 1.6rem;
   background-color: rgba(252, 40, 211, 0.05);
   box-shadow: 0px 0px 12px rgba(23, 18, 22, 0.05);
   font-weight: 700;
-  font-size: 2.4rem;
   letter-spacing: 0.25px;
   border-top-right-radius: 1.4rem;
   border-top-left-radius: 1.4rem;
+
+  font-size: 2.4rem;
+  padding: 2rem 1.6rem;
+  @media (max-width: 600px) {
+    font-size: 1.8rem;
+    padding: 1.6rem;
+  }
 `;
 
 type LineProps = {
@@ -32,6 +37,7 @@ const Line = styled.div`
 `;
 
 const Content = styled.div`
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
