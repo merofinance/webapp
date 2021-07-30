@@ -125,7 +125,7 @@ const Footer = () => {
         <LinkList key={linkList.header}>
           <LinkHeader>{linkList.header}</LinkHeader>
           {linkList.links.map((link: LinkType) => (
-            <Link key={link.label} href={link.link} target="_blank">
+            <Link id={`Footer - ${link.label}`} key={link.label} href={link.link} target="_blank">
               {link.label}
             </Link>
           ))}

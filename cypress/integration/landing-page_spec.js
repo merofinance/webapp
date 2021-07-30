@@ -106,3 +106,53 @@ describe("Join The Community", () => {
       .should("have.attr", "href", "https://github.com/backdfund");
   });
 });
+
+describe("Footer", () => {
+  it("Should have Twitter Link", () => {
+    cy.get('[id="Footer - Twitter"]')
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "https://twitter.com/backdfund");
+  });
+
+  it("Should have GitHub Link", () => {
+    cy.get('[id="Footer - GitHub"]')
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "https://github.com/backdfund");
+  });
+
+  it("Should have Telegram Chat Link", () => {
+    cy.get('[id="Footer - Telegram Chat"]')
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "https://t.me/backdchat");
+  });
+
+  it("Should have Litepaper Link", () => {
+    cy.get('[id="Footer - Litepaper"]')
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "/litepaper");
+  });
+
+  it("Should have Blog Link", () => {
+    cy.get('[id="Footer - Blog"]')
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "https://backdfund.medium.com/");
+  });
+
+  it("Should have Blog Fact Sheet", () => {
+    cy.get('[id="Footer - Fact Sheet"]')
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "/fact-sheet.pdf");
+  });
+
+  it("Should have Newsletter Link", () => {
+    cy.get('[id="Footer - Newsletter"]')
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "https://backd.substack.com/welcome");
+  });
+
+  it("Should have Telegram Announcements Link", () => {
+    cy.get('[id="Footer - Telegram Ann."]')
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "https://t.me/backdfund");
+  });
+});
