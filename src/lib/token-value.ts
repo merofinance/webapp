@@ -22,7 +22,8 @@ export class TokenValue {
   }
 
   static fromPlain(value: PlainTokenValue) {
-    return new TokenValue(stringToBigNumber(value.value || "0", value.decimals), value.decimals);
+    const decimals = value.decimals || 18;
+    return new TokenValue(stringToBigNumber(value.value || "0", decimals), decimals);
   }
 
   get value(): BigNumber {
