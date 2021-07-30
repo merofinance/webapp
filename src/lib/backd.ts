@@ -163,10 +163,11 @@ export class Web3Backd implements Backd {
 
   async registerPosition(pool: Pool, position: Position): Promise<ContractTransaction> {
     const decimals = pool.underlying.decimals;
+    const scale = BigNumber.from(10).pow(decimals);
     const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
     const rawExchangeRate = await poolContract.exchangeRate();
     const protocol = utils.formatBytes32String(position.protocol);
-    const depositAmount = position.maxTopUp.value.mul(rawExchangeRate).div(DEFAULT_SCALE);
+    const depositAmount = position.maxTopUp.value.mul(rawExchangeRate).div(scale);
 
     // TODO: allow to customize maxGasPrice, currently 200Gwei
     const maxGasPrice = BigNumber.from(200).mul(BigNumber.from(10).pow(9));
