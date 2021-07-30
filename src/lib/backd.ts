@@ -8,7 +8,7 @@ import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
 import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFactory";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
 import { getPrices } from "./coingecko";
-import { DEFAULT_SCALE, ETH_DECIMALS, ETH_DUMMY_ADDRESS } from "./constants";
+import { ETH_DECIMALS, ETH_DUMMY_ADDRESS } from "./constants";
 import { bigNumberToFloat, floatToBigNumber, scale } from "./numeric";
 import { TokenValue } from "./token-value";
 import {
