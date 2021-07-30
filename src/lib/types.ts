@@ -54,8 +54,8 @@ export const toPlainPosition = (position: Position): PlainPosition => {
 export const fromPlainPosition = (position: PlainPosition): Position => {
   return {
     ...position,
-    singleTopUp: new TokenValue(position.singleTopUp),
-    maxTopUp: new TokenValue(position.maxTopUp),
+    singleTopUp: TokenValue.fromPlain(position.singleTopUp),
+    maxTopUp: TokenValue.fromPlain(position.maxTopUp),
   };
 };
 
@@ -92,7 +92,7 @@ export const toPlainBalances = (balances: Balances): PlainBalances => {
 
 export const fromPlainBalances = (balances: PlainBalances): Balances => {
   return Object.fromEntries(
-    Object.entries(balances).map(([key, value]) => [key, new TokenValue(value)])
+    Object.entries(balances).map(([key, value]) => [key, TokenValue.fromPlain(value)])
   );
 };
 

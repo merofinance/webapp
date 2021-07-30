@@ -91,8 +91,8 @@ export const userSlice = createSlice({
       // NOTE: we do not want to touch "allowances" from Eth based pools
       if (token.address === ETH_DUMMY_ADDRESS) return;
 
-      const allowance = new TokenValue(state.allowances[token.address][spender], token.decimals);
-      const value = allowance.sub(new TokenValue(amount));
+      const allowance = TokenValue.fromPlain(state.allowances[token.address][spender]);
+      const value = allowance.sub(TokenValue.fromPlain(amount));
       state.allowances[token.address][spender] = value.isNegative()
         ? new TokenValue().toPlain()
         : value.toPlain();
@@ -193,27 +193,29 @@ export function selectBalance(addressOrPool: string | Optional<Pool>): Selector<
   return (state: RootState) => {
     if (!addressOrPool) return new TokenValue();
     if (typeof addressOrPool === "string")
-      return new TokenValue(state.user.balances[addressOrPool]);
+      return TokenValue.fromPlain(state.user.balances[addressOrPool]);
 
-    const lpTokenBalance = new TokenValue(state.user.balances[addressOrPool.lpToken.address]);
-    const stakedBalance = new TokenValue(state.user.balances[addressOrPool.stakerVaultAddress]);
+    const lpTokenBalance = TokenValue.fromPlain(state.user.balances[addressOrPool.lpToken.address]);
+    const stakedBalance = TokenValue.fromPlain(
+      state.user.balances[addressOrPool.stakerVaultAddress]
+    );
     return lpTokenBalance.add(stakedBalance);
   };
 }
 
 export function selectDepositAllowance(pool: Pool): Selector<TokenValue> {
   return (state: RootState) => {
-    return new TokenValue(state.user.allowances[pool.underlying.address]?.[pool.address]);
+    return TokenValue.fromPlain(state.user.allowances[pool.underlying.address]?.[pool.address]);
   };
 }
 export function selectToupAllowance(backd: Backd | undefined, pool: Pool): Selector<TokenValue> {
   return (state: RootState) => {
     if (!backd) return new TokenValue();
 
-    const lpTokenAllowance = new TokenValue(
+    const lpTokenAllowance = TokenValue.fromPlain(
       state.user.allowances[pool.lpToken.address]?.[backd.topupActionAddress]
     );
-    const vaultAllowance = new TokenValue(
+    const vaultAllowance = TokenValue.fromPlain(
       state.user.allowances[pool.stakerVaultAddress]?.[backd.topupActionAddress]
     );
     return lpTokenAllowance.add(vaultAllowance);

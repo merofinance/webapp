@@ -47,7 +47,7 @@ const PoolWithdraw = ({ pool }: Props) => {
           />
           <WithdrawalButton
             pool={pool}
-            value={new TokenValue(withdrawAmount, staked.decimals)}
+            value={TokenValue.fromUnscaled(withdrawAmount, staked.decimals)}
             complete={() => setWithdrawAmount("")}
           />
         </Content>

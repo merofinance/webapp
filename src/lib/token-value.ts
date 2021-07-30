@@ -11,16 +11,18 @@ export class TokenValue {
   private _value: BigNumber;
   private _decimals: number;
 
-  constructor(value: string | number | BigNumber | PlainTokenValue = 0, decimals: number = 18) {
+  constructor(value: BigNumber = BigNumber.from(0), decimals: number = 18) {
     this._decimals = decimals;
-    if (!value) this._value = BigNumber.from(0);
-    else if (isString(value)) this._value = stringToBigNumber(value, decimals);
-    else if (typeof value === "number") this._value = stringToBigNumber(value.toString(), decimals);
-    else if (value instanceof BigNumber) this._value = value;
-    else {
-      this._decimals = value.decimals;
-      this._value = stringToBigNumber(value.value, this._decimals);
-    }
+    this._value = value;
+  }
+
+  static fromUnscaled(value: number | string, decimals: number = 18) {
+    const valueString = isString(value) ? value : value.toString();
+    return new TokenValue(stringToBigNumber(valueString || "0", decimals), decimals);
+  }
+
+  static fromPlain(value: PlainTokenValue) {
+    return new TokenValue(stringToBigNumber(value.value || "0", value.decimals), value.decimals);
   }
 
   get value(): BigNumber {
