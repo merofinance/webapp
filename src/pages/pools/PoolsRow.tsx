@@ -122,8 +122,10 @@ const PoolsRow = ({ pool, preview }: Props) => {
   const balances = useSelector(selectBalances);
   const positions = useSelector(selectPoolPositions(pool));
 
-  const getBalance = (pool: Pool) => balances[pool.lpToken.address] || new TokenValue();
-  const locked = positions.reduce((a: number, b: Position) => b.maxTopUp.toNumber() + a, 0);
+  const balance = balances[pool.lpToken.address] || new TokenValue();
+  const locked = positions
+    .reduce((a: TokenValue, b: Position) => a.add(b.maxTopUp), new TokenValue())
+    .add(balance);
 
   return (
     <Row onClick={() => history.push(`/pool/${pool.lpToken.symbol}`)} preview={preview}>
@@ -134,7 +136,7 @@ const PoolsRow = ({ pool, preview }: Props) => {
         <Apy>{`${pool.apy}%`}</Apy>
       </Data>
       <Data>{numberToCompactCurrency(pool.totalAssets * price)}</Data>
-      {!preview && <Data>{formatCurrency((getBalance(pool).toNumber() + locked) * price)}</Data>}
+      {!preview && <Data>{formatCurrency(Number(locked.toString()) * price)}</Data>}
       <ChevronData preview={preview}>
         <Chevron src={chevron} alt="right arrow" />
       </ChevronData>

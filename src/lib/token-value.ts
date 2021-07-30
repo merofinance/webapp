@@ -79,11 +79,14 @@ export class TokenValue {
     return this.value.lte(other.value);
   }
 
+  multiplyByPrice = (price: number) => {
+    const priceScaled = Math.round(price * 100);
+    return new TokenValue(this.value.mul(priceScaled).div(100), this.decimals);
+  };
+
   toString = () => bigNumberToString(this._value, this._decimals);
 
-  toNumber = () => Number(this.toString());
+  toCryptoString = () => formatCrypto(Number(this.toString()));
 
-  toCryptoString = () => formatCrypto(this.toNumber());
-
-  toUsdValue = (price: number) => formatCurrency(this.toNumber() * price);
+  toUsdValue = (price: number) => formatCurrency(Number(this.toString()) * price);
 }

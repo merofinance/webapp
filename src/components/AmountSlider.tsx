@@ -64,7 +64,7 @@ type Props = {
 };
 
 const AmountSlider = ({ value, max, setValue }: Props) => {
-  const percent = max.isZero() ? 0 : Math.round((Number(value || "0") / max.toNumber()) * 100);
+  const percent = max.isZero() ? 0 : Math.round((Number(value) / Number(max.toString())) * 100);
 
   return (
     <StyledAmountSlider>
@@ -90,7 +90,7 @@ const AmountSlider = ({ value, max, setValue }: Props) => {
             let newValue = max.value.mul(BigNumber.from(step)).div(BigNumber.from(100));
             setValue(new TokenValue(newValue, max.decimals).toString());
           }}
-          active={Number(value || 0) / max.toNumber() > step / 100}
+          active={Number(value || 0) / Number(max.toString()) > step / 100}
         />
       ))}
     </StyledAmountSlider>

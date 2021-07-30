@@ -21,11 +21,16 @@ const PoolsStatistics = () => {
     pools.filter((pool: Pool) => pool.underlying.address === tokenAddress)[0];
 
   const locked = positions.reduce(
-    (a: number, b: Position) => b.maxTopUp.toNumber() * getPrice(getPool(b.actionToken)) + a,
-    0
+    (a: TokenValue, b: Position) =>
+      a.add(b.maxTopUp.multiplyByPrice(getPrice(getPool(b.actionToken)))),
+    new TokenValue()
   );
-  const deposits =
-    pools.reduce((a: number, b: Pool) => a + getBalance(b).toNumber() * getPrice(b), 0) + locked;
+  const deposits = locked.add(
+    pools.reduce(
+      (a: TokenValue, b: Pool) => a.add(getBalance(b).multiplyByPrice(getPrice(b))),
+      new TokenValue()
+    )
+  );
 
   return (
     <Statistics
@@ -33,13 +38,13 @@ const PoolsStatistics = () => {
         {
           header: "Your deposits",
           tooltip: "The current value of your assets held in Backd liquidity pools",
-          value: formatCurrency(deposits),
+          value: formatCurrency(Number(deposits.toString())),
         },
         {
           header: "Locked in position",
           tooltip:
             "The current value of your assets registered for top-ups (liquidation protection)",
-          value: formatCurrency(locked),
+          value: formatCurrency(Number(locked.toString())),
         },
         // {
         //   header: "Rewards accrued",
