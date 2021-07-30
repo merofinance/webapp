@@ -1,5 +1,5 @@
 import { BigNumber } from "ethers";
-import { SerializedTokenValue, TokenValue } from "./token-value";
+import { PlainTokenValue, TokenValue } from "./token-value";
 
 test("should create from string", () => {
   const testCases = ["1", "12.34", "0.123", "1010020102102", "10100201202.2334234293"];
@@ -21,7 +21,7 @@ test("should create from big number", () => {
   testCases.forEach((value: BigNumber) => new TokenValue(value));
 });
 
-test("should create from serialized token value", () => {
+test("should create from plain token value", () => {
   const testCases = [
     {
       value: "100000000",
@@ -40,7 +40,7 @@ test("should create from serialized token value", () => {
       decimals: 10,
     },
   ];
-  testCases.forEach((value: SerializedTokenValue) => new TokenValue(value));
+  testCases.forEach((value: PlainTokenValue) => new TokenValue(value));
 });
 
 test("should export as string", () => {
@@ -67,31 +67,5 @@ test("should export as string", () => {
   testCases.forEach(({ value, expected }) => {
     const tokenValue = new TokenValue(value);
     expect(tokenValue.toString()).toBe(expected);
-  });
-});
-
-test("should export as number", () => {
-  const testCases = [
-    { value: "1", expected: 1 },
-    { value: 1, expected: 1 },
-    { value: "10", expected: 10 },
-    { value: 10, expected: 10 },
-    { value: "0.1", expected: 0.1 },
-    { value: 0.1, expected: 0.1 },
-    { value: "0.11923", expected: 0.11923 },
-    { value: 0.11923, expected: 0.11923 },
-    { value: "12.34", expected: 12.34 },
-    { value: 12.34, expected: 12.34 },
-    { value: "12912309.341004102", expected: 12912309.341004102 },
-    { value: "0000012912309.34100410200000", expected: 12912309.341004102 },
-    { value: "000123.123120103000", expected: 123.123120103 },
-    { value: "11902319212323.1210233120103", expected: 11902319212323.121 },
-    { value: { value: "7.1819", decimals: 4 }, expected: 7.1819 },
-    { value: { value: "0.001910293", decimals: 10 }, expected: 0.001910293 },
-  ];
-
-  testCases.forEach(({ value, expected }) => {
-    const tokenValue = new TokenValue(value);
-    expect(tokenValue.toNumber()).toBe(expected);
   });
 });

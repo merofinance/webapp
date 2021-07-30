@@ -2,26 +2,26 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, Selector } from "../../app/store";
 import { Backd } from "../../lib/backd";
 import { ETH_DUMMY_ADDRESS } from "../../lib/constants";
-import { SerializedTokenValue, TokenValue } from "../../lib/token-value";
+import { PlainTokenValue, TokenValue } from "../../lib/token-value";
 import {
   Address,
   AllowanceQuery,
   Balances,
-  deserializeBalances,
+  fromPlainBalances,
   Optional,
   Pool,
-  serializeAllowances,
-  serializeBalances,
-  SerializedAllowances,
-  SerializedBalances,
+  toPlainAllowances,
+  toPlainBalances,
+  PlainAllowances,
+  PlainBalances,
   Token,
 } from "../../lib/types";
 import { fetchPool } from "../pools-list/poolsListSlice";
 import { handleTransactionConfirmation } from "../transactions-list/transactionsUtils";
 
 interface UserState {
-  balances: SerializedBalances;
-  allowances: SerializedAllowances;
+  balances: PlainBalances;
+  allowances: PlainAllowances;
 }
 
 const initialState: UserState = {
@@ -38,7 +38,7 @@ export const fetchBalances = createAsyncThunk(
       p.stakerVaultAddress,
     ]);
     const balances = await backd.getBalances(allTokens);
-    return serializeBalances(balances);
+    return toPlainBalances(balances);
   }
 );
 
@@ -60,7 +60,7 @@ export const fetchAllowances = createAsyncThunk(
       },
     ]);
     const allowances = await backd.getAllowances(queries);
-    return serializeAllowances(allowances);
+    return toPlainAllowances(allowances);
   }
 );
 
@@ -75,7 +75,7 @@ export const userSlice = createSlice({
   reducers: {
     setAllowance: (
       state,
-      action: PayloadAction<{ token: Token; spender: Address; amount: SerializedTokenValue }>
+      action: PayloadAction<{ token: Token; spender: Address; amount: PlainTokenValue }>
     ) => {
       const { spender, token, amount } = action.payload;
       if (!state.allowances[token.address]) {
@@ -85,7 +85,7 @@ export const userSlice = createSlice({
     },
     decreaseAllowance: (
       state,
-      action: PayloadAction<{ token: Token; spender: Address; amount: SerializedTokenValue }>
+      action: PayloadAction<{ token: Token; spender: Address; amount: PlainTokenValue }>
     ) => {
       const { spender, token, amount } = action.payload;
       // NOTE: we do not want to touch "allowances" from Eth based pools
@@ -94,8 +94,8 @@ export const userSlice = createSlice({
       const allowance = new TokenValue(state.allowances[token.address][spender], token.decimals);
       const value = allowance.sub(new TokenValue(amount));
       state.allowances[token.address][spender] = value.isNegative()
-        ? new TokenValue().serialized
-        : value.serialized;
+        ? new TokenValue().toPlain()
+        : value.toPlain();
     },
   },
   extraReducers: (builder) => {
@@ -126,9 +126,9 @@ export const approve = createAsyncThunk(
     const tx = await backd.approve(token, spender, amount);
     handleTransactionConfirmation(
       tx,
-      { action: "Approve", args: { spender, amount: amount.serialized, token } },
+      { action: "Approve", args: { spender, amount: amount.toPlain(), token } },
       dispatch,
-      [setAllowance({ token, spender, amount: amount.serialized })]
+      [setAllowance({ token, spender, amount: amount.toPlain() })]
     );
     return tx.hash;
   }
@@ -140,7 +140,7 @@ export const deposit = createAsyncThunk(
     const tx = await backd.deposit(pool, amount);
     handleTransactionConfirmation(
       tx,
-      { action: "Deposit", args: { pool, amount: amount.serialized } },
+      { action: "Deposit", args: { pool, amount: amount.toPlain() } },
       dispatch,
       [
         fetchBalances({ backd, pools: [pool] }),
@@ -148,7 +148,7 @@ export const deposit = createAsyncThunk(
         decreaseAllowance({
           token: pool.underlying,
           spender: pool.address,
-          amount: amount.serialized,
+          amount: amount.toPlain(),
         }),
       ]
     );
@@ -162,7 +162,7 @@ export const withdraw = createAsyncThunk(
     const tx = await backd.withdraw(pool.address, amount);
     handleTransactionConfirmation(
       tx,
-      { action: "Withdraw", args: { pool, amount: amount.serialized } },
+      { action: "Withdraw", args: { pool, amount: amount.toPlain() } },
       dispatch,
       [fetchBalances({ backd, pools: [pool] }), fetchPool({ backd, poolAddress: pool.address })]
     );
@@ -176,7 +176,7 @@ export const unstake = createAsyncThunk(
     const tx = await backd.unstake(pool.stakerVaultAddress, amount);
     handleTransactionConfirmation(
       tx,
-      { action: "Unstake", args: { pool, amount: amount.serialized } },
+      { action: "Unstake", args: { pool, amount: amount.toPlain() } },
       dispatch,
       [fetchBalances({ backd, pools: [pool] })]
     );
@@ -185,7 +185,7 @@ export const unstake = createAsyncThunk(
 );
 
 export const selectBalances = (state: RootState): Balances =>
-  deserializeBalances(state.user.balances);
+  fromPlainBalances(state.user.balances);
 
 export function selectBalance(pool: Optional<Pool>): Selector<TokenValue>;
 export function selectBalance(address: string): Selector<TokenValue>;

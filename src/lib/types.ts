@@ -1,5 +1,5 @@
 import { TransactionReceipt } from "@ethersproject/providers";
-import { SerializedTokenValue, TokenValue } from "./token-value";
+import { PlainTokenValue, TokenValue } from "./token-value";
 
 export type Optional<T> = T | null;
 
@@ -32,26 +32,26 @@ export interface Position<Num = number> {
   depositToken: Address;
 }
 
-export interface SerialisedPosition<Num = number> {
+export interface PlainPosition<Num = number> {
   protocol: string;
   account: Address;
   threshold: Num;
-  singleTopUp: SerializedTokenValue;
-  maxTopUp: SerializedTokenValue;
+  singleTopUp: PlainTokenValue;
+  maxTopUp: PlainTokenValue;
   maxGasPrice: number;
   actionToken: Address;
   depositToken: Address;
 }
 
-export const serializePosition = (position: Position): SerialisedPosition => {
+export const toPlainPosition = (position: Position): PlainPosition => {
   return {
     ...position,
-    singleTopUp: position.singleTopUp.serialized,
-    maxTopUp: position.maxTopUp.serialized,
+    singleTopUp: position.singleTopUp.toPlain(),
+    maxTopUp: position.maxTopUp.toPlain(),
   };
 };
 
-export const deserializePosition = (position: SerialisedPosition): Position => {
+export const fromPlainPosition = (position: PlainPosition): Position => {
   return {
     ...position,
     singleTopUp: new TokenValue(position.singleTopUp),
@@ -84,32 +84,30 @@ export function transformPool<T, U>(pool: Pool<T>, f: (v: T) => U): Pool<U> {
 export type Address = string;
 
 export type Balances = Record<string, TokenValue>;
-export type SerializedBalances = Record<string, SerializedTokenValue>;
+export type PlainBalances = Record<string, PlainTokenValue>;
 
-export const serializeBalances = (balances: Balances): SerializedBalances => {
-  return Object.fromEntries(
-    Object.entries(balances).map(([key, value]) => [key, value.serialized])
-  );
+export const toPlainBalances = (balances: Balances): PlainBalances => {
+  return Object.fromEntries(Object.entries(balances).map(([key, value]) => [key, value.toPlain()]));
 };
 
-export const deserializeBalances = (balances: SerializedBalances): Balances => {
+export const fromPlainBalances = (balances: PlainBalances): Balances => {
   return Object.fromEntries(
     Object.entries(balances).map(([key, value]) => [key, new TokenValue(value)])
   );
 };
 
 export type Allowances = Record<string, Balances>;
-export type SerializedAllowances = Record<string, SerializedBalances>;
+export type PlainAllowances = Record<string, PlainBalances>;
 
-export const serializeAllowances = (allowances: Allowances): SerializedAllowances => {
+export const toPlainAllowances = (allowances: Allowances): PlainAllowances => {
   return Object.fromEntries(
-    Object.entries(allowances).map(([key, value]) => [key, serializeBalances(value)])
+    Object.entries(allowances).map(([key, value]) => [key, toPlainBalances(value)])
   );
 };
 
-export const deserializeAllowances = (allowances: SerializedAllowances): Allowances => {
+export const fromPlainAllowances = (allowances: PlainAllowances): Allowances => {
   return Object.fromEntries(
-    Object.entries(allowances).map(([key, value]) => [key, deserializeBalances(value)])
+    Object.entries(allowances).map(([key, value]) => [key, fromPlainBalances(value)])
   );
 };
 

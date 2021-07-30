@@ -2,12 +2,12 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { Pool } from "../../lib";
 import { Backd } from "../../lib/backd";
-import { deserializePosition, Position, SerialisedPosition } from "../../lib/types";
+import { fromPlainPosition, Position, PlainPosition } from "../../lib/types";
 import { logout } from "../account/accountSlice";
 import { handleTransactionConfirmation } from "../transactions-list/transactionsUtils";
 import { fetchAllowances, fetchBalances } from "../user/userSlice";
 
-type PositionsState = SerialisedPosition[];
+type PositionsState = PlainPosition[];
 
 const initialState: PositionsState = [];
 
@@ -57,13 +57,13 @@ export const removePosition = createAsyncThunk(
 );
 
 export const selectPositions = (state: RootState): Position[] =>
-  state.positions.map((position: SerialisedPosition) => deserializePosition(position));
+  state.positions.map((position: PlainPosition) => fromPlainPosition(position));
 
 export function selectPoolPositions(pool: Pool): (state: RootState) => Position[] {
   return (state: RootState) =>
     state.positions
       .filter((p) => p.actionToken === pool.underlying.address)
-      .map((position: SerialisedPosition) => deserializePosition(position));
+      .map((position: PlainPosition) => fromPlainPosition(position));
 }
 
 export default positionsSlice.reducer;

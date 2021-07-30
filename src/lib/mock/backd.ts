@@ -9,7 +9,7 @@ import {
   Balances,
   Position,
   Prices,
-  SerialisedPosition,
+  PlainPosition,
   Token,
   transformPool,
 } from "../types";
@@ -85,7 +85,7 @@ export default class MockBackd implements Backd {
     );
   }
 
-  getPositions(): Promise<SerialisedPosition[]> {
+  getPositions(): Promise<PlainPosition[]> {
     return Promise.resolve(positions);
   }
 

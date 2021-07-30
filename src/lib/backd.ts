@@ -18,7 +18,7 @@ import {
   Pool,
   Position,
   Prices,
-  SerialisedPosition,
+  PlainPosition,
   Token,
   transformPool,
 } from "./types";
@@ -31,7 +31,7 @@ export interface Backd {
   currentAccount(): Promise<Address>;
   listPools(): Promise<Pool[]>;
   getPoolInfo(address: Address): Promise<Pool>;
-  getPositions(): Promise<SerialisedPosition[]>;
+  getPositions(): Promise<PlainPosition[]>;
   registerPosition(pool: Pool, position: Position): Promise<ContractTransaction>;
   removePosition(account: Address, protocol: string): Promise<ContractTransaction>;
   getBalance(address: Address, account?: Address): Promise<TokenValue>;
@@ -139,23 +139,23 @@ export class Web3Backd implements Backd {
     return transformPool(rawPool, bigNumberToFloat);
   }
 
-  async getPositions(): Promise<SerialisedPosition[]> {
+  async getPositions(): Promise<PlainPosition[]> {
     const account = await this.currentAccount();
     const rawPositions = await this.topupAction.listPositions(account);
     return Promise.all(rawPositions.map((v: any) => this.getPositionInfo(v)));
   }
 
-  async getPositionInfo(rawPosition: any): Promise<SerialisedPosition> {
+  async getPositionInfo(rawPosition: any): Promise<PlainPosition> {
     const token = Ierc20FullFactory.connect(rawPosition.record.depositToken, this._provider);
     const decimals = await token.decimals();
-    const position: SerialisedPosition = {
+    const position: PlainPosition = {
       protocol: ethers.utils.parseBytes32String(rawPosition.protocol),
       actionToken: rawPosition.record.actionToken,
       depositToken: rawPosition.record.depositToken,
       account: rawPosition.account,
       threshold: bigNumberToFloat(rawPosition.record.threshold),
-      singleTopUp: new TokenValue(rawPosition.record.singleTopUpAmount, decimals).serialized,
-      maxTopUp: new TokenValue(rawPosition.record.totalTopUpAmount, decimals).serialized,
+      singleTopUp: new TokenValue(rawPosition.record.singleTopUpAmount, decimals).toPlain(),
+      maxTopUp: new TokenValue(rawPosition.record.totalTopUpAmount, decimals).toPlain(),
       maxGasPrice: rawPosition.record.maxGasPrice.toNumber(),
     };
     return position;

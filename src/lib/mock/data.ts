@@ -1,7 +1,7 @@
 import { BigNumber, ContractReceipt, ContractTransaction } from "ethers";
 import { scale } from "../numeric";
 import { TokenValue } from "../token-value";
-import { Address, Pool, SerialisedPosition } from "../types";
+import { Address, Pool, PlainPosition } from "../types";
 
 export const masterAccount = "0xbacE8e7f276FD2Ee5ecE5C1df18BF381148862A6";
 
@@ -94,18 +94,18 @@ const positionKeys = [
   },
 ];
 
-export const positions: SerialisedPosition[] = [
+export const positions: PlainPosition[] = [
   {
-    singleTopUp: new TokenValue(1500).serialized,
-    maxTopUp: new TokenValue(4500).serialized,
+    singleTopUp: new TokenValue(1500).toPlain(),
+    maxTopUp: new TokenValue(4500).toPlain(),
     maxGasPrice: Math.pow(10, 10),
     actionToken: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
     depositToken: "0x99A77926B3FB49619DC3A1DAc18565bcB5A98b93",
     ...positionKeys[0],
   },
   {
-    singleTopUp: new TokenValue(10_000).serialized,
-    maxTopUp: new TokenValue(50_000).serialized,
+    singleTopUp: new TokenValue(10_000).toPlain(),
+    maxTopUp: new TokenValue(50_000).toPlain(),
     maxGasPrice: 5 * Math.pow(10, 10),
     actionToken: "0x6b175474e89094c44da98b954eedeac495271d0f",
     depositToken: "0x25FF22De379B644BD5C2263404baC6FeE5a4b8de",

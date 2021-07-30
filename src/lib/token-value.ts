@@ -2,7 +2,7 @@ import { BigNumber } from "ethers";
 import { isString } from "formik";
 import { bigNumberToString, formatCrypto, formatCurrency, stringToBigNumber } from "./numeric";
 
-export interface SerializedTokenValue {
+export interface PlainTokenValue {
   value: string;
   decimals: number;
 }
@@ -11,18 +11,15 @@ export class TokenValue {
   private _value: BigNumber;
   private _decimals: number;
 
-  constructor(
-    value: string | number | BigNumber | SerializedTokenValue = 0,
-    decimals: number = 18
-  ) {
+  constructor(value: string | number | BigNumber | PlainTokenValue = 0, decimals: number = 18) {
     this._decimals = decimals;
     if (!value) this._value = BigNumber.from(0);
     else if (isString(value)) this._value = stringToBigNumber(value, decimals);
     else if (typeof value === "number") this._value = stringToBigNumber(value.toString(), decimals);
     else if ((value as BigNumber)._isBigNumber) this._value = value as BigNumber;
     else {
-      this._decimals = (value as SerializedTokenValue).decimals;
-      this._value = stringToBigNumber((value as SerializedTokenValue).value, this._decimals);
+      this._decimals = (value as PlainTokenValue).decimals;
+      this._value = stringToBigNumber((value as PlainTokenValue).value, this._decimals);
     }
   }
 
@@ -34,12 +31,12 @@ export class TokenValue {
     return this._decimals;
   }
 
-  get serialized(): SerializedTokenValue {
+  toPlain = (): PlainTokenValue => {
     return {
       value: this.toString(),
       decimals: this._decimals,
     };
-  }
+  };
 
   isZero = () => this.value.isZero();
 
