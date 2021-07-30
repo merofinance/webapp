@@ -17,3 +17,16 @@ jobs:
         run: yarn
       - name: Building App
         run: yarn run build
+  e2e_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Run Cypress
+        uses: cypress-io/github-action@v2
+        with:
+          start: yarn start
+          wait-on: <http://localhost:3000/>
+          config_file: cypress.json
+          spec: "cypress/integration/**/*"
+        env:
+          CYPRESS_baseUrl: <http://localhost:3000/>
