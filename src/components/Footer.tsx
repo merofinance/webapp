@@ -17,6 +17,10 @@ const linkLists: LinkListType[] = [
     header: "community",
     links: [
       {
+        label: "Discord",
+        link: "https://discord.gg/gtwzyjGa",
+      },
+      {
         label: "Twitter",
         link: "https://twitter.com/backdfund",
       },
