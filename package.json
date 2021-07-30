@@ -6,7 +6,7 @@
     "start": "BROWSER=none craco start",
     "build": "craco build",
     "test": "craco test",
-    "cypress:open": "cypress open"
+    "cy:open": "cypress open"
   },
   "dependencies": {
     "@backdfund/protocol": "^0.1.3",
