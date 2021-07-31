@@ -25,8 +25,7 @@ jobs:
       - name: Installing Dependencies
         run: yarn
       - name: Starting Server
-        run: yarn start
-        run: wait-on http://localhost:3000
+        run: yarn start & wait-on http://localhost:3000
       - name: run cypress
         run: npx cypress run
 
