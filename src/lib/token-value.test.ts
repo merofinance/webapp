@@ -87,9 +87,9 @@ test("should export as string from scaled", () => {
 
 test("should export as string from plain", () => {
   const testCases = [
-    { value: { value: "7.1819", decimals: 4 }, expected: "7.1819" },
-    { value: { value: "0.001910293", decimals: 10 }, expected: "0.001910293" },
-    { value: { value: "0.001910293", decimals: 5 }, expected: "0.00191" },
+    { value: { value: "71819", decimals: 4 }, expected: "7.1819" },
+    { value: { value: "19102930", decimals: 10 }, expected: "0.001910293" },
+    { value: { value: "000191", decimals: 5 }, expected: "0.00191" },
   ];
 
   testCases.forEach(({ value, expected }) => {
@@ -120,6 +120,38 @@ test("toPlain/fromPlain should be symmetric for floats", () => {
         const tokenValue = TokenValue.fromUnscaled(value, decimals);
         const backAndForth = TokenValue.fromPlain(tokenValue.toPlain());
         expect(tokenValue.eq(backAndForth)).toBeTruthy();
+      }
+    )
+  );
+});
+
+test("toPlain/fromPlain should be symmetric for big numbers", () => {
+  fc.assert(
+    fc.property(
+      fc.integer({ min: 0 }),
+      fc.integer({ min: 0, max: 27 }),
+      (value: number, decimals: number) => {
+        const tokenValue = new TokenValue(BigNumber.from(value), decimals);
+        const backAndForth = TokenValue.fromPlain(tokenValue.toPlain());
+        expect(tokenValue.eq(backAndForth)).toBeTruthy();
+      }
+    )
+  );
+});
+
+test("fromPlain/toPlain should be symmetric", () => {
+  fc.assert(
+    fc.property(
+      fc.integer({ min: 0 }),
+      fc.integer({ min: 0, max: 27 }),
+      (value: number, decimals: number) => {
+        const plainValue: PlainTokenValue = {
+          value: value.toString(),
+          decimals,
+        };
+        const backAndForth = TokenValue.fromPlain(plainValue).toPlain();
+        expect(plainValue.value === backAndForth.value).toBeTruthy();
+        expect(plainValue.decimals === backAndForth.decimals).toBeTruthy();
       }
     )
   );

@@ -20,7 +20,7 @@ export class TokenValue {
   }
 
   static fromPlain(value: PlainTokenValue) {
-    return new TokenValue(stringToBigNumber(value.value || "0", value.decimals), value.decimals);
+    return new TokenValue(BigNumber.from(value.value), value.decimals);
   }
 
   get value(): BigNumber {
@@ -33,7 +33,7 @@ export class TokenValue {
 
   toPlain = (): PlainTokenValue => {
     return {
-      value: this.toString(),
+      value: this._value.toString(),
       decimals: this._decimals,
     };
   };
