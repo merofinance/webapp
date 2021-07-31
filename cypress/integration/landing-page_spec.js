@@ -4,6 +4,12 @@ describe("Innitial Load", () => {
   });
 });
 
+describe("Nav Items", () => {
+  it("Should only have one nav item", () => {
+    cy.get('[id="nav-items"]').children().should("have.length", 1);
+  });
+});
+
 describe("Benefits", () => {
   it("Should have Avoid Liquidation Benefit", () => {
     cy.get('[id="benefit - Avoid Liquidation"] > a')
