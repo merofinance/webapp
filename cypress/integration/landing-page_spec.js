@@ -1,6 +1,6 @@
 describe("Innitial Load", () => {
   it("Should Load Home Page", () => {
-    cy.visit("http://localhost:3000/");
+    cy.visit("/");
   });
 });
 
