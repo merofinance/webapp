@@ -22,8 +22,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Cypress run
-        uses: cypress-io/github-action@v2
+      - name: Installing Dependencies
+        run: yarn
+      - name: Starting Server
+        run: yarn start
+        run: wait-on http://localhost:3000
+      - name: run cypress
+        run: npx cypress run
 
   # cypress-run:
   #   runs-on: ubuntu-latest
