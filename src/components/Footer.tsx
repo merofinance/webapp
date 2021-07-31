@@ -18,7 +18,7 @@ const linkLists: LinkListType[] = [
     links: [
       {
         label: "Discord",
-        link: "https://discord.gg/gtwzyjGa",
+        link: "https://discord.gg/jpGvaFV3Rv",
       },
       {
         label: "Twitter",
