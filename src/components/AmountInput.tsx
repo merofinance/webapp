@@ -35,7 +35,7 @@ const AmountInput = ({ token, value, setValue, label, max, noSlider }: Props) =>
   const error = () => {
     if (value && Number(value) <= 0) return "Amount must be a positive number";
     try {
-      const amount = new TokenValue(value, token.decimals);
+      const amount = TokenValue.fromUnscaled(value, token.decimals);
       if (amount.gt(max)) return "Amount exceeds available balance";
       return "";
     } catch {

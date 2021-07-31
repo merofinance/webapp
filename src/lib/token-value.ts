@@ -1,5 +1,4 @@
 import { BigNumber } from "ethers";
-import { isString } from "formik";
 import { bigNumberToString, formatCrypto, formatCurrency, stringToBigNumber } from "./numeric";
 
 export interface PlainTokenValue {
@@ -11,16 +10,18 @@ export class TokenValue {
   private _value: BigNumber;
   private _decimals: number;
 
-  constructor(value: string | number | BigNumber | PlainTokenValue = 0, decimals: number = 18) {
+  constructor(value: BigNumber = BigNumber.from(0), decimals: number = 18) {
     this._decimals = decimals;
-    if (!value) this._value = BigNumber.from(0);
-    else if (isString(value)) this._value = stringToBigNumber(value, decimals);
-    else if (typeof value === "number") this._value = stringToBigNumber(value.toString(), decimals);
-    else if (value instanceof BigNumber) this._value = value;
-    else {
-      this._decimals = value.decimals;
-      this._value = stringToBigNumber(value.value, this._decimals);
-    }
+    this._value = value;
+  }
+
+  static fromUnscaled(value: number | string, decimals: number = 18) {
+    return new TokenValue(stringToBigNumber(value.toString() || "0", decimals), decimals);
+  }
+
+  static fromPlain(value: PlainTokenValue) {
+    const decimals = value.decimals || 18;
+    return new TokenValue(stringToBigNumber(value.value || "0", decimals), decimals);
   }
 
   get value(): BigNumber {
@@ -80,9 +81,10 @@ export class TokenValue {
     return this.value.lte(other.value);
   }
 
-  multiplyByPrice(price: number) {
-    const priceScaled = Math.round(price * 100);
-    return new TokenValue(this.value.mul(priceScaled).div(100), this.decimals);
+  mul(value: number | string) {
+    const scale = BigNumber.from(10).pow(this.decimals);
+    const scaledValue = stringToBigNumber(value.toString(), this.decimals);
+    return new TokenValue(this.value.mul(scaledValue).div(scale), this.decimals);
   }
 
   toString = () => bigNumberToString(this._value, this._decimals);

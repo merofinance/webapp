@@ -88,7 +88,7 @@ const NewPosition = ({ pool }: Props) => {
   const [single, setSingle] = useState("");
   const [max, setMax] = useState("");
 
-  const approved = allowance.gte(new TokenValue(max || "0", pool.underlying.decimals));
+  const approved = allowance.gte(TokenValue.fromUnscaled(max, pool.underlying.decimals));
 
   const addressError = () => {
     if (!address) return "";
@@ -113,9 +113,9 @@ const NewPosition = ({ pool }: Props) => {
   const singleError = () => {
     if (!single) return "";
     try {
-      const number = new TokenValue(single, pool.underlying.decimals);
+      const number = TokenValue.fromUnscaled(single, pool.underlying.decimals);
       if (number.isZero()) return "Must be positive number";
-      const maxNumber = new TokenValue(max, pool.underlying.decimals);
+      const maxNumber = TokenValue.fromUnscaled(max, pool.underlying.decimals);
       if (max && number.gt(maxNumber)) return "Must be less than max top up";
       return "";
     } catch {
@@ -126,7 +126,7 @@ const NewPosition = ({ pool }: Props) => {
   const maxError = () => {
     if (!max) return "";
     try {
-      const number = new TokenValue(max, pool.underlying.decimals);
+      const number = TokenValue.fromUnscaled(max, pool.underlying.decimals);
       if (number.isNegative()) return "Must be positive number";
       if (number.gt(balance)) return "Exceeds deposited balance";
       else return "";
@@ -141,8 +141,8 @@ const NewPosition = ({ pool }: Props) => {
     protocol,
     account: address,
     threshold: Number(threshold),
-    singleTopUp: new TokenValue(single, pool.underlying.decimals),
-    maxTopUp: new TokenValue(max, pool.underlying.decimals),
+    singleTopUp: TokenValue.fromUnscaled(single, pool.underlying.decimals),
+    maxTopUp: TokenValue.fromUnscaled(max, pool.underlying.decimals),
     maxGasPrice: 0,
     actionToken: pool.underlying.address,
     depositToken: pool.lpToken.address,
@@ -161,7 +161,7 @@ const NewPosition = ({ pool }: Props) => {
     if (!backd) return;
     setLoading(true);
     const approveArgs = {
-      amount: new TokenValue(max, pool.underlying.decimals),
+      amount: TokenValue.fromUnscaled(max, pool.underlying.decimals),
       backd,
       spender: backd.topupActionAddress,
       token: pool.lpToken,

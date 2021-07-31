@@ -21,13 +21,12 @@ const PoolsStatistics = () => {
     pools.filter((pool: Pool) => pool.underlying.address === tokenAddress)[0];
 
   const locked = positions.reduce(
-    (a: TokenValue, b: Position) =>
-      a.add(b.maxTopUp.multiplyByPrice(getPrice(getPool(b.actionToken)))),
+    (a: TokenValue, b: Position) => a.add(b.maxTopUp.mul(getPrice(getPool(b.actionToken)))),
     new TokenValue()
   );
   const deposits = locked.add(
     pools.reduce(
-      (a: TokenValue, b: Pool) => a.add(getBalance(b).multiplyByPrice(getPrice(b))),
+      (a: TokenValue, b: Pool) => a.add(getBalance(b).mul(getPrice(b))),
       new TokenValue()
     )
   );

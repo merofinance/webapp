@@ -44,7 +44,7 @@ const PoolDeposit = ({ pool }: Props) => {
           />
           <DepositButtons
             pool={pool}
-            value={new TokenValue(depositAmount, pool.underlying.decimals)}
+            value={TokenValue.fromUnscaled(depositAmount, pool.underlying.decimals)}
             complete={() => setDepositAmount("")}
           />
         </Content>
