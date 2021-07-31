@@ -19,15 +19,27 @@ jobs:
         run: yarn run build
   cypress-run:
     runs-on: ubuntu-latest
-    container: cypress/browsers:node12.18.3-chrome87-ff82
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
+        uses: actions/checkout@v1
       - name: Cypress run
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v1
         with:
-          # Specify Browser since container image is compile with Firefox
-          browser: chrome
+          build: yarn run build
+          start: yarn start
+          wait-on: http://localhost:3000
+
+  # cypress-run:
+  #   runs-on: ubuntu-latest
+  #   container: cypress/browsers:node12.18.3-chrome87-ff82
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+
+  #     # Install NPM dependencies, cache them correctly
+  #     # and run all Cypress tests
+  #     - name: Cypress run
+  #       uses: cypress-io/github-action@v2
+  #       with:
+  #         # Specify Browser since container image is compile with Firefox
+  #         browser: chrome
