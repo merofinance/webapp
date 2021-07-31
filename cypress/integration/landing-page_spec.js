@@ -108,6 +108,12 @@ describe("Join The Community", () => {
 });
 
 describe("Footer", () => {
+  it("Should have Discord Link", () => {
+    cy.get('[id="Footer - Discord"]')
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "https://discord.gg/jpGvaFV3Rv");
+  });
+
   it("Should have Twitter Link", () => {
     cy.get('[id="Footer - Twitter"]')
       .should("have.attr", "target", "_blank")
