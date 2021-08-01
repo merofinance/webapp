@@ -44,7 +44,12 @@ const Content = styled.div`
 const SubHeaderContainer = styled.div`
   display: flex;
   margin: auto;
+
   margin-bottom: 6rem;
+  @media (max-width: 600px) {
+    flex-direction: column;
+    margin-bottom: 2rem;
+  }
 `;
 
 const SubHeader = styled.div`
@@ -54,6 +59,10 @@ const SubHeader = styled.div`
   letter-spacing: 0.15px;
   text-align: center;
   margin-right: 0.5rem;
+
+  @media (max-width: 600px) {
+    margin-bottom: 0.2rem;
+  }
 `;
 
 const Highlight = styled.a`
@@ -76,7 +85,6 @@ type OptionProps = {
 
 const Option = styled.button`
   width: 100%;
-  padding: 1.9rem 2.2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -88,12 +96,22 @@ const Option = styled.button`
   );
   margin-top: 1.2rem;
   cursor: pointer;
+
+  padding: 1.9rem 2.2rem;
+  @media (max-width: 600px) {
+    padding: 1.5rem 2rem;
+  }
 `;
 
 const Name = styled.div`
+  line-height: 2.8rem;
+
   font-weight: 700;
   font-size: 2.1rem;
-  line-height: 2.8rem;
+  @media (max-width: 600px) {
+    font-weight: 700;
+    font-size: 2rem;
+  }
 `;
 
 const IconContainer = styled.div`
