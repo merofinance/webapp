@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import close from "../assets/ui/close.svg";
+import { useDevice } from "../lib/hooks";
 import Button from "./Button";
 
 const StyledPopup = styled.div`
@@ -83,6 +84,8 @@ type Props = {
 };
 
 const Popup = (props: Props): JSX.Element => {
+  const { isMobile } = useDevice();
+
   if (!props.show) return <></>;
 
   return (
@@ -94,7 +97,12 @@ const Popup = (props: Props): JSX.Element => {
         {props.content && props.content}
         {props.confirm && props.submit && (
           <ButtonContainer>
-            <Button medium background="#252140" text="Cancel" click={props.close} />
+            <Button
+              medium
+              background="#252140"
+              text={isMobile ? "Back" : "Cancel"}
+              click={props.close}
+            />
             <Button
               primary
               medium
