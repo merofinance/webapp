@@ -2,6 +2,7 @@ import { useWeb3React } from "@web3-react/core";
 import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import LaunchIcon from "@material-ui/icons/Launch";
 import { AbstractConnector } from "@web3-react/abstract-connector";
 import { injectedConnector, walletConnectConnector } from "../app/web3";
 import metamask from "../assets/wallets/metamask.svg";
@@ -67,6 +68,11 @@ const Highlight = styled.a`
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+
+  > svg {
+    margin-left: 0.3rem;
+    transform: translateY(2px);
+  }
 `;
 
 type OptionProps = {
@@ -138,6 +144,7 @@ const WalletSelectPopup = (props: Props) => {
               target="_blank"
             >
               Find out about wallets
+              <LaunchIcon style={{ fill: "var(--secondary)" }} />
             </Highlight>
           </SubHeaderContainer>
 
