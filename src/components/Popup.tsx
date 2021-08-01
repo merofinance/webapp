@@ -31,6 +31,10 @@ const PopupContainer = styled.div`
   padding: 3.7rem 1.6rem 2.3rem 1.6rem;
   border-radius: 1.4rem;
   background-color: #252140;
+
+  @media (max-width: 600px) {
+    margin: 0 1rem;
+  }
 `;
 
 const Exit = styled.img`
@@ -43,18 +47,29 @@ const Exit = styled.img`
 
 const Header = styled.div`
   font-weight: 700;
-  font-size: 3.6rem;
   line-height: 4.2rem;
   text-align: center;
+
   margin-bottom: 2.5rem;
+  font-size: 3.6rem;
+  @media (max-width: 600px) {
+    margin-bottom: 2rem;
+    font-size: 2.7rem;
+    margin-top: 2rem;
+  }
 `;
 
 const ButtonContainer = styled.div`
   width: 100%;
   display: grid;
+  margin-top: 2.4rem;
+
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 1.7rem;
-  margin-top: 2.4rem;
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 1.8rem;
+  }
 `;
 
 type Props = {
