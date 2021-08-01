@@ -125,7 +125,7 @@ const Connector = () => {
           <ConnectorText>{active ? shortenAddress(account!, 8) : "Connnect wallet"}</ConnectorText>
         </ConnectorButton>
       </DesktopConnector>
-      <MobileConnector>
+      <MobileConnector onClick={() => setConnecting(true)}>
         <DotContainer>
           <DotAura connected={active} />
           <DotCenter connected={active} />
