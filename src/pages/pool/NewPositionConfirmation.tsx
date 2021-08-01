@@ -6,6 +6,7 @@ import { AppDispatch } from "../../app/store";
 import Popup from "../../components/Popup";
 import GradientText from "../../styles/GradientText";
 import Tooltip from "../../components/Tooltip";
+import LaunchIcon from "@material-ui/icons/Launch";
 import { setError } from "../../features/error/errorSlice";
 import { registerPosition } from "../../features/positions/positionsSlice";
 import { openEtherscanAddress } from "../../lib/browser";
@@ -13,6 +14,7 @@ import { shortenAddress } from "../../lib/text";
 import { Pool, Position } from "../../lib/types";
 import { selectPrice } from "../../features/pool/selectors";
 import { formatCurrency } from "../../lib/numeric";
+import { useDevice } from "../../lib/hooks";
 
 const Content = styled.div`
   width: 100%;
@@ -23,21 +25,28 @@ const Content = styled.div`
 const Summary = styled.div`
   width: 100%;
   font-weight: 400;
-  font-size: 1.6rem;
   line-height: 2.4rem;
   letter-spacing: 0.15px;
+
+  font-size: 1.6rem;
+  @media (max-width: 600px) {
+    font-size: 1.4rem;
+  }
 `;
 
 const Address = styled(GradientText)`
   font-weight: 400;
-  font-size: 1.6rem;
   line-height: 2.4rem;
   letter-spacing: 0.15px;
   cursor: pointer;
+
+  font-size: 1.6rem;
+  @media (max-width: 600px) {
+    font-size: 1.4rem;
+  }
 `;
 
 const PositionSummary = styled.div`
-  margin-top: 4.8rem;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(60, 60, 60, 0.5);
@@ -45,6 +54,11 @@ const PositionSummary = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1.6rem;
+
+  margin-top: 4.8rem;
+  @media (max-width: 600px) {
+    margin-top: 1.8rem;
+  }
 `;
 
 const SummaryRow = styled.div`
@@ -58,16 +72,24 @@ const Label = styled.div`
   display: flex;
   align-items: center;
   font-weight: 500;
-  font-size: 1.8rem;
   letter-spacing: 0.15px;
   text-transform: capitalize;
+
+  font-size: 1.8rem;
+  @media (max-width: 600px) {
+    font-size: 1.6rem;
+  }
 `;
 
 const AddressLabel = styled(GradientText)`
   font-weight: 500;
-  font-size: 1.8rem;
   letter-spacing: 0.15px;
   cursor: pointer;
+
+  font-size: 1.8rem;
+  @media (max-width: 600px) {
+    font-size: 1.6rem;
+  }
 `;
 
 type Props = {
@@ -82,6 +104,7 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
   const dispatch = useDispatch<AppDispatch>();
   const price = useSelector(selectPrice(pool));
   const backd = useBackd();
+  const { isMobile } = useDevice();
 
   const [loading, setLoading] = useState(false);
 
@@ -113,7 +136,8 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
           <Summary>
             {`When the collateralization of `}
             <Address onClick={() => openEtherscanAddress(position.account, "_blank")}>
-              {shortenAddress(position.account, 26)}
+              {shortenAddress(position.account, isMobile ? 10 : 26)}
+              <LaunchIcon style={{ fill: "var(--secondary)" }} />
             </Address>
             {` drops below ${position.threshold}, it will
             be topped up with ${position.singleTopUp} ${pool.underlying.symbol} (${formatCurrency(
@@ -139,6 +163,7 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
               </Label>
               <AddressLabel onClick={() => openEtherscanAddress(position.account, "_blank")}>
                 {shortenAddress(position.account, 8)}
+                <LaunchIcon style={{ fill: "var(--secondary)" }} />
               </AddressLabel>
             </SummaryRow>
             <SummaryRow>
