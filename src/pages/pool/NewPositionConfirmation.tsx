@@ -6,6 +6,7 @@ import { AppDispatch } from "../../app/store";
 import Popup from "../../components/Popup";
 import GradientText from "../../styles/GradientText";
 import Tooltip from "../../components/Tooltip";
+import LaunchIcon from "@material-ui/icons/Launch";
 import { setError } from "../../features/error/errorSlice";
 import { registerPosition } from "../../features/positions/positionsSlice";
 import { openEtherscanAddress } from "../../lib/browser";
@@ -135,7 +136,8 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
           <Summary>
             {`When the collateralization of `}
             <Address onClick={() => openEtherscanAddress(position.account, "_blank")}>
-              {shortenAddress(position.account, isMobile ? 12 : 26)}
+              {shortenAddress(position.account, isMobile ? 10 : 26)}
+              <LaunchIcon style={{ fill: "var(--secondary)" }} />
             </Address>
             {` drops below ${position.threshold}, it will
             be topped up with ${position.singleTopUp} ${pool.underlying.symbol} (${formatCurrency(
@@ -161,6 +163,7 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
               </Label>
               <AddressLabel onClick={() => openEtherscanAddress(position.account, "_blank")}>
                 {shortenAddress(position.account, 8)}
+                <LaunchIcon style={{ fill: "var(--secondary)" }} />
               </AddressLabel>
             </SummaryRow>
             <SummaryRow>
