@@ -50,9 +50,6 @@ const BackdTooltip = ({ content }: Props) => {
           arrow
           title={content}
           classes={tooltipStyles()}
-          PopperProps={{
-            disablePortal: true,
-          }}
           onClose={handleTooltipClose}
           open={open}
           disableFocusListener
