@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import info from "../assets/ui/info.svg";
 
@@ -32,11 +32,27 @@ const ExitEvent = styled.div`
   z-index: 1;
 `;
 
-const Popup = styled.div`
+const Arrow = styled.div`
   position: absolute;
   top: 100%;
   left: 50%;
-  transform: translate(-50%, 1rem);
+  width: 10px;
+  height: 10px;
+  background-color: #433b6b;
+  transform: translate(-50%, 0.3rem) rotate(45deg);
+`;
+
+interface PopupProps {
+  tooltipTop: number;
+  tooltipLeft: number;
+}
+
+const Popup = styled.div`
+  position: fixed;
+  top: ${(props: PopupProps) => props.tooltipTop + "px"};
+  left: ${(props: PopupProps) =>
+    Math.min(Math.max(props.tooltipLeft, 160), window.innerWidth - 160) + "px"};
+  transform: translate(-50%, 2rem);
   width: 300px;
   max-width: 30rem;
   font-size: 1.1rem;
@@ -46,17 +62,6 @@ const Popup = styled.div`
   border-radius: 4px;
   padding: 0.6rem 0.8rem;
   z-index: 2;
-
-  :before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 10px;
-    height: 10px;
-    background-color: #433b6b;
-    transform: translate(-50%, -0.5rem) rotate(45deg);
-  }
 `;
 
 type Props = {
@@ -65,14 +70,21 @@ type Props = {
 
 const Tooltip = (props: Props) => {
   const [open, setOpen] = useState(false);
+  const tooltipRef = useRef<HTMLDivElement>(null);
 
   return (
-    <StyledTooltip>
+    <StyledTooltip ref={tooltipRef}>
       <Icon src={info} onClick={() => setOpen(true)} alt="help icon" />
       {open && (
         <>
           <ExitEvent onClick={() => setOpen(false)} />
-          <Popup>{props.content}</Popup>
+          <Arrow />
+          <Popup
+            tooltipTop={tooltipRef.current!.getBoundingClientRect().top | 0}
+            tooltipLeft={tooltipRef.current!.getBoundingClientRect().left | 0}
+          >
+            {props.content}
+          </Popup>
         </>
       )}
     </StyledTooltip>
