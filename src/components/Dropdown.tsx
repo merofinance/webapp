@@ -16,6 +16,7 @@ const useStyles = makeStyles(() => ({
     marginRight: 10,
 
     fontSize: 16,
+    // eslint-disable-next-line no-useless-computed-key
     ["@media (max-width:600px)"]: {
       fontSize: 12,
     },
@@ -34,6 +35,7 @@ const useStyles = makeStyles(() => ({
     transition: "all 0.3s",
 
     fontSize: 16,
+    // eslint-disable-next-line no-useless-computed-key
     ["@media (max-width:600px)"]: {
       fontSize: 12,
       minHeight: 0,
