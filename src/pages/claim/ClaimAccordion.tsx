@@ -4,6 +4,7 @@ import Accordion from "../../components/Accordion";
 import AccordionChevron from "../../components/AccordionChevron";
 import Asset from "../../components/Asset";
 import Button from "../../components/Button";
+import { useDevice } from "../../lib/hooks";
 import GradientText from "../../styles/GradientText";
 import ClaimRow from "./ClaimRow";
 
@@ -46,6 +47,10 @@ const Apr = styled.div`
   font-size: 1.8rem;
   line-height: 2rem;
   letter-spacing: 0.15px;
+
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const EndContainer = styled.div`
@@ -55,6 +60,10 @@ const EndContainer = styled.div`
 
   button:first-child {
     margin-right: 1.8rem;
+  }
+
+  @media (max-width: 600px) {
+    flex: 0.3;
   }
 `;
 
@@ -82,6 +91,8 @@ interface Props {
 }
 
 const ClaimAccordion = ({ open, toggle, rows }: Props) => {
+  const { isMobile, isDesktop } = useDevice();
+
   return (
     <Accordion
       header={
@@ -103,8 +114,16 @@ const ClaimAccordion = ({ open, toggle, rows }: Props) => {
           </ClaimableContainer>
           <Apr>5.2%</Apr>
           <EndContainer>
-            <Button text="Claim all" background="#1c0c37" width="12rem" />
-            <Button primary text="Claim all & Stake" width="18rem" />
+            {isDesktop && (
+              <Button
+                text="Claim all"
+                background="#1c0c37"
+                width="12rem"
+                small={isMobile}
+                primary={isMobile}
+              />
+            )}
+            {isDesktop && <Button primary text="Claim all & Stake" width="18rem" />}
             <AccordionChevron open={open} />
           </EndContainer>
         </Header>
