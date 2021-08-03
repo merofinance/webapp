@@ -5,23 +5,37 @@ export interface SummaryStatisticType {
   value: string;
 }
 
-const StyledPoolsOverview = styled.div`
+const StyledSummaryStatistics = styled.div`
   display: flex;
   margin: 0 8rem;
   justify-content: center;
   margin-bottom: 7.4rem;
+
+  @media (max-width: 600px) {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 1rem;
+    margin: 0;
+    margin-bottom: 5rem;
+  }
 `;
 
 const Container = styled.div`
   flex: 1;
-  padding: 3.3rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #16122e;
   border-radius: 14px;
   margin: 0 0.8rem;
+
   max-width: 40.7rem;
+  padding: 3.3rem 0;
+  @media (max-width: 600px) {
+    width: 100%;
+    max-width: 100%;
+    padding: 2rem 0;
+  }
 `;
 
 const Label = styled.div`
@@ -31,13 +45,20 @@ const Label = styled.div`
   letter-spacing: 0.15px;
   color: var(--sub);
   text-transform: capitalize;
+
+  @media (max-width: 600px) {
+  }
 `;
 
 const Number = styled.div`
   font-weight: 700;
-  font-size: 2.8rem;
   line-height: 4.2rem;
   letter-spacing: 0.25px;
+
+  font-size: 2.8rem;
+  @media (max-width: 600px) {
+    font-size: 2.4rem;
+  }
 `;
 
 interface Props {
@@ -46,14 +67,14 @@ interface Props {
 
 const SummaryStatistics = ({ statistics }: Props) => {
   return (
-    <StyledPoolsOverview>
+    <StyledSummaryStatistics>
       {statistics.map((statistic: SummaryStatisticType) => (
         <Container key={statistic.label}>
           <Label>{statistic.label}</Label>
           <Number>{statistic.value}</Number>
         </Container>
       ))}
-    </StyledPoolsOverview>
+    </StyledSummaryStatistics>
   );
 };
 
