@@ -13,7 +13,6 @@ import { openEtherscanAddress } from "../../lib/browser";
 import { shortenAddress } from "../../lib/text";
 import { Pool, Position } from "../../lib/types";
 import { selectPrice } from "../../features/pool/selectors";
-import { formatCurrency } from "../../lib/numeric";
 import { useDevice } from "../../lib/hooks";
 
 const Content = styled.div`
