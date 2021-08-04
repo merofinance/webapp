@@ -6,6 +6,7 @@ import { useLoading } from "../../../app/hooks/use-loading";
 import { AppDispatch } from "../../../app/store";
 import { AmountInputForm } from "../../../components/amount-input-form/AmountInputForm";
 import { Pool } from "../../../lib";
+import { INFINITE_APPROVE_AMMOUNT } from "../../../lib/constants";
 import { pendingTransactionsCount } from "../../transactions-list/transactionsSlice";
 import { approve, deposit, selectBalance, selectDepositAllowance } from "../../user/userSlice";
 
@@ -43,10 +44,15 @@ export function Deposit({ pool }: DepositProps) {
     setLoading,
   ]);
 
-  const executeApprove = (amount: number) => {
+  const executeApprove = () => {
     if (!backd) return;
     setLoading(true);
-    const approveAction = approve({ token: pool.underlying, spender: pool.address, amount, backd });
+    const approveAction = approve({
+      token: pool.underlying,
+      spender: pool.address,
+      amount: INFINITE_APPROVE_AMMOUNT,
+      backd,
+    });
     dispatch(approveAction).then((v) => {
       handleTxDispatch({ status: v.meta.requestStatus, actionType: "approve" });
     });
@@ -64,7 +70,7 @@ export function Deposit({ pool }: DepositProps) {
 
   const handleSubmit = (amount: number) => {
     if (amount > approvedToDeposit) {
-      executeApprove(amount);
+      executeApprove();
     } else {
       executeDeposit(amount);
     }
