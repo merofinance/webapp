@@ -65,6 +65,7 @@ const UnstakeTokens = ({ token }: Props) => {
       </Description>
       <Content>
         <AmountInput
+          token={token}
           noSlider
           value={value}
           setValue={(v: string) => setValue(v)}

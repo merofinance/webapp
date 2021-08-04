@@ -10,14 +10,6 @@ import { Position } from "../../lib/types";
 import { shortenAddress } from "../../lib/text";
 import { useLoading } from "../../app/hooks/use-loading";
 
-export type PositionType = {
-  protocol: string;
-  borrower: string;
-  threshold: number;
-  single: number;
-  total: number;
-};
-
 const StyledPosition = styled.div`
   width: 100%;
   display: flex;

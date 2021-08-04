@@ -31,7 +31,7 @@ const DesktopConnector = styled.div`
     }
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 715px) {
     display: none;
   }
 `;
@@ -77,7 +77,7 @@ const MobileConnector = styled.div`
   border: solid 1px var(--subtle);
   border-radius: 7px;
 
-  @media (min-width: 601px) {
+  @media (min-width: 716px) {
     display: none;
   }
 `;
@@ -125,7 +125,7 @@ const Connector = () => {
           <ConnectorText>{active ? shortenAddress(account!, 8) : "Connnect wallet"}</ConnectorText>
         </ConnectorButton>
       </DesktopConnector>
-      <MobileConnector>
+      <MobileConnector onClick={() => setConnecting(true)}>
         <DotContainer>
           <DotAura connected={active} />
           <DotCenter connected={active} />

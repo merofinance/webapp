@@ -12,6 +12,7 @@ import NewPositionInput from "./NewPositionInput";
 import { AppDispatch } from "../../app/store";
 import { ethers } from "ethers";
 import { selectPositions } from "../../features/positions/positionsSlice";
+import { TokenValue } from "../../lib/token-value";
 import { useDevice } from "../../lib/hooks";
 
 const Border = styled.div`
@@ -87,7 +88,7 @@ const NewPosition = ({ pool }: Props) => {
   const [single, setSingle] = useState("");
   const [max, setMax] = useState("");
 
-  const approved = allowance >= Number(max || "0");
+  const approved = allowance.gte(TokenValue.fromUnscaled(max, pool.underlying.decimals));
 
   const addressError = () => {
     if (!address) return "";
@@ -111,18 +112,27 @@ const NewPosition = ({ pool }: Props) => {
 
   const singleError = () => {
     if (!single) return "";
-    const number = Number(single);
-    if (number <= 0) return "Must be positive number";
-    if (max && number > Number(max)) return "Must be less than max top up";
-    return "";
+    try {
+      const number = TokenValue.fromUnscaled(single, pool.underlying.decimals);
+      if (number.isZero()) return "Must be positive number";
+      const maxNumber = TokenValue.fromUnscaled(max, pool.underlying.decimals);
+      if (max && number.gt(maxNumber)) return "Must be less than max top up";
+      return "";
+    } catch {
+      return "Invalid number";
+    }
   };
 
   const maxError = () => {
     if (!max) return "";
-    const number = Number(max);
-    if (number <= 0) return "Must be positive number";
-    if (number > balance) return "Exceeds deposited balance";
-    else return "";
+    try {
+      const number = TokenValue.fromUnscaled(max, pool.underlying.decimals);
+      if (number.isNegative()) return "Must be positive number";
+      if (number.gt(balance)) return "Exceeds deposited balance";
+      else return "";
+    } catch {
+      return "Invalid number";
+    }
   };
 
   const hasError = !!(addressError() || thresholdError() || singleError() || maxError());
@@ -131,8 +141,8 @@ const NewPosition = ({ pool }: Props) => {
     protocol,
     account: address,
     threshold: Number(threshold),
-    singleTopUp: Number(single),
-    maxTopUp: Number(max),
+    singleTopUp: TokenValue.fromUnscaled(single, pool.underlying.decimals),
+    maxTopUp: TokenValue.fromUnscaled(max, pool.underlying.decimals),
     maxGasPrice: 0,
     actionToken: pool.underlying.address,
     depositToken: pool.lpToken.address,
@@ -151,7 +161,7 @@ const NewPosition = ({ pool }: Props) => {
     if (!backd) return;
     setLoading(true);
     const approveArgs = {
-      amount: Number(max),
+      amount: TokenValue.fromUnscaled(max, pool.underlying.decimals),
       backd,
       spender: backd.topupActionAddress,
       token: pool.lpToken,
