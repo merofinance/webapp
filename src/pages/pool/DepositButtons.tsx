@@ -8,9 +8,10 @@ import { AppDispatch } from "../../app/store";
 import MultiStepButtons from "../../components/MultiStepButtons";
 import { ETH_DUMMY_ADDRESS, INFINITE_APPROVE_AMMOUNT } from "../../lib/constants";
 import Button from "../../components/Button";
+import { TokenValue } from "../../lib/token-value";
 
 type Props = {
-  value: number;
+  value: TokenValue;
   pool: Pool;
   complete: () => void;
 };
@@ -20,7 +21,7 @@ const DepositButtons = ({ value, pool, complete }: Props) => {
   const backd = useBackd();
   const { loading, setLoading, handleTxDispatch } = useLoading();
   const approvedToDeposit = useSelector(selectDepositAllowance(pool));
-  const approved = approvedToDeposit >= value;
+  const approved = approvedToDeposit.gte(value);
 
   const executeApprove = async () => {
     if (!backd || approved) return;
@@ -45,7 +46,7 @@ const DepositButtons = ({ value, pool, complete }: Props) => {
     <>
       {pool.underlying.address !== ETH_DUMMY_ADDRESS && (
         <MultiStepButtons
-          disabled={value === 0}
+          disabled={value.isZero()}
           firstText={`Approve ${pool.underlying.symbol}`}
           firstAction={executeApprove}
           firstComplete={approved}
@@ -66,7 +67,7 @@ const DepositButtons = ({ value, pool, complete }: Props) => {
             await executeDeposit();
             setLoading(false);
           }}
-          disabled={value === 0}
+          disabled={value.isZero()}
           loading={loading}
           hoverText="Enter Amount"
         />

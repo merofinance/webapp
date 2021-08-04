@@ -3,9 +3,8 @@ import styled from "styled-components";
 import percent from "../../assets/benefits/percent.svg";
 import plus from "../../assets/benefits/plus.svg";
 import shield from "../../assets/benefits/shield.svg";
-import GradientText from "../../styles/GradientText";
+import { GradientLink } from "../../styles/GradientText";
 import { Header4, Header5 } from "../../styles/Headers";
-import { openAndFocusWindow } from "../../lib/browser";
 
 type BenfitsType = {
   icon: string;
@@ -132,20 +131,14 @@ const IconGlassGradient = styled.div`
   transform: rotate(${(props: IconGlassGradientProps) => props.rotate}deg);
 `;
 
-const ReadMoreButton = styled.button`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
+const ReadMore = styled(GradientLink)`
+  font-weight: 400;
+  font-size: 2.1rem;
   transition: all 0.3s;
 
   :hover {
     opacity: 0.7;
   }
-`;
-
-const ReadMoreText = styled(GradientText)`
-  font-weight: 400;
-  font-size: 2.1rem;
 
   @media (max-width: 600px) {
     display: none;
@@ -172,7 +165,7 @@ const Benefits = () => {
   return (
     <StyledBenefits ref={benefitsRef}>
       {benefits.map((benefit: BenfitsType, index: number) => (
-        <Benefit key={benefit.header}>
+        <Benefit key={benefit.header} id={`benefit - ${benefit.header}`}>
           <IconContainer>
             <Icon src={benefit.icon} alt="benefit icon" />
           </IconContainer>
@@ -185,13 +178,9 @@ const Benefits = () => {
           </IconGlass>
           <Header4>{benefit.header}</Header4>
           <Header5>{benefit.content}</Header5>
-          <ReadMoreButton
-            onClick={() => {
-              openAndFocusWindow(benefit.url, "_blank");
-            }}
-          >
-            <ReadMoreText>Read more →</ReadMoreText>
-          </ReadMoreButton>
+          <ReadMore href={benefit.url} target="_blank">
+            Read more →
+          </ReadMore>
         </Benefit>
       ))}
     </StyledBenefits>

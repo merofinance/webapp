@@ -7,6 +7,7 @@ import { selectBalance, unstake, withdraw } from "../../features/user/userSlice"
 import { useDispatch, useSelector } from "react-redux";
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
+import { TokenValue } from "../../lib/token-value";
 
 const StyledProgressButtons = styled.div`
   width: 100%;
@@ -16,31 +17,31 @@ const StyledProgressButtons = styled.div`
 `;
 
 type Props = {
-  value: number;
+  value: TokenValue;
   pool: Pool;
   complete: () => void;
 };
 
-const WithdrawalButton = (props: Props) => {
+const WithdrawalButton = ({ value, pool, complete }: Props) => {
   const dispatch: AppDispatch = useDispatch();
   const backd = useBackd();
   const { loading, setLoading, handleTxDispatch } = useLoading();
-  const totalBalance = useSelector(selectBalance(props.pool));
-  const staked = useSelector(selectBalance(props.pool.stakerVaultAddress));
-  const availableToWithdraw = totalBalance - staked;
+  const totalBalance = useSelector(selectBalance(pool));
+  const staked = useSelector(selectBalance(pool.stakerVaultAddress));
+  const availableToWithdraw = totalBalance.sub(staked);
 
-  const executeWithdraw = async (amount: number) => {
-    dispatch(withdraw({ backd: backd!, pool: props.pool, amount })).then((v) => {
+  const executeWithdraw = async (amount: TokenValue) => {
+    dispatch(withdraw({ backd: backd!, pool: pool, amount })).then((v) => {
       handleTxDispatch({ status: v.meta.requestStatus, actionType: "withdraw" });
-      props.complete();
+      complete();
       setLoading(false);
     });
   };
 
   const executeUnstake = () => {
-    dispatch(unstake({ backd: backd!, pool: props.pool, amount: staked })).then((v) => {
+    dispatch(unstake({ backd: backd!, pool: pool, amount: staked })).then((v) => {
       handleTxDispatch({ status: v.meta.requestStatus, actionType: "unstake" });
-      props.complete();
+      complete();
       setLoading(false);
     });
   };
@@ -51,14 +52,14 @@ const WithdrawalButton = (props: Props) => {
         primary
         medium
         wide
-        text={`Withdraw ${props.pool.underlying.symbol.toUpperCase()}`}
+        text={`Withdraw ${pool.underlying.symbol.toUpperCase()}`}
         click={() => {
           if (!backd) return;
           setLoading(true);
-          if (props.value <= availableToWithdraw) executeWithdraw(props.value);
+          if (value.lte(availableToWithdraw)) executeWithdraw(value);
           else executeUnstake();
         }}
-        disabled={props.value === 0}
+        disabled={value.isZero()}
         loading={loading}
         hoverText={"Enter Amount"}
       />

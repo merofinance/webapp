@@ -5,7 +5,7 @@ import styled from "styled-components";
 import chevron from "../../assets/ui/chevron.svg";
 import Asset from "../../components/Asset";
 import Button from "../../components/Button";
-import GradientText from "../../styles/GradientText";
+import { GradientText } from "../../styles/GradientText";
 import { selectBalances } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
 import { formatPercent, numberToCompactCurrency } from "../../lib/numeric";
@@ -13,6 +13,7 @@ import { selectPoolPositions } from "../../features/positions/positionsSlice";
 import { Position } from "../../lib/types";
 import { selectPrice } from "../../features/pool/selectors";
 import { formatCurrency } from "../../lib/numeric";
+import { TokenValue } from "../../lib/token-value";
 
 type RowProps = {
   preview?: boolean;
@@ -129,8 +130,10 @@ const PoolsRow = ({ pool, preview }: Props) => {
   const balances = useSelector(selectBalances);
   const positions = useSelector(selectPoolPositions(pool));
 
-  const getBalance = (pool: Pool) => balances[pool.lpToken.address] || 0;
-  const locked = positions.reduce((a: number, b: Position) => b.maxTopUp + a, 0);
+  const balance = balances[pool.lpToken.address] || new TokenValue();
+  const locked = positions
+    .reduce((a: TokenValue, b: Position) => a.add(b.maxTopUp), new TokenValue())
+    .add(balance);
 
   return (
     <Row onClick={() => history.push(`/pool/${pool.lpToken.symbol}`)} preview={preview}>
@@ -142,7 +145,7 @@ const PoolsRow = ({ pool, preview }: Props) => {
       </Data>
       <Data>{numberToCompactCurrency(pool.totalAssets * price)}</Data>
       <DepositedData preview={preview}>
-        {formatCurrency((getBalance(pool) + locked) * price)}
+        {formatCurrency(Number(locked.toString()) * price)}
       </DepositedData>
       <ChevronData preview={preview}>
         <Chevron src={chevron} alt="right arrow" />
