@@ -12,9 +12,13 @@ const Header = styled.div`
   position: relative;
   width: 100%;
   padding: 0 1.6rem;
-  height: 6.6rem;
   display: flex;
   align-items: center;
+
+  height: 6.6rem;
+  @media (max-width: 600px) {
+    height: 5.6rem;
+  }
 `;
 
 const HeaderButton = styled.button`
