@@ -48,7 +48,7 @@ const StyledApp = styled.div`
   overflow: hidden;
 
   @media (max-width: 600px) {
-    padding: 0 3.3rem;
+    padding: 0 1.6rem;
     padding-bottom: 3.3rem;
   }
 
