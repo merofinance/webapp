@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Asset from "../../components/Asset";
 import Button from "../../components/Button";
 import { useDevice } from "../../lib/hooks";
+import { numberToCompactCurrency } from "../../lib/numeric";
 
 interface ClaimRowProps {
   index: number;
@@ -96,20 +97,20 @@ const ClaimRow = ({ index }: Props) => {
             decimals: 16,
           }}
           hideIcon={isMobile}
-          value={18}
+          value={18300000}
           small
+          compact
         />
-        <ValueUsd>=$120.00</ValueUsd>
+        <ValueUsd>{`=${numberToCompactCurrency(18300000)}`}</ValueUsd>
       </ValueContainer>
       <EndContainer>
+        {isDesktop && <Button text="Claim" background="#100830" width="12rem" primary={isMobile} />}
         <Button
-          text="Claim"
-          background="#100830"
-          width={isMobile ? "auto" : "12rem"}
-          small={isMobile}
-          primary={isMobile}
+          primary
+          text="Claim & Stake"
+          width={isMobile ? "auto" : "18rem"}
+          square={isMobile}
         />
-        {isDesktop && <Button primary text="Claim & Stake" width="18rem" />}
       </EndContainer>
     </StyledClaimRow>
   );
