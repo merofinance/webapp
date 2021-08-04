@@ -53,12 +53,13 @@ type Props = {
   large?: boolean;
   small?: boolean;
   value?: number;
+  hideIcon?: boolean;
 };
 
-const Asset = ({ token, large, small, value }: Props) => {
+const Asset = ({ token, large, small, value, hideIcon }: Props) => {
   return (
     <StyledAsset>
-      <Icon src={assets[token.symbol]} alt={`${token.symbol} icon`} />
+      {!hideIcon && <Icon src={assets[token.symbol]} alt={`${token.symbol} icon`} />}
       <Label large={large} small={small}>{`${value ? `${value} ` : ""}${token.symbol}`}</Label>
     </StyledAsset>
   );
