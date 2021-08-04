@@ -16,7 +16,7 @@ const StyledSummaryStatistics = styled.div`
     grid-template-columns: repeat(1, 1fr);
     grid-gap: 1rem;
     margin: 0;
-    margin-bottom: 5rem;
+    margin-bottom: 4rem;
   }
 `;
 
