@@ -66,7 +66,7 @@ const NavItems = () => {
   const history = useHistory();
 
   return (
-    <StyledNavItems>
+    <StyledNavItems id="nav-items">
       {LIVE && !STAKING_LIVE && (
         <NavItem>
           <Link onClick={() => history.push("/pools")}>pools</Link>
