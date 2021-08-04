@@ -22,11 +22,21 @@ const Buttons = styled.div`
   grid-gap: 1.5rem;
   margin-bottom: ${(props: ButtonsProps) => (props.stepsOnTop ? "0" : "1rem")};
   margin-top: ${(props: ButtonsProps) => (props.stepsOnTop ? "1.1rem" : "0")};
+
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap: 1.8rem;
+  }
 `;
 
 const ProgressContainer = styled.div`
   width: 100%;
   display: flex;
+
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const ProgressSection = styled.div`

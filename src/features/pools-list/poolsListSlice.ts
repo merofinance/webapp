@@ -62,17 +62,20 @@ export const poolsSlice = createSlice({
   },
 });
 
-export const fetchState = (backd: Backd): AppThunk => (dispatch) => {
-  dispatch(fetchPools({ backd })).then((v) => {
-    if (v.meta.requestStatus !== "fulfilled") return;
-    const pools = v.payload as Pool[];
-    dispatch(fetchBalances({ backd, pools }));
-    dispatch(fetchPrices({ backd, pools }));
-    dispatch(fetchAllowances({ backd, pools }));
-  });
-};
+export const fetchState =
+  (backd: Backd): AppThunk =>
+  (dispatch) => {
+    dispatch(fetchPools({ backd })).then((v) => {
+      if (v.meta.requestStatus !== "fulfilled") return;
+      const pools = v.payload as Pool[];
+      dispatch(fetchBalances({ backd, pools }));
+      dispatch(fetchPrices({ backd, pools }));
+      dispatch(fetchAllowances({ backd, pools }));
+    });
+  };
 
 export const selectPools = (state: RootState) => state.pools.pools;
+
 export const selectPrices = (state: RootState) => state.pools.prices;
 
 export default poolsSlice.reducer;

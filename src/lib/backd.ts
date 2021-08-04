@@ -8,8 +8,9 @@ import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
 import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFactory";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
 import { getPrices } from "./coingecko";
-import { DEFAULT_SCALE, ETH_DECIMALS, ETH_DUMMY_ADDRESS } from "./constants";
+import { ETH_DECIMALS, ETH_DUMMY_ADDRESS } from "./constants";
 import { bigNumberToFloat, floatToBigNumber, scale } from "./numeric";
+import { TokenValue } from "./token-value";
 import {
   Address,
   AllowanceQuery,
@@ -17,9 +18,9 @@ import {
   Pool,
   Position,
   Prices,
+  PlainPosition,
   Token,
   transformPool,
-  transformPosition,
 } from "./types";
 
 export type BackdOptions = {
@@ -30,18 +31,18 @@ export interface Backd {
   currentAccount(): Promise<Address>;
   listPools(): Promise<Pool[]>;
   getPoolInfo(address: Address): Promise<Pool>;
-  getPositions(): Promise<Position[]>;
+  getPositions(): Promise<PlainPosition[]>;
   registerPosition(pool: Pool, position: Position): Promise<ContractTransaction>;
   removePosition(account: Address, protocol: string): Promise<ContractTransaction>;
-  getBalance(address: Address, account?: Address): Promise<number>;
+  getBalance(address: Address, account?: Address): Promise<TokenValue>;
   getBalances(addresses: Address[], account?: Address): Promise<Balances>;
-  getAllowance(token: Token, spender: Address, account?: string): Promise<number>;
+  getAllowance(token: Token, spender: Address, account?: string): Promise<TokenValue>;
   getAllowances(queries: AllowanceQuery[]): Promise<Record<string, Balances>>;
   getPrices(symbol: string[]): Promise<Prices>;
-  approve(token: Token, spender: Address, amount: number): Promise<ContractTransaction>;
-  deposit(pool: Pool, amount: number): Promise<ContractTransaction>;
-  withdraw(poolAddress: Address, amount: number): Promise<ContractTransaction>;
-  unstake(vaultAddress: Address, amount: number): Promise<ContractTransaction>;
+  approve(token: Token, spender: Address, amount: TokenValue): Promise<ContractTransaction>;
+  deposit(pool: Pool, amount: TokenValue): Promise<ContractTransaction>;
+  withdraw(poolAddress: Address, amount: TokenValue): Promise<ContractTransaction>;
+  unstake(vaultAddress: Address, amount: TokenValue): Promise<ContractTransaction>;
 
   listSupportedProtocols(): Promise<string[]>;
 
@@ -140,33 +141,35 @@ export class Web3Backd implements Backd {
     return transformPool(rawPool, bigNumberToFloat);
   }
 
-  async getPositions(): Promise<Position[]> {
+  async getPositions(): Promise<PlainPosition[]> {
     const account = await this.currentAccount();
     const rawPositions = await this.topupAction.listPositions(account);
-    return rawPositions.map((rawPosition) => {
-      return transformPosition(
-        {
-          protocol: ethers.utils.parseBytes32String(rawPosition.protocol),
-          actionToken: rawPosition.record.actionToken,
-          depositToken: rawPosition.record.depositToken,
-          account: rawPosition.account,
-          threshold: rawPosition.record.threshold,
-          singleTopUp: rawPosition.record.singleTopUpAmount,
-          maxTopUp: rawPosition.record.totalTopUpAmount,
-          maxGasPrice: rawPosition.record.maxGasPrice.toNumber(),
-        },
-        bigNumberToFloat
-      );
-    });
+    return Promise.all(rawPositions.map((v: any) => this.getPositionInfo(v)));
+  }
+
+  async getPositionInfo(rawPosition: any): Promise<PlainPosition> {
+    const token = Ierc20FullFactory.connect(rawPosition.record.depositToken, this._provider);
+    const decimals = await token.decimals();
+    const position: PlainPosition = {
+      protocol: ethers.utils.parseBytes32String(rawPosition.protocol),
+      actionToken: rawPosition.record.actionToken,
+      depositToken: rawPosition.record.depositToken,
+      account: rawPosition.account,
+      threshold: bigNumberToFloat(rawPosition.record.threshold),
+      singleTopUp: new TokenValue(rawPosition.record.singleTopUpAmount, decimals).toPlain(),
+      maxTopUp: new TokenValue(rawPosition.record.totalTopUpAmount, decimals).toPlain(),
+      maxGasPrice: rawPosition.record.maxGasPrice.toNumber(),
+    };
+    return position;
   }
 
   async registerPosition(pool: Pool, position: Position): Promise<ContractTransaction> {
     const decimals = pool.underlying.decimals;
+    const scale = BigNumber.from(10).pow(decimals);
     const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
     const rawExchangeRate = await poolContract.exchangeRate();
     const protocol = utils.formatBytes32String(position.protocol);
-    const rawPosition = transformPosition(position, (v) => floatToBigNumber(v, decimals));
-    const depositAmount = rawPosition.maxTopUp.mul(rawExchangeRate).div(DEFAULT_SCALE);
+    const depositAmount = position.maxTopUp.value.mul(rawExchangeRate).div(scale);
 
     // TODO: allow to customize maxGasPrice, currently 200Gwei
     const maxGasPrice = BigNumber.from(200).mul(BigNumber.from(10).pow(9));
@@ -174,12 +177,12 @@ export class Web3Backd implements Backd {
     return this.topupAction.register(
       position.account,
       protocol,
-      rawPosition.threshold,
+      floatToBigNumber(position.threshold, decimals),
       pool.lpToken.address,
       depositAmount,
       pool.underlying.address,
-      rawPosition.singleTopUp,
-      rawPosition.maxTopUp,
+      position.singleTopUp.value,
+      position.maxTopUp.value,
       maxGasPrice
     );
   }
@@ -192,16 +195,16 @@ export class Web3Backd implements Backd {
     token: Pick<Token, "address" | "decimals">,
     spender: Address,
     account?: string
-  ): Promise<number> {
+  ): Promise<TokenValue> {
     if (!account) {
       account = await this.currentAccount();
     }
     if (token.address === ETH_DUMMY_ADDRESS) {
-      return Math.pow(10, 20);
+      return TokenValue.fromUnscaled(Math.pow(10, 20));
     }
     const tokenContract = Ierc20FullFactory.connect(token.address, this._provider);
     const rawAllowance = await tokenContract.allowance(account, spender);
-    return bigNumberToFloat(rawAllowance, token.decimals);
+    return new TokenValue(rawAllowance, token.decimals);
   }
 
   async getAllowances(queries: AllowanceQuery[]): Promise<Record<string, Balances>> {
@@ -218,41 +221,38 @@ export class Web3Backd implements Backd {
     return result;
   }
 
-  async approve(token: Token, spender: Address, amount: number): Promise<ContractTransaction> {
+  async approve(token: Token, spender: Address, amount: TokenValue): Promise<ContractTransaction> {
     const tokenContract = Ierc20FullFactory.connect(token.address, this._provider);
-    const scaledAmount = floatToBigNumber(amount, token.decimals);
-    return tokenContract.approve(spender, scaledAmount);
+    return tokenContract.approve(spender, amount.value);
   }
 
-  async deposit(pool: Pool, amount: number): Promise<ContractTransaction> {
+  async deposit(pool: Pool, amount: TokenValue): Promise<ContractTransaction> {
     const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
-    const scaledAmount = floatToBigNumber(amount);
-    const value = pool.underlying.address === ETH_DUMMY_ADDRESS ? scaledAmount : 0;
-    return poolContract["deposit(uint256)"](scaledAmount, { value });
+    const value = pool.underlying.address === ETH_DUMMY_ADDRESS ? amount.value : 0;
+    return poolContract["deposit(uint256)"](amount.value, { value });
   }
 
-  async withdraw(pool: Address, amount: number): Promise<ContractTransaction> {
+  async withdraw(pool: Address, amount: TokenValue): Promise<ContractTransaction> {
     const poolContract = LiquidityPoolFactory.connect(pool, this._provider);
-    const scaledAmount = floatToBigNumber(amount);
-    return poolContract["redeem(uint256)"](scaledAmount);
+    return poolContract["redeem(uint256)"](amount.value);
   }
 
-  async unstake(vault: Address, amount: number): Promise<ContractTransaction> {
+  async unstake(vault: Address, amount: TokenValue): Promise<ContractTransaction> {
     const vaultContract = StakerVaultFactory.connect(vault, this._provider);
-    const scaledAmount = floatToBigNumber(amount);
-    return vaultContract.unstake(scaledAmount);
+    return vaultContract.unstake(amount.value);
   }
 
-  async getBalance(address: string, account?: string): Promise<number> {
+  async getBalance(address: string, account?: string): Promise<TokenValue> {
     if (!account) {
       account = await this.currentAccount();
     }
     if (address === ETH_DUMMY_ADDRESS) {
-      return this.provider.getBalance(account).then(bigNumberToFloat);
+      return new TokenValue(await this.provider.getBalance(account));
     }
     const token = Ierc20FullFactory.connect(address, this._provider);
+    const decimals = await token.decimals();
     const rawBalance = await token.balanceOf(account);
-    return bigNumberToFloat(rawBalance);
+    return new TokenValue(rawBalance, decimals);
   }
 
   async getBalances(addresses: string[], account?: string): Promise<Balances> {

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router";
 import styled from "styled-components";
 import logo from "../assets/logo.svg";
 import Connector from "./Connector";
@@ -46,8 +45,6 @@ const Logo = styled.img`
 `;
 
 const Header = () => {
-  const history = useHistory();
-
   const [scrollPosition, setScrollPosition] = useState(0);
 
   const handleScroll = () => {
@@ -65,7 +62,9 @@ const Header = () => {
 
   return (
     <StyledHeader isSticky={scrollPosition > 40}>
-      <Logo onClick={() => history.push("/")} src={logo} alt="Backd logo" />
+      <a href="/">
+        <Logo src={logo} alt="Backd logo" />
+      </a>
       <NavItems />
       <Connector />
     </StyledHeader>

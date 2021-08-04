@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import close from "../assets/ui/close.svg";
+import { useDevice } from "../lib/hooks";
 import Button from "./Button";
 
 const StyledPopup = styled.div`
@@ -31,6 +32,10 @@ const PopupContainer = styled.div`
   padding: 3.7rem 1.6rem 2.3rem 1.6rem;
   border-radius: 1.4rem;
   background-color: #252140;
+
+  @media (max-width: 600px) {
+    margin: 0 1rem;
+  }
 `;
 
 const Exit = styled.img`
@@ -43,18 +48,29 @@ const Exit = styled.img`
 
 const Header = styled.div`
   font-weight: 700;
-  font-size: 3.6rem;
   line-height: 4.2rem;
   text-align: center;
+
   margin-bottom: 2.5rem;
+  font-size: 3.6rem;
+  @media (max-width: 600px) {
+    margin-bottom: 2rem;
+    font-size: 2.7rem;
+    margin-top: 2rem;
+  }
 `;
 
 const ButtonContainer = styled.div`
   width: 100%;
   display: grid;
+  margin-top: 2.4rem;
+
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 1.7rem;
-  margin-top: 2.4rem;
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 1.8rem;
+  }
 `;
 
 type Props = {
@@ -68,6 +84,8 @@ type Props = {
 };
 
 const Popup = (props: Props): JSX.Element => {
+  const { isMobile } = useDevice();
+
   if (!props.show) return <></>;
 
   return (
@@ -79,7 +97,12 @@ const Popup = (props: Props): JSX.Element => {
         {props.content && props.content}
         {props.confirm && props.submit && (
           <ButtonContainer>
-            <Button medium background="#252140" text="Cancel" click={props.close} />
+            <Button
+              medium
+              background="#252140"
+              text={isMobile ? "Back" : "Cancel"}
+              click={props.close}
+            />
             <Button
               primary
               medium

@@ -17,6 +17,10 @@ const linkLists: LinkListType[] = [
     header: "community",
     links: [
       {
+        label: "Discord",
+        link: "https://discord.gg/jpGvaFV3Rv",
+      },
+      {
         label: "Twitter",
         link: "https://twitter.com/backdfund",
       },
@@ -41,10 +45,10 @@ const linkLists: LinkListType[] = [
         label: "Blog",
         link: "https://backdfund.medium.com/",
       },
-      // {
-      //   label: "Fact Sheet",
-      //   link: "/fact-sheet.pdf",
-      // },
+      {
+        label: "Fact Sheet",
+        link: "/fact-sheet.pdf",
+      },
     ],
   },
   {
@@ -125,7 +129,7 @@ const Footer = () => {
         <LinkList key={linkList.header}>
           <LinkHeader>{linkList.header}</LinkHeader>
           {linkList.links.map((link: LinkType) => (
-            <Link key={link.label} href={link.link} target="_blank">
+            <Link id={`Footer - ${link.label}`} key={link.label} href={link.link} target="_blank">
               {link.label}
             </Link>
           ))}

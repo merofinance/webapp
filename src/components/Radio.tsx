@@ -99,6 +99,7 @@ const Radio = (props: Props) => {
       {props.options.map((option: RadioOptionType) => (
         <RadioOption
           key={option.label}
+          id={`Radio Option - ${option.value}`}
           onClick={() => props.setOption(option.value)}
           active={option.value === props.active}
         >

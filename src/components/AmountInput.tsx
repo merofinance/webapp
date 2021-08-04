@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { formatCrypto } from "../lib/numeric";
+import { TokenValue } from "../lib/token-value";
+import { Token } from "../lib/types";
 import AmountSlider from "./AmountSlider";
 import Input from "./Input";
 
@@ -22,24 +23,29 @@ const Available = styled.div`
 `;
 
 type Props = {
+  token: Token;
   value: string;
   setValue: (v: string) => void;
   label: string;
-  max: number;
+  max: TokenValue;
   noSlider?: boolean;
 };
 
-const AmountInput = ({ value, setValue, label, max, noSlider }: Props) => {
+const AmountInput = ({ token, value, setValue, label, max, noSlider }: Props) => {
   const error = () => {
-    const amount = Number(value);
-    if (amount < 0) return "Amount must be a positive number";
-    if (amount > max) return "Amount exceeds available balance";
-    return "";
+    if (value && Number(value) <= 0) return "Amount must be a positive number";
+    try {
+      const amount = TokenValue.fromUnscaled(value, token.decimals);
+      if (amount.gt(max)) return "Amount exceeds available balance";
+      return "";
+    } catch {
+      return "Invalid number";
+    }
   };
 
   return (
     <StyledAmountInput>
-      <Available>{`Available: ${formatCrypto(max)}`}</Available>
+      <Available>{`Available: ${max.toCryptoString()}`}</Available>
       <Input
         valid={!error()}
         label={label}

@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import Accordion from "../../components/Accordion";
+import AccordionChevron from "../../components/AccordionChevron";
 import Asset from "../../components/Asset";
 import Button from "../../components/Button";
-import GradientText from "../../styles/GradientText";
-import accordionChevron from "../../assets/ui/accordion-chevron.svg";
+import { GradientText } from "../../styles/GradientText";
 import ClaimRow from "./ClaimRow";
 
 const Header = styled.div`
@@ -58,20 +58,6 @@ const EndContainer = styled.div`
   }
 `;
 
-interface ArrowProps {
-  open: boolean;
-}
-
-const Arrow = styled.img`
-  width: 1.2rem;
-  margin-right: 1.6rem;
-  margin-left: 3.2rem;
-  transition: transform 0.3s;
-  transform: ${(props: ArrowProps) => (props.open ? "rotate(0deg)" : "rotate(180deg)")};
-  user-drag: none;
-  user-select: none;
-`;
-
 const ContentContainer = styled.div`
   width: 100%;
   display: flex;
@@ -119,7 +105,7 @@ const ClaimAccordion = ({ open, toggle, rows }: Props) => {
           <EndContainer>
             <Button text="Claim all" background="#1c0c37" width="12rem" />
             <Button primary text="Claim all & Stake" width="18rem" />
-            <Arrow open={open} src={accordionChevron} />
+            <AccordionChevron open={open} />
           </EndContainer>
         </Header>
       }

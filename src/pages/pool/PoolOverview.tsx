@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Pool } from "../../lib";
-import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 import Overview from "../../components/Overview";
 import { selectPrice } from "../../features/pool/selectors";
 import { formatPercent, numberToCompactCurrency } from "../../lib/numeric";
@@ -20,17 +19,17 @@ const PoolOverview = ({ pool }: Props) => {
       rows={[
         {
           label: "Pool TVL",
-          tooltip: PLACEHOLDER_TOOLTIP,
+          tooltip: "The market capitalization of assets held in the pool (total value locked)",
           value: numberToCompactCurrency(locked),
         },
         {
           label: "APY",
-          tooltip: PLACEHOLDER_TOOLTIP,
+          tooltip: "The current annual percent yield earned by pool LPs",
           value: formatPercent(pool.apy),
         },
         {
           label: "Strategy",
-          tooltip: PLACEHOLDER_TOOLTIP,
+          tooltip: "The current protocol funds are allocated to for yield farming strategies",
           value: pool.name,
         },
       ]}

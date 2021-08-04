@@ -2,13 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import Accordion from "../../components/Accordion";
 import Asset from "../../components/Asset";
-import GradientText from "../../styles/GradientText";
-import accordionChevron from "../../assets/ui/accordion-chevron.svg";
+import { GradientText } from "../../styles/GradientText";
 import Tabs from "../../components/Tabs";
 import StakeTokens from "./StakeTokens";
 import { Token } from "../../lib/types";
 import { ETH_DUMMY_ADDRESS } from "../../lib/constants";
 import UnstakeTokens from "./UnstakeTokens";
+import AccordionChevron from "../../components/AccordionChevron";
 
 const Header = styled.div`
   position: relative;
@@ -92,20 +92,6 @@ const EndContainer = styled.div`
   }
 `;
 
-interface ArrowProps {
-  open: boolean;
-}
-
-const Arrow = styled.img`
-  width: 1.2rem;
-  margin-right: 1.6rem;
-  margin-left: 3.2rem;
-  transition: transform 0.3s;
-  transform: ${(props: ArrowProps) => (props.open ? "rotate(0deg)" : "rotate(180deg)")};
-  user-drag: none;
-  user-select: none;
-`;
-
 const ContentContainer = styled.div`
   width: 100%;
   display: flex;
@@ -143,7 +129,7 @@ const StakeAccordion = ({ open, toggle }: Props) => {
           </ValueContainer>
           <Tvl>$30,034</Tvl>
           <EndContainer>
-            <Arrow open={open} src={accordionChevron} />
+            <AccordionChevron open={open} />
           </EndContainer>
         </Header>
       }

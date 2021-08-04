@@ -1,70 +1,51 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import arrow from "../assets/ui/arrow.svg";
+import { FormControl, makeStyles, MenuItem, Select } from "@material-ui/core";
+import React from "react";
 
-const StyledDropdown = styled.div`
-  position: relative;
-`;
+const useStyles = makeStyles(() => ({
+  formControl: {
+    margin: 1,
+    minWidth: 120,
+    color: "red",
+  },
+  select: {
+    color: "var(--main)",
+    marginTop: 2,
+    fontWeight: 400,
+    letterSpacing: 0.15,
+    textTransform: "capitalize",
+    marginRight: 10,
 
-const Button = styled.button`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-`;
+    fontSize: 16,
+    // eslint-disable-next-line no-useless-computed-key
+    ["@media (max-width:600px)"]: {
+      fontSize: 12,
+    },
+  },
+  icon: {
+    transform: "scale(1.5) translate(-4px, 2px)",
+  },
+  dropdownStyle: {
+    backgroundColor: "#433b6b",
+  },
+  menuItem: {
+    color: "var(--main)",
+    fontWeight: 400,
+    letterSpacing: 0.15,
+    textTransform: "capitalize",
+    transition: "all 0.3s",
 
-const Label = styled.div`
-  font-weight: 400;
-  font-size: 1.6rem;
-  letter-spacing: 0.15px;
-  margin-right: 1rem;
-  text-transform: capitalize;
-`;
+    fontSize: 16,
+    // eslint-disable-next-line no-useless-computed-key
+    ["@media (max-width:600px)"]: {
+      fontSize: 12,
+      minHeight: 0,
+    },
 
-type ArrowProps = {
-  open: boolean;
-};
-
-const Arrow = styled.img`
-  width: 10px;
-  transform: ${(props: ArrowProps) => (props.open ? "rotate(0deg)" : "rotate(180deg)")};
-`;
-
-const ExitEvent = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-`;
-
-const Popup = styled.div`
-  position: absolute;
-  left: 0;
-  top: 50%;
-  background-color: #433b6b;
-  border-radius: 4px;
-  padding: 0.8rem 0;
-  display: flex;
-  flex-direction: column;
-  z-index: 1;
-`;
-
-const Option = styled.button`
-  width: 100%;
-  padding: 0.6rem 2.4rem 0.6rem 1.6rem;
-  font-weight: 400;
-  font-size: 1.6rem;
-  letter-spacing: 0.15px;
-  transition: all 0.1s;
-  text-align: left;
-  text-transform: capitalize;
-  line-height: 24px;
-  cursor: pointer;
-
-  :hover {
-    background-color: rgba(255, 255, 255, 0.2);
-  }
-`;
+    "&:hover": {
+      backgroundColor: "rgba(255, 255, 255, 0.2)",
+    },
+  },
+}));
 
 type Props = {
   value: string;
@@ -72,34 +53,30 @@ type Props = {
   setValue: (v: string) => void;
 };
 
-const Dropdown = (props: Props) => {
-  const [popupOpen, setPopupOpen] = useState(false);
+const Dropdown = ({ value, options, setValue }: Props) => {
+  const classes = useStyles();
 
   return (
-    <StyledDropdown>
-      <Button onClick={() => setPopupOpen(true)}>
-        <Label>{props.value ? props.value : "Choose"}</Label>
-        <Arrow src={arrow} open={popupOpen} alt="arrow" />
-      </Button>
-      {popupOpen && (
-        <>
-          <ExitEvent onClick={() => setPopupOpen(false)} />
-          <Popup>
-            {props.options.map((option: string) => (
-              <Option
-                key={option}
-                onClick={() => {
-                  props.setValue(option);
-                  setPopupOpen(false);
-                }}
-              >
-                {option}
-              </Option>
-            ))}
-          </Popup>
-        </>
-      )}
-    </StyledDropdown>
+    <FormControl className={classes.formControl}>
+      <Select
+        value={value}
+        onChange={(event: any) => setValue(event.target.value)}
+        displayEmpty
+        className={classes.select}
+        MenuProps={{ classes: { paper: classes.dropdownStyle } }}
+        classes={{ icon: classes.icon }}
+        disableUnderline
+      >
+        <MenuItem value="" className={classes.menuItem}>
+          choose
+        </MenuItem>
+        {options.map((option: string) => (
+          <MenuItem key={option} value={option} className={classes.menuItem}>
+            {option}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   );
 };
 

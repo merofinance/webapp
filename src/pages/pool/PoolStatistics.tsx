@@ -4,9 +4,9 @@ import Statistics from "../../components/Statistics";
 import { Pool, Position } from "../../lib/types";
 import { selectPrice } from "../../features/pool/selectors";
 import { selectBalance } from "../../features/user/userSlice";
-import { PLACEHOLDER_TOOLTIP } from "../../lib/constants";
 import { selectPoolPositions } from "../../features/positions/positionsSlice";
 import { formatCurrency } from "../../lib/numeric";
+import { TokenValue } from "../../lib/token-value";
 
 type Props = {
   pool: Pool;
@@ -17,25 +17,29 @@ const PoolStatistics = ({ pool }: Props) => {
   const balance = useSelector(selectBalance(pool));
   const positions = useSelector(selectPoolPositions(pool));
 
-  const locked = positions.reduce((a: number, b: Position) => b.maxTopUp * price + a, 0);
-  const deposits = balance * price + locked;
+  const locked = positions.reduce(
+    (a: TokenValue, b: Position) => a.add(b.maxTopUp.mul(price)),
+    new TokenValue()
+  );
+  const deposits = locked.add(balance.mul(price));
 
   return (
     <Statistics
       statistics={[
         {
           header: "Your deposits",
-          tooltip: PLACEHOLDER_TOOLTIP,
-          value: formatCurrency(deposits),
+          tooltip: "The current value of your assets held in Backd liquidity pools",
+          value: formatCurrency(Number(deposits.toString())),
         },
         {
           header: "Locked in position",
-          tooltip: PLACEHOLDER_TOOLTIP,
-          value: formatCurrency(locked),
+          tooltip:
+            "The current value of your assets registered for top-ups (liquidation protection)",
+          value: formatCurrency(Number(locked.toString())),
         },
         // {
         //   header: "Rewards accrued",
-        //   tooltip: PLACEHOLDER_TOOLTIP,
+        //   tooltip: "The current value of earned rewards that have yet to be claimed",
         //   value: formatCurrency(0),
         // },
       ]}

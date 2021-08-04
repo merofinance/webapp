@@ -3,9 +3,8 @@ import styled from "styled-components";
 import background from "../../assets/audit/background.svg";
 import chainSecurityMobile from "../../assets/audit/chain-security-mobile.svg";
 import chainSecurity from "../../assets/audit/chain-security.svg";
-import GradientText from "../../styles/GradientText";
-import { openAndFocusWindow } from "../../lib/browser";
 import { useIsLive } from "../../lib/hooks";
+import { GradientLink } from "../../styles/GradientText";
 
 const StyledAuditedBy = styled.div`
   width: 100%;
@@ -91,7 +90,7 @@ const Description = styled.div`
   }
 `;
 
-const ViewReport = styled(GradientText)`
+const ViewReport = styled(GradientLink)`
   font-weight: 700;
   font-size: 1.8rem;
   cursor: pointer;
@@ -131,11 +130,7 @@ const AuditedBy = () => {
             corporations.
           </Description>
           {live && (
-            <ViewReport
-              onClick={() => {
-                openAndFocusWindow("", "_blank");
-              }}
-            >
+            <ViewReport href="" target="_blank">
               View Report →
             </ViewReport>
           )}
