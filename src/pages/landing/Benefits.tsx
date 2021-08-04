@@ -3,7 +3,7 @@ import styled from "styled-components";
 import percent from "../../assets/benefits/percent.svg";
 import plus from "../../assets/benefits/plus.svg";
 import shield from "../../assets/benefits/shield.svg";
-import GradientText from "../../styles/GradientText";
+import { GradientLink } from "../../styles/GradientText";
 import { Header4, Header5 } from "../../styles/Headers";
 
 type BenfitsType = {
@@ -131,20 +131,14 @@ const IconGlassGradient = styled.div`
   transform: rotate(${(props: IconGlassGradientProps) => props.rotate}deg);
 `;
 
-const ReadMoreLink = styled.a`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
+const ReadMore = styled(GradientLink)`
+  font-weight: 400;
+  font-size: 2.1rem;
   transition: all 0.3s;
 
   :hover {
     opacity: 0.7;
   }
-`;
-
-const ReadMoreText = styled(GradientText)`
-  font-weight: 400;
-  font-size: 2.1rem;
 
   @media (max-width: 600px) {
     display: none;
@@ -184,9 +178,9 @@ const Benefits = () => {
           </IconGlass>
           <Header4>{benefit.header}</Header4>
           <Header5>{benefit.content}</Header5>
-          <ReadMoreLink href={benefit.url} target="_blank">
-            <ReadMoreText>Read more →</ReadMoreText>
-          </ReadMoreLink>
+          <ReadMore href={benefit.url} target="_blank">
+            Read more →
+          </ReadMore>
         </Benefit>
       ))}
     </StyledBenefits>
