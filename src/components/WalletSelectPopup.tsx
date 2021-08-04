@@ -2,6 +2,7 @@ import { useWeb3React } from "@web3-react/core";
 import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import LaunchIcon from "@material-ui/icons/Launch";
 import { AbstractConnector } from "@web3-react/abstract-connector";
 import { injectedConnector, walletConnectConnector } from "../app/web3";
 import metamask from "../assets/wallets/metamask.svg";
@@ -44,7 +45,12 @@ const Content = styled.div`
 const SubHeaderContainer = styled.div`
   display: flex;
   margin: auto;
+
   margin-bottom: 6rem;
+  @media (max-width: 600px) {
+    flex-direction: column;
+    margin-bottom: 2rem;
+  }
 `;
 
 const SubHeader = styled.div`
@@ -54,6 +60,10 @@ const SubHeader = styled.div`
   letter-spacing: 0.15px;
   text-align: center;
   margin-right: 0.5rem;
+
+  @media (max-width: 600px) {
+    margin-bottom: 0.2rem;
+  }
 `;
 
 const Highlight = styled.a`
@@ -67,6 +77,11 @@ const Highlight = styled.a`
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+
+  > svg {
+    margin-left: 0.3rem;
+    transform: translateY(2px);
+  }
 `;
 
 type OptionProps = {
@@ -76,7 +91,6 @@ type OptionProps = {
 
 const Option = styled.button`
   width: 100%;
-  padding: 1.9rem 2.2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -88,12 +102,22 @@ const Option = styled.button`
   );
   margin-top: 1.2rem;
   cursor: pointer;
+
+  padding: 1.9rem 2.2rem;
+  @media (max-width: 600px) {
+    padding: 1.5rem 2rem;
+  }
 `;
 
 const Name = styled.div`
+  line-height: 2.8rem;
+
   font-weight: 700;
   font-size: 2.1rem;
-  line-height: 2.8rem;
+  @media (max-width: 600px) {
+    font-weight: 700;
+    font-size: 2rem;
+  }
 `;
 
 const IconContainer = styled.div`
@@ -138,6 +162,7 @@ const WalletSelectPopup = (props: Props) => {
               target="_blank"
             >
               Find out about wallets
+              <LaunchIcon style={{ fill: "var(--secondary)" }} />
             </Highlight>
           </SubHeaderContainer>
 

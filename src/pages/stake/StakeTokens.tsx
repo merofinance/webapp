@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import AmountInput from "../../components/AmountInput";
 import MultiStepButtons from "../../components/MultiStepButtons";
+import LaunchIcon from "@material-ui/icons/Launch";
 import { selectBalance } from "../../features/user/userSlice";
 import { Token } from "../../lib/types";
 import GradientText from "../../styles/GradientText";
@@ -59,10 +60,14 @@ const StakeTokens = ({ token }: Props) => {
     <StyledStakeTokens>
       <Description>
         Stake BKD and earn a share in x% of platform revenue, paid out in bkdDAI tokens.{" "}
-        <MoreLink>More</MoreLink>
+        <MoreLink>
+          More
+          <LaunchIcon style={{ fill: "var(--secondary)" }} />
+        </MoreLink>
       </Description>
       <Content>
         <AmountInput
+          token={token}
           noSlider
           value={value}
           setValue={(v: string) => setValue(v)}

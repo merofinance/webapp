@@ -2,13 +2,26 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, Selector } from "../../app/store";
 import { Backd } from "../../lib/backd";
 import { ETH_DUMMY_ADDRESS } from "../../lib/constants";
-import { Address, AllowanceQuery, Balances, Optional, Pool, Token } from "../../lib/types";
+import { PlainTokenValue, TokenValue } from "../../lib/token-value";
+import {
+  Address,
+  AllowanceQuery,
+  Balances,
+  fromPlainBalances,
+  Optional,
+  Pool,
+  toPlainAllowances,
+  toPlainBalances,
+  PlainAllowances,
+  PlainBalances,
+  Token,
+} from "../../lib/types";
 import { fetchPool } from "../pools-list/poolsListSlice";
 import { handleTransactionConfirmation } from "../transactions-list/transactionsUtils";
 
 interface UserState {
-  balances: Balances;
-  allowances: Record<string, Balances>;
+  balances: PlainBalances;
+  allowances: PlainAllowances;
 }
 
 const initialState: UserState = {
@@ -24,7 +37,8 @@ export const fetchBalances = createAsyncThunk(
       p.underlying.address,
       p.stakerVaultAddress,
     ]);
-    return backd.getBalances(allTokens);
+    const balances = await backd.getBalances(allTokens);
+    return toPlainBalances(balances);
   }
 );
 
@@ -45,14 +59,15 @@ export const fetchAllowances = createAsyncThunk(
         token: { address: pool.stakerVaultAddress, decimals: pool.underlying.decimals },
       },
     ]);
-    return backd.getAllowances(queries);
+    const allowances = await backd.getAllowances(queries);
+    return toPlainAllowances(allowances);
   }
 );
 
-type ApproveArgs = { backd: Backd; token: Token; spender: Address; amount: number };
-type DepositArgs = { backd: Backd; pool: Pool; amount: number };
-type WithdrawArgs = { backd: Backd; pool: Pool; amount: number };
-type UnstakeArgs = { backd: Backd; pool: Pool; amount: number };
+type ApproveArgs = { backd: Backd; token: Token; spender: Address; amount: TokenValue };
+type DepositArgs = { backd: Backd; pool: Pool; amount: TokenValue };
+type WithdrawArgs = { backd: Backd; pool: Pool; amount: TokenValue };
+type UnstakeArgs = { backd: Backd; pool: Pool; amount: TokenValue };
 
 export const userSlice = createSlice({
   name: "user",
@@ -60,7 +75,7 @@ export const userSlice = createSlice({
   reducers: {
     setAllowance: (
       state,
-      action: PayloadAction<{ token: Token; spender: Address; amount: number }>
+      action: PayloadAction<{ token: Token; spender: Address; amount: PlainTokenValue }>
     ) => {
       const { spender, token, amount } = action.payload;
       if (!state.allowances[token.address]) {
@@ -70,14 +85,17 @@ export const userSlice = createSlice({
     },
     decreaseAllowance: (
       state,
-      action: PayloadAction<{ token: Token; spender: Address; amount: number }>
+      action: PayloadAction<{ token: Token; spender: Address; amount: PlainTokenValue }>
     ) => {
       const { spender, token, amount } = action.payload;
       // NOTE: we do not want to touch "allowances" from Eth based pools
       if (token.address === ETH_DUMMY_ADDRESS) return;
 
-      const allowance = state.allowances[token.address][spender] || 0;
-      state.allowances[token.address][spender] = Math.max(0, allowance - amount);
+      const allowance = TokenValue.fromPlain(state.allowances[token.address][spender]);
+      const value = allowance.sub(TokenValue.fromPlain(amount));
+      state.allowances[token.address][spender] = value.isNegative()
+        ? new TokenValue().toPlain()
+        : value.toPlain();
     },
   },
   extraReducers: (builder) => {
@@ -108,9 +126,9 @@ export const approve = createAsyncThunk(
     const tx = await backd.approve(token, spender, amount);
     handleTransactionConfirmation(
       tx,
-      { action: "Approve", args: { spender, amount, token } },
+      { action: "Approve", args: { spender, amount: amount.toPlain(), token } },
       dispatch,
-      [setAllowance({ token, spender, amount })]
+      [setAllowance({ token, spender, amount: amount.toPlain() })]
     );
     return tx.hash;
   }
@@ -120,11 +138,20 @@ export const deposit = createAsyncThunk(
   "user/deposit",
   async ({ backd, pool, amount }: DepositArgs, { dispatch }) => {
     const tx = await backd.deposit(pool, amount);
-    handleTransactionConfirmation(tx, { action: "Deposit", args: { pool, amount } }, dispatch, [
-      fetchBalances({ backd, pools: [pool] }),
-      fetchPool({ backd, poolAddress: pool.address }),
-      decreaseAllowance({ token: pool.underlying, spender: pool.address, amount }),
-    ]);
+    handleTransactionConfirmation(
+      tx,
+      { action: "Deposit", args: { pool, amount: amount.toPlain() } },
+      dispatch,
+      [
+        fetchBalances({ backd, pools: [pool] }),
+        fetchPool({ backd, poolAddress: pool.address }),
+        decreaseAllowance({
+          token: pool.underlying,
+          spender: pool.address,
+          amount: amount.toPlain(),
+        }),
+      ]
+    );
     return tx.hash;
   }
 );
@@ -133,10 +160,12 @@ export const withdraw = createAsyncThunk(
   "user/withdraw",
   async ({ backd, pool, amount }: WithdrawArgs, { dispatch }) => {
     const tx = await backd.withdraw(pool.address, amount);
-    handleTransactionConfirmation(tx, { action: "Withdraw", args: { pool, amount } }, dispatch, [
-      fetchBalances({ backd, pools: [pool] }),
-      fetchPool({ backd, poolAddress: pool.address }),
-    ]);
+    handleTransactionConfirmation(
+      tx,
+      { action: "Withdraw", args: { pool, amount: amount.toPlain() } },
+      dispatch,
+      [fetchBalances({ backd, pools: [pool] }), fetchPool({ backd, poolAddress: pool.address })]
+    );
     return tx.hash;
   }
 );
@@ -145,44 +174,51 @@ export const unstake = createAsyncThunk(
   "user/unstake",
   async ({ backd, pool, amount }: UnstakeArgs, { dispatch }) => {
     const tx = await backd.unstake(pool.stakerVaultAddress, amount);
-    handleTransactionConfirmation(tx, { action: "Unstake", args: { pool, amount } }, dispatch, [
-      fetchBalances({ backd, pools: [pool] }),
-    ]);
+    handleTransactionConfirmation(
+      tx,
+      { action: "Unstake", args: { pool, amount: amount.toPlain() } },
+      dispatch,
+      [fetchBalances({ backd, pools: [pool] })]
+    );
     return tx.hash;
   }
 );
 
-export const selectBalances = (state: RootState) => state.user.balances;
+export const selectBalances = (state: RootState): Balances =>
+  fromPlainBalances(state.user.balances);
 
-export function selectBalance(pool: Optional<Pool>): Selector<number>;
-export function selectBalance(address: string): Selector<number>;
-export function selectBalance(addressOrPool: string | Optional<Pool>): Selector<number> {
+export function selectBalance(pool: Optional<Pool>): Selector<TokenValue>;
+export function selectBalance(address: string): Selector<TokenValue>;
+export function selectBalance(addressOrPool: string | Optional<Pool>): Selector<TokenValue> {
   return (state: RootState) => {
-    if (!addressOrPool) {
-      return 0;
-    }
-    if (typeof addressOrPool === "string") {
-      return state.user.balances[addressOrPool] || 0;
-    }
-    const lpTokenBalance = state.user.balances[addressOrPool.lpToken.address] || 0;
-    const stakedBalance = state.user.balances[addressOrPool.stakerVaultAddress] || 0;
-    return lpTokenBalance + stakedBalance;
+    if (!addressOrPool) return new TokenValue();
+    if (typeof addressOrPool === "string")
+      return TokenValue.fromPlain(state.user.balances[addressOrPool]);
+
+    const lpTokenBalance = TokenValue.fromPlain(state.user.balances[addressOrPool.lpToken.address]);
+    const stakedBalance = TokenValue.fromPlain(
+      state.user.balances[addressOrPool.stakerVaultAddress]
+    );
+    return lpTokenBalance.add(stakedBalance);
   };
 }
 
-export function selectDepositAllowance(pool: Pool): Selector<number> {
+export function selectDepositAllowance(pool: Pool): Selector<TokenValue> {
   return (state: RootState) => {
-    return state.user.allowances[pool.underlying.address]?.[pool.address] || 0;
+    return TokenValue.fromPlain(state.user.allowances[pool.underlying.address]?.[pool.address]);
   };
 }
-export function selectToupAllowance(backd: Backd | undefined, pool: Pool): Selector<number> {
+export function selectToupAllowance(backd: Backd | undefined, pool: Pool): Selector<TokenValue> {
   return (state: RootState) => {
-    if (!backd) return 0;
-    const lpTokenAllowance =
-      state.user.allowances[pool.lpToken.address]?.[backd.topupActionAddress] || 0;
-    const vaultAllowance =
-      state.user.allowances[pool.stakerVaultAddress]?.[backd.topupActionAddress] || 0;
-    return lpTokenAllowance + vaultAllowance;
+    if (!backd) return new TokenValue();
+
+    const lpTokenAllowance = TokenValue.fromPlain(
+      state.user.allowances[pool.lpToken.address]?.[backd.topupActionAddress]
+    );
+    const vaultAllowance = TokenValue.fromPlain(
+      state.user.allowances[pool.stakerVaultAddress]?.[backd.topupActionAddress]
+    );
+    return lpTokenAllowance.add(vaultAllowance);
   };
 }
 

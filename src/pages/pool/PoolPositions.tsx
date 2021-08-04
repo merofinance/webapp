@@ -49,7 +49,7 @@ const StyledPositions = styled.div`
   @media (max-width: 600px) {
     width: calc(100% + 3.2rem);
     overflow-x: auto;
-    transform: translateX(-1.6rem);
+    left: -1.6rem;
   }
 `;
 
