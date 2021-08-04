@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
 import MultiStepButtons from "../../components/MultiStepButtons";
-import { ETH_DUMMY_ADDRESS } from "../../lib/constants";
+import { ETH_DUMMY_ADDRESS, INFINITE_APPROVE_AMMOUNT } from "../../lib/constants";
 import Button from "../../components/Button";
 
 type Props = {
@@ -23,11 +23,13 @@ const DepositButtons = ({ value, pool, complete }: Props) => {
   const approved = approvedToDeposit >= value;
 
   const executeApprove = async () => {
+    console.log("meow");
     if (!backd || approved) return;
+    console.log("woof");
     const approveAction = approve({
       token: pool.underlying,
       spender: pool.address,
-      amount: value,
+      amount: INFINITE_APPROVE_AMMOUNT,
       backd: backd,
     });
     const v = await dispatch(approveAction);
