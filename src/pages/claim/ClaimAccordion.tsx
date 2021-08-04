@@ -36,9 +36,13 @@ const ClaimableContainer = styled.div`
 
 const Claimable = styled(GradientText)`
   font-weight: 700;
-  font-size: 1.8rem;
   line-height: 2.7rem;
   letter-spacing: 0.15px;
+
+  font-size: 1.8rem;
+  @media (max-width: 600px) {
+    font-size: 1.6rem;
+  }
 `;
 
 const Apr = styled.div`
