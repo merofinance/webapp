@@ -8,7 +8,7 @@ import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
 import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFactory";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
 import { getPrices } from "./coingecko";
-import { ETH_DECIMALS, ETH_DUMMY_ADDRESS } from "./constants";
+import { ETH_DECIMALS, ETH_DUMMY_ADDRESS, INFINITE_APPROVE_AMMOUNT } from "./constants";
 import { bigNumberToFloat, floatToBigNumber, scale } from "./numeric";
 import { TokenValue } from "./token-value";
 import {
@@ -198,7 +198,7 @@ export class Web3Backd implements Backd {
       account = await this.currentAccount();
     }
     if (token.address === ETH_DUMMY_ADDRESS) {
-      return TokenValue.fromUnscaled(Math.pow(10, 20));
+      return TokenValue.fromUnscaled(INFINITE_APPROVE_AMMOUNT);
     }
     const tokenContract = Ierc20FullFactory.connect(token.address, this._provider);
     const rawAllowance = await tokenContract.allowance(account, spender);
