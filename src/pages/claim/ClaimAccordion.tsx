@@ -83,12 +83,13 @@ const Breakdown = styled.div`
   line-height: 2.4rem;
   letter-spacing: 0.15px;
   opacity: 0.6;
-  margin-bottom: 2.4rem;
   margin-left: 1.6rem;
 
   font-size: 1.6rem;
+  margin-bottom: 2.4rem;
   @media (max-width: 600px) {
     font-size: 1.2rem;
+    margin-bottom: 1rem;
   }
 `;
 
