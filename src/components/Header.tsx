@@ -28,7 +28,7 @@ const StyledHeader = styled.div`
   box-shadow: -4px 0px 4px rgba(0, 0, 0, ${(props: HeaderProps) => (props.isSticky ? "0.25" : "0")});
 
   @media (max-width: 600px) {
-    padding: 2.3rem 3.3rem;
+    padding: 2.3rem 1.6rem;
     margin-bottom: 0;
   }
 
