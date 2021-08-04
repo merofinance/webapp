@@ -5,7 +5,7 @@ import styled from "styled-components";
 import chevron from "../../assets/ui/chevron.svg";
 import Asset from "../../components/Asset";
 import Button from "../../components/Button";
-import GradientText from "../../styles/GradientText";
+import { GradientText } from "../../styles/GradientText";
 import { selectBalances } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
 import { formatPercent, numberToCompactCurrency } from "../../lib/numeric";
