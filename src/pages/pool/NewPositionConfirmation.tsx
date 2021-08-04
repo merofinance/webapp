@@ -4,15 +4,15 @@ import styled from "styled-components";
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
 import Popup from "../../components/Popup";
-import GradientText from "../../styles/GradientText";
+import { GradientLink } from "../../styles/GradientText";
 import Tooltip from "../../components/Tooltip";
 import { setError } from "../../features/error/errorSlice";
 import { registerPosition } from "../../features/positions/positionsSlice";
-import { openEtherscanAddress } from "../../lib/browser";
 import { shortenAddress } from "../../lib/text";
 import { Pool, Position } from "../../lib/types";
 import { selectPrice } from "../../features/pool/selectors";
 import { formatCurrency } from "../../lib/numeric";
+import { ETHERSCAN_URL } from "../../lib/constants";
 
 const Content = styled.div`
   width: 100%;
@@ -28,7 +28,7 @@ const Summary = styled.div`
   letter-spacing: 0.15px;
 `;
 
-const Address = styled(GradientText)`
+const Address = styled(GradientLink)`
   font-weight: 400;
   font-size: 1.6rem;
   line-height: 2.4rem;
@@ -63,7 +63,7 @@ const Label = styled.div`
   text-transform: capitalize;
 `;
 
-const AddressLabel = styled(GradientText)`
+const AddressLabel = styled(GradientLink)`
   font-weight: 500;
   font-size: 1.8rem;
   letter-spacing: 0.15px;
@@ -112,7 +112,7 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
         <Content>
           <Summary>
             {`When the collateralization of `}
-            <Address onClick={() => openEtherscanAddress(position.account, "_blank")}>
+            <Address href={`${ETHERSCAN_URL}${position.account}`} target="_blank">
               {shortenAddress(position.account, 26)}
             </Address>
             {` drops below ${position.threshold}, it will
@@ -137,7 +137,7 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
                 Borrower
                 <Tooltip content="The address of the owner of the position to top up (e.g. if Alice is the borrower on Aave that should be topped up then this would be Alice’s address)" />
               </Label>
-              <AddressLabel onClick={() => openEtherscanAddress(position.account, "_blank")}>
+              <AddressLabel href={`${ETHERSCAN_URL}${position.account}`} target="_blank">
                 {shortenAddress(position.account, 8)}
               </AddressLabel>
             </SummaryRow>
