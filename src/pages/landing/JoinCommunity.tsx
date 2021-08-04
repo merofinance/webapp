@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import GradientText from "../../styles/GradientText";
+import { GradientText } from "../../styles/GradientText";
 import { Header2 } from "../../styles/Headers";
 import telegram from "../../assets/socials/telegram.svg";
 import twitter from "../../assets/socials/twitter.svg";
@@ -71,7 +71,7 @@ const Social = styled.a`
   }
 `;
 
-const Link = styled(GradientText)`
+const Label = styled(GradientText)`
   flex: 1;
   font-weight: 700;
   font-size: 1.8rem;
@@ -118,7 +118,7 @@ const JoinCommunity = () => {
             href={social.link}
             target="_blank"
           >
-            <Link>{social.label}</Link>
+            <Label>{social.label}</Label>
             <IconContainer>
               <Icon src={social.icon} alt={`${social.label} logo`} />
             </IconContainer>

@@ -4,7 +4,7 @@ import Accordion from "../../components/Accordion";
 import AccordionChevron from "../../components/AccordionChevron";
 import Asset from "../../components/Asset";
 import Button from "../../components/Button";
-import GradientText from "../../styles/GradientText";
+import { GradientText } from "../../styles/GradientText";
 import ClaimRow from "./ClaimRow";
 
 const Header = styled.div`
