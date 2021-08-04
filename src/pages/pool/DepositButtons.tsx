@@ -23,9 +23,7 @@ const DepositButtons = ({ value, pool, complete }: Props) => {
   const approved = approvedToDeposit >= value;
 
   const executeApprove = async () => {
-    console.log("meow");
     if (!backd || approved) return;
-    console.log("woof");
     const approveAction = approve({
       token: pool.underlying,
       spender: pool.address,
