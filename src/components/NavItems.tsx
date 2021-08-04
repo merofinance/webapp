@@ -80,9 +80,14 @@ const NavItems = () => {
   return (
     <StyledNavItems id="nav-items">
       {live && !STAKING_LIVE && (
-        <NavItem>
-          <InternalLink to="/pools">pools</InternalLink>
-        </NavItem>
+        <>
+          <NavItem>
+            <InternalLink to="/claim">claim</InternalLink>
+          </NavItem>
+          <NavItem>
+            <InternalLink to="/pools">pools</InternalLink>
+          </NavItem>
+        </>
       )}
       {live &&
         STAKING_LIVE &&
