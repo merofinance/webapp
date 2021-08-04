@@ -13,6 +13,7 @@ import { AppDispatch } from "../../app/store";
 import { ethers } from "ethers";
 import { selectPositions } from "../../features/positions/positionsSlice";
 import { useDevice } from "../../lib/hooks";
+import { INFINITE_APPROVE_AMMOUNT } from "../../lib/constants";
 
 const Border = styled.div`
   width: 100%;
@@ -151,7 +152,7 @@ const NewPosition = ({ pool }: Props) => {
     if (!backd) return;
     setLoading(true);
     const approveArgs = {
-      amount: Number(max),
+      amount: INFINITE_APPROVE_AMMOUNT,
       backd,
       spender: backd.topupActionAddress,
       token: pool.lpToken,

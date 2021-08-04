@@ -8,6 +8,7 @@ import * as yup from "yup";
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
 import { ButtonSpinner } from "../../components/button-spinner/ButtonSpinner";
+import { INFINITE_APPROVE_AMMOUNT } from "../../lib/constants";
 import { Pool, Position, positionFromPartial } from "../../lib/types";
 import { approve, selectBalance, selectToupAllowance } from "../user/userSlice";
 import { NewPositionModal } from "./NewPositionModal";
@@ -73,10 +74,15 @@ export function NewPositionRow({ pool }: NewPositionRowProps) {
   const allowance = useSelector(selectToupAllowance(backd, pool));
   const balance = useSelector(selectBalance(pool.lpToken.address));
 
-  const executeApprove = (amount: number) => {
+  const executeApprove = () => {
     if (!backd) return;
 
-    const approveArgs = { amount, backd, spender: backd.topupActionAddress, token: pool.lpToken };
+    const approveArgs = {
+      amount: INFINITE_APPROVE_AMMOUNT,
+      backd,
+      spender: backd.topupActionAddress,
+      token: pool.lpToken,
+    };
     dispatch(approve(approveArgs)).then(() => {
       formik.setSubmitting(false);
     });
@@ -113,7 +119,7 @@ export function NewPositionRow({ pool }: NewPositionRowProps) {
     if (allowance >= topupValue) {
       setShowConfirmModal(true);
     } else {
-      executeApprove(topupValue);
+      executeApprove();
     }
   };
 
