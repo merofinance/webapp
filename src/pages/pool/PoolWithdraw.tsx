@@ -6,6 +6,7 @@ import ContentSection from "../../components/ContentSection";
 import { selectBalance } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
 import { useDevice } from "../../lib/hooks";
+import { TokenValue } from "../../lib/token-value";
 import PoolStatistics from "./PoolStatistics";
 import WithdrawalButton from "./WithdrawButton";
 
@@ -22,7 +23,7 @@ type Props = {
 const PoolWithdraw = ({ pool }: Props) => {
   const totalBalance = useSelector(selectBalance(pool));
   const staked = useSelector(selectBalance(pool.stakerVaultAddress));
-  const availableToWithdraw = totalBalance - staked;
+  const availableToWithdraw = totalBalance.sub(staked);
   const { isMobile } = useDevice();
 
   const [withdrawAmount, setWithdrawAmount] = useState("");
@@ -34,6 +35,7 @@ const PoolWithdraw = ({ pool }: Props) => {
       content={
         <Content>
           <AmountInput
+            token={pool.underlying}
             value={withdrawAmount}
             setValue={(v: string) => setWithdrawAmount(v)}
             label={
@@ -45,7 +47,7 @@ const PoolWithdraw = ({ pool }: Props) => {
           />
           <WithdrawalButton
             pool={pool}
-            value={Number(withdrawAmount)}
+            value={TokenValue.fromUnscaled(withdrawAmount, staked.decimals)}
             complete={() => setWithdrawAmount("")}
           />
         </Content>

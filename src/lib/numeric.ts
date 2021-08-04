@@ -47,16 +47,30 @@ export function floatToBigNumber(
   const scaledSignificant = Math.round(value * Math.pow(10, decimalScale));
   return scale(scaledSignificant, decimals - decimalScale);
 }
+const roundToOneDp = (value: number) => {
+  return value.toLocaleString(undefined, {
+    maximumFractionDigits: 1,
+    minimumFractionDigits: 0,
+  });
+};
 
-export const numberToCompact = (value: number) => {
-  if (value >= 1_000_000_000) return `${(value / 1_000_000_000).toFixed(1)}b`;
-  if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}m`;
-  if (value >= 1_000) return `${(value / 1_000).toFixed(1)}k`;
-  return value.toFixed(0);
+const roundToTwoDp = (value: number) => {
+  return value.toLocaleString(undefined, {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+  });
+};
+
+export const numberToCompactString = (value: number) => {
+  if (value >= 1_000_000_000_000) return `${roundToOneDp(value / 1_000_000_000_000)}t`;
+  if (value >= 1_000_000_000) return `${roundToOneDp(value / 1_000_000_000)}b`;
+  if (value >= 1_000_000) return `${roundToOneDp(value / 1_000_000)}m`;
+  if (value >= 1_000) return `${roundToOneDp(value / 1_000)}k`;
+  return roundToTwoDp(value);
 };
 
 export const numberToCompactCurrency = (value: number) => {
-  return `$${numberToCompact(value)}`;
+  return `$${numberToCompactString(value)}`;
 };
 
 export const formatCurrency = (number: number) => {
@@ -73,8 +87,47 @@ export const formatPercent = (number: number) => {
 };
 
 export const formatCrypto = (number: number) => {
-  const decimals = Math.max(5 - Math.floor(Math.pow(number, 1 / 10)), 0);
+  let decimals = Math.max(5 - Math.floor(Math.pow(number, 1 / 10)), 0);
+  if (number < 0.0001) decimals = 18;
   return number.toLocaleString(undefined, {
     maximumFractionDigits: decimals,
   });
+};
+
+export const bigNumberToString = (number: BigNumber, decimals: number) => {
+  let string = number.toString();
+  while (string.length < decimals) string = "0" + string;
+  let decimalLocation = string.length - decimals;
+  let whole = string.slice(0, decimalLocation) || "0";
+  let fraction = string.slice(decimalLocation).replace(/0+$/, "");
+  return whole + (fraction ? "." + fraction : "");
+};
+
+export const stringToBigNumber = (value: string, decimals: number) => {
+  if (!value || value === ".") throw new Error("Not a valid number");
+  if (value.substring(0, 1) === "-") throw new Error("Negative numbers not supported");
+
+  const [num, power] = value.split("e");
+
+  if (power) {
+    decimals += Number(power);
+  }
+
+  const comps = num.split(".");
+  const whole = comps[0] || "0";
+
+  if (decimals >= 0) {
+    let fraction = comps[1] || "0";
+    if (fraction.length <= decimals) {
+      while (fraction.length < decimals) fraction += "0";
+    } else {
+      fraction = fraction.substring(0, decimals) || "0";
+    }
+
+    const base = BigNumber.from(10).pow(BigNumber.from(decimals));
+    return BigNumber.from(whole).mul(base).add(fraction);
+  } else {
+    const base = BigNumber.from(10).pow(BigNumber.from(-decimals));
+    return BigNumber.from(whole).div(base);
+  }
 };

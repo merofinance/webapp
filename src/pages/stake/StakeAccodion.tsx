@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Accordion from "../../components/Accordion";
 import Asset from "../../components/Asset";
-import GradientText from "../../styles/GradientText";
+import { GradientText } from "../../styles/GradientText";
 import Tabs from "../../components/Tabs";
 import StakeTokens from "./StakeTokens";
 import { Token } from "../../lib/types";

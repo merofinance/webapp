@@ -92,7 +92,7 @@ const PoolPage = () => {
       </Content>
       <RightColumn>
         <PoolOverview pool={pool} />
-        {tab !== "positions" && balance > 0 && (
+        {tab !== "positions" && !balance.isZero() && (
           <ButtonContainer>
             <Button
               medium

@@ -4,16 +4,15 @@ import styled from "styled-components";
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
 import Popup from "../../components/Popup";
-import GradientText from "../../styles/GradientText";
+import { GradientLink } from "../../styles/GradientText";
 import Tooltip from "../../components/Tooltip";
 import LaunchIcon from "@material-ui/icons/Launch";
 import { setError } from "../../features/error/errorSlice";
 import { registerPosition } from "../../features/positions/positionsSlice";
-import { openEtherscanAddress } from "../../lib/browser";
 import { shortenAddress } from "../../lib/text";
 import { Pool, Position } from "../../lib/types";
 import { selectPrice } from "../../features/pool/selectors";
-import { formatCurrency } from "../../lib/numeric";
+import { ETHERSCAN_URL } from "../../lib/constants";
 import { useDevice } from "../../lib/hooks";
 
 const Content = styled.div`
@@ -34,7 +33,7 @@ const Summary = styled.div`
   }
 `;
 
-const Address = styled(GradientText)`
+const Address = styled(GradientLink)`
   font-weight: 400;
   line-height: 2.4rem;
   letter-spacing: 0.15px;
@@ -81,7 +80,7 @@ const Label = styled.div`
   }
 `;
 
-const AddressLabel = styled(GradientText)`
+const AddressLabel = styled(GradientLink)`
   font-weight: 500;
   letter-spacing: 0.15px;
   cursor: pointer;
@@ -135,18 +134,17 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
         <Content>
           <Summary>
             {`When the collateralization of `}
-            <Address onClick={() => openEtherscanAddress(position.account, "_blank")}>
+            <Address href={`${ETHERSCAN_URL}${position.account}`} target="_blank">
               {shortenAddress(position.account, isMobile ? 10 : 26)}
               <LaunchIcon style={{ fill: "var(--secondary)" }} />
             </Address>
             {` drops below ${position.threshold}, it will
-            be topped up with ${position.singleTopUp} ${pool.underlying.symbol} (${formatCurrency(
-              position.singleTopUp * price
-            )}). This will be repeated each time the
+            be topped up with ${position.singleTopUp} ${
+              pool.underlying.symbol
+            } (${position.singleTopUp.toUsdValue(price)}). This will be repeated each time the
             collateralization ratio drops below ${position.threshold}, until a total of ${
               position.maxTopUp
-            } ${pool.underlying.symbol} (${formatCurrency(position.maxTopUp * price)}) is topped
-            up.`}
+            } ${pool.underlying.symbol} (${position.maxTopUp.toUsdValue(price)}) is topped up.`}
           </Summary>
           <PositionSummary>
             <SummaryRow>
@@ -161,7 +159,7 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
                 Borrower
                 <Tooltip content="The address of the owner of the position to top up (e.g. if Alice is the borrower on Aave that should be topped up then this would be Alice’s address)" />
               </Label>
-              <AddressLabel onClick={() => openEtherscanAddress(position.account, "_blank")}>
+              <AddressLabel href={`${ETHERSCAN_URL}${position.account}`} target="_blank">
                 {shortenAddress(position.account, 8)}
                 <LaunchIcon style={{ fill: "var(--secondary)" }} />
               </AddressLabel>
@@ -178,14 +176,14 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
                 Singe top-up
                 <Tooltip content="Amount of a single top up increment (e.g. top up increments of 2,500 DAI)" />
               </Label>
-              <Label>{position.singleTopUp}</Label>
+              <Label>{position.singleTopUp.toCryptoString()}</Label>
             </SummaryRow>
             <SummaryRow>
               <Label>
                 Total top-up
                 <Tooltip content="Maximum top up amount (value of your liquidity allocated for top ups)" />
               </Label>
-              <Label>{position.maxTopUp}</Label>
+              <Label>{position.maxTopUp.toCryptoString()}</Label>
             </SummaryRow>
           </PositionSummary>
         </Content>

@@ -1,4 +1,5 @@
 import { TransactionReceipt } from "@ethersproject/providers";
+import { PlainTokenValue, TokenValue } from "./token-value";
 
 export type Optional<T> = T | null;
 
@@ -24,12 +25,39 @@ export interface Position<Num = number> {
   protocol: string;
   account: Address;
   threshold: Num;
-  singleTopUp: Num;
-  maxTopUp: Num;
+  singleTopUp: TokenValue;
+  maxTopUp: TokenValue;
   maxGasPrice: number;
   actionToken: Address;
   depositToken: Address;
 }
+
+export interface PlainPosition<Num = number> {
+  protocol: string;
+  account: Address;
+  threshold: Num;
+  singleTopUp: PlainTokenValue;
+  maxTopUp: PlainTokenValue;
+  maxGasPrice: number;
+  actionToken: Address;
+  depositToken: Address;
+}
+
+export const toPlainPosition = (position: Position): PlainPosition => {
+  return {
+    ...position,
+    singleTopUp: position.singleTopUp.toPlain(),
+    maxTopUp: position.maxTopUp.toPlain(),
+  };
+};
+
+export const fromPlainPosition = (position: PlainPosition): Position => {
+  return {
+    ...position,
+    singleTopUp: TokenValue.fromPlain(position.singleTopUp),
+    maxTopUp: TokenValue.fromPlain(position.maxTopUp),
+  };
+};
 
 export function positionFromPartial<T>(pool: Pool<T>, position: Partial<Position<T>>): Position<T> {
   return {
@@ -53,22 +81,36 @@ export function transformPool<T, U>(pool: Pool<T>, f: (v: T) => U): Pool<U> {
   };
 }
 
-export function transformPosition<T, U>(position: Position<T>, f: (v: T) => U): Position<U> {
-  return {
-    protocol: position.protocol,
-    account: position.account,
-    actionToken: position.actionToken,
-    depositToken: position.depositToken,
-    maxGasPrice: position.maxGasPrice,
-    threshold: f(position.threshold),
-    singleTopUp: f(position.singleTopUp),
-    maxTopUp: f(position.maxTopUp),
-  };
-}
-
 export type Address = string;
 
-export type Balances<Num = number> = Record<string, Num>;
+export type Balances = Record<string, TokenValue>;
+export type PlainBalances = Record<string, PlainTokenValue>;
+
+export const toPlainBalances = (balances: Balances): PlainBalances => {
+  return Object.fromEntries(Object.entries(balances).map(([key, value]) => [key, value.toPlain()]));
+};
+
+export const fromPlainBalances = (balances: PlainBalances): Balances => {
+  return Object.fromEntries(
+    Object.entries(balances).map(([key, value]) => [key, TokenValue.fromPlain(value)])
+  );
+};
+
+export type Allowances = Record<string, Balances>;
+export type PlainAllowances = Record<string, PlainBalances>;
+
+export const toPlainAllowances = (allowances: Allowances): PlainAllowances => {
+  return Object.fromEntries(
+    Object.entries(allowances).map(([key, value]) => [key, toPlainBalances(value)])
+  );
+};
+
+export const fromPlainAllowances = (allowances: PlainAllowances): Allowances => {
+  return Object.fromEntries(
+    Object.entries(allowances).map(([key, value]) => [key, fromPlainBalances(value)])
+  );
+};
+
 export type Prices<Num = number> = Record<string, Num>;
 export type AllowanceQuery = {
   spender: Address;

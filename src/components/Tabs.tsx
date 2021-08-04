@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import GradientText from "../styles/GradientText";
+import { GradientText } from "../styles/GradientText";
 
 export interface TabType {
   label: string;

@@ -163,7 +163,7 @@ const HowItWorks = () => {
           show={categories.map((a: RadioOptionType) => a.value).indexOf(category) === index}
         >
           {cards.map((card: CardType) => (
-            <Card key={card.number}>
+            <Card key={card.number} id={`How It Works - ${card.number}`}>
               <Number>{card.number}</Number>
               <Header>{card.header}</Header>
               <Body>{card.body}</Body>

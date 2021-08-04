@@ -1,0 +1,32 @@
+name: Build on PR
+"on": pull_request
+jobs:
+  unit_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Installing Dependencies
+        run: yarn
+      - name: Running Unit Tests
+        run: yarn run test
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Installing Dependencies
+        run: yarn
+      - name: Building App
+        run: yarn run build
+  cypress-run:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Increase Watchers
+        run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+      - name: Installing Dependencies
+        run: yarn
+      - name: Starting Server
+        run: yarn start & npx wait-on http://localhost:3000
+      - name: run cypress
+        run: CYPRESS_baseUrl=http://localhost:3000 npx cypress run

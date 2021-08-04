@@ -1,7 +1,7 @@
 import { useWeb3React } from "@web3-react/core";
 import React, { useState } from "react";
 import styled from "styled-components";
-import GradientText from "../styles/GradientText";
+import { GradientText } from "../styles/GradientText";
 import WalletSelectPopup from "./WalletSelectPopup";
 import { shortenAddress } from "../lib/text";
 
