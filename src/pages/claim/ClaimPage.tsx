@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Seo from "../../components/Seo";
 import ClaimSummary from "./ClaimSummary";
 import ClaimAccordion from "./ClaimAccordion";
-import { useDevice } from "../../lib/hooks";
 
 const claims: string[] = ["test-claim-01", "test-claim-02"];
 
@@ -63,7 +62,6 @@ const Note = styled.a`
 
 const ClaimPage = () => {
   const [openAccordions, setOpenAccordions] = useState<number[]>([0]);
-  const { isMobile } = useDevice();
 
   const isOpen = (index: number): boolean => openAccordions.indexOf(index) >= 0;
 
