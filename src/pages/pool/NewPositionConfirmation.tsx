@@ -13,7 +13,6 @@ import { openEtherscanAddress } from "../../lib/browser";
 import { shortenAddress } from "../../lib/text";
 import { Pool, Position } from "../../lib/types";
 import { selectPrice } from "../../features/pool/selectors";
-import { formatCurrency } from "../../lib/numeric";
 import { useDevice } from "../../lib/hooks";
 
 const Content = styled.div`
@@ -140,13 +139,12 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
               <LaunchIcon style={{ fill: "var(--secondary)" }} />
             </Address>
             {` drops below ${position.threshold}, it will
-            be topped up with ${position.singleTopUp} ${pool.underlying.symbol} (${formatCurrency(
-              position.singleTopUp * price
-            )}). This will be repeated each time the
+            be topped up with ${position.singleTopUp} ${
+              pool.underlying.symbol
+            } (${position.singleTopUp.toUsdValue(price)}). This will be repeated each time the
             collateralization ratio drops below ${position.threshold}, until a total of ${
               position.maxTopUp
-            } ${pool.underlying.symbol} (${formatCurrency(position.maxTopUp * price)}) is topped
-            up.`}
+            } ${pool.underlying.symbol} (${position.maxTopUp.toUsdValue(price)}) is topped up.`}
           </Summary>
           <PositionSummary>
             <SummaryRow>
@@ -178,14 +176,14 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
                 Singe top-up
                 <Tooltip content="Amount of a single top up increment (e.g. top up increments of 2,500 DAI)" />
               </Label>
-              <Label>{position.singleTopUp}</Label>
+              <Label>{position.singleTopUp.toCryptoString()}</Label>
             </SummaryRow>
             <SummaryRow>
               <Label>
                 Total top-up
                 <Tooltip content="Maximum top up amount (value of your liquidity allocated for top ups)" />
               </Label>
-              <Label>{position.maxTopUp}</Label>
+              <Label>{position.maxTopUp.toCryptoString()}</Label>
             </SummaryRow>
           </PositionSummary>
         </Content>
