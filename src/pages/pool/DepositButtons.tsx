@@ -28,7 +28,7 @@ const DepositButtons = ({ value, pool, complete }: Props) => {
     const approveAction = approve({
       token: pool.underlying,
       spender: pool.address,
-      amount: INFINITE_APPROVE_AMMOUNT,
+      amount: TokenValue.fromUnscaled(INFINITE_APPROVE_AMMOUNT),
       backd: backd,
     });
     const v = await dispatch(approveAction);
