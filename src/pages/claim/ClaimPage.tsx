@@ -83,7 +83,7 @@ const ClaimPage = () => {
       <ClaimSummary />
       <Headers>
         <Header>Asset</Header>
-        <Header>{isMobile ? "Claimable" : "Claimable (USD)"}</Header>
+        <Header>Claimable (USD)</Header>
         <Header hideMobile>APR</Header>
         <ButtonHeader />
       </Headers>
