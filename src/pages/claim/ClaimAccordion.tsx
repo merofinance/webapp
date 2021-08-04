@@ -76,12 +76,16 @@ const ContentContainer = styled.div`
 
 const Breakdown = styled.div`
   font-weight: 500;
-  font-size: 1.6rem;
   line-height: 2.4rem;
   letter-spacing: 0.15px;
   opacity: 0.6;
   margin-bottom: 2.4rem;
   margin-left: 1.6rem;
+
+  font-size: 1.6rem;
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+  }
 `;
 
 interface Props {
