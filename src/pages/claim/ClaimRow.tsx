@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Asset from "../../components/Asset";
 import Button from "../../components/Button";
+import SplitButton from "../../components/SplitButton";
 import { useDevice } from "../../lib/hooks";
 import { numberToCompactCurrency } from "../../lib/numeric";
 
@@ -104,13 +105,13 @@ const ClaimRow = ({ index }: Props) => {
         <ValueUsd>{`=${numberToCompactCurrency(18300000)}`}</ValueUsd>
       </ValueContainer>
       <EndContainer>
-        {isDesktop && <Button text="Claim" background="#100830" width="12rem" primary={isMobile} />}
-        <Button
-          primary
-          text="Claim & Stake"
-          width={isMobile ? "auto" : "18rem"}
-          square={isMobile}
-        />
+        {isDesktop && (
+          <>
+            <Button text="Claim" background="#100830" width="12rem" primary={isMobile} />
+            <Button primary text={"Claim & Stake"} width={isMobile ? "auto" : "18rem"} />
+          </>
+        )}
+        {isMobile && <SplitButton />}
       </EndContainer>
     </StyledClaimRow>
   );

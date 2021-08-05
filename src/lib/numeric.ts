@@ -47,6 +47,7 @@ export function floatToBigNumber(
   const scaledSignificant = Math.round(value * Math.pow(10, decimalScale));
   return scale(scaledSignificant, decimals - decimalScale);
 }
+
 const roundToOneDp = (value: number) => {
   return value.toLocaleString(undefined, {
     maximumFractionDigits: 1,
