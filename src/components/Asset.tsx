@@ -4,7 +4,7 @@ import eth from "../assets/tokens/eth.png";
 import usdc from "../assets/tokens/usdc.png";
 import dai from "../assets/tokens/dai.png";
 import { Token } from "../lib/types";
-import { numberToCompact } from "../lib/numeric";
+import { numberToCompactString } from "../lib/numeric";
 
 type AssetType = {
   [key: string]: string;
@@ -67,7 +67,7 @@ const Asset = ({ token, large, small, value, hideIcon, compact }: Props) => {
     <StyledAsset>
       {!hideIcon && <Icon src={assets[token.symbol]} alt={`${token.symbol} icon`} />}
       <Label large={large} small={small}>{`${
-        value ? `${compact ? numberToCompact(value) : value} ` : ""
+        value ? `${compact ? numberToCompactString(value) : value} ` : ""
       }${token.symbol}`}</Label>
     </StyledAsset>
   );
