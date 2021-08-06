@@ -26,7 +26,7 @@ import Footer from "./components/Footer";
 import PoolsPage from "./pages/pools/PoolsPage";
 import StakePage from "./pages/stake/StakePage";
 import LitepaperPage from "./pages/litepaper/LitepaperPage";
-import { ConnectWallet } from "./features/account/ConnectWallet";
+import { ConnectWallet } from "./components/ConnectWallet";
 import ClaimPage from "./pages/claim/ClaimPage";
 import PoolPage from "./pages/pool/PoolPage";
 import { LIVE, STAKING_LIVE } from "./lib/constants";
