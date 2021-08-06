@@ -31,7 +31,8 @@ export default class MockBackd implements Backd {
   }
 
   getPoolInfo(address: Address): Promise<Pool> {
-    const pool = pools.find((pool) => pool.address === address)!!;
+    const pool = pools.find((pool) => pool.address === address);
+    if (!pool) throw Error("No pool found for address");
     return Promise.resolve(transformPool(pool, bigNumberToFloat));
   }
 
