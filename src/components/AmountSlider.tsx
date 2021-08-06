@@ -63,7 +63,7 @@ type Props = {
   setValue: (value: string) => void;
 };
 
-const AmountSlider = ({ value, max, setValue }: Props) => {
+const AmountSlider = ({ value, max, setValue }: Props): JSX.Element => {
   const percent = max.isZero() ? 0 : Math.round((Number(value) / Number(max.toString())) * 100);
 
   return (

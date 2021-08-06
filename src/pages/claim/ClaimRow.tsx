@@ -83,7 +83,7 @@ interface Props {
   index: number;
 }
 
-const ClaimRow = ({ index }: Props) => {
+const ClaimRow = ({ index }: Props): JSX.Element => {
   const { isMobile, isDesktop } = useDevice();
 
   return (

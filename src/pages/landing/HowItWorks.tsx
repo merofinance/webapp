@@ -146,7 +146,7 @@ const Header = styled(Header4)`
   }
 `;
 
-const HowItWorks = () => {
+const HowItWorks = (): JSX.Element => {
   const [category, setCategory] = useState("earn");
 
   return (

@@ -31,7 +31,7 @@ type Props = {
   noSlider?: boolean;
 };
 
-const AmountInput = ({ token, value, setValue, label, max, noSlider }: Props) => {
+const AmountInput = ({ token, value, setValue, label, max, noSlider }: Props): JSX.Element => {
   const error = () => {
     if (value && Number(value) <= 0) return "Amount must be a positive number";
     try {

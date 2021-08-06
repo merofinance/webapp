@@ -20,7 +20,7 @@ type Props = {
   pool: Pool;
 };
 
-const PoolDeposit = ({ pool }: Props) => {
+const PoolDeposit = ({ pool }: Props): JSX.Element => {
   const availableToDeposit = useSelector(selectBalance(pool.underlying.address));
   const [depositAmount, setDepositAmount] = useState("");
   const { isMobile } = useDevice();

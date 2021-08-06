@@ -79,7 +79,7 @@ const Swirl = styled.img`
   }
 `;
 
-const Preview = () => {
+const Preview = (): JSX.Element => {
   const backd = useBackd();
   const dispatch = useDispatch();
   const pools = useSelector(selectPools);

@@ -35,7 +35,7 @@ const LinkText = styled(GradientText)`
   }
 `;
 
-export function ErrorAlert() {
+export function ErrorAlert(): JSX.Element {
   const error = useSelector(selectError);
   const dispatch: AppDispatch = useDispatch();
 

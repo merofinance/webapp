@@ -110,7 +110,7 @@ type Props = {
   pool: Pool;
 };
 
-const PoolPositions = ({ pool }: Props) => {
+const PoolPositions = ({ pool }: Props): JSX.Element => {
   const positions = useSelector(selectPoolPositions(pool));
   const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();

@@ -20,7 +20,7 @@ type Props = {
   pool: Pool;
 };
 
-const PoolWithdraw = ({ pool }: Props) => {
+const PoolWithdraw = ({ pool }: Props): JSX.Element => {
   const totalBalance = useSelector(selectBalance(pool));
   const staked = useSelector(selectBalance(pool.stakerVaultAddress));
   const availableToWithdraw = totalBalance.sub(staked);

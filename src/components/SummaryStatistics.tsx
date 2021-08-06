@@ -67,7 +67,7 @@ interface Props {
   statistics: SummaryStatisticType[];
 }
 
-const SummaryStatistics = ({ statistics }: Props) => {
+const SummaryStatistics = ({ statistics }: Props): JSX.Element => {
   return (
     <StyledSummaryStatistics>
       {statistics.map((statistic: SummaryStatisticType) => (

@@ -138,7 +138,7 @@ type Props = {
   close: () => void;
 };
 
-const WalletSelectPopup = (props: Props) => {
+const WalletSelectPopup = (props: Props): JSX.Element => {
   const dispatch = useDispatch();
   const { activate } = useWeb3React();
 

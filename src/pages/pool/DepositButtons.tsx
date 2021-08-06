@@ -17,7 +17,7 @@ type Props = {
   complete: () => void;
 };
 
-const DepositButtons = ({ value, pool, complete }: Props) => {
+const DepositButtons = ({ value, pool, complete }: Props): JSX.Element => {
   const dispatch: AppDispatch = useDispatch();
   const backd = useBackd();
   const { loading, setLoading, handleTxDispatch } = useLoading();

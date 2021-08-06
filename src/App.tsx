@@ -68,7 +68,7 @@ const Content = styled.div`
 
 library.add(faInfoCircle, faClock, faCheck, faTimesCircle, faExternalLinkAlt, faTrashAlt);
 
-function App() {
+const App = (): JSX.Element => {
   const dispatch: AppDispatch = useDispatch();
 
   const getLibrary = (rawProvider: any, connector: any) => {
@@ -138,6 +138,6 @@ function App() {
       </Web3ReactProvider>
     </ErrorBoundary>
   );
-}
+};
 
 export default App;

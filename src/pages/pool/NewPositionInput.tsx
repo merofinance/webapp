@@ -81,7 +81,7 @@ type Props = {
   setValue: (v: string) => void;
 };
 
-const NewPositionInput = (props: Props) => {
+const NewPositionInput = (props: Props): JSX.Element => {
   return (
     <Value>
       <StyledNewPositionInput>

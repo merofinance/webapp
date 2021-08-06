@@ -41,7 +41,7 @@ type Props = {
   token: Token;
 };
 
-const UnstakeTokens = ({ token }: Props) => {
+const UnstakeTokens = ({ token }: Props): JSX.Element => {
   const balance = useSelector(selectBalance(token.address));
   const [value, setValue] = useState("");
   const [approved, setApproved] = useState(false);

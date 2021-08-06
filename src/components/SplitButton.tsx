@@ -57,7 +57,7 @@ interface Props {
   buttons: ButtonType[];
 }
 
-export default function SplitButton({ buttons }: Props) {
+export default function SplitButton({ buttons }: Props): JSX.Element {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);

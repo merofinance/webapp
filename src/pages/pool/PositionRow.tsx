@@ -62,7 +62,7 @@ type Props = {
   pool: Pool;
 };
 
-const PositionRow = ({ position, pool }: Props) => {
+const PositionRow = ({ position, pool }: Props): JSX.Element => {
   const backd = useBackd();
   const { setLoading, handleTxDispatch } = useLoading();
   const dispatch: AppDispatch = useDispatch();

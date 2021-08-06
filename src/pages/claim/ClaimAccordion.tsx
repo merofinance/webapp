@@ -103,7 +103,7 @@ interface Props {
   rows: string[];
 }
 
-const ClaimAccordion = ({ open, toggle, rows }: Props) => {
+const ClaimAccordion = ({ open, toggle, rows }: Props): JSX.Element => {
   const { isMobile, isDesktop } = useDevice();
 
   return (

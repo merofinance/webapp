@@ -135,7 +135,7 @@ type Props = {
   note?: string;
 };
 
-const Input = (props: Props) => {
+const Input = (props: Props): JSX.Element => {
   const [focused, setFocused] = useState(false);
   const [hover, setHover] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);

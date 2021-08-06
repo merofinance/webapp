@@ -24,7 +24,7 @@ interface Props {
   open: boolean;
 }
 
-const AccordionChevron = ({ open }: Props) => {
+const AccordionChevron = ({ open }: Props): JSX.Element => {
   return <Arrow open={open} src={accordionChevron} />;
 };
 

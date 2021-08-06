@@ -120,7 +120,7 @@ const Link = styled.a`
   }
 `;
 
-const Footer = () => {
+const Footer = (): JSX.Element => {
   return (
     <StyledFooter>
       <Logo src={logo} alt="Backd logo" />

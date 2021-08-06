@@ -74,7 +74,7 @@ interface Props {
   pool: Pool;
 }
 
-const NewPosition = ({ pool }: Props) => {
+const NewPosition = ({ pool }: Props): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();
   const { isMobile } = useDevice();

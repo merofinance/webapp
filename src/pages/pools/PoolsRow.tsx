@@ -122,7 +122,7 @@ type Props = {
   preview?: boolean;
 };
 
-const PoolsRow = ({ pool, preview }: Props) => {
+const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
   const history = useHistory();
 
   const price = useSelector(selectPrice(pool));

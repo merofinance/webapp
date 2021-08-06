@@ -114,7 +114,7 @@ const Background = styled.img`
   }
 `;
 
-const AuditedBy = () => {
+const AuditedBy = (): JSX.Element => {
   return (
     <StyledAuditedBy>
       <Container>

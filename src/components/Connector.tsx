@@ -113,7 +113,7 @@ const DotCenter = styled.div`
   background-color: ${(props: Connected) => (props.connected ? "var(--success)" : "var(--error)")};
 `;
 
-const Connector = () => {
+const Connector = (): JSX.Element => {
   const { account, active } = useWeb3React();
   const [connecting, setConnecting] = useState(false);
 

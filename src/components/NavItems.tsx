@@ -73,7 +73,7 @@ const ExternalLink = styled.a`
   }
 `;
 
-const NavItems = () => {
+const NavItems = (): JSX.Element => {
   return (
     <StyledNavItems id="nav-items">
       {LIVE && !STAKING_LIVE && (

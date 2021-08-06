@@ -248,7 +248,7 @@ type Props = {
   width?: string;
 };
 
-const Button = (props: Props) => {
+const Button = (props: Props): JSX.Element => {
   return (
     <StyledButton
       type={props.submit ? "submit" : "button"}

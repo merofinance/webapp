@@ -57,7 +57,7 @@ const Bold = styled.span`
   }
 `;
 
-const LitepaperPage = () => {
+const LitepaperPage = (): JSX.Element => {
   return (
     <StyledLitepaperPage>
       <Seo

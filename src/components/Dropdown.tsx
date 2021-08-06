@@ -53,7 +53,7 @@ type Props = {
   setValue: (v: string) => void;
 };
 
-const Dropdown = ({ value, options, setValue }: Props) => {
+const Dropdown = ({ value, options, setValue }: Props): JSX.Element => {
   const classes = useStyles();
 
   return (

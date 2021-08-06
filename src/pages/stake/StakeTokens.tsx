@@ -43,7 +43,7 @@ type Props = {
   token: Token;
 };
 
-const StakeTokens = ({ token }: Props) => {
+const StakeTokens = ({ token }: Props): JSX.Element => {
   const balance = useSelector(selectBalance(token.address));
   const [value, setValue] = useState("");
   const [approved, setApproved] = useState(false);

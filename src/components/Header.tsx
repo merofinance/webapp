@@ -45,7 +45,7 @@ const Logo = styled.img`
   }
 `;
 
-const Header = () => {
+const Header = (): JSX.Element => {
   const [scrollPosition, setScrollPosition] = useState(0);
 
   const handleScroll = () => {

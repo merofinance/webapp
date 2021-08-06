@@ -51,7 +51,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const PoolPage = () => {
+const PoolPage = (): JSX.Element => {
   const { poolName } = useParams<DepositWithdrawParams>();
   const pool = useSelector(selectPool(poolName));
   const balance = useSelector(selectBalance(pool));

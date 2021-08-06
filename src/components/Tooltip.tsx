@@ -33,7 +33,7 @@ interface Props {
   content: string;
 }
 
-const BackdTooltip = ({ content }: Props) => {
+const BackdTooltip = ({ content }: Props): JSX.Element => {
   const [open, setOpen] = React.useState(false);
 
   const handleTooltipClose = () => {

@@ -100,7 +100,7 @@ type Props = {
   complete: () => void;
 };
 
-const NewPositionConfirmation = ({ show, close, position, pool, complete }: Props) => {
+const NewPositionConfirmation = ({ show, close, position, pool, complete }: Props): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
   const price = useSelector(selectPrice(pool));
   const backd = useBackd();

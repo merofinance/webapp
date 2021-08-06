@@ -9,7 +9,7 @@ interface Props {
   pool: Pool;
 }
 
-const PoolOverview = ({ pool }: Props) => {
+const PoolOverview = ({ pool }: Props): JSX.Element => {
   const price = useSelector(selectPrice(pool));
   const locked = pool.totalAssets * price;
 
