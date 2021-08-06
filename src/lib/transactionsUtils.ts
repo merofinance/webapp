@@ -44,28 +44,26 @@ export async function handleTransactionConfirmation(
 export const formatTransactionInfo = (txDescription: TransactionDescription) => {
   switch (txDescription.action) {
     case "Approve":
-      return txDescription.args?.amount.toLocaleString() + " " + txDescription.args?.token.symbol;
+      return `${txDescription.args?.amount.toLocaleString()} ${txDescription.args?.token.symbol}`;
     case "Deposit":
-      return (
-        txDescription.args?.amount.toLocaleString() +
-        " " +
+      return `${txDescription.args?.amount.toLocaleString()} ${
         txDescription.args?.pool.underlying.symbol
-      );
+      }`;
     case "Withdraw":
-      return (
-        txDescription.args?.amount.toLocaleString() + " " + txDescription.args?.pool.lpToken.symbol
-      );
+      return `${txDescription.args?.amount.toLocaleString()} ${
+        txDescription.args?.pool.lpToken.symbol
+      }`;
     case "Unstake":
-      return (
-        txDescription.args?.amount.toLocaleString() + " " + txDescription.args?.pool.lpToken.symbol
-      );
+      return `${txDescription.args?.amount.toLocaleString()} ${
+        txDescription.args?.pool.lpToken.symbol
+      }`;
     case "Register": {
       const position: Position = txDescription.args?.position;
-      return position.account.slice(0, 8) + "... on " + position.protocol;
+      return `${position.account.slice(0, 8)}... on ${position.protocol}`;
     }
     case "Remove": {
       const position: Position = txDescription.args?.position;
-      return position.account.slice(0, 8) + "... on " + position.protocol;
+      return `${position.account.slice(0, 8)}... on ${position.protocol}`;
     }
     default:
       return "";

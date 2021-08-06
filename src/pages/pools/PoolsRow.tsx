@@ -8,11 +8,10 @@ import Button from "../../components/Button";
 import { GradientText } from "../../styles/GradientText";
 import { selectBalances } from "../../state/userSlice";
 import { Pool } from "../../lib";
-import { formatPercent, numberToCompactCurrency } from "../../lib/numeric";
+import { formatPercent, numberToCompactCurrency, formatCurrency } from "../../lib/numeric";
 import { selectPoolPositions } from "../../state/positionsSlice";
 import { Position } from "../../lib/types";
 import { selectPrice } from "../../state/selectors";
-import { formatCurrency } from "../../lib/numeric";
 import { TokenValue } from "../../lib/token-value";
 
 type RowProps = {

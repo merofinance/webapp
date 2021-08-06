@@ -72,9 +72,11 @@ export const sortTransactions = (transactions: TransactionInfo[]): TransactionIn
   return transactions.sort((tx1, tx2) => {
     if (tx1.blockNumber && tx2.blockNumber && tx1.blockNumber !== tx2.blockNumber) {
       return tx2.blockNumber - tx1.blockNumber;
-    } else if (tx1.blockNumber && !tx2.blockNumber) {
+    }
+    if (tx1.blockNumber && !tx2.blockNumber) {
       return 1;
-    } else if (!tx1.blockNumber && tx2.blockNumber) {
+    }
+    if (!tx1.blockNumber && tx2.blockNumber) {
       return -1;
     }
     return tx2.timestamp - tx1.timestamp;

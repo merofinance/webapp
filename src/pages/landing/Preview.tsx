@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+
 import PoolsRow from "../pools/PoolsRow";
 import swirl1 from "../../assets/background/swirl-1.svg";
 import swirl2 from "../../assets/background/swirl-2.svg";
 import { useBackd } from "../../app/hooks/use-backd";
-import { useDispatch, useSelector } from "react-redux";
 import { fetchState, selectPools } from "../../state/poolsListSlice";
 import { Pool } from "../../lib";
 

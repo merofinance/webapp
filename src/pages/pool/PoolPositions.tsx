@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+
 import ContentSection from "../../components/ContentSection";
 import NewPosition from "./NewPosition";
 import Tooltip from "../../components/Tooltip";
 import { Pool } from "../../lib";
-import { useDispatch, useSelector } from "react-redux";
 import { fetchPositions, selectPoolPositions } from "../../state/positionsSlice";
 import { AppDispatch } from "../../app/store";
 import { useBackd } from "../../app/hooks/use-backd";
@@ -133,7 +134,7 @@ const PoolPositions = ({ pool }: Props) => {
                     <HeaderText>{header.label}</HeaderText> <Tooltip content={header.tooltip} />
                   </Header>
                 ))}
-                <Header></Header>
+                <Header />
               </Headers>
               <NewPosition pool={pool} />
               {positions.map((position: Position, index: number) => (

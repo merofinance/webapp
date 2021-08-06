@@ -8,14 +8,15 @@ export interface PlainTokenValue {
 
 export class TokenValue {
   private _value: BigNumber;
+
   private _decimals: number;
 
-  constructor(value: BigNumber = BigNumber.from(0), decimals: number = 18) {
+  constructor(value = BigNumber.from(0), decimals = 18) {
     this._decimals = decimals;
     this._value = value;
   }
 
-  static fromUnscaled(value: number | string, decimals: number = 18) {
+  static fromUnscaled(value: number | string, decimals = 18) {
     return new TokenValue(stringToBigNumber(value.toString() || "0", decimals), decimals);
   }
 

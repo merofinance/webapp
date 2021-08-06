@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+
 import deleteIcon from "../../assets/ui/delete.svg";
 import { Pool } from "../../lib";
-import { useDispatch } from "react-redux";
 import { removePosition } from "../../state/positionsSlice";
 import { AppDispatch } from "../../app/store";
 import { useBackd } from "../../app/hooks/use-backd";

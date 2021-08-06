@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import LaunchIcon from "@material-ui/icons/Launch";
+
 import AmountInput from "../../components/AmountInput";
 import MultiStepButtons from "../../components/MultiStepButtons";
-import LaunchIcon from "@material-ui/icons/Launch";
 import { selectBalance } from "../../state/userSlice";
 import { Token } from "../../lib/types";
 import { GradientLink } from "../../styles/GradientText";

@@ -23,7 +23,7 @@ export async function fetchCoinsMappings(): Promise<CoinsMapping> {
   if (coinsMapping.initialized) {
     return coinsMapping;
   }
-  const url = apiBaseURL + "/coins/list";
+  const url = `${apiBaseURL}/coins/list`;
   const response = await fetch(url);
   const coinsList: CoinInfo[] = await response.json();
   coinsList.forEach((coin) => {
@@ -56,7 +56,7 @@ export function convertPrices(
   return prices;
 }
 
-export async function getPrices(symbols: string[], quote: string = "USD"): Promise<Prices> {
+export async function getPrices(symbols: string[], quote = "USD"): Promise<Prices> {
   quote = quote.toLowerCase();
 
   const { geckoIdToSymbol, symbolToGeckoId } = await fetchCoinsMappings();

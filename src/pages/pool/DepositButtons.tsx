@@ -1,8 +1,9 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import { Pool } from "../../lib";
 import { useLoading } from "../../app/hooks/use-loading";
 import { approve, deposit, selectDepositAllowance } from "../../state/userSlice";
-import { useDispatch, useSelector } from "react-redux";
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
 import MultiStepButtons from "../../components/MultiStepButtons";
@@ -29,7 +30,7 @@ const DepositButtons = ({ value, pool, complete }: Props) => {
       token: pool.underlying,
       spender: pool.address,
       amount: TokenValue.fromUnscaled(INFINITE_APPROVE_AMMOUNT),
-      backd: backd,
+      backd,
     });
     const v = await dispatch(approveAction);
     handleTxDispatch({ status: v.meta.requestStatus, actionType: "approve" });
@@ -37,7 +38,7 @@ const DepositButtons = ({ value, pool, complete }: Props) => {
 
   const executeDeposit = async () => {
     if (!backd || !approved) return;
-    const v = await dispatch(deposit({ backd: backd, pool: pool, amount: value }));
+    const v = await dispatch(deposit({ backd, pool, amount: value }));
     handleTxDispatch({ status: v.meta.requestStatus, actionType: "deposit" });
     complete();
   };
