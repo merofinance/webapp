@@ -12,6 +12,8 @@ import { ethers } from "ethers";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import styled from "styled-components";
+
 import { useMock } from "./app/config";
 import { PrivateRoute } from "./app/private-route";
 import { AppDispatch } from "./app/store";
@@ -21,7 +23,6 @@ import { setError } from "./state/errorSlice";
 import { createBackd } from "./lib/factory";
 import MockSigner from "./lib/mock/signer";
 import LandingPage from "./pages/landing/LandingPage";
-import styled from "styled-components";
 import Footer from "./components/Footer";
 import PoolsPage from "./pages/pools/PoolsPage";
 import StakePage from "./pages/stake/StakePage";

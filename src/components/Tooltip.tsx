@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import info from "../assets/ui/info.svg";
 import { makeStyles, Tooltip } from "@material-ui/core";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+
+import info from "../assets/ui/info.svg";
 
 const Icon = styled.img`
   position: relative;

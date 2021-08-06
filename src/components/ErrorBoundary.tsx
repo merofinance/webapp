@@ -5,9 +5,8 @@ import { setError } from "../state/errorSlice";
 type ErrorBoundaryProps = {
   dispatch: AppDispatch;
 };
-type ErrorBoundaryState = {};
 
-export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+export class ErrorBoundary extends React.Component<ErrorBoundaryProps, any> {
   static getDerivedStateFromError(error: Error) {
     return {};
   }
