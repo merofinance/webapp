@@ -16,7 +16,8 @@ const handleError: CaseReducer<ErrorState, any> = (
   state: ErrorState,
   action: PayloadAction<unknown, any, any, SerializedError>
 ): ErrorState => {
-  return { error: action.error.message!! };
+  if (!action.error.message) throw Error("Missing error message when handing error");
+  return { error: action.error.message };
 };
 
 export const errorSlice = createSlice({
