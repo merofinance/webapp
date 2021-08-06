@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import logo from "../assets/logo.svg";
+import logo from "../assets/logo/logo.svg";
 import { LIVE } from "../lib/constants";
 import Connector from "./Connector";
 import NavItems from "./NavItems";
