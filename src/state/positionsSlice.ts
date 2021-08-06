@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../../app/store";
-import { Pool } from "../../lib";
-import { Backd } from "../../lib/backd";
-import { fromPlainPosition, Position, PlainPosition } from "../../lib/types";
-import { logout } from "../../state/accountSlice";
-import { handleTransactionConfirmation } from "../transactions-list/transactionsUtils";
-import { fetchAllowances, fetchBalances } from "../user/userSlice";
+import { RootState } from "../app/store";
+import { Pool } from "../lib";
+import { Backd } from "../lib/backd";
+import { fromPlainPosition, Position, PlainPosition } from "../lib/types";
+import { logout } from "./accountSlice";
+import { handleTransactionConfirmation } from "../features/transactions-list/transactionsUtils";
+import { fetchAllowances, fetchBalances } from "../features/user/userSlice";
 
 type PositionsState = PlainPosition[];
 

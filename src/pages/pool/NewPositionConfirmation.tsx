@@ -8,7 +8,7 @@ import { GradientLink } from "../../styles/GradientText";
 import Tooltip from "../../components/Tooltip";
 import LaunchIcon from "@material-ui/icons/Launch";
 import { setError } from "../../state/errorSlice";
-import { registerPosition } from "../../features/positions/positionsSlice";
+import { registerPosition } from "../../state/positionsSlice";
 import { shortenAddress } from "../../lib/text";
 import { Pool, Position } from "../../lib/types";
 import { selectPrice } from "../../state/selectors";

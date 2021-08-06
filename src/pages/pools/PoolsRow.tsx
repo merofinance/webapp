@@ -9,7 +9,7 @@ import { GradientText } from "../../styles/GradientText";
 import { selectBalances } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
 import { formatPercent, numberToCompactCurrency } from "../../lib/numeric";
-import { selectPoolPositions } from "../../features/positions/positionsSlice";
+import { selectPoolPositions } from "../../state/positionsSlice";
 import { Position } from "../../lib/types";
 import { selectPrice } from "../../state/selectors";
 import { formatCurrency } from "../../lib/numeric";

@@ -11,7 +11,7 @@ import NewPositionConfirmation from "./NewPositionConfirmation";
 import NewPositionInput from "./NewPositionInput";
 import { AppDispatch } from "../../app/store";
 import { ethers } from "ethers";
-import { selectPositions } from "../../features/positions/positionsSlice";
+import { selectPositions } from "../../state/positionsSlice";
 import { TokenValue } from "../../lib/token-value";
 import { INFINITE_APPROVE_AMMOUNT } from "../../lib/constants";
 import { useDevice } from "../../app/hooks/use-device";

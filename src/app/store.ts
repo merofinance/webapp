@@ -9,7 +9,7 @@ import poolsReducer from "../state/poolsListSlice";
 import userReducer from "../features/user/userSlice";
 import accountReducer from "../state/accountSlice";
 import errorReducer from "../state/errorSlice";
-import positionsReducer from "../features/positions/positionsSlice";
+import positionsReducer from "../state/positionsSlice";
 import transactionsReducer from "../features/transactions-list/transactionsSlice";
 import storage from "redux-persist/lib/storage";
 import {

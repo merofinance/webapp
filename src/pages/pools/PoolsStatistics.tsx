@@ -4,7 +4,7 @@ import { selectPools, selectPrices } from "../../state/poolsListSlice";
 import { selectBalances } from "../../features/user/userSlice";
 import { Pool } from "../../lib";
 import Statistics from "../../components/Statistics";
-import { selectPositions } from "../../features/positions/positionsSlice";
+import { selectPositions } from "../../state/positionsSlice";
 import { Position } from "../../lib/types";
 import { formatCurrency } from "../../lib/numeric";
 import { TokenValue } from "../../lib/token-value";

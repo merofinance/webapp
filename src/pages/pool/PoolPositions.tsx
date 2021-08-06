@@ -5,7 +5,7 @@ import NewPosition from "./NewPosition";
 import Tooltip from "../../components/Tooltip";
 import { Pool } from "../../lib";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPositions, selectPoolPositions } from "../../features/positions/positionsSlice";
+import { fetchPositions, selectPoolPositions } from "../../state/positionsSlice";
 import { AppDispatch } from "../../app/store";
 import { useBackd } from "../../app/hooks/use-backd";
 import { Position } from "../../lib/types";
