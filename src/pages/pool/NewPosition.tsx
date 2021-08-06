@@ -13,8 +13,8 @@ import { AppDispatch } from "../../app/store";
 import { ethers } from "ethers";
 import { selectPositions } from "../../features/positions/positionsSlice";
 import { TokenValue } from "../../lib/token-value";
-import { useDevice } from "../../lib/hooks";
 import { INFINITE_APPROVE_AMMOUNT } from "../../lib/constants";
+import { useDevice } from "../../app/hooks/use-device";
 
 const Border = styled.div`
   width: 100%;

@@ -13,7 +13,7 @@ import { shortenAddress } from "../../lib/text";
 import { Pool, Position } from "../../lib/types";
 import { selectPrice } from "../../features/pool/selectors";
 import { ETHERSCAN_URL } from "../../lib/constants";
-import { useDevice } from "../../lib/hooks";
+import { useDevice } from "../../app/hooks/use-device";
 
 const Content = styled.div`
   width: 100%;

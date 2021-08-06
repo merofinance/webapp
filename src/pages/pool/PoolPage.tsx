@@ -11,7 +11,7 @@ import PoolPositions from "./PoolPositions";
 import PoolWithdraw from "./PoolWithdraw";
 import PoolOverview from "./PoolOverview";
 import { selectBalance } from "../../features/user/userSlice";
-import { useDevice } from "../../lib/hooks";
+import { useDevice } from "../../app/hooks/use-device";
 
 type DepositWithdrawParams = {
   poolName: string;

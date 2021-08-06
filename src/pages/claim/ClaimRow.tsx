@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import { useDevice } from "../../app/hooks/use-device";
 import Asset from "../../components/Asset";
 import Button from "../../components/Button";
 import SplitButton from "../../components/SplitButton";
-import { useDevice } from "../../lib/hooks";
 import { numberToCompactCurrency } from "../../lib/numeric";
 
 interface ClaimRowProps {
