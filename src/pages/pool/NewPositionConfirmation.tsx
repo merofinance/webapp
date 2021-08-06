@@ -11,7 +11,7 @@ import { setError } from "../../state/errorSlice";
 import { registerPosition } from "../../features/positions/positionsSlice";
 import { shortenAddress } from "../../lib/text";
 import { Pool, Position } from "../../lib/types";
-import { selectPrice } from "../../features/pool/selectors";
+import { selectPrice } from "../../state/selectors";
 import { ETHERSCAN_URL } from "../../lib/constants";
 import { useDevice } from "../../app/hooks/use-device";
 

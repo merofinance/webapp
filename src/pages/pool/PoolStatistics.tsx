@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Statistics from "../../components/Statistics";
 import { Pool, Position } from "../../lib/types";
-import { selectPrice } from "../../features/pool/selectors";
+import { selectPrice } from "../../state/selectors";
 import { selectBalance } from "../../features/user/userSlice";
 import { selectPoolPositions } from "../../features/positions/positionsSlice";
 import { formatCurrency } from "../../lib/numeric";

@@ -1,6 +1,6 @@
 import { Selector } from "reselect";
-import { RootState } from "../../app/store";
-import { Optional, Pool } from "../../lib/types";
+import { RootState } from "../app/store";
+import { Optional, Pool } from "../lib/types";
 
 export function selectPool(poolName: string): (state: RootState) => Optional<Pool> {
   return (state: RootState) =>

@@ -4,7 +4,7 @@ import { Redirect, useParams } from "react-router";
 import styled from "styled-components";
 import Radio from "../../components/Radio";
 import Button from "../../components/Button";
-import { selectPool } from "../../features/pool/selectors";
+import { selectPool } from "../../state/selectors";
 import Seo from "../../components/Seo";
 import PoolDeposit from "./PoolDeposit";
 import PoolPositions from "./PoolPositions";
