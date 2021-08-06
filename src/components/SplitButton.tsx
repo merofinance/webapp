@@ -14,25 +14,50 @@ import { makeStyles } from "@material-ui/core";
 const options = ["Claim & Stake", "Claim"];
 
 const useStyles = makeStyles({
-  right: {
-    background: "#36B0E6",
-    width: "3.8rem",
-    minWidth: "0",
-    //     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
-    //     border: 0,
-    //     borderRadius: 3,
-    //     boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
-    //     color: "white",
-    //     height: 48,
-    //     padding: "0 30px",
-  },
   left: {
     whiteSpace: "nowrap",
     background: "var(--gradient)",
+    minWidth: "6rem",
+    padding: "0 1rem",
+  },
+  right: {
+    background: "#36B0E6",
+    width: "2.6rem",
+    minWidth: "0",
+  },
+  paper: {
+    backgroundColor: "#433b6b",
+  },
+  menuItem: {
+    color: "var(--main)",
+    fontWeight: 400,
+    letterSpacing: 0.15,
+    textTransform: "capitalize",
+    transition: "all 0.3s",
+
+    fontSize: 16,
+    // eslint-disable-next-line no-useless-computed-key
+    ["@media (max-width:600px)"]: {
+      fontSize: 12,
+      minHeight: 0,
+    },
+
+    "&:hover": {
+      backgroundColor: "rgba(255, 255, 255, 0.2)",
+    },
   },
 });
 
-export default function SplitButton() {
+interface ButtonType {
+  label: string;
+  action: () => void;
+}
+
+interface Props {
+  buttons: ButtonType[];
+}
+
+export default function SplitButton({ buttons }: Props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -42,9 +67,10 @@ export default function SplitButton() {
     console.info(`You clicked ${options[selectedIndex]}`);
   };
 
-  const handleMenuItemClick = (event: any, index: number) => {
+  const handleMenuItemClick = (event: any, index: number, action: () => void) => {
     setSelectedIndex(index);
     setOpen(false);
+    action();
   };
 
   const handleToggle = () => {
@@ -89,17 +115,18 @@ export default function SplitButton() {
                 transformOrigin: placement === "bottom" ? "center top" : "center bottom",
               }}
             >
-              <Paper>
+              <Paper className={classes.paper}>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList id="split-button-menu">
-                    {options.map((option, index) => (
+                    {buttons.map((button: ButtonType, index) => (
                       <MenuItem
-                        key={option}
+                        key={button.label}
                         disabled={index === 2}
                         selected={index === selectedIndex}
-                        onClick={(event) => handleMenuItemClick(event, index)}
+                        onClick={(event) => handleMenuItemClick(event, index, button.action)}
+                        className={classes.menuItem}
                       >
-                        {option}
+                        {button.label}
                       </MenuItem>
                     ))}
                   </MenuList>

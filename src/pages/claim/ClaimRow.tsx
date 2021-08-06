@@ -111,7 +111,20 @@ const ClaimRow = ({ index }: Props) => {
             <Button primary text={"Claim & Stake"} width={isMobile ? "auto" : "18rem"} />
           </>
         )}
-        {isMobile && <SplitButton />}
+        {isMobile && (
+          <SplitButton
+            buttons={[
+              {
+                label: "Claim & Stake",
+                action: () => console.log("not implemented"),
+              },
+              {
+                label: "Claim",
+                action: () => console.log("not implemented"),
+              },
+            ]}
+          />
+        )}
       </EndContainer>
     </StyledClaimRow>
   );
