@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../../app/store";
-import Popup from "../../components/Popup";
-import { Paragraph } from "../../styles/Headers";
-import { selectError, setError } from "../../state/errorSlice";
-import { GradientText } from "../../styles/GradientText";
-import Button from "../../components/Button";
+import { AppDispatch } from "../app/store";
+import Popup from "./Popup";
+import { Paragraph } from "../styles/Headers";
+import { selectError, setError } from "../state/errorSlice";
+import { GradientText } from "../styles/GradientText";
+import Button from "./Button";
 
 const Content = styled.div`
   width: 100%;

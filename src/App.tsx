@@ -30,7 +30,7 @@ import { ConnectWallet } from "./components/ConnectWallet";
 import ClaimPage from "./pages/claim/ClaimPage";
 import PoolPage from "./pages/pool/PoolPage";
 import { LIVE, STAKING_LIVE } from "./lib/constants";
-import { ErrorAlert } from "./features/error/ErrorAlert";
+import { ErrorAlert } from "./components/ErrorAlert";
 
 const Background = styled.div`
   background: radial-gradient(rgba(11, 3, 60, 0.2), rgba(10, 5, 38, 0.3));
