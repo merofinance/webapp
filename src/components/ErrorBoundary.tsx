@@ -1,6 +1,6 @@
 import React, { ErrorInfo } from "react";
-import { AppDispatch } from "../../app/store";
-import { setError } from "../../state/errorSlice";
+import { AppDispatch } from "../app/store";
+import { setError } from "../state/errorSlice";
 
 type ErrorBoundaryProps = {
   dispatch: AppDispatch;

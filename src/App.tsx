@@ -16,7 +16,7 @@ import { useMock } from "./app/config";
 import { PrivateRoute } from "./app/private-route";
 import { AppDispatch } from "./app/store";
 import Header from "./components/Header";
-import { ErrorBoundary } from "./features/error/ErrorBoundary";
+import { ErrorBoundary } from "./components/ErrorBoundary";
 import { setError } from "./state/errorSlice";
 import { createBackd } from "./lib/factory";
 import MockSigner from "./lib/mock/signer";
