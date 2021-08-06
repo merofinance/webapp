@@ -48,21 +48,30 @@ export function floatToBigNumber(
   return scale(scaledSignificant, decimals - decimalScale);
 }
 
-const roundToOneDpCurrency = (value: number) => {
+const roundToOneDp = (value: number) => {
   return value.toLocaleString(undefined, {
     maximumFractionDigits: 1,
     minimumFractionDigits: 0,
-    style: "currency",
-    currency: "USD",
   });
 };
 
+const roundToTwoDp = (value: number) => {
+  return value.toLocaleString(undefined, {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+  });
+};
+
+export const numberToCompactString = (value: number) => {
+  if (value >= 1_000_000_000_000) return `${roundToOneDp(value / 1_000_000_000_000)}t`;
+  if (value >= 1_000_000_000) return `${roundToOneDp(value / 1_000_000_000)}b`;
+  if (value >= 1_000_000) return `${roundToOneDp(value / 1_000_000)}m`;
+  if (value >= 1_000) return `${roundToOneDp(value / 1_000)}k`;
+  return roundToTwoDp(value);
+};
+
 export const numberToCompactCurrency = (value: number) => {
-  if (value >= 1_000_000_000_000) return `${roundToOneDpCurrency(value / 1_000_000_000_000)}t`;
-  if (value >= 1_000_000_000) return `${roundToOneDpCurrency(value / 1_000_000_000)}b`;
-  if (value >= 1_000_000) return `${roundToOneDpCurrency(value / 1_000_000)}m`;
-  if (value >= 1_000) return `${roundToOneDpCurrency(value / 1_000)}k`;
-  return formatCurrency(value);
+  return `$${numberToCompactString(value)}`;
 };
 
 export const formatCurrency = (number: number) => {

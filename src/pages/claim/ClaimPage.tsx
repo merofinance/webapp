@@ -19,29 +19,45 @@ const Headers = styled.div`
   margin-bottom: 0.5rem;
 `;
 
+interface HeaderProps {
+  hideMobile?: boolean;
+}
+
 const Header = styled.div`
   flex: 1;
   font-weight: 700;
-  font-size: 1.4rem;
   line-height: 2.4rem;
   letter-spacing: 0.15px;
   color: rgba(255, 255, 255, 0.87);
   opacity: 0.6;
+
+  font-size: 1.4rem;
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+    display: ${(props: HeaderProps) => (props.hideMobile ? "none" : "flex")};
+  }
 `;
 
 const ButtonHeader = styled.div`
   flex: 1.8;
+  @media (max-width: 600px) {
+    flex: 0.3;
+  }
 `;
 
 const Note = styled.a`
   align-self: flex-end;
   margin-right: 0.5rem;
   font-weight: 500;
-  font-size: 1.4rem;
   line-height: 4.2rem;
   letter-spacing: 0.25px;
   transform: translateY(-4.5rem);
   cursor: pointer;
+
+  font-size: 1.4rem;
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+  }
 `;
 
 const ClaimPage = () => {
@@ -66,7 +82,7 @@ const ClaimPage = () => {
       <Headers>
         <Header>Asset</Header>
         <Header>Claimable (USD)</Header>
-        <Header>APR</Header>
+        <Header hideMobile>APR</Header>
         <ButtonHeader />
       </Headers>
       {claims.map((claim: string, index: number) => (

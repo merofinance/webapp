@@ -4,6 +4,7 @@ import Accordion from "../../components/Accordion";
 import AccordionChevron from "../../components/AccordionChevron";
 import Asset from "../../components/Asset";
 import Button from "../../components/Button";
+import { useDevice } from "../../lib/hooks";
 import { GradientText } from "../../styles/GradientText";
 import ClaimRow from "./ClaimRow";
 
@@ -11,9 +12,13 @@ const Header = styled.div`
   position: relative;
   width: 100%;
   padding: 0 1.6rem;
-  height: 6.6rem;
   display: flex;
   align-items: center;
+
+  height: 6.6rem;
+  @media (max-width: 600px) {
+    height: 5.6rem;
+  }
 `;
 
 const HeaderButton = styled.button`
@@ -35,9 +40,13 @@ const ClaimableContainer = styled.div`
 
 const Claimable = styled(GradientText)`
   font-weight: 700;
-  font-size: 1.8rem;
   line-height: 2.7rem;
   letter-spacing: 0.15px;
+
+  font-size: 1.8rem;
+  @media (max-width: 600px) {
+    font-size: 1.6rem;
+  }
 `;
 
 const Apr = styled.div`
@@ -46,6 +55,10 @@ const Apr = styled.div`
   font-size: 1.8rem;
   line-height: 2rem;
   letter-spacing: 0.15px;
+
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const EndContainer = styled.div`
@@ -55,6 +68,10 @@ const EndContainer = styled.div`
 
   button:first-child {
     margin-right: 1.8rem;
+  }
+
+  @media (max-width: 600px) {
+    flex: 0.3;
   }
 `;
 
@@ -67,12 +84,17 @@ const ContentContainer = styled.div`
 
 const Breakdown = styled.div`
   font-weight: 500;
-  font-size: 1.6rem;
   line-height: 2.4rem;
   letter-spacing: 0.15px;
   opacity: 0.6;
-  margin-bottom: 2.4rem;
   margin-left: 1.6rem;
+
+  font-size: 1.6rem;
+  margin-bottom: 2.4rem;
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 interface Props {
@@ -82,6 +104,8 @@ interface Props {
 }
 
 const ClaimAccordion = ({ open, toggle, rows }: Props) => {
+  const { isMobile, isDesktop } = useDevice();
+
   return (
     <Accordion
       header={
@@ -103,8 +127,16 @@ const ClaimAccordion = ({ open, toggle, rows }: Props) => {
           </ClaimableContainer>
           <Apr>5.2%</Apr>
           <EndContainer>
-            <Button text="Claim all" background="#1c0c37" width="12rem" />
-            <Button primary text="Claim all & Stake" width="18rem" />
+            {isDesktop && (
+              <Button
+                text="Claim all"
+                background="#1c0c37"
+                width="12rem"
+                small={isMobile}
+                primary={isMobile}
+              />
+            )}
+            {isDesktop && <Button primary text="Claim all & Stake" width="18rem" />}
             <AccordionChevron open={open} />
           </EndContainer>
         </Header>
