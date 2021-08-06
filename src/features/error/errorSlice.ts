@@ -1,6 +1,6 @@
 import { CaseReducer, createSlice, PayloadAction, SerializedError } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { logout } from "../account/accountSlice";
+import { logout } from "../../state/accountSlice";
 import { fetchPool, fetchPools, fetchPrices } from "../pools-list/poolsListSlice";
 import { fetchPositions, registerPosition, removePosition } from "../positions/positionsSlice";
 import { fetchPendingTransactions } from "../transactions-list/transactionsSlice";

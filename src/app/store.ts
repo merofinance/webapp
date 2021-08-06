@@ -7,7 +7,7 @@ import {
 } from "@reduxjs/toolkit";
 import poolsReducer from "../features/pools-list/poolsListSlice";
 import userReducer from "../features/user/userSlice";
-import accountReducer from "../features/account/accountSlice";
+import accountReducer from "../state/accountSlice";
 import errorReducer from "../features/error/errorSlice";
 import positionsReducer from "../features/positions/positionsSlice";
 import transactionsReducer from "../features/transactions-list/transactionsSlice";

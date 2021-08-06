@@ -3,7 +3,7 @@ import { RootState } from "../../app/store";
 import { Pool } from "../../lib";
 import { Backd } from "../../lib/backd";
 import { fromPlainPosition, Position, PlainPosition } from "../../lib/types";
-import { logout } from "../account/accountSlice";
+import { logout } from "../../state/accountSlice";
 import { handleTransactionConfirmation } from "../transactions-list/transactionsUtils";
 import { fetchAllowances, fetchBalances } from "../user/userSlice";
 

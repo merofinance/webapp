@@ -3,7 +3,7 @@ import { AppThunk, RootState } from "../../app/store";
 import { Pool } from "../../lib";
 import { Backd } from "../../lib/backd";
 import { Prices } from "../../lib/types";
-import { logout } from "../account/accountSlice";
+import { logout } from "../../state/accountSlice";
 import { fetchAllowances, fetchBalances } from "../user/userSlice";
 
 interface PoolsState {

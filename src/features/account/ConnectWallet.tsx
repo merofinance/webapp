@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { activateIfAuthorized } from "../../app/web3";
 import WalletSelectPopup from "../../components/WalletSelectPopup";
 import { Backd } from "../../lib/backd";
-import { isConnected } from "../account/accountSlice";
+import { isConnected } from "../../state/accountSlice";
 
 export function ConnectWallet() {
   const history = useHistory();
