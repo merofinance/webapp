@@ -2,7 +2,7 @@ import { useWeb3React } from "@web3-react/core";
 import React, { ReactChild, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Redirect, Route, RouteProps } from "react-router-dom";
-import { isConnected } from "../features/account/accountSlice";
+import { isConnected } from "../state/accountSlice";
 import { Backd } from "../lib/backd";
 import { activateIfAuthorized } from "./web3";
 

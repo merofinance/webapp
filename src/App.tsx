@@ -16,8 +16,8 @@ import { useMock } from "./app/config";
 import { PrivateRoute } from "./app/private-route";
 import { AppDispatch } from "./app/store";
 import Header from "./components/Header";
-import { ErrorBoundary } from "./features/error/ErrorBoundary";
-import { setError } from "./features/error/errorSlice";
+import { ErrorBoundary } from "./components/ErrorBoundary";
+import { setError } from "./state/errorSlice";
 import { createBackd } from "./lib/factory";
 import MockSigner from "./lib/mock/signer";
 import LandingPage from "./pages/landing/LandingPage";
@@ -26,11 +26,11 @@ import Footer from "./components/Footer";
 import PoolsPage from "./pages/pools/PoolsPage";
 import StakePage from "./pages/stake/StakePage";
 import LitepaperPage from "./pages/litepaper/LitepaperPage";
-import { ConnectWallet } from "./features/account/ConnectWallet";
+import { ConnectWallet } from "./components/ConnectWallet";
 import ClaimPage from "./pages/claim/ClaimPage";
 import PoolPage from "./pages/pool/PoolPage";
 import { LIVE, STAKING_LIVE } from "./lib/constants";
-import { ErrorAlert } from "./features/error/ErrorAlert";
+import { ErrorAlert } from "./components/ErrorAlert";
 
 const Background = styled.div`
   background: radial-gradient(rgba(11, 3, 60, 0.2), rgba(10, 5, 38, 0.3));

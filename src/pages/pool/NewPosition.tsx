@@ -4,17 +4,17 @@ import styled from "styled-components";
 import { useBackd } from "../../app/hooks/use-backd";
 import Dropdown from "../../components/Dropdown";
 import Button from "../../components/Button";
-import { approve, selectBalance, selectToupAllowance } from "../../features/user/userSlice";
+import { approve, selectBalance, selectToupAllowance } from "../../state/userSlice";
 import { Pool } from "../../lib";
 import { Position } from "../../lib/types";
 import NewPositionConfirmation from "./NewPositionConfirmation";
 import NewPositionInput from "./NewPositionInput";
 import { AppDispatch } from "../../app/store";
 import { ethers } from "ethers";
-import { selectPositions } from "../../features/positions/positionsSlice";
+import { selectPositions } from "../../state/positionsSlice";
 import { TokenValue } from "../../lib/token-value";
-import { useDevice } from "../../lib/hooks";
 import { INFINITE_APPROVE_AMMOUNT } from "../../lib/constants";
+import { useDevice } from "../../app/hooks/use-device";
 
 const Border = styled.div`
   width: 100%;

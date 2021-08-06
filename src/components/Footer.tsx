@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import logo from "../assets/full-logo.svg";
+import logo from "../assets/logo/full-logo.svg";
 
 type LinkType = {
   label: string;

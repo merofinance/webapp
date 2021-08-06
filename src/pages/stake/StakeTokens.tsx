@@ -4,7 +4,7 @@ import styled from "styled-components";
 import AmountInput from "../../components/AmountInput";
 import MultiStepButtons from "../../components/MultiStepButtons";
 import LaunchIcon from "@material-ui/icons/Launch";
-import { selectBalance } from "../../features/user/userSlice";
+import { selectBalance } from "../../state/userSlice";
 import { Token } from "../../lib/types";
 import { GradientLink } from "../../styles/GradientText";
 

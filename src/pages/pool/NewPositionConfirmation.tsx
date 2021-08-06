@@ -7,13 +7,13 @@ import Popup from "../../components/Popup";
 import { GradientLink } from "../../styles/GradientText";
 import Tooltip from "../../components/Tooltip";
 import LaunchIcon from "@material-ui/icons/Launch";
-import { setError } from "../../features/error/errorSlice";
-import { registerPosition } from "../../features/positions/positionsSlice";
+import { setError } from "../../state/errorSlice";
+import { registerPosition } from "../../state/positionsSlice";
 import { shortenAddress } from "../../lib/text";
 import { Pool, Position } from "../../lib/types";
-import { selectPrice } from "../../features/pool/selectors";
+import { selectPrice } from "../../state/selectors";
 import { ETHERSCAN_URL } from "../../lib/constants";
-import { useDevice } from "../../lib/hooks";
+import { useDevice } from "../../app/hooks/use-device";
 
 const Content = styled.div`
   width: 100%;

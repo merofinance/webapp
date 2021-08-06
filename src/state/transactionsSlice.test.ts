@@ -1,4 +1,4 @@
-import { TransactionInfo } from "../../lib/types";
+import { TransactionInfo } from "../lib/types";
 import { sortTransactions } from "./transactionsSlice";
 
 test("sort transactions", () => {

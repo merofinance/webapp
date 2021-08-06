@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import { useDevice } from "../../app/hooks/use-device";
 import Accordion from "../../components/Accordion";
 import AccordionChevron from "../../components/AccordionChevron";
 import Asset from "../../components/Asset";
 import Button from "../../components/Button";
-import { useDevice } from "../../lib/hooks";
 import { GradientText } from "../../styles/GradientText";
 import ClaimRow from "./ClaimRow";
 

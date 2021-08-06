@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Pool } from "../../lib";
 import Overview from "../../components/Overview";
-import { selectPrice } from "../../features/pool/selectors";
+import { selectPrice } from "../../state/selectors";
 import { formatPercent, numberToCompactCurrency } from "../../lib/numeric";
 
 interface Props {

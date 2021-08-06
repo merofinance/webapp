@@ -7,7 +7,7 @@ import { AbstractConnector } from "@web3-react/abstract-connector";
 import { injectedConnector, walletConnectConnector } from "../app/web3";
 import metamask from "../assets/wallets/metamask.svg";
 import walletConnect from "../assets/wallets/wallet-connect.svg";
-import { setConnected } from "../features/account/accountSlice";
+import { setConnected } from "../state/accountSlice";
 import Popup from "./Popup";
 
 type WalletOption = {

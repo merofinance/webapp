@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import close from "../assets/ui/close.svg";
-import { useDevice } from "../lib/hooks";
+import { useDevice } from "../app/hooks/use-device";
 import Button from "./Button";
 
 const StyledPopup = styled.div`

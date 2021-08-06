@@ -1,7 +1,7 @@
 import React from "react";
 import { Pool } from "../../lib";
 import { useLoading } from "../../app/hooks/use-loading";
-import { approve, deposit, selectDepositAllowance } from "../../features/user/userSlice";
+import { approve, deposit, selectDepositAllowance } from "../../state/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";

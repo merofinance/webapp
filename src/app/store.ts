@@ -5,12 +5,12 @@ import {
   getDefaultMiddleware,
   ThunkAction,
 } from "@reduxjs/toolkit";
-import poolsReducer from "../features/pools-list/poolsListSlice";
-import userReducer from "../features/user/userSlice";
-import accountReducer from "../features/account/accountSlice";
-import errorReducer from "../features/error/errorSlice";
-import positionsReducer from "../features/positions/positionsSlice";
-import transactionsReducer from "../features/transactions-list/transactionsSlice";
+import poolsReducer from "../state/poolsListSlice";
+import userReducer from "../state/userSlice";
+import accountReducer from "../state/accountSlice";
+import errorReducer from "../state/errorSlice";
+import positionsReducer from "../state/positionsSlice";
+import transactionsReducer from "../state/transactionsSlice";
 import storage from "redux-persist/lib/storage";
 import {
   FLUSH,
