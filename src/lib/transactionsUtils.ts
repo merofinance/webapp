@@ -1,14 +1,14 @@
 import { ContractTransaction } from "@ethersproject/contracts";
 import { batch } from "react-redux";
-import { AppDispatch } from "../../app/store";
+import { AppDispatch } from "../app/store";
 import {
   parseTransactionReceipt,
   Position,
   TransactionDescription,
   TransactionInfo,
-} from "../../lib/types";
-import { setError } from "../../state/errorSlice";
-import { addTransaction, confirmTransaction } from "../../state/transactionsSlice";
+} from "./types";
+import { setError } from "../state/errorSlice";
+import { addTransaction, confirmTransaction } from "../state/transactionsSlice";
 
 export function formatError(err: any): string {
   return (err.data || {}).message || err.message;

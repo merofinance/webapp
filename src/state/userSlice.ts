@@ -17,7 +17,7 @@ import {
   Token,
 } from "../lib/types";
 import { fetchPool } from "./poolsListSlice";
-import { handleTransactionConfirmation } from "../features/transactions-list/transactionsUtils";
+import { handleTransactionConfirmation } from "../lib/transactionsUtils";
 
 interface UserState {
   balances: PlainBalances;
