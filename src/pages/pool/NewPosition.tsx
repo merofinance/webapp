@@ -14,6 +14,7 @@ import { ethers } from "ethers";
 import { selectPositions } from "../../features/positions/positionsSlice";
 import { TokenValue } from "../../lib/token-value";
 import { useDevice } from "../../lib/hooks";
+import { INFINITE_APPROVE_AMMOUNT } from "../../lib/constants";
 
 const Border = styled.div`
   width: 100%;
@@ -161,7 +162,7 @@ const NewPosition = ({ pool }: Props) => {
     if (!backd) return;
     setLoading(true);
     const approveArgs = {
-      amount: TokenValue.fromUnscaled(max, pool.underlying.decimals),
+      amount: TokenValue.fromUnscaled(INFINITE_APPROVE_AMMOUNT, pool.underlying.decimals),
       backd,
       spender: backd.topupActionAddress,
       token: pool.lpToken,
