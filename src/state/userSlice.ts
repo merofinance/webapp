@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState, Selector } from "../../app/store";
-import { Backd } from "../../lib/backd";
-import { ETH_DUMMY_ADDRESS } from "../../lib/constants";
-import { PlainTokenValue, TokenValue } from "../../lib/token-value";
+import { RootState, Selector } from "../app/store";
+import { Backd } from "../lib/backd";
+import { ETH_DUMMY_ADDRESS } from "../lib/constants";
+import { PlainTokenValue, TokenValue } from "../lib/token-value";
 import {
   Address,
   AllowanceQuery,
@@ -15,9 +15,9 @@ import {
   PlainAllowances,
   PlainBalances,
   Token,
-} from "../../lib/types";
-import { fetchPool } from "../../state/poolsListSlice";
-import { handleTransactionConfirmation } from "../transactions-list/transactionsUtils";
+} from "../lib/types";
+import { fetchPool } from "./poolsListSlice";
+import { handleTransactionConfirmation } from "../features/transactions-list/transactionsUtils";
 
 interface UserState {
   balances: PlainBalances;

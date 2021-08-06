@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useBackd } from "../../app/hooks/use-backd";
 import Dropdown from "../../components/Dropdown";
 import Button from "../../components/Button";
-import { approve, selectBalance, selectToupAllowance } from "../../features/user/userSlice";
+import { approve, selectBalance, selectToupAllowance } from "../../state/userSlice";
 import { Pool } from "../../lib";
 import { Position } from "../../lib/types";
 import NewPositionConfirmation from "./NewPositionConfirmation";

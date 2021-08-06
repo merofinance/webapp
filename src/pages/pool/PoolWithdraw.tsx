@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useDevice } from "../../app/hooks/use-device";
 import AmountInput from "../../components/AmountInput";
 import ContentSection from "../../components/ContentSection";
-import { selectBalance } from "../../features/user/userSlice";
+import { selectBalance } from "../../state/userSlice";
 import { Pool } from "../../lib";
 import { TokenValue } from "../../lib/token-value";
 import PoolStatistics from "./PoolStatistics";

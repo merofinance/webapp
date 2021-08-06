@@ -6,7 +6,7 @@ import {
   ThunkAction,
 } from "@reduxjs/toolkit";
 import poolsReducer from "../state/poolsListSlice";
-import userReducer from "../features/user/userSlice";
+import userReducer from "../state/userSlice";
 import accountReducer from "../state/accountSlice";
 import errorReducer from "../state/errorSlice";
 import positionsReducer from "../state/positionsSlice";

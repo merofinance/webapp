@@ -6,7 +6,7 @@ import chevron from "../../assets/ui/chevron.svg";
 import Asset from "../../components/Asset";
 import Button from "../../components/Button";
 import { GradientText } from "../../styles/GradientText";
-import { selectBalances } from "../../features/user/userSlice";
+import { selectBalances } from "../../state/userSlice";
 import { Pool } from "../../lib";
 import { formatPercent, numberToCompactCurrency } from "../../lib/numeric";
 import { selectPoolPositions } from "../../state/positionsSlice";

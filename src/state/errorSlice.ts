@@ -4,7 +4,7 @@ import { logout } from "../state/accountSlice";
 import { fetchPool, fetchPools, fetchPrices } from "./poolsListSlice";
 import { fetchPositions, registerPosition, removePosition } from "./positionsSlice";
 import { fetchPendingTransactions } from "../state/transactionsSlice";
-import { deposit, fetchAllowances, fetchBalances, withdraw } from "../features/user/userSlice";
+import { deposit, fetchAllowances, fetchBalances, withdraw } from "./userSlice";
 
 interface ErrorState {
   error: string;

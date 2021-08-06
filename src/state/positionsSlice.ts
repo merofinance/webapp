@@ -5,7 +5,7 @@ import { Backd } from "../lib/backd";
 import { fromPlainPosition, Position, PlainPosition } from "../lib/types";
 import { logout } from "./accountSlice";
 import { handleTransactionConfirmation } from "../features/transactions-list/transactionsUtils";
-import { fetchAllowances, fetchBalances } from "../features/user/userSlice";
+import { fetchAllowances, fetchBalances } from "./userSlice";
 
 type PositionsState = PlainPosition[];
 

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Button from "../../components/Button";
 import { Pool } from "../../lib";
 import { useLoading } from "../../app/hooks/use-loading";
-import { selectBalance, unstake, withdraw } from "../../features/user/userSlice";
+import { selectBalance, unstake, withdraw } from "../../state/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";

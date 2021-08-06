@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { selectPools, selectPrices } from "../../state/poolsListSlice";
-import { selectBalances } from "../../features/user/userSlice";
+import { selectBalances } from "../../state/userSlice";
 import { Pool } from "../../lib";
 import Statistics from "../../components/Statistics";
 import { selectPositions } from "../../state/positionsSlice";

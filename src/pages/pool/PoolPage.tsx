@@ -10,7 +10,7 @@ import PoolDeposit from "./PoolDeposit";
 import PoolPositions from "./PoolPositions";
 import PoolWithdraw from "./PoolWithdraw";
 import PoolOverview from "./PoolOverview";
-import { selectBalance } from "../../features/user/userSlice";
+import { selectBalance } from "../../state/userSlice";
 import { useDevice } from "../../app/hooks/use-device";
 
 type DepositWithdrawParams = {
