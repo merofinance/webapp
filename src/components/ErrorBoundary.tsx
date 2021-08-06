@@ -1,4 +1,4 @@
-import React, { ErrorInfo } from "react";
+import React, { ErrorInfo, ReactNode } from "react";
 import { AppDispatch } from "../app/store";
 import { setError } from "../state/errorSlice";
 
@@ -7,15 +7,11 @@ type ErrorBoundaryProps = {
 };
 
 export class ErrorBoundary extends React.Component<ErrorBoundaryProps, any> {
-  static getDerivedStateFromError(error: Error) {
-    return {};
-  }
-
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
     this.props.dispatch(setError({ error: error.message }));
   }
 
-  render() {
+  render(): ReactNode {
     return this.props.children;
   }
 }
