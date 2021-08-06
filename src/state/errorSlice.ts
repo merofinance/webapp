@@ -3,7 +3,7 @@ import { RootState } from "../app/store";
 import { logout } from "../state/accountSlice";
 import { fetchPool, fetchPools, fetchPrices } from "./poolsListSlice";
 import { fetchPositions, registerPosition, removePosition } from "./positionsSlice";
-import { fetchPendingTransactions } from "../features/transactions-list/transactionsSlice";
+import { fetchPendingTransactions } from "../state/transactionsSlice";
 import { deposit, fetchAllowances, fetchBalances, withdraw } from "../features/user/userSlice";
 
 interface ErrorState {

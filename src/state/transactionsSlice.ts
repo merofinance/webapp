@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState, Selector } from "../../app/store";
-import { Backd } from "../../lib/backd";
-import { parseTransactionReceipt, TransactionConfirmation, TransactionInfo } from "../../lib/types";
-import { logout } from "../../state/accountSlice";
+import { RootState, Selector } from "../app/store";
+import { Backd } from "../lib/backd";
+import { parseTransactionReceipt, TransactionConfirmation, TransactionInfo } from "../lib/types";
+import { logout } from "./accountSlice";
 
 interface TransactionsState {
   transactions: TransactionInfo[];

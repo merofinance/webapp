@@ -8,7 +8,7 @@ import {
   TransactionInfo,
 } from "../../lib/types";
 import { setError } from "../../state/errorSlice";
-import { addTransaction, confirmTransaction } from "./transactionsSlice";
+import { addTransaction, confirmTransaction } from "../../state/transactionsSlice";
 
 export function formatError(err: any): string {
   return (err.data || {}).message || err.message;
