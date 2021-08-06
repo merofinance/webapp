@@ -122,7 +122,7 @@ const Connector = (): JSX.Element => {
       <DesktopConnector>
         <Aura connected={active} />
         <ConnectorButton onClick={() => setConnecting(true)} connected={active}>
-          <ConnectorText>{active ? shortenAddress(account!, 8) : "Connnect wallet"}</ConnectorText>
+          <ConnectorText>{account ? shortenAddress(account, 8) : "Connnect wallet"}</ConnectorText>
         </ConnectorButton>
       </DesktopConnector>
       <MobileConnector onClick={() => setConnecting(true)}>
