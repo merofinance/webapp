@@ -12,9 +12,7 @@ export default class MockSigner extends Signer {
     return Promise.resolve(message.toString());
   }
 
-  signTransaction(
-    transaction: Deferrable<TransactionRequest>
-  ): Promise<string> {
+  signTransaction(transaction: Deferrable<TransactionRequest>): Promise<string> {
     const data = transaction.data?.toString() || "";
     return Promise.resolve(data);
   }
