@@ -5,7 +5,7 @@ import swirl1 from "../../assets/background/swirl-1.svg";
 import swirl2 from "../../assets/background/swirl-2.svg";
 import { useBackd } from "../../app/hooks/use-backd";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchState, selectPools } from "../../features/pools-list/poolsListSlice";
+import { fetchState, selectPools } from "../../state/poolsListSlice";
 import { Pool } from "../../lib";
 
 const StyledPreview = styled.div`

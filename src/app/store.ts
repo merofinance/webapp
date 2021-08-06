@@ -5,7 +5,7 @@ import {
   getDefaultMiddleware,
   ThunkAction,
 } from "@reduxjs/toolkit";
-import poolsReducer from "../features/pools-list/poolsListSlice";
+import poolsReducer from "../state/poolsListSlice";
 import userReducer from "../features/user/userSlice";
 import accountReducer from "../state/accountSlice";
 import errorReducer from "../state/errorSlice";

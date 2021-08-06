@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { useBackd } from "../../app/hooks/use-backd";
 import ContentSection from "../../components/ContentSection";
-import { fetchState, selectPools } from "../../features/pools-list/poolsListSlice";
+import { fetchState, selectPools } from "../../state/poolsListSlice";
 import { Pool } from "../../lib";
 import Seo from "../../components/Seo";
 import PoolsRow from "./PoolsRow";

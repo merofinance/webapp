@@ -16,7 +16,7 @@ import {
   PlainBalances,
   Token,
 } from "../../lib/types";
-import { fetchPool } from "../pools-list/poolsListSlice";
+import { fetchPool } from "../../state/poolsListSlice";
 import { handleTransactionConfirmation } from "../transactions-list/transactionsUtils";
 
 interface UserState {

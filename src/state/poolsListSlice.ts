@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { AppThunk, RootState } from "../../app/store";
-import { Pool } from "../../lib";
-import { Backd } from "../../lib/backd";
-import { Prices } from "../../lib/types";
-import { logout } from "../../state/accountSlice";
-import { fetchAllowances, fetchBalances } from "../user/userSlice";
+import { AppThunk, RootState } from "../app/store";
+import { Pool } from "../lib";
+import { Backd } from "../lib/backd";
+import { Prices } from "../lib/types";
+import { logout } from "./accountSlice";
+import { fetchAllowances, fetchBalances } from "../features/user/userSlice";
 
 interface PoolsState {
   pools: Pool[];
