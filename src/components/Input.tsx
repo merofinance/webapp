@@ -165,9 +165,16 @@ const Input = (props: Props): JSX.Element => {
         >
           {props.label}
         </Label>
-        {props.buttonText && props.buttonAction && (
+        {props.buttonText && (
           <ButtonContainer>
-            <Button primary small text={props.buttonText} click={() => props.buttonAction!()} />
+            <Button
+              primary
+              small
+              text={props.buttonText}
+              click={() => {
+                if (props.buttonAction) props.buttonAction();
+              }}
+            />
           </ButtonContainer>
         )}
       </InputContainer>
