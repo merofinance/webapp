@@ -1,10 +1,14 @@
 import { CaseReducer, createSlice, PayloadAction, SerializedError } from "@reduxjs/toolkit";
-import { RootState } from "../../app/store";
-import { logout } from "../../state/accountSlice";
-import { fetchPool, fetchPools, fetchPrices } from "../pools-list/poolsListSlice";
-import { fetchPositions, registerPosition, removePosition } from "../positions/positionsSlice";
-import { fetchPendingTransactions } from "../transactions-list/transactionsSlice";
-import { deposit, fetchAllowances, fetchBalances, withdraw } from "../user/userSlice";
+import { RootState } from "../app/store";
+import { logout } from "../state/accountSlice";
+import { fetchPool, fetchPools, fetchPrices } from "../features/pools-list/poolsListSlice";
+import {
+  fetchPositions,
+  registerPosition,
+  removePosition,
+} from "../features/positions/positionsSlice";
+import { fetchPendingTransactions } from "../features/transactions-list/transactionsSlice";
+import { deposit, fetchAllowances, fetchBalances, withdraw } from "../features/user/userSlice";
 
 interface ErrorState {
   error: string;

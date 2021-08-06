@@ -7,7 +7,7 @@ import {
   TransactionDescription,
   TransactionInfo,
 } from "../../lib/types";
-import { setError } from "../error/errorSlice";
+import { setError } from "../../state/errorSlice";
 import { addTransaction, confirmTransaction } from "./transactionsSlice";
 
 export function formatError(err: any): string {

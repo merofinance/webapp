@@ -8,7 +8,7 @@ import {
 import poolsReducer from "../features/pools-list/poolsListSlice";
 import userReducer from "../features/user/userSlice";
 import accountReducer from "../state/accountSlice";
-import errorReducer from "../features/error/errorSlice";
+import errorReducer from "../state/errorSlice";
 import positionsReducer from "../features/positions/positionsSlice";
 import transactionsReducer from "../features/transactions-list/transactionsSlice";
 import storage from "redux-persist/lib/storage";

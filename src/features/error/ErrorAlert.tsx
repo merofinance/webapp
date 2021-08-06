@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../app/store";
 import Popup from "../../components/Popup";
 import { Paragraph } from "../../styles/Headers";
-import { selectError, setError } from "./errorSlice";
+import { selectError, setError } from "../../state/errorSlice";
 import { GradientText } from "../../styles/GradientText";
 import Button from "../../components/Button";
 
