@@ -109,5 +109,9 @@
       "twitter": "Twitter",
       "github": "GitHub"
     }
+  },
+  "getStarted": {
+    "header": "get started",
+    "description": "Deposit liquidity and start earning yield."
   }
 }
