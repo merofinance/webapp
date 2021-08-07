@@ -149,6 +149,7 @@ export class Web3Backd implements Backd {
     return Promise.all(rawPositions.map((v: any) => this.getPositionInfo(v)));
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async getPositionInfo(rawPosition: any): Promise<PlainPosition> {
     const token = Ierc20FullFactory.connect(rawPosition.record.depositToken, this._provider);
     const decimals = await token.decimals();
