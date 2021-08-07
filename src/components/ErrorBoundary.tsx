@@ -11,6 +11,10 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, any> {
     this.props.dispatch(setError({ error: error.message }));
   }
 
+  static getDerivedStateFromError(): any {
+    return {};
+  }
+
   render(): ReactNode {
     return this.props.children;
   }
