@@ -1,6 +1,8 @@
 import React from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
+import { useTranslation, withTranslation, Trans } from "react-i18next";
+
 import Button from "../../components/Button";
 import { Header1, Header3 } from "../../styles/Headers";
 import { LIVE } from "../../lib/constants";
@@ -19,10 +21,12 @@ const StyledHero = styled.div`
 
 const Hero = (): JSX.Element => {
   const history = useHistory();
+  // const { t } = useTransl;
+  const { t } = useTranslation();
 
   return (
     <StyledHero>
-      <Header1>reactive liquidity</Header1>
+      <Header1>{t("title")}</Header1>
       <Header3>
         A trustless and interest generating protocol designed to prevent collateralized loans from
         becoming liquidatable.
