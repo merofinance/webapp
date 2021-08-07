@@ -1,68 +1,59 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
 import { Header2, Header4 } from "../../styles/Headers";
 import Radio, { RadioOptionType } from "../../components/Radio";
-
-const categories: RadioOptionType[] = [
-  {
-    label: "earn yield",
-    value: "earn",
-  },
-  {
-    label: "earn & protect",
-    value: "protect",
-  },
-];
 
 type CardType = {
   number: string;
   header: string;
-  body: string;
+  description: string;
 };
 
 const cardsList: CardType[][] = [
   [
     {
-      number: "01",
-      header: "Deposit Liquidity",
-      body: "Deposit funds into Backd liquidity pools and receive pool LP tokens.",
+      number: "howItWorks.categories.earnYield.cards.deposit.number",
+      header: "howItWorks.categories.earnYield.cards.deposit.header",
+      description: "howItWorks.categories.earnYield.cards.deposit.description",
     },
     {
-      number: "02",
-      header: "Earn Yield",
-      body: "Earn compounded yield from strategy profits and protocol fees as LP tokens appreciate over the underlying tokens.",
+      number: "howItWorks.categories.earnYield.cards.earn.number",
+      header: "howItWorks.categories.earnYield.cards.earn.header",
+      description: "howItWorks.categories.earnYield.cards.earn.description",
     },
     {
-      number: "03",
-      header: "Stake to Earn Rewards",
-      body: "Stake your pool LP tokens to receive Backd rewards.",
+      number: "howItWorks.categories.earnYield.cards.stake.number",
+      header: "howItWorks.categories.earnYield.cards.stake.header",
+      description: "howItWorks.categories.earnYield.cards.stake.description",
     },
     {
-      number: "04",
-      header: "Unstake Any Time",
-      body: "Unstake your LP tokens or claim your Backd rewards at any time.",
+      number: "howItWorks.categories.earnYield.cards.claim.number",
+      header: "howItWorks.categories.earnYield.cards.claim.header",
+      description: "howItWorks.categories.earnYield.cards.claim.description",
     },
   ],
   [
     {
-      number: "01",
-      header: "Deposit Liquidity",
-      body: "Deposit funds into Backd liquidity pools and receive pool LP tokens.",
+      number: "howItWorks.categories.earnAndProtect.cards.deposit.number",
+      header: "howItWorks.categories.earnAndProtect.cards.deposit.header",
+      description: "howItWorks.categories.earnAndProtect.cards.deposit.description",
     },
     {
-      number: "02",
-      header: "Register Loan on-Chain",
-      body: "Register Compound or Aave loans on-chain to receive collateral top-ups, and stake your pool LP tokens to earn Backd rewards.",
+      number: "howItWorks.categories.earnAndProtect.cards.register.number",
+      header: "howItWorks.categories.earnAndProtect.cards.register.header",
+      description: "howItWorks.categories.earnAndProtect.cards.register.description",
     },
     {
-      number: "03",
-      header: "Protect & Earn",
-      body: "Earn compounded yield and protocol fees as the LP token appreciates, while keepers monitor your loan and transfer your capital to avoid liquidation.",
+      number: "howItWorks.categories.earnAndProtect.cards.protect.number",
+      header: "howItWorks.categories.earnAndProtect.cards.protect.header",
+      description: "howItWorks.categories.earnAndProtect.cards.protect.description",
     },
     {
-      number: "04",
-      header: "Unstake Any Time",
-      body: "Unregister or update a position, withdraw LP tokens or claim Backd rewards at any time.",
+      number: "howItWorks.categories.earnAndProtect.cards.claim.number",
+      header: "howItWorks.categories.earnAndProtect.cards.claim.header",
+      description: "howItWorks.categories.earnAndProtect.cards.claim.description",
     },
   ],
 ];
@@ -147,11 +138,23 @@ const Header = styled(Header4)`
 `;
 
 const HowItWorks = (): JSX.Element => {
+  const { t } = useTranslation();
   const [category, setCategory] = useState("earn");
+
+  const categories: RadioOptionType[] = [
+    {
+      label: t("howItWorks.categories.earnYield.tabName"),
+      value: "earn",
+    },
+    {
+      label: t("howItWorks.categories.earnAndProtect.tabName"),
+      value: "protect",
+    },
+  ];
 
   return (
     <StyledHowItWorks>
-      <Header2>how it works</Header2>
+      <Header2>{t("howItWorks.header")}</Header2>
       <Radio
         options={categories}
         active={category}
@@ -164,9 +167,9 @@ const HowItWorks = (): JSX.Element => {
         >
           {cards.map((card: CardType) => (
             <Card key={card.number} id={`How It Works - ${card.number}`}>
-              <Number>{card.number}</Number>
-              <Header>{card.header}</Header>
-              <Body>{card.body}</Body>
+              <Number>{t(card.number)}</Number>
+              <Header>{t(card.header)}</Header>
+              <Body>{t(card.description)}</Body>
             </Card>
           ))}
         </CardContainer>

@@ -37,5 +37,60 @@
       "description": "A small fee charged on the collateral top-up amount is distributed among LPs."
     },
     "readMore": "Read more"
+  },
+  "howItWorks": {
+    "header": "how it works",
+    "categories": {
+      "earnYield": {
+        "tabName": "earn yield",
+        "cards": {
+          "deposit": {
+            "number": "01",
+            "header": "Deposit Liquidity",
+            "description": "Deposit funds into Backd liquidity pools and receive pool LP tokens."
+          },
+          "earn": {
+            "number": "02",
+            "header": "Earn Yield",
+            "description": "Earn compounded yield from strategy profits and protocol fees as LP tokens appreciate over the underlying tokens."
+          },
+          "stake": {
+            "number": "03",
+            "header": "Stake to Earn Rewards",
+            "description": "Stake your pool LP tokens to receive Backd rewards."
+          },
+          "claim": {
+            "number": "04",
+            "header": "Unstake Any Time",
+            "description": "Unstake your LP tokens or claim your Backd rewards at any time."
+          }
+        }
+      },
+      "earnAndProtect": {
+        "tabName": "earn & protect",
+        "cards": {
+          "deposit": {
+            "number": "01",
+            "header": "Deposit Liquidity",
+            "description": "Deposit funds into Backd liquidity pools and receive pool LP tokens."
+          },
+          "register": {
+            "number": "02",
+            "header": "Register Loan on-Chain",
+            "description": "Register Compound or Aave loans on-chain to receive collateral top-ups, and stake your pool LP tokens to earn Backd rewards."
+          },
+          "protect": {
+            "number": "03",
+            "header": "Protect & Earn",
+            "description": "Earn compounded yield and protocol fees as the LP token appreciates, while keepers monitor your loan and transfer your capital to avoid liquidation."
+          },
+          "claim": {
+            "number": "04",
+            "header": "Unstake Any Time",
+            "description": "Unregister or update a position, withdraw LP tokens or claim Backd rewards at any time."
+          }
+        }
+      }
+    }
   }
 }
