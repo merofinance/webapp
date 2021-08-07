@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
 import logo from "../assets/logo/full-logo.svg";
 
 type LinkType = {
@@ -120,7 +122,15 @@ const Link = styled.a`
   }
 `;
 
+const TestChangeLanguage = styled.div`
+  width: 5rem;
+  height: 5rem;
+  background-color: pink;
+`;
+
 const Footer = (): JSX.Element => {
+  const { i18n } = useTranslation();
+
   return (
     <StyledFooter>
       <Logo src={logo} alt="Backd logo" />
@@ -135,7 +145,7 @@ const Footer = (): JSX.Element => {
           ))}
         </LinkList>
       ))}
-      <div />
+      <TestChangeLanguage onClick={() => i18n.changeLanguage("jp")} />
     </StyledFooter>
   );
 };
