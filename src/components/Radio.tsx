@@ -88,7 +88,7 @@ type Props = {
   setOption: (value: string) => void;
 };
 
-const Radio = (props: Props) => {
+const Radio = (props: Props): JSX.Element => {
   return (
     <StyledRadio>
       <ActiveIndicator

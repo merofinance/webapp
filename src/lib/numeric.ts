@@ -1,11 +1,11 @@
 import { BigNumber, BigNumberish } from "ethers";
 import { DEFAULT_DECIMALS } from "./constants";
 
-export function scale(number: BigNumberish, decimals: number = DEFAULT_DECIMALS) {
+export function scale(number: BigNumberish, decimals: number = DEFAULT_DECIMALS): BigNumber {
   return BigNumber.from(number).mul(BigNumber.from(10).pow(decimals));
 }
 
-function flooredLog(value: BigNumber, base: number = 10): number {
+function flooredLog(value: BigNumber, base = 10): number {
   let result = 0;
   while (value.gt(base)) {
     result++;
@@ -17,15 +17,15 @@ function flooredLog(value: BigNumber, base: number = 10): number {
 export function bigNumberToFloat(
   value: BigNumber,
   decimals: number = DEFAULT_DECIMALS,
-  significantDigits: number = 5
+  significantDigits = 5
 ): number {
   const log = flooredLog(value);
   const decimalsScale = Math.min(Math.max(0, log - significantDigits + 1), decimals);
   const rounded = value.div(BigNumber.from(10).pow(decimalsScale)).toNumber();
-  return rounded / Math.pow(10, Math.max(0, decimals - decimalsScale));
+  return rounded / 10 ** Math.max(0, decimals - decimalsScale);
 }
 
-function countLeadingZeros(value: number, base: number = 10): number {
+function countLeadingZeros(value: number, base = 10): number {
   let result = 0;
   while (value < 1) {
     result++;
@@ -37,32 +37,32 @@ function countLeadingZeros(value: number, base: number = 10): number {
 export function floatToBigNumber(
   value: number,
   decimals: number = DEFAULT_DECIMALS,
-  significantDigits: number = 5
+  significantDigits = 5
 ): BigNumber {
   const leadingZeros = countLeadingZeros(value);
   const decimalScale = leadingZeros + significantDigits;
   if (decimalScale > decimals) {
     throw new Error(`decimalScale (${decimalScale}) > decimals ${decimals}`);
   }
-  const scaledSignificant = Math.round(value * Math.pow(10, decimalScale));
+  const scaledSignificant = Math.round(value * 10 ** decimalScale);
   return scale(scaledSignificant, decimals - decimalScale);
 }
 
-const roundToOneDp = (value: number) => {
+const roundToOneDp = (value: number): string => {
   return value.toLocaleString(undefined, {
     maximumFractionDigits: 1,
     minimumFractionDigits: 0,
   });
 };
 
-const roundToTwoDp = (value: number) => {
+const roundToTwoDp = (value: number): string => {
   return value.toLocaleString(undefined, {
     maximumFractionDigits: 2,
     minimumFractionDigits: 2,
   });
 };
 
-export const numberToCompactString = (value: number) => {
+export const numberToCompactString = (value: number): string => {
   if (value >= 1_000_000_000_000) return `${roundToOneDp(value / 1_000_000_000_000)}t`;
   if (value >= 1_000_000_000) return `${roundToOneDp(value / 1_000_000_000)}b`;
   if (value >= 1_000_000) return `${roundToOneDp(value / 1_000_000)}m`;
@@ -70,11 +70,11 @@ export const numberToCompactString = (value: number) => {
   return roundToTwoDp(value);
 };
 
-export const numberToCompactCurrency = (value: number) => {
+export const numberToCompactCurrency = (value: number): string => {
   return `$${numberToCompactString(value)}`;
 };
 
-export const formatCurrency = (number: number) => {
+export const formatCurrency = (number: number): string => {
   return number.toLocaleString(undefined, {
     maximumFractionDigits: 2,
     minimumFractionDigits: 2,
@@ -83,28 +83,28 @@ export const formatCurrency = (number: number) => {
   });
 };
 
-export const formatPercent = (number: number) => {
+export const formatPercent = (number: number): string => {
   return number.toLocaleString(undefined, { maximumFractionDigits: 2, style: "percent" });
 };
 
-export const formatCrypto = (number: number) => {
-  let decimals = Math.max(5 - Math.floor(Math.pow(number, 1 / 10)), 0);
+export const formatCrypto = (number: number): string => {
+  let decimals = Math.max(5 - Math.floor(number ** (1 / 10)), 0);
   if (number < 0.0001) decimals = 18;
   return number.toLocaleString(undefined, {
     maximumFractionDigits: decimals,
   });
 };
 
-export const bigNumberToString = (number: BigNumber, decimals: number) => {
+export const bigNumberToString = (number: BigNumber, decimals: number): string => {
   let string = number.toString();
-  while (string.length < decimals) string = "0" + string;
-  let decimalLocation = string.length - decimals;
-  let whole = string.slice(0, decimalLocation) || "0";
-  let fraction = string.slice(decimalLocation).replace(/0+$/, "");
-  return whole + (fraction ? "." + fraction : "");
+  while (string.length < decimals) string = `0${string}`;
+  const decimalLocation = string.length - decimals;
+  const whole = string.slice(0, decimalLocation) || "0";
+  const fraction = string.slice(decimalLocation).replace(/0+$/, "");
+  return whole + (fraction ? `.${fraction}` : "");
 };
 
-export const stringToBigNumber = (value: string, decimals: number) => {
+export const stringToBigNumber = (value: string, decimals: number): BigNumber => {
   if (!value || value === ".") throw new Error("Not a valid number");
   if (value.substring(0, 1) === "-") throw new Error("Negative numbers not supported");
 
@@ -127,8 +127,7 @@ export const stringToBigNumber = (value: string, decimals: number) => {
 
     const base = BigNumber.from(10).pow(BigNumber.from(decimals));
     return BigNumber.from(whole).mul(base).add(fraction);
-  } else {
-    const base = BigNumber.from(10).pow(BigNumber.from(-decimals));
-    return BigNumber.from(whole).div(base);
   }
+  const base = BigNumber.from(10).pow(BigNumber.from(-decimals));
+  return BigNumber.from(whole).div(base);
 };

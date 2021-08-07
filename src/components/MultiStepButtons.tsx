@@ -108,7 +108,7 @@ const MultiStepButtons = ({
   secondAction,
   secondHoverText,
   stepsOnTop,
-}: Props) => {
+}: Props): JSX.Element => {
   const { loading, setLoading } = useLoading();
 
   const action = async (action: () => Promise<void>) => {

@@ -145,7 +145,7 @@ const ReadMore = styled(GradientLink)`
   }
 `;
 
-const Benefits = () => {
+const Benefits = (): JSX.Element => {
   const benefitsRef = useRef<HTMLDivElement>(null);
   const [scrollPosition, setScrollPosition] = useState(0);
 

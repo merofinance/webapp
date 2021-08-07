@@ -23,7 +23,7 @@ const Content = styled.div`
   align-items: center;
 `;
 
-const LandingPage = () => {
+const LandingPage = (): JSX.Element => {
   return (
     <StyledLanding>
       <Background />

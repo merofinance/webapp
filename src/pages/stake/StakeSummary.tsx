@@ -1,7 +1,7 @@
 import React from "react";
 import SummaryStatistics from "../../components/SummaryStatistics";
 
-const StakeSummary = () => {
+const StakeSummary = (): JSX.Element => {
   return (
     <SummaryStatistics
       statistics={[

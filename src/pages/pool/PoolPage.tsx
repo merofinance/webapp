@@ -51,8 +51,8 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const PoolPage = () => {
-  let { poolName } = useParams<DepositWithdrawParams>();
+const PoolPage = (): JSX.Element => {
+  const { poolName } = useParams<DepositWithdrawParams>();
   const pool = useSelector(selectPool(poolName));
   const balance = useSelector(selectBalance(pool));
   const { isMobile } = useDevice();

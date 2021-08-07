@@ -77,7 +77,7 @@ interface Props {
   open: boolean;
 }
 
-const Accordion = ({ header, content, open }: Props) => {
+const Accordion = ({ header, content, open }: Props): JSX.Element => {
   return (
     <StyledAccordion>
       <Header open={open}>{header}</Header>

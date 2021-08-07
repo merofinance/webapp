@@ -62,7 +62,7 @@ type Props = {
   compact?: boolean;
 };
 
-const Asset = ({ token, large, small, value, hideIcon, compact }: Props) => {
+const Asset = ({ token, large, small, value, hideIcon, compact }: Props): JSX.Element => {
   return (
     <StyledAsset>
       {!hideIcon && <Icon src={assets[token.symbol]} alt={`${token.symbol} icon`} />}

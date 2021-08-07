@@ -23,7 +23,7 @@ export async function fetchCoinsMappings(): Promise<CoinsMapping> {
   if (coinsMapping.initialized) {
     return coinsMapping;
   }
-  const url = apiBaseURL + "/coins/list";
+  const url = `${apiBaseURL}/coins/list`;
   const response = await fetch(url);
   const coinsList: CoinInfo[] = await response.json();
   coinsList.forEach((coin) => {
@@ -42,21 +42,21 @@ export function convertPrices(
 ): Prices {
   const prices: Prices = {};
 
-  for (const coinId in apiPrices) {
-    const price = apiPrices[coinId][quote];
-    const rawSymbol = geckoIdToSymbol[coinId];
+  Object.entries(apiPrices).forEach((apiPrice) => {
+    const price = apiPrice[1][quote];
+    const rawSymbol = geckoIdToSymbol[apiPrice[0]];
     const symbol = symbols.find((s) => s.toLowerCase() === rawSymbol);
     if (!symbol) {
       console.error(`received price for unexpected symbol ${rawSymbol}`);
-      continue;
+    } else {
+      prices[symbol] = price;
     }
-    prices[symbol] = price;
-  }
+  });
 
   return prices;
 }
 
-export async function getPrices(symbols: string[], quote: string = "USD"): Promise<Prices> {
+export async function getPrices(symbols: string[], quote = "USD"): Promise<Prices> {
   quote = quote.toLowerCase();
 
   const { geckoIdToSymbol, symbolToGeckoId } = await fetchCoinsMappings();

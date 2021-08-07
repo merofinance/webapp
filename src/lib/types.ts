@@ -60,12 +60,17 @@ export const fromPlainPosition = (position: PlainPosition): Position => {
 };
 
 export function positionFromPartial<T>(pool: Pool<T>, position: Partial<Position<T>>): Position<T> {
+  if (!position.protocol) throw Error("Missing protocol when creating position");
+  if (!position.account) throw Error("Missing account when creating position");
+  if (!position.threshold) throw Error("Missing threshold when creating position");
+  if (!position.singleTopUp) throw Error("Missing single top up when creating position");
+  if (!position.maxTopUp) throw Error("Missing max top up when creating position");
   return {
-    protocol: position.protocol!!,
-    account: position.account!!,
-    threshold: position.threshold!!,
-    singleTopUp: position.singleTopUp!!,
-    maxTopUp: position.maxTopUp!!,
+    protocol: position.protocol,
+    account: position.account,
+    threshold: position.threshold,
+    singleTopUp: position.singleTopUp,
+    maxTopUp: position.maxTopUp,
     maxGasPrice: 0,
     actionToken: pool.underlying.address,
     depositToken: pool.lpToken.address,

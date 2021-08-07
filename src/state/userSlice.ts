@@ -100,20 +100,31 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchBalances.fulfilled, (state, action) => {
-      for (const tokenAddress in action.payload) {
-        state.balances[tokenAddress] = action.payload[tokenAddress];
-      }
+      Object.entries(action.payload).forEach((tokenAddress) => {
+        // eslint-disable-next-line prefer-destructuring
+        state.balances[tokenAddress[0]] = tokenAddress[1];
+      });
     });
 
     builder.addCase(fetchAllowances.fulfilled, (state, action) => {
-      for (const tokenAddress in action.payload) {
-        if (!state.allowances[tokenAddress]) {
-          state.allowances[tokenAddress] = {};
+      Object.entries(action.payload).forEach((tokenAddress) => {
+        if (!state.allowances[tokenAddress[0]]) {
+          state.allowances[tokenAddress[0]] = {};
         }
-        for (const spender in action.payload[tokenAddress]) {
-          state.allowances[tokenAddress][spender] = action.payload[tokenAddress][spender];
+        Object.entries(tokenAddress[1]).forEach((spender) => {
+          // eslint-disable-next-line prefer-destructuring
+          state.allowances[tokenAddress[0]][spender[0]] = spender[1];
+        });
+      });
+      Object.entries(action.payload).forEach((tokenAddress) => {
+        if (!state.allowances[tokenAddress[0]]) {
+          state.allowances[tokenAddress[0]] = {};
         }
-      }
+        Object.entries(tokenAddress[1]).forEach((spender) => {
+          // eslint-disable-next-line prefer-destructuring
+          state.allowances[tokenAddress[0]][spender[0]] = spender[1];
+        });
+      });
     });
   },
 });

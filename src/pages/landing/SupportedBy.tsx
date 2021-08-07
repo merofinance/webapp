@@ -95,7 +95,7 @@ const Protocol = styled.img`
   }
 `;
 
-const SupportedBy = () => {
+const SupportedBy = (): JSX.Element => {
   return (
     <StyledSupportedBy>
       <Header2>supported by</Header2>

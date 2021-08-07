@@ -131,7 +131,7 @@ type Props = {
   rows: OverviewRow[];
 };
 
-const Overview = ({ header, rows }: Props) => {
+const Overview = ({ header, rows }: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
 
   return (

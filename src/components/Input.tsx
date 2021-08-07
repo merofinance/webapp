@@ -135,7 +135,7 @@ type Props = {
   note?: string;
 };
 
-const Input = (props: Props) => {
+const Input = (props: Props): JSX.Element => {
   const [focused, setFocused] = useState(false);
   const [hover, setHover] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -165,9 +165,16 @@ const Input = (props: Props) => {
         >
           {props.label}
         </Label>
-        {props.buttonText && props.buttonAction && (
+        {props.buttonText && (
           <ButtonContainer>
-            <Button primary small text={props.buttonText} click={() => props.buttonAction!()} />
+            <Button
+              primary
+              small
+              text={props.buttonText}
+              click={() => {
+                if (props.buttonAction) props.buttonAction();
+              }}
+            />
           </ButtonContainer>
         )}
       </InputContainer>

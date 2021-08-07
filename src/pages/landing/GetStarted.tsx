@@ -57,7 +57,7 @@ const Body = styled.p`
   }
 `;
 
-const GetStarted = () => {
+const GetStarted = (): JSX.Element => {
   const history = useHistory();
 
   return (

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { ethers } from "ethers";
+
 import { useBackd } from "../../app/hooks/use-backd";
 import Dropdown from "../../components/Dropdown";
 import Button from "../../components/Button";
@@ -10,7 +12,6 @@ import { Position } from "../../lib/types";
 import NewPositionConfirmation from "./NewPositionConfirmation";
 import NewPositionInput from "./NewPositionInput";
 import { AppDispatch } from "../../app/store";
-import { ethers } from "ethers";
 import { selectPositions } from "../../state/positionsSlice";
 import { TokenValue } from "../../lib/token-value";
 import { INFINITE_APPROVE_AMMOUNT } from "../../lib/constants";
@@ -73,7 +74,7 @@ interface Props {
   pool: Pool;
 }
 
-const NewPosition = ({ pool }: Props) => {
+const NewPosition = ({ pool }: Props): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();
   const { isMobile } = useDevice();
@@ -130,7 +131,7 @@ const NewPosition = ({ pool }: Props) => {
       const number = TokenValue.fromUnscaled(max, pool.underlying.decimals);
       if (number.isNegative()) return "Must be positive number";
       if (number.gt(balance)) return "Exceeds deposited balance";
-      else return "";
+      return "";
     } catch {
       return "Invalid number";
     }

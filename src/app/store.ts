@@ -5,12 +5,6 @@ import {
   getDefaultMiddleware,
   ThunkAction,
 } from "@reduxjs/toolkit";
-import poolsReducer from "../state/poolsListSlice";
-import userReducer from "../state/userSlice";
-import accountReducer from "../state/accountSlice";
-import errorReducer from "../state/errorSlice";
-import positionsReducer from "../state/positionsSlice";
-import transactionsReducer from "../state/transactionsSlice";
 import storage from "redux-persist/lib/storage";
 import {
   FLUSH,
@@ -22,6 +16,13 @@ import {
   REGISTER,
   REHYDRATE,
 } from "redux-persist";
+
+import poolsReducer from "../state/poolsListSlice";
+import userReducer from "../state/userSlice";
+import accountReducer from "../state/accountSlice";
+import errorReducer from "../state/errorSlice";
+import positionsReducer from "../state/positionsSlice";
+import transactionsReducer from "../state/transactionsSlice";
 
 const rootReducer = combineReducers({
   pools: poolsReducer,

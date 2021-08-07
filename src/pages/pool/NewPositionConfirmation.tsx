@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import LaunchIcon from "@material-ui/icons/Launch";
+
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
 import Popup from "../../components/Popup";
 import { GradientLink } from "../../styles/GradientText";
 import Tooltip from "../../components/Tooltip";
-import LaunchIcon from "@material-ui/icons/Launch";
 import { setError } from "../../state/errorSlice";
 import { registerPosition } from "../../state/positionsSlice";
 import { shortenAddress } from "../../lib/text";
@@ -99,7 +100,7 @@ type Props = {
   complete: () => void;
 };
 
-const NewPositionConfirmation = ({ show, close, position, pool, complete }: Props) => {
+const NewPositionConfirmation = ({ show, close, position, pool, complete }: Props): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
   const price = useSelector(selectPrice(pool));
   const backd = useBackd();

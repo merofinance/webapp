@@ -103,7 +103,7 @@ interface Props {
   toggle: () => void;
 }
 
-const StakeAccordion = ({ open, toggle }: Props) => {
+const StakeAccordion = ({ open, toggle }: Props): JSX.Element => {
   const token: Token = {
     address: ETH_DUMMY_ADDRESS,
     name: "DAI",

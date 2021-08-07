@@ -50,7 +50,7 @@ type Props = {
   content: JSX.Element;
 };
 
-const ContentSection = ({ header, statistics, content }: Props) => {
+const ContentSection = ({ header, statistics, content }: Props): JSX.Element => {
   return (
     <StyledContentSection>
       <Header>{header}</Header>

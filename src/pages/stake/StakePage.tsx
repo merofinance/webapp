@@ -33,7 +33,7 @@ const ArrowHeader = styled.div`
   flex: 0.2;
 `;
 
-const StakePage = () => {
+const StakePage = (): JSX.Element => {
   const [activePool, setActivePool] = useState<number | null>(0);
 
   const isOpen = (index: number): boolean => activePool !== null && activePool === index;

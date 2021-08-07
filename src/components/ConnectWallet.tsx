@@ -7,7 +7,7 @@ import WalletSelectPopup from "./WalletSelectPopup";
 import { Backd } from "../lib/backd";
 import { isConnected } from "../state/accountSlice";
 
-export function ConnectWallet() {
+export const ConnectWallet = (): JSX.Element => {
   const history = useHistory();
   const connected = useSelector(isConnected);
 
@@ -23,4 +23,4 @@ export function ConnectWallet() {
   }, [active, history, activate, connected]);
 
   return <WalletSelectPopup show={!active} close={() => history.push("/")} />;
-}
+};

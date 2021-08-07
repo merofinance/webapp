@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+
 import Button from "../../components/Button";
 import { Pool } from "../../lib";
 import { useLoading } from "../../app/hooks/use-loading";
 import { selectBalance, unstake, withdraw } from "../../state/userSlice";
-import { useDispatch, useSelector } from "react-redux";
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
 import { TokenValue } from "../../lib/token-value";
@@ -22,7 +23,7 @@ type Props = {
   complete: () => void;
 };
 
-const WithdrawalButton = ({ value, pool, complete }: Props) => {
+const WithdrawalButton = ({ value, pool, complete }: Props): JSX.Element => {
   const dispatch: AppDispatch = useDispatch();
   const backd = useBackd();
   const { loading, setLoading, handleTxDispatch } = useLoading();
@@ -31,7 +32,8 @@ const WithdrawalButton = ({ value, pool, complete }: Props) => {
   const availableToWithdraw = totalBalance.sub(staked);
 
   const executeWithdraw = async (amount: TokenValue) => {
-    dispatch(withdraw({ backd: backd!, pool: pool, amount })).then((v) => {
+    if (!backd) return;
+    dispatch(withdraw({ backd, pool, amount })).then((v) => {
       handleTxDispatch({ status: v.meta.requestStatus, actionType: "withdraw" });
       complete();
       setLoading(false);
@@ -39,7 +41,8 @@ const WithdrawalButton = ({ value, pool, complete }: Props) => {
   };
 
   const executeUnstake = () => {
-    dispatch(unstake({ backd: backd!, pool: pool, amount: staked })).then((v) => {
+    if (!backd) return;
+    dispatch(unstake({ backd, pool, amount: staked })).then((v) => {
       handleTxDispatch({ status: v.meta.requestStatus, actionType: "unstake" });
       complete();
       setLoading(false);
@@ -54,14 +57,13 @@ const WithdrawalButton = ({ value, pool, complete }: Props) => {
         wide
         text={`Withdraw ${pool.underlying.symbol.toUpperCase()}`}
         click={() => {
-          if (!backd) return;
           setLoading(true);
           if (value.lte(availableToWithdraw)) executeWithdraw(value);
           else executeUnstake();
         }}
         disabled={value.isZero()}
         loading={loading}
-        hoverText={"Enter Amount"}
+        hoverText="Enter Amount"
       />
     </StyledProgressButtons>
   );

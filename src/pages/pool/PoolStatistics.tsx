@@ -12,7 +12,7 @@ type Props = {
   pool: Pool;
 };
 
-const PoolStatistics = ({ pool }: Props) => {
+const PoolStatistics = ({ pool }: Props): JSX.Element => {
   const price = useSelector(selectPrice(pool));
   const balance = useSelector(selectBalance(pool));
   const positions = useSelector(selectPoolPositions(pool));

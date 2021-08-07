@@ -87,7 +87,7 @@ interface Props {
   tabs: TabType[];
 }
 
-const Tabs = ({ tabs }: Props) => {
+const Tabs = ({ tabs }: Props): JSX.Element => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (

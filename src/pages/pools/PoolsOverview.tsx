@@ -5,7 +5,7 @@ import { Pool } from "../../lib";
 import Overview from "../../components/Overview";
 import { formatPercent, numberToCompactCurrency } from "../../lib/numeric";
 
-const PoolsOverview = () => {
+const PoolsOverview = (): JSX.Element => {
   const pools = useSelector(selectPools);
   const prices = useSelector(selectPrices);
 

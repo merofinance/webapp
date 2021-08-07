@@ -67,7 +67,7 @@ const DarkIcons = styled.img.attrs((props: ScrollProps) => ({
   }
 `;
 
-const Background = () => {
+const Background = (): JSX.Element => {
   const [scrollPosition, setScrollPosition] = useState(0);
 
   const handleScroll = () => {

@@ -65,7 +65,7 @@ const ChevronHeader = styled.th`
   }
 `;
 
-const PoolsPage = () => {
+const PoolsPage = (): JSX.Element => {
   const backd = useBackd();
   const dispatch = useDispatch();
   const pools = useSelector(selectPools);

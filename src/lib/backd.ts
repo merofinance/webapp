@@ -52,12 +52,15 @@ export interface Backd {
 
 export class Web3Backd implements Backd {
   private controller: Controller;
+
   private topupAction: TopUpAction;
 
   constructor(private _provider: Signer | providers.Provider, private options: BackdOptions) {
     const contracts = this.getContracts(options.chainId);
 
+    // eslint-disable-next-line dot-notation
     this.controller = ControllerFactory.connect(contracts["Controller"][0], _provider);
+    // eslint-disable-next-line dot-notation
     this.topupAction = TopUpActionFactory.connect(contracts["MockTopUpAction"][0], _provider);
   }
 
@@ -68,7 +71,8 @@ export class Web3Backd implements Backd {
   get provider(): providers.Provider {
     const provider = this._provider;
     if (provider instanceof Signer) {
-      return provider.provider!!;
+      if (!provider.provider) throw Error("Provider is null");
+      return provider.provider;
     }
     return provider;
   }
@@ -145,6 +149,7 @@ export class Web3Backd implements Backd {
     return Promise.all(rawPositions.map((v: any) => this.getPositionInfo(v)));
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async getPositionInfo(rawPosition: any): Promise<PlainPosition> {
     const token = Ierc20FullFactory.connect(rawPosition.record.depositToken, this._provider);
     const decimals = await token.decimals();
@@ -162,7 +167,7 @@ export class Web3Backd implements Backd {
   }
 
   async registerPosition(pool: Pool, position: Position): Promise<ContractTransaction> {
-    const decimals = pool.underlying.decimals;
+    const { decimals } = pool.underlying;
     const scale = BigNumber.from(10).pow(decimals);
     const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
     const rawExchangeRate = await poolContract.exchangeRate();

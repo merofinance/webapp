@@ -66,7 +66,7 @@ type Props = {
   click: () => void;
 };
 
-const SliderStep = (props: Props) => {
+const SliderStep = (props: Props): JSX.Element => {
   return (
     <Step percent={props.percent} onClick={() => props.click()} active={props.active}>
       <PercentContainer>

@@ -120,11 +120,11 @@ const Link = styled.a`
   }
 `;
 
-const Footer = () => {
+const Footer = (): JSX.Element => {
   return (
     <StyledFooter>
       <Logo src={logo} alt="Backd logo" />
-      <div></div>
+      <div />
       {linkLists.map((linkList: LinkListType) => (
         <LinkList key={linkList.header}>
           <LinkHeader>{linkList.header}</LinkHeader>
@@ -135,7 +135,7 @@ const Footer = () => {
           ))}
         </LinkList>
       ))}
-      <div></div>
+      <div />
     </StyledFooter>
   );
 };

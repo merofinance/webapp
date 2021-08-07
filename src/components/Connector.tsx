@@ -113,7 +113,7 @@ const DotCenter = styled.div`
   background-color: ${(props: Connected) => (props.connected ? "var(--success)" : "var(--error)")};
 `;
 
-const Connector = () => {
+const Connector = (): JSX.Element => {
   const { account, active } = useWeb3React();
   const [connecting, setConnecting] = useState(false);
 
@@ -122,7 +122,7 @@ const Connector = () => {
       <DesktopConnector>
         <Aura connected={active} />
         <ConnectorButton onClick={() => setConnecting(true)} connected={active}>
-          <ConnectorText>{active ? shortenAddress(account!, 8) : "Connnect wallet"}</ConnectorText>
+          <ConnectorText>{account ? shortenAddress(account, 8) : "Connnect wallet"}</ConnectorText>
         </ConnectorButton>
       </DesktopConnector>
       <MobileConnector onClick={() => setConnecting(true)}>

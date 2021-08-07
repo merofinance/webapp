@@ -17,7 +17,7 @@ const StyledHero = styled.div`
   }
 `;
 
-const Hero = () => {
+const Hero = (): JSX.Element => {
   const history = useHistory();
 
   return (

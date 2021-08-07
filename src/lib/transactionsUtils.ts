@@ -10,6 +10,7 @@ import {
 import { setError } from "../state/errorSlice";
 import { addTransaction, confirmTransaction } from "../state/transactionsSlice";
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function formatError(err: any): string {
   return (err.data || {}).message || err.message;
 }
@@ -20,7 +21,7 @@ export async function handleTransactionConfirmation(
   dispatch: AppDispatch,
   // FIXME: Parameters<AppDispatch>[0] does not seem to work with non-thunk actions
   actions: any[] = []
-) {
+): Promise<void> {
   const txInfo = {
     hash: tx.hash,
     chainId: tx.chainId,
@@ -41,38 +42,39 @@ export async function handleTransactionConfirmation(
     .catch((err) => dispatch(setError({ error: formatError(err) })));
 }
 
-export const formatTransactionInfo = (txDescription: TransactionDescription) => {
+export const formatTransactionInfo = (txDescription: TransactionDescription): string => {
   switch (txDescription.action) {
     case "Approve":
-      return txDescription.args?.amount.toLocaleString() + " " + txDescription.args?.token.symbol;
+      return `${txDescription.args?.amount.toLocaleString()} ${txDescription.args?.token.symbol}`;
     case "Deposit":
-      return (
-        txDescription.args?.amount.toLocaleString() +
-        " " +
+      return `${txDescription.args?.amount.toLocaleString()} ${
         txDescription.args?.pool.underlying.symbol
-      );
+      }`;
     case "Withdraw":
-      return (
-        txDescription.args?.amount.toLocaleString() + " " + txDescription.args?.pool.lpToken.symbol
-      );
+      return `${txDescription.args?.amount.toLocaleString()} ${
+        txDescription.args?.pool.lpToken.symbol
+      }`;
     case "Unstake":
-      return (
-        txDescription.args?.amount.toLocaleString() + " " + txDescription.args?.pool.lpToken.symbol
-      );
+      return `${txDescription.args?.amount.toLocaleString()} ${
+        txDescription.args?.pool.lpToken.symbol
+      }`;
     case "Register": {
       const position: Position = txDescription.args?.position;
-      return position.account.slice(0, 8) + "... on " + position.protocol;
+      return `${position.account.slice(0, 8)}... on ${position.protocol}`;
     }
     case "Remove": {
       const position: Position = txDescription.args?.position;
-      return position.account.slice(0, 8) + "... on " + position.protocol;
+      return `${position.account.slice(0, 8)}... on ${position.protocol}`;
     }
     default:
       return "";
   }
 };
 
-export const getExplorerLink = ({ chainId, hash }: Pick<TransactionInfo, "chainId" | "hash">) => {
+export const getExplorerLink = ({
+  chainId,
+  hash,
+}: Pick<TransactionInfo, "chainId" | "hash">): string => {
   switch (chainId) {
     case 1:
       return `https://etherscan.io/tx/${hash}`;

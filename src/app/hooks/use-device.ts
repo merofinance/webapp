@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 
-export const useDevice = () => {
+interface useDeviceType {
+  isMobile: boolean;
+  isDesktop: boolean;
+}
+
+export const useDevice = (): useDeviceType => {
   const [isMobile, setMobile] = useState(false);
   const [isDesktop, setDesktop] = useState(true);
 

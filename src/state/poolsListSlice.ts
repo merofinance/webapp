@@ -74,8 +74,8 @@ export const fetchState =
     });
   };
 
-export const selectPools = (state: RootState) => state.pools.pools;
+export const selectPools = (state: RootState): Pool[] => state.pools.pools;
 
-export const selectPrices = (state: RootState) => state.pools.prices;
+export const selectPrices = (state: RootState): Prices => state.pools.prices;
 
 export default poolsSlice.reducer;

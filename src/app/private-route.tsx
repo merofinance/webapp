@@ -10,7 +10,7 @@ type PrivateRouteProps = {
   children: ReactChild;
 } & RouteProps;
 
-export function PrivateRoute({ children, ...rest }: PrivateRouteProps) {
+export function PrivateRoute({ children, ...rest }: PrivateRouteProps): JSX.Element {
   const [loadingStatus, setLoadingStatus] = useState(true);
   const connected = useSelector(isConnected);
 

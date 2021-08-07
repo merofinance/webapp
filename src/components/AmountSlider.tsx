@@ -63,7 +63,7 @@ type Props = {
   setValue: (value: string) => void;
 };
 
-const AmountSlider = ({ value, max, setValue }: Props) => {
+const AmountSlider = ({ value, max, setValue }: Props): JSX.Element => {
   const percent = max.isZero() ? 0 : Math.round((Number(value) / Number(max.toString())) * 100);
 
   return (
@@ -76,7 +76,7 @@ const AmountSlider = ({ value, max, setValue }: Props) => {
         max={100}
         value={percent}
         onChange={(e: any, value: any) => {
-          let newValue = max.value.mul(BigNumber.from(value)).div(BigNumber.from(100));
+          const newValue = max.value.mul(BigNumber.from(value)).div(BigNumber.from(100));
           setValue(new TokenValue(newValue, max.decimals).toString());
         }}
         valueLabelDisplay="auto"
@@ -87,7 +87,7 @@ const AmountSlider = ({ value, max, setValue }: Props) => {
           key={step}
           percent={`${step}%`}
           click={() => {
-            let newValue = max.value.mul(BigNumber.from(step)).div(BigNumber.from(100));
+            const newValue = max.value.mul(BigNumber.from(step)).div(BigNumber.from(100));
             setValue(new TokenValue(newValue, max.decimals).toString());
           }}
           active={Number(value || 0) / Number(max.toString()) > step / 100}

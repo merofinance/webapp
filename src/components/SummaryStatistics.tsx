@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+
 export interface SummaryStatisticType {
   label: string;
   value: string;
@@ -66,7 +67,7 @@ interface Props {
   statistics: SummaryStatisticType[];
 }
 
-const SummaryStatistics = ({ statistics }: Props) => {
+const SummaryStatistics = ({ statistics }: Props): JSX.Element => {
   return (
     <StyledSummaryStatistics>
       {statistics.map((statistic: SummaryStatisticType) => (

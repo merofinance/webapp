@@ -67,7 +67,7 @@ type Props = {
   statistics: StatisticType[];
 };
 
-const Statistics = ({ statistics }: Props) => {
+const Statistics = ({ statistics }: Props): JSX.Element => {
   return (
     <StyledStatistics>
       {statistics.map((statistic: StatisticType) => (

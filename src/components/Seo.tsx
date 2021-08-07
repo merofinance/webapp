@@ -6,7 +6,7 @@ interface Props {
   description?: string;
 }
 
-const Seo = ({ title, description }: Props) => {
+const Seo = ({ title, description }: Props): JSX.Element => {
   return (
     <Helmet>
       {title && <title>{title}</title>}

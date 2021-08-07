@@ -9,7 +9,7 @@ import { Position } from "../../lib/types";
 import { formatCurrency } from "../../lib/numeric";
 import { TokenValue } from "../../lib/token-value";
 
-const PoolsStatistics = () => {
+const PoolsStatistics = (): JSX.Element => {
   const pools = useSelector(selectPools);
   const prices = useSelector(selectPrices);
   const balances = useSelector(selectBalances);

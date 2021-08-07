@@ -83,7 +83,7 @@ interface Props {
   index: number;
 }
 
-const ClaimRow = ({ index }: Props) => {
+const ClaimRow = ({ index }: Props): JSX.Element => {
   const { isMobile, isDesktop } = useDevice();
 
   return (
@@ -108,7 +108,7 @@ const ClaimRow = ({ index }: Props) => {
         {isDesktop && (
           <>
             <Button text="Claim" background="#100830" width="12rem" primary={isMobile} />
-            <Button primary text={"Claim & Stake"} width={isMobile ? "auto" : "18rem"} />
+            <Button primary text="Claim & Stake" width={isMobile ? "auto" : "18rem"} />
           </>
         )}
         {isMobile && (

@@ -106,7 +106,7 @@ const Icon = styled.img`
   }
 `;
 
-const JoinCommunity = () => {
+const JoinCommunity = (): JSX.Element => {
   return (
     <StyledJoinCommunity>
       <Header2>join the community</Header2>
