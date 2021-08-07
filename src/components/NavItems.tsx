@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
 import { LIVE, STAKING_LIVE } from "../lib/constants";
 
 type NavItemType = {
@@ -10,15 +12,15 @@ type NavItemType = {
 
 const navItems: NavItemType[] = [
   {
-    label: "claim",
+    label: "header.tabs.claim",
     link: "/claim",
   },
   {
-    label: "pools",
+    label: "header.tabs.pools",
     link: "/pools",
   },
   {
-    label: "stake BKD",
+    label: "header.tabs.stake",
     link: "/stake",
   },
 ];
@@ -74,24 +76,26 @@ const ExternalLink = styled.a`
 `;
 
 const NavItems = (): JSX.Element => {
+  const { t } = useTranslation();
+
   return (
     <StyledNavItems id="nav-items">
       {LIVE && !STAKING_LIVE && (
         <NavItem>
-          <InternalLink to="/pools">pools</InternalLink>
+          <InternalLink to="/pools">{t("header.tabs.pools")}</InternalLink>
         </NavItem>
       )}
       {LIVE &&
         STAKING_LIVE &&
         navItems.map((navItem: NavItemType) => (
           <NavItem key={navItem.label}>
-            <InternalLink to={navItem.link}>{navItem.label}</InternalLink>
+            <InternalLink to={navItem.link}>{t(navItem.label)}</InternalLink>
           </NavItem>
         ))}
       {!LIVE && (
         <NavItem>
           <ExternalLink href="https://backdfund.medium.com/" target="_blank">
-            blog
+            {t("header.tabs.blog")}
           </ExternalLink>
         </NavItem>
       )}
