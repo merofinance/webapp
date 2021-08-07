@@ -1,7 +1,14 @@
 {
   "header": {},
   "walletConnect": {
-    "connectWallet": "Connect Wallet"
+    "connectWallet": "Connect Wallet",
+    "header": "Connect your wallet",
+    "newToEthereum": "New to Ethereum?",
+    "aboutWallets": "Find out about wallets",
+    "wallets": {
+      "metaMask": "MetaMask",
+      "walletConnect": "WalletConnect"
+    }
   },
   "landingPage": {
     "header": "Reactive Liquidity",
