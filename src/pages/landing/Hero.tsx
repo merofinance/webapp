@@ -26,17 +26,14 @@ const Hero = (): JSX.Element => {
 
   return (
     <StyledHero>
-      <Header1>{t("title")}</Header1>
-      <Header3>
-        A trustless and interest generating protocol designed to prevent collateralized loans from
-        becoming liquidatable.
-      </Header3>
+      <Header1>{t("landingPage.header")}</Header1>
+      <Header3>{t("landingPage.subHeader")}</Header3>
       <Button
         primary
         hero
         large
         inactive={!LIVE}
-        text={LIVE ? "view pools" : "coming soon"}
+        text={LIVE ? t("landingPage.viewPools") : t("landingPage.comingSoon")}
         click={() => {
           if (!LIVE) return;
           history.push("/pools");

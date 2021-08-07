@@ -1,7 +1,8 @@
 {
-  "title": "Welcome to react using react-i18next",
-  "description": {
-    "part1": "To get started, edit <1>src/App.js</1> and save to reload.",
-    "part2": "Switch language between english and german using buttons above."
+  "landingPage": {
+    "header": "Reactive Liquidity",
+    "subHeader": "A trustless and interest generating protocol designed to prevent collateralized loans from becoming liquidatable.",
+    "comingSoon": "coming soon",
+    "viewPools": "view pools"
   }
 }
