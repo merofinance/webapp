@@ -16,11 +16,11 @@ export class TokenValue {
     this._value = value;
   }
 
-  static fromUnscaled(value: number | string, decimals = 18) {
+  static fromUnscaled(value: number | string, decimals = 18): TokenValue {
     return new TokenValue(stringToBigNumber(value.toString() || "0", decimals), decimals);
   }
 
-  static fromPlain(value: PlainTokenValue) {
+  static fromPlain(value: PlainTokenValue): TokenValue {
     return new TokenValue(BigNumber.from(value.value), value.decimals);
   }
 
@@ -39,57 +39,57 @@ export class TokenValue {
     };
   };
 
-  isZero = () => this.value.isZero();
+  isZero = (): boolean => this.value.isZero();
 
-  isNegative = () => this.value.isNegative();
+  isNegative = (): boolean => this.value.isNegative();
 
-  assertSameDecimals(other: TokenValue) {
+  assertSameDecimals(other: TokenValue): void {
     console.assert(this.decimals === other.decimals, "should have the same number of decimals");
   }
 
-  add(other: TokenValue) {
+  add(other: TokenValue): TokenValue {
     this.assertSameDecimals(other);
     return new TokenValue(this.value.add(other.value), this.decimals);
   }
 
-  sub(other: TokenValue) {
+  sub(other: TokenValue): TokenValue {
     this.assertSameDecimals(other);
     return new TokenValue(this.value.sub(other.value), this.decimals);
   }
 
-  eq(other: TokenValue) {
+  eq(other: TokenValue): boolean {
     return this.value.eq(other.value) && this.decimals === other.decimals;
   }
 
-  gt(other: TokenValue) {
+  gt(other: TokenValue): boolean {
     this.assertSameDecimals(other);
     return this.value.gt(other.value);
   }
 
-  gte(other: TokenValue) {
+  gte(other: TokenValue): boolean {
     this.assertSameDecimals(other);
     return this.value.gte(other.value);
   }
 
-  lt(other: TokenValue) {
+  lt(other: TokenValue): boolean {
     this.assertSameDecimals(other);
     return this.value.lt(other.value);
   }
 
-  lte(other: TokenValue) {
+  lte(other: TokenValue): boolean {
     this.assertSameDecimals(other);
     return this.value.lte(other.value);
   }
 
-  mul(value: number | string) {
+  mul(value: number | string): TokenValue {
     const scale = BigNumber.from(10).pow(this.decimals);
     const scaledValue = stringToBigNumber(value.toString(), this.decimals);
     return new TokenValue(this.value.mul(scaledValue).div(scale), this.decimals);
   }
 
-  toString = () => bigNumberToString(this._value, this._decimals);
+  toString = (): string => bigNumberToString(this._value, this._decimals);
 
-  toCryptoString = () => formatCrypto(Number(this.toString()));
+  toCryptoString = (): string => formatCrypto(Number(this.toString()));
 
-  toUsdValue = (price: number) => formatCurrency(Number(this.toString()) * price);
+  toUsdValue = (price: number): string => formatCurrency(Number(this.toString()) * price);
 }

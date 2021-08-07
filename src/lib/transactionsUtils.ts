@@ -10,6 +10,7 @@ import {
 import { setError } from "../state/errorSlice";
 import { addTransaction, confirmTransaction } from "../state/transactionsSlice";
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function formatError(err: any): string {
   return (err.data || {}).message || err.message;
 }
@@ -20,7 +21,7 @@ export async function handleTransactionConfirmation(
   dispatch: AppDispatch,
   // FIXME: Parameters<AppDispatch>[0] does not seem to work with non-thunk actions
   actions: any[] = []
-) {
+): Promise<void> {
   const txInfo = {
     hash: tx.hash,
     chainId: tx.chainId,
@@ -41,7 +42,7 @@ export async function handleTransactionConfirmation(
     .catch((err) => dispatch(setError({ error: formatError(err) })));
 }
 
-export const formatTransactionInfo = (txDescription: TransactionDescription) => {
+export const formatTransactionInfo = (txDescription: TransactionDescription): string => {
   switch (txDescription.action) {
     case "Approve":
       return `${txDescription.args?.amount.toLocaleString()} ${txDescription.args?.token.symbol}`;
@@ -70,7 +71,10 @@ export const formatTransactionInfo = (txDescription: TransactionDescription) => 
   }
 };
 
-export const getExplorerLink = ({ chainId, hash }: Pick<TransactionInfo, "chainId" | "hash">) => {
+export const getExplorerLink = ({
+  chainId,
+  hash,
+}: Pick<TransactionInfo, "chainId" | "hash">): string => {
   switch (chainId) {
     case 1:
       return `https://etherscan.io/tx/${hash}`;
