@@ -139,7 +139,7 @@ const Footer = (): JSX.Element => {
         <LinkList key={linkList.header}>
           <LinkHeader>{t(linkList.header)}</LinkHeader>
           {linkList.links.map((link: LinkType) => (
-            <Link id={`Footer - ${link.label}`} key={link.label} href={link.link} target="_blank">
+            <Link id={link.label} key={link.label} href={link.link} target="_blank">
               {t(link.label)}
             </Link>
           ))}

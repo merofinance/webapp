@@ -167,7 +167,7 @@ const Benefits = (): JSX.Element => {
   return (
     <StyledBenefits ref={benefitsRef}>
       {benefits.map((benefit: BenfitsType, index: number) => (
-        <Benefit key={benefit.header} id={`benefit - ${benefit.header}`}>
+        <Benefit key={benefit.header} id={benefit.header}>
           <IconContainer>
             <Icon src={benefit.icon} alt="benefit icon" />
           </IconContainer>

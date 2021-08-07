@@ -116,12 +116,7 @@ const JoinCommunity = (): JSX.Element => {
       <Header2>{t("joinCommunity.header")}</Header2>
       <Socials>
         {socials.map((social: SocialType) => (
-          <Social
-            key={social.label}
-            id={`Join Community - ${social.label}`}
-            href={social.link}
-            target="_blank"
-          >
+          <Social key={social.label} id={social.label} href={social.link} target="_blank">
             <Label>{`${t(social.label)} →`}</Label>
             <IconContainer>
               <Icon src={social.icon} alt={`${social.label} logo`} />

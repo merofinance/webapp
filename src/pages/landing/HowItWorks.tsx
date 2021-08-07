@@ -165,8 +165,8 @@ const HowItWorks = (): JSX.Element => {
           key={index}
           show={categories.map((a: RadioOptionType) => a.value).indexOf(category) === index}
         >
-          {cards.map((card: CardType) => (
-            <Card key={card.number} id={`How It Works - ${card.number}`}>
+          {cards.map((card: CardType, index: number) => (
+            <Card key={card.number} id={`How It Works - ${index}`}>
               <Number>{t(card.number)}</Number>
               <Header>{t(card.header)}</Header>
               <Body>{t(card.description)}</Body>
