@@ -101,5 +101,13 @@
     "header": "audited by",
     "description": "Led by security experts from ETH Zurich and trusted by 85+ blockchain companies and corporations.",
     "viewReport": "View Report"
+  },
+  "joinCommunity": {
+    "header": "join the community",
+    "socials": {
+      "telegram": "Telegram",
+      "twitter": "Twitter",
+      "github": "GitHub"
+    }
   }
 }
