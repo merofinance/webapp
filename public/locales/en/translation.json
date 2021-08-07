@@ -1,4 +1,8 @@
 {
+  "header": {},
+  "walletConnect": {
+    "connectWallet": "Connect Wallet"
+  },
   "landingPage": {
     "header": "Reactive Liquidity",
     "subHeader": "A trustless and interest generating protocol designed to prevent collateralized loans from becoming liquidatable.",

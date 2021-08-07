@@ -1,6 +1,8 @@
 import { useWeb3React } from "@web3-react/core";
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
 import { GradientText } from "../styles/GradientText";
 import WalletSelectPopup from "./WalletSelectPopup";
 import { shortenAddress } from "../lib/text";
@@ -116,13 +118,16 @@ const DotCenter = styled.div`
 const Connector = (): JSX.Element => {
   const { account, active } = useWeb3React();
   const [connecting, setConnecting] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <>
       <DesktopConnector>
         <Aura connected={active} />
         <ConnectorButton onClick={() => setConnecting(true)} connected={active}>
-          <ConnectorText>{account ? shortenAddress(account, 8) : "Connnect wallet"}</ConnectorText>
+          <ConnectorText>
+            {account ? shortenAddress(account, 8) : t("walletConnect.connectWallet")}
+          </ConnectorText>
         </ConnectorButton>
       </DesktopConnector>
       <MobileConnector onClick={() => setConnecting(true)}>
