@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import { useTranslation, withTranslation, Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 import Button from "../../components/Button";
 import { Header1, Header3 } from "../../styles/Headers";
