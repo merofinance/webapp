@@ -16,52 +16,52 @@ type LinkListType = {
 
 const linkLists: LinkListType[] = [
   {
-    header: "community",
+    header: "footer.community.header",
     links: [
       {
-        label: "Discord",
+        label: "footer.community.links.discord",
         link: "https://discord.gg/jpGvaFV3Rv",
       },
       {
-        label: "Twitter",
+        label: "footer.community.links.twitter",
         link: "https://twitter.com/backdfund",
       },
       {
-        label: "GitHub",
+        label: "footer.community.links.github",
         link: "https://github.com/backdfund",
       },
       {
-        label: "Telegram Chat",
+        label: "footer.community.links.telegram",
         link: "https://t.me/backdchat",
       },
     ],
   },
   {
-    header: "resources",
+    header: "footer.resources.header",
     links: [
       {
-        label: "Litepaper",
+        label: "footer.resources.links.litepaper",
         link: "/litepaper",
       },
       {
-        label: "Blog",
+        label: "footer.resources.links.blog",
         link: "https://backdfund.medium.com/",
       },
       {
-        label: "Fact Sheet",
+        label: "footer.resources.links.factSheet",
         link: "/fact-sheet.pdf",
       },
     ],
   },
   {
-    header: "updates",
+    header: "footer.updates.header",
     links: [
       {
-        label: "Newsletter",
+        label: "footer.updates.links.newsletter",
         link: "https://backd.substack.com/welcome",
       },
       {
-        label: "Telegram Ann.",
+        label: "footer.updates.links.telegram",
         link: "https://t.me/backdfund",
       },
     ],
@@ -129,7 +129,7 @@ const TestChangeLanguage = styled.div`
 `;
 
 const Footer = (): JSX.Element => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
     <StyledFooter>
@@ -137,10 +137,10 @@ const Footer = (): JSX.Element => {
       <div />
       {linkLists.map((linkList: LinkListType) => (
         <LinkList key={linkList.header}>
-          <LinkHeader>{linkList.header}</LinkHeader>
+          <LinkHeader>{t(linkList.header)}</LinkHeader>
           {linkList.links.map((link: LinkType) => (
             <Link id={`Footer - ${link.label}`} key={link.label} href={link.link} target="_blank">
-              {link.label}
+              {t(link.label)}
             </Link>
           ))}
         </LinkList>

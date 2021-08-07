@@ -113,5 +113,31 @@
   "getStarted": {
     "header": "get started",
     "description": "Deposit liquidity and start earning yield."
+  },
+  "footer": {
+    "community": {
+      "header": "community",
+      "links": {
+        "discord": "Discord",
+        "twitter": "Twitter",
+        "github": "GitHub",
+        "telegram": "Telegram Chat"
+      }
+    },
+    "resources": {
+      "header": "resources",
+      "links": {
+        "litepaper": "Litepaper",
+        "blog": "Blog",
+        "factSheet": "Fact Sheet"
+      }
+    },
+    "updates": {
+      "header": "updates",
+      "links": {
+        "newsletter": "Newsletter",
+        "telegram": "Telegram Ann."
+      }
+    }
   }
 }
