@@ -1,7 +1,7 @@
 import { BigNumber, BigNumberish } from "ethers";
 import { DEFAULT_DECIMALS } from "./constants";
 
-export function scale(number: BigNumberish, decimals: number = DEFAULT_DECIMALS) {
+export function scale(number: BigNumberish, decimals: number = DEFAULT_DECIMALS): BigNumber {
   return BigNumber.from(number).mul(BigNumber.from(10).pow(decimals));
 }
 
@@ -48,21 +48,21 @@ export function floatToBigNumber(
   return scale(scaledSignificant, decimals - decimalScale);
 }
 
-const roundToOneDp = (value: number) => {
+const roundToOneDp = (value: number): string => {
   return value.toLocaleString(undefined, {
     maximumFractionDigits: 1,
     minimumFractionDigits: 0,
   });
 };
 
-const roundToTwoDp = (value: number) => {
+const roundToTwoDp = (value: number): string => {
   return value.toLocaleString(undefined, {
     maximumFractionDigits: 2,
     minimumFractionDigits: 2,
   });
 };
 
-export const numberToCompactString = (value: number) => {
+export const numberToCompactString = (value: number): string => {
   if (value >= 1_000_000_000_000) return `${roundToOneDp(value / 1_000_000_000_000)}t`;
   if (value >= 1_000_000_000) return `${roundToOneDp(value / 1_000_000_000)}b`;
   if (value >= 1_000_000) return `${roundToOneDp(value / 1_000_000)}m`;
@@ -70,11 +70,11 @@ export const numberToCompactString = (value: number) => {
   return roundToTwoDp(value);
 };
 
-export const numberToCompactCurrency = (value: number) => {
+export const numberToCompactCurrency = (value: number): string => {
   return `$${numberToCompactString(value)}`;
 };
 
-export const formatCurrency = (number: number) => {
+export const formatCurrency = (number: number): string => {
   return number.toLocaleString(undefined, {
     maximumFractionDigits: 2,
     minimumFractionDigits: 2,
@@ -83,11 +83,11 @@ export const formatCurrency = (number: number) => {
   });
 };
 
-export const formatPercent = (number: number) => {
+export const formatPercent = (number: number): string => {
   return number.toLocaleString(undefined, { maximumFractionDigits: 2, style: "percent" });
 };
 
-export const formatCrypto = (number: number) => {
+export const formatCrypto = (number: number): string => {
   let decimals = Math.max(5 - Math.floor(number ** (1 / 10)), 0);
   if (number < 0.0001) decimals = 18;
   return number.toLocaleString(undefined, {
@@ -95,7 +95,7 @@ export const formatCrypto = (number: number) => {
   });
 };
 
-export const bigNumberToString = (number: BigNumber, decimals: number) => {
+export const bigNumberToString = (number: BigNumber, decimals: number): string => {
   let string = number.toString();
   while (string.length < decimals) string = `0${string}`;
   const decimalLocation = string.length - decimals;
@@ -104,7 +104,7 @@ export const bigNumberToString = (number: BigNumber, decimals: number) => {
   return whole + (fraction ? `.${fraction}` : "");
 };
 
-export const stringToBigNumber = (value: string, decimals: number) => {
+export const stringToBigNumber = (value: string, decimals: number): BigNumber => {
   if (!value || value === ".") throw new Error("Not a valid number");
   if (value.substring(0, 1) === "-") throw new Error("Negative numbers not supported");
 
