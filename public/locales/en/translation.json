@@ -92,5 +92,8 @@
         }
       }
     }
+  },
+  "supportedBy": {
+    "header": "supported by"
   }
 }
