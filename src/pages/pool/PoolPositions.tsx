@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -54,17 +54,6 @@ const StyledPositions = styled.div`
   }
 `;
 
-const ScrollShadow = styled.div`
-  position: absolute;
-  right: 0;
-  top: 50%;
-  background-color: #10082f;
-  filter: blur(5px);
-  width: 20px;
-  transform: translate(50%, -50%);
-  height: 90%;
-`;
-
 const PositionContent = styled.div`
   display: flex;
   flex-direction: column;
@@ -106,6 +95,24 @@ const HeaderText = styled.div`
   }
 `;
 
+interface ScrollShadowProps {
+  show: boolean;
+}
+
+const ScrollShadow = styled.div`
+  position: absolute;
+  right: 0;
+  top: 50%;
+  background-color: #10082f;
+  filter: blur(5px);
+  width: 20px;
+  transform: translate(50%, -50%);
+  height: 90%;
+
+  transition: opacity 0.3s;
+  opacity: ${(props: ScrollShadowProps) => (props.show ? 1 : 0)};
+`;
+
 type Props = {
   pool: Pool;
 };
@@ -114,6 +121,14 @@ const PoolPositions = ({ pool }: Props): JSX.Element => {
   const positions = useSelector(selectPoolPositions(pool));
   const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();
+  const [showShadow, setShowShadow] = useState(true);
+  const positionContentRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = () => {
+    setShowShadow(
+      (positionContentRef.current?.getBoundingClientRect().right || 1000) > window.innerWidth
+    );
+  };
 
   useEffect(() => {
     if (!backd) return;
@@ -126,8 +141,8 @@ const PoolPositions = ({ pool }: Props): JSX.Element => {
       statistics={<PoolStatistics pool={pool} />}
       content={
         <>
-          <StyledPositions>
-            <PositionContent>
+          <StyledPositions onScroll={handleScroll}>
+            <PositionContent ref={positionContentRef}>
               <Headers>
                 {headers.map((header: HeaderType) => (
                   <Header key={header.label}>
@@ -142,7 +157,7 @@ const PoolPositions = ({ pool }: Props): JSX.Element => {
               ))}
             </PositionContent>
           </StyledPositions>
-          <ScrollShadow />
+          <ScrollShadow show={showShadow} />
         </>
       }
     />
