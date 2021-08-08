@@ -135,24 +135,26 @@ const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
     .add(balance);
 
   return (
-    <Row onClick={() => history.push(`/pool/${pool.lpToken.symbol}`)} preview={preview}>
-      <Data>
-        <Asset token={pool.underlying} />
-      </Data>
-      <Data>
-        <Apy>{formatPercent(pool.apy)}</Apy>
-      </Data>
-      <Data>{numberToCompactCurrency(pool.totalAssets * price)}</Data>
-      <DepositedData preview={preview}>
-        {formatCurrency(Number(locked.toString()) * price)}
-      </DepositedData>
-      <ChevronData preview={preview}>
-        <Chevron src={chevron} alt="right arrow" />
-      </ChevronData>
-      <Data right preview={preview}>
-        <Button text="deposit" background="#141128" />
-      </Data>
-    </Row>
+    <tbody>
+      <Row onClick={() => history.push(`/pool/${pool.lpToken.symbol}`)} preview={preview}>
+        <Data>
+          <Asset token={pool.underlying} />
+        </Data>
+        <Data>
+          <Apy>{formatPercent(pool.apy)}</Apy>
+        </Data>
+        <Data>{numberToCompactCurrency(pool.totalAssets * price)}</Data>
+        <DepositedData preview={preview}>
+          {formatCurrency(Number(locked.toString()) * price)}
+        </DepositedData>
+        <ChevronData preview={preview}>
+          <Chevron src={chevron} alt="right arrow" />
+        </ChevronData>
+        <Data right preview={preview}>
+          <Button text="deposit" background="#141128" />
+        </Data>
+      </Row>
+    </tbody>
   );
 };
 

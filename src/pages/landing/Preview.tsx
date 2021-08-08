@@ -94,12 +94,14 @@ const Preview = (): JSX.Element => {
       <Swirl src={swirl1} alt="decorative swirl" />
       <Swirl src={swirl2} alt="decorative swirl" />
       <Table>
-        <HeaderRow>
-          <Header>Asset</Header>
-          <Header>APY</Header>
-          <Header>TVL</Header>
-          <ChevronHeader />
-        </HeaderRow>
+        <thead>
+          <HeaderRow>
+            <Header>Asset</Header>
+            <Header>APY</Header>
+            <Header>TVL</Header>
+            <ChevronHeader />
+          </HeaderRow>
+        </thead>
         {pools.map((pool: Pool) => (
           <PoolsRow key={pool.name} preview pool={pool} />
         ))}

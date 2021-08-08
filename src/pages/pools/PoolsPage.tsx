@@ -86,13 +86,15 @@ const PoolsPage = (): JSX.Element => {
         statistics={<PoolsStatistics />}
         content={
           <Table>
-            <HeaderRow>
-              <Header>Asset</Header>
-              <Header>APY</Header>
-              <Header>TVL</Header>
-              <Header hideOnMobile>Your deposits</Header>
-              <ChevronHeader />
-            </HeaderRow>
+            <thead>
+              <HeaderRow>
+                <Header>Asset</Header>
+                <Header>APY</Header>
+                <Header>TVL</Header>
+                <Header hideOnMobile>Your deposits</Header>
+                <ChevronHeader />
+              </HeaderRow>
+            </thead>
             {pools.map((pool: Pool) => (
               <PoolsRow key={pool.address} pool={pool} />
             ))}
