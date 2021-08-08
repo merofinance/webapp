@@ -17,7 +17,7 @@ describe("Benefits", () => {
       .should(
         "have.attr",
         "href",
-        "https://backdfund.medium.com/introducing-the-backd-protocol-95020816cee5"
+        "https://backdfund.medium.com/collateral-top-ups-through-backd-781bfd0edf4c"
       );
   });
 
@@ -27,7 +27,7 @@ describe("Benefits", () => {
       .should(
         "have.attr",
         "href",
-        "https://backdfund.medium.com/introducing-the-backd-protocol-95020816cee5"
+        "https://backdfund.medium.com/yield-farming-on-backd-c80141cef836"
       );
   });
 
@@ -37,7 +37,7 @@ describe("Benefits", () => {
       .should(
         "have.attr",
         "href",
-        "https://backdfund.medium.com/introducing-the-backd-protocol-95020816cee5"
+        "https://backdfund.medium.com/becoming-a-backd-keeper-2d81133e0a9d"
       );
   });
 });
