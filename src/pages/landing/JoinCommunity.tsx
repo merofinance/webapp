@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { GradientText } from "../../styles/GradientText";
 import { Header2 } from "../../styles/Headers";
-import telegram from "../../assets/socials/telegram.svg";
+import discord from "../../assets/socials/discord.svg";
 import twitter from "../../assets/socials/twitter.svg";
 import github from "../../assets/socials/github.svg";
 
@@ -15,7 +15,7 @@ type SocialType = {
 const socials: SocialType[] = [
   {
     label: "Discord →",
-    icon: telegram,
+    icon: discord,
     link: "https://discord.gg/jpGvaFV3Rv",
   },
   {
