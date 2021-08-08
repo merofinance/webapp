@@ -94,10 +94,10 @@ describe("Supported By", () => {
 });
 
 describe("Join The Community", () => {
-  it("Should have Telegram Link", () => {
-    cy.get('[id="Join Community - Telegram →"]')
+  it("Should have Discord Link", () => {
+    cy.get('[id="Join Community - Discord →"]')
       .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://t.me/backdchat");
+      .should("have.attr", "href", "https://discord.gg/jpGvaFV3Rv");
   });
 
   it("Should have Twitter Link", () => {
