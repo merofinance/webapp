@@ -14,9 +14,9 @@ type SocialType = {
 
 const socials: SocialType[] = [
   {
-    label: "Telegram →",
+    label: "Discord →",
     icon: telegram,
-    link: "https://t.me/backdchat",
+    link: "https://discord.gg/jpGvaFV3Rv",
   },
   {
     label: "Twitter →",
