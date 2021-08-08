@@ -13,6 +13,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
+import { HelmetProvider } from "react-helmet-async";
 
 import { useMock } from "./app/config";
 import { PrivateRoute } from "./app/private-route";
@@ -83,60 +84,62 @@ const App = (): JSX.Element => {
   };
 
   return (
-    <ErrorBoundary dispatch={dispatch}>
-      <Web3ReactProvider getLibrary={getLibrary}>
-        <Router>
-          <Background>
-            <Header />
-            <StyledApp>
-              <Content>
-                <Switch>
-                  {LIVE && (
-                    <PrivateRoute path="/pool/:poolName">
-                      <PoolPage />
-                    </PrivateRoute>
-                  )}
+    <HelmetProvider>
+      <ErrorBoundary dispatch={dispatch}>
+        <Web3ReactProvider getLibrary={getLibrary}>
+          <Router>
+            <Background>
+              <Header />
+              <StyledApp>
+                <Content>
+                  <Switch>
+                    {LIVE && (
+                      <PrivateRoute path="/pool/:poolName">
+                        <PoolPage />
+                      </PrivateRoute>
+                    )}
 
-                  {LIVE && (
-                    <Route path="/connect">
-                      <ConnectWallet />
+                    {LIVE && (
+                      <Route path="/connect">
+                        <ConnectWallet />
+                      </Route>
+                    )}
+
+                    {LIVE && (
+                      <PrivateRoute path="/pools">
+                        <PoolsPage />
+                      </PrivateRoute>
+                    )}
+
+                    {STAKING_LIVE && (
+                      <Route path="/claim">
+                        <ClaimPage />
+                      </Route>
+                    )}
+
+                    {STAKING_LIVE && (
+                      <Route path="/stake">
+                        <StakePage />
+                      </Route>
+                    )}
+
+                    <Route path="/litepaper">
+                      <LitepaperPage />
                     </Route>
-                  )}
 
-                  {LIVE && (
-                    <PrivateRoute path="/pools">
-                      <PoolsPage />
-                    </PrivateRoute>
-                  )}
-
-                  {STAKING_LIVE && (
-                    <Route path="/claim">
-                      <ClaimPage />
+                    <Route path="/">
+                      <LandingPage />
                     </Route>
-                  )}
-
-                  {STAKING_LIVE && (
-                    <Route path="/stake">
-                      <StakePage />
-                    </Route>
-                  )}
-
-                  <Route path="/litepaper">
-                    <LitepaperPage />
-                  </Route>
-
-                  <Route path="/">
-                    <LandingPage />
-                  </Route>
-                </Switch>
-              </Content>
-              <Footer />
-              <ErrorAlert />
-            </StyledApp>
-          </Background>
-        </Router>
-      </Web3ReactProvider>
-    </ErrorBoundary>
+                  </Switch>
+                </Content>
+                <Footer />
+                <ErrorAlert />
+              </StyledApp>
+            </Background>
+          </Router>
+        </Web3ReactProvider>
+      </ErrorBoundary>
+    </HelmetProvider>
   );
 };
 

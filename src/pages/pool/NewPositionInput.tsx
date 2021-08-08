@@ -49,6 +49,7 @@ const Input = styled.input`
     border-radius: 3px;
   }
 
+  -moz-appearance: textfield;
   ::-webkit-outer-spin-button {
     display: none;
   }

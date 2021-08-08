@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+
 import logo from "../assets/logo/logo.svg";
 import { LIVE } from "../lib/constants";
 import Connector from "./Connector";
@@ -63,9 +65,9 @@ const Header = (): JSX.Element => {
 
   return (
     <StyledHeader isSticky={scrollPosition > 40}>
-      <a href="/">
+      <Link to="/">
         <Logo src={logo} alt="Backd logo" />
-      </a>
+      </Link>
       <NavItems />
       {LIVE && <Connector />}
     </StyledHeader>
