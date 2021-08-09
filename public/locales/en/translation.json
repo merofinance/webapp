@@ -105,7 +105,7 @@
   "joinCommunity": {
     "header": "join the community",
     "socials": {
-      "telegram": "Telegram",
+      "discord": "Discord",
       "twitter": "Twitter",
       "github": "GitHub"
     }
