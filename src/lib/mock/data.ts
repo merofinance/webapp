@@ -128,6 +128,8 @@ export const makeContractRecipt = (contractAddress: Address, account: Address): 
     confirmations: 1,
     cumulativeGasUsed: BigNumber.from(186_434),
     byzantium: true,
+    effectiveGasPrice: BigNumber.from(50),
+    type: 2,
   };
 };
 

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { GradientText } from "../../styles/GradientText";
 import { Header2 } from "../../styles/Headers";
-import telegram from "../../assets/socials/telegram.svg";
+import discord from "../../assets/socials/discord.svg";
 import twitter from "../../assets/socials/twitter.svg";
 import github from "../../assets/socials/github.svg";
 
@@ -16,9 +16,9 @@ type SocialType = {
 
 const socials: SocialType[] = [
   {
-    label: "joinCommunity.socials.telegram",
-    icon: telegram,
-    link: "https://t.me/backdchat",
+    label: "joinCommunity.socials.discord",
+    icon: discord,
+    link: "https://discord.gg/jpGvaFV3Rv",
   },
   {
     label: "joinCommunity.socials.twitter",
