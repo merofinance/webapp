@@ -16,7 +16,7 @@ export class TokenValue {
     this._value = value;
   }
 
-  static fromUnscaled(value: number | string, decimals = 18): TokenValue {
+  static fromUnscaled(value: number | string = 0, decimals = 18): TokenValue {
     return new TokenValue(stringToBigNumber(value.toString() || "0", decimals), decimals);
   }
 
