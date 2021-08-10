@@ -220,12 +220,7 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
       <StyledNewPosition>
         <Form noValidate onSubmit={formik.handleSubmit}>
           <Value>
-            <Dropdown
-              value={formik.values.protocol}
-              name="protocol"
-              options={["Aave", "Compound"]}
-              onChange={formik.handleChange}
-            />
+            <Dropdown formik={formik} name="protocol" options={["Aave", "Compound"]} />
           </Value>
           <NewPositionInput type="text" name="account" formik={formik} />
           <NewPositionInput type="number" name="threshold" formik={formik} />

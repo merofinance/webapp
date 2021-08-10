@@ -48,24 +48,21 @@ const useStyles = makeStyles(() => ({
 }));
 
 type Props = {
-  value: string;
+  formik: any;
   name: string;
   options: string[];
-  onChange: (
-    event: ChangeEvent<{ name?: string | undefined; value: unknown }>,
-    child: ReactNode
-  ) => void;
 };
 
-const Dropdown = ({ value, name, options, onChange }: Props): JSX.Element => {
+const Dropdown = ({ formik, name, options }: Props): JSX.Element => {
   const classes = useStyles();
 
   return (
     <FormControl className={classes.formControl}>
       <Select
-        value={value}
+        value={formik.values[name]}
         name={name}
-        onChange={onChange}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
         displayEmpty
         className={classes.select}
         MenuProps={{ classes: { paper: classes.dropdownStyle } }}
