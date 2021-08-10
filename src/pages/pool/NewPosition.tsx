@@ -221,34 +221,10 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
               onChange={formik.handleChange}
             />
           </Value>
-          <NewPositionInput
-            type="text"
-            name="account"
-            value={formik.values.account}
-            error={formik.errors.account || ""}
-            onChange={formik.handleChange}
-          />
-          <NewPositionInput
-            type="number"
-            name="threshold"
-            value={formik.values.threshold}
-            error={formik.errors.threshold || ""}
-            onChange={formik.handleChange}
-          />
-          <NewPositionInput
-            type="number"
-            name="singleTopUp"
-            value={formik.values.singleTopUp}
-            error={formik.errors.singleTopUp || ""}
-            onChange={formik.handleChange}
-          />
-          <NewPositionInput
-            type="number"
-            name="maxTopUp"
-            value={formik.values.maxTopUp}
-            error={formik.errors.maxTopUp || ""}
-            onChange={formik.handleChange}
-          />
+          <NewPositionInput type="text" name="account" formik={formik} />
+          <NewPositionInput type="number" name="threshold" formik={formik} />
+          <NewPositionInput type="number" name="singleTopUp" formik={formik} />
+          <NewPositionInput type="number" name="maxTopUp" formik={formik} />
           <Value>
             <Button
               submit

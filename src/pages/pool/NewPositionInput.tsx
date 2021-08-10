@@ -1,5 +1,7 @@
 import React, { ChangeEventHandler } from "react";
 import styled from "styled-components";
+import { useFormik } from "formik";
+
 import { Value } from "./NewPosition";
 
 const StyledNewPositionInput = styled.div`
@@ -78,18 +80,23 @@ const Error = styled.div`
 type Props = {
   type: string;
   name: string;
-  value: string;
-  error: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  formik: any;
 };
 
-const NewPositionInput = ({ type, name, value, error, onChange }: Props): JSX.Element => {
+const NewPositionInput = ({ type, name, formik }: Props): JSX.Element => {
   return (
     <Value>
       <StyledNewPositionInput>
-        <InputBorder valid={!error}>
-          <Input type={type} name={name} value={value} placeholder="0" onChange={onChange} />
-          {error && <Error>{error}</Error>}
+        <InputBorder valid={!formik.errors[name]}>
+          <Input
+            type={type}
+            name={name}
+            value={formik.values[name]}
+            placeholder="0"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.errors[name] && <Error>{formik.errors[name]}</Error>}
         </InputBorder>
       </StyledNewPositionInput>
     </Value>
