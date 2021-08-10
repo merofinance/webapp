@@ -62,7 +62,7 @@ const validationSchema = yup.object().shape({
       "Must be positive number",
       (s: any) => !TokenValue.fromUnscaled(s).isZero()
     ),
-  totalTopUp: yup
+  maxTopUp: yup
     .string()
     .required("Max Top Up required")
     .test("is-valid-number", "Invalid number", (s: any) => {
