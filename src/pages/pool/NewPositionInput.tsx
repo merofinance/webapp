@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEventHandler } from "react";
 import styled from "styled-components";
 import { Value } from "./NewPosition";
 
@@ -77,23 +77,19 @@ const Error = styled.div`
 
 type Props = {
   type: string;
+  name: string;
   value: string;
   error: string;
-  setValue: (v: string) => void;
+  onChange: ChangeEventHandler<HTMLInputElement>;
 };
 
-const NewPositionInput = (props: Props): JSX.Element => {
+const NewPositionInput = ({ type, name, value, error, onChange }: Props): JSX.Element => {
   return (
     <Value>
       <StyledNewPositionInput>
-        <InputBorder valid={!props.error}>
-          <Input
-            type={props.type}
-            value={props.value}
-            placeholder="0"
-            onChange={(e) => props.setValue(e.target.value)}
-          />
-          {props.error && <Error>{props.error}</Error>}
+        <InputBorder valid={!error}>
+          <Input type={type} name={name} value={value} placeholder="0" onChange={onChange} />
+          {error && <Error>{error}</Error>}
         </InputBorder>
       </StyledNewPositionInput>
     </Value>

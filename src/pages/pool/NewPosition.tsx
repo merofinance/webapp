@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { ethers } from "ethers";
+import * as yup from "yup";
+import { useFormik } from "formik";
 
 import { useBackd } from "../../app/hooks/use-backd";
 import Dropdown from "../../components/Dropdown";
@@ -16,6 +18,67 @@ import { selectPositions } from "../../state/positionsSlice";
 import { TokenValue } from "../../lib/token-value";
 import { INFINITE_APPROVE_AMMOUNT } from "../../lib/constants";
 import { useDevice } from "../../app/hooks/use-device";
+
+interface FormType {
+  protocol: string;
+  account: string;
+  threshold: string;
+  singleTopUp: string;
+  maxTopUp: string;
+}
+
+const initialValues: FormType = {
+  protocol: "",
+  account: "",
+  threshold: "",
+  singleTopUp: "",
+  maxTopUp: "",
+};
+
+const validationSchema = yup.object().shape({
+  protocol: yup.string().required(),
+  account: yup
+    .string()
+    .required()
+    .test(
+      "is-address",
+      "Invalid Address",
+      (s: any) => typeof s === "string" && ethers.utils.isAddress(s)
+    ),
+  threshold: yup.number().required().moreThan(1.0),
+  singleTopUp: yup
+    .string()
+    .required()
+    .test("is-value-number", "Invalid number", (s: any) => {
+      try {
+        TokenValue.fromUnscaled(s);
+        return true;
+      } catch {
+        return false;
+      }
+    })
+    .test(
+      "is-positive-number",
+      "Must be positive number",
+      (s: any) => !TokenValue.fromUnscaled(s).isZero()
+    ),
+  totalTopUp: yup
+    .string()
+    .required()
+    .test("is-value-number", "Invalid number", (s: any) => {
+      try {
+        TokenValue.fromUnscaled(s);
+        return true;
+      } catch {
+        return false;
+      }
+    })
+    .test(
+      "is-positive-number",
+      "Must be positive number",
+      (s: any) => !TokenValue.fromUnscaled(s).isZero()
+    ),
+});
 
 const Border = styled.div`
   width: 100%;
@@ -46,7 +109,7 @@ const StyledNewPosition = styled.div`
   }
 `;
 
-const Content = styled.div`
+const Form = styled.form`
   width: 100%;
   display: flex;
   align-items: center;
@@ -84,79 +147,10 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
 
   const [loading, setLoading] = useState(false);
   const [confirming, setConfirming] = useState(false);
-  const [protocol, setProtocol] = useState("");
-  const [address, setAddress] = useState("");
-  const [threshold, setThreshold] = useState("");
-  const [single, setSingle] = useState("");
-  const [max, setMax] = useState("");
 
-  const approved = allowance.gte(TokenValue.fromUnscaled(max, pool.underlying.decimals));
-
-  const addressError = () => {
-    if (!address) return "";
-    if (!ethers.utils.isAddress(address)) return "Invalid Address";
-    if (
-      protocol &&
-      positions.filter(
-        (position: Position) => position.protocol === protocol && position.account === address
-      ).length > 0
-    )
-      return "Max of one position per protocol and address";
-    return "";
-  };
-
-  const thresholdError = () => {
-    if (!threshold) return "";
-    const number = Number(threshold);
-    if (number <= 1) return "Must be above 1";
-    return "";
-  };
-
-  const singleError = () => {
-    if (!single) return "";
-    try {
-      const number = TokenValue.fromUnscaled(single, pool.underlying.decimals);
-      if (number.isZero()) return "Must be positive number";
-      const maxNumber = TokenValue.fromUnscaled(max, pool.underlying.decimals);
-      if (max && number.gt(maxNumber)) return "Must be less than max top up";
-      return "";
-    } catch {
-      return "Invalid number";
-    }
-  };
-
-  const maxError = () => {
-    if (!max) return "";
-    try {
-      const number = TokenValue.fromUnscaled(max, pool.underlying.decimals);
-      if (number.isNegative()) return "Must be positive number";
-      if (number.gt(balance)) return "Exceeds deposited balance";
-      return "";
-    } catch {
-      return "Invalid number";
-    }
-  };
-
-  const hasError = !!(addressError() || thresholdError() || singleError() || maxError());
-
-  const position: Position = {
-    protocol,
-    account: address,
-    threshold: Number(threshold),
-    singleTopUp: TokenValue.fromUnscaled(single, pool.underlying.decimals),
-    maxTopUp: TokenValue.fromUnscaled(max, pool.underlying.decimals),
-    maxGasPrice: 0,
-    actionToken: pool.underlying.address,
-    depositToken: pool.lpToken.address,
-  };
-
-  const buttonHoverText = () => {
-    if (!protocol) return "Select Protocol";
-    if (!address) return "Enter Address";
-    if (!threshold) return "Enter Threshold";
-    if (!single) return "Enter Single Top Up";
-    if (!max) return "Enter Max Top Up";
-    return "";
+  const onSubmit = () => {
+    if (approved) setConfirming(true);
+    else executeApprove();
   };
 
   const executeApprove = () => {
@@ -173,72 +167,112 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
     });
   };
 
-  const clearInputs = () => {
-    setProtocol("");
-    setAddress("");
-    setThreshold("");
-    setSingle("");
-    setMax("");
+  const validate = (values: FormType): Record<string, string> => {
+    const errors: Record<string, string> = {};
+
+    if (
+      values.protocol &&
+      positions.filter(
+        (position: Position) =>
+          position.protocol === values.protocol && position.account === values.account
+      ).length > 0
+    )
+      errors.protocol = "Max of one position per protocol and address";
+
+    const single = TokenValue.fromUnscaled(values.singleTopUp, pool.underlying.decimals);
+    const max = TokenValue.fromUnscaled(values.maxTopUp, pool.underlying.decimals);
+    if (single.gt(max)) errors.single = "Must be less than max top up";
+    if (max.gt(balance)) errors.maxTopUp = "Exceeds deposited balance";
+
+    return errors;
+  };
+
+  const formik = useFormik({ initialValues, validationSchema, onSubmit, validate });
+
+  const approved = allowance.gte(
+    TokenValue.fromUnscaled(formik.values.maxTopUp, pool.underlying.decimals)
+  );
+
+  const position: Position = {
+    protocol: formik.values.protocol,
+    account: formik.values.account,
+    threshold: Number(formik.values.threshold),
+    singleTopUp: TokenValue.fromUnscaled(formik.values.singleTopUp, pool.underlying.decimals),
+    maxTopUp: TokenValue.fromUnscaled(formik.values.maxTopUp, pool.underlying.decimals),
+    maxGasPrice: 0,
+    actionToken: pool.underlying.address,
+    depositToken: pool.lpToken.address,
+  };
+
+  const buttonHoverText = () => {
+    if (!formik.values.protocol) return "Select Protocol";
+    if (!formik.values.account) return "Enter Address";
+    if (!formik.values.threshold) return "Enter Threshold";
+    if (!formik.values.singleTopUp) return "Enter Single Top Up";
+    if (!formik.values.maxTopUp) return "Enter Max Top Up";
+    return "";
   };
 
   return (
     <Border>
       <StyledNewPosition>
-        <Content>
+        <Form noValidate onSubmit={formik.handleSubmit}>
           <Value>
             <Dropdown
-              value={protocol}
+              value={formik.values.protocol}
+              name="protocol"
               options={["Aave", "Compound"]}
-              setValue={(v: string) => setProtocol(v)}
+              onChange={formik.handleChange}
             />
           </Value>
           <NewPositionInput
             type="text"
-            value={address}
-            setValue={(v: string) => setAddress(v)}
-            error={addressError()}
+            name="account"
+            value={formik.values.account}
+            error={formik.errors.account || ""}
+            onChange={formik.handleChange}
           />
           <NewPositionInput
             type="number"
-            value={threshold}
-            setValue={(v: string) => setThreshold(v)}
-            error={thresholdError()}
+            name="threshold"
+            value={formik.values.threshold}
+            error={formik.errors.threshold || ""}
+            onChange={formik.handleChange}
           />
           <NewPositionInput
             type="number"
-            value={single}
-            setValue={(v: string) => setSingle(v)}
-            error={singleError()}
+            name="singleTopUp"
+            value={formik.values.singleTopUp}
+            error={formik.errors.singleTopUp || ""}
+            onChange={formik.handleChange}
           />
           <NewPositionInput
             type="number"
-            value={max}
-            setValue={(v: string) => setMax(v)}
-            error={maxError()}
+            name="maxTopUp"
+            value={formik.values.maxTopUp}
+            error={formik.errors.maxTopUp || ""}
+            onChange={formik.handleChange}
           />
           <Value>
             <Button
+              submit
               primary
               small={isMobile}
-              disabled={!(protocol && address && threshold && single && max) || hasError}
-              text={approved && max !== "" ? "create 2/2" : "approve 1/2"}
-              click={() => {
-                if (approved) setConfirming(true);
-                else executeApprove();
-              }}
+              disabled={!formik.dirty || !formik.isValid || formik.isSubmitting}
+              text={approved && formik.values.maxTopUp !== "" ? "create 2/2" : "approve 1/2"}
               hoverText={buttonHoverText()}
               loading={loading}
             />
           </Value>
-        </Content>
-        {hasError && <ErrorSpacing />}
+        </Form>
+        {!formik.isValid && <ErrorSpacing />}
       </StyledNewPosition>
       <NewPositionConfirmation
         show={confirming}
         close={() => setConfirming(false)}
         position={position}
         pool={pool}
-        complete={() => clearInputs()}
+        complete={() => formik.resetForm({ values: initialValues })}
       />
     </Border>
   );

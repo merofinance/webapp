@@ -1,5 +1,5 @@
 import { FormControl, makeStyles, MenuItem, Select } from "@material-ui/core";
-import React from "react";
+import React, { ChangeEvent, ReactNode } from "react";
 
 const useStyles = makeStyles(() => ({
   formControl: {
@@ -49,18 +49,23 @@ const useStyles = makeStyles(() => ({
 
 type Props = {
   value: string;
+  name: string;
   options: string[];
-  setValue: (v: string) => void;
+  onChange: (
+    event: ChangeEvent<{ name?: string | undefined; value: unknown }>,
+    child: ReactNode
+  ) => void;
 };
 
-const Dropdown = ({ value, options, setValue }: Props): JSX.Element => {
+const Dropdown = ({ value, name, options, onChange }: Props): JSX.Element => {
   const classes = useStyles();
 
   return (
     <FormControl className={classes.formControl}>
       <Select
         value={value}
-        onChange={(event: any) => setValue(event.target.value)}
+        name={name}
+        onChange={onChange}
         displayEmpty
         className={classes.select}
         MenuProps={{ classes: { paper: classes.dropdownStyle } }}
