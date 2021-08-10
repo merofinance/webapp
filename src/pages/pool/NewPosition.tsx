@@ -173,7 +173,7 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
         position.protocol === values.protocol && position.account === values.account
     );
     if (values.protocol && matchingPositions.length > 0)
-      errors.protocol = "Max of one position per protocol and address";
+      errors.account = "Max of one position per protocol and address";
 
     const single = TokenValue.fromUnscaled(values.singleTopUp, pool.underlying.decimals);
     const max = TokenValue.fromUnscaled(values.maxTopUp, pool.underlying.decimals);
