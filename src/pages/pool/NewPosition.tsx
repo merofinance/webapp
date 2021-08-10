@@ -209,6 +209,12 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
     return "";
   };
 
+  const displayingError =
+    (formik.touched.account && formik.errors.account) ||
+    (formik.touched.threshold && formik.errors.threshold) ||
+    (formik.touched.singleTopUp && formik.errors.singleTopUp) ||
+    (formik.touched.maxTopUp && formik.errors.maxTopUp);
+
   return (
     <Border>
       <StyledNewPosition>
@@ -237,7 +243,7 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
             />
           </Value>
         </Form>
-        {!formik.isValid && <ErrorSpacing />}
+        {displayingError && <ErrorSpacing />}
       </StyledNewPosition>
       <NewPositionConfirmation
         show={confirming}
