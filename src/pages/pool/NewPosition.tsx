@@ -39,16 +39,16 @@ const validationSchema = yup.object().shape({
   protocol: yup.string().required(),
   account: yup
     .string()
-    .required()
+    .required("Address is required")
     .test(
       "is-address",
       "Invalid Address",
       (s: any) => typeof s === "string" && ethers.utils.isAddress(s)
     ),
-  threshold: yup.number().required().moreThan(1.0),
+  threshold: yup.number().required("Threshold is required").moreThan(1.0, "Must be greater than 1"),
   singleTopUp: yup
     .string()
-    .required()
+    .required("Single Top Up is required")
     .test("is-valid-number", "Invalid number", (s: any) => {
       try {
         TokenValue.fromUnscaled(s);
@@ -64,7 +64,7 @@ const validationSchema = yup.object().shape({
     ),
   totalTopUp: yup
     .string()
-    .required()
+    .required("Max Top Up required")
     .test("is-valid-number", "Invalid number", (s: any) => {
       try {
         TokenValue.fromUnscaled(s);
