@@ -87,7 +87,7 @@ const NewPositionInput = ({ type, name, formik }: Props): JSX.Element => {
   return (
     <Value>
       <StyledNewPositionInput>
-        <InputBorder valid={!formik.errors[name]}>
+        <InputBorder valid={!formik.touched[name] || !formik.errors[name]}>
           <Input
             type={type}
             name={name}
@@ -96,7 +96,7 @@ const NewPositionInput = ({ type, name, formik }: Props): JSX.Element => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
-          {formik.errors[name] && <Error>{formik.errors[name]}</Error>}
+          {formik.touched[name] && formik.errors[name] && <Error>{formik.errors[name]}</Error>}
         </InputBorder>
       </StyledNewPositionInput>
     </Value>
