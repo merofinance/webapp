@@ -49,7 +49,7 @@ const validationSchema = yup.object().shape({
   singleTopUp: yup
     .string()
     .required()
-    .test("is-value-number", "Invalid number", (s: any) => {
+    .test("is-valid-number", "Invalid number", (s: any) => {
       try {
         TokenValue.fromUnscaled(s);
         return true;
@@ -65,7 +65,7 @@ const validationSchema = yup.object().shape({
   totalTopUp: yup
     .string()
     .required()
-    .test("is-value-number", "Invalid number", (s: any) => {
+    .test("is-valid-number", "Invalid number", (s: any) => {
       try {
         TokenValue.fromUnscaled(s);
         return true;
@@ -144,8 +144,6 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
   const allowance = useSelector(selectToupAllowance(backd, pool));
   const balance = useSelector(selectBalance(pool));
   const positions = useSelector(selectPositions);
-
-  const [loading, setLoading] = useState(false);
   const [confirming, setConfirming] = useState(false);
 
   const onSubmit = () => {
@@ -155,7 +153,7 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
 
   const executeApprove = () => {
     if (!backd) return;
-    setLoading(true);
+    formik.setSubmitting(true);
     const approveArgs = {
       amount: TokenValue.fromUnscaled(INFINITE_APPROVE_AMMOUNT, pool.underlying.decimals),
       backd,
@@ -163,20 +161,18 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
       token: pool.lpToken,
     };
     dispatch(approve(approveArgs)).then(() => {
-      setLoading(false);
+      formik.setSubmitting(false);
     });
   };
 
   const validate = (values: FormType): Record<string, string> => {
     const errors: Record<string, string> = {};
 
-    if (
-      values.protocol &&
-      positions.filter(
-        (position: Position) =>
-          position.protocol === values.protocol && position.account === values.account
-      ).length > 0
-    )
+    const matchingPositions = positions.filter(
+      (position: Position) =>
+        position.protocol === values.protocol && position.account === values.account
+    );
+    if (values.protocol && matchingPositions.length > 0)
       errors.protocol = "Max of one position per protocol and address";
 
     const single = TokenValue.fromUnscaled(values.singleTopUp, pool.underlying.decimals);
@@ -261,7 +257,7 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
               disabled={!formik.dirty || !formik.isValid || formik.isSubmitting}
               text={approved && formik.values.maxTopUp !== "" ? "create 2/2" : "approve 1/2"}
               hoverText={buttonHoverText()}
-              loading={loading}
+              loading={formik.isSubmitting}
             />
           </Value>
         </Form>
