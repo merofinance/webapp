@@ -136,6 +136,12 @@ describe("Footer", () => {
       .should("have.attr", "href", "/litepaper");
   });
 
+  it("Should have Docs Link", () => {
+    cy.get('[id="Footer - Docs"]')
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "https://docs.backd.fund/");
+  });
+
   it("Should have Blog Link", () => {
     cy.get('[id="Footer - Blog"]')
       .should("have.attr", "target", "_blank")
