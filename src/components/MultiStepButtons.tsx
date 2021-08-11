@@ -12,7 +12,6 @@ const StyledMuliStepButtons = styled.div`
   width: 100%;
   display: flex;
   flex-direction: ${(props: ButtonsProps) => (props.stepsOnTop ? "column-reverse" : "column")};
-  margin-top: 1.7rem;
 `;
 
 const Buttons = styled.div`
