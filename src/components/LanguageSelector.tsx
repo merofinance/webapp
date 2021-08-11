@@ -1,8 +1,9 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
-import Selector, { SelectorOptionType } from "./Selector";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
+import Selector, { SelectorOptionType } from "./Selector";
 import globe from "../assets/ui/globe.svg";
 
 const languageOptions: SelectorOptionType[] = [
@@ -21,8 +22,13 @@ const StyledLanguageSelector = styled.button`
   align-items: center;
   height: 3.6rem;
   padding: 0 1.7rem;
-  border: solid 1px white;
   border-radius: 0.7rem;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  :hover {
+    background-color: #271f4f;
+  }
 `;
 
 const Globe = styled.img`
@@ -34,6 +40,28 @@ const Label = styled.div`
   font-weight: 500;
   letter-spacing: 0.15px;
   margin-left: 1.5rem;
+
+  @media (max-width: 600px) {
+    display: none;
+  }
+`;
+
+interface ArrowProps {
+  open: boolean;
+}
+
+const Arrow = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  margin-left: 0.7rem;
+  margin-right: 0.4rem;
+
+  svg {
+    transition: 0.3s;
+    transform: ${(props: ArrowProps) => (props.open ? "rotate(180deg)" : "rotate(0deg)")};
+  }
 
   @media (max-width: 600px) {
     display: none;
@@ -54,6 +82,9 @@ const LanguageSelector = () => {
     <StyledLanguageSelector onClick={() => setOpen(true)} ref={anchorRef}>
       <Globe src={globe} />
       <Label>{activeLanguage}</Label>
+      <Arrow open={open}>
+        <ArrowDropDownIcon fontSize="inherit" />
+      </Arrow>
       <Selector
         open={open}
         anchorRef={anchorRef}
