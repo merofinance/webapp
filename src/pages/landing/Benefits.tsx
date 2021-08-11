@@ -19,19 +19,19 @@ const benefits: BenfitsType[] = [
     header: "Avoid Liquidation",
     content:
       "Liquidity deposited in Backd and marked as back-up collateral will be automatically shifted when needed for collateral top-ups.",
-    url: "https://backdfund.medium.com/collateral-top-ups-through-backd-781bfd0edf4c",
+    url: "https://docs.backd.fund/protocol-architecture/top-ups",
   },
   {
     icon: plus,
     header: "Earn Yield",
     content: "Earn interest on liquidity via yield-farming strategies based on Curve and Convex.",
-    url: "https://backdfund.medium.com/yield-farming-on-backd-c80141cef836",
+    url: "https://docs.backd.fund/protocol-architecture/pools",
   },
   {
     icon: percent,
     header: "Fee Share",
     content: "A small fee charged on the collateral top-up amount is distributed among LPs.",
-    url: "https://backdfund.medium.com/becoming-a-backd-keeper-2d81133e0a9d",
+    url: "https://docs.backd.fund/protocol-architecture/top-ups/backd-keepers",
   },
 ];
 
