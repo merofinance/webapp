@@ -4,7 +4,9 @@
       "claim": "ご請求",
       "pools": "プール",
       "stake": "BKDへの出資",
-      "blog": "ブログ"
+      "docs": "------",
+      "blog": "ブログ",
+      "newsletter": "------"
     }
   },
   "walletConnect": {
@@ -128,6 +130,7 @@
       "header": "resources",
       "links": {
         "litepaper": "Litepaper",
+        "docs": "--------",
         "blog": "ブログ",
         "factSheet": "概況報告"
       }

@@ -4,7 +4,9 @@
       "claim": "claim",
       "pools": "pools",
       "stake": "stake BKD",
-      "blog": "blog"
+      "docs": "docs",
+      "blog": "blog",
+      "newsletter": "newsletter"
     }
   },
   "walletConnect": {
@@ -128,6 +130,7 @@
       "header": "resources",
       "links": {
         "litepaper": "Litepaper",
+        "docs": "Docs",
         "blog": "Blog",
         "factSheet": "Fact Sheet"
       }
