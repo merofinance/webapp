@@ -5,8 +5,22 @@ describe("Innitial Load", () => {
 });
 
 describe("Nav Items", () => {
-  it("Should only have one nav item", () => {
-    cy.get('[id="nav-items"]').children().should("have.length", 1);
+  it("Should have Docs Link", () => {
+    cy.get('[id="Header - docs"]')
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "https://docs.backd.fund/");
+  });
+
+  it("Should have Blog Link", () => {
+    cy.get('[id="Header - blog"]')
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "https://backdfund.medium.com/");
+  });
+
+  it("Should have Newsletter Link", () => {
+    cy.get('[id="Header - newsletter"]')
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "https://backd.substack.com/welcome");
   });
 });
 
