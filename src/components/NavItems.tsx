@@ -89,11 +89,23 @@ const NavItems = (): JSX.Element => {
           </NavItem>
         ))}
       {!LIVE && (
-        <NavItem>
-          <ExternalLink href="https://backdfund.medium.com/" target="_blank">
-            blog
-          </ExternalLink>
-        </NavItem>
+        <>
+          <NavItem>
+            <ExternalLink href="https://docs.backd.fund/" target="_blank">
+              docs
+            </ExternalLink>
+          </NavItem>
+          <NavItem>
+            <ExternalLink href="https://backdfund.medium.com/" target="_blank">
+              blog
+            </ExternalLink>
+          </NavItem>
+          <NavItem>
+            <ExternalLink href="https://backd.substack.com/welcome" target="_blank">
+              newsletter
+            </ExternalLink>
+          </NavItem>
+        </>
       )}
     </StyledNavItems>
   );
