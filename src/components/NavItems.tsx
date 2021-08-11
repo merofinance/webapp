@@ -13,7 +13,7 @@ type NavItemType = {
 // We can delete this after launch
 const preLaunchItems: NavItemType[] = [
   {
-    label: "docs",
+    label: "header.tabs.docs",
     link: "https://docs.backd.fund/",
   },
   {
@@ -21,7 +21,7 @@ const preLaunchItems: NavItemType[] = [
     link: "https://backdfund.medium.com/",
   },
   {
-    label: "newsletter",
+    label: "header.tabs.newsletter",
     link: "https://backd.substack.com/welcome",
   },
 ];
