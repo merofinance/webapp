@@ -63,7 +63,7 @@ const Note = styled.a`
 const ClaimPage = (): JSX.Element => {
   const [openAccordions, setOpenAccordions] = useState<number[]>([0]);
 
-  const isOpen = (index: number): boolean => openAccordions.indexOf(index) >= 0;
+  const isOpen = (index: number): boolean => openAccordions.includes(index);
 
   const toggle = (index: number): void => {
     const _openAccordions = [...openAccordions];

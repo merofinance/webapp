@@ -44,6 +44,10 @@ const linkLists: LinkListType[] = [
         link: "/litepaper",
       },
       {
+        label: "footer.resources.links.docs",
+        link: "https://docs.backd.fund/",
+      },
+      {
         label: "footer.resources.links.blog",
         link: "https://backdfund.medium.com/",
       },

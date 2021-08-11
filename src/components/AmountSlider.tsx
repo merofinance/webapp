@@ -13,6 +13,7 @@ const steps: number[] = [25, 50, 75, 100];
 const StyledAmountSlider = styled.div`
   position: relative;
   width: 100%;
+  margin-bottom: 1.7rem;
 `;
 
 const BackdSlider = withStyles({

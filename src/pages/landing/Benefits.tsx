@@ -20,19 +20,19 @@ const benefits: BenfitsType[] = [
     icon: shield,
     header: "benefits.avoidLiquidation.header",
     description: "benefits.avoidLiquidation.description",
-    url: "https://backdfund.medium.com/collateral-top-ups-through-backd-781bfd0edf4c",
+    url: "https://docs.backd.fund/protocol-architecture/top-ups",
   },
   {
     icon: plus,
     header: "benefits.earnYield.header",
     description: "benefits.earnYield.description",
-    url: "https://backdfund.medium.com/yield-farming-on-backd-c80141cef836",
+    url: "https://docs.backd.fund/protocol-architecture/pools",
   },
   {
     icon: percent,
     header: "benefits.feeShare.header",
     description: "benefits.feeShare.description",
-    url: "https://backdfund.medium.com/becoming-a-backd-keeper-2d81133e0a9d",
+    url: "https://docs.backd.fund/protocol-architecture/top-ups/backd-keepers",
   },
 ];
 

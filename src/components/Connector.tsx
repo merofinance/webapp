@@ -1,11 +1,12 @@
 import { useWeb3React } from "@web3-react/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 import { GradientText } from "../styles/GradientText";
 import WalletSelectPopup from "./WalletSelectPopup";
 import { shortenAddress } from "../lib/text";
+import { useBackd } from "../app/hooks/use-backd";
 
 type ConnectedType = {
   connected: boolean;
@@ -42,7 +43,8 @@ const ConnectorButton = styled.button`
   position: relative;
   cursor: pointer;
   height: 4.2rem;
-  width: ${(props: ConnectedType) => (props.connected ? "13.3rem" : "15.8rem")};
+  width: ${(props: ConnectedType) => (props.connected ? "auto" : "15.8rem")};
+  padding: ${(props: ConnectedType) => (props.connected ? "0 2rem" : "0")};
   border-radius: ${(props: ConnectedType) => (props.connected ? "1.4rem" : "2.1rem")};
   background-color: ${(props: ConnectedType) => (props.connected ? "none" : "var(--main)")};
   border: ${(props: ConnectedType) =>
@@ -117,8 +119,29 @@ const DotCenter = styled.div`
 
 const Connector = (): JSX.Element => {
   const { account, active } = useWeb3React();
-  const [connecting, setConnecting] = useState(false);
+  const backd = useBackd();
   const { t } = useTranslation();
+
+  const [connecting, setConnecting] = useState(false);
+  const [ens, setEns] = useState("");
+
+  const updateEns = async () => {
+    if (!account || !backd) return;
+    try {
+      const ens = await backd.provider.lookupAddress(account);
+      if (ens) {
+        setEns(ens);
+        return;
+      }
+    } catch {
+      console.log("ENS Not Supported");
+    }
+    setEns("");
+  };
+
+  useEffect(() => {
+    updateEns();
+  }, [account, updateEns, backd]);
 
   return (
     <>
@@ -126,7 +149,7 @@ const Connector = (): JSX.Element => {
         <Aura connected={active} />
         <ConnectorButton onClick={() => setConnecting(true)} connected={active}>
           <ConnectorText>
-            {account ? shortenAddress(account, 8) : t("walletConnect.connectWallet")}
+            {account ? ens || shortenAddress(account, 8) : t("walletConnect.connectWallet")}
           </ConnectorText>
         </ConnectorButton>
       </DesktopConnector>

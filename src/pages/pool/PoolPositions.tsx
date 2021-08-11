@@ -137,7 +137,7 @@ const PoolPositions = ({ pool }: Props): JSX.Element => {
 
   return (
     <ContentSection
-      header="Top-up positions"
+      header={`Top-up ${pool.underlying.symbol} positions`}
       statistics={<PoolStatistics pool={pool} />}
       content={
         <>
