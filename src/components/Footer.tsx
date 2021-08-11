@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 import logo from "../assets/logo/full-logo.svg";
+import LanguageSelector from "./LanguageSelector";
 
 type LinkType = {
   label: string;
@@ -126,14 +127,8 @@ const Link = styled.a`
   }
 `;
 
-const TestChangeLanguage = styled.div`
-  width: 5rem;
-  height: 5rem;
-  background-color: pink;
-`;
-
 const Footer = (): JSX.Element => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <StyledFooter>
@@ -149,7 +144,7 @@ const Footer = (): JSX.Element => {
           ))}
         </LinkList>
       ))}
-      <TestChangeLanguage onClick={() => i18n.changeLanguage("jp")} />
+      <LanguageSelector />
     </StyledFooter>
   );
 };
