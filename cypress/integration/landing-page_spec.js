@@ -14,21 +14,13 @@ describe("Benefits", () => {
   it("Should have Avoid Liquidation Benefit", () => {
     cy.get('[id="benefit - Avoid Liquidation"] > a')
       .should("have.attr", "target", "_blank")
-      .should(
-        "have.attr",
-        "href",
-        "https://backdfund.medium.com/collateral-top-ups-through-backd-781bfd0edf4c"
-      );
+      .should("have.attr", "href", "https://docs.backd.fund/protocol-architecture/top-ups");
   });
 
   it("Should have Earn Yield Benefit", () => {
     cy.get('[id="benefit - Earn Yield"] > a')
       .should("have.attr", "target", "_blank")
-      .should(
-        "have.attr",
-        "href",
-        "https://backdfund.medium.com/yield-farming-on-backd-c80141cef836"
-      );
+      .should("have.attr", "href", "https://docs.backd.fund/protocol-architecture/pools");
   });
 
   it("Should have Fee Share Benefit", () => {
@@ -37,7 +29,7 @@ describe("Benefits", () => {
       .should(
         "have.attr",
         "href",
-        "https://backdfund.medium.com/becoming-a-backd-keeper-2d81133e0a9d"
+        "https://docs.backd.fund/protocol-architecture/top-ups/backd-keepers"
       );
   });
 });
