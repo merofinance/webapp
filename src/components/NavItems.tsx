@@ -8,6 +8,22 @@ type NavItemType = {
   link: string;
 };
 
+// We can delete this after launch
+const preLaunchItems: NavItemType[] = [
+  {
+    label: "docs",
+    link: "https://docs.backd.fund/",
+  },
+  {
+    label: "blog",
+    link: "https://backdfund.medium.com/",
+  },
+  {
+    label: "newsletter",
+    link: "https://backd.substack.com/welcome",
+  },
+];
+
 const navItems: NavItemType[] = [
   {
     label: "claim",
@@ -88,25 +104,14 @@ const NavItems = (): JSX.Element => {
             <InternalLink to={navItem.link}>{navItem.label}</InternalLink>
           </NavItem>
         ))}
-      {!LIVE && (
-        <>
-          <NavItem>
-            <ExternalLink href="https://docs.backd.fund/" target="_blank">
-              docs
+      {!LIVE &&
+        preLaunchItems.map((navItem: NavItemType) => (
+          <NavItem key={navItem.label}>
+            <ExternalLink id={`Header - ${navItem.label}`} href={navItem.link} target="_blank">
+              {navItem.label}
             </ExternalLink>
           </NavItem>
-          <NavItem>
-            <ExternalLink href="https://backdfund.medium.com/" target="_blank">
-              blog
-            </ExternalLink>
-          </NavItem>
-          <NavItem>
-            <ExternalLink href="https://backd.substack.com/welcome" target="_blank">
-              newsletter
-            </ExternalLink>
-          </NavItem>
-        </>
-      )}
+        ))}
     </StyledNavItems>
   );
 };
