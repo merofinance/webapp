@@ -1,9 +1,10 @@
 import { useWeb3React } from "@web3-react/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { GradientText } from "../styles/GradientText";
 import WalletSelectPopup from "./WalletSelectPopup";
 import { shortenAddress } from "../lib/text";
+import { injectedConnector } from "../app/web3";
 
 type ConnectedType = {
   connected: boolean;
@@ -114,8 +115,19 @@ const DotCenter = styled.div`
 `;
 
 const Connector = (): JSX.Element => {
-  const { account, active } = useWeb3React();
+  const { account, active, activate } = useWeb3React();
   const [connecting, setConnecting] = useState(false);
+
+  const autoConnect = async () => {
+    const authorized = await injectedConnector.isAuthorized();
+    if (!active && authorized) {
+      await activate(injectedConnector);
+    }
+  };
+
+  useEffect(() => {
+    autoConnect();
+  }, [autoConnect]);
 
   return (
     <>
