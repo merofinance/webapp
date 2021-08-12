@@ -40,10 +40,6 @@ const Label = styled.div`
   font-weight: 500;
   letter-spacing: 0.15px;
   margin-left: 1.5rem;
-
-  @media (max-width: 600px) {
-    display: none;
-  }
 `;
 
 interface ArrowProps {
@@ -61,10 +57,6 @@ const Arrow = styled.div`
   svg {
     transition: 0.3s;
     transform: ${(props: ArrowProps) => (props.open ? "rotate(180deg)" : "rotate(0deg)")};
-  }
-
-  @media (max-width: 600px) {
-    display: none;
   }
 `;
 
