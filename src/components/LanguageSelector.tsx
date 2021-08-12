@@ -72,12 +72,14 @@ const LanguageSelector = () => {
   )[0].label;
 
   return (
-    <StyledLanguageSelector onClick={() => setOpen(true)} ref={anchorRef}>
-      <Globe src={globe} />
-      <Label>{activeLanguage}</Label>
-      <Arrow open={open}>
-        <ArrowDropDownIcon fontSize="inherit" />
-      </Arrow>
+    <>
+      <StyledLanguageSelector onClick={() => setOpen(true)} ref={anchorRef}>
+        <Globe src={globe} />
+        <Label>{activeLanguage}</Label>
+        <Arrow open={open}>
+          <ArrowDropDownIcon fontSize="inherit" />
+        </Arrow>
+      </StyledLanguageSelector>
       <Selector
         open={open}
         anchorRef={anchorRef}
@@ -87,7 +89,7 @@ const LanguageSelector = () => {
         select={(v: string) => i18n.changeLanguage(v)}
         width={`${anchorRef.current?.getBoundingClientRect().width}px`}
       />
-    </StyledLanguageSelector>
+    </>
   );
 };
 
