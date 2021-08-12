@@ -25,6 +25,7 @@ const StyledLanguageSelector = styled.button`
   border-radius: 0.7rem;
   cursor: pointer;
   transition: all 0.3s;
+  margin-bottom: 1rem;
 
   :hover {
     background-color: #271f4f;
@@ -84,6 +85,7 @@ const LanguageSelector = () => {
         selected={i18n.language}
         close={() => setOpen(false)}
         select={(v: string) => i18n.changeLanguage(v)}
+        width={`${anchorRef.current?.getBoundingClientRect().width}px`}
       />
     </StyledLanguageSelector>
   );
