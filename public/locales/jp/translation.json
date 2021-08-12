@@ -4,7 +4,7 @@
       "claim": "ご請求",
       "pools": "プール",
       "stake": "BKDへの出資",
-      "docs": "------",
+      "docs": "ドックス",
       "blog": "ブログ",
       "newsletter": "メルマガ"
     }
@@ -130,7 +130,7 @@
       "header": "resources",
       "links": {
         "litepaper": "Litepaper",
-        "docs": "--------",
+        "docs": "ドックス",
         "blog": "ブログ",
         "factSheet": "概況報告"
       }
