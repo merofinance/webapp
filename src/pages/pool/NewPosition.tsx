@@ -68,7 +68,7 @@ const validationSchema = yup.object().shape({
 
 const Border = styled.div`
   width: 100%;
-  background: linear-gradient(to right, #c532f9 1%, #32b2e5 101%);
+  background: linear-gradient(to right, #c532f9, #32b2e5);
   margin-top: 0.6rem;
   padding: 1px;
 
