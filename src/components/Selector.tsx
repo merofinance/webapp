@@ -47,9 +47,18 @@ interface Props {
   selected: string;
   close: () => void;
   select: (v: string) => void;
+  width?: string;
 }
 
-const Selector = ({ open, anchorRef, options, selected, close, select }: Props): JSX.Element => {
+const Selector = ({
+  open,
+  anchorRef,
+  options,
+  selected,
+  close,
+  select,
+  width,
+}: Props): JSX.Element => {
   const classes = useStyles();
 
   return (
@@ -68,7 +77,7 @@ const Selector = ({ open, anchorRef, options, selected, close, select }: Props):
             transformOrigin: placement === "bottom" ? "center top" : "center bottom",
           }}
         >
-          <Paper className={classes.paper}>
+          <Paper className={classes.paper} style={{ width: width || "auto" }}>
             <ClickAwayListener onClickAway={close}>
               <MenuList id="split-button-menu">
                 {options.map((option: SelectorOptionType) => (
