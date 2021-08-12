@@ -21,10 +21,10 @@ export interface Pool<Num = number> {
   exchangeRate: Num;
 }
 
-export interface Position<Num = number> {
+export interface Position {
   protocol: string;
   account: Address;
-  threshold: Num;
+  threshold: ScaledNumber;
   singleTopUp: ScaledNumber;
   maxTopUp: ScaledNumber;
   maxGasPrice: number;
@@ -32,10 +32,10 @@ export interface Position<Num = number> {
   depositToken: Address;
 }
 
-export interface PlainPosition<Num = number> {
+export interface PlainPosition {
   protocol: string;
   account: Address;
-  threshold: Num;
+  threshold: PlainScaledNumber;
   singleTopUp: PlainScaledNumber;
   maxTopUp: PlainScaledNumber;
   maxGasPrice: number;
@@ -46,6 +46,7 @@ export interface PlainPosition<Num = number> {
 export const toPlainPosition = (position: Position): PlainPosition => {
   return {
     ...position,
+    threshold: position.threshold.toPlain(),
     singleTopUp: position.singleTopUp.toPlain(),
     maxTopUp: position.maxTopUp.toPlain(),
   };
@@ -54,12 +55,13 @@ export const toPlainPosition = (position: Position): PlainPosition => {
 export const fromPlainPosition = (position: PlainPosition): Position => {
   return {
     ...position,
+    threshold: ScaledNumber.fromPlain(position.threshold),
     singleTopUp: ScaledNumber.fromPlain(position.singleTopUp),
     maxTopUp: ScaledNumber.fromPlain(position.maxTopUp),
   };
 };
 
-export function positionFromPartial<T>(pool: Pool<T>, position: Partial<Position<T>>): Position<T> {
+export function positionFromPartial<T>(pool: Pool<T>, position: Partial<Position>): Position {
   if (!position.protocol) throw Error("Missing protocol when creating position");
   if (!position.account) throw Error("Missing account when creating position");
   if (!position.threshold) throw Error("Missing threshold when creating position");

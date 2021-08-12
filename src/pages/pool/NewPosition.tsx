@@ -178,7 +178,7 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
   const position: Position = {
     protocol: formik.values.protocol,
     account: formik.values.account,
-    threshold: Number(formik.values.threshold),
+    threshold: ScaledNumber.fromUnscaled(formik.values.threshold),
     singleTopUp: ScaledNumber.fromUnscaled(formik.values.singleTopUp, pool.underlying.decimals),
     maxTopUp: ScaledNumber.fromUnscaled(formik.values.maxTopUp, pool.underlying.decimals),
     maxGasPrice: 0,
