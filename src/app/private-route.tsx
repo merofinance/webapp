@@ -1,38 +1,20 @@
 import { useWeb3React } from "@web3-react/core";
-import React, { ReactChild, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { ReactChild } from "react";
 import { Redirect, Route, RouteProps } from "react-router-dom";
-import { isConnected } from "../state/accountSlice";
 import { Backd } from "../lib/backd";
-import { activateIfAuthorized } from "./web3";
 
 type PrivateRouteProps = {
   children: ReactChild;
 } & RouteProps;
 
 export function PrivateRoute({ children, ...rest }: PrivateRouteProps): JSX.Element {
-  const [loadingStatus, setLoadingStatus] = useState(true);
-  const connected = useSelector(isConnected);
-
-  const { activate, active } = useWeb3React<Backd>();
-
-  const loggedIn = (connected && active) || loadingStatus;
-
-  useEffect(() => {
-    if (!connected) {
-      setLoadingStatus(false);
-      return;
-    }
-    activateIfAuthorized({ active, activate }).then(() => {
-      setLoadingStatus(false);
-    });
-  }, [active, activate, connected]);
+  const { active } = useWeb3React<Backd>();
 
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        loggedIn ? (
+        active ? (
           children
         ) : (
           <Redirect

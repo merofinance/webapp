@@ -76,6 +76,7 @@ const App = (): JSX.Element => {
     const provider = new ethers.providers.Web3Provider(rawProvider);
     const signer = useMock ? new MockSigner() : provider.getSigner();
     const options = { chainId: parseInt(rawProvider.chainId, 16) };
+
     try {
       return createBackd(signer, options);
     } catch (e) {
