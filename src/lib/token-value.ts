@@ -24,6 +24,15 @@ export class TokenValue {
     return new TokenValue(BigNumber.from(value.value), value.decimals);
   }
 
+  static isValid(value: number | string, decimals = 18): boolean {
+    try {
+      TokenValue.fromUnscaled(value, decimals);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
   get value(): BigNumber {
     return this._value;
   }
