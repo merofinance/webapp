@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
+import { CircularProgress } from "@material-ui/core";
 
 import deleteIcon from "../../assets/ui/delete.svg";
 import { Pool } from "../../lib";
@@ -64,15 +65,16 @@ type Props = {
 
 const PositionRow = ({ position, pool }: Props): JSX.Element => {
   const backd = useBackd();
-  const { setLoading, handleTxDispatch } = useLoading();
+  const { loading, setLoading, handleTxDispatch } = useLoading();
   const dispatch: AppDispatch = useDispatch();
 
   const handleRemovePosition = () => {
-    if (!backd) return;
+    if (!backd || loading) return;
 
     setLoading(true);
     dispatch(removePosition({ backd, pool, position })).then((v: any) => {
       handleTxDispatch({ status: v.meta.requestStatus, actionType: "remove" });
+      setLoading(false);
     });
   };
 
@@ -85,7 +87,10 @@ const PositionRow = ({ position, pool }: Props): JSX.Element => {
       <Value>{`${position.maxTopUp} ${pool.underlying.symbol.toUpperCase()}`}</Value>
       <Value>
         <DeleteButton>
-          <Delete src={deleteIcon} alt="delete button" onClick={() => handleRemovePosition()} />
+          {loading && <CircularProgress size={17} />}
+          {!loading && (
+            <Delete src={deleteIcon} alt="delete button" onClick={() => handleRemovePosition()} />
+          )}
         </DeleteButton>
       </Value>
     </StyledPosition>

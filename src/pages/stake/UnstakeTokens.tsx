@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import LaunchIcon from "@material-ui/icons/Launch";
+
 import AmountInput from "../../components/AmountInput";
 import MultiStepButtons from "../../components/MultiStepButtons";
 import { selectBalance } from "../../state/userSlice";
@@ -18,7 +20,7 @@ const Description = styled.div`
   font-size: 1.8rem;
   line-height: 2.6rem;
   letter-spacing: 0.46px;
-  margin-bottom: 2rem;
+  margin-bottom: 3.7rem;
 `;
 
 const MoreLink = styled(GradientLink)`
@@ -61,6 +63,7 @@ const UnstakeTokens = ({ token }: Props): JSX.Element => {
         Stake BKD and earn a share in x% of platform revenue, paid out in bkdDAI tokens.{" "}
         <MoreLink href="" target="_blank">
           More
+          <LaunchIcon style={{ fill: "var(--secondary)" }} />
         </MoreLink>
       </Description>
       <Content>

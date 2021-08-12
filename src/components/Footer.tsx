@@ -42,6 +42,10 @@ const linkLists: LinkListType[] = [
         link: "/litepaper",
       },
       {
+        label: "Docs",
+        link: "https://docs.backd.fund/",
+      },
+      {
         label: "Blog",
         link: "https://backdfund.medium.com/",
       },
@@ -77,10 +81,6 @@ const StyledFooter = styled.div`
 
   @media (max-width: 600px) {
     flex-direction: column;
-
-    div:nth-child(5) {
-      order: -1;
-    }
   }
 `;
 

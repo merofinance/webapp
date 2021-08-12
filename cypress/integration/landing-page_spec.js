@@ -5,8 +5,22 @@ describe("Innitial Load", () => {
 });
 
 describe("Nav Items", () => {
-  it("Should only have one nav item", () => {
-    cy.get('[id="nav-items"]').children().should("have.length", 1);
+  it("Should have Docs Link", () => {
+    cy.get('[id="Header - docs"]')
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "https://docs.backd.fund/");
+  });
+
+  it("Should have Blog Link", () => {
+    cy.get('[id="Header - blog"]')
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "https://backdfund.medium.com/");
+  });
+
+  it("Should have Newsletter Link", () => {
+    cy.get('[id="Header - newsletter"]')
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "https://backd.substack.com/welcome");
   });
 });
 
@@ -14,21 +28,13 @@ describe("Benefits", () => {
   it("Should have Avoid Liquidation Benefit", () => {
     cy.get('[id="benefit - Avoid Liquidation"] > a')
       .should("have.attr", "target", "_blank")
-      .should(
-        "have.attr",
-        "href",
-        "https://backdfund.medium.com/collateral-top-ups-through-backd-781bfd0edf4c"
-      );
+      .should("have.attr", "href", "https://docs.backd.fund/protocol-architecture/top-ups");
   });
 
   it("Should have Earn Yield Benefit", () => {
     cy.get('[id="benefit - Earn Yield"] > a')
       .should("have.attr", "target", "_blank")
-      .should(
-        "have.attr",
-        "href",
-        "https://backdfund.medium.com/yield-farming-on-backd-c80141cef836"
-      );
+      .should("have.attr", "href", "https://docs.backd.fund/protocol-architecture/pools");
   });
 
   it("Should have Fee Share Benefit", () => {
@@ -37,7 +43,7 @@ describe("Benefits", () => {
       .should(
         "have.attr",
         "href",
-        "https://backdfund.medium.com/becoming-a-backd-keeper-2d81133e0a9d"
+        "https://docs.backd.fund/protocol-architecture/top-ups/backd-keepers"
       );
   });
 });
@@ -142,6 +148,12 @@ describe("Footer", () => {
     cy.get('[id="Footer - Litepaper"]')
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "/litepaper");
+  });
+
+  it("Should have Docs Link", () => {
+    cy.get('[id="Footer - Docs"]')
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "https://docs.backd.fund/");
   });
 
   it("Should have Blog Link", () => {
