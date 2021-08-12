@@ -1,15 +1,15 @@
 import { BigNumber } from "ethers";
-import { PlainTokenValue, TokenValue } from "./scaled-number";
+import { PlainScaledNumber, ScaledNumber } from "./scaled-number";
 import fc from "fast-check";
 
 test("should create from string", () => {
   const testCases = ["1", "12.34", "0.123", "1010020102102", "10100201202.2334234293", ""];
-  testCases.forEach((value: string) => TokenValue.fromUnscaled(value));
+  testCases.forEach((value: string) => ScaledNumber.fromUnscaled(value));
 });
 
 test("should create from number", () => {
   const testCases = [1, 12.34, 0.123, 1010020102102];
-  testCases.forEach((value: number) => TokenValue.fromUnscaled(value));
+  testCases.forEach((value: number) => ScaledNumber.fromUnscaled(value));
 });
 
 test("should create from big number", () => {
@@ -20,7 +20,7 @@ test("should create from big number", () => {
     BigNumber.from(0),
   ];
   testCases.forEach((value: BigNumber) =>
-    expect(new TokenValue(value).value.eq(value)).toBeTruthy()
+    expect(new ScaledNumber(value).value.eq(value)).toBeTruthy()
   );
 });
 
@@ -43,7 +43,7 @@ test("should create from plain token value", () => {
       decimals: 10,
     },
   ];
-  testCases.forEach((value: PlainTokenValue) => TokenValue.fromPlain(value));
+  testCases.forEach((value: PlainScaledNumber) => ScaledNumber.fromPlain(value));
 });
 
 test("Should check if a token value is valid", () => {
@@ -70,7 +70,7 @@ test("Should check if a token value is valid", () => {
     },
   ];
   testCases.forEach(({ value, decimals, expected }) => {
-    expect(TokenValue.isValid(value, decimals)).toBe(expected);
+    expect(ScaledNumber.isValid(value, decimals)).toBe(expected);
   });
 });
 
@@ -93,7 +93,7 @@ test("should export as string from unscaled", () => {
   ];
 
   testCases.forEach(({ value, expected }) => {
-    expect(TokenValue.fromUnscaled(value).toString()).toBe(expected);
+    expect(ScaledNumber.fromUnscaled(value).toString()).toBe(expected);
   });
 });
 
@@ -108,7 +108,7 @@ test("should export as string from scaled", () => {
   ];
 
   testCases.forEach(({ value, decimals, expected }) => {
-    const tokenValue = new TokenValue(value, decimals);
+    const tokenValue = new ScaledNumber(value, decimals);
     expect(tokenValue.toString()).toBe(expected);
   });
 });
@@ -121,7 +121,7 @@ test("should export as string from plain", () => {
   ];
 
   testCases.forEach(({ value, expected }) => {
-    expect(TokenValue.fromPlain(value).toString()).toBe(expected);
+    expect(ScaledNumber.fromPlain(value).toString()).toBe(expected);
   });
 });
 
@@ -131,8 +131,8 @@ test("toPlain/fromPlain should be symmetric for integers", () => {
       fc.integer({ min: 0 }),
       fc.integer({ min: 0, max: 27 }),
       (value: number, decimals: number) => {
-        const tokenValue = TokenValue.fromUnscaled(value, decimals);
-        const backAndForth = TokenValue.fromPlain(tokenValue.toPlain());
+        const tokenValue = ScaledNumber.fromUnscaled(value, decimals);
+        const backAndForth = ScaledNumber.fromPlain(tokenValue.toPlain());
         expect(tokenValue.eq(backAndForth)).toBeTruthy();
       }
     )
@@ -145,8 +145,8 @@ test("toPlain/fromPlain should be symmetric for floats", () => {
       fc.float({ min: 0 }),
       fc.integer({ min: 0, max: 27 }),
       (value: number, decimals: number) => {
-        const tokenValue = TokenValue.fromUnscaled(value, decimals);
-        const backAndForth = TokenValue.fromPlain(tokenValue.toPlain());
+        const tokenValue = ScaledNumber.fromUnscaled(value, decimals);
+        const backAndForth = ScaledNumber.fromPlain(tokenValue.toPlain());
         expect(tokenValue.eq(backAndForth)).toBeTruthy();
       }
     )
@@ -159,8 +159,8 @@ test("toPlain/fromPlain should be symmetric for big numbers", () => {
       fc.integer({ min: 0 }),
       fc.integer({ min: 0, max: 27 }),
       (value: number, decimals: number) => {
-        const tokenValue = new TokenValue(BigNumber.from(value), decimals);
-        const backAndForth = TokenValue.fromPlain(tokenValue.toPlain());
+        const tokenValue = new ScaledNumber(BigNumber.from(value), decimals);
+        const backAndForth = ScaledNumber.fromPlain(tokenValue.toPlain());
         expect(tokenValue.eq(backAndForth)).toBeTruthy();
       }
     )
@@ -173,11 +173,11 @@ test("fromPlain/toPlain should be symmetric", () => {
       fc.integer({ min: 0 }),
       fc.integer({ min: 0, max: 27 }),
       (value: number, decimals: number) => {
-        const plainValue: PlainTokenValue = {
+        const plainValue: PlainScaledNumber = {
           value: value.toString(),
           decimals,
         };
-        const backAndForth = TokenValue.fromPlain(plainValue).toPlain();
+        const backAndForth = ScaledNumber.fromPlain(plainValue).toPlain();
         expect(plainValue.value === backAndForth.value).toBeTruthy();
         expect(plainValue.decimals === backAndForth.decimals).toBeTruthy();
       }

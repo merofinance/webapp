@@ -15,7 +15,7 @@ import NewPositionConfirmation from "./NewPositionConfirmation";
 import NewPositionInput from "./NewPositionInput";
 import { AppDispatch } from "../../app/store";
 import { selectPositions } from "../../state/positionsSlice";
-import { TokenValue } from "../../lib/scaled-number";
+import { ScaledNumber } from "../../lib/scaled-number";
 import { INFINITE_APPROVE_AMMOUNT } from "../../lib/constants";
 import { useDevice } from "../../app/hooks/use-device";
 
@@ -49,20 +49,20 @@ const validationSchema = yup.object().shape({
   singleTopUp: yup
     .string()
     .required("Single Top Up is required")
-    .test("is-valid-number", "Invalid number", (s: any) => TokenValue.isValid(s))
+    .test("is-valid-number", "Invalid number", (s: any) => ScaledNumber.isValid(s))
     .test(
       "is-positive-number",
       "Must be positive number",
-      (s: any) => !TokenValue.fromUnscaled(s).isZero()
+      (s: any) => !ScaledNumber.fromUnscaled(s).isZero()
     ),
   maxTopUp: yup
     .string()
     .required("Max Top Up required")
-    .test("is-valid-number", "Invalid number", (s: any) => TokenValue.isValid(s))
+    .test("is-valid-number", "Invalid number", (s: any) => ScaledNumber.isValid(s))
     .test(
       "is-positive-number",
       "Must be positive number",
-      (s: any) => !TokenValue.fromUnscaled(s).isZero()
+      (s: any) => !ScaledNumber.fromUnscaled(s).isZero()
     ),
 });
 
@@ -141,7 +141,7 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
     if (!backd) return;
     formik.setSubmitting(true);
     const approveArgs = {
-      amount: TokenValue.fromUnscaled(INFINITE_APPROVE_AMMOUNT, pool.underlying.decimals),
+      amount: ScaledNumber.fromUnscaled(INFINITE_APPROVE_AMMOUNT, pool.underlying.decimals),
       backd,
       spender: backd.topupActionAddress,
       token: pool.lpToken,
@@ -161,8 +161,8 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
     if (values.protocol && matchingPositions.length > 0)
       errors.account = "Max of one position per protocol and address";
 
-    const single = TokenValue.fromUnscaled(values.singleTopUp, pool.underlying.decimals);
-    const max = TokenValue.fromUnscaled(values.maxTopUp, pool.underlying.decimals);
+    const single = ScaledNumber.fromUnscaled(values.singleTopUp, pool.underlying.decimals);
+    const max = ScaledNumber.fromUnscaled(values.maxTopUp, pool.underlying.decimals);
     if (single.gt(max)) errors.singleTopUp = "Must be less than max top up";
     if (max.gt(balance)) errors.maxTopUp = "Exceeds deposited balance";
 
@@ -172,15 +172,15 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
   const formik = useFormik({ initialValues, validationSchema, onSubmit, validate });
 
   const approved = allowance.gte(
-    TokenValue.fromUnscaled(formik.values.maxTopUp, pool.underlying.decimals)
+    ScaledNumber.fromUnscaled(formik.values.maxTopUp, pool.underlying.decimals)
   );
 
   const position: Position = {
     protocol: formik.values.protocol,
     account: formik.values.account,
     threshold: Number(formik.values.threshold),
-    singleTopUp: TokenValue.fromUnscaled(formik.values.singleTopUp, pool.underlying.decimals),
-    maxTopUp: TokenValue.fromUnscaled(formik.values.maxTopUp, pool.underlying.decimals),
+    singleTopUp: ScaledNumber.fromUnscaled(formik.values.singleTopUp, pool.underlying.decimals),
+    maxTopUp: ScaledNumber.fromUnscaled(formik.values.maxTopUp, pool.underlying.decimals),
     maxGasPrice: 0,
     actionToken: pool.underlying.address,
     depositToken: pool.lpToken.address,

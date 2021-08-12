@@ -1,12 +1,12 @@
 import { BigNumber } from "ethers";
 import { bigNumberToString, formatCrypto, formatCurrency, stringToBigNumber } from "./numeric";
 
-export interface PlainTokenValue {
+export interface PlainScaledNumber {
   value: string;
   decimals: number;
 }
 
-export class TokenValue {
+export class ScaledNumber {
   private _value: BigNumber;
 
   private _decimals: number;
@@ -16,17 +16,17 @@ export class TokenValue {
     this._value = value;
   }
 
-  static fromUnscaled(value: number | string = 0, decimals = 18): TokenValue {
-    return new TokenValue(stringToBigNumber(value.toString() || "0", decimals), decimals);
+  static fromUnscaled(value: number | string = 0, decimals = 18): ScaledNumber {
+    return new ScaledNumber(stringToBigNumber(value.toString() || "0", decimals), decimals);
   }
 
-  static fromPlain(value: PlainTokenValue): TokenValue {
-    return new TokenValue(BigNumber.from(value.value), value.decimals);
+  static fromPlain(value: PlainScaledNumber): ScaledNumber {
+    return new ScaledNumber(BigNumber.from(value.value), value.decimals);
   }
 
   static isValid(value: number | string, decimals = 18): boolean {
     try {
-      TokenValue.fromUnscaled(value, decimals);
+      ScaledNumber.fromUnscaled(value, decimals);
       return true;
     } catch {
       return false;
@@ -41,7 +41,7 @@ export class TokenValue {
     return this._decimals;
   }
 
-  toPlain = (): PlainTokenValue => {
+  toPlain = (): PlainScaledNumber => {
     return {
       value: this._value.toString(),
       decimals: this._decimals,
@@ -52,48 +52,48 @@ export class TokenValue {
 
   isNegative = (): boolean => this.value.isNegative();
 
-  assertSameDecimals(other: TokenValue): void {
+  assertSameDecimals(other: ScaledNumber): void {
     console.assert(this.decimals === other.decimals, "should have the same number of decimals");
   }
 
-  add(other: TokenValue): TokenValue {
+  add(other: ScaledNumber): ScaledNumber {
     this.assertSameDecimals(other);
-    return new TokenValue(this.value.add(other.value), this.decimals);
+    return new ScaledNumber(this.value.add(other.value), this.decimals);
   }
 
-  sub(other: TokenValue): TokenValue {
+  sub(other: ScaledNumber): ScaledNumber {
     this.assertSameDecimals(other);
-    return new TokenValue(this.value.sub(other.value), this.decimals);
+    return new ScaledNumber(this.value.sub(other.value), this.decimals);
   }
 
-  eq(other: TokenValue): boolean {
+  eq(other: ScaledNumber): boolean {
     return this.value.eq(other.value) && this.decimals === other.decimals;
   }
 
-  gt(other: TokenValue): boolean {
+  gt(other: ScaledNumber): boolean {
     this.assertSameDecimals(other);
     return this.value.gt(other.value);
   }
 
-  gte(other: TokenValue): boolean {
+  gte(other: ScaledNumber): boolean {
     this.assertSameDecimals(other);
     return this.value.gte(other.value);
   }
 
-  lt(other: TokenValue): boolean {
+  lt(other: ScaledNumber): boolean {
     this.assertSameDecimals(other);
     return this.value.lt(other.value);
   }
 
-  lte(other: TokenValue): boolean {
+  lte(other: ScaledNumber): boolean {
     this.assertSameDecimals(other);
     return this.value.lte(other.value);
   }
 
-  mul(value: number | string): TokenValue {
+  mul(value: number | string): ScaledNumber {
     const scale = BigNumber.from(10).pow(this.decimals);
     const scaledValue = stringToBigNumber(value.toString(), this.decimals);
-    return new TokenValue(this.value.mul(scaledValue).div(scale), this.decimals);
+    return new ScaledNumber(this.value.mul(scaledValue).div(scale), this.decimals);
   }
 
   toString = (): string => bigNumberToString(this._value, this._decimals);

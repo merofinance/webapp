@@ -6,7 +6,7 @@ import AmountInput from "../../components/AmountInput";
 import ContentSection from "../../components/ContentSection";
 import { selectBalance } from "../../state/userSlice";
 import { Pool } from "../../lib";
-import { TokenValue } from "../../lib/scaled-number";
+import { ScaledNumber } from "../../lib/scaled-number";
 import PoolStatistics from "./PoolStatistics";
 import WithdrawalButton from "./WithdrawButton";
 
@@ -47,7 +47,7 @@ const PoolWithdraw = ({ pool }: Props): JSX.Element => {
           />
           <WithdrawalButton
             pool={pool}
-            value={TokenValue.fromUnscaled(withdrawAmount, staked.decimals)}
+            value={ScaledNumber.fromUnscaled(withdrawAmount, staked.decimals)}
             complete={() => setWithdrawAmount("")}
           />
         </Content>

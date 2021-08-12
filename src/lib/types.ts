@@ -1,5 +1,5 @@
 import { TransactionReceipt } from "@ethersproject/providers";
-import { PlainTokenValue, TokenValue } from "./scaled-number";
+import { PlainScaledNumber, ScaledNumber } from "./scaled-number";
 
 export type Optional<T> = T | null;
 
@@ -25,8 +25,8 @@ export interface Position<Num = number> {
   protocol: string;
   account: Address;
   threshold: Num;
-  singleTopUp: TokenValue;
-  maxTopUp: TokenValue;
+  singleTopUp: ScaledNumber;
+  maxTopUp: ScaledNumber;
   maxGasPrice: number;
   actionToken: Address;
   depositToken: Address;
@@ -36,8 +36,8 @@ export interface PlainPosition<Num = number> {
   protocol: string;
   account: Address;
   threshold: Num;
-  singleTopUp: PlainTokenValue;
-  maxTopUp: PlainTokenValue;
+  singleTopUp: PlainScaledNumber;
+  maxTopUp: PlainScaledNumber;
   maxGasPrice: number;
   actionToken: Address;
   depositToken: Address;
@@ -54,8 +54,8 @@ export const toPlainPosition = (position: Position): PlainPosition => {
 export const fromPlainPosition = (position: PlainPosition): Position => {
   return {
     ...position,
-    singleTopUp: TokenValue.fromPlain(position.singleTopUp),
-    maxTopUp: TokenValue.fromPlain(position.maxTopUp),
+    singleTopUp: ScaledNumber.fromPlain(position.singleTopUp),
+    maxTopUp: ScaledNumber.fromPlain(position.maxTopUp),
   };
 };
 
@@ -88,8 +88,8 @@ export function transformPool<T, U>(pool: Pool<T>, f: (v: T) => U): Pool<U> {
 
 export type Address = string;
 
-export type Balances = Record<string, TokenValue>;
-export type PlainBalances = Record<string, PlainTokenValue>;
+export type Balances = Record<string, ScaledNumber>;
+export type PlainBalances = Record<string, PlainScaledNumber>;
 
 export const toPlainBalances = (balances: Balances): PlainBalances => {
   return Object.fromEntries(Object.entries(balances).map(([key, value]) => [key, value.toPlain()]));
@@ -97,7 +97,7 @@ export const toPlainBalances = (balances: Balances): PlainBalances => {
 
 export const fromPlainBalances = (balances: PlainBalances): Balances => {
   return Object.fromEntries(
-    Object.entries(balances).map(([key, value]) => [key, TokenValue.fromPlain(value)])
+    Object.entries(balances).map(([key, value]) => [key, ScaledNumber.fromPlain(value)])
   );
 };
 

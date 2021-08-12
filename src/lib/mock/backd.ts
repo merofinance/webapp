@@ -2,7 +2,7 @@ import { BigNumber, ContractTransaction, providers } from "ethers";
 import { Pool } from "..";
 import { Backd } from "../backd";
 import { bigNumberToFloat } from "../numeric";
-import { TokenValue } from "../scaled-number";
+import { ScaledNumber } from "../scaled-number";
 import {
   Address,
   AllowanceQuery,
@@ -36,7 +36,7 @@ export default class MockBackd implements Backd {
     return Promise.resolve(transformPool(pool, bigNumberToFloat));
   }
 
-  getAllowance(token: Token, spender: Address, account?: string): Promise<TokenValue> {
+  getAllowance(token: Token, spender: Address, account?: string): Promise<ScaledNumber> {
     return Promise.resolve(this.allowances[token.address][spender] || 0);
   }
 
@@ -44,27 +44,31 @@ export default class MockBackd implements Backd {
     return Promise.resolve(this.allowances);
   }
 
-  getBalance(pool: Address, account?: Address): Promise<TokenValue> {
+  getBalance(pool: Address, account?: Address): Promise<ScaledNumber> {
     const number = pool in balances ? balances[pool] : BigNumber.from(0);
-    return Promise.resolve(new TokenValue(number));
+    return Promise.resolve(new ScaledNumber(number));
   }
 
-  async deposit(pool: Pool, amount: TokenValue): Promise<ContractTransaction> {
+  async deposit(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction> {
     const account = await this.currentAccount();
     return makeContractTransaction(pool.address, account);
   }
 
-  async withdraw(poolAddress: Address, amount: TokenValue): Promise<ContractTransaction> {
+  async withdraw(poolAddress: Address, amount: ScaledNumber): Promise<ContractTransaction> {
     const account = await this.currentAccount();
     return makeContractTransaction(poolAddress, account);
   }
 
-  async unstake(poolAddress: Address, amount: TokenValue): Promise<ContractTransaction> {
+  async unstake(poolAddress: Address, amount: ScaledNumber): Promise<ContractTransaction> {
     const account = await this.currentAccount();
     return makeContractTransaction(poolAddress, account);
   }
 
-  async approve(token: Token, spender: Address, amount: TokenValue): Promise<ContractTransaction> {
+  async approve(
+    token: Token,
+    spender: Address,
+    amount: ScaledNumber
+  ): Promise<ContractTransaction> {
     const account = await this.currentAccount();
     if (!this.allowances[token.address]) {
       this.allowances[token.address] = {};
