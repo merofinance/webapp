@@ -17,17 +17,6 @@ export interface SelectorOptionType {
 }
 
 const useStyles = makeStyles({
-  left: {
-    whiteSpace: "nowrap",
-    background: "var(--gradient)",
-    minWidth: "6rem",
-    padding: "0 1rem",
-  },
-  right: {
-    background: "#36B0E6",
-    width: "2.6rem",
-    minWidth: "0",
-  },
   paper: {
     backgroundColor: "#433b6b",
   },
