@@ -46,6 +46,34 @@ test("should create from plain token value", () => {
   testCases.forEach((value: PlainTokenValue) => TokenValue.fromPlain(value));
 });
 
+test("Should check if a token value is valid", () => {
+  const testCases = [
+    {
+      value: "100000000",
+      decimals: 8,
+      expected: true,
+    },
+    {
+      value: "21390120318230123021312031",
+      decimals: undefined,
+      expected: true,
+    },
+    {
+      value: ".",
+      decimals: 3,
+      expected: false,
+    },
+    {
+      value: "-10000",
+      decimals: 3,
+      expected: false,
+    },
+  ];
+  testCases.forEach(({ value, decimals, expected }) => {
+    expect(TokenValue.isValid(value, decimals)).toBe(expected);
+  });
+});
+
 test("should export as string from unscaled", () => {
   const testCases = [
     { value: "1", expected: "1" },
