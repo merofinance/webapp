@@ -108,8 +108,8 @@ test("should export as string from scaled", () => {
   ];
 
   testCases.forEach(({ value, decimals, expected }) => {
-    const tokenValue = new ScaledNumber(value, decimals);
-    expect(tokenValue.toString()).toBe(expected);
+    const scaledNumber = new ScaledNumber(value, decimals);
+    expect(scaledNumber.toString()).toBe(expected);
   });
 });
 
@@ -131,9 +131,9 @@ test("toPlain/fromPlain should be symmetric for integers", () => {
       fc.integer({ min: 0 }),
       fc.integer({ min: 0, max: 27 }),
       (value: number, decimals: number) => {
-        const tokenValue = ScaledNumber.fromUnscaled(value, decimals);
-        const backAndForth = ScaledNumber.fromPlain(tokenValue.toPlain());
-        expect(tokenValue.eq(backAndForth)).toBeTruthy();
+        const scaledNumber = ScaledNumber.fromUnscaled(value, decimals);
+        const backAndForth = ScaledNumber.fromPlain(scaledNumber.toPlain());
+        expect(scaledNumber.eq(backAndForth)).toBeTruthy();
       }
     )
   );
@@ -145,9 +145,9 @@ test("toPlain/fromPlain should be symmetric for floats", () => {
       fc.float({ min: 0 }),
       fc.integer({ min: 0, max: 27 }),
       (value: number, decimals: number) => {
-        const tokenValue = ScaledNumber.fromUnscaled(value, decimals);
-        const backAndForth = ScaledNumber.fromPlain(tokenValue.toPlain());
-        expect(tokenValue.eq(backAndForth)).toBeTruthy();
+        const scaledNumber = ScaledNumber.fromUnscaled(value, decimals);
+        const backAndForth = ScaledNumber.fromPlain(scaledNumber.toPlain());
+        expect(scaledNumber.eq(backAndForth)).toBeTruthy();
       }
     )
   );
@@ -159,9 +159,9 @@ test("toPlain/fromPlain should be symmetric for big numbers", () => {
       fc.integer({ min: 0 }),
       fc.integer({ min: 0, max: 27 }),
       (value: number, decimals: number) => {
-        const tokenValue = new ScaledNumber(BigNumber.from(value), decimals);
-        const backAndForth = ScaledNumber.fromPlain(tokenValue.toPlain());
-        expect(tokenValue.eq(backAndForth)).toBeTruthy();
+        const scaledNumber = new ScaledNumber(BigNumber.from(value), decimals);
+        const backAndForth = ScaledNumber.fromPlain(scaledNumber.toPlain());
+        expect(scaledNumber.eq(backAndForth)).toBeTruthy();
       }
     )
   );
