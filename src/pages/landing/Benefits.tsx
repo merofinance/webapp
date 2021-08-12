@@ -141,7 +141,8 @@ const ReadMore = styled(GradientLink)`
   }
 
   @media (max-width: 600px) {
-    display: none;
+    font-size: 1.6rem;
+    margin-top: 1rem;
   }
 `;
 
