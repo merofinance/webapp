@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { ethers } from "ethers";
 import * as yup from "yup";
-import { useFormik } from "formik";
+import { FormikErrors, useFormik } from "formik";
 
 import { useBackd } from "../../app/hooks/use-backd";
 import Dropdown from "../../components/Dropdown";
@@ -152,7 +152,7 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
   };
 
   const validate = (values: FormType): Record<string, string> => {
-    const errors: Record<string, string> = {};
+    const errors: FormikErrors<FormType> = {};
 
     const matchingPositions = positions.filter(
       (position: Position) =>
@@ -163,7 +163,7 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
 
     const single = TokenValue.fromUnscaled(values.singleTopUp, pool.underlying.decimals);
     const max = TokenValue.fromUnscaled(values.maxTopUp, pool.underlying.decimals);
-    if (single.gt(max)) errors.single = "Must be less than max top up";
+    if (single.gt(max)) errors.singleTopUp = "Must be less than max top up";
     if (max.gt(balance)) errors.maxTopUp = "Exceeds deposited balance";
 
     return errors;
