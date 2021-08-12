@@ -1,5 +1,5 @@
 import { BigNumber } from "ethers";
-import { PlainTokenValue, TokenValue } from "./token-value";
+import { PlainTokenValue, TokenValue } from "./scaled-number";
 import fc from "fast-check";
 
 test("should create from string", () => {

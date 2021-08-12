@@ -9,7 +9,7 @@ import { AppDispatch } from "../../app/store";
 import MultiStepButtons from "../../components/MultiStepButtons";
 import { ETH_DUMMY_ADDRESS, INFINITE_APPROVE_AMMOUNT } from "../../lib/constants";
 import Button from "../../components/Button";
-import { TokenValue } from "../../lib/token-value";
+import { TokenValue } from "../../lib/scaled-number";
 
 type Props = {
   value: TokenValue;

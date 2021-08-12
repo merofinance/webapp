@@ -2,7 +2,7 @@ import { Slider, withStyles } from "@material-ui/core";
 import { BigNumber } from "ethers";
 import React from "react";
 import styled from "styled-components";
-import { TokenValue } from "../lib/token-value";
+import { TokenValue } from "../lib/scaled-number";
 import SliderStep from "./SliderStep";
 
 const Gradient = "linear-gradient(to right, rgba(197, 50, 249, 1), rgba(50, 178, 229, 1))";

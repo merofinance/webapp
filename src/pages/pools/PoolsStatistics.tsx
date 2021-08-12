@@ -7,7 +7,7 @@ import Statistics from "../../components/Statistics";
 import { selectPositions } from "../../state/positionsSlice";
 import { Position } from "../../lib/types";
 import { formatCurrency } from "../../lib/numeric";
-import { TokenValue } from "../../lib/token-value";
+import { TokenValue } from "../../lib/scaled-number";
 
 const PoolsStatistics = (): JSX.Element => {
   const pools = useSelector(selectPools);

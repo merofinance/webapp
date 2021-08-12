@@ -15,7 +15,7 @@ import NewPositionConfirmation from "./NewPositionConfirmation";
 import NewPositionInput from "./NewPositionInput";
 import { AppDispatch } from "../../app/store";
 import { selectPositions } from "../../state/positionsSlice";
-import { TokenValue } from "../../lib/token-value";
+import { TokenValue } from "../../lib/scaled-number";
 import { INFINITE_APPROVE_AMMOUNT } from "../../lib/constants";
 import { useDevice } from "../../app/hooks/use-device";
 
@@ -151,7 +151,7 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
     });
   };
 
-  const validate = (values: FormType): Record<string, string> => {
+  const validate = (values: FormType): FormikErrors<FormType> => {
     const errors: FormikErrors<FormType> = {};
 
     const matchingPositions = positions.filter(

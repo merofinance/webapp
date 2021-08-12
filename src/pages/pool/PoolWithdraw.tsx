@@ -6,7 +6,7 @@ import AmountInput from "../../components/AmountInput";
 import ContentSection from "../../components/ContentSection";
 import { selectBalance } from "../../state/userSlice";
 import { Pool } from "../../lib";
-import { TokenValue } from "../../lib/token-value";
+import { TokenValue } from "../../lib/scaled-number";
 import PoolStatistics from "./PoolStatistics";
 import WithdrawalButton from "./WithdrawButton";
 

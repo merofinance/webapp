@@ -1,5 +1,5 @@
 import { TransactionReceipt } from "@ethersproject/providers";
-import { PlainTokenValue, TokenValue } from "./token-value";
+import { PlainTokenValue, TokenValue } from "./scaled-number";
 
 export type Optional<T> = T | null;
 

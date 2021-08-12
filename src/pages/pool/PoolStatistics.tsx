@@ -6,7 +6,7 @@ import { selectPrice } from "../../state/selectors";
 import { selectBalance } from "../../state/userSlice";
 import { selectPoolPositions } from "../../state/positionsSlice";
 import { formatCurrency } from "../../lib/numeric";
-import { TokenValue } from "../../lib/token-value";
+import { TokenValue } from "../../lib/scaled-number";
 
 type Props = {
   pool: Pool;

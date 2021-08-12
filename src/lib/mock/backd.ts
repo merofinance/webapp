@@ -2,7 +2,7 @@ import { BigNumber, ContractTransaction, providers } from "ethers";
 import { Pool } from "..";
 import { Backd } from "../backd";
 import { bigNumberToFloat } from "../numeric";
-import { TokenValue } from "../token-value";
+import { TokenValue } from "../scaled-number";
 import {
   Address,
   AllowanceQuery,

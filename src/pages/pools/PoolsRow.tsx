@@ -12,7 +12,7 @@ import { formatPercent, numberToCompactCurrency, formatCurrency } from "../../li
 import { selectPoolPositions } from "../../state/positionsSlice";
 import { Position } from "../../lib/types";
 import { selectPrice } from "../../state/selectors";
-import { TokenValue } from "../../lib/token-value";
+import { TokenValue } from "../../lib/scaled-number";
 
 type RowProps = {
   preview?: boolean;

@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, Selector } from "../app/store";
 import { Backd } from "../lib/backd";
 import { ETH_DUMMY_ADDRESS } from "../lib/constants";
-import { PlainTokenValue, TokenValue } from "../lib/token-value";
+import { PlainTokenValue, TokenValue } from "../lib/scaled-number";
 import {
   Address,
   AllowanceQuery,

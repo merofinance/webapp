@@ -1,6 +1,6 @@
 import { BigNumber, ContractReceipt, ContractTransaction } from "ethers";
 import { scale } from "../numeric";
-import { TokenValue } from "../token-value";
+import { TokenValue } from "../scaled-number";
 import { Address, Pool, PlainPosition } from "../types";
 
 export const masterAccount = "0xbacE8e7f276FD2Ee5ecE5C1df18BF381148862A6";

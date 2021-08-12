@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { TokenValue } from "../lib/token-value";
+import { TokenValue } from "../lib/scaled-number";
 import { Token } from "../lib/types";
 import AmountSlider from "./AmountSlider";
 import Input from "./Input";

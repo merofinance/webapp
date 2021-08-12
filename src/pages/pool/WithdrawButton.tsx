@@ -8,7 +8,7 @@ import { useLoading } from "../../app/hooks/use-loading";
 import { selectBalance, unstake, withdraw } from "../../state/userSlice";
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
-import { TokenValue } from "../../lib/token-value";
+import { TokenValue } from "../../lib/scaled-number";
 
 const StyledProgressButtons = styled.div`
   width: 100%;
