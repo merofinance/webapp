@@ -1,5 +1,6 @@
 import { FormControl, makeStyles, MenuItem, Select } from "@material-ui/core";
-import React, { ChangeEvent, ReactNode } from "react";
+import React from "react";
+import { FormikFormType, FormValuesType } from "../pages/pool/NewPosition";
 
 const useStyles = makeStyles(() => ({
   formControl: {
@@ -48,8 +49,8 @@ const useStyles = makeStyles(() => ({
 }));
 
 type Props = {
-  formik: any;
-  name: string;
+  formik: FormikFormType;
+  name: FormValuesType;
   options: string[];
 };
 
