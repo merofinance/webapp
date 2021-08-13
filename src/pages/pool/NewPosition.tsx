@@ -195,11 +195,8 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
     return "";
   };
 
-  const displayingError =
-    (formik.touched.account && formik.errors.account) ||
-    (formik.touched.threshold && formik.errors.threshold) ||
-    (formik.touched.singleTopUp && formik.errors.singleTopUp) ||
-    (formik.touched.maxTopUp && formik.errors.maxTopUp);
+  const errorKeys: Array<keyof FormType> = ["account", "threshold", "singleTopUp", "maxTopUp"];
+  const displayingError = errorKeys.some((v) => formik.touched[v] && formik.errors[v]);
 
   return (
     <Border>
