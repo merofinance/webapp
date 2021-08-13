@@ -19,7 +19,7 @@ import { ScaledNumber } from "../../lib/scaled-number";
 import { INFINITE_APPROVE_AMMOUNT } from "../../lib/constants";
 import { useDevice } from "../../app/hooks/use-device";
 
-interface FormType {
+export interface FormType {
   protocol: string;
   account: string;
   threshold: string;
@@ -73,7 +73,6 @@ const wrapperFormik = () =>
     onSubmit: () => {},
   });
 export type FormikFormType = ReturnType<typeof wrapperFormik>;
-export type FormValuesType = "account" | "threshold" | "singleTopUp" | "maxTopUp" | "protocol";
 
 const Border = styled.div`
   width: 100%;

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { FormikFormType, FormValuesType, Value } from "./NewPosition";
+import { FormikFormType, FormType, Value } from "./NewPosition";
 
 const StyledNewPositionInput = styled.div`
   width: 67%;
@@ -77,7 +77,7 @@ const Error = styled.div`
 
 type Props = {
   type: string;
-  name: FormValuesType;
+  name: keyof FormType;
   formik: FormikFormType;
 };
 
