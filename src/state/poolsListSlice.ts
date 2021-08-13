@@ -3,7 +3,6 @@ import { AppThunk, RootState } from "../app/store";
 import { Pool } from "../lib";
 import { Backd } from "../lib/backd";
 import { Prices } from "../lib/types";
-import { logout } from "./accountSlice";
 import { fetchAllowances, fetchBalances } from "./userSlice";
 
 interface PoolsState {
@@ -54,10 +53,6 @@ export const poolsSlice = createSlice({
 
     builder.addCase(fetchPrices.fulfilled, (state, action) => {
       state.prices = action.payload;
-    });
-
-    builder.addCase(logout, (state, action) => {
-      return initialState;
     });
   },
 });

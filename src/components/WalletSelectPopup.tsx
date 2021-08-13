@@ -1,6 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
 import React from "react";
-import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import LaunchIcon from "@material-ui/icons/Launch";
@@ -9,7 +8,6 @@ import { AbstractConnector } from "@web3-react/abstract-connector";
 import { injectedConnector, walletConnectConnector } from "../app/web3";
 import metamask from "../assets/wallets/metamask.svg";
 import walletConnect from "../assets/wallets/wallet-connect.svg";
-import { setConnected } from "../state/accountSlice";
 import Popup from "./Popup";
 
 type WalletOption = {
@@ -141,13 +139,11 @@ type Props = {
 };
 
 const WalletSelectPopup = (props: Props): JSX.Element => {
-  const dispatch = useDispatch();
   const { activate } = useWeb3React();
   const { t } = useTranslation();
 
   const connect = async (connector: AbstractConnector) => {
     await activate(connector);
-    dispatch(setConnected(true));
     props.close();
   };
 

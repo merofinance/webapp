@@ -1,6 +1,5 @@
 import { CaseReducer, createSlice, PayloadAction, SerializedError } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
-import { logout } from "./accountSlice";
 import { fetchPool, fetchPools, fetchPrices } from "./poolsListSlice";
 import { fetchPositions, registerPosition, removePosition } from "./positionsSlice";
 import { fetchPendingTransactions } from "./transactionsSlice";
@@ -40,8 +39,6 @@ export const errorSlice = createSlice({
     builder.addCase(fetchPositions.rejected, handleError);
     builder.addCase(registerPosition.rejected, handleError);
     builder.addCase(removePosition.rejected, handleError);
-
-    builder.addCase(logout, (state, action) => initialState);
   },
 });
 

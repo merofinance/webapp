@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { GradientText } from "../styles/GradientText";
 import WalletSelectPopup from "./WalletSelectPopup";
 import { shortenAddress } from "../lib/text";
+import { injectedConnector } from "../app/web3";
 import { useBackd } from "../app/hooks/use-backd";
 
 type ConnectedType = {
@@ -118,7 +119,7 @@ const DotCenter = styled.div`
 `;
 
 const Connector = (): JSX.Element => {
-  const { account, active } = useWeb3React();
+  const { account, active, activate } = useWeb3React();
   const backd = useBackd();
   const { t } = useTranslation();
 
@@ -142,6 +143,17 @@ const Connector = (): JSX.Element => {
   useEffect(() => {
     updateEns();
   }, [account, updateEns, backd]);
+
+  const autoConnect = async () => {
+    const authorized = await injectedConnector.isAuthorized();
+    if (!active && authorized) {
+      await activate(injectedConnector);
+    }
+  };
+
+  useEffect(() => {
+    autoConnect();
+  }, [autoConnect]);
 
   return (
     <>

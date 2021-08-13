@@ -27,13 +27,3 @@ export const walletConnectConnector = new WalletConnectConnector({
   qrcode: true,
   pollingInterval: 12000,
 });
-
-export async function activateIfAuthorized({
-  active,
-  activate,
-}: Pick<Web3ReactContextInterface<Backd>, "activate" | "active">): Promise<void> {
-  const authorized = await injectedConnector.isAuthorized();
-  if (!active && authorized) {
-    await activate(injectedConnector);
-  }
-}
