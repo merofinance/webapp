@@ -85,12 +85,12 @@ const positionKeys = [
   {
     protocol: "Compound",
     account: "0xE9998d2C082c340D9b7023FA27a54c14f0Bb3F9c",
-    threshold: 105,
+    threshold: ScaledNumber.fromUnscaled(105).toPlain(),
   },
   {
     protocol: "Aave",
     account: "0xb47b5D45CDBa7D1114A632c010E0bC9B2053B1c1",
-    threshold: 110,
+    threshold: ScaledNumber.fromUnscaled(110).toPlain(),
   },
 ];
 

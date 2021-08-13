@@ -158,7 +158,7 @@ export class Web3Backd implements Backd {
       actionToken: rawPosition.record.actionToken,
       depositToken: rawPosition.record.depositToken,
       account: rawPosition.account,
-      threshold: bigNumberToFloat(rawPosition.record.threshold),
+      threshold: new ScaledNumber(rawPosition.record.threshold, decimals).toPlain(),
       singleTopUp: new ScaledNumber(rawPosition.record.singleTopUpAmount, decimals).toPlain(),
       maxTopUp: new ScaledNumber(rawPosition.record.totalTopUpAmount, decimals).toPlain(),
       maxGasPrice: rawPosition.record.maxGasPrice.toNumber(),
@@ -180,7 +180,7 @@ export class Web3Backd implements Backd {
     return this.topupAction.register(
       position.account,
       protocol,
-      floatToBigNumber(position.threshold, decimals),
+      position.threshold.value,
       pool.lpToken.address,
       depositAmount,
       pool.underlying.address,

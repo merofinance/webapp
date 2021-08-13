@@ -102,10 +102,7 @@ export default class MockBackd implements Backd {
     return Promise.resolve(["Aave", "Compound"]);
   }
 
-  async registerPosition(
-    pool: Pool<number>,
-    position: Position<number>
-  ): Promise<ContractTransaction> {
+  async registerPosition(pool: Pool<number>, position: Position): Promise<ContractTransaction> {
     const account = await this.currentAccount();
     return makeContractTransaction(this.topupActionAddress, account);
   }
