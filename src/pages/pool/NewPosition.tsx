@@ -66,6 +66,15 @@ const validationSchema = yup.object().shape({
     ),
 });
 
+const wrapperFormik = () =>
+  useFormik<FormType>({
+    initialValues,
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    onSubmit: () => {},
+  });
+export type FormikFormType = ReturnType<typeof wrapperFormik>;
+export type FormValuesType = "account" | "threshold" | "singleTopUp" | "maxTopUp" | "protocol";
+
 const Border = styled.div`
   width: 100%;
   background: linear-gradient(to right, #c532f9, #32b2e5);
