@@ -34,7 +34,7 @@ const SubHeader = styled.p`
 
 const GetInTouch = styled(GradientLink)`
   font-size: 2.2rem;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 3rem;
 `;
 
@@ -46,9 +46,9 @@ const LinkContainer = styled.div`
 `;
 
 const InternalLink = styled(Link)`
-  font-size: 2.6rem;
-  font-weight: 700;
-  line-height: 4.3rem;
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 4rem;
   text-transform: capitalize;
 
   background: var(--gradient);
@@ -59,9 +59,9 @@ const InternalLink = styled(Link)`
 `;
 
 const ExternalLink = styled(GradientLink)`
-  font-size: 2.6rem;
-  font-weight: 700;
-  line-height: 4.3rem;
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 4rem;
   text-transform: capitalize;
 `;
 
