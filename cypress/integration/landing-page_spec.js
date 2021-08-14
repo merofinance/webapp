@@ -6,19 +6,19 @@ describe("Innitial Load", () => {
 
 describe("Nav Items", () => {
   it("Should have Docs Link", () => {
-    cy.get('[id="Header - docs"]')
+    cy.get('[id="header.tabs.docs"]')
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://docs.backd.fund/");
   });
 
   it("Should have Blog Link", () => {
-    cy.get('[id="Header - blog"]')
+    cy.get('[id="header.tabs.blog"]')
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://backdfund.medium.com/");
   });
 
   it("Should have Newsletter Link", () => {
-    cy.get('[id="Header - newsletter"]')
+    cy.get('[id="header.tabs.newsletter"]')
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://backd.substack.com/welcome");
   });
