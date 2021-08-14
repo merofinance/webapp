@@ -1,5 +1,7 @@
 # backd webapp
 
+[![This project is using Percy.io for visual regression testing.](https://percy.io/static/images/percy-badge.svg)](https://percy.io/3b0d1c60/backd)
+
 ## Setup
 
 Install the dependencies with the command `yarn install`.
