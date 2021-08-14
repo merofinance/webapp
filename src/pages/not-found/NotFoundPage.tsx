@@ -68,20 +68,26 @@ const ExternalLink = styled(GradientLink)`
 const NotFoundPage = () => {
   return (
     <StyledNotFoundPage>
-      <Number>404</Number>
+      <Number id="not-found-number">404</Number>
       <Header>Page could not be found.</Header>
       <SubHeader>
         Try one of the handy links below - or{" "}
-        <GetInTouch href="https://discord.gg/jpGvaFV3Rv" target="_blank">
+        <GetInTouch id="not-found-support" href="https://discord.gg/jpGvaFV3Rv" target="_blank">
           get in touch
         </GetInTouch>{" "}
         if you believe there is an issue.
       </SubHeader>
       <LinkContainer>
-        <InternalLink to="/">home page</InternalLink>
-        <InternalLink to="/">view all pools</InternalLink>
-        <InternalLink to="/">claim page</InternalLink>
-        <ExternalLink href="https://discord.gg/jpGvaFV3Rv" target="_blank">
+        <InternalLink id="not-found-home" to="/">
+          home page
+        </InternalLink>
+        <InternalLink id="not-found-pools" to="/pools">
+          view all pools
+        </InternalLink>
+        <InternalLink id="not-found-claim" to="/claim">
+          claim page
+        </InternalLink>
+        <ExternalLink id="not-found-docs" href="https://docs.backd.fund/" target="_blank">
           Docs
         </ExternalLink>
       </LinkContainer>
