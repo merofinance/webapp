@@ -5,7 +5,7 @@ import { AppDispatch } from "../app/store";
 import Popup from "./Popup";
 import { Paragraph } from "../styles/Headers";
 import { selectError, setError } from "../state/errorSlice";
-import { GradientText } from "../styles/GradientText";
+import { GradientLink } from "../styles/GradientText";
 import Button from "./Button";
 
 const Content = styled.div`
@@ -18,16 +18,13 @@ const Text = styled(Paragraph)`
   margin-bottom: 3rem;
 `;
 
-const Link = styled.a`
-  margin-left: 0.5rem;
-`;
-
-const LinkText = styled(GradientText)`
+const Link = styled(GradientLink)`
   font-weight: 400;
   font-size: 1.6rem;
   line-height: 2.4rem;
   letter-spacing: 0.15px;
   margin-bottom: 1rem;
+  margin-left: 0.5rem;
 
   @media (max-width: 600px) {
     font-size: 1.2rem;
@@ -50,7 +47,7 @@ export function ErrorAlert(): JSX.Element {
           <Text>
             Please try again in a moment. If the error persists, you can contact us on
             <Link href="https://t.me/backdchat" target="_blank">
-              <LinkText>Telegram</LinkText>
+              Telegram
             </Link>
           </Text>
           <Button
