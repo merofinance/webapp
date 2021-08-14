@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import { GradientLink } from "../../styles/GradientText";
+import { useDevice } from "../../app/hooks/use-device";
 
 const StyledNotFoundPage = styled.div`
   width: 100%;
@@ -13,31 +14,53 @@ const StyledNotFoundPage = styled.div`
 `;
 
 const Number = styled.div`
-  font-size: 22rem;
   font-weight: 700;
+
+  font-size: 22rem;
   line-height: 17rem;
   margin-bottom: 4rem;
+  @media (max-width: 600px) {
+    font-size: 15rem;
+    line-height: 12rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+  }
 `;
 
 const Header = styled.h1`
-  font-size: 5.2rem;
   font-weight: 700;
-  line-height: 6.6rem;
   margin-bottom: 1.6rem;
   text-align: center;
+
+  font-size: 5.2rem;
+  line-height: 6.6rem;
+  @media (max-width: 600px) {
+    font-size: 3.6rem;
+    line-height: 4.6rem;
+  }
 `;
 
 const SubHeader = styled.p`
-  font-size: 2.2rem;
   font-weight: 400;
-  line-height: 3rem;
   text-align: center;
+
+  font-size: 2.2rem;
+  line-height: 3rem;
+  @media (max-width: 600px) {
+    font-size: 1.8rem;
+    line-height: 2.4rem;
+  }
 `;
 
 const GetInTouch = styled(GradientLink)`
-  font-size: 2.2rem;
   font-weight: 600;
+
+  font-size: 2.2rem;
   line-height: 3rem;
+  @media (max-width: 600px) {
+    font-size: 1.8rem;
+    line-height: 2.4rem;
+  }
 `;
 
 const LinkContainer = styled.div`
@@ -48,9 +71,7 @@ const LinkContainer = styled.div`
 `;
 
 const InternalLink = styled(Link)`
-  font-size: 2.5rem;
   font-weight: 600;
-  line-height: 4rem;
   text-transform: capitalize;
 
   background: var(--gradient);
@@ -58,20 +79,34 @@ const InternalLink = styled(Link)`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   cursor: pointer;
+
+  font-size: 2.5rem;
+  line-height: 4rem;
+  @media (max-width: 600px) {
+    font-size: 2rem;
+    line-height: 3.3rem;
+  }
 `;
 
 const ExternalLink = styled(GradientLink)`
-  font-size: 2.5rem;
   font-weight: 600;
-  line-height: 4rem;
   text-transform: capitalize;
+
+  font-size: 2.5rem;
+  line-height: 4rem;
+  @media (max-width: 600px) {
+    font-size: 2rem;
+    line-height: 3.3rem;
+  }
 `;
 
 const NotFoundPage = () => {
+  const { isMobile } = useDevice();
+
   return (
     <StyledNotFoundPage>
       <Number id="not-found-number">404</Number>
-      <Header>Page could not be found.</Header>
+      <Header>{isMobile ? "Page not found" : "Page could not be found."}</Header>
       <SubHeader>
         Try one of the handy links below - or{" "}
         <GetInTouch id="not-found-support" href="https://discord.gg/jpGvaFV3Rv" target="_blank">
