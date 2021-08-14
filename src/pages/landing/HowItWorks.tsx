@@ -143,12 +143,12 @@ const HowItWorks = (): JSX.Element => {
 
   const categories: RadioOptionType[] = [
     {
-      label: t("howItWorks.categories.earnYield.tabName"),
       value: "earn",
+      label: t("howItWorks.categories.earnYield.tabName"),
     },
     {
-      label: t("howItWorks.categories.earnAndProtect.tabName"),
       value: "protect",
+      label: t("howItWorks.categories.earnAndProtect.tabName"),
     },
   ];
 
