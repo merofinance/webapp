@@ -151,7 +151,7 @@ describe("Footer", () => {
   });
 
   it("Should have Docs Link", () => {
-    cy.get('[id="Footer - Docs"]')
+    cy.get('[id="footer.resources.links.docs"]')
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://docs.backd.fund/");
   });
