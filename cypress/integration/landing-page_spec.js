@@ -56,7 +56,7 @@ describe("How it Works", () => {
     cy.get('[id="How It Works - 3"]').contains("Unstake Any Time");
   });
 
-  it("Should Chang to Earn & Protect Tab", () => {
+  it("Should Change to Earn & Protect Tab", () => {
     cy.get('[id="Radio Option - protect"]').click();
   });
 
