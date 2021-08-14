@@ -28,7 +28,5 @@ jobs:
         run: yarn
       - name: Starting Server
         run: yarn start & npx wait-on http://localhost:3000
-      - name: Set Percy Environment Variable
-        run: export PERCY_TOKEN=${{secrets.PERCY_TOKEN}}
       - name: Run Cypress with Percy
         run: CYPRESS_baseUrl=http://localhost:3000 yarn run percy
