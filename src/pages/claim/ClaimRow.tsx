@@ -115,10 +115,12 @@ const ClaimRow = ({ index }: Props): JSX.Element => {
           <SplitButton
             buttons={[
               {
+                value: "claim-and-stake",
                 label: "Claim & Stake",
                 action: () => console.log("not implemented"),
               },
               {
+                value: "claim",
                 label: "Claim",
                 action: () => console.log("not implemented"),
               },
