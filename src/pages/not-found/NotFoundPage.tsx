@@ -24,12 +24,14 @@ const Header = styled.h1`
   font-weight: 700;
   line-height: 6.6rem;
   margin-bottom: 1.6rem;
+  text-align: center;
 `;
 
 const SubHeader = styled.p`
   font-size: 2.2rem;
   font-weight: 400;
   line-height: 3rem;
+  text-align: center;
 `;
 
 const GetInTouch = styled(GradientLink)`
