@@ -9,3 +9,9 @@ describe("Page Content", () => {
     cy.get("h1").contains("Backd Litepaper");
   });
 });
+
+describe("Percy Screenshot", () => {
+  it("Should take screenshot", () => {
+    cy.percySnapshot();
+  });
+});
