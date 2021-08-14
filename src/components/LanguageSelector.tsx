@@ -74,7 +74,7 @@ const LanguageSelector = () => {
 
   return (
     <>
-      <StyledLanguageSelector onClick={() => setOpen(true)} ref={anchorRef}>
+      <StyledLanguageSelector id="language-selector" onClick={() => setOpen(true)} ref={anchorRef}>
         <Globe src={globe} />
         <Label>{activeLanguage.label}</Label>
         <Arrow open={open}>
