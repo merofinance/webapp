@@ -64,8 +64,8 @@ const PoolPage = (): JSX.Element => {
   return (
     <StyledPoolPage>
       <Seo
-        title="DAI Pool"
-        description="Deposit DAI to farm yield while protecting your DeFi loan (Aave, Compound, etc.) from liquidation"
+        title={`${pool.underlying.symbol} Pool`}
+        description={`Deposit ${pool.underlying.symbol} to farm yield while protecting your DeFi loan (Aave, Compound, etc.) from liquidation`}
       />
       <Content>
         <Radio
