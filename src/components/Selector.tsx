@@ -82,6 +82,7 @@ const Selector = ({
               <MenuList id="split-button-menu">
                 {options.map((option: SelectorOptionType) => (
                   <MenuItem
+                    id={option.value}
                     key={option.label}
                     selected={option.value === selected}
                     onClick={() => {
