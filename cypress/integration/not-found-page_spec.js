@@ -25,6 +25,7 @@ describe("Internal Links", () => {
 
   it("Should Navigate to Pools Page", () => {
     cy.get("#not-found-pools").click();
+    cy.wait(1000);
     cy.location().should((loc) => {
       expect(loc.pathname).to.eq("/connect");
     });
