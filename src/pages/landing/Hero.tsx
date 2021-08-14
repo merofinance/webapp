@@ -21,7 +21,6 @@ const StyledHero = styled.div`
 
 const Hero = (): JSX.Element => {
   const history = useHistory();
-  // const { t } = useTransl;
   const { t } = useTranslation();
 
   return (
