@@ -181,8 +181,8 @@ describe("Footer", () => {
   });
 });
 
-describe("Percy Screenshot", () => {
-  it("Should take screenshot", () => {
+describe("Percy", () => {
+  it("Should Screenshot Landing Page", () => {
     cy.percySnapshot();
   });
 });

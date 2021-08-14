@@ -10,8 +10,8 @@ describe("Page Content", () => {
   });
 });
 
-describe("Percy Screenshot", () => {
-  it("Should take screenshot", () => {
+describe("Percy", () => {
+  it("Should Screenshot Litepaper Page", () => {
     cy.percySnapshot();
   });
 });
