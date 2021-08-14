@@ -180,3 +180,9 @@ describe("Footer", () => {
       .should("have.attr", "href", "https://t.me/backdfund");
   });
 });
+
+describe("Percy", () => {
+  it("Should Screenshot Landing Page", () => {
+    cy.percySnapshot();
+  });
+});

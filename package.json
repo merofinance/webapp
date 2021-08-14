@@ -6,7 +6,8 @@
     "start": "BROWSER=none craco start",
     "build": "craco build",
     "test": "craco test",
-    "cy:open": "cypress open"
+    "cy:open": "cypress open",
+    "percy": "percy exec -- cypress run"
   },
   "dependencies": {
     "@backdfund/protocol": "^0.1.5",
@@ -45,6 +46,8 @@
   },
   "devDependencies": {
     "@craco/craco": "^6.1.1",
+    "@percy/cli": "^1.0.0-beta.65",
+    "@percy/cypress": "^3.1.1",
     "@types/jest": "^24.0.0",
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
