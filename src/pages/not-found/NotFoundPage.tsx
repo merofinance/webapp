@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import { GradientLink } from "../../styles/GradientText";
 import { useDevice } from "../../app/hooks/use-device";
+import { LIVE } from "../../lib/constants";
 
 const StyledNotFoundPage = styled.div`
   width: 100%;
@@ -118,12 +119,16 @@ const NotFoundPage = () => {
         <InternalLink id="not-found-home" to="/">
           home page
         </InternalLink>
-        <InternalLink id="not-found-pools" to="/pools">
-          view all pools
-        </InternalLink>
-        <InternalLink id="not-found-claim" to="/claim">
-          claim page
-        </InternalLink>
+        {LIVE && (
+          <InternalLink id="not-found-pools" to="/pools">
+            view all pools
+          </InternalLink>
+        )}
+        {LIVE && (
+          <InternalLink id="not-found-claim" to="/claim">
+            claim page
+          </InternalLink>
+        )}
         <ExternalLink id="not-found-docs" href="https://docs.backd.fund/" target="_blank">
           Docs
         </ExternalLink>
