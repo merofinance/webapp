@@ -139,7 +139,7 @@ interface Props {
 }
 
 const StakeAccordion = ({ open, toggle }: Props): JSX.Element => {
-  const { isMobile, isDesktop } = useDevice();
+  const { isDesktop } = useDevice();
 
   const token: Token = {
     address: ETH_DUMMY_ADDRESS,
