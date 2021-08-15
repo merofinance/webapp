@@ -47,7 +47,7 @@ const StyledPositions = styled.div`
   position: relative;
   width: 100%;
 
-  @media (max-width: 600px) {
+  @media (max-width: 900px) {
     width: calc(100% + 3.2rem);
     overflow-x: auto;
     left: -1.6rem;
@@ -58,7 +58,7 @@ const PositionContent = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media (max-width: 600px) {
+  @media (max-width: 900px) {
     width: 720px;
     overflow-x: auto;
   }
@@ -71,8 +71,14 @@ const Headers = styled.div`
   white-space: nowrap;
 
   margin-bottom: 0.2rem;
-  @media (max-width: 600px) {
+  @media (max-width: 900px) {
     margin-bottom: 0;
+  }
+
+  @media (min-width: 1440px) {
+    > div:last-child {
+      min-width: 14rem;
+    }
   }
 `;
 
@@ -89,7 +95,7 @@ const HeaderText = styled.div`
 
   font-weight: 500;
   font-size: 1.4rem;
-  @media (max-width: 600px) {
+  @media (max-width: 900px) {
     font-weight: 700;
     font-size: 1.2rem;
   }
