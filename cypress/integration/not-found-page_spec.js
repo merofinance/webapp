@@ -23,21 +23,23 @@ describe("Internal Links", () => {
     cy.visit("/askkasklaslkaskjl");
   });
 
-  it("Should Navigate to Pools Page", () => {
-    cy.get("#not-found-pools").click();
-    cy.location().should((loc) => {
-      expect(loc.pathname).to.eq("/pools");
-    });
-    cy.visit("/askkasklaslkaskjl");
-  });
+  // We can uncomment these when the protocol is live
 
-  it("Should Navigate to Claim Page", () => {
-    cy.get("#not-found-claim").click();
-    cy.location().should((loc) => {
-      expect(loc.pathname).to.eq("/claim");
-    });
-    cy.visit("/askkasklaslkaskjl");
-  });
+  // it("Should Navigate to Pools Page", () => {
+  //   cy.get("#not-found-pools").click();
+  //   cy.location().should((loc) => {
+  //     expect(loc.pathname).to.eq("/pools");
+  //   });
+  //   cy.visit("/askkasklaslkaskjl");
+  // });
+
+  // it("Should Navigate to Claim Page", () => {
+  //   cy.get("#not-found-claim").click();
+  //   cy.location().should((loc) => {
+  //     expect(loc.pathname).to.eq("/claim");
+  //   });
+  //   cy.visit("/askkasklaslkaskjl");
+  // });
 });
 
 describe("External Links", () => {
