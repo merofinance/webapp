@@ -26,6 +26,12 @@ describe("Language Switching", () => {
     cy.get('[id="How It Works - 2"]').contains("利益獲得のための出資");
   });
 
+  describe("Percy", () => {
+    it("Should Screenshot Japanese Landing Page", () => {
+      cy.percySnapshot();
+    });
+  });
+
   it("Should Change Language back to English", () => {
     cy.get('[id="language-selector"]').click();
     cy.get('[id="en"]').click();
