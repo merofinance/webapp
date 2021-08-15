@@ -21,7 +21,7 @@ const StyledPoolPage = styled.div`
   width: 100%;
   display: flex;
 
-  @media (max-width: 993px) {
+  @media (max-width: 1439px) {
     flex-direction: column-reverse;
   }
 `;
@@ -38,7 +38,7 @@ const RightColumn = styled.div`
   align-items: center;
 
   margin-top: 6.4rem;
-  @media (max-width: 993px) {
+  @media (max-width: 1439px) {
     margin-top: 0;
   }
 `;
@@ -46,7 +46,7 @@ const RightColumn = styled.div`
 const ButtonContainer = styled.div`
   margin-top: 2.4rem;
 
-  @media (max-width: 993px) {
+  @media (max-width: 1439px) {
     display: none;
   }
 `;
