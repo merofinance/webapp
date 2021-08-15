@@ -59,7 +59,10 @@ const StakePage = (): JSX.Element => {
 
   return (
     <StyledPoolsPage>
-      <Seo title="" description="" />
+      <Seo
+        title="Stake BKD & Earn Rewards"
+        description="Earn rewards and protocol profits in addition to aggregated yield from yield farming strategies"
+      />
       <StakeSummary />
       <Headers>
         <Header>Asset</Header>
