@@ -47,8 +47,12 @@ const Content = styled.div`
   width: 100%;
   display: grid;
   align-items: flex-end;
-  grid-template-columns: repeat(2, 1fr);
   grid-gap: 1.8rem;
+
+  grid-template-columns: repeat(2, 1fr);
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
 type Props = {
