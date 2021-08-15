@@ -74,6 +74,12 @@ const Headers = styled.div`
   @media (max-width: 600px) {
     margin-bottom: 0;
   }
+
+  @media (min-width: 1440px) {
+    > div:last-child {
+      min-width: 14rem;
+    }
+  }
 `;
 
 const Header = styled.div`
