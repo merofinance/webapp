@@ -145,9 +145,11 @@ describe("Footer", () => {
   });
 
   it("Should have Litepaper Link", () => {
-    cy.get('[id="Footer - Litepaper"]')
-      .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "/litepaper");
+    cy.get('[id="Footer - Litepaper"]').click();
+    cy.location().should((loc) => {
+      expect(loc.pathname).to.eq("/litepaper");
+    });
+    cy.visit("/");
   });
 
   it("Should have Docs Link", () => {
