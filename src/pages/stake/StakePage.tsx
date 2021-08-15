@@ -46,6 +46,10 @@ const Header = styled.div`
 
 const ArrowHeader = styled.div`
   flex: 0.2;
+
+  @media (min-width: 601px) {
+    margin-right: 1.8rem;
+  }
 `;
 
 const StakePage = (): JSX.Element => {
