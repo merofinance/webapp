@@ -1,8 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../assets/logo/full-logo.svg";
 
 type LinkType = {
+  internal: boolean;
   label: string;
   link: string;
 };
@@ -17,18 +19,22 @@ const linkLists: LinkListType[] = [
     header: "community",
     links: [
       {
+        internal: false,
         label: "Discord",
         link: "https://discord.gg/jpGvaFV3Rv",
       },
       {
+        internal: false,
         label: "Twitter",
         link: "https://twitter.com/backdfund",
       },
       {
+        internal: false,
         label: "GitHub",
         link: "https://github.com/backdfund",
       },
       {
+        internal: false,
         label: "Telegram Chat",
         link: "https://t.me/backdchat",
       },
@@ -38,18 +44,22 @@ const linkLists: LinkListType[] = [
     header: "resources",
     links: [
       {
+        internal: true,
         label: "Litepaper",
         link: "/litepaper",
       },
       {
+        internal: false,
         label: "Docs",
         link: "https://docs.backd.fund/",
       },
       {
+        internal: false,
         label: "Blog",
         link: "https://backdfund.medium.com/",
       },
       {
+        internal: false,
         label: "Fact Sheet",
         link: "/fact-sheet.pdf",
       },
@@ -59,10 +69,12 @@ const linkLists: LinkListType[] = [
     header: "updates",
     links: [
       {
+        internal: false,
         label: "Newsletter",
         link: "https://backd.substack.com/welcome",
       },
       {
+        internal: false,
         label: "Telegram Ann.",
         link: "https://t.me/backdfund",
       },
@@ -108,7 +120,19 @@ const LinkHeader = styled.div`
   margin-bottom: 1.2rem;
 `;
 
-const Link = styled.a`
+const ExternalLink = styled.a`
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--sub);
+  line-height: 2.4rem;
+  transition: opacity 0.3s;
+
+  :hover {
+    opacity: 0.7;
+  }
+`;
+
+const InternalLink = styled(Link)`
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--sub);
@@ -128,11 +152,22 @@ const Footer = (): JSX.Element => {
       {linkLists.map((linkList: LinkListType) => (
         <LinkList key={linkList.header}>
           <LinkHeader>{linkList.header}</LinkHeader>
-          {linkList.links.map((link: LinkType) => (
-            <Link id={`Footer - ${link.label}`} key={link.label} href={link.link} target="_blank">
-              {link.label}
-            </Link>
-          ))}
+          {linkList.links.map((link: LinkType) =>
+            link.internal ? (
+              <InternalLink id={`Footer - ${link.label}`} key={link.label} to={link.link}>
+                {link.label}
+              </InternalLink>
+            ) : (
+              <ExternalLink
+                id={`Footer - ${link.label}`}
+                key={link.label}
+                href={link.link}
+                target="_blank"
+              >
+                {link.label}
+              </ExternalLink>
+            )
+          )}
         </LinkList>
       ))}
       <div />
