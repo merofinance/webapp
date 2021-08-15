@@ -17,16 +17,31 @@ const Headers = styled.div`
   width: 100%;
   padding: 0 1.6rem;
   margin-bottom: 0.5rem;
+
+  @media (max-width: 600px) {
+    > div:first-child {
+      flex: 1.3;
+    }
+  }
 `;
+
+interface HeaderProps {
+  hideMobile?: boolean;
+}
 
 const Header = styled.div`
   flex: 1;
   font-weight: 700;
-  font-size: 1.4rem;
   line-height: 2.4rem;
   letter-spacing: 0.15px;
   color: rgba(255, 255, 255, 0.87);
   opacity: 0.6;
+
+  font-size: 1.4rem;
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+    display: ${(props: HeaderProps) => (props.hideMobile ? "none" : "flex")};
+  }
 `;
 
 const ArrowHeader = styled.div`
@@ -44,10 +59,10 @@ const StakePage = (): JSX.Element => {
       <StakeSummary />
       <Headers>
         <Header>Asset</Header>
-        <Header>Claimable (USD)</Header>
+        <Header hideMobile>Claimable (USD)</Header>
         <Header>APR</Header>
         <Header>Staked</Header>
-        <Header>TVL</Header>
+        <Header hideMobile>TVL</Header>
         <ArrowHeader />
       </Headers>
       {pools.map((pool: string, index: number) => (

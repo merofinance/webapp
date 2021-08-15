@@ -9,6 +9,8 @@ import { Token } from "../../lib/types";
 import { ETH_DUMMY_ADDRESS } from "../../lib/constants";
 import UnstakeTokens from "./UnstakeTokens";
 import AccordionChevron from "../../components/AccordionChevron";
+import { useDevice } from "../../app/hooks/use-device";
+import { numberToCompactCurrency } from "../../lib/numeric";
 
 const Header = styled.div`
   position: relative;
@@ -17,6 +19,12 @@ const Header = styled.div`
   height: 6.6rem;
   display: flex;
   align-items: center;
+
+  @media (max-width: 600px) {
+    > div:nth-child(2) {
+      flex: 1.3;
+    }
+  }
 `;
 
 const HeaderButton = styled.button`
@@ -35,6 +43,10 @@ const AssetContainer = styled.div`
 
 const ClaimableContainer = styled.div`
   flex: 1;
+
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const Claimable = styled(GradientText)`
@@ -47,9 +59,18 @@ const Claimable = styled(GradientText)`
 const Apr = styled.div`
   flex: 1;
   font-weight: 900;
-  font-size: 1.8rem;
   line-height: 2rem;
   letter-spacing: 0.15px;
+
+  font-size: 1.8rem;
+  @media (max-width: 600px) {
+    font-size: 1.6rem;
+
+    background: var(--gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 `;
 
 const ValueContainer = styled.div`
@@ -63,15 +84,23 @@ const ValueToken = styled.div`
   font-size: 1.8rem;
   line-height: 2.7rem;
   letter-spacing: 0.15px;
+
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const ValueUsd = styled.div`
   font-weight: 400;
-  font-size: 1.8rem;
   line-height: 2.7rem;
   letter-spacing: 0.15px;
   opacity: 0.6;
   margin-left: 0.8rem;
+
+  font-size: 1.8rem;
+  @media (max-width: 600px) {
+    font-size: 1.6rem;
+  }
 `;
 
 const Tvl = styled.div`
@@ -80,6 +109,10 @@ const Tvl = styled.div`
   font-size: 1.8rem;
   line-height: 2rem;
   letter-spacing: 0.15px;
+
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const EndContainer = styled.div`
@@ -104,6 +137,8 @@ interface Props {
 }
 
 const StakeAccordion = ({ open, toggle }: Props): JSX.Element => {
+  const { isMobile, isDesktop } = useDevice();
+
   const token: Token = {
     address: ETH_DUMMY_ADDRESS,
     name: "DAI",
@@ -125,7 +160,7 @@ const StakeAccordion = ({ open, toggle }: Props): JSX.Element => {
           <Apr>5.2%</Apr>
           <ValueContainer>
             <ValueToken>40 BKD</ValueToken>
-            <ValueUsd>=$3200.93</ValueUsd>
+            <ValueUsd>{`${isDesktop ? "=$3200.93" : numberToCompactCurrency(3200.93)}`}</ValueUsd>
           </ValueContainer>
           <Tvl>$30,034</Tvl>
           <EndContainer>
