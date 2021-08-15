@@ -47,8 +47,12 @@ const Content = styled.div`
   width: 100%;
   display: grid;
   align-items: flex-end;
-  grid-template-columns: repeat(2, 1fr);
   grid-gap: 1.8rem;
+
+  grid-template-columns: repeat(2, 1fr);
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
 type Props = {
@@ -89,7 +93,7 @@ const StakeTokens = ({ token }: Props): JSX.Element => {
           noSlider
           value={value}
           setValue={(v: string) => setValue(v)}
-          label="Enter an amount of BKD to stake"
+          label={isMobile ? "Amount of BKD to stake" : "Enter an amount of BKD to stake"}
           max={balance}
         />
         <MultiStepButtons
