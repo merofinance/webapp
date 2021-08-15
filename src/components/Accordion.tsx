@@ -54,6 +54,9 @@ const Body = styled.div`
 
   transition: max-height 0.3s ease-out;
   max-height: ${(props: BodyProps) => (props.open ? "300px" : "0")};
+  @media (max-width: 600px) {
+    max-height: ${(props: BodyProps) => (props.open ? "400px" : "0")};
+  }
 `;
 
 const BodyContent = styled.div`
