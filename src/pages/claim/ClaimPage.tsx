@@ -51,12 +51,13 @@ const Note = styled.a`
   font-weight: 500;
   line-height: 4.2rem;
   letter-spacing: 0.25px;
-  transform: translateY(-4.5rem);
   cursor: pointer;
 
   font-size: 1.4rem;
+  transform: translateY(-4.5rem);
   @media (max-width: 600px) {
     font-size: 1.2rem;
+    transform: translateY(-1.5rem);
   }
 `;
 

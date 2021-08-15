@@ -5,7 +5,11 @@ const StyledAccordion = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+
   margin-bottom: 4.8rem;
+  @media (max-width: 600px) {
+    margin-bottom: 1.8rem;
+  }
 `;
 
 interface HeaderProps {
