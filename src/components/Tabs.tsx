@@ -21,20 +21,30 @@ const Options = styled.div`
 
 const Option = styled.button`
   position: relative;
-  width: 18rem;
-  padding: 1.6rem 0;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+
+  width: 18rem;
+  padding: 1.6rem 0;
+  @media (max-width: 600px) {
+    flex: 1;
+    width: 100%;
+    padding: 1.4rem 0;
+  }
 `;
 
 const OptionText = styled.div`
   font-weight: 700;
-  font-size: 1.6rem;
   letter-spacing: 0.46px;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.54);
+
+  font-size: 1.6rem;
+  @media (max-width: 600px) {
+    font-size: 1.4rem;
+  }
 `;
 
 interface OptionTextProps {
@@ -47,12 +57,16 @@ const GradientOptionText = styled(GradientText)`
   left: 50%;
   transform: translate(-50%, -50%);
   font-weight: 700;
-  font-size: 1.6rem;
   letter-spacing: 0.46px;
   text-transform: uppercase;
 
   transition: opacity 0.3s;
   opacity: ${(props: OptionTextProps) => (props.active ? "1" : "0")};
+
+  font-size: 1.6rem;
+  @media (max-width: 600px) {
+    font-size: 1.4rem;
+  }
 `;
 
 const LineContainer = styled.div`
@@ -70,12 +84,18 @@ const ActiveLine = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  width: 18rem;
   height: 2px;
   background: var(--gradient);
 
   transition: transform 0.3s;
-  transform: translateX(${(props: ActiveLineProps) => `${props.activeIndex * 18}rem`});
+
+  width: 18rem;
+  @media (max-width: 600px) {
+    width: calc((100vw - 32px) / 2);
+    transform: translateX(
+      ${(props: ActiveLineProps) => `calc(((100vw - 32px) / 2) * ${props.activeIndex})`}
+    );
+  }
 `;
 
 const Content = styled.div`
