@@ -46,8 +46,8 @@ export function ErrorAlert(): JSX.Element {
           <Text>{`Error: ${error}`}</Text>
           <Text>
             Please try again in a moment. If the error persists, you can contact us on
-            <Link href="https://t.me/backdchat" target="_blank">
-              Telegram
+            <Link href="https://discord.gg/jpGvaFV3Rv" target="_blank">
+              Discord
             </Link>
           </Text>
           <Button
