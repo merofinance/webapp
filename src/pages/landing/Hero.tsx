@@ -22,7 +22,7 @@ const Hero = (): JSX.Element => {
 
   return (
     <StyledHero>
-      <Header1>reactive liquidity</Header1>
+      <Header1>meow</Header1>
       <Header3>
         A trustless and interest generating protocol designed to prevent collateralized loans from
         becoming liquidatable.
