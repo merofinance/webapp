@@ -107,7 +107,12 @@ const NavItems = (): JSX.Element => {
       {!LIVE &&
         preLaunchItems.map((navItem: NavItemType) => (
           <NavItem key={navItem.label}>
-            <ExternalLink id={`Header - ${navItem.label}`} href={navItem.link} target="_blank">
+            <ExternalLink
+              id={`Header - ${navItem.label}`}
+              href={navItem.link}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {navItem.label}
             </ExternalLink>
           </NavItem>

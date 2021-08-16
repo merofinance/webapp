@@ -128,7 +128,7 @@ const AuditedBy = (): JSX.Element => {
             corporations.
           </Description>
           {LIVE && (
-            <ViewReport href="" target="_blank">
+            <ViewReport href="" target="_blank" rel="noopener noreferrer">
               View Report →
             </ViewReport>
           )}

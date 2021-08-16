@@ -110,7 +110,12 @@ const NotFoundPage = () => {
       <Header>{isMobile ? "Page not found" : "Page could not be found."}</Header>
       <SubHeader>
         Try one of the handy links below - or{" "}
-        <GetInTouch id="not-found-support" href="https://discord.gg/jpGvaFV3Rv" target="_blank">
+        <GetInTouch
+          id="not-found-support"
+          href="https://discord.gg/jpGvaFV3Rv"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           get in touch
         </GetInTouch>{" "}
         if you believe there is an issue.
@@ -129,7 +134,12 @@ const NotFoundPage = () => {
             claim page
           </InternalLink>
         )}
-        <ExternalLink id="not-found-docs" href="https://docs.backd.fund/" target="_blank">
+        <ExternalLink
+          id="not-found-docs"
+          href="https://docs.backd.fund/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Docs
         </ExternalLink>
       </LinkContainer>

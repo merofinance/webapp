@@ -117,6 +117,7 @@ const JoinCommunity = (): JSX.Element => {
             id={`Join Community - ${social.label}`}
             href={social.link}
             target="_blank"
+            rel="noopener noreferrer"
           >
             <Label>{social.label}</Label>
             <IconContainer>

@@ -179,7 +179,7 @@ const Benefits = (): JSX.Element => {
           </IconGlass>
           <Header4>{benefit.header}</Header4>
           <Header5>{benefit.content}</Header5>
-          <ReadMore href={benefit.url} target="_blank">
+          <ReadMore href={benefit.url} target="_blank" rel="noopener noreferrer">
             Read more →
           </ReadMore>
         </Benefit>
