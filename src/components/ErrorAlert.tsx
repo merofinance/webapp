@@ -46,7 +46,7 @@ export function ErrorAlert(): JSX.Element {
           <Text>{`Error: ${error}`}</Text>
           <Text>
             Please try again in a moment. If the error persists, you can contact us on
-            <Link href="https://discord.gg/jpGvaFV3Rv" target="_blank">
+            <Link href="https://discord.gg/jpGvaFV3Rv" target="_blank" rel="noopener noreferrer">
               Discord
             </Link>
           </Text>

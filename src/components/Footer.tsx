@@ -163,6 +163,7 @@ const Footer = (): JSX.Element => {
                 key={link.label}
                 href={link.link}
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 {link.label}
               </ExternalLink>
