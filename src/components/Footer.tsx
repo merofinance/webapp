@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
@@ -6,6 +7,7 @@ import logo from "../assets/logo/full-logo.svg";
 import LanguageSelector from "./LanguageSelector";
 
 type LinkType = {
+  internal: boolean;
   label: string;
   link: string;
 };
@@ -20,18 +22,22 @@ const linkLists: LinkListType[] = [
     header: "footer.community.header",
     links: [
       {
+        internal: false,
         label: "footer.community.links.discord",
         link: "https://discord.gg/jpGvaFV3Rv",
       },
       {
+        internal: false,
         label: "footer.community.links.twitter",
         link: "https://twitter.com/backdfund",
       },
       {
+        internal: false,
         label: "footer.community.links.github",
         link: "https://github.com/backdfund",
       },
       {
+        internal: false,
         label: "footer.community.links.telegram",
         link: "https://t.me/backdchat",
       },
@@ -41,18 +47,22 @@ const linkLists: LinkListType[] = [
     header: "footer.resources.header",
     links: [
       {
+        internal: true,
         label: "footer.resources.links.litepaper",
         link: "/litepaper",
       },
       {
+        internal: false,
         label: "footer.resources.links.docs",
         link: "https://docs.backd.fund/",
       },
       {
+        internal: false,
         label: "footer.resources.links.blog",
         link: "https://backdfund.medium.com/",
       },
       {
+        internal: false,
         label: "footer.resources.links.factSheet",
         link: "/fact-sheet.pdf",
       },
@@ -62,10 +72,12 @@ const linkLists: LinkListType[] = [
     header: "footer.updates.header",
     links: [
       {
+        internal: false,
         label: "footer.updates.links.newsletter",
         link: "https://backd.substack.com/welcome",
       },
       {
+        internal: false,
         label: "footer.updates.links.telegram",
         link: "https://t.me/backdfund",
       },
@@ -111,7 +123,19 @@ const LinkHeader = styled.div`
   margin-bottom: 1.2rem;
 `;
 
-const Link = styled.a`
+const ExternalLink = styled.a`
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--sub);
+  line-height: 2.4rem;
+  transition: opacity 0.3s;
+
+  :hover {
+    opacity: 0.7;
+  }
+`;
+
+const InternalLink = styled(Link)`
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--sub);
@@ -131,13 +155,25 @@ const Footer = (): JSX.Element => {
       <Logo src={logo} alt="Backd logo" />
       <div />
       {linkLists.map((linkList: LinkListType) => (
-        <LinkList key={linkList.header}>
+        <LinkList>
           <LinkHeader>{t(linkList.header)}</LinkHeader>
-          {linkList.links.map((link: LinkType) => (
-            <Link id={link.label} key={link.label} href={link.link} target="_blank">
-              {t(link.label)}
-            </Link>
-          ))}
+          {linkList.links.map((link: LinkType) =>
+            link.internal ? (
+              <InternalLink id={link.label} key={link.label} to={link.link}>
+                {link.label}
+              </InternalLink>
+            ) : (
+              <ExternalLink
+                id={link.label}
+                key={link.label}
+                href={link.link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t(link.label)}
+              </ExternalLink>
+            )
+          )}
         </LinkList>
       ))}
       <LanguageSelector />

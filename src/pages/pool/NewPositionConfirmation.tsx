@@ -135,7 +135,11 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
         <Content>
           <Summary>
             {`When the collateralization of `}
-            <Address href={`${ETHERSCAN_URL}${position.account}`} target="_blank">
+            <Address
+              href={`${ETHERSCAN_URL}${position.account}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {shortenAddress(position.account, isMobile ? 10 : 26)}
               <LaunchIcon style={{ fill: "var(--secondary)" }} />
             </Address>
@@ -160,7 +164,11 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
                 Borrower
                 <Tooltip content="The address of the owner of the position to top up (e.g. if Alice is the borrower on Aave that should be topped up then this would be Alice’s address)" />
               </Label>
-              <AddressLabel href={`${ETHERSCAN_URL}${position.account}`} target="_blank">
+              <AddressLabel
+                href={`${ETHERSCAN_URL}${position.account}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {shortenAddress(position.account, 8)}
                 <LaunchIcon style={{ fill: "var(--secondary)" }} />
               </AddressLabel>

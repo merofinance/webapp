@@ -110,6 +110,7 @@ const SupportedBy = (): JSX.Element => {
             id={`Supported By - ${protocol.name}`}
             href={protocol.link}
             target="_blank"
+            rel="noopener noreferrer"
           >
             <Protocol
               src={protocol.image}

@@ -10,7 +10,7 @@ interface OverviewRow {
 }
 
 const Container = styled.div`
-  @media (max-width: 993px) {
+  @media (max-width: 1439px) {
     width: 100%;
   }
 `;
@@ -30,7 +30,7 @@ const StyledOverview = styled.div`
   margin-left: 1.6rem;
   width: 40rem;
   padding: 2rem 1.8rem;
-  @media (max-width: 993px) {
+  @media (max-width: 1439px) {
     margin-left: 0;
     width: 100%;
     margin-bottom: 2.4rem;
@@ -48,7 +48,7 @@ const Header = styled.button`
 
   font-size: 2.4rem;
   margin-bottom: 0.6rem;
-  @media (max-width: 993px) {
+  @media (max-width: 1439px) {
     position: absolute;
     top: 0;
     left: 0;
@@ -72,7 +72,7 @@ const ChevronContainer = styled.div`
   justify-content: center;
   align-items: center;
 
-  @media (min-width: 994px) {
+  @media (min-width: 1440px) {
     display: none;
   }
 `;
@@ -82,7 +82,7 @@ const Statistics = styled.div`
   flex-direction: column;
   width: 100%;
 
-  @media (max-width: 993px) {
+  @media (max-width: 1439px) {
     margin-top: 3.2rem;
   }
 `;
@@ -93,7 +93,7 @@ const StatisticContainer = styled.div`
   justify-content: space-between;
 
   margin-top: 1.4rem;
-  @media (max-width: 993px) {
+  @media (max-width: 1439px) {
     margin-top: 0.2rem;
   }
 `;
@@ -109,7 +109,7 @@ const Label = styled.div`
   letter-spacing: 0.15px;
 
   font-size: 2rem;
-  @media (max-width: 993px) {
+  @media (max-width: 1439px) {
     font-size: 1.4rem;
   }
 `;
@@ -121,7 +121,7 @@ const Value = styled.div`
   color: var(--sub);
 
   font-size: 2rem;
-  @media (max-width: 993px) {
+  @media (max-width: 1439px) {
     font-size: 1.4rem;
   }
 `;

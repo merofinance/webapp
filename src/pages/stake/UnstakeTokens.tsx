@@ -61,7 +61,7 @@ const UnstakeTokens = ({ token }: Props): JSX.Element => {
     <StyledUnstakeTokens>
       <Description>
         Stake BKD and earn a share in x% of platform revenue, paid out in bkdDAI tokens.{" "}
-        <MoreLink href="" target="_blank">
+        <MoreLink href="" target="_blank" rel="noopener noreferrer">
           More
           <LaunchIcon style={{ fill: "var(--secondary)" }} />
         </MoreLink>

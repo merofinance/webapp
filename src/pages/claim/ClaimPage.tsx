@@ -93,7 +93,7 @@ const ClaimPage = (): JSX.Element => {
           rows={["test-row-01", "test-row-02", "test-row-03"]}
         />
       ))}
-      <Note href="https://google.com/" target="_blank">
+      <Note href="https://google.com/" target="_blank" rel="noopener noreferrer">
         Where are my pool rewards?
       </Note>
     </StyledPoolsPage>

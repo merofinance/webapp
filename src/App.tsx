@@ -33,6 +33,7 @@ import ClaimPage from "./pages/claim/ClaimPage";
 import PoolPage from "./pages/pool/PoolPage";
 import { LIVE, STAKING_LIVE } from "./lib/constants";
 import { ErrorAlert } from "./components/ErrorAlert";
+import NotFoundPage from "./pages/not-found/NotFoundPage";
 
 const Background = styled.div`
   background: radial-gradient(rgba(11, 3, 60, 0.2), rgba(10, 5, 38, 0.3));
@@ -65,6 +66,7 @@ const Content = styled.div`
   align-items: center;
   width: 100%;
   max-width: 1400px;
+  flex: 1;
 `;
 
 library.add(faInfoCircle, faClock, faCheck, faTimesCircle, faExternalLinkAlt, faTrashAlt);
@@ -129,8 +131,12 @@ const App = (): JSX.Element => {
                         <LitepaperPage />
                       </Route>
 
-                      <Route path="/">
+                      <Route exact path="/">
                         <LandingPage />
+                      </Route>
+
+                      <Route>
+                        <NotFoundPage />
                       </Route>
                     </Switch>
                   </Content>

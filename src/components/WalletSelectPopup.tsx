@@ -159,6 +159,7 @@ const WalletSelectPopup = (props: Props): JSX.Element => {
             <Highlight
               href="https://backd-1.gitbook.io/backd/resources/faq/general"
               target="_blank"
+              rel="noopener noreferrer"
             >
               {t("walletConnect.aboutWallets")}
               <LaunchIcon style={{ fill: "var(--secondary)" }} />

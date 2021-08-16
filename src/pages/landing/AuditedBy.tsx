@@ -129,7 +129,7 @@ const AuditedBy = (): JSX.Element => {
           <MobileLogo src={chainSecurityMobile} alt="Chain Security logo" />
           <Description>{t("auditedBy.description")}</Description>
           {LIVE && (
-            <ViewReport href="" target="_blank">
+            <ViewReport href="" target="_blank" rel="noopener noreferrer">
               {`${t("auditedBy.viewReport")} →`}
             </ViewReport>
           )}
