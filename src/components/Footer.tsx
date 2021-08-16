@@ -160,7 +160,7 @@ const Footer = (): JSX.Element => {
           {linkList.links.map((link: LinkType) =>
             link.internal ? (
               <InternalLink id={link.label} key={link.label} to={link.link}>
-                {link.label}
+                {t(link.label)}
               </InternalLink>
             ) : (
               <ExternalLink
