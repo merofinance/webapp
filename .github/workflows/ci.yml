@@ -32,3 +32,10 @@ jobs:
         run: yarn run percy
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+      - name: Preview Deployment
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.PERSONAL_GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SECRET }}"
+          expires: 30d
+          projectId: backd-ffbef
