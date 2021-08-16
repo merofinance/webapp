@@ -20,7 +20,7 @@ jobs:
         run: yarn
       - name: Building App
         run: yarn run build
-  cypress-run:
+  cypress_test:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
