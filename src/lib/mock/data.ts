@@ -1,6 +1,6 @@
 import { BigNumber, ContractReceipt, ContractTransaction } from "ethers";
 import { scale } from "../numeric";
-import { TokenValue } from "../token-value";
+import { ScaledNumber } from "../scaled-number";
 import { Address, Pool, PlainPosition } from "../types";
 
 export const masterAccount = "0xbacE8e7f276FD2Ee5ecE5C1df18BF381148862A6";
@@ -85,27 +85,27 @@ const positionKeys = [
   {
     protocol: "Compound",
     account: "0xE9998d2C082c340D9b7023FA27a54c14f0Bb3F9c",
-    threshold: 105,
+    threshold: ScaledNumber.fromUnscaled(105).toPlain(),
   },
   {
     protocol: "Aave",
     account: "0xb47b5D45CDBa7D1114A632c010E0bC9B2053B1c1",
-    threshold: 110,
+    threshold: ScaledNumber.fromUnscaled(110).toPlain(),
   },
 ];
 
 export const positions: PlainPosition[] = [
   {
-    singleTopUp: TokenValue.fromUnscaled(1500).toPlain(),
-    maxTopUp: TokenValue.fromUnscaled(4500).toPlain(),
+    singleTopUp: ScaledNumber.fromUnscaled(1500).toPlain(),
+    maxTopUp: ScaledNumber.fromUnscaled(4500).toPlain(),
     maxGasPrice: 10 ** 10,
     actionToken: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
     depositToken: "0x99A77926B3FB49619DC3A1DAc18565bcB5A98b93",
     ...positionKeys[0],
   },
   {
-    singleTopUp: TokenValue.fromUnscaled(10_000).toPlain(),
-    maxTopUp: TokenValue.fromUnscaled(50_000).toPlain(),
+    singleTopUp: ScaledNumber.fromUnscaled(10_000).toPlain(),
+    maxTopUp: ScaledNumber.fromUnscaled(50_000).toPlain(),
     maxGasPrice: 5 * 10 ** 10,
     actionToken: "0x6b175474e89094c44da98b954eedeac495271d0f",
     depositToken: "0x25FF22De379B644BD5C2263404baC6FeE5a4b8de",

@@ -12,7 +12,7 @@ import { formatPercent, numberToCompactCurrency, formatCurrency } from "../../li
 import { selectPoolPositions } from "../../state/positionsSlice";
 import { Position } from "../../lib/types";
 import { selectPrice } from "../../state/selectors";
-import { TokenValue } from "../../lib/token-value";
+import { ScaledNumber } from "../../lib/scaled-number";
 
 type RowProps = {
   preview?: boolean;
@@ -129,9 +129,9 @@ const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
   const balances = useSelector(selectBalances);
   const positions = useSelector(selectPoolPositions(pool));
 
-  const balance = balances[pool.lpToken.address] || new TokenValue();
+  const balance = balances[pool.lpToken.address] || new ScaledNumber();
   const locked = positions
-    .reduce((a: TokenValue, b: Position) => a.add(b.maxTopUp), new TokenValue())
+    .reduce((a: ScaledNumber, b: Position) => a.add(b.maxTopUp), new ScaledNumber())
     .add(balance);
 
   return (

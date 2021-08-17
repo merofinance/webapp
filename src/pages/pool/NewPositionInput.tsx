@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Value } from "./NewPosition";
+import { FormikFormType, FormType, Value } from "./NewPosition";
 
 const StyledNewPositionInput = styled.div`
   width: 67%;
@@ -77,23 +77,26 @@ const Error = styled.div`
 
 type Props = {
   type: string;
-  value: string;
-  error: string;
-  setValue: (v: string) => void;
+  name: keyof FormType;
+  formik: FormikFormType;
 };
 
-const NewPositionInput = (props: Props): JSX.Element => {
+const NewPositionInput = ({ type, name, formik }: Props): JSX.Element => {
+  const valid = !formik.touched[name] || !formik.errors[name];
+
   return (
     <Value>
       <StyledNewPositionInput>
-        <InputBorder valid={!props.error}>
+        <InputBorder valid={valid}>
           <Input
-            type={props.type}
-            value={props.value}
+            type={type}
+            name={name}
+            value={formik.values[name]}
             placeholder="0"
-            onChange={(e) => props.setValue(e.target.value)}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
-          {props.error && <Error>{props.error}</Error>}
+          {!valid && <Error>{formik.errors[name]}</Error>}
         </InputBorder>
       </StyledNewPositionInput>
     </Value>

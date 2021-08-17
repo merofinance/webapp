@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, Selector } from "../app/store";
 import { Backd } from "../lib/backd";
 import { ETH_DUMMY_ADDRESS } from "../lib/constants";
-import { PlainTokenValue, TokenValue } from "../lib/token-value";
+import { PlainScaledNumber, ScaledNumber } from "../lib/scaled-number";
 import {
   Address,
   AllowanceQuery,
@@ -64,10 +64,10 @@ export const fetchAllowances = createAsyncThunk(
   }
 );
 
-type ApproveArgs = { backd: Backd; token: Token; spender: Address; amount: TokenValue };
-type DepositArgs = { backd: Backd; pool: Pool; amount: TokenValue };
-type WithdrawArgs = { backd: Backd; pool: Pool; amount: TokenValue };
-type UnstakeArgs = { backd: Backd; pool: Pool; amount: TokenValue };
+type ApproveArgs = { backd: Backd; token: Token; spender: Address; amount: ScaledNumber };
+type DepositArgs = { backd: Backd; pool: Pool; amount: ScaledNumber };
+type WithdrawArgs = { backd: Backd; pool: Pool; amount: ScaledNumber };
+type UnstakeArgs = { backd: Backd; pool: Pool; amount: ScaledNumber };
 
 export const userSlice = createSlice({
   name: "user",
@@ -75,7 +75,7 @@ export const userSlice = createSlice({
   reducers: {
     setAllowance: (
       state,
-      action: PayloadAction<{ token: Token; spender: Address; amount: PlainTokenValue }>
+      action: PayloadAction<{ token: Token; spender: Address; amount: PlainScaledNumber }>
     ) => {
       const { spender, token, amount } = action.payload;
       if (!state.allowances[token.address]) {
@@ -85,16 +85,16 @@ export const userSlice = createSlice({
     },
     decreaseAllowance: (
       state,
-      action: PayloadAction<{ token: Token; spender: Address; amount: PlainTokenValue }>
+      action: PayloadAction<{ token: Token; spender: Address; amount: PlainScaledNumber }>
     ) => {
       const { spender, token, amount } = action.payload;
       // NOTE: we do not want to touch "allowances" from Eth based pools
       if (token.address === ETH_DUMMY_ADDRESS) return;
 
-      const allowance = TokenValue.fromPlain(state.allowances[token.address][spender]);
-      const value = allowance.sub(TokenValue.fromPlain(amount));
+      const allowance = ScaledNumber.fromPlain(state.allowances[token.address][spender]);
+      const value = allowance.sub(ScaledNumber.fromPlain(amount));
       state.allowances[token.address][spender] = value.isNegative()
-        ? new TokenValue().toPlain()
+        ? new ScaledNumber().toPlain()
         : value.toPlain();
     },
   },
@@ -198,35 +198,37 @@ export const unstake = createAsyncThunk(
 export const selectBalances = (state: RootState): Balances =>
   fromPlainBalances(state.user.balances);
 
-export function selectBalance(pool: Optional<Pool>): Selector<TokenValue>;
-export function selectBalance(address: string): Selector<TokenValue>;
-export function selectBalance(addressOrPool: string | Optional<Pool>): Selector<TokenValue> {
+export function selectBalance(pool: Optional<Pool>): Selector<ScaledNumber>;
+export function selectBalance(address: string): Selector<ScaledNumber>;
+export function selectBalance(addressOrPool: string | Optional<Pool>): Selector<ScaledNumber> {
   return (state: RootState) => {
-    if (!addressOrPool) return new TokenValue();
+    if (!addressOrPool) return new ScaledNumber();
     if (typeof addressOrPool === "string")
-      return TokenValue.fromPlain(state.user.balances[addressOrPool]);
+      return ScaledNumber.fromPlain(state.user.balances[addressOrPool]);
 
-    const lpTokenBalance = TokenValue.fromPlain(state.user.balances[addressOrPool.lpToken.address]);
-    const stakedBalance = TokenValue.fromPlain(
+    const lpTokenBalance = ScaledNumber.fromPlain(
+      state.user.balances[addressOrPool.lpToken.address]
+    );
+    const stakedBalance = ScaledNumber.fromPlain(
       state.user.balances[addressOrPool.stakerVaultAddress]
     );
     return lpTokenBalance.add(stakedBalance);
   };
 }
 
-export function selectDepositAllowance(pool: Pool): Selector<TokenValue> {
+export function selectDepositAllowance(pool: Pool): Selector<ScaledNumber> {
   return (state: RootState) => {
-    return TokenValue.fromPlain(state.user.allowances[pool.underlying.address]?.[pool.address]);
+    return ScaledNumber.fromPlain(state.user.allowances[pool.underlying.address]?.[pool.address]);
   };
 }
-export function selectToupAllowance(backd: Backd | undefined, pool: Pool): Selector<TokenValue> {
+export function selectToupAllowance(backd: Backd | undefined, pool: Pool): Selector<ScaledNumber> {
   return (state: RootState) => {
-    if (!backd) return new TokenValue();
+    if (!backd) return new ScaledNumber();
 
-    const lpTokenAllowance = TokenValue.fromPlain(
+    const lpTokenAllowance = ScaledNumber.fromPlain(
       state.user.allowances[pool.lpToken.address]?.[backd.topupActionAddress]
     );
-    const vaultAllowance = TokenValue.fromPlain(
+    const vaultAllowance = ScaledNumber.fromPlain(
       state.user.allowances[pool.stakerVaultAddress]?.[backd.topupActionAddress]
     );
     return lpTokenAllowance.add(vaultAllowance);

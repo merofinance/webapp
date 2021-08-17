@@ -8,6 +8,7 @@ import MultiStepButtons from "../../components/MultiStepButtons";
 import { selectBalance } from "../../state/userSlice";
 import { Token } from "../../lib/types";
 import { GradientLink } from "../../styles/GradientText";
+import { useDevice } from "../../app/hooks/use-device";
 
 const StyledUnstakeTokens = styled.div`
   width: 100%;
@@ -17,26 +18,41 @@ const StyledUnstakeTokens = styled.div`
 
 const Description = styled.div`
   font-weight: 500;
+  letter-spacing: 0.46px;
+
   font-size: 1.8rem;
   line-height: 2.6rem;
-  letter-spacing: 0.46px;
   margin-bottom: 3.7rem;
+  @media (max-width: 600px) {
+    font-size: 1.3rem;
+    line-height: 1.9rem;
+    margin-bottom: 1.7rem;
+  }
 `;
 
 const MoreLink = styled(GradientLink)`
   font-weight: 500;
-  font-size: 1.8rem;
-  line-height: 2.6rem;
   letter-spacing: 0.46px;
   cursor: pointer;
+
+  font-size: 1.8rem;
+  line-height: 2.6rem;
+  @media (max-width: 600px) {
+    font-size: 1.3rem;
+    line-height: 1.9rem;
+  }
 `;
 
 const Content = styled.div`
   width: 100%;
   display: grid;
   align-items: flex-end;
-  grid-template-columns: repeat(2, 1fr);
   grid-gap: 1.8rem;
+
+  grid-template-columns: repeat(2, 1fr);
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
 type Props = {
@@ -45,6 +61,8 @@ type Props = {
 
 const UnstakeTokens = ({ token }: Props): JSX.Element => {
   const balance = useSelector(selectBalance(token.address));
+  const { isMobile } = useDevice();
+
   const [value, setValue] = useState("");
   const [approved, setApproved] = useState(false);
 
@@ -63,7 +81,10 @@ const UnstakeTokens = ({ token }: Props): JSX.Element => {
         Stake BKD and earn a share in x% of platform revenue, paid out in bkdDAI tokens.{" "}
         <MoreLink href="" target="_blank" rel="noopener noreferrer">
           More
-          <LaunchIcon style={{ fill: "var(--secondary)" }} />
+          <LaunchIcon
+            fontSize={isMobile ? "small" : "medium"}
+            style={{ fill: "var(--secondary)", transform: "translateY(2px)" }}
+          />
         </MoreLink>
       </Description>
       <Content>
@@ -72,7 +93,7 @@ const UnstakeTokens = ({ token }: Props): JSX.Element => {
           noSlider
           value={value}
           setValue={(v: string) => setValue(v)}
-          label="Enter an amount of BKD to unstake"
+          label={isMobile ? "Amount of BKD to unstake" : "Enter an amount of BKD to unstake"}
           max={balance}
         />
         <MultiStepButtons

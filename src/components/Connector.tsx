@@ -142,7 +142,7 @@ const Connector = (): JSX.Element => {
 
   useEffect(() => {
     updateEns();
-  }, [account, updateEns, backd]);
+  }, [account, backd]);
 
   const autoConnect = async () => {
     const authorized = await injectedConnector.isAuthorized();

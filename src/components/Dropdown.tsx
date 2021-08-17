@@ -1,5 +1,6 @@
 import { FormControl, makeStyles, MenuItem, Select } from "@material-ui/core";
 import React from "react";
+import { FormikFormType, FormType } from "../pages/pool/NewPosition";
 
 const useStyles = makeStyles(() => ({
   formControl: {
@@ -48,19 +49,21 @@ const useStyles = makeStyles(() => ({
 }));
 
 type Props = {
-  value: string;
+  formik: FormikFormType;
+  name: keyof FormType;
   options: string[];
-  setValue: (v: string) => void;
 };
 
-const Dropdown = ({ value, options, setValue }: Props): JSX.Element => {
+const Dropdown = ({ formik, name, options }: Props): JSX.Element => {
   const classes = useStyles();
 
   return (
     <FormControl className={classes.formControl}>
       <Select
-        value={value}
-        onChange={(event: any) => setValue(event.target.value)}
+        value={formik.values[name]}
+        name={name}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
         displayEmpty
         className={classes.select}
         MenuProps={{ classes: { paper: classes.dropdownStyle } }}
