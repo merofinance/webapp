@@ -21,12 +21,12 @@ describe("Setting Language with Query Parameter", () => {
   });
 
   it("Should Show Japanese with JA Parameter", () => {
-    cy.visit("/?lang=ja");
+    cy.visit("/?lng=ja");
     isJapanese();
   });
 
   it("Should Show English with EN Parameter", () => {
-    cy.visit("/?lang=en");
+    cy.visit("/?lng=en");
     isEnglish();
   });
 });
