@@ -143,7 +143,7 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
               {shortenAddress(position.account, isMobile ? 10 : 26)}
               <LaunchIcon style={{ fill: "var(--secondary)" }} />
             </Address>
-            {` drops below ${position.threshold}, it will
+            {` drops below ${position.threshold.toString()}, it will
             be topped up with ${position.singleTopUp} ${
               pool.underlying.symbol
             } (${position.singleTopUp.toUsdValue(price)}). This will be repeated each time the
@@ -178,7 +178,7 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
                 Threshold
                 <Tooltip content="The health factor threshold a collateral top up should occur at" />
               </Label>
-              <Label>{position.threshold}</Label>
+              <Label>{position.threshold.toString()}</Label>
             </SummaryRow>
             <SummaryRow>
               <Label>

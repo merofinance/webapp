@@ -1,5 +1,5 @@
 import { TransactionReceipt } from "@ethersproject/providers";
-import { PlainTokenValue, TokenValue } from "./token-value";
+import { PlainScaledNumber, ScaledNumber } from "./scaled-number";
 
 export type Optional<T> = T | null;
 
@@ -21,23 +21,23 @@ export interface Pool<Num = number> {
   exchangeRate: Num;
 }
 
-export interface Position<Num = number> {
+export interface Position {
   protocol: string;
   account: Address;
-  threshold: Num;
-  singleTopUp: TokenValue;
-  maxTopUp: TokenValue;
+  threshold: ScaledNumber;
+  singleTopUp: ScaledNumber;
+  maxTopUp: ScaledNumber;
   maxGasPrice: number;
   actionToken: Address;
   depositToken: Address;
 }
 
-export interface PlainPosition<Num = number> {
+export interface PlainPosition {
   protocol: string;
   account: Address;
-  threshold: Num;
-  singleTopUp: PlainTokenValue;
-  maxTopUp: PlainTokenValue;
+  threshold: PlainScaledNumber;
+  singleTopUp: PlainScaledNumber;
+  maxTopUp: PlainScaledNumber;
   maxGasPrice: number;
   actionToken: Address;
   depositToken: Address;
@@ -46,6 +46,7 @@ export interface PlainPosition<Num = number> {
 export const toPlainPosition = (position: Position): PlainPosition => {
   return {
     ...position,
+    threshold: position.threshold.toPlain(),
     singleTopUp: position.singleTopUp.toPlain(),
     maxTopUp: position.maxTopUp.toPlain(),
   };
@@ -54,12 +55,13 @@ export const toPlainPosition = (position: Position): PlainPosition => {
 export const fromPlainPosition = (position: PlainPosition): Position => {
   return {
     ...position,
-    singleTopUp: TokenValue.fromPlain(position.singleTopUp),
-    maxTopUp: TokenValue.fromPlain(position.maxTopUp),
+    threshold: ScaledNumber.fromPlain(position.threshold),
+    singleTopUp: ScaledNumber.fromPlain(position.singleTopUp),
+    maxTopUp: ScaledNumber.fromPlain(position.maxTopUp),
   };
 };
 
-export function positionFromPartial<T>(pool: Pool<T>, position: Partial<Position<T>>): Position<T> {
+export function positionFromPartial<T>(pool: Pool<T>, position: Partial<Position>): Position {
   if (!position.protocol) throw Error("Missing protocol when creating position");
   if (!position.account) throw Error("Missing account when creating position");
   if (!position.threshold) throw Error("Missing threshold when creating position");
@@ -88,8 +90,8 @@ export function transformPool<T, U>(pool: Pool<T>, f: (v: T) => U): Pool<U> {
 
 export type Address = string;
 
-export type Balances = Record<string, TokenValue>;
-export type PlainBalances = Record<string, PlainTokenValue>;
+export type Balances = Record<string, ScaledNumber>;
+export type PlainBalances = Record<string, PlainScaledNumber>;
 
 export const toPlainBalances = (balances: Balances): PlainBalances => {
   return Object.fromEntries(Object.entries(balances).map(([key, value]) => [key, value.toPlain()]));
@@ -97,7 +99,7 @@ export const toPlainBalances = (balances: Balances): PlainBalances => {
 
 export const fromPlainBalances = (balances: PlainBalances): Balances => {
   return Object.fromEntries(
-    Object.entries(balances).map(([key, value]) => [key, TokenValue.fromPlain(value)])
+    Object.entries(balances).map(([key, value]) => [key, ScaledNumber.fromPlain(value)])
   );
 };
 

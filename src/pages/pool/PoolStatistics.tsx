@@ -6,7 +6,7 @@ import { selectPrice } from "../../state/selectors";
 import { selectBalance } from "../../state/userSlice";
 import { selectPoolPositions } from "../../state/positionsSlice";
 import { formatCurrency } from "../../lib/numeric";
-import { TokenValue } from "../../lib/token-value";
+import { ScaledNumber } from "../../lib/scaled-number";
 
 type Props = {
   pool: Pool;
@@ -18,8 +18,8 @@ const PoolStatistics = ({ pool }: Props): JSX.Element => {
   const positions = useSelector(selectPoolPositions(pool));
 
   const locked = positions.reduce(
-    (a: TokenValue, b: Position) => a.add(b.maxTopUp.mul(price)),
-    new TokenValue()
+    (a: ScaledNumber, b: Position) => a.add(b.maxTopUp.mul(price)),
+    new ScaledNumber()
   );
   const deposits = locked.add(balance.mul(price));
 

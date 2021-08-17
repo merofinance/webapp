@@ -2,7 +2,7 @@ import { Slider, withStyles } from "@material-ui/core";
 import { BigNumber } from "ethers";
 import React from "react";
 import styled from "styled-components";
-import { TokenValue } from "../lib/token-value";
+import { ScaledNumber } from "../lib/scaled-number";
 import SliderStep from "./SliderStep";
 
 const Gradient = "linear-gradient(to right, rgba(197, 50, 249, 1), rgba(50, 178, 229, 1))";
@@ -60,7 +60,7 @@ const valuetext = (value: any) => `${value}%`;
 
 type Props = {
   value: string;
-  max: TokenValue;
+  max: ScaledNumber;
   setValue: (value: string) => void;
 };
 
@@ -78,7 +78,7 @@ const AmountSlider = ({ value, max, setValue }: Props): JSX.Element => {
         value={percent}
         onChange={(e: any, value: any) => {
           const newValue = max.value.mul(BigNumber.from(value)).div(BigNumber.from(100));
-          setValue(new TokenValue(newValue, max.decimals).toString());
+          setValue(new ScaledNumber(newValue, max.decimals).toString());
         }}
         valueLabelDisplay="auto"
         valueLabelFormat={valuetext}
@@ -89,7 +89,7 @@ const AmountSlider = ({ value, max, setValue }: Props): JSX.Element => {
           percent={`${step}%`}
           click={() => {
             const newValue = max.value.mul(BigNumber.from(step)).div(BigNumber.from(100));
-            setValue(new TokenValue(newValue, max.decimals).toString());
+            setValue(new ScaledNumber(newValue, max.decimals).toString());
           }}
           active={Number(value || 0) / Number(max.toString()) > step / 100}
         />

@@ -9,10 +9,10 @@ import { AppDispatch } from "../../app/store";
 import MultiStepButtons from "../../components/MultiStepButtons";
 import { ETH_DUMMY_ADDRESS, INFINITE_APPROVE_AMMOUNT } from "../../lib/constants";
 import Button from "../../components/Button";
-import { TokenValue } from "../../lib/token-value";
+import { ScaledNumber } from "../../lib/scaled-number";
 
 type Props = {
-  value: TokenValue;
+  value: ScaledNumber;
   pool: Pool;
   complete: () => void;
 };
@@ -29,7 +29,7 @@ const DepositButtons = ({ value, pool, complete }: Props): JSX.Element => {
     const approveAction = approve({
       token: pool.underlying,
       spender: pool.address,
-      amount: TokenValue.fromUnscaled(INFINITE_APPROVE_AMMOUNT),
+      amount: ScaledNumber.fromUnscaled(INFINITE_APPROVE_AMMOUNT),
       backd,
     });
     const v = await dispatch(approveAction);

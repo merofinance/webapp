@@ -7,7 +7,7 @@ import Statistics from "../../components/Statistics";
 import { selectPositions } from "../../state/positionsSlice";
 import { Position } from "../../lib/types";
 import { formatCurrency } from "../../lib/numeric";
-import { TokenValue } from "../../lib/token-value";
+import { ScaledNumber } from "../../lib/scaled-number";
 
 const PoolsStatistics = (): JSX.Element => {
   const pools = useSelector(selectPools);
@@ -15,19 +15,19 @@ const PoolsStatistics = (): JSX.Element => {
   const balances = useSelector(selectBalances);
   const positions = useSelector(selectPositions);
 
-  const getBalance = (pool: Pool) => balances[pool.lpToken.address] || new TokenValue();
+  const getBalance = (pool: Pool) => balances[pool.lpToken.address] || new ScaledNumber();
   const getPrice = (pool: Pool) => prices[pool.underlying.symbol] || 0;
   const getPool = (tokenAddress: string) =>
     pools.filter((pool: Pool) => pool.underlying.address === tokenAddress)[0];
 
   const locked = positions.reduce(
-    (a: TokenValue, b: Position) => a.add(b.maxTopUp.mul(getPrice(getPool(b.actionToken)))),
-    new TokenValue()
+    (a: ScaledNumber, b: Position) => a.add(b.maxTopUp.mul(getPrice(getPool(b.actionToken)))),
+    new ScaledNumber()
   );
   const deposits = locked.add(
     pools.reduce(
-      (a: TokenValue, b: Pool) => a.add(getBalance(b).mul(getPrice(b))),
-      new TokenValue()
+      (a: ScaledNumber, b: Pool) => a.add(getBalance(b).mul(getPrice(b))),
+      new ScaledNumber()
     )
   );
 

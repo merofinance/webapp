@@ -82,7 +82,7 @@ const PositionRow = ({ position, pool }: Props): JSX.Element => {
     <StyledPosition>
       <Value>{position.protocol}</Value>
       <Value>{shortenAddress(position.account, 10)}</Value>
-      <Value>{position.threshold}</Value>
+      <Value>{position.threshold.toString()}</Value>
       <Value>{`${position.singleTopUp} ${pool.underlying.symbol.toUpperCase()}`}</Value>
       <Value>{`${position.maxTopUp} ${pool.underlying.symbol.toUpperCase()}`}</Value>
       <Value>

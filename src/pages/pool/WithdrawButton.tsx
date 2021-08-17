@@ -8,7 +8,7 @@ import { useLoading } from "../../app/hooks/use-loading";
 import { selectBalance, unstake, withdraw } from "../../state/userSlice";
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
-import { TokenValue } from "../../lib/token-value";
+import { ScaledNumber } from "../../lib/scaled-number";
 
 const StyledProgressButtons = styled.div`
   width: 100%;
@@ -17,7 +17,7 @@ const StyledProgressButtons = styled.div`
 `;
 
 type Props = {
-  value: TokenValue;
+  value: ScaledNumber;
   pool: Pool;
   complete: () => void;
 };
@@ -30,7 +30,7 @@ const WithdrawalButton = ({ value, pool, complete }: Props): JSX.Element => {
   const staked = useSelector(selectBalance(pool.stakerVaultAddress));
   const availableToWithdraw = totalBalance.sub(staked);
 
-  const executeWithdraw = async (amount: TokenValue) => {
+  const executeWithdraw = async (amount: ScaledNumber) => {
     if (!backd) return;
     dispatch(withdraw({ backd, pool, amount })).then((v) => {
       handleTxDispatch({ status: v.meta.requestStatus, actionType: "withdraw" });

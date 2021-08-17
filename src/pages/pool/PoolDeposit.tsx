@@ -6,7 +6,7 @@ import AmountInput from "../../components/AmountInput";
 import ContentSection from "../../components/ContentSection";
 import { selectBalance } from "../../state/userSlice";
 import { Pool } from "../../lib";
-import { TokenValue } from "../../lib/token-value";
+import { ScaledNumber } from "../../lib/scaled-number";
 import DepositButtons from "./DepositButtons";
 import PoolStatistics from "./PoolStatistics";
 
@@ -44,7 +44,7 @@ const PoolDeposit = ({ pool }: Props): JSX.Element => {
           />
           <DepositButtons
             pool={pool}
-            value={TokenValue.fromUnscaled(depositAmount, pool.underlying.decimals)}
+            value={ScaledNumber.fromUnscaled(depositAmount, pool.underlying.decimals)}
             complete={() => setDepositAmount("")}
           />
         </Content>
