@@ -1,7 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import { useLocation } from "react-router-dom";
+import queryString from "query-string";
 
 import Selector, { SelectorOptionType } from "./Selector";
 import globe from "../assets/ui/globe.svg";
@@ -64,8 +66,14 @@ const Arrow = styled.div`
 const LanguageSelector = () => {
   const { i18n } = useTranslation();
   const anchorRef = useRef<HTMLButtonElement>(null);
+  const url = useLocation();
 
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const { lang } = queryString.parse(url.search);
+    if (lang && typeof lang === "string") i18n.changeLanguage(lang);
+  }, [url]);
 
   const matchingLanguages = languageOptions.filter(
     (option: SelectorOptionType) => option.value === i18n.language.split("-")[0]
