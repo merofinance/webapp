@@ -5,7 +5,11 @@ const StyledAccordion = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+
   margin-bottom: 4.8rem;
+  @media (max-width: 600px) {
+    margin-bottom: 1.8rem;
+  }
 `;
 
 interface HeaderProps {
@@ -50,6 +54,9 @@ const Body = styled.div`
 
   transition: max-height 0.3s ease-out;
   max-height: ${(props: BodyProps) => (props.open ? "300px" : "0")};
+  @media (max-width: 600px) {
+    max-height: ${(props: BodyProps) => (props.open ? "400px" : "0")};
+  }
 `;
 
 const BodyContent = styled.div`
