@@ -20,8 +20,8 @@ describe("Setting Language with Query Parameter", () => {
     isEnglish();
   });
 
-  it("Should Show Japanese with JP Parameter", () => {
-    cy.visit("/?lang=jp");
+  it("Should Show Japanese with JA Parameter", () => {
+    cy.visit("/?lang=ja");
     isJapanese();
   });
 
@@ -42,7 +42,7 @@ describe("Language Switching", () => {
 
   it("Should Change Language to Japanese", () => {
     cy.get('[id="language-selector"]').click();
-    cy.get('[id="jp"]').click();
+    cy.get('[id="ja"]').click();
   });
 
   it("Should Show Japanese", () => {

@@ -14,7 +14,7 @@ const languageOptions: SelectorOptionType[] = [
     label: "English",
   },
   {
-    value: "jp",
+    value: "ja",
     label: "日本語",
   },
 ];
