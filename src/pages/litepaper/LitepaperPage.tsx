@@ -81,19 +81,19 @@ const LitepaperPage = (): JSX.Element => {
       <List>
         <Item>
           <Paragraph>
-            <Bold>{t("litepaper.pools.differences.assets.header")}</Bold>
+            <Bold>{t("litepaper.pools.differences.assets.header")}</Bold>{" "}
             {t("litepaper.pools.differences.assets.description")}
           </Paragraph>
         </Item>
         <Item>
           <Paragraph>
-            <Bold>{t("litepaper.pools.differences.parameterization.header")}</Bold>
+            <Bold>{t("litepaper.pools.differences.parameterization.header")}</Bold>{" "}
             {t("litepaper.pools.differences.parameterization.description")}
           </Paragraph>
         </Item>
         <Item>
           <Paragraph>
-            <Bold>{t("litepaper.pools.differences.strategy.header")}</Bold>
+            <Bold>{t("litepaper.pools.differences.strategy.header")}</Bold>{" "}
             {t("litepaper.pools.differences.strategy.description")}
           </Paragraph>
         </Item>
@@ -129,23 +129,23 @@ const LitepaperPage = (): JSX.Element => {
       <Header>{t("litepaper.components.header")}</Header>
       <Paragraph>{t("litepaper.components.paragraph")}</Paragraph>
       <Paragraph>
-        <Bold>{t("litepaper.components.components.pools.header")}</Bold>
+        <Bold>{t("litepaper.components.components.pools.header")}</Bold>{" "}
         {t("litepaper.components.components.pools.decription")}
       </Paragraph>
       <Paragraph>
-        <Bold>{t("litepaper.components.components.vaults.header")}</Bold>
+        <Bold>{t("litepaper.components.components.vaults.header")}</Bold>{" "}
         {t("litepaper.components.components.vaults.decription")}
       </Paragraph>
       <Paragraph>
-        <Bold>{t("litepaper.components.components.strategies.header")}</Bold>
+        <Bold>{t("litepaper.components.components.strategies.header")}</Bold>{" "}
         {t("litepaper.components.components.strategies.decription")}
       </Paragraph>
       <Paragraph>
-        <Bold>{t("litepaper.components.components.handlers.header")}</Bold>
+        <Bold>{t("litepaper.components.components.handlers.header")}</Bold>{" "}
         {t("litepaper.components.components.handlers.decription")}
       </Paragraph>
       <Paragraph>
-        <Bold>{t("litepaper.components.components.keepers.header")}</Bold>
+        <Bold>{t("litepaper.components.components.keepers.header")}</Bold>{" "}
         {t("litepaper.components.components.keepers.decription")}
       </Paragraph>
 
