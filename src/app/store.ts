@@ -22,6 +22,7 @@ import userReducer from "../state/userSlice";
 import errorReducer from "../state/errorSlice";
 import positionsReducer from "../state/positionsSlice";
 import transactionsReducer from "../state/transactionsSlice";
+import uiReducer from "../state/uiSlice";
 
 const rootReducer = combineReducers({
   pools: poolsReducer,
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   positions: positionsReducer,
   transactions: transactionsReducer,
   error: errorReducer,
+  ui: uiReducer,
 });
 
 const persistConfig = {
