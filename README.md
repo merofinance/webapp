@@ -22,23 +22,29 @@
   </p>
 </div>
 
-# backd webapp
+# Backd Website
 
-## Setup
+Welcome to the repo for the Backed Website - a React project implementing Web3 which allows users to interract with the Backd Protocol.
 
-Install the dependencies with the command `yarn install`.
+## Development
 
-## Available Scripts
+- Install [Yarn](https://yarnpkg.com/)
+- Then run the following commands:
 
-In the project directory, you can run:
+```
+# Clone the project to download its contents
+> cd repositories
+> git clone https://github.com/backdfund/webapp.git
 
-### `yarn start`
+# Make Yarn install the project's dependencies into node_modules/
+> cd webapp
+> yarn
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Startup the project
+> yarn start
+```
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- Open http://localhost:3000/ to view the website.
 
 To launch the application using mock data, use the following command:
 
@@ -46,17 +52,21 @@ To launch the application using mock data, use the following command:
 env REACT_APP_USE_MOCK=1 yarn start
 ```
 
-### `yarn test`
+## Testing
 
-Launches the test runner in the interactive watch mode.<br />
+There are two types of tests supported, Unit Tests and Automation Tests.  
+Both need to be passing for any PR to be merged.
+
+### Unit Tests
+
+The following command can be used to run the unit tests:  
+`yarn test`  
+This launches the test runner in the interactive watch mode.  
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
+### Automation Tests
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The following command can be used to run the automation tests:  
+`yarn run cy:open`  
+This runs Cypress in open mode so you can view the tests suites and see them run.  
+See the [Cypress docs](https://docs.cypress.io/guides/overview/why-cypress) for more information.
