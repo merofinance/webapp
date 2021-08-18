@@ -1,6 +1,28 @@
-# backd webapp
+<div align="center">
+  <br>
+	<a href="https://backd.fund/"><img src="https://backd.fund/bkd-full-dark.png" width="200"></a>
+  <br>
+  <br>
+  <p>
+    <a href="https://github.com/backdfund/webapp/graphs/contributors">
+        <img src="https://img.shields.io/github/contributors/backdfund/webapp?style=flat-square" alt="GitHub contributors" />
+    </a>
+    <a href="https://github.com/backdfund/webapp/commits/">
+    	<img src="https://img.shields.io/github/commit-activity/m/backdfund/webapp?style=flat-square" alt="GitHub commit-activity" />
+    </a>
+    <a href="https://gitmoji.dev">
+        <img src="https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square" alt="Gitmoji" >
+    </a>
+    <a href="https://discord.gg/jpGvaFV3Rv">
+        <img src="https://discordapp.com/api/guilds/869304943373348915/embed.png" alt="Discord server" >
+    </a>
+    <a href="https://percy.io/3b0d1c60/backd">
+        <img src="https://percy.io/static/images/percy-badge.svg" alt="Percy Visual Testing" >
+    </a>
+  </p>
+</div>
 
-[![This project is using Percy.io for visual regression testing.](https://percy.io/static/images/percy-badge.svg)](https://percy.io/3b0d1c60/backd)
+# backd webapp
 
 ## Setup
 
