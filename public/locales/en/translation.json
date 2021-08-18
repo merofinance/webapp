@@ -142,5 +142,23 @@
         "telegram": "Telegram Ann."
       }
     }
+  },
+  "notFound": {
+    "number": "404",
+    "header": {
+      "desktop": "Page could not be found.",
+      "mobile": "Page not found"
+    },
+    "subHeader": {
+      "start": "Try one of the handy links below - or",
+      "getInTouch": "get in touch",
+      "end": "if you believe there is an issue."
+    },
+    "links": {
+      "home": "home page",
+      "pools": "view all pools",
+      "claim": "claim page",
+      "docs": "docs"
+    }
   }
 }
