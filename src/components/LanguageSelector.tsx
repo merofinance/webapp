@@ -15,6 +15,10 @@ const languageOptions: SelectorOptionType[] = [
     value: "ja",
     label: "日本語",
   },
+  {
+    value: "zh",
+    label: "中文",
+  },
 ];
 
 const StyledLanguageSelector = styled.button`
