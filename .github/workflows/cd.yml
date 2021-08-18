@@ -36,7 +36,7 @@ jobs:
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
   deploy:
-    needs: [unit_test, build, cypress-run]
+    needs: [unit_test, build, cypress_test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
