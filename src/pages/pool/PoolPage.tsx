@@ -12,12 +12,19 @@ import PoolWithdraw from "./PoolWithdraw";
 import PoolOverview from "./PoolOverview";
 import { selectBalance } from "../../state/userSlice";
 import { useDevice } from "../../app/hooks/use-device";
+import BetaSnackbar from "../../components/BetaSnackbar";
 
 type DepositWithdrawParams = {
   poolName: string;
 };
 
 const StyledPoolPage = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const PageContent = styled.div`
   width: 100%;
   display: flex;
 
@@ -67,42 +74,45 @@ const PoolPage = (): JSX.Element => {
         title={`${pool.underlying.symbol} Pool`}
         description={`Deposit ${pool.underlying.symbol} to farm yield while protecting your DeFi loan (Aave, Compound, etc.) from liquidation`}
       />
-      <Content>
-        <Radio
-          options={[
-            {
-              label: "Deposit",
-              value: "deposit",
-            },
-            {
-              label: "Withdraw",
-              value: "withdraw",
-            },
-            {
-              label: isMobile ? "Positions" : "Top-up Positions",
-              value: "positions",
-            },
-          ]}
-          active={tab}
-          setOption={(value: string) => setTab(value)}
-        />
-        {tab === "deposit" && <PoolDeposit pool={pool} />}
-        {tab === "withdraw" && <PoolWithdraw pool={pool} />}
-        {tab === "positions" && <PoolPositions pool={pool} />}
-      </Content>
-      <RightColumn>
-        <PoolOverview pool={pool} />
-        {tab !== "positions" && !balance.isZero() && (
-          <ButtonContainer>
-            <Button
-              medium
-              text="+ Create a Top-up Position"
-              click={() => setTab("positions")}
-              background="#0A0525"
-            />
-          </ButtonContainer>
-        )}
-      </RightColumn>
+      <BetaSnackbar />
+      <PageContent>
+        <Content>
+          <Radio
+            options={[
+              {
+                label: "Deposit",
+                value: "deposit",
+              },
+              {
+                label: "Withdraw",
+                value: "withdraw",
+              },
+              {
+                label: isMobile ? "Positions" : "Top-up Positions",
+                value: "positions",
+              },
+            ]}
+            active={tab}
+            setOption={(value: string) => setTab(value)}
+          />
+          {tab === "deposit" && <PoolDeposit pool={pool} />}
+          {tab === "withdraw" && <PoolWithdraw pool={pool} />}
+          {tab === "positions" && <PoolPositions pool={pool} />}
+        </Content>
+        <RightColumn>
+          <PoolOverview pool={pool} />
+          {tab !== "positions" && !balance.isZero() && (
+            <ButtonContainer>
+              <Button
+                medium
+                text="+ Create a Top-up Position"
+                click={() => setTab("positions")}
+                background="#0A0525"
+              />
+            </ButtonContainer>
+          )}
+        </RightColumn>
+      </PageContent>
     </StyledPoolPage>
   );
 };
