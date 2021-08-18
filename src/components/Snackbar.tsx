@@ -11,6 +11,7 @@ const StyledSnackbar = styled.div`
   border: 2px solid var(--info);
   display: flex;
   justify-content: space-between;
+  margin-bottom: 5rem;
 `;
 
 const Text = styled.div`
@@ -28,9 +29,12 @@ const Link = styled.a`
   line-height: 2.8rem;
   letter-spacing: 0.15px;
   text-decoration: underline;
+  margin-left: 0.4rem;
 `;
 
-const ExitButton = styled.button``;
+const ExitButton = styled.button`
+  cursor: pointer;
+`;
 
 const ExitIcon = styled.img`
   width: 1.4rem;
