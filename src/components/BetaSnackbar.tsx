@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { BETA } from "../lib/constants";
 import { dismissBetaSnackbar, selectBetaSnackbarDismissed } from "../state/uiSlice";
 import Snackbar from "./Snackbar";
 
@@ -9,7 +10,7 @@ const BetaSnackbar = () => {
 
   return (
     <Snackbar
-      show={!dismissed}
+      show={!dismissed && BETA}
       close={() => dispatch(dismissBetaSnackbar())}
       text="Currently, all pools are in a shielded state. This allows for a maximum TVL of $1m per pool."
       link={{
