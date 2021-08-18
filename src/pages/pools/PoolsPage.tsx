@@ -9,8 +9,15 @@ import Seo from "../../components/Seo";
 import PoolsRow from "./PoolsRow";
 import PoolsOverview from "./PoolsOverview";
 import PoolsStatistics from "./PoolsStatistics";
+import BetaSnackbar from "../../components/BetaSnackbar";
 
 const StyledPoolsPage = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const PageContent = styled.div`
   width: 100%;
   display: flex;
 
@@ -81,27 +88,30 @@ const PoolsPage = (): JSX.Element => {
         title="Backd Pools"
         description="Increase leverage, farm yield, & prevent DeFi loans (Aave, Compound, etc.) from liquidation"
       />
-      <ContentSection
-        header="All pools"
-        statistics={<PoolsStatistics />}
-        content={
-          <Table>
-            <thead>
-              <HeaderRow>
-                <Header>Asset</Header>
-                <Header>APY</Header>
-                <Header>TVL</Header>
-                <Header hideOnMobile>Your deposits</Header>
-                <ChevronHeader />
-              </HeaderRow>
-            </thead>
-            {pools.map((pool: Pool) => (
-              <PoolsRow key={pool.address} pool={pool} />
-            ))}
-          </Table>
-        }
-      />
-      <PoolsOverview />
+      <BetaSnackbar />
+      <PageContent>
+        <ContentSection
+          header="All pools"
+          statistics={<PoolsStatistics />}
+          content={
+            <Table>
+              <thead>
+                <HeaderRow>
+                  <Header>Asset</Header>
+                  <Header>APY</Header>
+                  <Header>TVL</Header>
+                  <Header hideOnMobile>Your deposits</Header>
+                  <ChevronHeader />
+                </HeaderRow>
+              </thead>
+              {pools.map((pool: Pool) => (
+                <PoolsRow key={pool.address} pool={pool} />
+              ))}
+            </Table>
+          }
+        />
+        <PoolsOverview />
+      </PageContent>
     </StyledPoolsPage>
   );
 };
