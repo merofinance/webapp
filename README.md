@@ -24,33 +24,27 @@
 
 # Backd Website
 
-Welcome to the repo for the Backed Website - a React project implementing Web3 which allows users to interract with the Backd Protocol.
+Welcome to the repo for the Backed Website - a React project implementing Web3 which allows users to interract with the Backd Protocol.  
+If you are interested in contributing, please check out our [Contribution Guide](https://github.com/backdfund/webapp/blob/master/.github/CONTRIBUTING.md)
 
 ## Development
 
-- Install [Yarn](https://yarnpkg.com/)
-- Then run the following commands:
+Dependencies:
 
-```
-# Clone the project to download its contents
-> cd repositories
-> git clone https://github.com/backdfund/webapp.git
+- [Install Node.js](https://nodejs.org/en/download/)
+- [Install Yarn](https://classic.yarnpkg.com/en/docs/install/)
 
-# Make Yarn install the project's dependencies into node_modules/
-> cd webapp
-> yarn
+To run the app locally:
 
-# Startup the project
-> yarn start
-```
+- [Clone the Repository](https://www.google.com/search?q=how+to+clone+a+repository+from+github) to your local machine
+- [Open a Terminal](https://www.google.com/search?q=how+to+open+a+terminal+in+a+directory&oq=how+to+open+a+terminal+in+a+directory) at the app directory
+- [Change directory](https://www.google.com/search?q=how+to+cd+to+a+directory&oq=how+to+cd+to+a+directory) to the `webapp` directory
+- Run `yarn`
+- Run `yarn start`
+- Navigate to `http://localhost:3000/`
 
-- Open http://localhost:3000/ to view the website.
-
-To launch the application using mock data, use the following command:
-
-```
-env REACT_APP_USE_MOCK=1 yarn start
-```
+To launch the application using mock data, use the following command:  
+`env REACT_APP_USE_MOCK=1 yarn start`
 
 ## Testing
 
