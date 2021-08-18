@@ -20,7 +20,6 @@ const StyledHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 8rem;
   z-index: 1;
   transition: all 0.3s;
   padding: 2.4rem 12.4rem;
@@ -28,6 +27,7 @@ const StyledHeader = styled.div`
   background-color: ${(props: HeaderProps) => (props.isSticky ? "#120e2c" : "transparent")};
   box-shadow: -4px 0px 4px rgba(0, 0, 0, ${(props: HeaderProps) => (props.isSticky ? "0.25" : "0")});
 
+  margin-bottom: 7rem;
   @media (max-width: 600px) {
     padding: 2.3rem 1.6rem;
     margin-bottom: 0;
