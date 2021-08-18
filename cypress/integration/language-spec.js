@@ -1,3 +1,11 @@
+const isEnglish = () => {
+  cy.get("h1").contains("Reactive Liquidity");
+  cy.get("h3").contains(
+    "A trustless and interest generating protocol designed to prevent collateralized loans from becoming liquidatable."
+  );
+  cy.get('[id="How It Works - 2"]').contains("Stake to Earn Rewards");
+};
+
 const isJapanese = () => {
   cy.get("h1").contains("反応性流動資産");
   cy.get("h3").contains(
@@ -6,12 +14,10 @@ const isJapanese = () => {
   cy.get('[id="How It Works - 2"]').contains("利益獲得のための出資");
 };
 
-const isEnglish = () => {
-  cy.get("h1").contains("Reactive Liquidity");
-  cy.get("h3").contains(
-    "A trustless and interest generating protocol designed to prevent collateralized loans from becoming liquidatable."
-  );
-  cy.get('[id="How It Works - 2"]').contains("Stake to Earn Rewards");
+const isChinese = () => {
+  cy.get("h1").contains("激活流动性");
+  cy.get("h3").contains("一个去信任化和产生利息的清算保护协议");
+  cy.get('[id="How It Works - 2"]').contains("质押以赚取回报");
 };
 
 describe("Setting Language with Query Parameter", () => {
@@ -23,6 +29,11 @@ describe("Setting Language with Query Parameter", () => {
   it("Should Show Japanese with JA Parameter", () => {
     cy.visit("/?lng=ja");
     isJapanese();
+  });
+
+  it("Should Show Chinese with ZH Parameter", () => {
+    cy.visit("/?lng=zh");
+    isChinese();
   });
 
   it("Should Show English with EN Parameter", () => {
@@ -50,6 +61,19 @@ describe("Language Switching", () => {
   });
 
   it("Percy Should Screenshot Japanese Landing Page", () => {
+    cy.percySnapshot();
+  });
+
+  it("Should Change Language to Chinese", () => {
+    cy.get('[id="language-selector"]').click();
+    cy.get('[id="zh"]').click();
+  });
+
+  it("Should Show Chinese", () => {
+    isChinese();
+  });
+
+  it("Percy Should Screenshot Chinese Landing Page", () => {
     cy.percySnapshot();
   });
 
