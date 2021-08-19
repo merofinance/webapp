@@ -20,7 +20,7 @@
     }
   },
   "landingPage": {
-    "header": "反応性流動資産",
+    "header": "リアクティブ流動資産",
     "subHeader": "担保付ローンを清算から防ぐために設計された、管理者不在の利子生成プロトコルです。",
     "comingSoon": "coming soon",
     "viewPools": "プールを見る"
@@ -41,7 +41,7 @@
     "readMore": "続きを読む"
   },
   "howItWorks": {
-    "header": "どのように動くか",
+    "header": "Backdの使い方",
     "categories": {
       "earnYield": {
         "tabName": "利回りを稼ぐ",
@@ -58,12 +58,12 @@
           },
           "stake": {
             "number": "03",
-            "header": "利益獲得のための出資",
+            "header": "利益獲得のための預け入れ",
             "description": "Backdの報酬を受け取るためにプールのLPトークンを出資する."
           },
           "claim": {
             "number": "04",
-            "header": "出資の取り消しはいつでも可能",
+            "header": "お引き出しはいつでも可能",
             "description": "LPトークンの出資はいつでもご解約いただけます。また、Backdの報酬もいつでもご請求いただけます。"
           }
         }
@@ -88,7 +88,7 @@
           },
           "claim": {
             "number": "04",
-            "header": "出資の取り消しはいつでも可能",
+            "header": "お引き出しはいつでも可能",
             "description": "いつでも、持ち高の登録解除・更新・LPトークンのお引き出し・Backdの報酬の請求を行うことが可能です。"
           }
         }
@@ -99,9 +99,9 @@
     "header": "助成"
   },
   "auditedBy": {
-    "preLaunchHeader": "進行中の審査",
+    "preLaunchHeader": "進行中の監査",
     "header": "監査元",
-    "description": "ETHチューリッヒのセキュリティ専門家が主導しており、85以上のブロックチェーン企業や法人企業からの信頼をいただいております。",
+    "description": "85以上のブロックチェーン企業や法人企業からの信頼されている、チューリッヒ工科大学のセキュリティ専門家が主導しております。",
     "viewReport": "報告を見る"
   },
   "joinCommunity": {
@@ -130,7 +130,7 @@
       "header": "resources",
       "links": {
         "litepaper": "Litepaper",
-        "docs": "ドックス",
+        "docs": "ドキュメント",
         "blog": "ブログ",
         "factSheet": "概況報告"
       }
