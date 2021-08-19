@@ -3,13 +3,13 @@ const isEnglish = () => {
   cy.get("h3").contains(
     "A trustless and interest generating protocol designed to prevent collateralized loans from becoming liquidatable."
   );
-  cy.get('[id="How It Works - 2"]').contains("Stake to Earn Rewards");
+  cy.get("#how-it-works-2").contains("Stake to Earn Rewards");
 };
 
 const isChinese = () => {
   cy.get("h1").contains("响应式流动资产");
   cy.get("h3").contains("一个去信任化利息生成，旨在防止担保贷款被清算的保护协议");
-  cy.get('[id="How It Works - 2"]').contains("质押盈利");
+  cy.get("#how-it-works-2").contains("质押盈利");
 };
 
 describe("Setting Language with Query Parameter", () => {
@@ -39,8 +39,8 @@ describe("Language Switching", () => {
   });
 
   it("Should Change Language to Chinese", () => {
-    cy.get('[id="language-selector"]').click();
-    cy.get('[id="zh"]').click();
+    cy.get("#language-selector").click();
+    cy.get("#zh").click();
   });
 
   it("Should Show Chinese", () => {
@@ -52,8 +52,8 @@ describe("Language Switching", () => {
   });
 
   it("Should Change Language back to English", () => {
-    cy.get('[id="language-selector"]').click();
-    cy.get('[id="en"]').click();
+    cy.get("#language-selector").click();
+    cy.get("#en").click();
   });
 
   it("Should Show English again", () => {

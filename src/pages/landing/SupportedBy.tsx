@@ -107,7 +107,7 @@ const SupportedBy = (): JSX.Element => {
         {protocols.map((protocol: ProtocolType, index: number) => (
           <ProtocolContainer
             key={index}
-            id={`Supported By - ${protocol.name}`}
+            id={`supported-by-${protocol.name.toLowerCase()}`}
             href={protocol.link}
             target="_blank"
             rel="noopener noreferrer"
