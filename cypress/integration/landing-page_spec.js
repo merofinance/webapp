@@ -81,19 +81,19 @@ describe("How it Works", () => {
 
 describe("Supported By", () => {
   it("Should have Divergence Link", () => {
-    cy.get('[id="Supported By - Divergence"]')
+    cy.get("#supported-by-divergence")
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://www.div.vc/");
   });
 
   it("Should have Curve Link", () => {
-    cy.get('[id="Supported By - Curve"]')
+    cy.get("#supported-by-curve")
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://curve.fi/");
   });
 
   it("Should have Aave Link", () => {
-    cy.get('[id="Supported By - Aave"]')
+    cy.get("#supported-by-aave")
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "http://aave.com/");
   });
