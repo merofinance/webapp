@@ -35,8 +35,8 @@
       "description": "透过建基于Convex和Curve的流动资产挖矿策略赚取最大回报"
     },
     "feeShare": {
-      "header": "佣金分润",
-      "description": "流动资产提供者能分享从补充保证金服务所获得的佣金"
+      "header": "手续费分润",
+      "description": "流动性提供者能分享从补充保证金服务所获得的手续费"
     },
     "readMore": "了解更多"
   },
@@ -48,8 +48,8 @@
         "cards": {
           "deposit": {
             "number": "一",
-            "header": "存入流动资产",
-            "description": "为Backd流动资产池存款以获得LP凭证"
+            "header": "存入流动性",
+            "description": "为Backd流动性池存款以获得LP凭证"
           },
           "earn": {
             "number": "二",
@@ -73,8 +73,8 @@
         "cards": {
           "deposit": {
             "number": "一",
-            "header": "存入流动资产",
-            "description": "为Backd流动资产池存款以获得LP凭证"
+            "header": "存入流动性",
+            "description": "为Backd流动性池存款以获得LP凭证"
           },
           "register": {
             "number": "二",
@@ -132,7 +132,7 @@
         "litepaper": "简版白皮书",
         "docs": "文档",
         "blog": "博客",
-        "factSheet": "概括说明"
+        "factSheet": "资料页"
       }
     },
     "updates": {
