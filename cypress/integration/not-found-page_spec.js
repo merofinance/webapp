@@ -1,3 +1,5 @@
+import { percySnapshot } from "../support";
+
 describe("Innitial Load", () => {
   it("Should Load Not Found Page", () => {
     cy.visit("/askkasklaslkaskjl");
@@ -58,6 +60,6 @@ describe("External Links", () => {
 
 describe("Percy", () => {
   it("Should Screenshot Not Found Page", () => {
-    cy.percySnapshot();
+    percySnapshot();
   });
 });
