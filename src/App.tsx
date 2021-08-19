@@ -9,7 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Web3ReactProvider } from "@web3-react/core";
 import { ethers } from "ethers";
-import React from "react";
+import React, { Suspense } from "react";
 import { useDispatch } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
@@ -87,66 +87,68 @@ const App = (): JSX.Element => {
   };
 
   return (
-    <HelmetProvider>
-      <ErrorBoundary dispatch={dispatch}>
-        <Web3ReactProvider getLibrary={getLibrary}>
-          <Router>
-            <Background>
-              <Header />
-              <StyledApp>
-                <Content>
-                  <Switch>
-                    {LIVE && (
-                      <PrivateRoute path="/pool/:poolName">
-                        <PoolPage />
-                      </PrivateRoute>
-                    )}
+    <Suspense fallback={<div />}>
+      <HelmetProvider>
+        <ErrorBoundary dispatch={dispatch}>
+          <Web3ReactProvider getLibrary={getLibrary}>
+            <Router>
+              <Background>
+                <Header />
+                <StyledApp>
+                  <Content>
+                    <Switch>
+                      {LIVE && (
+                        <PrivateRoute path="/pool/:poolName">
+                          <PoolPage />
+                        </PrivateRoute>
+                      )}
 
-                    {LIVE && (
-                      <Route path="/connect">
-                        <ConnectWallet />
+                      {LIVE && (
+                        <Route path="/connect">
+                          <ConnectWallet />
+                        </Route>
+                      )}
+
+                      {LIVE && (
+                        <PrivateRoute path="/pools">
+                          <PoolsPage />
+                        </PrivateRoute>
+                      )}
+
+                      {STAKING_LIVE && (
+                        <Route path="/claim">
+                          <ClaimPage />
+                        </Route>
+                      )}
+
+                      {STAKING_LIVE && (
+                        <Route path="/stake">
+                          <StakePage />
+                        </Route>
+                      )}
+
+                      <Route path="/litepaper">
+                        <LitepaperPage />
                       </Route>
-                    )}
 
-                    {LIVE && (
-                      <PrivateRoute path="/pools">
-                        <PoolsPage />
-                      </PrivateRoute>
-                    )}
-
-                    {STAKING_LIVE && (
-                      <Route path="/claim">
-                        <ClaimPage />
+                      <Route exact path="/">
+                        <LandingPage />
                       </Route>
-                    )}
 
-                    {STAKING_LIVE && (
-                      <Route path="/stake">
-                        <StakePage />
+                      <Route>
+                        <NotFoundPage />
                       </Route>
-                    )}
-
-                    <Route path="/litepaper">
-                      <LitepaperPage />
-                    </Route>
-
-                    <Route exact path="/">
-                      <LandingPage />
-                    </Route>
-
-                    <Route>
-                      <NotFoundPage />
-                    </Route>
-                  </Switch>
-                </Content>
-                <Footer />
-                <ErrorAlert />
-              </StyledApp>
-            </Background>
-          </Router>
-        </Web3ReactProvider>
-      </ErrorBoundary>
-    </HelmetProvider>
+                    </Switch>
+                  </Content>
+                  <Footer />
+                  <ErrorAlert />
+                </StyledApp>
+              </Background>
+            </Router>
+          </Web3ReactProvider>
+        </ErrorBoundary>
+      </HelmetProvider>
+    </Suspense>
   );
 };
 

@@ -1,0 +1,146 @@
+{
+  "header": {
+    "tabs": {
+      "claim": "claim",
+      "pools": "pools",
+      "stake": "stake BKD",
+      "docs": "docs",
+      "blog": "blog",
+      "newsletter": "newsletter"
+    }
+  },
+  "walletConnect": {
+    "connectWallet": "Connect Wallet",
+    "header": "Connect your wallet",
+    "newToEthereum": "New to Ethereum?",
+    "aboutWallets": "Find out about wallets",
+    "wallets": {
+      "metaMask": "MetaMask",
+      "walletConnect": "WalletConnect"
+    }
+  },
+  "landingPage": {
+    "header": "Reactive Liquidity",
+    "subHeader": "A trustless and interest generating protocol designed to prevent collateralized loans from becoming liquidatable.",
+    "comingSoon": "coming soon",
+    "viewPools": "view pools"
+  },
+  "benefits": {
+    "avoidLiquidation": {
+      "header": "Avoid Liquidation",
+      "description": "Liquidity deposited in Backd and marked as back-up collateral will be automatically shifted when needed for collateral top-ups."
+    },
+    "earnYield": {
+      "header": "Earn Yield",
+      "description": "Earn interest on liquidity via yield-farming strategies based on Curve and Convex."
+    },
+    "feeShare": {
+      "header": "Fee Share",
+      "description": "A small fee charged on the collateral top-up amount is distributed among LPs."
+    },
+    "readMore": "Read more"
+  },
+  "howItWorks": {
+    "header": "how it works",
+    "categories": {
+      "earnYield": {
+        "tabName": "earn yield",
+        "cards": {
+          "deposit": {
+            "number": "01",
+            "header": "Deposit Liquidity",
+            "description": "Deposit funds into Backd liquidity pools and receive pool LP tokens."
+          },
+          "earn": {
+            "number": "02",
+            "header": "Earn Yield",
+            "description": "Earn compounded yield from strategy profits and protocol fees as LP tokens appreciate over the underlying tokens."
+          },
+          "stake": {
+            "number": "03",
+            "header": "Stake to Earn Rewards",
+            "description": "Stake your pool LP tokens to receive Backd rewards."
+          },
+          "claim": {
+            "number": "04",
+            "header": "Unstake Any Time",
+            "description": "Unstake your LP tokens or claim your Backd rewards at any time."
+          }
+        }
+      },
+      "earnAndProtect": {
+        "tabName": "earn & protect",
+        "cards": {
+          "deposit": {
+            "number": "01",
+            "header": "Deposit Liquidity",
+            "description": "Deposit funds into Backd liquidity pools and receive pool LP tokens."
+          },
+          "register": {
+            "number": "02",
+            "header": "Register Loan on-Chain",
+            "description": "Register Compound or Aave loans on-chain to receive collateral top-ups, and stake your pool LP tokens to earn Backd rewards."
+          },
+          "protect": {
+            "number": "03",
+            "header": "Protect & Earn",
+            "description": "Earn compounded yield and protocol fees as the LP token appreciates, while keepers monitor your loan and transfer your capital to avoid liquidation."
+          },
+          "claim": {
+            "number": "04",
+            "header": "Unstake Any Time",
+            "description": "Unregister or update a position, withdraw LP tokens or claim Backd rewards at any time."
+          }
+        }
+      }
+    }
+  },
+  "supportedBy": {
+    "header": "supported by"
+  },
+  "auditedBy": {
+    "preLaunchHeader": "audit in progress",
+    "header": "audited by",
+    "description": "Led by security experts from ETH Zurich and trusted by 85+ blockchain companies and corporations.",
+    "viewReport": "View Report"
+  },
+  "joinCommunity": {
+    "header": "join the community",
+    "socials": {
+      "discord": "Discord",
+      "twitter": "Twitter",
+      "github": "GitHub"
+    }
+  },
+  "getStarted": {
+    "header": "get started",
+    "description": "Deposit liquidity and start earning yield."
+  },
+  "footer": {
+    "community": {
+      "header": "community",
+      "links": {
+        "discord": "Discord",
+        "twitter": "Twitter",
+        "github": "GitHub",
+        "telegram": "Telegram Chat"
+      }
+    },
+    "resources": {
+      "header": "resources",
+      "links": {
+        "litepaper": "Litepaper",
+        "docs": "Docs",
+        "blog": "Blog",
+        "factSheet": "Fact Sheet"
+      }
+    },
+    "updates": {
+      "header": "updates",
+      "links": {
+        "newsletter": "Newsletter",
+        "telegram": "Telegram Ann."
+      }
+    }
+  }
+}

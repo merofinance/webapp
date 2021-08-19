@@ -6,6 +6,7 @@ import App from "./App";
 import { persistor, store } from "./app/store";
 import * as serviceWorker from "./serviceWorker";
 import GlobalStyles from "./styles/GlobalStyles";
+import "./app/i18n";
 
 ReactDOM.render(
   <React.StrictMode>

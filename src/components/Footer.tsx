@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
 import logo from "../assets/logo/full-logo.svg";
+import LanguageSelector from "./LanguageSelector";
 
 type LinkType = {
   internal: boolean;
@@ -16,66 +19,66 @@ type LinkListType = {
 
 const linkLists: LinkListType[] = [
   {
-    header: "community",
+    header: "footer.community.header",
     links: [
       {
         internal: false,
-        label: "Discord",
+        label: "footer.community.links.discord",
         link: "https://discord.gg/jpGvaFV3Rv",
       },
       {
         internal: false,
-        label: "Twitter",
+        label: "footer.community.links.twitter",
         link: "https://twitter.com/backdfund",
       },
       {
         internal: false,
-        label: "GitHub",
+        label: "footer.community.links.github",
         link: "https://github.com/backdfund",
       },
       {
         internal: false,
-        label: "Telegram Chat",
+        label: "footer.community.links.telegram",
         link: "https://t.me/backdchat",
       },
     ],
   },
   {
-    header: "resources",
+    header: "footer.resources.header",
     links: [
       {
         internal: true,
-        label: "Litepaper",
+        label: "footer.resources.links.litepaper",
         link: "/litepaper",
       },
       {
         internal: false,
-        label: "Docs",
+        label: "footer.resources.links.docs",
         link: "https://docs.backd.fund/",
       },
       {
         internal: false,
-        label: "Blog",
+        label: "footer.resources.links.blog",
         link: "https://backdfund.medium.com/",
       },
       {
         internal: false,
-        label: "Fact Sheet",
+        label: "footer.resources.links.factSheet",
         link: "/fact-sheet.pdf",
       },
     ],
   },
   {
-    header: "updates",
+    header: "footer.updates.header",
     links: [
       {
         internal: false,
-        label: "Newsletter",
+        label: "footer.updates.links.newsletter",
         link: "https://backd.substack.com/welcome",
       },
       {
         internal: false,
-        label: "Telegram Ann.",
+        label: "footer.updates.links.telegram",
         link: "https://t.me/backdfund",
       },
     ],
@@ -145,33 +148,35 @@ const InternalLink = styled(Link)`
 `;
 
 const Footer = (): JSX.Element => {
+  const { t } = useTranslation();
+
   return (
     <StyledFooter>
       <Logo src={logo} alt="Backd logo" />
       <div />
       {linkLists.map((linkList: LinkListType) => (
-        <LinkList key={linkList.header}>
-          <LinkHeader>{linkList.header}</LinkHeader>
+        <LinkList>
+          <LinkHeader>{t(linkList.header)}</LinkHeader>
           {linkList.links.map((link: LinkType) =>
             link.internal ? (
-              <InternalLink id={`Footer - ${link.label}`} key={link.label} to={link.link}>
-                {link.label}
+              <InternalLink id={link.label} key={link.label} to={link.link}>
+                {t(link.label)}
               </InternalLink>
             ) : (
               <ExternalLink
-                id={`Footer - ${link.label}`}
+                id={link.label}
                 key={link.label}
                 href={link.link}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {link.label}
+                {t(link.label)}
               </ExternalLink>
             )
           )}
         </LinkList>
       ))}
-      <div />
+      <LanguageSelector />
     </StyledFooter>
   );
 };

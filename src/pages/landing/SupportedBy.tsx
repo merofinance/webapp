@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
 import { Header2 } from "../../styles/Headers";
 import divergence from "../../assets/protocols/divergence.svg";
 import curve from "../../assets/protocols/curve.svg";
@@ -96,9 +98,11 @@ const Protocol = styled.img`
 `;
 
 const SupportedBy = (): JSX.Element => {
+  const { t } = useTranslation();
+
   return (
     <StyledSupportedBy>
-      <Header2>supported by</Header2>
+      <Header2>{t("supportedBy.header")}</Header2>
       <Protocols>
         {protocols.map((protocol: ProtocolType, index: number) => (
           <ProtocolContainer

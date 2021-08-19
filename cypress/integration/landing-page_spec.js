@@ -6,19 +6,19 @@ describe("Innitial Load", () => {
 
 describe("Nav Items", () => {
   it("Should have Docs Link", () => {
-    cy.get('[id="Header - docs"]')
+    cy.get('[id="header.tabs.docs"]')
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://docs.backd.fund/");
   });
 
   it("Should have Blog Link", () => {
-    cy.get('[id="Header - blog"]')
+    cy.get('[id="header.tabs.blog"]')
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://backdfund.medium.com/");
   });
 
   it("Should have Newsletter Link", () => {
-    cy.get('[id="Header - newsletter"]')
+    cy.get('[id="header.tabs.newsletter"]')
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://backd.substack.com/welcome");
   });
@@ -26,19 +26,19 @@ describe("Nav Items", () => {
 
 describe("Benefits", () => {
   it("Should have Avoid Liquidation Benefit", () => {
-    cy.get('[id="benefit - Avoid Liquidation"] > a')
+    cy.get('[id="benefits.avoidLiquidation.header"] > a')
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://docs.backd.fund/protocol-architecture/top-ups");
   });
 
   it("Should have Earn Yield Benefit", () => {
-    cy.get('[id="benefit - Earn Yield"] > a')
+    cy.get('[id="benefits.earnYield.header"] > a')
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://docs.backd.fund/protocol-architecture/pools");
   });
 
   it("Should have Fee Share Benefit", () => {
-    cy.get('[id="benefit - Fee Share"] > a')
+    cy.get('[id="benefits.feeShare.header"] > a')
       .should("have.attr", "target", "_blank")
       .should(
         "have.attr",
@@ -50,32 +50,32 @@ describe("Benefits", () => {
 
 describe("How it Works", () => {
   it("Should Show Earn Yeild Options", () => {
-    cy.get('[id="How It Works - 01"]').contains("Deposit Liquidity");
-    cy.get('[id="How It Works - 02"]').contains("Earn Yield");
-    cy.get('[id="How It Works - 03"]').contains("Stake to Earn Rewards");
-    cy.get('[id="How It Works - 04"]').contains("Unstake Any Time");
+    cy.get('[id="How It Works - 0"]').contains("Deposit Liquidity");
+    cy.get('[id="How It Works - 1"]').contains("Earn Yield");
+    cy.get('[id="How It Works - 2"]').contains("Stake to Earn Rewards");
+    cy.get('[id="How It Works - 3"]').contains("Unstake Any Time");
   });
 
-  it("Should Chang to Earn & Protect Tab", () => {
+  it("Should Change to Earn & Protect Tab", () => {
     cy.get('[id="Radio Option - protect"]').click();
   });
 
   it("Should Show Earn & Protect Options", () => {
-    cy.get('[id="How It Works - 01"]').contains("Deposit Liquidity");
-    cy.get('[id="How It Works - 02"]').contains("Register Loan on-Chain");
-    cy.get('[id="How It Works - 03"]').contains("Protect & Earn");
-    cy.get('[id="How It Works - 04"]').contains("Unstake Any Time");
+    cy.get('[id="How It Works - 0"]').contains("Deposit Liquidity");
+    cy.get('[id="How It Works - 1"]').contains("Register Loan on-Chain");
+    cy.get('[id="How It Works - 2"]').contains("Protect & Earn");
+    cy.get('[id="How It Works - 3"]').contains("Unstake Any Time");
   });
 
-  it("Should Chang to Earn Yield Tab", () => {
+  it("Should Change to Earn Yield Tab", () => {
     cy.get('[id="Radio Option - protect"]').click();
   });
 
   it("Should Show Earn Yeild Options", () => {
-    cy.get('[id="How It Works - 01"]').contains("Deposit Liquidity");
-    cy.get('[id="How It Works - 02"]').contains("Earn Yield");
-    cy.get('[id="How It Works - 03"]').contains("Stake to Earn Rewards");
-    cy.get('[id="How It Works - 04"]').contains("Unstake Any Time");
+    cy.get('[id="How It Works - 0"]').contains("Deposit Liquidity");
+    cy.get('[id="How It Works - 1"]').contains("Earn Yield");
+    cy.get('[id="How It Works - 2"]').contains("Stake to Earn Rewards");
+    cy.get('[id="How It Works - 3"]').contains("Unstake Any Time");
   });
 });
 
@@ -101,19 +101,19 @@ describe("Supported By", () => {
 
 describe("Join The Community", () => {
   it("Should have Discord Link", () => {
-    cy.get('[id="Join Community - Discord →"]')
+    cy.get('[id="joinCommunity.socials.discord"]')
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://discord.gg/jpGvaFV3Rv");
   });
 
   it("Should have Twitter Link", () => {
-    cy.get('[id="Join Community - Twitter →"]')
+    cy.get('[id="joinCommunity.socials.twitter"]')
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://twitter.com/backdfund");
   });
 
   it("Should have Telegram Link", () => {
-    cy.get('[id="Join Community - GitHub →"]')
+    cy.get('[id="joinCommunity.socials.github"]')
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://github.com/backdfund");
   });
@@ -121,31 +121,31 @@ describe("Join The Community", () => {
 
 describe("Footer", () => {
   it("Should have Discord Link", () => {
-    cy.get('[id="Footer - Discord"]')
+    cy.get('[id="footer.community.links.discord"]')
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://discord.gg/jpGvaFV3Rv");
   });
 
   it("Should have Twitter Link", () => {
-    cy.get('[id="Footer - Twitter"]')
+    cy.get('[id="footer.community.links.twitter"]')
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://twitter.com/backdfund");
   });
 
   it("Should have GitHub Link", () => {
-    cy.get('[id="Footer - GitHub"]')
+    cy.get('[id="footer.community.links.github"]')
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://github.com/backdfund");
   });
 
   it("Should have Telegram Chat Link", () => {
-    cy.get('[id="Footer - Telegram Chat"]')
+    cy.get('[id="footer.community.links.telegram"]')
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://t.me/backdchat");
   });
 
   it("Should have Litepaper Link", () => {
-    cy.get('[id="Footer - Litepaper"]').click();
+    cy.get('[id="footer.resources.links.litepaper"]').click();
     cy.location().should((loc) => {
       expect(loc.pathname).to.eq("/litepaper");
     });
@@ -153,31 +153,31 @@ describe("Footer", () => {
   });
 
   it("Should have Docs Link", () => {
-    cy.get('[id="Footer - Docs"]')
+    cy.get('[id="footer.resources.links.docs"]')
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://docs.backd.fund/");
   });
 
   it("Should have Blog Link", () => {
-    cy.get('[id="Footer - Blog"]')
+    cy.get('[id="footer.resources.links.blog"]')
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://backdfund.medium.com/");
   });
 
   it("Should have Blog Fact Sheet", () => {
-    cy.get('[id="Footer - Fact Sheet"]')
+    cy.get('[id="footer.resources.links.factSheet"]')
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "/fact-sheet.pdf");
   });
 
   it("Should have Newsletter Link", () => {
-    cy.get('[id="Footer - Newsletter"]')
+    cy.get('[id="footer.updates.links.newsletter"]')
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://backd.substack.com/welcome");
   });
 
   it("Should have Telegram Announcements Link", () => {
-    cy.get('[id="Footer - Telegram Ann."]')
+    cy.get('[id="footer.updates.links.telegram"]')
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://t.me/backdfund");
   });

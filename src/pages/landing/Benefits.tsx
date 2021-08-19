@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
 import percent from "../../assets/benefits/percent.svg";
 import plus from "../../assets/benefits/plus.svg";
 import shield from "../../assets/benefits/shield.svg";
@@ -9,28 +11,27 @@ import { Header4, Header5 } from "../../styles/Headers";
 type BenfitsType = {
   icon: string;
   header: string;
-  content: string;
+  description: string;
   url: string;
 };
 
 const benefits: BenfitsType[] = [
   {
     icon: shield,
-    header: "Avoid Liquidation",
-    content:
-      "Liquidity deposited in Backd and marked as back-up collateral will be automatically shifted when needed for collateral top-ups.",
+    header: "benefits.avoidLiquidation.header",
+    description: "benefits.avoidLiquidation.description",
     url: "https://docs.backd.fund/protocol-architecture/top-ups",
   },
   {
     icon: plus,
-    header: "Earn Yield",
-    content: "Earn interest on liquidity via yield-farming strategies based on Curve and Convex.",
+    header: "benefits.earnYield.header",
+    description: "benefits.earnYield.description",
     url: "https://docs.backd.fund/protocol-architecture/pools",
   },
   {
     icon: percent,
-    header: "Fee Share",
-    content: "A small fee charged on the collateral top-up amount is distributed among LPs.",
+    header: "benefits.feeShare.header",
+    description: "benefits.feeShare.description",
     url: "https://docs.backd.fund/protocol-architecture/top-ups/backd-keepers",
   },
 ];
@@ -149,6 +150,7 @@ const ReadMore = styled(GradientLink)`
 const Benefits = (): JSX.Element => {
   const benefitsRef = useRef<HTMLDivElement>(null);
   const [scrollPosition, setScrollPosition] = useState(0);
+  const { t } = useTranslation();
 
   const handleScroll = () => {
     const position = window.pageYOffset;
@@ -166,7 +168,7 @@ const Benefits = (): JSX.Element => {
   return (
     <StyledBenefits ref={benefitsRef}>
       {benefits.map((benefit: BenfitsType, index: number) => (
-        <Benefit key={benefit.header} id={`benefit - ${benefit.header}`}>
+        <Benefit key={benefit.header} id={benefit.header}>
           <IconContainer>
             <Icon src={benefit.icon} alt="benefit icon" />
           </IconContainer>
@@ -177,10 +179,10 @@ const Benefits = (): JSX.Element => {
           >
             <IconGlassGradient rotate={index === 1 ? 90 : index === 2 ? -90 : 0} />
           </IconGlass>
-          <Header4>{benefit.header}</Header4>
-          <Header5>{benefit.content}</Header5>
+          <Header4>{t(benefit.header)}</Header4>
+          <Header5>{t(benefit.description)}</Header5>
           <ReadMore href={benefit.url} target="_blank" rel="noopener noreferrer">
-            Read more →
+            {`${t("benefits.readMore")} →`}
           </ReadMore>
         </Benefit>
       ))}
