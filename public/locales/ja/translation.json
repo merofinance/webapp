@@ -1,0 +1,146 @@
+{
+  "header": {
+    "tabs": {
+      "claim": "ご請求",
+      "pools": "プール",
+      "stake": "BKDへの出資",
+      "docs": "ドックス",
+      "blog": "ブログ",
+      "newsletter": "メルマガ"
+    }
+  },
+  "walletConnect": {
+    "connectWallet": "ウォレットと接続",
+    "header": "ウォレットのアカウントと接続",
+    "newToEthereum": "イーサリアムのご利用は初めてですか？",
+    "aboutWallets": "ウォレットについて調べる",
+    "wallets": {
+      "metaMask": "MetaMask",
+      "walletConnect": "ウォレットを接続する"
+    }
+  },
+  "landingPage": {
+    "header": "反応性流動資産",
+    "subHeader": "担保付ローンを清算から防ぐために設計された、管理者不在の利子生成プロトコルです。",
+    "comingSoon": "coming soon",
+    "viewPools": "プールを見る"
+  },
+  "benefits": {
+    "avoidLiquidation": {
+      "header": "清算を回避する",
+      "description": "Backdに預け入れられ、予備の担保とされた流動性資産は担保の補充が必要とされた際に自動的に移動されます。"
+    },
+    "earnYield": {
+      "header": "利回りを稼ぐ",
+      "description": "CurveとConvexに基づくイールドファーミング戦略を通じて流動資産の利回りを稼ぎます。"
+    },
+    "feeShare": {
+      "header": "手数料の分担",
+      "description": "担保額に課せられる少額の手数料が、流動資産提供者間で分配されます。"
+    },
+    "readMore": "続きを読む"
+  },
+  "howItWorks": {
+    "header": "どのように動くか",
+    "categories": {
+      "earnYield": {
+        "tabName": "利回りを稼ぐ",
+        "cards": {
+          "deposit": {
+            "number": "01",
+            "header": "流動資産の入金",
+            "description": "Backdの流動資産プールに資金を預け入ることで、プールのLPトークンを受け取ります。"
+          },
+          "earn": {
+            "number": "02",
+            "header": "利回りを稼ぐ",
+            "description": "LPトークンが、原資産トークンよりも価値が上がるため、戦略利益とプロトコルの手数料から複合利回りを稼ぐことができます。"
+          },
+          "stake": {
+            "number": "03",
+            "header": "利益獲得のための出資",
+            "description": "Backdの報酬を受け取るためにプールのLPトークンを出資する."
+          },
+          "claim": {
+            "number": "04",
+            "header": "出資の取り消しはいつでも可能",
+            "description": "LPトークンの出資はいつでもご解約いただけます。また、Backdの報酬もいつでもご請求いただけます。"
+          }
+        }
+      },
+      "earnAndProtect": {
+        "tabName": "安全に稼ぐ",
+        "cards": {
+          "deposit": {
+            "number": "01",
+            "header": "流動資産の入金",
+            "description": "資金をBackdの流動資産プールに預け入れ、プールのLPトークンを受け取ります。"
+          },
+          "register": {
+            "number": "02",
+            "header": "オンチェーンのローンを登録する",
+            "description": "オンチェーンのCompoundローンまたはAaveローンを登録して担保の上積みを受け取り、プールのLPトークンに出資してBackdの報酬を得ます。"
+          },
+          "protect": {
+            "number": "03",
+            "header": "安全に稼ぐ",
+            "description": "Keeperがお客様のローンを追跡し清算から守り、お客様の資本を転送している間、LPトークンの価値が上がるにつれて、複合利回りとプロトコル料金を獲得します。"
+          },
+          "claim": {
+            "number": "04",
+            "header": "出資の取り消しはいつでも可能",
+            "description": "いつでも、持ち高の登録解除・更新・LPトークンのお引き出し・Backdの報酬の請求を行うことが可能です。"
+          }
+        }
+      }
+    }
+  },
+  "supportedBy": {
+    "header": "助成"
+  },
+  "auditedBy": {
+    "preLaunchHeader": "進行中の審査",
+    "header": "監査元",
+    "description": "ETHチューリッヒのセキュリティ専門家が主導しており、85以上のブロックチェーン企業や法人企業からの信頼をいただいております。",
+    "viewReport": "報告を見る"
+  },
+  "joinCommunity": {
+    "header": "コミュニティへのご参加",
+    "socials": {
+      "telegram": "Telegram",
+      "twitter": "Twitter",
+      "github": "GitHub"
+    }
+  },
+  "getStarted": {
+    "header": "はじめませんか？",
+    "description": "流動資産を預金し、利回りを獲得"
+  },
+  "footer": {
+    "community": {
+      "header": "Backdのコミュニティへに参加",
+      "links": {
+        "discord": "Discord",
+        "twitter": "Twitter",
+        "github": "GitHub",
+        "telegram": "Telegram Chat"
+      }
+    },
+    "resources": {
+      "header": "resources",
+      "links": {
+        "litepaper": "Litepaper",
+        "docs": "ドックス",
+        "blog": "ブログ",
+        "factSheet": "概況報告"
+      }
+    },
+    "updates": {
+      "header": "最新情報",
+      "links": {
+        "newsletter": "メルマガ",
+        "telegram": "Telegram Ann."
+      }
+    }
+  }
+}
