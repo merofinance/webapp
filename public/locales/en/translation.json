@@ -240,5 +240,43 @@
       "paragraph": "Backd will rely on a decentralized governance scheme, which will be introduced after the protocol launch. The protocol offers a lot of room for parameterization, such as required reserve ratios for pools, strategy allocation weights, reserve requirement weights for vaults or LP and keeper fees. Furthermore, new pools, strategies and supported protocols can be added via governance.",
       "disclaimer": "Disclaimer: a Backd governance token does not exist at this point, so please do not fall for scams."
     }
+  },
+  "pools": {
+    "header": "All pools",
+    "overview": {
+      "header": "",
+      "tvl": {
+        "header": "",
+        "tooltip": ""
+      },
+      "apy": {
+        "header": "",
+        "tooltip": ""
+      }
+    }
+  },
+  "pool": {
+    "header": "",
+    "overview": {
+      "header": "Pool Overview",
+      "tvl": {
+        "header": "Pool TVL",
+        "tooltip": "The market capitalization of assets held in the pool (total value locked)"
+      },
+      "apy": {
+        "header": "APY",
+        "tooltip": "The current annual percent yield earned by pool LPs"
+      },
+      "strategy": {
+        "header": "Strategy",
+        "tooltip": "The current protocol funds are allocated to for yield farming strategies"
+      }
+    }
+  },
+  "headers": {
+    "asset": "Asset",
+    "apy": "APY",
+    "tvl": "TVL",
+    "deposits": "Your deposits"
   }
 }
