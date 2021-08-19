@@ -15,9 +15,9 @@ const isJapanese = () => {
 };
 
 const isChinese = () => {
-  cy.get("h1").contains("激活流动性");
-  cy.get("h3").contains("一个去信任化和产生利息的清算保护协议");
-  cy.get('[id="How It Works - 2"]').contains("质押以赚取回报");
+  cy.get("h1").contains("响应式流动资产");
+  cy.get("h3").contains("一个去信任化利息生成，旨在防止担保贷款被清算的保护协议");
+  cy.get('[id="How It Works - 2"]').contains("质押盈利");
 };
 
 describe("Setting Language with Query Parameter", () => {
