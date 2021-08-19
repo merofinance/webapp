@@ -13,11 +13,11 @@ const isChinese = () => {
 };
 
 const isJapanese = () => {
-  cy.get("h1").contains("反応性流動資産");
+  cy.get("h1").contains("リアクティブ流動資産");
   cy.get("h3").contains(
     "担保付ローンを清算から防ぐために設計された、管理者不在の利子生成プロトコルです。"
   );
-  cy.get("#how-it-works-2").contains("利益獲得のための出資");
+  cy.get("#how-it-works-2").contains("利益獲得のための預け入れ");
 };
 
 describe("Setting Language with Query Parameter", () => {
