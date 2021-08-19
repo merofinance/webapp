@@ -1,3 +1,5 @@
+import { percySnapshot } from "../support";
+
 describe("Innitial Load", () => {
   it("Should Load Home Page", () => {
     cy.visit("/");
@@ -185,6 +187,6 @@ describe("Footer", () => {
 
 describe("Percy", () => {
   it("Should Screenshot Landing Page", () => {
-    cy.percySnapshot();
+    percySnapshot();
   });
 });
