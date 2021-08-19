@@ -155,7 +155,7 @@ const Footer = (): JSX.Element => {
       <Logo src={logo} alt="Backd logo" />
       <div />
       {linkLists.map((linkList: LinkListType) => (
-        <LinkList>
+        <LinkList key={linkList.header}>
           <LinkHeader>{t(linkList.header)}</LinkHeader>
           {linkList.links.map((link: LinkType) =>
             link.internal ? (
