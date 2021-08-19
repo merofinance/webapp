@@ -57,7 +57,7 @@ describe("How it Works", () => {
   });
 
   it("Should Change to Earn & Protect Tab", () => {
-    cy.get('[id="Radio Option - protect"]').click();
+    cy.get("#radio-option-protect").click();
   });
 
   it("Should Show Earn & Protect Options", () => {
@@ -68,7 +68,7 @@ describe("How it Works", () => {
   });
 
   it("Should Change to Earn Yield Tab", () => {
-    cy.get('[id="Radio Option - protect"]').click();
+    cy.get("#radio-option-earn").click();
   });
 
   it("Should Show Earn Yeild Options", () => {
