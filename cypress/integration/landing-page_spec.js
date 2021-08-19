@@ -50,10 +50,10 @@ describe("Benefits", () => {
 
 describe("How it Works", () => {
   it("Should Show Earn Yeild Options", () => {
-    cy.get('[id="How It Works - 0"]').contains("Deposit Liquidity");
-    cy.get('[id="How It Works - 1"]').contains("Earn Yield");
-    cy.get('[id="How It Works - 2"]').contains("Stake to Earn Rewards");
-    cy.get('[id="How It Works - 3"]').contains("Unstake Any Time");
+    cy.get("#how-it-works-0").contains("Deposit Liquidity");
+    cy.get("#how-it-works-1").contains("Earn Yield");
+    cy.get("#how-it-works-2").contains("Stake to Earn Rewards");
+    cy.get("#how-it-works-3").contains("Unstake Any Time");
   });
 
   it("Should Change to Earn & Protect Tab", () => {
@@ -61,10 +61,10 @@ describe("How it Works", () => {
   });
 
   it("Should Show Earn & Protect Options", () => {
-    cy.get('[id="How It Works - 0"]').contains("Deposit Liquidity");
-    cy.get('[id="How It Works - 1"]').contains("Register Loan on-Chain");
-    cy.get('[id="How It Works - 2"]').contains("Protect & Earn");
-    cy.get('[id="How It Works - 3"]').contains("Unstake Any Time");
+    cy.get("#how-it-works-0").contains("Deposit Liquidity");
+    cy.get('[id="how-it-works-1"]').contains("Register Loan on-Chain");
+    cy.get('[id="how-it-works-2"]').contains("Protect & Earn");
+    cy.get("#how-it-works-3").contains("Unstake Any Time");
   });
 
   it("Should Change to Earn Yield Tab", () => {
@@ -72,10 +72,10 @@ describe("How it Works", () => {
   });
 
   it("Should Show Earn Yeild Options", () => {
-    cy.get('[id="How It Works - 0"]').contains("Deposit Liquidity");
-    cy.get('[id="How It Works - 1"]').contains("Earn Yield");
-    cy.get('[id="How It Works - 2"]').contains("Stake to Earn Rewards");
-    cy.get('[id="How It Works - 3"]').contains("Unstake Any Time");
+    cy.get("#how-it-works-0").contains("Deposit Liquidity");
+    cy.get("#how-it-works-1").contains("Earn Yield");
+    cy.get("#how-it-works-2").contains("Stake to Earn Rewards");
+    cy.get("#how-it-works-3").contains("Unstake Any Time");
   });
 });
 
