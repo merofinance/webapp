@@ -1,3 +1,5 @@
+import { percySnapshot } from "../support";
+
 const isEnglish = () => {
   cy.get("h1").contains("Reactive Liquidity");
   cy.get("h3").contains(
@@ -48,7 +50,7 @@ describe("Language Switching", () => {
   });
 
   it("Percy Should Screenshot Chinese Landing Page", () => {
-    cy.percySnapshot();
+    percySnapshot();
   });
 
   it("Should Change Language back to English", () => {
