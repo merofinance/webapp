@@ -274,7 +274,19 @@
     }
   },
   "pool": {
-    "header": "",
+    "tabs": {
+      "deposit": {
+        "tab": "Deposit"
+      },
+      "withdraw": {
+        "tab": "Withdraw"
+      },
+      "positions": {
+        "tabDesktop": "Top-up Positions",
+        "tabMobile": "Positions",
+        "button": "Create a Top-up Position"
+      }
+    },
     "overview": {
       "header": "Pool Overview",
       "tvl": {
