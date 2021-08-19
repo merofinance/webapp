@@ -50,50 +50,50 @@ describe("Benefits", () => {
 
 describe("How it Works", () => {
   it("Should Show Earn Yeild Options", () => {
-    cy.get('[id="How It Works - 0"]').contains("Deposit Liquidity");
-    cy.get('[id="How It Works - 1"]').contains("Earn Yield");
-    cy.get('[id="How It Works - 2"]').contains("Stake to Earn Rewards");
-    cy.get('[id="How It Works - 3"]').contains("Unstake Any Time");
+    cy.get("#how-it-works-0").contains("Deposit Liquidity");
+    cy.get("#how-it-works-1").contains("Earn Yield");
+    cy.get("#how-it-works-2").contains("Stake to Earn Rewards");
+    cy.get("#how-it-works-3").contains("Unstake Any Time");
   });
 
   it("Should Change to Earn & Protect Tab", () => {
-    cy.get('[id="Radio Option - protect"]').click();
+    cy.get("#radio-option-protect").click();
   });
 
   it("Should Show Earn & Protect Options", () => {
-    cy.get('[id="How It Works - 0"]').contains("Deposit Liquidity");
-    cy.get('[id="How It Works - 1"]').contains("Register Loan on-Chain");
-    cy.get('[id="How It Works - 2"]').contains("Protect & Earn");
-    cy.get('[id="How It Works - 3"]').contains("Unstake Any Time");
+    cy.get("#how-it-works-0").contains("Deposit Liquidity");
+    cy.get('[id="how-it-works-1"]').contains("Register Loan on-Chain");
+    cy.get('[id="how-it-works-2"]').contains("Protect & Earn");
+    cy.get("#how-it-works-3").contains("Unstake Any Time");
   });
 
   it("Should Change to Earn Yield Tab", () => {
-    cy.get('[id="Radio Option - protect"]').click();
+    cy.get("#radio-option-earn").click();
   });
 
   it("Should Show Earn Yeild Options", () => {
-    cy.get('[id="How It Works - 0"]').contains("Deposit Liquidity");
-    cy.get('[id="How It Works - 1"]').contains("Earn Yield");
-    cy.get('[id="How It Works - 2"]').contains("Stake to Earn Rewards");
-    cy.get('[id="How It Works - 3"]').contains("Unstake Any Time");
+    cy.get("#how-it-works-0").contains("Deposit Liquidity");
+    cy.get("#how-it-works-1").contains("Earn Yield");
+    cy.get("#how-it-works-2").contains("Stake to Earn Rewards");
+    cy.get("#how-it-works-3").contains("Unstake Any Time");
   });
 });
 
 describe("Supported By", () => {
   it("Should have Divergence Link", () => {
-    cy.get('[id="Supported By - Divergence"]')
+    cy.get("#supported-by-divergence")
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://www.div.vc/");
   });
 
   it("Should have Curve Link", () => {
-    cy.get('[id="Supported By - Curve"]')
+    cy.get("#supported-by-curve")
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://curve.fi/");
   });
 
   it("Should have Aave Link", () => {
-    cy.get('[id="Supported By - Aave"]')
+    cy.get("#supported-by-aave")
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "http://aave.com/");
   });

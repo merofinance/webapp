@@ -99,7 +99,7 @@ const Radio = (props: Props): JSX.Element => {
       {props.options.map((option: RadioOptionType) => (
         <RadioOption
           key={option.label}
-          id={`Radio Option - ${option.value}`}
+          id={`radio-option-${option.value}`}
           onClick={() => props.setOption(option.value)}
           active={option.value === props.active}
         >
