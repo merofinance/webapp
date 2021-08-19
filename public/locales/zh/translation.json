@@ -6,7 +6,7 @@
       "stake": "质押BKD",
       "docs": "文档",
       "blog": "博客",
-      "newsletter": "通信"
+      "newsletter": "订阅"
     }
   },
   "walletConnect": {
@@ -20,8 +20,8 @@
     }
   },
   "landingPage": {
-    "header": "激活流动性",
-    "subHeader": "一个去信任化和产生利息的清算保护协议",
+    "header": "响应式流动资产",
+    "subHeader": "一个去信任化利息生成，旨在防止担保贷款被清算的保护协议",
     "comingSoon": "敬请期待",
     "viewPools": "查看池子"
   },
@@ -31,34 +31,34 @@
       "description": "当需要补充保证金时，存放在Backd的备用资产将自动转到贷款协议以作保证金"
     },
     "earnYield": {
-      "header": "赚取年化",
-      "description": "透过建基于Convex和Curve的流动性挖矿策略赚取年化"
+      "header": "赚取收益",
+      "description": "透过建基于Convex和Curve的流动资产挖矿策略赚取最大回报"
     },
     "feeShare": {
-      "header": "手续费分润",
-      "description": "流动性提供者能分享从补充保证金服务所获得的手续费"
+      "header": "佣金分润",
+      "description": "流动资产提供者能分享从补充保证金服务所获得的佣金"
     },
-    "readMore": "阅读更多"
+    "readMore": "了解更多"
   },
   "howItWorks": {
     "header": "机制介绍",
     "categories": {
       "earnYield": {
-        "tabName": "赚取年化",
+        "tabName": "赚取收益",
         "cards": {
           "deposit": {
             "number": "一",
-            "header": "存入流动性",
-            "description": "为Backd流动性池存款以获得LP凭证"
+            "header": "存入流动资产",
+            "description": "为Backd流动资产池存款以获得LP凭证"
           },
           "earn": {
             "number": "二",
-            "header": "赚取年化",
-            "description": "透过策略收益和协议收入，赚取随LP凭证单价增长的复合年化"
+            "header": "赚取收益",
+            "description": "透过策略收益和协议收入，赚取随LP凭证单价增长的复合收益"
           },
           "stake": {
             "number": "三",
-            "header": "质押以赚取回报",
+            "header": "质押盈利",
             "description": "质押LP凭证以获得Backd收益"
           },
           "claim": {
@@ -69,22 +69,22 @@
         }
       },
       "earnAndProtect": {
-        "tabName": "赚取年化和保护仓位",
+        "tabName": "安全赚取",
         "cards": {
           "deposit": {
             "number": "一",
-            "header": "存入流动性",
-            "description": "为Backd流动性池存款以获得LP凭证"
+            "header": "存入流动资产",
+            "description": "为Backd流动资产池存款以获得LP凭证"
           },
           "register": {
             "number": "二",
-            "header": "链上登记贷款",
-            "description": "链上登记来自Compound或Aave的贷款以获得抵押品补充并质押LP凭证以赚取Backd年化"
+            "header": "登记链上贷款",
+            "description": "登记来自Compound或Aave的链上贷款以获得抵押品补充并质押LP凭证以赚取Backd收益"
           },
           "protect": {
             "number": "三",
-            "header": "保护仓位并赚取年化",
-            "description": "赚取随LP凭证单价增长的复合年化，同时享受守门人保障免受清算的服务"
+            "header": "安全放心地赚取",
+            "description": "赚取随LP凭证单价增长的复合收益，同时享受守门人(Keeper)保障免受清算的服务"
           },
           "claim": {
             "number": "四",
@@ -114,7 +114,7 @@
   },
   "getStarted": {
     "header": "开始使用",
-    "description": "存入流动性以赚取年化"
+    "description": "存入流动资产以赚取收益"
   },
   "footer": {
     "community": {
@@ -129,16 +129,16 @@
     "resources": {
       "header": "资源",
       "links": {
-        "litepaper": "轻量白皮书",
+        "litepaper": "简版白皮书",
         "docs": "文档",
         "blog": "博客",
-        "factSheet": "简介"
+        "factSheet": "概括说明"
       }
     },
     "updates": {
       "header": "最新消息",
       "links": {
-        "newsletter": "通信",
+        "newsletter": "订阅",
         "telegram": "电报频道"
       }
     }
