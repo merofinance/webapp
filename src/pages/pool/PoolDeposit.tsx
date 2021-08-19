@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
 import { useDevice } from "../../app/hooks/use-device";
 import AmountInput from "../../components/AmountInput";
 import ContentSection from "../../components/ContentSection";
@@ -21,13 +23,20 @@ type Props = {
 };
 
 const PoolDeposit = ({ pool }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const availableToDeposit = useSelector(selectBalance(pool.underlying.address));
   const [depositAmount, setDepositAmount] = useState("");
   const { isMobile } = useDevice();
 
+  const header = t("pool.tabs.deposit.header").replace("[[ASSET]]", pool.underlying.symbol);
+
+  const inputLabel = isMobile
+    ? t("pool.tabs.deposit.input.labelMobile")
+    : t("pool.tabs.deposit.input.labelDesktop").replace("[[ASSET]]", pool.underlying.symbol);
+
   return (
     <ContentSection
-      header={`Deposit ${pool.underlying.symbol.toUpperCase()}`}
+      header={header}
       statistics={<PoolStatistics pool={pool} />}
       content={
         <Content>
@@ -35,11 +44,7 @@ const PoolDeposit = ({ pool }: Props): JSX.Element => {
             token={pool.underlying}
             value={depositAmount}
             setValue={(v: string) => setDepositAmount(v)}
-            label={
-              isMobile
-                ? "Enter amount to deposit"
-                : `Enter an amount of ${pool.underlying.symbol} to deposit`
-            }
+            label={inputLabel}
             max={availableToDeposit}
           />
           <DepositButtons

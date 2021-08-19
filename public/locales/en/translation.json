@@ -276,7 +276,12 @@
   "pool": {
     "tabs": {
       "deposit": {
-        "tab": "Deposit"
+        "tab": "Deposit",
+        "header": "Deposit [[ASSET]]",
+        "input": {
+          "labelMobile": "Enter amount to deposit",
+          "labelDesktop": "Enter an amount of [[ASSET]] to deposit"
+        }
       },
       "withdraw": {
         "tab": "Withdraw"
