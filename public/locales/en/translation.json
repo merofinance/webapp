@@ -289,6 +289,20 @@
         "header": "Strategy",
         "tooltip": "The current protocol funds are allocated to for yield farming strategies"
       }
+    },
+    "statistics": {
+      "deposits": {
+        "header": "Your deposits",
+        "tooltip": "The current value of your assets held in the pools"
+      },
+      "locked": {
+        "header": "Locked in position",
+        "tooltip": "The current value of your assets registered for top-ups (liquidation protection)"
+      },
+      "rewards": {
+        "header": "Rewards accrued",
+        "tooltip": "The current value of earned rewards that have yet to be claimed"
+      }
     }
   },
   "headers": {

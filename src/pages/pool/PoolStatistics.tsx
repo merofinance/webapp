@@ -1,5 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+
 import Statistics from "../../components/Statistics";
 import { Pool, Position } from "../../lib/types";
 import { selectPrice } from "../../state/selectors";
@@ -13,6 +15,7 @@ type Props = {
 };
 
 const PoolStatistics = ({ pool }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const price = useSelector(selectPrice(pool));
   const balance = useSelector(selectBalance(pool));
   const positions = useSelector(selectPoolPositions(pool));
@@ -27,21 +30,20 @@ const PoolStatistics = ({ pool }: Props): JSX.Element => {
     <Statistics
       statistics={[
         {
-          header: "Your deposits",
-          tooltip: "The current value of your assets held in Backd liquidity pools",
+          header: t("pool.statistics.deposits.header"),
+          tooltip: t("pool.statistics.deposits.tooltip"),
           value: formatCurrency(Number(deposits.toString())),
         },
         {
-          header: "Locked in position",
-          tooltip:
-            "The current value of your assets registered for top-ups (liquidation protection)",
+          header: t("pool.statistics.locked.header"),
+          tooltip: t("pool.statistics.locked.tooltip"),
           value: formatCurrency(Number(locked.toString())),
         },
-        // {
-        //   header: "Rewards accrued",
-        //   tooltip: "The current value of earned rewards that have yet to be claimed",
-        //   value: formatCurrency(0),
-        // },
+        {
+          header: t("pool.statistics.rewards.header"),
+          tooltip: t("pool.statistics.rewards.tooltip"),
+          value: formatCurrency(0),
+        },
       ]}
     />
   );
