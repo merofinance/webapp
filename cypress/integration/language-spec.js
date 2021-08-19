@@ -76,7 +76,7 @@ describe("Language Switching", () => {
   });
 
   it("Percy Should Screenshot Japanese Landing Page", () => {
-    cy.percySnapshot();
+    percySnapshot();
   });
 
   it("Should Change Language back to English", () => {
