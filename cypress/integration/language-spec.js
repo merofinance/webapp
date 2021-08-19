@@ -39,8 +39,8 @@ describe("Language Switching", () => {
   });
 
   it("Should Change Language to Chinese", () => {
-    cy.get('[id="language-selector"]').click();
-    cy.get('[id="zh"]').click();
+    cy.get("#language-selector").click();
+    cy.get("#zh").click();
   });
 
   it("Should Show Chinese", () => {
@@ -52,8 +52,8 @@ describe("Language Switching", () => {
   });
 
   it("Should Change Language back to English", () => {
-    cy.get('[id="language-selector"]').click();
-    cy.get('[id="en"]').click();
+    cy.get("#language-selector").click();
+    cy.get("#en").click();
   });
 
   it("Should Show English again", () => {
