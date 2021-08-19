@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { GradientLink } from "../../styles/GradientText";
 import { useDevice } from "../../app/hooks/use-device";
@@ -103,35 +104,36 @@ const ExternalLink = styled(GradientLink)`
 
 const NotFoundPage = () => {
   const { isMobile } = useDevice();
+  const { t } = useTranslation();
 
   return (
     <StyledNotFoundPage>
-      <Number id="not-found-number">404</Number>
-      <Header>{isMobile ? "Page not found" : "Page could not be found."}</Header>
+      <Number id="not-found-number">{t("notFound.number")}</Number>
+      <Header>{isMobile ? t("notFound.header.mobile") : t("notFound.header.desktop")}</Header>
       <SubHeader>
-        Try one of the handy links below - or{" "}
+        {t("notFound.subHeader.start")}{" "}
         <GetInTouch
           id="not-found-support"
           href="https://discord.gg/jpGvaFV3Rv"
           target="_blank"
           rel="noopener noreferrer"
         >
-          get in touch
+          {t("notFound.subHeader.getInTouch")}
         </GetInTouch>{" "}
-        if you believe there is an issue.
+        {t("notFound.subHeader.end")}
       </SubHeader>
       <LinkContainer>
         <InternalLink id="not-found-home" to="/">
-          home page
+          {t("notFound.links.home")}
         </InternalLink>
         {LIVE && (
           <InternalLink id="not-found-pools" to="/pools">
-            view all pools
+            {t("notFound.links.pools")}
           </InternalLink>
         )}
         {LIVE && (
           <InternalLink id="not-found-claim" to="/claim">
-            claim page
+            {t("notFound.links.claim")}
           </InternalLink>
         )}
         <ExternalLink
@@ -140,7 +142,7 @@ const NotFoundPage = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Docs
+          {t("notFound.links.docs")}
         </ExternalLink>
       </LinkContainer>
     </StyledNotFoundPage>
