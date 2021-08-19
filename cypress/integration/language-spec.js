@@ -12,6 +12,14 @@ const isChinese = () => {
   cy.get('[id="How It Works - 2"]').contains("质押盈利");
 };
 
+const isJapanese = () => {
+  cy.get("h1").contains("反応性流動資産");
+  cy.get("h3").contains(
+    "担保付ローンを清算から防ぐために設計された、管理者不在の利子生成プロトコルです。"
+  );
+  cy.get('[id="How It Works - 2"]').contains("利益獲得のための出資");
+};
+
 describe("Setting Language with Query Parameter", () => {
   it("Should Show English with no Parameter", () => {
     cy.visit("/");
@@ -21,6 +29,11 @@ describe("Setting Language with Query Parameter", () => {
   it("Should Show Chinese with ZH Parameter", () => {
     cy.visit("/?lng=zh");
     isChinese();
+  });
+
+  it("Should Show Japanese with JA Parameter", () => {
+    cy.visit("/?lng=ja");
+    isJapanese();
   });
 
   it("Should Show English with EN Parameter", () => {
@@ -48,6 +61,19 @@ describe("Language Switching", () => {
   });
 
   it("Percy Should Screenshot Chinese Landing Page", () => {
+    cy.percySnapshot();
+  });
+
+  it("Should Change Language to Japanese", () => {
+    cy.get('[id="language-selector"]').click();
+    cy.get('[id="ja"]').click();
+  });
+
+  it("Should Show Japanese", () => {
+    isJapanese();
+  });
+
+  it("Percy Should Screenshot Japanese Landing Page", () => {
     cy.percySnapshot();
   });
 
