@@ -438,5 +438,14 @@
     "confirm": "Confirm",
     "cancelDesktop": "Cancel",
     "cancelMobile": "Back"
+  },
+  "errors": {
+    "header": "An Error Occured",
+    "support": "Please try again in a moment. If the error persists, you can contact us on",
+    "positionCreation": "Position creation failed",
+    "wrongNetwork": "Wrong network selected, please use a development network",
+    "fetchPrices": "failed to fetch prices: {{error}}",
+    "invalidNumber": "Not a valid number",
+    "negativeNumber": "Negative numbers not supported"
   }
 }

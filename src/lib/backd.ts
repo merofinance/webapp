@@ -82,7 +82,7 @@ export class Web3Backd implements Backd {
       case 1337:
         return contracts["1337"];
       default:
-        throw new Error("Wrong network selected, please use a development network");
+        throw new Error("errors.wrongNetwork");
     }
   }
 
@@ -270,7 +270,7 @@ export class Web3Backd implements Backd {
 
   async getPrices(symbols: string[]): Promise<Prices> {
     return getPrices(symbols).catch((e) => {
-      throw new Error(`failed to fetch prices: ${e.message}`);
+      throw new Error("errors.fetchPrices");
     });
   }
 

@@ -118,7 +118,7 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
     dispatch(registerPosition({ position, pool, backd })).then((v: any) => {
       setLoading(false);
       if (v.meta.requestStatus === "rejected")
-        dispatch(setError({ error: "Position creation failed" }));
+        dispatch(setError({ error: t("errors.positionCreation") }));
       else {
         complete();
         close();

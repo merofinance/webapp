@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+
 import { AppDispatch } from "../app/store";
 import Popup from "./Popup";
 import { Paragraph } from "../styles/Headers";
@@ -33,6 +35,7 @@ const Link = styled(GradientLink)`
 `;
 
 export function ErrorAlert(): JSX.Element {
+  const { t } = useTranslation();
   const error = useSelector(selectError);
   const dispatch: AppDispatch = useDispatch();
 
@@ -40,14 +43,14 @@ export function ErrorAlert(): JSX.Element {
     <Popup
       show={!!error}
       close={() => dispatch(setError({ error: "" }))}
-      header="An Error Occured"
+      header={t("errors.header")}
       content={
         <Content>
-          <Text>{`Error: ${error}`}</Text>
+          <Text>{`Error: ${t(error)}`}</Text>
           <Text>
-            Please try again in a moment. If the error persists, you can contact us on
+            {t("errors.support")}
             <Link href="https://discord.gg/jpGvaFV3Rv" target="_blank" rel="noopener noreferrer">
-              Discord
+              {t("footer.community.links.discord")}
             </Link>
           </Text>
           <Button

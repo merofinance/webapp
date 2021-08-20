@@ -105,8 +105,8 @@ export const bigNumberToString = (number: BigNumber, decimals: number): string =
 };
 
 export const stringToBigNumber = (value: string, decimals: number): BigNumber => {
-  if (!value || value === ".") throw new Error("Not a valid number");
-  if (value.substring(0, 1) === "-") throw new Error("Negative numbers not supported");
+  if (!value || value === ".") throw new Error("errors.invalidNumber");
+  if (value.substring(0, 1) === "-") throw new Error("errors.negativeNumber");
 
   const [num, power] = value.split("e");
 
