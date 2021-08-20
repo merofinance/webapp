@@ -28,11 +28,11 @@ const PoolDeposit = ({ pool }: Props): JSX.Element => {
   const [depositAmount, setDepositAmount] = useState("");
   const { isMobile } = useDevice();
 
-  const header = t("pool.tabs.deposit.header").replace("[[ASSET]]", pool.underlying.symbol);
+  const header = t("pool.tabs.deposit.header", { asset: pool.underlying.symbol });
 
   const inputLabel = isMobile
     ? t("pool.tabs.deposit.input.labelMobile")
-    : t("pool.tabs.deposit.input.labelDesktop").replace("[[ASSET]]", pool.underlying.symbol);
+    : t("pool.tabs.deposit.input.labelDesktop", { asset: pool.underlying.symbol });
 
   return (
     <ContentSection
