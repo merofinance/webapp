@@ -285,7 +285,8 @@
         "action": "Deposit and Stake"
       },
       "withdraw": {
-        "tab": "Withdraw"
+        "tab": "Withdraw",
+        "action": "Withdraw {{asset}}"
       },
       "positions": {
         "tabDesktop": "Top-up Positions",
