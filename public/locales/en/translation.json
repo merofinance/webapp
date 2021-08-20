@@ -327,5 +327,14 @@
     "apy": "APY",
     "tvl": "TVL",
     "deposits": "Your deposits"
+  },
+  "amountInput": {
+    "available": "Available: {{ammount}}",
+    "max": "max",
+    "validation": {
+      "positive": "Amount must be a positive number",
+      "exceedsBalance": "Amount exceeds available balance",
+      "invalid": "Invalid number"
+    }
   }
 }

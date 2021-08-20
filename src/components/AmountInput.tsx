@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { ScaledNumber } from "../lib/scaled-number";
 import { Token } from "../lib/types";
@@ -32,20 +33,22 @@ type Props = {
 };
 
 const AmountInput = ({ token, value, setValue, label, max, noSlider }: Props): JSX.Element => {
+  const { t } = useTranslation();
+
   const error = () => {
-    if (value && Number(value) <= 0) return "Amount must be a positive number";
+    if (value && Number(value) <= 0) return t("amountInput.validation.positive");
     try {
       const amount = ScaledNumber.fromUnscaled(value, token.decimals);
-      if (amount.gt(max)) return "Amount exceeds available balance";
+      if (amount.gt(max)) return t("amountInput.validation.exceedsBalance");
       return "";
     } catch {
-      return "Invalid number";
+      return t("amountInput.validation.invalid");
     }
   };
 
   return (
     <StyledAmountInput>
-      <Available>{`Available: ${max.toCryptoString()}`}</Available>
+      <Available>{t("amountInput.available", { ammount: max.toCryptoString() })}</Available>
       <Input
         valid={!error()}
         label={label}
@@ -53,7 +56,7 @@ const AmountInput = ({ token, value, setValue, label, max, noSlider }: Props): J
         type="number"
         onChange={(v: string) => setValue(v)}
         background="#100830"
-        buttonText="max"
+        buttonText={t("amountInput.max")}
         buttonAction={() => setValue(max.toString())}
         errorMessage={error()}
       />
