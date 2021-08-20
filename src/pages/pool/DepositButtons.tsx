@@ -50,13 +50,13 @@ const DepositButtons = ({ value, pool, complete }: Props): JSX.Element => {
       {pool.underlying.address !== ETH_DUMMY_ADDRESS && (
         <MultiStepButtons
           disabled={value.isZero()}
-          firstText={t("amountInput.approve", pool.underlying.symbol)}
+          firstText={t("amountInput.approve", { asset: pool.underlying.symbol })}
           firstAction={executeApprove}
           firstComplete={approved}
           firstHoverText={t("amountInput.enter")}
           secondText={t("pool.tabs.deposit.action")}
           secondAction={executeDeposit}
-          secondHoverText={t("amountInput.approve", pool.underlying.symbol)}
+          secondHoverText={t("amountInput.approve", { asset: pool.underlying.symbol })}
         />
       )}
       {pool.underlying.address === ETH_DUMMY_ADDRESS && (

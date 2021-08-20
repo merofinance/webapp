@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
 import Seo from "../../components/Seo";
 import StakeSummary from "./StakeSummary";
 import StakeAccordion from "./StakeAccodion";
@@ -53,6 +55,7 @@ const ArrowHeader = styled.div`
 `;
 
 const StakePage = (): JSX.Element => {
+  const { t } = useTranslation();
   const [activePool, setActivePool] = useState<number | null>(0);
 
   const isOpen = (index: number): boolean => activePool !== null && activePool === index;
@@ -65,11 +68,11 @@ const StakePage = (): JSX.Element => {
       />
       <StakeSummary />
       <Headers>
-        <Header>Asset</Header>
-        <Header hideMobile>Claimable (USD)</Header>
-        <Header>APR</Header>
-        <Header>Staked</Header>
-        <Header hideMobile>TVL</Header>
+        <Header>{t("headers.asset")}</Header>
+        <Header hideMobile>{t("headers.claimable")}</Header>
+        <Header>{t("headers.apr")}</Header>
+        <Header>{t("headers.staked")}</Header>
+        <Header hideMobile>{t("headers.tvl")}</Header>
         <ArrowHeader />
       </Headers>
       {pools.map((pool: string, index: number) => (

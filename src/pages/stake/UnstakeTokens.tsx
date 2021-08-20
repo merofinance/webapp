@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import LaunchIcon from "@material-ui/icons/Launch";
+import { useTranslation } from "react-i18next";
 
 import AmountInput from "../../components/AmountInput";
 import MultiStepButtons from "../../components/MultiStepButtons";
@@ -60,6 +61,7 @@ type Props = {
 };
 
 const UnstakeTokens = ({ token }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const balance = useSelector(selectBalance(token.address));
   const { isMobile } = useDevice();
 
@@ -78,9 +80,9 @@ const UnstakeTokens = ({ token }: Props): JSX.Element => {
   return (
     <StyledUnstakeTokens>
       <Description>
-        Stake BKD and earn a share in x% of platform revenue, paid out in bkdDAI tokens.{" "}
+        {t("stake.tabs.unstake.description")}{" "}
         <MoreLink href="" target="_blank" rel="noopener noreferrer">
-          More
+          {t("stake.tabs.unstake.more")}
           <LaunchIcon
             fontSize={isMobile ? "small" : "medium"}
             style={{ fill: "var(--secondary)", transform: "translateY(2px)" }}
@@ -93,19 +95,21 @@ const UnstakeTokens = ({ token }: Props): JSX.Element => {
           noSlider
           value={value}
           setValue={(v: string) => setValue(v)}
-          label={isMobile ? "Amount of BKD to unstake" : "Enter an amount of BKD to unstake"}
+          label={
+            isMobile ? t("stake.tabs.unstake.inputMobile") : t("stake.tabs.unstake.inputDesktop")
+          }
           max={balance}
         />
         <MultiStepButtons
           stepsOnTop
           disabled={!value}
-          firstText={`Approve ${token.symbol}`}
+          firstText={t("amountInput.approve", { asset: token.symbol })}
           firstAction={approve}
           firstComplete={approved}
-          firstHoverText="Enter Amount"
-          secondText="Unstake and Withdraw"
+          firstHoverText={t("amountInput.enter")}
+          secondText={t("stake.tabs.unstake.action")}
           secondAction={unstake}
-          secondHoverText={`Approve ${token.symbol}`}
+          secondHoverText={t("amountInput.approve", { asset: token.symbol })}
         />
       </Content>
     </StyledUnstakeTokens>

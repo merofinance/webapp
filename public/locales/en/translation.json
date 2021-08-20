@@ -393,6 +393,24 @@
     "overview": {
       "claimable": "claimable",
       "deposits": "your total deposits"
+    },
+    "tabs": {
+      "stake": {
+        "header": "stake",
+        "description": "Stake BKD and earn a share in x% of platform revenue, paid out in bkdDAI tokens.",
+        "more": "More",
+        "inputDesktop": "Enter an amount of BKD to stake",
+        "inputMobile": "Amount of BKD to stake",
+        "action": "Deposit and Stake"
+      },
+      "unstake": {
+        "header": "unstake",
+        "description": "Stake BKD and earn a share in x% of platform revenue, paid out in bkdDAI tokens.",
+        "more": "More",
+        "inputDesktop": "Enter an amount of BKD to unstake",
+        "inputMobile": "Amount of BKD to unstake",
+        "action": "Unstake and Withdraw"
+      }
     }
   },
   "headers": {
@@ -401,7 +419,8 @@
     "apy": "APY",
     "tvl": "TVL",
     "deposits": "Your deposits",
-    "claimable": "Claimable (USD)"
+    "claimable": "Claimable (USD)",
+    "staked": "Staked"
   },
   "amountInput": {
     "available": "Available: {{amount}}",
@@ -411,7 +430,7 @@
       "exceedsBalance": "Amount exceeds available balance",
       "invalid": "Invalid number"
     },
-    "approve": "Approve {{amount}}",
+    "approve": "Approve {{asset}}",
     "enter": "Enter Amount"
   },
   "components": {
