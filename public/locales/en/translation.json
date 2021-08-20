@@ -374,6 +374,18 @@
       }
     }
   },
+  "claim": {
+    "overview": {
+      "claimable": "claimable",
+      "deposits": "your total deposits"
+    }
+  },
+  "stake": {
+    "overview": {
+      "claimable": "claimable",
+      "deposits": "your total deposits"
+    }
+  },
   "headers": {
     "asset": "Asset",
     "apy": "APY",
