@@ -336,6 +336,11 @@
             "positive": "Must be positive number",
             "exceedsBalance": "Exceeds deposited balance"
           }
+        },
+        "confirmation": {
+          "header": "Confirm top-up position",
+          "summaryStart": "When the collateralization of",
+          "summaryEnd": "drops below {{threshold}}, it will be topped up with {{single}} {{asset}} ({{singleUsd}}). This will be repeated each time the collateralization ratio drops below {{threshold}}, until a total of {{max}} {{asset}} ({{maxUsd}}) is topped up."
         }
       }
     },

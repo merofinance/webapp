@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import LaunchIcon from "@material-ui/icons/Launch";
+import { useTranslation } from "react-i18next";
 
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
@@ -39,6 +40,7 @@ const Address = styled(GradientLink)`
   line-height: 2.4rem;
   letter-spacing: 0.15px;
   cursor: pointer;
+  margin-left: 0.5rem;
 
   font-size: 1.6rem;
   @media (max-width: 600px) {
@@ -101,6 +103,7 @@ type Props = {
 };
 
 const NewPositionConfirmation = ({ show, close, position, pool, complete }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const price = useSelector(selectPrice(pool));
   const backd = useBackd();
@@ -127,14 +130,14 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
     <Popup
       show={show}
       close={close}
-      header="Confirm top-up position"
+      header={t("pool.tabs.positions.confirmation.header")}
       confirm
       submit={() => executeRegister()}
       loading={loading}
       content={
         <Content>
           <Summary>
-            {`When the collateralization of `}
+            {t("pool.tabs.positions.confirmation.summaryStart")}
             <Address
               href={`${ETHERSCAN_URL}${position.account}`}
               target="_blank"
@@ -143,26 +146,27 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
               {shortenAddress(position.account, isMobile ? 10 : 26)}
               <LaunchIcon style={{ fill: "var(--secondary)" }} />
             </Address>
-            {` drops below ${position.threshold.toString()}, it will
-            be topped up with ${position.singleTopUp} ${
-              pool.underlying.symbol
-            } (${position.singleTopUp.toUsdValue(price)}). This will be repeated each time the
-            collateralization ratio drops below ${position.threshold}, until a total of ${
-              position.maxTopUp
-            } ${pool.underlying.symbol} (${position.maxTopUp.toUsdValue(price)}) is topped up.`}
+            {t("pool.tabs.positions.confirmation.summaryEnd", {
+              threshold: position.threshold,
+              single: position.singleTopUp,
+              asset: pool.underlying.symbol,
+              singleUsd: position.singleTopUp.toUsdValue(price),
+              max: position.maxTopUp,
+              maxUsd: position.maxTopUp.toUsdValue(price),
+            })}
           </Summary>
           <PositionSummary>
             <SummaryRow>
               <Label>
-                Protocol
-                <Tooltip content="The lending protocol on which the user is borrowing funds (currently compatible with Aave and Compound)" />
+                {t("pool.tabs.positions.fields.protocol.label")}
+                <Tooltip content={t("pool.tabs.positions.fields.protocol.tooltip")} />
               </Label>
               <Label>{position.protocol}</Label>
             </SummaryRow>
             <SummaryRow>
               <Label>
-                Borrower
-                <Tooltip content="The address of the owner of the position to top up (e.g. if Alice is the borrower on Aave that should be topped up then this would be Alice’s address)" />
+                {t("pool.tabs.positions.fields.address.label")}
+                <Tooltip content={t("pool.tabs.positions.fields.address.tooltip")} />
               </Label>
               <AddressLabel
                 href={`${ETHERSCAN_URL}${position.account}`}
@@ -175,22 +179,22 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
             </SummaryRow>
             <SummaryRow>
               <Label>
-                Threshold
-                <Tooltip content="The health factor threshold a collateral top up should occur at" />
+                {t("pool.tabs.positions.fields.threshold.label")}
+                <Tooltip content={t("pool.tabs.positions.fields.threshold.tooltip")} />
               </Label>
               <Label>{position.threshold.toString()}</Label>
             </SummaryRow>
             <SummaryRow>
               <Label>
-                Singe top-up
-                <Tooltip content="Amount of a single top up increment (e.g. top up increments of 2,500 DAI)" />
+                {t("pool.tabs.positions.fields.single.label")}
+                <Tooltip content={t("pool.tabs.positions.fields.single.tooltip")} />
               </Label>
               <Label>{position.singleTopUp.toCryptoString()}</Label>
             </SummaryRow>
             <SummaryRow>
               <Label>
-                Total top-up
-                <Tooltip content="Maximum top up amount (value of your liquidity allocated for top ups)" />
+                {t("pool.tabs.positions.fields.max.label")}
+                <Tooltip content={t("pool.tabs.positions.fields.max.tooltip")} />
               </Label>
               <Label>{position.maxTopUp.toCryptoString()}</Label>
             </SummaryRow>
