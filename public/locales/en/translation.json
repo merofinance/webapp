@@ -281,7 +281,8 @@
         "input": {
           "labelMobile": "Enter amount to deposit",
           "labelDesktop": "Enter an amount of {{asset}} to deposit"
-        }
+        },
+        "action": "Deposit and Stake"
       },
       "withdraw": {
         "tab": "Withdraw"
@@ -329,12 +330,14 @@
     "deposits": "Your deposits"
   },
   "amountInput": {
-    "available": "Available: {{ammount}}",
+    "available": "Available: {{amount}}",
     "max": "max",
     "validation": {
       "positive": "Amount must be a positive number",
       "exceedsBalance": "Amount exceeds available balance",
       "invalid": "Invalid number"
-    }
+    },
+    "approve": "Approve {{amount}}",
+    "enter": "Enter Amount"
   }
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { Pool } from "../../lib";
 import { useLoading } from "../../app/hooks/use-loading";
@@ -18,6 +19,7 @@ type Props = {
 };
 
 const DepositButtons = ({ value, pool, complete }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const dispatch: AppDispatch = useDispatch();
   const backd = useBackd();
   const { loading, setLoading, handleTxDispatch } = useLoading();
@@ -48,13 +50,13 @@ const DepositButtons = ({ value, pool, complete }: Props): JSX.Element => {
       {pool.underlying.address !== ETH_DUMMY_ADDRESS && (
         <MultiStepButtons
           disabled={value.isZero()}
-          firstText={`Approve ${pool.underlying.symbol}`}
+          firstText={t("amountInput.approve", pool.underlying.symbol)}
           firstAction={executeApprove}
           firstComplete={approved}
-          firstHoverText="Enter Amount"
-          secondText="Deposit and Stake"
+          firstHoverText={t("amountInput.enter")}
+          secondText={t("pool.tabs.deposit.action")}
           secondAction={executeDeposit}
-          secondHoverText={`Approve ${pool.underlying.symbol}`}
+          secondHoverText={t("amountInput.approve", pool.underlying.symbol)}
         />
       )}
       {pool.underlying.address === ETH_DUMMY_ADDRESS && (
@@ -62,7 +64,7 @@ const DepositButtons = ({ value, pool, complete }: Props): JSX.Element => {
           primary
           medium
           wide
-          text="Deposit and Stake"
+          text={t("pool.tabs.deposit.action")}
           click={async () => {
             setLoading(true);
             await executeDeposit();
@@ -70,7 +72,7 @@ const DepositButtons = ({ value, pool, complete }: Props): JSX.Element => {
           }}
           disabled={value.isZero()}
           loading={loading}
-          hoverText="Enter Amount"
+          hoverText={t("amountInput.enter")}
         />
       )}
     </>
