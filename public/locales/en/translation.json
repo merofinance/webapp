@@ -291,7 +291,52 @@
       "positions": {
         "tabDesktop": "Top-up Positions",
         "tabMobile": "Positions",
-        "button": "Create a Top-up Position"
+        "header": "Top-up {{asset}} positions",
+        "buttons": {
+          "nav": "Create a Top-up Position",
+          "approve": "approve 1/2",
+          "create": "create 2/2"
+        },
+        "fields": {
+          "protocol": {
+            "label": "Protocol",
+            "tooltip": "The lending protocol on which the user is borrowing funds (currently compatible with Aave and Compound)",
+            "hover": "Select Protocol"
+          },
+          "address": {
+            "label": "Address",
+            "tooltip": "The address of the owner of the position to top up (e.g. if Alice is the borrower on Aave that should be topped up then this would be Alice’s address)",
+            "hover": "Enter Address",
+            "required": "Address is required",
+            "invalid": "Invalid Address",
+            "unique": "Max of one position per protocol and address"
+          },
+          "threshold": {
+            "label": "Threshold",
+            "tooltip": "The health factor threshold a collateral top up should occur at",
+            "hover": "Enter Threshold",
+            "required": "Threshold is required",
+            "greaterThanOne": "Must be greater than 1"
+          },
+          "single": {
+            "label": "Single Top Up",
+            "tooltip": "Amount of a single top up increment (e.g. top up increments of 2,500 DAI)",
+            "hover": "Enter Single Top Up",
+            "required": "Single Top Up is required",
+            "invalid": "Invalid number",
+            "positive": "Must be positive number",
+            "lessThanMax": "Must be less than max top up"
+          },
+          "max": {
+            "label": "Max Top Up",
+            "tooltip": "Maximum top up amount (value of your liquidity allocated for top ups)",
+            "hover": "Enter Max Top Up",
+            "required": "Max Top Up required",
+            "invalid": "Invalid number",
+            "positive": "Must be positive number",
+            "exceedsBalance": "Exceeds deposited balance"
+          }
+        }
       }
     },
     "overview": {
@@ -340,5 +385,8 @@
     },
     "approve": "Approve {{amount}}",
     "enter": "Enter Amount"
+  },
+  "components": {
+    "dropdownChoose": "choose"
   }
 }

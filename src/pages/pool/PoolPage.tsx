@@ -101,7 +101,7 @@ const PoolPage = (): JSX.Element => {
           <ButtonContainer>
             <Button
               medium
-              text={`+ ${t("pool.tabs.positions.button")}`}
+              text={`+ ${t("pool.tabs.positions.buttons.nav")}`}
               click={() => setTab("positions")}
               background="#0A0525"
             />
