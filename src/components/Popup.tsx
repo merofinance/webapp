@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
 import close from "../assets/ui/close.svg";
 import { useDevice } from "../app/hooks/use-device";
 import Button from "./Button";
@@ -84,6 +86,7 @@ type Props = {
 };
 
 const Popup = (props: Props): JSX.Element => {
+  const { t } = useTranslation();
   const { isMobile } = useDevice();
 
   if (!props.show) return <></>;
@@ -100,13 +103,13 @@ const Popup = (props: Props): JSX.Element => {
             <Button
               medium
               background="#252140"
-              text={isMobile ? "Back" : "Cancel"}
+              text={isMobile ? t("components.cancelMobile") : t("components.cancelDesktop")}
               click={props.close}
             />
             <Button
               primary
               medium
-              text="Confirm"
+              text={t("components.confirm")}
               click={() => {
                 if (props.submit) props.submit();
               }}
