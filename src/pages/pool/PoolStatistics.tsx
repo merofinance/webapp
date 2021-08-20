@@ -39,11 +39,11 @@ const PoolStatistics = ({ pool }: Props): JSX.Element => {
           tooltip: t("pool.statistics.locked.tooltip"),
           value: formatCurrency(Number(locked.toString())),
         },
-        {
-          header: t("pool.statistics.rewards.header"),
-          tooltip: t("pool.statistics.rewards.tooltip"),
-          value: formatCurrency(0),
-        },
+        // {
+        //   header: t("pool.statistics.rewards.header"),
+        //   tooltip: t("pool.statistics.rewards.tooltip"),
+        //   value: formatCurrency(0),
+        // },
       ]}
     />
   );
