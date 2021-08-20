@@ -1,5 +1,7 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+
 import { useDevice } from "../../app/hooks/use-device";
 import Accordion from "../../components/Accordion";
 import AccordionChevron from "../../components/AccordionChevron";
@@ -104,6 +106,7 @@ interface Props {
 }
 
 const ClaimAccordion = ({ open, toggle, rows }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const { isMobile, isDesktop } = useDevice();
 
   return (
@@ -129,21 +132,23 @@ const ClaimAccordion = ({ open, toggle, rows }: Props): JSX.Element => {
           <EndContainer>
             {isDesktop && (
               <Button
-                text="Claim all"
+                text={t("claim.buttons.claimAll")}
                 background="#1c0c37"
                 width="12rem"
                 small={isMobile}
                 primary={isMobile}
               />
             )}
-            {isDesktop && <Button primary text="Claim all & Stake" width="18rem" />}
+            {isDesktop && (
+              <Button primary text={t("claim.buttons.claimAllAndStake")} width="18rem" />
+            )}
             <AccordionChevron open={open} />
           </EndContainer>
         </Header>
       }
       content={
         <ContentContainer>
-          <Breakdown>Breakdown of claimable earnings:</Breakdown>
+          <Breakdown>{t("claim.breakdown")}</Breakdown>
           {rows.map((row: string, index: number) => (
             <ClaimRow key={row} index={index} />
           ))}

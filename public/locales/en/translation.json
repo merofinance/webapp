@@ -378,7 +378,16 @@
     "overview": {
       "claimable": "claimable",
       "deposits": "your total deposits"
-    }
+    },
+    "buttons": {
+      "claim": "Claim",
+      "claimAndStake": "Claim & Stake",
+      "claimAll": "Claim all",
+      "claimAllAndStake": "Claim all & Stake"
+    },
+    "pool": "{{asset}} pool",
+    "breakdown": "Breakdown of claimable earnings:",
+    "helpText": "Where are my pool rewards?"
   },
   "stake": {
     "overview": {
@@ -388,9 +397,11 @@
   },
   "headers": {
     "asset": "Asset",
+    "apr": "APR",
     "apy": "APY",
     "tvl": "TVL",
-    "deposits": "Your deposits"
+    "deposits": "Your deposits",
+    "claimable": "Claimable (USD)"
   },
   "amountInput": {
     "available": "Available: {{amount}}",
