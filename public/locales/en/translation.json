@@ -286,6 +286,11 @@
       },
       "withdraw": {
         "tab": "Withdraw",
+        "header": "Withdraw {{asset}}",
+        "input": {
+          "labelMobile": "Enter amount to withdraw",
+          "labelDesktop": "Enter an amount of {{asset}} to withdraw"
+        },
         "action": "Withdraw {{asset}}"
       },
       "positions": {
