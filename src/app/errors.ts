@@ -45,6 +45,9 @@ export class UnsupportedNetwork extends BackdError {
       network = `chain id ${this.chainId}`;
     }
 
+    if (this.chainId === 1)
+      return "Backd is not yet live on mainnet. You can test it now on Kovan by switching networks.";
+
     return (
       `Please change network. You are currently using ${network}, which is not supported. ` +
       "Backd currently supports Kovan and chain id 1337 for developement."
