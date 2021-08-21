@@ -2,6 +2,7 @@ import React from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import { useWeb3React } from "@web3-react/core";
 
 import Button from "../../components/Button";
 import { Header1, Header3 } from "../../styles/Headers";
@@ -23,6 +24,7 @@ const Hero = (): JSX.Element => {
   const history = useHistory();
   const { t } = useTranslation();
   const { protocolLive } = useIsLive();
+  const { chainId } = useWeb3React();
 
   return (
     <StyledHero>
@@ -32,10 +34,22 @@ const Hero = (): JSX.Element => {
         primary
         hero
         large
-        inactive={!protocolLive}
-        text={protocolLive ? t("landingPage.viewPools") : t("landingPage.changeNetwork")}
+        inactive={!protocolLive && chainId !== 1}
+        text={
+          protocolLive
+            ? t("landingPage.viewPools")
+            : chainId === 1
+            ? t("landingPage.changeNetwork")
+            : t("landingPage.unsupportedNetwork")
+        }
         click={() => {
-          if (!protocolLive) return;
+          if (!protocolLive) {
+            if (chainId !== 1) return;
+            return (window as any).ethereum.request({
+              method: "wallet_switchEthereumChain",
+              params: [{ chainId: "0x2a" }],
+            });
+          }
           history.push("/pools");
         }}
       />
