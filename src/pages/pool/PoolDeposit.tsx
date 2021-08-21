@@ -28,15 +28,13 @@ const PoolDeposit = ({ pool }: Props): JSX.Element => {
   const [depositAmount, setDepositAmount] = useState("");
   const { isMobile } = useDevice();
 
-  const header = t("pool.tabs.deposit.header", { asset: pool.underlying.symbol });
-
   const inputLabel = isMobile
     ? t("pool.tabs.deposit.input.labelMobile")
     : t("pool.tabs.deposit.input.labelDesktop", { asset: pool.underlying.symbol });
 
   return (
     <ContentSection
-      header={header}
+      header={t("pool.tabs.deposit.header", { asset: pool.underlying.symbol })}
       statistics={<PoolStatistics pool={pool} />}
       content={
         <Content>
