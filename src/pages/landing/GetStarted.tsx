@@ -62,7 +62,7 @@ const Body = styled.p`
 const GetStarted = (): JSX.Element => {
   const history = useHistory();
   const { t } = useTranslation();
-  const { protocolLive, live } = useIsLive();
+  const { protocolLive } = useIsLive();
 
   return (
     <StyledGetStarted>
@@ -73,13 +73,7 @@ const GetStarted = (): JSX.Element => {
           primary
           large
           inactive={!protocolLive}
-          text={
-            live
-              ? protocolLive
-                ? t("landingPage.viewPools")
-                : t("landingPage.changeNetwork")
-              : t("landingPage.comingSoon")
-          }
+          text={protocolLive ? t("landingPage.viewPools") : t("landingPage.changeNetwork")}
           click={() => {
             if (!protocolLive) return;
             history.push("/pools");

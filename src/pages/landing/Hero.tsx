@@ -23,7 +23,7 @@ const StyledHero = styled.div`
 const Hero = (): JSX.Element => {
   const history = useHistory();
   const { t } = useTranslation();
-  const { protocolLive, live } = useIsLive();
+  const { protocolLive } = useIsLive();
   const { chainId } = useWeb3React();
 
   return (
@@ -36,13 +36,11 @@ const Hero = (): JSX.Element => {
         large
         inactive={!protocolLive && chainId !== 1}
         text={
-          live
-            ? protocolLive
-              ? t("landingPage.viewPools")
-              : chainId === 1
-              ? t("landingPage.changeNetwork")
-              : t("landingPage.unsupportedNetwork")
-            : t("landingPage.comingSoon")
+          protocolLive
+            ? t("landingPage.viewPools")
+            : chainId === 1
+            ? t("landingPage.changeNetwork")
+            : t("landingPage.unsupportedNetwork")
         }
         click={() => {
           if (!protocolLive) {

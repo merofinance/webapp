@@ -50,8 +50,6 @@ const Logo = styled.img`
 const Header = (): JSX.Element => {
   const [scrollPosition, setScrollPosition] = useState(0);
 
-  const { live } = useIsLive();
-
   const handleScroll = () => {
     const position = window.pageYOffset;
     setScrollPosition(position);
@@ -71,7 +69,7 @@ const Header = (): JSX.Element => {
         <Logo src={logo} alt="Backd logo" />
       </Link>
       <NavItems />
-      {live && <Connector />}
+      <Connector />
     </StyledHeader>
   );
 };

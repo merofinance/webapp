@@ -25,6 +25,7 @@ const Content = styled.div`
 
 const LandingPage = (): JSX.Element => {
   const { protocolLive } = useIsLive();
+
   return (
     <StyledLanding>
       <Background />

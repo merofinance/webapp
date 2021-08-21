@@ -8,6 +8,8 @@ import chainSecurity from "../../assets/audit/chain-security.svg";
 import { GradientLink } from "../../styles/GradientText";
 import { useIsLive } from "../../app/hooks/use-is-live";
 
+const AUDIT_COMPLETED = false;
+
 const StyledAuditedBy = styled.div`
   width: 100%;
   margin: var(--section-margin);
@@ -118,7 +120,6 @@ const Background = styled.img`
 
 const AuditedBy = (): JSX.Element => {
   const { t } = useTranslation();
-  const { live } = useIsLive();
 
   return (
     <StyledAuditedBy>
@@ -126,10 +127,12 @@ const AuditedBy = (): JSX.Element => {
         <Background src={background} alt="decorative background" />
         <Logo src={chainSecurity} alt="Chain Security logo" />
         <Content>
-          <Header>{live ? t("auditedBy.header") : t("auditedBy.preLaunchHeader")}</Header>
+          <Header>
+            {AUDIT_COMPLETED ? t("auditedBy.header") : t("auditedBy.preLaunchHeader")}
+          </Header>
           <MobileLogo src={chainSecurityMobile} alt="Chain Security logo" />
           <Description>{t("auditedBy.description")}</Description>
-          {live && (
+          {AUDIT_COMPLETED && (
             <ViewReport href="" target="_blank" rel="noopener noreferrer">
               {`${t("auditedBy.viewReport")} →`}
             </ViewReport>

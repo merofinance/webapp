@@ -75,7 +75,7 @@ library.add(faInfoCircle, faClock, faCheck, faTimesCircle, faExternalLinkAlt, fa
 const App = (): JSX.Element => {
   const dispatch: AppDispatch = useDispatch();
 
-  const { live, protocolLive, stakingLive } = useIsLive();
+  const { stakingLive } = useIsLive();
 
   const getLibrary = (rawProvider: any, connector: any) => {
     const provider = new ethers.providers.Web3Provider(rawProvider);
@@ -101,23 +101,17 @@ const App = (): JSX.Element => {
                 <StyledApp>
                   <Content>
                     <Switch>
-                      {protocolLive && (
-                        <PrivateRoute path="/pool/:poolName">
-                          <PoolPage />
-                        </PrivateRoute>
-                      )}
+                      <PrivateRoute path="/pool/:poolName">
+                        <PoolPage />
+                      </PrivateRoute>
 
-                      {live && (
-                        <Route path="/connect">
-                          <ConnectWallet />
-                        </Route>
-                      )}
+                      <Route path="/connect">
+                        <ConnectWallet />
+                      </Route>
 
-                      {protocolLive && (
-                        <PrivateRoute path="/pools">
-                          <PoolsPage />
-                        </PrivateRoute>
-                      )}
+                      <PrivateRoute path="/pools">
+                        <PoolsPage />
+                      </PrivateRoute>
 
                       {stakingLive && (
                         <Route path="/claim">
