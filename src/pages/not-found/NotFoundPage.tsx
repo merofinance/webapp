@@ -106,7 +106,7 @@ const ExternalLink = styled(GradientLink)`
 const NotFoundPage = (): JSX.Element => {
   const { isMobile } = useDevice();
   const { t } = useTranslation();
-  const { chainSupported } = useIsLive();
+  const { protocolLive } = useIsLive();
 
   return (
     <StyledNotFoundPage>
@@ -128,7 +128,7 @@ const NotFoundPage = (): JSX.Element => {
         <InternalLink id="not-found-home" to="/">
           {t("notFound.links.home")}
         </InternalLink>
-        {chainSupported && (
+        {protocolLive && (
           <InternalLink id="not-found-pools" to="/pools">
             {t("notFound.links.pools")}
           </InternalLink>

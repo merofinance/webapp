@@ -62,7 +62,7 @@ const Body = styled.p`
 const GetStarted = (): JSX.Element => {
   const history = useHistory();
   const { t } = useTranslation();
-  const { chainSupported } = useIsLive();
+  const { protocolLive } = useIsLive();
 
   return (
     <StyledGetStarted>
@@ -72,10 +72,10 @@ const GetStarted = (): JSX.Element => {
         <Button
           primary
           large
-          inactive={!chainSupported}
-          text={chainSupported ? t("landingPage.viewPools") : t("landingPage.changeNetwork")}
+          inactive={!protocolLive}
+          text={protocolLive ? t("landingPage.viewPools") : t("landingPage.changeNetwork")}
           click={() => {
-            if (!chainSupported) return;
+            if (!protocolLive) return;
             history.push("/pools");
           }}
         />

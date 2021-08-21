@@ -24,7 +24,7 @@ const Content = styled.div`
 `;
 
 const LandingPage = (): JSX.Element => {
-  const { chainSupported } = useIsLive();
+  const { protocolLive } = useIsLive();
 
   return (
     <StyledLanding>
@@ -32,7 +32,7 @@ const LandingPage = (): JSX.Element => {
       <Content>
         <Hero />
         <Benefits />
-        {chainSupported && <Preview />}
+        {protocolLive && <Preview />}
         <HowItWorks />
         <SupportedBy />
         <AuditedBy />
