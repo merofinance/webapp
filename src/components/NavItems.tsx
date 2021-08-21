@@ -93,7 +93,7 @@ const ExternalLink = styled.a`
 
 const NavItems = (): JSX.Element => {
   const { t } = useTranslation();
-  const { protocolLive, stakingLive } = useIsLive();
+  const { chainSupported: protocolLive, stakingLive } = useIsLive();
 
   return (
     <StyledNavItems id="nav-items">

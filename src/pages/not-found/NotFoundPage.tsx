@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { GradientLink } from "../../styles/GradientText";
 import { useDevice } from "../../app/hooks/use-device";
 import { useIsLive } from "../../app/hooks/use-is-live";
+import { STAKING_LIVE } from "../../lib/constants";
 
 const StyledNotFoundPage = styled.div`
   width: 100%;
@@ -105,7 +106,7 @@ const ExternalLink = styled(GradientLink)`
 const NotFoundPage = (): JSX.Element => {
   const { isMobile } = useDevice();
   const { t } = useTranslation();
-  const { live } = useIsLive();
+  const { chainSupported } = useIsLive();
 
   return (
     <StyledNotFoundPage>
@@ -127,12 +128,12 @@ const NotFoundPage = (): JSX.Element => {
         <InternalLink id="not-found-home" to="/">
           {t("notFound.links.home")}
         </InternalLink>
-        {live && (
+        {chainSupported && (
           <InternalLink id="not-found-pools" to="/pools">
             {t("notFound.links.pools")}
           </InternalLink>
         )}
-        {live && (
+        {STAKING_LIVE && (
           <InternalLink id="not-found-claim" to="/claim">
             {t("notFound.links.claim")}
           </InternalLink>
