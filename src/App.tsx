@@ -31,9 +31,10 @@ import LitepaperPage from "./pages/litepaper/LitepaperPage";
 import { ConnectWallet } from "./components/ConnectWallet";
 import ClaimPage from "./pages/claim/ClaimPage";
 import PoolPage from "./pages/pool/PoolPage";
-import { LIVE, STAKING_LIVE } from "./lib/constants";
 import { ErrorAlert } from "./components/ErrorAlert";
 import NotFoundPage from "./pages/not-found/NotFoundPage";
+import { BackdError } from "./app/errors";
+import { useIsLive } from "./app/hooks/use-is-live";
 
 const Background = styled.div`
   background: radial-gradient(rgba(11, 3, 60, 0.2), rgba(10, 5, 38, 0.3));
@@ -74,6 +75,8 @@ library.add(faInfoCircle, faClock, faCheck, faTimesCircle, faExternalLinkAlt, fa
 const App = (): JSX.Element => {
   const dispatch: AppDispatch = useDispatch();
 
+  const { live, protocolLive, stakingLive } = useIsLive();
+
   const getLibrary = (rawProvider: any, connector: any) => {
     const provider = new ethers.providers.Web3Provider(rawProvider);
     const signer = useMock ? new MockSigner() : provider.getSigner();
@@ -82,7 +85,8 @@ const App = (): JSX.Element => {
     try {
       return createBackd(signer, options);
     } catch (e) {
-      dispatch(setError({ error: e.message }));
+      const error = e instanceof BackdError ? e.toErrorState() : { message: e.message };
+      dispatch(setError(error));
     }
   };
 
@@ -97,31 +101,31 @@ const App = (): JSX.Element => {
                 <StyledApp>
                   <Content>
                     <Switch>
-                      {LIVE && (
+                      {protocolLive && (
                         <PrivateRoute path="/pool/:poolName">
                           <PoolPage />
                         </PrivateRoute>
                       )}
 
-                      {LIVE && (
+                      {live && (
                         <Route path="/connect">
                           <ConnectWallet />
                         </Route>
                       )}
 
-                      {LIVE && (
+                      {protocolLive && (
                         <PrivateRoute path="/pools">
                           <PoolsPage />
                         </PrivateRoute>
                       )}
 
-                      {STAKING_LIVE && (
+                      {stakingLive && (
                         <Route path="/claim">
                           <ClaimPage />
                         </Route>
                       )}
 
-                      {STAKING_LIVE && (
+                      {stakingLive && (
                         <Route path="/stake">
                           <StakePage />
                         </Route>

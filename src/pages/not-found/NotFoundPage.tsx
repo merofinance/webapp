@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import { GradientLink } from "../../styles/GradientText";
 import { useDevice } from "../../app/hooks/use-device";
-import { LIVE } from "../../lib/constants";
+import { useIsLive } from "../../app/hooks/use-is-live";
 
 const StyledNotFoundPage = styled.div`
   width: 100%;
@@ -102,9 +102,10 @@ const ExternalLink = styled(GradientLink)`
   }
 `;
 
-const NotFoundPage = () => {
+const NotFoundPage = (): JSX.Element => {
   const { isMobile } = useDevice();
   const { t } = useTranslation();
+  const { live } = useIsLive();
 
   return (
     <StyledNotFoundPage>
@@ -126,12 +127,12 @@ const NotFoundPage = () => {
         <InternalLink id="not-found-home" to="/">
           {t("notFound.links.home")}
         </InternalLink>
-        {LIVE && (
+        {live && (
           <InternalLink id="not-found-pools" to="/pools">
             {t("notFound.links.pools")}
           </InternalLink>
         )}
-        {LIVE && (
+        {live && (
           <InternalLink id="not-found-claim" to="/claim">
             {t("notFound.links.claim")}
           </InternalLink>

@@ -23,7 +23,8 @@
     "header": "Reactive Liquidity",
     "subHeader": "A trustless and interest generating protocol designed to prevent collateralized loans from becoming liquidatable.",
     "comingSoon": "coming soon",
-    "viewPools": "view pools"
+    "viewPools": "view pools",
+    "changeNetwork": "unsupported network"
   },
   "benefits": {
     "avoidLiquidation": {

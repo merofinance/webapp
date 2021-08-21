@@ -38,24 +38,26 @@ export function ErrorAlert(): JSX.Element {
 
   return (
     <Popup
-      show={!!error}
-      close={() => dispatch(setError({ error: "" }))}
-      header="An Error Occured"
+      show={error.message.length > 0}
+      close={() => dispatch(setError({ message: "" }))}
+      header={error.title || "An Error Occured"}
       content={
         <Content>
-          <Text>{`Error: ${error}`}</Text>
-          <Text>
-            Please try again in a moment. If the error persists, you can contact us on
-            <Link href="https://discord.gg/jpGvaFV3Rv" target="_blank" rel="noopener noreferrer">
-              Discord
-            </Link>
-          </Text>
+          <Text>{`Error: ${error.message}`}</Text>
+          {error.hideContact ? null : (
+            <Text>
+              Please try again in a moment. If the error persists, you can contact us on
+              <Link href="https://discord.gg/jpGvaFV3Rv" target="_blank" rel="noopener noreferrer">
+                Discord
+              </Link>
+            </Text>
+          )}
           <Button
             medium
             primary
             background="#252140"
             text="Close"
-            click={() => dispatch(setError({ error: "" }))}
+            click={() => dispatch(setError({ message: "" }))}
           />
         </Content>
       }

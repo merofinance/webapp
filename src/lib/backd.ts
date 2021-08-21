@@ -7,6 +7,7 @@ import { StakerVaultFactory } from "@backdfund/protocol/typechain/StakerVaultFac
 import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
 import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFactory";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
+import { UnsupportedNetwork } from "../app/errors";
 import { getPrices } from "./coingecko";
 import { ETH_DECIMALS, ETH_DUMMY_ADDRESS, INFINITE_APPROVE_AMMOUNT } from "./constants";
 import { bigNumberToFloat, floatToBigNumber, scale } from "./numeric";
@@ -61,7 +62,7 @@ export class Web3Backd implements Backd {
     // eslint-disable-next-line dot-notation
     this.controller = ControllerFactory.connect(contracts["Controller"][0], _provider);
     // eslint-disable-next-line dot-notation
-    this.topupAction = TopUpActionFactory.connect(contracts["MockTopUpAction"][0], _provider);
+    this.topupAction = TopUpActionFactory.connect(contracts["TopUpAction"][0], _provider);
   }
 
   get topupActionAddress(): string {
@@ -79,10 +80,12 @@ export class Web3Backd implements Backd {
 
   private getContracts(chainId: number): Record<string, string[]> {
     switch (chainId) {
+      case 42:
+        return contracts["42"];
       case 1337:
         return contracts["1337"];
       default:
-        throw new Error("Wrong network selected, please use a development network");
+        throw new UnsupportedNetwork(chainId);
     }
   }
 

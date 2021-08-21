@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import Button from "../../components/Button";
 import { Header1, Header3 } from "../../styles/Headers";
-import { LIVE } from "../../lib/constants";
+import { useIsLive } from "../../app/hooks/use-is-live";
 
 const StyledHero = styled.div`
   width: 100%;
@@ -22,6 +22,7 @@ const StyledHero = styled.div`
 const Hero = (): JSX.Element => {
   const history = useHistory();
   const { t } = useTranslation();
+  const { protocolLive, live } = useIsLive();
 
   return (
     <StyledHero>
@@ -31,10 +32,16 @@ const Hero = (): JSX.Element => {
         primary
         hero
         large
-        inactive={!LIVE}
-        text={LIVE ? t("landingPage.viewPools") : t("landingPage.comingSoon")}
+        inactive={!protocolLive}
+        text={
+          live
+            ? protocolLive
+              ? t("landingPage.viewPools")
+              : t("landingPage.changeNetwork")
+            : t("landingPage.comingSoon")
+        }
         click={() => {
-          if (!LIVE) return;
+          if (!protocolLive) return;
           history.push("/pools");
         }}
       />

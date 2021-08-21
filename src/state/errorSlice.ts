@@ -1,29 +1,26 @@
 import { CaseReducer, createSlice, PayloadAction, SerializedError } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
+import { ErrorState } from "../app/errors";
 import { fetchPool, fetchPools, fetchPrices } from "./poolsListSlice";
 import { fetchPositions, registerPosition, removePosition } from "./positionsSlice";
 import { fetchPendingTransactions } from "./transactionsSlice";
 import { deposit, fetchAllowances, fetchBalances, withdraw } from "./userSlice";
 
-interface ErrorState {
-  error: string;
-}
-
-const initialState: ErrorState = { error: "" };
+const initialState: ErrorState = { message: "" };
 
 const handleError: CaseReducer<ErrorState, any> = (
   state: ErrorState,
   action: PayloadAction<unknown, any, any, SerializedError>
 ): ErrorState => {
   if (!action.error.message) throw Error("Missing error message when handing error");
-  return { error: action.error.message };
+  return { message: action.error.message };
 };
 
 export const errorSlice = createSlice({
   name: "error",
   initialState,
   reducers: {
-    setError: (state, action: PayloadAction<{ error: string }>) => {
+    setError: (state, action: PayloadAction<ErrorState>) => {
       return action.payload;
     },
   },
@@ -44,6 +41,6 @@ export const errorSlice = createSlice({
 
 export const { setError } = errorSlice.actions;
 
-export const selectError = (state: RootState): string => state.error.error;
+export const selectError = (state: RootState): ErrorState => state.error;
 
 export default errorSlice.reducer;

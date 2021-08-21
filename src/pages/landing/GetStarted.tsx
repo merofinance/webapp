@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import Button from "../../components/Button";
 import { Header2 } from "../../styles/Headers";
-import { LIVE } from "../../lib/constants";
+import { useIsLive } from "../../app/hooks/use-is-live";
 
 const StyledGetStarted = styled.div`
   width: 100%;
@@ -62,6 +62,7 @@ const Body = styled.p`
 const GetStarted = (): JSX.Element => {
   const history = useHistory();
   const { t } = useTranslation();
+  const { protocolLive, live } = useIsLive();
 
   return (
     <StyledGetStarted>
@@ -71,10 +72,16 @@ const GetStarted = (): JSX.Element => {
         <Button
           primary
           large
-          inactive={!LIVE}
-          text={LIVE ? t("landingPage.viewPools") : t("landingPage.comingSoon")}
+          inactive={!protocolLive}
+          text={
+            live
+              ? protocolLive
+                ? t("landingPage.viewPools")
+                : t("landingPage.changeNetwork")
+              : t("landingPage.comingSoon")
+          }
           click={() => {
-            if (!LIVE) return;
+            if (!protocolLive) return;
             history.push("/pools");
           }}
         />

@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import logo from "../assets/logo/logo.svg";
-import { LIVE } from "../lib/constants";
 import Connector from "./Connector";
 import NavItems from "./NavItems";
+import { useIsLive } from "../app/hooks/use-is-live";
 
 type HeaderProps = {
   isSticky: boolean;
@@ -50,6 +50,8 @@ const Logo = styled.img`
 const Header = (): JSX.Element => {
   const [scrollPosition, setScrollPosition] = useState(0);
 
+  const { live } = useIsLive();
+
   const handleScroll = () => {
     const position = window.pageYOffset;
     setScrollPosition(position);
@@ -69,7 +71,7 @@ const Header = (): JSX.Element => {
         <Logo src={logo} alt="Backd logo" />
       </Link>
       <NavItems />
-      {LIVE && <Connector />}
+      {live && <Connector />}
     </StyledHeader>
   );
 };

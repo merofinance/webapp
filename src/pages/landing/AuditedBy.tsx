@@ -6,7 +6,7 @@ import background from "../../assets/audit/background.svg";
 import chainSecurityMobile from "../../assets/audit/chain-security-mobile.svg";
 import chainSecurity from "../../assets/audit/chain-security.svg";
 import { GradientLink } from "../../styles/GradientText";
-import { LIVE } from "../../lib/constants";
+import { useIsLive } from "../../app/hooks/use-is-live";
 
 const StyledAuditedBy = styled.div`
   width: 100%;
@@ -118,6 +118,7 @@ const Background = styled.img`
 
 const AuditedBy = (): JSX.Element => {
   const { t } = useTranslation();
+  const { live } = useIsLive();
 
   return (
     <StyledAuditedBy>
@@ -125,10 +126,10 @@ const AuditedBy = (): JSX.Element => {
         <Background src={background} alt="decorative background" />
         <Logo src={chainSecurity} alt="Chain Security logo" />
         <Content>
-          <Header>{LIVE ? t("auditedBy.header") : t("auditedBy.preLaunchHeader")}</Header>
+          <Header>{live ? t("auditedBy.header") : t("auditedBy.preLaunchHeader")}</Header>
           <MobileLogo src={chainSecurityMobile} alt="Chain Security logo" />
           <Description>{t("auditedBy.description")}</Description>
-          {LIVE && (
+          {live && (
             <ViewReport href="" target="_blank" rel="noopener noreferrer">
               {`${t("auditedBy.viewReport")} →`}
             </ViewReport>

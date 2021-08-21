@@ -39,7 +39,7 @@ export async function handleTransactionConfirmation(
         actions.forEach((action) => dispatch(action));
       });
     })
-    .catch((err) => dispatch(setError({ error: formatError(err) })));
+    .catch((err) => dispatch(setError({ message: formatError(err) })));
 }
 
 export const formatTransactionInfo = (txDescription: TransactionDescription): string => {

@@ -8,7 +8,7 @@ type ErrorBoundaryProps = {
 
 export class ErrorBoundary extends React.Component<ErrorBoundaryProps, any> {
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    this.props.dispatch(setError({ error: error.message }));
+    this.props.dispatch(setError({ message: error.message }));
   }
 
   static getDerivedStateFromError(): any {
