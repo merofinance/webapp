@@ -128,12 +128,12 @@ const ClaimRow = ({ index }: Props): JSX.Element => {
             buttons={[
               {
                 value: "claim-and-stake",
-                label: "Claim & Stake",
+                label: t("claim.buttons.claim"),
                 action: () => console.log("not implemented"),
               },
               {
                 value: "claim",
-                label: "Claim",
+                label: t("claim.buttons.claimAndStake"),
                 action: () => console.log("not implemented"),
               },
             ]}
