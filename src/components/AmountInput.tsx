@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { ScaledNumber } from "../lib/scaled-number";
-import { Token } from "../lib/types";
 import AmountSlider from "./AmountSlider";
 import Input from "./Input";
 
@@ -23,31 +22,20 @@ const Available = styled.div`
 `;
 
 type Props = {
-  token: Token;
   value: string;
   setValue: (v: string) => void;
   label: string;
   max: ScaledNumber;
   noSlider?: boolean;
+  error: string;
 };
 
-const AmountInput = ({ token, value, setValue, label, max, noSlider }: Props): JSX.Element => {
-  const error = () => {
-    if (value && Number(value) <= 0) return "Amount must be a positive number";
-    try {
-      const amount = ScaledNumber.fromUnscaled(value, token.decimals);
-      if (amount.gt(max)) return "Amount exceeds available balance";
-      return "";
-    } catch {
-      return "Invalid number";
-    }
-  };
-
+const AmountInput = ({ value, setValue, label, max, noSlider, error }: Props): JSX.Element => {
   return (
     <StyledAmountInput>
       <Available>{`Available: ${max.toCryptoString()}`}</Available>
       <Input
-        valid={!error()}
+        valid={!error}
         label={label}
         value={value}
         type="number"
@@ -55,7 +43,7 @@ const AmountInput = ({ token, value, setValue, label, max, noSlider }: Props): J
         background="#100830"
         buttonText="max"
         buttonAction={() => setValue(max.toString())}
-        errorMessage={error()}
+        errorMessage={error}
       />
       {!noSlider && <AmountSlider value={value} max={max} setValue={setValue} />}
     </StyledAmountInput>

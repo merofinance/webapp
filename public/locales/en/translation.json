@@ -25,7 +25,7 @@
     "comingSoon": "coming soon",
     "viewPools": "view pools",
     "unsupportedNetwork": "unsupported network",
-    "changeNetwork": "switch to kovan"
+    "changeNetwork": "try on testnet"
   },
   "benefits": {
     "avoidLiquidation": {

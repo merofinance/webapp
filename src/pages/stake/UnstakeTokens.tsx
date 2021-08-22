@@ -89,12 +89,12 @@ const UnstakeTokens = ({ token }: Props): JSX.Element => {
       </Description>
       <Content>
         <AmountInput
-          token={token}
           noSlider
           value={value}
           setValue={(v: string) => setValue(v)}
           label={isMobile ? "Amount of BKD to unstake" : "Enter an amount of BKD to unstake"}
           max={balance}
+          error=""
         />
         <MultiStepButtons
           stepsOnTop
