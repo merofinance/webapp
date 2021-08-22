@@ -6,12 +6,36 @@ import { useTranslation } from "react-i18next";
 import { GradientText } from "../styles/GradientText";
 import { shortenAddress } from "../lib/text";
 import { useBackd } from "../app/hooks/use-backd";
+import { chainIds } from "../lib/constants";
+
+const StyledConnectorDesktop = styled.div`
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 715px) {
+    display: none;
+  }
+`;
+
+const Network = styled.div`
+  display: flex;
+  align-items: center;
+  height: 3.2rem;
+  border-radius: 1.6rem;
+  padding: 0 2rem;
+  font-size: 1.4rem;
+  letter-spacing: 0.15px;
+  line-height: 2.8rem;
+  font-weight: 500;
+  background-color: rgba(137, 102, 246, 0.1);
+  margin-right: 1.6rem;
+`;
 
 type ConnectedType = {
   connected: boolean;
 };
 
-const DesktopConnector = styled.div`
+const ButtonContainer = styled.div`
   position: relative;
   transition: transform 0.3s;
 
@@ -31,10 +55,6 @@ const DesktopConnector = styled.div`
       border-radius: 2.4rem;
       opacity: 0.8;
     }
-  }
-
-  @media (max-width: 715px) {
-    display: none;
   }
 `;
 
@@ -100,14 +120,17 @@ const ConnectorDesktop = ({ connect }: Props): JSX.Element => {
   }, [account, backd, chainId]);
 
   return (
-    <DesktopConnector>
-      <Aura connected={active} />
-      <ConnectorButton onClick={() => connect()} connected={active}>
-        <ConnectorText>
-          {account ? ens || shortenAddress(account, 8) : t("walletConnect.connectWallet")}
-        </ConnectorText>
-      </ConnectorButton>
-    </DesktopConnector>
+    <StyledConnectorDesktop>
+      {chainId && chainId !== 1 && chainIds[chainId] && <Network>{chainIds[chainId]}</Network>}
+      <ButtonContainer>
+        <Aura connected={active} />
+        <ConnectorButton onClick={() => connect()} connected={active}>
+          <ConnectorText>
+            {account ? ens || shortenAddress(account, 8) : t("walletConnect.connectWallet")}
+          </ConnectorText>
+        </ConnectorButton>
+      </ButtonContainer>
+    </StyledConnectorDesktop>
   );
 };
 
