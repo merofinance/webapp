@@ -41,15 +41,25 @@ const Border = styled.button`
   justify-content: center;
   align-items: center;
   background: linear-gradient(to right, rgba(197, 50, 249, 0.7), rgba(50, 178, 229, 0.7));
-  transition: all 0.3s;
   cursor: pointer;
 
   border-radius: ${(props: ConnectedType) => (props.connected ? "8px" : "2.7rem")};
   padding: ${(props: ConnectedType) => (props.connected ? "1px" : "6px 7px")};
   background: ${(props: ConnectedType) =>
     props.connected
-      ? "var(--gradient)"
-      : "linear-gradient(to right, rgba(197, 50, 249, 0.7), rgba(50, 178, 229, 0.7))"};
+      ? "linear-gradient(to right, var(--primary-gradient) 0%, var(--secondary-gradient) 50%, var(--primary-gradient) 100%)"
+      : "linear-gradient(to right, rgba(197, 50, 249, 0.7) 0%, rgba(50, 178, 229, 0.7) 50%, rgba(197, 50, 249, 0.7) 100%)"};
+
+  transition: all 0.5s;
+  background-size: 200% auto;
+
+  :hover {
+    background-position: right center;
+
+    div {
+      background-position: right center;
+    }
+  }
 `;
 
 const Innner = styled.div`
@@ -63,11 +73,24 @@ const Innner = styled.div`
   background-color: ${(props: ConnectedType) => (props.connected ? "#0A0524" : "var(--main)")};
 `;
 
-const ConnectorText = styled(GradientText)`
+const ConnectorText = styled.div`
   font-weight: 500;
   font-size: 1.5rem;
   letter-spacing: 0.46px;
   margin-left: 0.9rem;
+
+  background: linear-gradient(
+    to right,
+    var(--primary-gradient) 0%,
+    var(--secondary-gradient) 50%,
+    var(--primary-gradient) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  transition: all 0.5s;
+  background-size: 200% auto;
 `;
 
 interface Props {
