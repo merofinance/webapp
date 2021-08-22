@@ -7,6 +7,7 @@ import { GradientText } from "../styles/GradientText";
 import { shortenAddress } from "../lib/text";
 import { useBackd } from "../app/hooks/use-backd";
 import { chainIds } from "../lib/constants";
+import PulsingDot from "./PulsingDot";
 
 const StyledConnectorDesktop = styled.div`
   display: flex;
@@ -35,60 +36,38 @@ type ConnectedType = {
   connected: boolean;
 };
 
-const ButtonContainer = styled.div`
-  position: relative;
-  transition: transform 0.3s;
+const Border = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, rgba(197, 50, 249, 0.7), rgba(50, 178, 229, 0.7));
+  transition: all 0.3s;
+  cursor: pointer;
 
-  :hover {
-    div {
-      width: 17.5rem;
-      height: 5.6rem;
-      border-radius: 2.8rem;
-      opacity: 0.6;
-    }
-  }
-
-  :active {
-    div {
-      width: 16.5rem;
-      height: 4.8rem;
-      border-radius: 2.4rem;
-      opacity: 0.8;
-    }
-  }
+  border-radius: ${(props: ConnectedType) => (props.connected ? "8px" : "2.7rem")};
+  padding: ${(props: ConnectedType) => (props.connected ? "1px" : "6px 7px")};
+  background: ${(props: ConnectedType) =>
+    props.connected
+      ? "var(--gradient)"
+      : "linear-gradient(to right, rgba(197, 50, 249, 0.7), rgba(50, 178, 229, 0.7))"};
 `;
 
-const ConnectorButton = styled.button`
-  position: relative;
-  cursor: pointer;
-  height: 4.2rem;
-  width: ${(props: ConnectedType) => (props.connected ? "auto" : "15.8rem")};
-  padding: ${(props: ConnectedType) => (props.connected ? "0 2rem" : "0")};
-  border-radius: ${(props: ConnectedType) => (props.connected ? "1.4rem" : "2.1rem")};
-  background-color: ${(props: ConnectedType) => (props.connected ? "none" : "var(--main)")};
-  border: ${(props: ConnectedType) =>
-    props.connected ? "solid 1px rgba(197, 50, 249, 0.5)" : "none"};
-  margin: 0.6rem;
+const Innner = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: ${(props: ConnectedType) => (props.connected ? "4rem" : "4.2rem")};
+  padding: ${(props: ConnectedType) => (props.connected ? "0 1.5rem 0 0.9rem" : "0 2.2rem")};
+  border-radius: ${(props: ConnectedType) => (props.connected ? "7px" : "2.1rem")};
+  background-color: ${(props: ConnectedType) => (props.connected ? "#0A0524" : "var(--main)")};
 `;
 
 const ConnectorText = styled(GradientText)`
   font-weight: 500;
   font-size: 1.5rem;
   letter-spacing: 0.46px;
-`;
-
-const Aura = styled.div`
-  display: ${(props: ConnectedType) => (props.connected ? "none" : "flex")};
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 17.3rem;
-  height: 5.4rem;
-  border-radius: 2.7rem;
-  transform: translate(-50%, -50%);
-  background: var(--gradient);
-  opacity: 0.7;
-  transition: all 0.3s;
+  margin-left: 0.9rem;
 `;
 
 interface Props {
@@ -122,14 +101,14 @@ const ConnectorDesktop = ({ connect }: Props): JSX.Element => {
   return (
     <StyledConnectorDesktop>
       {chainId && chainId !== 1 && chainIds[chainId] && <Network>{chainIds[chainId]}</Network>}
-      <ButtonContainer>
-        <Aura connected={active} />
-        <ConnectorButton onClick={() => connect()} connected={active}>
+      <Border connected={active}>
+        <Innner onClick={() => connect()} connected={active}>
+          {active && <PulsingDot success={chainId === 1} />}
           <ConnectorText>
             {account ? ens || shortenAddress(account, 8) : t("walletConnect.connectWallet")}
           </ConnectorText>
-        </ConnectorButton>
-      </ButtonContainer>
+        </Innner>
+      </Border>
     </StyledConnectorDesktop>
   );
 };
