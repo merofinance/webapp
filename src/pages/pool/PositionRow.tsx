@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CircularProgress } from "@material-ui/core";
 
 import deleteIcon from "../../assets/ui/delete.svg";
@@ -10,7 +10,7 @@ import { AppDispatch } from "../../app/store";
 import { useBackd } from "../../app/hooks/use-backd";
 import { Position } from "../../lib/types";
 import { shortenAddress } from "../../lib/text";
-import { useLoading } from "../../app/hooks/use-loading";
+import { hasPendingTransaction } from "../../state/transactionsSlice";
 
 const StyledPosition = styled.div`
   width: 100%;
@@ -65,17 +65,12 @@ type Props = {
 
 const PositionRow = ({ position, pool }: Props): JSX.Element => {
   const backd = useBackd();
-  const { loading, setLoading, handleTxDispatch } = useLoading();
   const dispatch: AppDispatch = useDispatch();
+  const loading = useSelector(hasPendingTransaction("Remove"));
 
   const handleRemovePosition = () => {
     if (!backd || loading) return;
-
-    setLoading(true);
-    dispatch(removePosition({ backd, pool, position })).then((v: any) => {
-      handleTxDispatch({ status: v.meta.requestStatus, actionType: "remove" });
-      setLoading(false);
-    });
+    dispatch(removePosition({ backd, pool, position }));
   };
 
   return (
