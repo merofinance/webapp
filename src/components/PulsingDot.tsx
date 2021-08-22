@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 const DotContainer = styled.div`
   position: relative;
@@ -10,8 +10,25 @@ const DotContainer = styled.div`
   align-items: center;
 `;
 
+const pulseAnimation = keyframes`
+  0% {
+    transform: scale(0.7);
+    opacity: 0.7;
+  }
+  70% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+`;
+
 const DotAura = styled.div`
   position: absolute;
+  width: 6px;
+  height: 6px;
   top: 0;
   left: 0;
   width: 100%;
@@ -19,13 +36,12 @@ const DotAura = styled.div`
   background-color: ${(props: Props) =>
     props.success ? "var(--success)" : props.error ? "var(--error)" : "var(--neutral)"};
   border-radius: 50%;
-  opacity: 0.3;
-  transform: scale(1);
+  animation: ${pulseAnimation} 2s infinite; ;
 `;
 
 const DotCenter = styled.div`
-  width: 0.6rem;
-  height: 0.6rem;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background-color: ${(props: Props) =>
     props.success ? "var(--success)" : props.error ? "var(--error)" : "var(--neutral)"};
