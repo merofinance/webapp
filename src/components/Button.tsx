@@ -148,6 +148,7 @@ const Text = styled.div`
     return "var(--main)";
   }};
   text-transform: ${(props: ButtonProps) => {
+    if (props.large) return "none";
     if (props.medium) return "none";
     if (props.small) return "uppercase";
     return "capitalize";
