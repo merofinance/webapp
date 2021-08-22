@@ -8,6 +8,7 @@ import WalletSelectPopup from "./WalletSelectPopup";
 import { shortenAddress } from "../lib/text";
 import { injectedConnector } from "../app/web3";
 import { useBackd } from "../app/hooks/use-backd";
+import { useWeb3Updated } from "../app/hooks/use-web3-updated";
 
 type ConnectedType = {
   connected: boolean;
@@ -120,6 +121,7 @@ const DotCenter = styled.div`
 
 const Connector = (): JSX.Element => {
   const { account, active, activate } = useWeb3React();
+  const updated = useWeb3Updated();
   const backd = useBackd();
   const { t } = useTranslation();
 
@@ -140,10 +142,6 @@ const Connector = (): JSX.Element => {
     setEns("");
   };
 
-  useEffect(() => {
-    updateEns();
-  }, [account, backd]);
-
   const autoConnect = async () => {
     const authorized = await injectedConnector.isAuthorized();
     if (!active && authorized) {
@@ -153,7 +151,8 @@ const Connector = (): JSX.Element => {
 
   useEffect(() => {
     autoConnect();
-  }, [autoConnect]);
+    updateEns();
+  }, [updated]);
 
   return (
     <>
