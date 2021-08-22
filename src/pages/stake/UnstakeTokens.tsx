@@ -103,9 +103,11 @@ const UnstakeTokens = ({ token }: Props): JSX.Element => {
           firstAction={approve}
           firstComplete={approved}
           firstHoverText="Enter Amount"
+          firstLoading={false}
           secondText="Unstake and Withdraw"
           secondAction={unstake}
           secondHoverText={`Approve ${token.symbol}`}
+          secondLoading={false}
         />
       </Content>
     </StyledUnstakeTokens>
