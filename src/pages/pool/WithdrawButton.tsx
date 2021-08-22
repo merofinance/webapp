@@ -20,9 +20,10 @@ type Props = {
   value: ScaledNumber;
   pool: Pool;
   complete: () => void;
+  valid: boolean;
 };
 
-const WithdrawalButton = ({ value, pool, complete }: Props): JSX.Element => {
+const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element => {
   const dispatch: AppDispatch = useDispatch();
   const backd = useBackd();
   const { loading, setLoading, handleTxDispatch } = useLoading();
@@ -56,11 +57,12 @@ const WithdrawalButton = ({ value, pool, complete }: Props): JSX.Element => {
         wide
         text={`Withdraw ${pool.underlying.symbol.toUpperCase()}`}
         click={() => {
+          if (!valid) return;
           setLoading(true);
           if (value.lte(availableToWithdraw)) executeWithdraw(value);
           else executeUnstake();
         }}
-        disabled={value.isZero()}
+        disabled={!valid}
         loading={loading}
         hoverText="Enter Amount"
       />
