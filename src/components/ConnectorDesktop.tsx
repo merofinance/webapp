@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
-import { GradientText } from "../styles/GradientText";
 import { shortenAddress } from "../lib/text";
 import { useBackd } from "../app/hooks/use-backd";
 import { chainIds } from "../lib/constants";
