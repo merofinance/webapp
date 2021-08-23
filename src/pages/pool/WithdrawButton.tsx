@@ -36,12 +36,12 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
   }, [loading]);
 
   const executeWithdraw = (amount: ScaledNumber) => {
-    if (!backd) return;
+    if (!backd || loading) return;
     dispatch(withdraw({ backd, pool, amount }));
   };
 
   const executeUnstake = () => {
-    if (!backd) return;
+    if (!backd || loading) return;
     dispatch(unstake({ backd, pool, amount: staked }));
   };
 

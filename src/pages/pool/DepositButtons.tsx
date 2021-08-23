@@ -32,7 +32,7 @@ const DepositButtons = ({ value, pool, complete, valid }: Props): JSX.Element =>
   const approved = approvedToDeposit.gte(value);
 
   const executeApprove = () => {
-    if (!backd || approved) return;
+    if (!backd || approved || approveLoading) return;
     dispatch(
       approve({
         token: pool.underlying,
@@ -44,7 +44,7 @@ const DepositButtons = ({ value, pool, complete, valid }: Props): JSX.Element =>
   };
 
   const executeDeposit = () => {
-    if (!backd || !approved) return;
+    if (!backd || !approved || depositLoading) return;
     dispatch(deposit({ backd, pool, amount: value }));
   };
 

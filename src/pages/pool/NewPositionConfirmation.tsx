@@ -115,7 +115,7 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
   }, [loading]);
 
   const executeRegister = () => {
-    if (!backd) return;
+    if (!backd || loading) return;
     dispatch(registerPosition({ position, pool, backd }));
   };
 
