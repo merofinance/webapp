@@ -49,7 +49,7 @@ const Border = styled.button`
       ? "linear-gradient(to right, var(--primary-gradient) 0%, var(--secondary-gradient) 50%, var(--primary-gradient) 100%)"
       : "linear-gradient(to right, rgba(197, 50, 249, 0.7) 0%, rgba(50, 178, 229, 0.7) 50%, rgba(197, 50, 249, 0.7) 100%)"};
 
-  transition: all 0.5s;
+  transition: background-position 0.5s;
   background-size: 200% auto;
 
   :hover {
@@ -88,7 +88,7 @@ const ConnectorText = styled.div`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
-  transition: all 0.5s;
+  transition: background-position 0.5s;
   background-size: 200% auto;
 `;
 
