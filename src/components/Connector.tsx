@@ -8,7 +8,7 @@ import ConnectorDesktop from "./ConnectorDesktop";
 import ConnectorMobile from "./ConnectorMobile";
 import WalletSelectPopup from "./WalletSelectPopup";
 
-const NO_CONNECTION_PAGES: string[] = ["/", "/litepaper"];
+const PROTOCOL_PAGES: string[] = ["pools", "pool"];
 
 const Connector = (): JSX.Element => {
   const { active, activate } = useWeb3React();
@@ -45,7 +45,7 @@ const Connector = (): JSX.Element => {
         wallet={wallet}
       />
       <WalletSelectPopup
-        show={connecting || (!active && !NO_CONNECTION_PAGES.includes(location.pathname))}
+        show={connecting || (!active && PROTOCOL_PAGES.includes(location.pathname.split("/")[1]))}
         close={() => {
           setConnecting(false);
           setShowingDetails(false);
