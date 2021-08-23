@@ -114,8 +114,6 @@ const RecentTransactions = () => {
   const dispatch: AppDispatch = useDispatch();
   const transactions = useSelector(selectTransactions);
 
-  console.log(transactions);
-
   const getDetails = (tx: TransactionInfo) => {
     if (!tx.description.args) return "";
     if (tx.description.action === "Deposit" || tx.description.action === "Withdraw") {
