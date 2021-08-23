@@ -43,7 +43,7 @@ export function ErrorAlert(): JSX.Element {
       header={error.title || "An Error Occured"}
       content={
         <Content>
-          <Text>{`Error: ${error.message}`}</Text>
+          <Text>{error.message}</Text>
           {error.hideContact ? null : (
             <Text>
               Please try again in a moment. If the error persists, you can contact us on
@@ -52,13 +52,15 @@ export function ErrorAlert(): JSX.Element {
               </Link>
             </Text>
           )}
-          <Button
-            medium
-            primary
-            background="#252140"
-            text="Close"
-            click={() => dispatch(setError({ message: "" }))}
-          />
+          {error.hideButton ? null : (
+            <Button
+              medium
+              primary
+              background="#252140"
+              text="Close"
+              click={() => dispatch(setError({ message: "" }))}
+            />
+          )}
         </Content>
       }
     />
