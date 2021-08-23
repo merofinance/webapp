@@ -27,6 +27,7 @@ const PoolWithdraw = ({ pool }: Props): JSX.Element => {
   const { isMobile } = useDevice();
 
   const [withdrawAmount, setWithdrawAmount] = useState("");
+  const value = ScaledNumber.fromUnscaled(withdrawAmount, staked.decimals);
 
   const error = () => {
     if (withdrawAmount && Number(withdrawAmount) <= 0) return "Amount must be a positive number";
@@ -58,9 +59,9 @@ const PoolWithdraw = ({ pool }: Props): JSX.Element => {
           />
           <WithdrawalButton
             pool={pool}
-            value={ScaledNumber.fromUnscaled(withdrawAmount, staked.decimals)}
+            value={value}
             complete={() => setWithdrawAmount("")}
-            valid={!error()}
+            valid={!error() && !value.isZero()}
           />
         </Content>
       }
