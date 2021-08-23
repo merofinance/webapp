@@ -25,7 +25,7 @@ const tooltipStyles = makeStyles(() => ({
   },
   tooltip: {
     backgroundColor: "#433b6b",
-    fontSize: 12,
+    fontSize: 13,
   },
 }));
 
