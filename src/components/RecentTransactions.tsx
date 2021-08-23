@@ -3,10 +3,12 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import LaunchIcon from "@material-ui/icons/Launch";
+import externalLink from "../assets/ui/gradient-external-link.svg";
 
 import { TransactionInfo } from "../lib/types";
 import { selectTransactions } from "../state/transactionsSlice";
 import { GradientText } from "../styles/GradientText";
+import { ETHERSCAN_URL } from "../lib/constants";
 
 const StyledRecentTransactions = styled.div`
   width: calc(100% + 3.2rem);
@@ -59,6 +61,10 @@ const Text = styled.div`
   font-weight: 500;
 `;
 
+const ExternalLink = styled.img`
+  width: 1.2rem;
+`;
+
 const Empty = styled.div`
   font-size: 1.1rem;
   line-height: 1.6rem;
@@ -84,10 +90,9 @@ const RecentTransactions = () => {
           <Status />
           <Text>meow</Text>
           <Text>meow</Text>
-          <LaunchIcon
-            fontSize="medium"
-            style={{ fill: "var(--gradient)", transform: "translateY(0px)" }}
-          />
+          <a href={`${ETHERSCAN_URL}${transaction.hash}`} target="_blank" rel="noopener noreferrer">
+            <ExternalLink src={externalLink} />
+          </a>
         </Transaction>
       ))}
     </StyledRecentTransactions>
