@@ -11,6 +11,8 @@ import { ETHERSCAN_URL } from "../lib/constants";
 import pending from "../assets/ui/status/pending.svg";
 import success from "../assets/ui/status/success.svg";
 import failure from "../assets/ui/status/failure.svg";
+import { ScaledNumber } from "../lib/scaled-number";
+import { shortenAddress } from "../lib/text";
 
 const StyledRecentTransactions = styled.div`
   width: calc(100% + 3.2rem);
@@ -74,6 +76,9 @@ const spin = keyframes`
 const Status = styled.img`
   width: 1.3rem;
   animation: ${(props: StatusProps) => (props.pending ? spin : still)} 1s linear infinite;
+  /* TODO Remove redundant keyframe */
+  /* TODO Rotate Failed Status icon */
+  /* TODO Add functionality to Clear */
 `;
 
 const Text = styled.div`
@@ -102,6 +107,28 @@ const RecentTransactions = () => {
 
   console.log(transactions);
 
+  const getDetails = (tx: TransactionInfo) => {
+    if (!tx.description.args) return "";
+    if (tx.description.action === "Deposit" || tx.description.action === "Withdraw") {
+      const { args } = tx.description;
+      const token = args.pool.underlying.symbol;
+      const tokenValue = ScaledNumber.fromPlain(args.amount);
+      return `${tokenValue.toCryptoString()} ${token}`;
+    }
+    if (tx.description.action === "Approve") {
+      return tx.description.args.token.symbol;
+    }
+    if (tx.description.action === "Register") {
+      const { position } = tx.description.args;
+      return `${shortenAddress(position.account, 8)} ${position.protocol}`;
+    }
+    if (tx.description.action === "Remove") {
+      const { position } = tx.description.args;
+      return `${shortenAddress(position.account, 8)} ${position.protocol}`;
+    }
+    throw Error("Transaction type not supported");
+  };
+
   return (
     <StyledRecentTransactions>
       <HeaderContainer>
@@ -110,13 +137,13 @@ const RecentTransactions = () => {
       </HeaderContainer>
       {transactions.length === 0 && <Empty>{t("walletConnect.details.empty")}</Empty>}
       {transactions.slice(0, 4).map((tx: TransactionInfo) => (
-        <Transaction>
+        <Transaction key={tx.hash}>
           <Status
             src={tx.confirmations === 0 ? pending : tx.status === 1 ? success : failure}
             pending={tx.confirmations === 0}
           />
-          <Text>meow</Text>
-          <Text>meow</Text>
+          <Text>{tx.description.action}</Text>
+          <Text>{getDetails(tx)}</Text>
           <a href={`${ETHERSCAN_URL}${tx.hash}`} target="_blank" rel="noopener noreferrer">
             <ExternalLink src={externalLink} />
           </a>
