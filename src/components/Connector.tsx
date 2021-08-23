@@ -38,16 +38,19 @@ const Connector = (): JSX.Element => {
     <>
       <ConnectorDesktop connect={onClick} />
       <ConnectorMobile connect={onClick} />
-      <WalletSelectPopup
-        show={connecting || (!active && !NO_CONNECTION_PAGES.includes(location.pathname))}
-        close={() => setConnecting(false)}
-        setWallet={(w: string) => setWallet(w)}
-      />
       <ConnectionDetails
         show={showingDetails}
         close={() => setShowingDetails(false)}
         changeWallet={() => setConnecting(true)}
         wallet={wallet}
+      />
+      <WalletSelectPopup
+        show={connecting || (!active && !NO_CONNECTION_PAGES.includes(location.pathname))}
+        close={() => {
+          setConnecting(false);
+          setShowingDetails(false);
+        }}
+        setWallet={(w: string) => setWallet(w)}
       />
     </>
   );
