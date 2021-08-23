@@ -8,6 +8,7 @@ type ButtonProps = {
   large?: boolean;
   medium?: boolean;
   small?: boolean;
+  tiny?: boolean;
   square?: boolean;
   uppercase?: boolean;
   loading?: boolean;
@@ -43,6 +44,7 @@ const StyledButton = styled.button`
     if (props.medium) return "1.5rem";
     if (props.square) return "1.5rem";
     if (props.small) return "0.5rem";
+    if (props.tiny) return "0.8rem";
     return "2rem";
   }};
   margin-top: ${(props: ButtonProps) => {
@@ -92,6 +94,7 @@ const Content = styled.div`
     if (props.large) return "6.2rem";
     if (props.medium) return "4.8rem";
     if (props.small) return "2.8rem";
+    if (props.tiny) return "2.3rem";
     if (props.square) return "5.6rem";
     return "3.8rem";
   }};
@@ -99,6 +102,7 @@ const Content = styled.div`
     if (props.large) return "3.1rem";
     if (props.medium) return "1.4rem";
     if (props.small) return "0.4rem";
+    if (props.tiny) return "0.7rem";
     if (props.square) return "1.4rem";
     return "1.9rem";
   }};
@@ -107,6 +111,7 @@ const Content = styled.div`
       if (props.large) return "5rem";
       if (props.medium) return "1.9rem";
       if (props.small) return "1.1rem";
+      if (props.tiny) return "0.9rem";
       if (props.square) return "3rem";
       return "2.6rem";
     }};
@@ -115,11 +120,13 @@ const Content = styled.div`
     height: ${(props: ButtonProps) => {
       if (props.square) return "2.6rem";
       if (props.small) return "2.8rem";
+      if (props.tiny) return "2.3rem";
       if (props.primary) return "4.8rem";
     }};
     border-radius: ${(props: ButtonProps) => {
       if (props.square) return "0.4rem";
       if (props.small) return "0.4rem";
+      if (props.tiny) return "0.7rem";
       if (props.medium) return "1.4rem";
       if (props.primary) return "2.4rem";
       return "1.9rem";
@@ -128,6 +135,7 @@ const Content = styled.div`
       ${(props: ButtonProps) => {
         if (props.square) return "1rem";
         if (props.small) return "1.1rem";
+        if (props.tiny) return "0.9rem";
         if (props.primary) return "5.2rem";
       }};
   }
@@ -161,11 +169,13 @@ const Text = styled.div`
   }};
   line-height: ${(props: ButtonProps) => {
     if (props.large) return "2.8rem";
+    if (props.tiny) return "1.8rem";
     return "2.6rem";
   }};
   font-size: ${(props: ButtonProps) => {
     if (props.large) return "2.1rem";
     if (props.small) return "1.3rem";
+    if (props.tiny) return "1.2rem";
     if (props.square) return "1.4rem";
     return "1.5rem";
   }};
@@ -195,6 +205,7 @@ const Text = styled.div`
     font-size: ${(props: ButtonProps) => {
       if (props.large) return "1.4rem";
       if (props.small) return "1.4rem";
+      if (props.tiny) return "1.2rem";
       if (props.square) return "1.2rem";
       return "1.4rem";
     }};
@@ -239,6 +250,7 @@ type Props = {
   large?: boolean;
   medium?: boolean;
   small?: boolean;
+  tiny?: boolean;
   square?: boolean;
   uppercase?: boolean;
   loading?: boolean;
@@ -262,6 +274,7 @@ const Button = (props: Props): JSX.Element => {
       medium={props.medium}
       square={props.square}
       small={props.small}
+      tiny={props.tiny}
       wide={props.wide}
       disabled={props.disabled}
       inactive={props.inactive}
@@ -276,6 +289,7 @@ const Button = (props: Props): JSX.Element => {
         large={props.large}
         medium={props.medium}
         small={props.small}
+        tiny={props.tiny}
         square={props.square}
         disabled={props.disabled}
         complete={props.complete}
@@ -289,6 +303,7 @@ const Button = (props: Props): JSX.Element => {
             large={props.large}
             medium={props.medium}
             small={props.small}
+            tiny={props.tiny}
             square={props.square}
             uppercase={props.uppercase}
             disabled={props.disabled}
