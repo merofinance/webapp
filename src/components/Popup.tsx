@@ -37,6 +37,7 @@ const PopupContainer = styled.div`
     props.small ? "2.1rem 1.6rem 2.1rem 1.6rem" : "3.7rem 1.6rem 2.3rem 1.6rem"};
   border-radius: 1.4rem;
   background-color: #252140;
+  overflow: hidden;
 
   @media (max-width: 600px) {
     margin: 0 1rem;
