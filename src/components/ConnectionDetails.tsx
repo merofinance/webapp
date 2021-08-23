@@ -1,10 +1,15 @@
+import { useWeb3React } from "@web3-react/core";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
+import LaunchIcon from "@material-ui/icons/Launch";
+
+import { shortenAddress } from "../lib/text";
+import { GradientText } from "../styles/GradientText";
 import Button from "./Button";
 
 import Popup from "./Popup";
+import { ETHERSCAN_URL } from "../lib/constants";
 
 const Content = styled.div`
   width: 100%;
@@ -27,6 +32,26 @@ const Wallet = styled.div`
   opacity: 0.5;
 `;
 
+const AddressContainer = styled.a`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  height: 3.2rem;
+  background-color: rgba(10, 6, 33, 0.4);
+  border-radius: 0.7rem;
+  margin-top: 1.2rem;
+  cursor: pointer;
+`;
+
+const Address = styled(GradientText)`
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 2.8rem;
+  letter-spacing: 0.15px;
+`;
+
 interface Props {
   show: boolean;
   close: () => void;
@@ -36,6 +61,7 @@ interface Props {
 
 const ConnectionDetails = ({ show, close, changeWallet, wallet }: Props) => {
   const { t } = useTranslation();
+  const { account } = useWeb3React();
 
   return (
     <Popup
@@ -54,6 +80,17 @@ const ConnectionDetails = ({ show, close, changeWallet, wallet }: Props) => {
               click={changeWallet}
             />
           </WalletContainer>
+          <AddressContainer
+            href={`${ETHERSCAN_URL}${account}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Address>{shortenAddress(account || "", 24)}</Address>
+            <LaunchIcon
+              fontSize="medium"
+              style={{ fill: "var(--secondary)", transform: "translateY(0px)" }}
+            />
+          </AddressContainer>
         </Content>
       }
     />

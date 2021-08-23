@@ -16,7 +16,7 @@ const Connector = (): JSX.Element => {
   const location = useLocation();
   const [connecting, setConnecting] = useState(false);
   const [showingDetails, setShowingDetails] = useState(false);
-  const [wallet, setWallet] = useState("");
+  const [wallet, setWallet] = useState("walletConnect.wallets.metaMask");
 
   const autoConnect = async () => {
     const authorized = await injectedConnector.isAuthorized();
