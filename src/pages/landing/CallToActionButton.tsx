@@ -5,6 +5,7 @@ import { useWeb3React } from "@web3-react/core";
 
 import Button from "../../components/Button";
 import { useIsLive } from "../../app/hooks/use-is-live";
+import { changeNetwork } from "../../lib/web3";
 
 interface Props {
   hero?: boolean;
@@ -30,14 +31,8 @@ const CallToActionButton = ({ hero }: Props): JSX.Element => {
           : t("landingPage.unsupportedNetwork")
       }
       click={() => {
-        if (!protocolLive) {
-          if (chainId !== 1) return;
-          return (window as any).ethereum.request({
-            method: "wallet_switchEthereumChain",
-            params: [{ chainId: "0x2a" }],
-          });
-        }
-        history.push("/pools");
+        if (chainId === 1) changeNetwork(42);
+        if (protocolLive) history.push("/pools");
       }}
     />
   );
