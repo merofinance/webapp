@@ -25,6 +25,7 @@ const PoolDeposit = ({ pool }: Props): JSX.Element => {
   const { isMobile } = useDevice();
 
   const [depositAmount, setDepositAmount] = useState("");
+  const value = ScaledNumber.fromUnscaled(depositAmount, pool.underlying.decimals);
 
   const error = () => {
     if (depositAmount && Number(depositAmount) <= 0) return "Amount must be a positive number";
@@ -56,9 +57,9 @@ const PoolDeposit = ({ pool }: Props): JSX.Element => {
           />
           <DepositButtons
             pool={pool}
-            value={ScaledNumber.fromUnscaled(depositAmount, pool.underlying.decimals)}
+            value={value}
             complete={() => setDepositAmount("")}
-            valid={!error()}
+            valid={!error() && !value.isZero()}
           />
         </Content>
       }
