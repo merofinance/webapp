@@ -15,9 +15,10 @@ type Props = {
   value: ScaledNumber;
   pool: Pool;
   complete: () => void;
+  valid: boolean;
 };
 
-const DepositButtons = ({ value, pool, complete }: Props): JSX.Element => {
+const DepositButtons = ({ value, pool, complete, valid }: Props): JSX.Element => {
   const dispatch: AppDispatch = useDispatch();
   const backd = useBackd();
   const { loading, setLoading, handleTxDispatch } = useLoading();
@@ -47,7 +48,7 @@ const DepositButtons = ({ value, pool, complete }: Props): JSX.Element => {
     <>
       {pool.underlying.address !== ETH_DUMMY_ADDRESS && (
         <MultiStepButtons
-          disabled={value.isZero()}
+          disabled={!valid}
           firstText={`Approve ${pool.underlying.symbol}`}
           firstAction={executeApprove}
           firstComplete={approved}
@@ -68,7 +69,7 @@ const DepositButtons = ({ value, pool, complete }: Props): JSX.Element => {
             await executeDeposit();
             setLoading(false);
           }}
-          disabled={value.isZero()}
+          disabled={!valid}
           loading={loading}
           hoverText="Enter Amount"
         />
