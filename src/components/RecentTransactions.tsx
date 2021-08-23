@@ -1,14 +1,16 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import styled from "styled-components";
-import LaunchIcon from "@material-ui/icons/Launch";
-import externalLink from "../assets/ui/gradient-external-link.svg";
+import styled, { keyframes } from "styled-components";
 
+import externalLink from "../assets/ui/gradient-external-link.svg";
 import { TransactionInfo } from "../lib/types";
 import { selectTransactions } from "../state/transactionsSlice";
 import { GradientText } from "../styles/GradientText";
 import { ETHERSCAN_URL } from "../lib/constants";
+import pending from "../assets/ui/status/pending.svg";
+import success from "../assets/ui/status/success.svg";
+import failure from "../assets/ui/status/failure.svg";
 
 const StyledRecentTransactions = styled.div`
   width: calc(100% + 3.2rem);
@@ -47,11 +49,31 @@ const Transaction = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0.8rem 0;
+  margin: 0.7rem 0;
+`;
+
+interface StatusProps {
+  pending: boolean;
+}
+
+const still = keyframes`
+	0% {
+		transform: none;
+	}
+`;
+
+const spin = keyframes`
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
 `;
 
 const Status = styled.img`
   width: 1.3rem;
+  animation: ${(props: StatusProps) => (props.pending ? spin : still)} 1s linear infinite;
 `;
 
 const Text = styled.div`
@@ -78,6 +100,8 @@ const RecentTransactions = () => {
   const { t } = useTranslation();
   const transactions = useSelector(selectTransactions);
 
+  console.log(transactions);
+
   return (
     <StyledRecentTransactions>
       <HeaderContainer>
@@ -85,12 +109,15 @@ const RecentTransactions = () => {
         {transactions.length > 0 && <Clear>{t("walletConnect.details.clear")}</Clear>}
       </HeaderContainer>
       {transactions.length === 0 && <Empty>{t("walletConnect.details.empty")}</Empty>}
-      {transactions.map((transaction: TransactionInfo) => (
+      {transactions.slice(0, 4).map((tx: TransactionInfo) => (
         <Transaction>
-          <Status />
+          <Status
+            src={tx.confirmations === 0 ? pending : tx.status === 1 ? success : failure}
+            pending={tx.confirmations === 0}
+          />
           <Text>meow</Text>
           <Text>meow</Text>
-          <a href={`${ETHERSCAN_URL}${transaction.hash}`} target="_blank" rel="noopener noreferrer">
+          <a href={`${ETHERSCAN_URL}${tx.hash}`} target="_blank" rel="noopener noreferrer">
             <ExternalLink src={externalLink} />
           </a>
         </Transaction>
