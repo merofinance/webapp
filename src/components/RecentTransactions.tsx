@@ -125,11 +125,7 @@ const RecentTransactions = () => {
     if (tx.description.action === "Approve") {
       return tx.description.args.token.symbol;
     }
-    if (tx.description.action === "Register") {
-      const { position } = tx.description.args;
-      return `${shortenAddress(position.account, 8)} ${position.protocol}`;
-    }
-    if (tx.description.action === "Remove") {
+    if (tx.description.action === "Register" || tx.description.action === "Remove") {
       const { position } = tx.description.args;
       return `${shortenAddress(position.account, 8)} ${position.protocol}`;
     }
