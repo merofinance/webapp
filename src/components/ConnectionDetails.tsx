@@ -1,5 +1,7 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+
 import Popup from "./Popup";
 
 const Content = styled.div`
@@ -14,8 +16,16 @@ interface Props {
 }
 
 const ConnectionDetails = ({ show, close }: Props) => {
+  const { t } = useTranslation();
+
   return (
-    <Popup small show={show} close={close} header="account" content={<Content>meow</Content>} />
+    <Popup
+      small
+      show={show}
+      close={close}
+      header={t("walletConnect.details.header")}
+      content={<Content>meow</Content>}
+    />
   );
 };
 

@@ -17,6 +17,9 @@
     "wallets": {
       "metaMask": "MetaMask",
       "walletConnect": "WalletConnect"
+    },
+    "details": {
+      "header": "Account"
     }
   },
   "landingPage": {
