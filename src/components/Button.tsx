@@ -9,6 +9,7 @@ type ButtonProps = {
   medium?: boolean;
   small?: boolean;
   square?: boolean;
+  uppercase?: boolean;
   loading?: boolean;
   wide?: boolean;
   disabled?: boolean;
@@ -41,6 +42,7 @@ const StyledButton = styled.button`
     if (props.large) return "3.2rem";
     if (props.medium) return "1.5rem";
     if (props.square) return "1.5rem";
+    if (props.small) return "0.5rem";
     return "2rem";
   }};
   margin-top: ${(props: ButtonProps) => {
@@ -150,7 +152,7 @@ const Text = styled.div`
   text-transform: ${(props: ButtonProps) => {
     if (props.large) return "none";
     if (props.medium) return "none";
-    if (props.small) return "uppercase";
+    if (props.uppercase) return "uppercase";
     return "capitalize";
   }};
   letter-spacing: ${(props: ButtonProps) => {
@@ -238,6 +240,7 @@ type Props = {
   medium?: boolean;
   small?: boolean;
   square?: boolean;
+  uppercase?: boolean;
   loading?: boolean;
   submit?: boolean;
   wide?: boolean;
@@ -258,6 +261,7 @@ const Button = (props: Props): JSX.Element => {
       large={props.large}
       medium={props.medium}
       square={props.square}
+      small={props.small}
       wide={props.wide}
       disabled={props.disabled}
       inactive={props.inactive}
@@ -286,6 +290,7 @@ const Button = (props: Props): JSX.Element => {
             medium={props.medium}
             small={props.small}
             square={props.square}
+            uppercase={props.uppercase}
             disabled={props.disabled}
           >
             {props.text}
