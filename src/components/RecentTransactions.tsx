@@ -74,19 +74,31 @@ const spin = keyframes`
 `;
 
 const Status = styled.img`
-  width: 1.3rem;
+  height: 1.4rem;
   animation: ${(props: StatusProps) => (props.pending ? spin : still)} 1s linear infinite;
   /* TODO Remove redundant keyframe */
   /* TODO Rotate Failed Status icon */
   /* TODO Add functionality to Clear */
 `;
 
-const Text = styled.div`
+const Type = styled.div`
+  margin-left: 0.7rem;
   font-size: 1.1rem;
   line-height: 1.6rem;
   letter-spacing: 0.15px;
   font-weight: 500;
+  flex: 1;
 `;
+
+const Details = styled.div`
+  font-size: 1.1rem;
+  line-height: 1.6rem;
+  letter-spacing: 0.15px;
+  font-weight: 500;
+  flex: 2.2;
+`;
+
+const Link = styled.a``;
 
 const ExternalLink = styled.img`
   width: 1.2rem;
@@ -142,11 +154,11 @@ const RecentTransactions = () => {
             src={tx.confirmations === 0 ? pending : tx.status === 1 ? success : failure}
             pending={tx.confirmations === 0}
           />
-          <Text>{tx.description.action}</Text>
-          <Text>{getDetails(tx)}</Text>
-          <a href={`${ETHERSCAN_URL}${tx.hash}`} target="_blank" rel="noopener noreferrer">
+          <Type>{tx.description.action}</Type>
+          <Details>{getDetails(tx)}</Details>
+          <Link href={`${ETHERSCAN_URL}${tx.hash}`} target="_blank" rel="noopener noreferrer">
             <ExternalLink src={externalLink} />
-          </a>
+          </Link>
         </Transaction>
       ))}
     </StyledRecentTransactions>
