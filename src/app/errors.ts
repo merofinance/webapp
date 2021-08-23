@@ -6,6 +6,7 @@ export interface ErrorState {
   message: string;
   title?: string;
   hideContact?: boolean;
+  hideButton?: boolean;
 }
 
 export class BackdError extends CustomError {
@@ -17,12 +18,21 @@ export class BackdError extends CustomError {
     return false;
   }
 
+  get hideButton(): boolean {
+    return false;
+  }
+
   formatMessage(): string {
     return this.message;
   }
 
   toErrorState(): ErrorState {
-    return { title: this.title, message: this.formatMessage(), hideContact: this.hideContact };
+    return {
+      title: this.title,
+      message: this.formatMessage(),
+      hideContact: this.hideContact,
+      hideButton: this.hideButton,
+    };
   }
 }
 
@@ -36,6 +46,10 @@ export class UnsupportedNetwork extends BackdError {
   }
 
   get hideContact(): boolean {
+    return true;
+  }
+
+  get hideButton(): boolean {
     return true;
   }
 
