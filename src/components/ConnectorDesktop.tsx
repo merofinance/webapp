@@ -7,6 +7,7 @@ import { shortenAddress } from "../lib/text";
 import { useBackd } from "../app/hooks/use-backd";
 import { chainIds } from "../lib/constants";
 import PulsingDot from "./PulsingDot";
+import { useWeb3Updated } from "../app/hooks/use-web3-updated";
 
 const StyledConnectorDesktop = styled.div`
   display: flex;
@@ -98,6 +99,7 @@ interface Props {
 
 const ConnectorDesktop = ({ connect }: Props): JSX.Element => {
   const { account, active, chainId } = useWeb3React();
+  const updated = useWeb3Updated();
   const backd = useBackd();
   const { t } = useTranslation();
   const [ens, setEns] = useState("");
@@ -118,7 +120,7 @@ const ConnectorDesktop = ({ connect }: Props): JSX.Element => {
 
   useEffect(() => {
     updateEns();
-  }, [account, backd, chainId]);
+  }, [updated]);
 
   return (
     <StyledConnectorDesktop>
