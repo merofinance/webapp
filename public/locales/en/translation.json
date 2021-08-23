@@ -19,7 +19,9 @@
       "walletConnect": "WalletConnect"
     },
     "details": {
-      "header": "Account"
+      "header": "Account",
+      "connected": "Connected with {{wallet}}",
+      "change": "Change"
     }
   },
   "landingPage": {
