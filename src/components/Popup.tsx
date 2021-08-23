@@ -53,11 +53,12 @@ const Exit = styled.img`
 
 const Header = styled.div`
   font-weight: 700;
-  line-height: 4.2rem;
-  text-align: center;
 
-  margin-bottom: 2.5rem;
-  font-size: 3.6rem;
+  text-align: ${(props: PopupContainerProps) => (props.small ? "left" : "center")};
+  margin-bottom: ${(props: PopupContainerProps) => (props.small ? "1.8rem" : "2.5rem")};
+  font-size: ${(props: PopupContainerProps) => (props.small ? "1.6rem" : "3.6rem")};
+  line-height: ${(props: PopupContainerProps) => (props.small ? "1.7rem" : "4.2rem")};
+
   @media (max-width: 600px) {
     margin-bottom: 2rem;
     font-size: 2.7rem;
@@ -107,8 +108,8 @@ const Popup = ({
     <StyledPopup>
       <ExitEvent onClick={close} />
       <PopupContainer small={small}>
-        <Exit src={closeIcon} onClick={close} alt="exit button" />
-        {header && <Header>{header}</Header>}
+        <Exit src={closeIcon} onClick={close} alt="exit button" small={small} />
+        {header && <Header small={small}>{header}</Header>}
         {content && content}
         {confirm && submit && (
           <ButtonContainer>
