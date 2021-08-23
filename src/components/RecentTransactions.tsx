@@ -75,8 +75,6 @@ const spin = keyframes`
 const Status = styled.img`
   height: 1.4rem;
   animation: ${(props: StatusProps) => (props.pending ? spin : "none")} 1s linear infinite;
-  /* TODO Rotate Failed Status icon */
-  /* TODO Add functionality to Clear */
 `;
 
 const Type = styled.div`
