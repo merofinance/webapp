@@ -9,11 +9,13 @@ import { selectTransactions } from "../state/transactionsSlice";
 import { GradientText } from "../styles/GradientText";
 
 const StyledRecentTransactions = styled.div`
-  width: 100%;
+  width: calc(100% + 3.2rem);
   display: flex;
   flex-direction: column;
   padding: 2rem 1.6rem;
   background-color: rgba(10, 6, 33, 0.15);
+  margin-top: 0.3rem;
+  transform: translate(-1.6rem, 2.1rem);
 `;
 
 const HeaderContainer = styled.div`
@@ -21,6 +23,7 @@ const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 0.8rem;
 `;
 
 const Header = styled.div`
@@ -42,6 +45,7 @@ const Transaction = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 0.8rem 0;
 `;
 
 const Status = styled.img`
@@ -55,6 +59,15 @@ const Text = styled.div`
   font-weight: 500;
 `;
 
+const Empty = styled.div`
+  font-size: 1.1rem;
+  line-height: 1.6rem;
+  letter-spacing: 0.15px;
+  font-weight: 500;
+  opacity: 0.6;
+  margin-top: 0.8rem;
+`;
+
 const RecentTransactions = () => {
   const { t } = useTranslation();
   const transactions = useSelector(selectTransactions);
@@ -62,9 +75,10 @@ const RecentTransactions = () => {
   return (
     <StyledRecentTransactions>
       <HeaderContainer>
-        <Header>{t("walletConnect.details.change")}</Header>
-        <Clear>{t("walletConnect.details.clear")}</Clear>
+        <Header>{t("walletConnect.details.recentTransactions")}</Header>
+        {transactions.length > 0 && <Clear>{t("walletConnect.details.clear")}</Clear>}
       </HeaderContainer>
+      {transactions.length === 0 && <Empty>{t("walletConnect.details.empty")}</Empty>}
       {transactions.map((transaction: TransactionInfo) => (
         <Transaction>
           <Status />
@@ -72,7 +86,7 @@ const RecentTransactions = () => {
           <Text>meow</Text>
           <LaunchIcon
             fontSize="medium"
-            style={{ fill: "var(--secondary)", transform: "translateY(0px)" }}
+            style={{ fill: "var(--gradient)", transform: "translateY(0px)" }}
           />
         </Transaction>
       ))}

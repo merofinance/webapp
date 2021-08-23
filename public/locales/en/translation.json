@@ -23,7 +23,8 @@
       "connected": "Connected with {{wallet}}",
       "change": "Change",
       "recentTransactions": "Recent transactions",
-      "clear": "Clear"
+      "clear": "Clear",
+      "empty": "Your transactions will appear here..."
     }
   },
   "landingPage": {
