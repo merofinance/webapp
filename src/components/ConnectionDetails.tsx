@@ -9,7 +9,9 @@ import { GradientText } from "../styles/GradientText";
 import Button from "./Button";
 
 import Popup from "./Popup";
-import { ETHERSCAN_URL } from "../lib/constants";
+import { chainIds, ETHERSCAN_URL } from "../lib/constants";
+import PulsingDot from "./PulsingDot";
+import RecentTransactions from "./RecentTransactions";
 
 const Content = styled.div`
   width: 100%;
@@ -52,6 +54,25 @@ const Address = styled(GradientText)`
   letter-spacing: 0.15px;
 `;
 
+const NetworkContainer = styled.div`
+  width: 100%;
+  padding: 0 1rem;
+  height: 3.2rem;
+  display: flex;
+  align-items: center;
+  background-color: rgba(137, 102, 246, 0.1);
+  border-radius: 1.6rem;
+  margin-top: 2.4rem;
+`;
+
+const Network = styled.div`
+  font-size: 1.4rem;
+  line-height: 2.8rem;
+  font-weight: 500;
+  letter-spacing: 0.15px;
+  margin-left: 0.7rem;
+`;
+
 interface Props {
   show: boolean;
   close: () => void;
@@ -61,7 +82,15 @@ interface Props {
 
 const ConnectionDetails = ({ show, close, changeWallet, wallet }: Props) => {
   const { t } = useTranslation();
-  const { account } = useWeb3React();
+  const { account, chainId } = useWeb3React();
+
+  const networkName = (): string => {
+    if (!chainId) return "Unknown Network";
+    if (chainId === 1) return "Ethereum Mainet";
+    const network = chainIds[chainId.toString()];
+    if (!network) return `Chain id ${chainId}`;
+    return `Ethereum ${network} Testnet`;
+  };
 
   return (
     <Popup
@@ -91,6 +120,11 @@ const ConnectionDetails = ({ show, close, changeWallet, wallet }: Props) => {
               style={{ fill: "var(--secondary)", transform: "translateY(0px)" }}
             />
           </AddressContainer>
+          <NetworkContainer>
+            <PulsingDot success={chainId === 1} />
+            <Network>{networkName()}</Network>
+          </NetworkContainer>
+          <RecentTransactions />
         </Content>
       }
     />

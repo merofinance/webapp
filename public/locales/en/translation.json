@@ -21,7 +21,9 @@
     "details": {
       "header": "Account",
       "connected": "Connected with {{wallet}}",
-      "change": "Change"
+      "change": "Change",
+      "recentTransactions": "Recent transactions",
+      "clear": "Clear"
     }
   },
   "landingPage": {
