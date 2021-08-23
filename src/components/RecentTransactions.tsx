@@ -1,11 +1,11 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
 
 import externalLink from "../assets/ui/gradient-external-link.svg";
 import { TransactionInfo } from "../lib/types";
-import { selectTransactions } from "../state/transactionsSlice";
+import { clearTransactions, selectTransactions } from "../state/transactionsSlice";
 import { GradientText } from "../styles/GradientText";
 import { ETHERSCAN_URL } from "../lib/constants";
 import pending from "../assets/ui/status/pending.svg";
@@ -13,6 +13,7 @@ import success from "../assets/ui/status/success.svg";
 import failure from "../assets/ui/status/failure.svg";
 import { ScaledNumber } from "../lib/scaled-number";
 import { shortenAddress } from "../lib/text";
+import { AppDispatch } from "../app/store";
 
 const StyledRecentTransactions = styled.div`
   width: calc(100% + 3.2rem);
@@ -39,6 +40,10 @@ const Header = styled.div`
   letter-spacing: 0.15px;
 `;
 
+const ClearButton = styled.button`
+  cursor: pointer;
+`;
+
 const Clear = styled(GradientText)`
   font-size: 1.2rem;
   line-height: 1.8rem;
@@ -58,12 +63,6 @@ interface StatusProps {
   pending: boolean;
 }
 
-const still = keyframes`
-	0% {
-		transform: none;
-	}
-`;
-
 const spin = keyframes`
 	0% {
 		transform: rotate(0deg);
@@ -75,8 +74,7 @@ const spin = keyframes`
 
 const Status = styled.img`
   height: 1.4rem;
-  animation: ${(props: StatusProps) => (props.pending ? spin : still)} 1s linear infinite;
-  /* TODO Remove redundant keyframe */
+  animation: ${(props: StatusProps) => (props.pending ? spin : "none")} 1s linear infinite;
   /* TODO Rotate Failed Status icon */
   /* TODO Add functionality to Clear */
 `;
@@ -115,6 +113,7 @@ const Empty = styled.div`
 
 const RecentTransactions = () => {
   const { t } = useTranslation();
+  const dispatch: AppDispatch = useDispatch();
   const transactions = useSelector(selectTransactions);
 
   console.log(transactions);
@@ -145,7 +144,11 @@ const RecentTransactions = () => {
     <StyledRecentTransactions>
       <HeaderContainer>
         <Header>{t("walletConnect.details.recentTransactions")}</Header>
-        {transactions.length > 0 && <Clear>{t("walletConnect.details.clear")}</Clear>}
+        {transactions.length > 0 && (
+          <ClearButton onClick={() => dispatch(clearTransactions())}>
+            <Clear>{t("walletConnect.details.clear")}</Clear>
+          </ClearButton>
+        )}
       </HeaderContainer>
       {transactions.length === 0 && <Empty>{t("walletConnect.details.empty")}</Empty>}
       {transactions.slice(0, 4).map((tx: TransactionInfo) => (
