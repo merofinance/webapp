@@ -2,18 +2,19 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
+import { useWeb3React } from "@web3-react/core";
 
 import externalLink from "../assets/ui/gradient-external-link.svg";
 import { TransactionInfo } from "../lib/types";
 import { clearTransactions, selectTransactions } from "../state/transactionsSlice";
 import { GradientText } from "../styles/GradientText";
-import { ETHERSCAN_URL } from "../lib/constants";
 import pending from "../assets/ui/status/pending.svg";
 import success from "../assets/ui/status/success.svg";
 import failure from "../assets/ui/status/failure.svg";
 import { ScaledNumber } from "../lib/scaled-number";
 import { shortenAddress } from "../lib/text";
 import { AppDispatch } from "../app/store";
+import { getEtherscanTransactionLink } from "../lib/web3";
 
 const StyledRecentTransactions = styled.div`
   width: calc(100% + 3.2rem);
@@ -111,6 +112,7 @@ const Empty = styled.div`
 
 const RecentTransactions = () => {
   const { t } = useTranslation();
+  const { chainId } = useWeb3React();
   const dispatch: AppDispatch = useDispatch();
   const transactions = useSelector(selectTransactions);
 
@@ -151,7 +153,11 @@ const RecentTransactions = () => {
           />
           <Type>{tx.description.action}</Type>
           <Details>{getDetails(tx)}</Details>
-          <Link href={`${ETHERSCAN_URL}${tx.hash}`} target="_blank" rel="noopener noreferrer">
+          <Link
+            href={getEtherscanTransactionLink(chainId, tx.hash)}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <ExternalLink src={externalLink} />
           </Link>
         </Transaction>

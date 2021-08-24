@@ -9,9 +9,10 @@ import { GradientText } from "../styles/GradientText";
 import Button from "./Button";
 
 import Popup from "./Popup";
-import { chainIds, ETHERSCAN_URL } from "../lib/constants";
+import { chainIds } from "../lib/constants";
 import PulsingDot from "./PulsingDot";
 import RecentTransactions from "./RecentTransactions";
+import { getEtherscanAddressLink } from "../lib/web3";
 
 const Content = styled.div`
   width: 100%;
@@ -110,7 +111,7 @@ const ConnectionDetails = ({ show, close, changeWallet, wallet }: Props) => {
             />
           </WalletContainer>
           <AddressContainer
-            href={`${ETHERSCAN_URL}${account}`}
+            href={getEtherscanAddressLink(chainId, account || "")}
             target="_blank"
             rel="noopener noreferrer"
           >
