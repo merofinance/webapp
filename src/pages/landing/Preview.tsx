@@ -16,6 +16,7 @@ const StyledPreview = styled.div`
   margin: var(--section-margin);
   display: flex;
   justify-content: center;
+  overflow: hidden;
 
   @media (max-width: 600px) {
     margin: var(--mobile-section-margin);

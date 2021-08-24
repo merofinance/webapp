@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import LaunchIcon from "@material-ui/icons/Launch";
+import { useWeb3React } from "@web3-react/core";
 
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
@@ -13,8 +14,8 @@ import { registerPosition } from "../../state/positionsSlice";
 import { shortenAddress } from "../../lib/text";
 import { Pool, Position } from "../../lib/types";
 import { selectPrice } from "../../state/selectors";
-import { ETHERSCAN_URL } from "../../lib/constants";
 import { useDevice } from "../../app/hooks/use-device";
+import { getEtherscanAddressLink } from "../../lib/web3";
 
 const Content = styled.div`
   width: 100%;
@@ -104,6 +105,7 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
   const dispatch = useDispatch<AppDispatch>();
   const price = useSelector(selectPrice(pool));
   const backd = useBackd();
+  const { chainId } = useWeb3React();
   const { isMobile } = useDevice();
 
   const [loading, setLoading] = useState(false);
@@ -136,7 +138,7 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
           <Summary>
             {`When the collateralization of `}
             <Address
-              href={`${ETHERSCAN_URL}${position.account}`}
+              href={getEtherscanAddressLink(chainId, position.account)}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -165,7 +167,7 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
                 <Tooltip content="The address of the owner of the position to top up (e.g. if Alice is the borrower on Aave that should be topped up then this would be Alice’s address)" />
               </Label>
               <AddressLabel
-                href={`${ETHERSCAN_URL}${position.account}`}
+                href={getEtherscanAddressLink(chainId, position.account)}
                 target="_blank"
                 rel="noopener noreferrer"
               >

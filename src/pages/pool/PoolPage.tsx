@@ -15,17 +15,23 @@ import { useDevice } from "../../app/hooks/use-device";
 import { useBackd } from "../../app/hooks/use-backd";
 import { fetchState } from "../../state/poolsListSlice";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
+import BackButton from "../../components/BackButton";
 
 type DepositWithdrawParams = {
   poolName: string;
 };
 
 const StyledPoolPage = styled.div`
+  position: relative;
   width: 100%;
   display: flex;
 
   @media (max-width: 1439px) {
-    flex-direction: column-reverse;
+    flex-direction: column;
+
+    > div:nth-child(2) {
+      order: 3;
+    }
   }
 `;
 
@@ -74,6 +80,7 @@ const PoolPage = (): JSX.Element => {
 
   return (
     <StyledPoolPage>
+      <BackButton />
       <Seo
         title={`${pool.underlying.symbol} Pool`}
         description={`Deposit ${pool.underlying.symbol} to farm yield while protecting your DeFi loan (Aave, Compound, etc.) from liquidation`}
