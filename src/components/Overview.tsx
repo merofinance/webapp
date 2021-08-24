@@ -51,6 +51,7 @@ interface Props {
 const Overview = ({ description, link }: Props) => {
   return (
     <InfoCard
+      defaultOpen
       collapsible
       header="Overview"
       content={
