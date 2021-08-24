@@ -9,6 +9,7 @@ import Seo from "../../components/Seo";
 import PoolsRow from "./PoolsRow";
 import PoolsInformation from "./PoolsInformation";
 import PoolsStatistics from "./PoolsStatistics";
+import Overview from "../../components/Overview";
 
 const StyledPoolsPage = styled.div`
   width: 100%;
@@ -107,6 +108,10 @@ const PoolsPage = (): JSX.Element => {
         }
       />
       <InfoCards>
+        <Overview
+          description="Deposit ABC to begin earning yield via the STRATEGY_NAME. Once you have deposited, you can make your liquidity reactive by opening a top-up position."
+          link="https://docs.backd.fund/"
+        />
         <PoolsInformation />
       </InfoCards>
     </StyledPoolsPage>
