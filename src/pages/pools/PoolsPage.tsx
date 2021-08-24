@@ -7,8 +7,9 @@ import { fetchState, selectPools } from "../../state/poolsListSlice";
 import { Pool } from "../../lib";
 import Seo from "../../components/Seo";
 import PoolsRow from "./PoolsRow";
-import PoolsOverview from "./PoolsOverview";
+import PoolsInformation from "./PoolsInformation";
 import PoolsStatistics from "./PoolsStatistics";
+import Overview from "../../components/Overview";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 
 const StyledPoolsPage = styled.div`
@@ -66,6 +67,11 @@ const ChevronHeader = styled.th`
   }
 `;
 
+const InfoCards = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const PoolsPage = (): JSX.Element => {
   const backd = useBackd();
   const dispatch = useDispatch();
@@ -103,7 +109,13 @@ const PoolsPage = (): JSX.Element => {
           </Table>
         }
       />
-      <PoolsOverview />
+      <InfoCards>
+        <Overview
+          description="Backd’s single-asset pools aggregate yield across strategies. After depositing an asset, register a top-up position to protect from liquidation on supported collateralized lending protocols."
+          link="https://docs.backd.fund/"
+        />
+        <PoolsInformation />
+      </InfoCards>
     </StyledPoolsPage>
   );
 };

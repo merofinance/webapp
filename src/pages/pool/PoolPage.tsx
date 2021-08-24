@@ -9,9 +9,10 @@ import Seo from "../../components/Seo";
 import PoolDeposit from "./PoolDeposit";
 import PoolPositions from "./PoolPositions";
 import PoolWithdraw from "./PoolWithdraw";
-import PoolOverview from "./PoolOverview";
+import PoolInformation from "./PoolInformation";
 import { selectBalance } from "../../state/userSlice";
 import { useDevice } from "../../app/hooks/use-device";
+import Overview from "../../components/Overview";
 import { useBackd } from "../../app/hooks/use-backd";
 import { fetchState } from "../../state/poolsListSlice";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
@@ -35,13 +36,17 @@ const StyledPoolPage = styled.div`
   }
 `;
 
+const ContentContainer = styled.div`
+  width: 100%;
+`;
+
 const Content = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
 `;
 
-const RightColumn = styled.div`
+const InfoCards = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -53,8 +58,6 @@ const RightColumn = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  margin-top: 2.4rem;
-
   @media (max-width: 1439px) {
     display: none;
   }
@@ -85,31 +88,37 @@ const PoolPage = (): JSX.Element => {
         title={`${pool.underlying.symbol} Pool`}
         description={`Deposit ${pool.underlying.symbol} to farm yield while protecting your DeFi loan (Aave, Compound, etc.) from liquidation`}
       />
-      <Content>
-        <Radio
-          options={[
-            {
-              label: "Deposit",
-              value: "deposit",
-            },
-            {
-              label: "Withdraw",
-              value: "withdraw",
-            },
-            {
-              label: isMobile ? "Positions" : "Top-up Positions",
-              value: "positions",
-            },
-          ]}
-          active={tab}
-          setOption={(value: string) => setTab(value)}
+      <ContentContainer>
+        <Content>
+          <Radio
+            options={[
+              {
+                label: "Deposit",
+                value: "deposit",
+              },
+              {
+                label: "Withdraw",
+                value: "withdraw",
+              },
+              {
+                label: isMobile ? "Positions" : "Top-up Positions",
+                value: "positions",
+              },
+            ]}
+            active={tab}
+            setOption={(value: string) => setTab(value)}
+          />
+          {tab === "deposit" && <PoolDeposit pool={pool} />}
+          {tab === "withdraw" && <PoolWithdraw pool={pool} />}
+          {tab === "positions" && <PoolPositions pool={pool} />}
+        </Content>
+      </ContentContainer>
+      <InfoCards>
+        <Overview
+          description={`Deposit ${pool.underlying.symbol} to begin earning yield via the ${pool.name} strategy. Once you have deposited, you can make your liquidity reactive by opening a top-up position.`}
+          link="https://docs.backd.fund/"
         />
-        {tab === "deposit" && <PoolDeposit pool={pool} />}
-        {tab === "withdraw" && <PoolWithdraw pool={pool} />}
-        {tab === "positions" && <PoolPositions pool={pool} />}
-      </Content>
-      <RightColumn>
-        <PoolOverview pool={pool} />
+        <PoolInformation pool={pool} />
         {tab !== "positions" && !balance.isZero() && (
           <ButtonContainer>
             <Button
@@ -120,7 +129,7 @@ const PoolPage = (): JSX.Element => {
             />
           </ButtonContainer>
         )}
-      </RightColumn>
+      </InfoCards>
     </StyledPoolPage>
   );
 };
