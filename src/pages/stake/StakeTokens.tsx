@@ -103,9 +103,11 @@ const StakeTokens = ({ token }: Props): JSX.Element => {
           firstAction={approve}
           firstComplete={approved}
           firstHoverText="Enter Amount"
+          firstLoading={false}
           secondText="Deposit and Stake"
           secondAction={stake}
           secondHoverText={`Approve ${token.symbol}`}
+          secondLoading={false}
         />
       </Content>
     </StyledStakeTokens>

@@ -18,6 +18,7 @@ import { selectPositions } from "../../state/positionsSlice";
 import { ScaledNumber } from "../../lib/scaled-number";
 import { INFINITE_APPROVE_AMMOUNT } from "../../lib/constants";
 import { useDevice } from "../../app/hooks/use-device";
+import { hasPendingTransaction } from "../../state/transactionsSlice";
 
 export interface FormType {
   protocol: string;
@@ -138,6 +139,7 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
   const allowance = useSelector(selectToupAllowance(backd, pool));
   const balance = useSelector(selectBalance(pool));
   const positions = useSelector(selectPositions);
+  const loading = useSelector(hasPendingTransaction("Approve"));
   const [confirming, setConfirming] = useState(false);
 
   const onSubmit = () => {
@@ -147,16 +149,14 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
 
   const executeApprove = () => {
     if (!backd) return;
-    formik.setSubmitting(true);
-    const approveArgs = {
-      amount: ScaledNumber.fromUnscaled(INFINITE_APPROVE_AMMOUNT, pool.underlying.decimals),
-      backd,
-      spender: backd.topupActionAddress,
-      token: pool.lpToken,
-    };
-    dispatch(approve(approveArgs)).then(() => {
-      formik.setSubmitting(false);
-    });
+    dispatch(
+      approve({
+        amount: ScaledNumber.fromUnscaled(INFINITE_APPROVE_AMMOUNT, pool.underlying.decimals),
+        backd,
+        spender: backd.topupActionAddress,
+        token: pool.lpToken,
+      })
+    );
   };
 
   const validate = (values: FormType): FormikErrors<FormType> => {
@@ -223,10 +223,10 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
               submit
               primary
               small={isMobile}
-              disabled={!formik.dirty || !formik.isValid || formik.isSubmitting}
+              disabled={!formik.dirty || !formik.isValid || loading}
               text={approved && formik.values.maxTopUp !== "" ? "create 2/2" : "approve 1/2"}
               hoverText={buttonHoverText()}
-              loading={formik.isSubmitting}
+              loading={loading}
             />
           </Value>
         </Form>
