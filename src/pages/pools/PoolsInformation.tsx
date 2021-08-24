@@ -15,7 +15,7 @@ const PoolsInformation = (): JSX.Element => {
 
   return (
     <Information
-      header="Pools Overview"
+      header="Pools Information"
       rows={[
         {
           label: "Platform TVL",

@@ -15,7 +15,7 @@ const PoolInformation = ({ pool }: Props): JSX.Element => {
 
   return (
     <Information
-      header="Pool Overview"
+      header="Pool Information"
       rows={[
         {
           label: "Pool TVL",
