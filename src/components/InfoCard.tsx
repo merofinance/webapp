@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AccordionChevron from "./AccordionChevron";
 
@@ -94,10 +94,15 @@ type Props = {
   header: string;
   content: JSX.Element;
   collapsible?: boolean;
+  defaultOpen?: boolean;
 };
 
-const InfoCard = ({ header, content, collapsible }: Props): JSX.Element => {
+const InfoCard = ({ header, content, collapsible, defaultOpen }: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    setOpen(!!defaultOpen);
+  }, []);
 
   return (
     <StyledInfoCard open={open} collapsible={collapsible}>
