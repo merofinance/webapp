@@ -22,4 +22,5 @@ export const etherscanUrls: Record<string, string> = {
   "4": "https://rinkeby.etherscan.io/",
   "5": "https://goerli.etherscan.io/",
   "42": "https://kovan.etherscan.io/",
+  "1337": "https://etherscan.io/", // NOTE: only here to have some dummy URL in dev
 };
