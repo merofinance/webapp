@@ -3,13 +3,13 @@ import React, { useEffect, useState } from "react";
 
 import WalletSelectPopup from "./WalletSelectPopup";
 import { injectedConnector } from "../app/web3";
-import { useBackd } from "../app/hooks/use-backd";
 import ConnectorDesktop from "./ConnectorDesktop";
 import ConnectorMobile from "./ConnectorMobile";
+import { useWeb3Updated } from "../app/hooks/use-web3-updated";
 
 const Connector = (): JSX.Element => {
-  const { account, active, activate, chainId } = useWeb3React();
-  const backd = useBackd();
+  const { active, activate } = useWeb3React();
+  const updated = useWeb3Updated();
   const [connecting, setConnecting] = useState(false);
 
   const autoConnect = async () => {
@@ -21,7 +21,7 @@ const Connector = (): JSX.Element => {
 
   useEffect(() => {
     autoConnect();
-  }, [account, backd, chainId]);
+  }, [updated]);
 
   return (
     <>
