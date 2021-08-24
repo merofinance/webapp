@@ -109,7 +109,7 @@ const PoolsPage = (): JSX.Element => {
       />
       <InfoCards>
         <Overview
-          description="Pools are single-asset pools, aggregating yield across strategies. After depositing an asset, register your LP tokens for liquidation protection on supported collateralized debt positions."
+          description="Backd’s single-asset pools aggregate yield across strategies. After depositing an asset, register a top-up position to protect from liquidation on supported collateralized lending protocols."
           link="https://docs.backd.fund/"
         />
         <PoolsInformation />
