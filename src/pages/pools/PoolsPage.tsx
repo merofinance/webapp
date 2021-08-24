@@ -109,7 +109,7 @@ const PoolsPage = (): JSX.Element => {
       />
       <InfoCards>
         <Overview
-          description="Deposit ABC to begin earning yield via the STRATEGY_NAME. Once you have deposited, you can make your liquidity reactive by opening a top-up position."
+          description="Pools are single-asset pools, aggregating yield across strategies. After depositing an asset, register your LP tokens for liquidation protection on supported collateralized debt positions."
           link="https://docs.backd.fund/"
         />
         <PoolsInformation />
