@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import AccordionChevron from "./AccordionChevron";
+import InfoCard from "./InfoCard";
 import Tooltip from "./Tooltip";
 
 interface OverviewRow {
@@ -81,10 +82,6 @@ const Statistics = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-
-  @media (max-width: 1439px) {
-    margin-top: 3.2rem;
-  }
 `;
 
 const StatisticContainer = styled.div`
@@ -132,15 +129,10 @@ type Props = {
 };
 
 const Overview = ({ header, rows }: Props): JSX.Element => {
-  const [open, setOpen] = useState(false);
-
   return (
-    <Container>
-      <StyledOverview open={open}>
-        <ChevronContainer>
-          <AccordionChevron open={open} />
-        </ChevronContainer>
-        <Header onClick={() => setOpen(!open)}>{header}</Header>
+    <InfoCard
+      header={header}
+      content={
         <Statistics>
           {rows.map((row: OverviewRow) => (
             <StatisticContainer key={row.label}>
@@ -152,8 +144,8 @@ const Overview = ({ header, rows }: Props): JSX.Element => {
             </StatisticContainer>
           ))}
         </Statistics>
-      </StyledOverview>
-    </Container>
+      }
+    />
   );
 };
 
