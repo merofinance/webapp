@@ -12,6 +12,7 @@ import PoolWithdraw from "./PoolWithdraw";
 import PoolInformation from "./PoolInformation";
 import { selectBalance } from "../../state/userSlice";
 import { useDevice } from "../../app/hooks/use-device";
+import Overview from "../../components/Overview";
 
 type DepositWithdrawParams = {
   poolName: string;
@@ -32,7 +33,7 @@ const Content = styled.div`
   flex-direction: column;
 `;
 
-const RightColumn = styled.div`
+const InfoCards = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -90,7 +91,11 @@ const PoolPage = (): JSX.Element => {
         {tab === "withdraw" && <PoolWithdraw pool={pool} />}
         {tab === "positions" && <PoolPositions pool={pool} />}
       </Content>
-      <RightColumn>
+      <InfoCards>
+        <Overview
+          description="Deposit ABC to begin earning yield via the STRATEGY_NAME. Once you have deposited, you can make your liquidity reactive by opening a top-up position."
+          link="https://docs.backd.fund/"
+        />
         <PoolInformation pool={pool} />
         {tab !== "positions" && !balance.isZero() && (
           <ButtonContainer>
@@ -102,7 +107,7 @@ const PoolPage = (): JSX.Element => {
             />
           </ButtonContainer>
         )}
-      </RightColumn>
+      </InfoCards>
     </StyledPoolPage>
   );
 };
