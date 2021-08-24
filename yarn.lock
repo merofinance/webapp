@@ -1208,10 +1208,10 @@
     "@babel/helper-validator-identifier" "^7.14.9"
     to-fast-properties "^2.0.0"
 
-"@backdfund/protocol@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@backdfund/protocol/-/protocol-0.1.6.tgz#1c4799bc18253626ef16cab26bced7cc7b4c93d6"
-  integrity sha512-ucDSxkd2U5WnmyUek63jo3YzTQFTKfIhmofIt/3qCqvUPVCT6lv+/R6iBXVq+olpxpfR10jIFieTfqETfH2KPw==
+"@backdfund/protocol@^0.1.8":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@backdfund/protocol/-/protocol-0.1.8.tgz#eaa73ef5796b93974517cdafef9e735ff3b8dc45"
+  integrity sha512-CiDGbELKJhpFJC+JYqQdT269Zy7KfdYSEaJMfpiG50P/L9gNvam4yve5wE3obMjjAA7T4Vx9vydFwIYXD3vSjQ==
 
 "@bcoe/v8-coverage@^0.2.3":
   version "0.2.3"
@@ -11184,8 +11184,6 @@ postcss-page-break@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/postcss-page-break/-/postcss-page-break-2.0.0.tgz#add52d0e0a528cabe6afee8b46e2abb277df46bf"
   integrity sha512-tkpTSrLpfLfD9HvgOlJuigLuk39wVTbbd8RKcy8/ugV2bNBUW3xU+AIqyxhDrQr1VUj1RmyJrBn1YWrqUm9zAQ==
-  dependencies:
-    postcss "^7.0.2"
 
 postcss-place@^4.0.1:
   version "4.0.1"
