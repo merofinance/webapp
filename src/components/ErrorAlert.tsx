@@ -14,8 +14,14 @@ const Content = styled.div`
   flex-direction: column;
 `;
 
+interface TextProps {
+  center?: boolean;
+}
+
 const Text = styled(Paragraph)`
+  width: 100%;
   margin-bottom: 3rem;
+  text-align: ${(props: TextProps) => (props.center ? "center" : "left")};
 `;
 
 const Link = styled(GradientLink)`
@@ -43,7 +49,7 @@ export function ErrorAlert(): JSX.Element {
       header={error.title || "An Error Occured"}
       content={
         <Content>
-          <Text>{error.message}</Text>
+          <Text center={error.hideButton}>{error.message}</Text>
           {error.hideContact ? null : (
             <Text>
               Please try again in a moment. If the error persists, you can contact us on
