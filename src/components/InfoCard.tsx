@@ -28,7 +28,7 @@ const StyledInfoCard = styled.div`
     margin-left: 0;
     width: 100%;
     padding: 1.6rem;
-    max-height: ${(props: StyleProps) => (props.open ? "13rem" : "4.8rem")};
+    max-height: ${(props: StyleProps) => (props.open ? "16rem" : "4.8rem")};
   }
 `;
 
