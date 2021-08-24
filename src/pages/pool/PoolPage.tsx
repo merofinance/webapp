@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router";
 import styled from "styled-components";
 import Radio from "../../components/Radio";
@@ -13,6 +13,9 @@ import PoolInformation from "./PoolInformation";
 import { selectBalance } from "../../state/userSlice";
 import { useDevice } from "../../app/hooks/use-device";
 import Overview from "../../components/Overview";
+import { useBackd } from "../../app/hooks/use-backd";
+import { fetchState } from "../../state/poolsListSlice";
+import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import BackButton from "../../components/BackButton";
 
 type DepositWithdrawParams = {
@@ -62,11 +65,19 @@ const ButtonContainer = styled.div`
 
 const PoolPage = (): JSX.Element => {
   const { poolName } = useParams<DepositWithdrawParams>();
+  const backd = useBackd();
+  const dispatch = useDispatch();
+  const updated = useWeb3Updated();
   const pool = useSelector(selectPool(poolName));
   const balance = useSelector(selectBalance(pool));
   const { isMobile } = useDevice();
 
   const [tab, setTab] = useState("deposit");
+
+  useEffect(() => {
+    if (!backd) return;
+    dispatch(fetchState(backd));
+  }, [updated]);
 
   if (!pool) return <Redirect to="/" />;
 

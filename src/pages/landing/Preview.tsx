@@ -8,6 +8,7 @@ import swirl2 from "../../assets/background/swirl-2.svg";
 import { useBackd } from "../../app/hooks/use-backd";
 import { fetchState, selectPools } from "../../state/poolsListSlice";
 import { Pool } from "../../lib";
+import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 
 const StyledPreview = styled.div`
   position: relative;
@@ -84,11 +85,12 @@ const Preview = (): JSX.Element => {
   const backd = useBackd();
   const dispatch = useDispatch();
   const pools = useSelector(selectPools);
+  const updated = useWeb3Updated();
 
   useEffect(() => {
     if (!backd) return;
     dispatch(fetchState(backd));
-  }, [backd, dispatch]);
+  }, [updated]);
 
   return (
     <StyledPreview>

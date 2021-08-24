@@ -10,6 +10,7 @@ import PoolsRow from "./PoolsRow";
 import PoolsInformation from "./PoolsInformation";
 import PoolsStatistics from "./PoolsStatistics";
 import Overview from "../../components/Overview";
+import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 
 const StyledPoolsPage = styled.div`
   width: 100%;
@@ -75,11 +76,12 @@ const PoolsPage = (): JSX.Element => {
   const backd = useBackd();
   const dispatch = useDispatch();
   const pools = useSelector(selectPools);
+  const updated = useWeb3Updated();
 
   useEffect(() => {
     if (!backd) return;
     dispatch(fetchState(backd));
-  }, [backd, dispatch]);
+  }, [updated]);
 
   return (
     <StyledPoolsPage>

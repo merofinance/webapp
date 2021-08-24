@@ -82,6 +82,13 @@ export const transactions: Selector<TransactionInfo[]> = (state: RootState) => {
   return sortTransactions(Array.from(state.transactions.transactions));
 };
 
+export function hasPendingTransaction(action: string): (state: RootState) => boolean {
+  return (state: RootState) =>
+    state.transactions.transactions.filter(
+      (tx) => tx.confirmations === 0 && tx.description.action === action
+    ).length > 0;
+}
+
 export const { addTransaction, confirmTransaction, clearTransactions } = transactionsSlice.actions;
 
 export default transactionsSlice.reducer;
