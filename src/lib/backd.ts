@@ -10,7 +10,7 @@ import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from
 import { UnsupportedNetwork } from "../app/errors";
 import { getPrices } from "./coingecko";
 import { ETH_DECIMALS, ETH_DUMMY_ADDRESS, INFINITE_APPROVE_AMMOUNT } from "./constants";
-import { bigNumberToFloat, floatToBigNumber, scale } from "./numeric";
+import { bigNumberToFloat, scale } from "./numeric";
 import { ScaledNumber } from "./scaled-number";
 import {
   Address,
