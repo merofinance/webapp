@@ -10,19 +10,35 @@ const Content = styled.div`
 `;
 
 const Description = styled.div`
-  font-size: 1.5rem;
   font-weight: 500;
-  line-height: 2rem;
   letter-spacing: 0.46px;
   opacity: 0.8;
+
+  font-size: 1.5rem;
+  line-height: 2rem;
+  @media (max-width: 1439px) {
+    font-size: 1.2rem;
+    line-height: 1.7rem;
+  }
+`;
+
+const LinkContainer = styled.div`
+  margin-top: 0.2rem;
+  @media (max-width: 1439px) {
+    margin-top: 0.4rem;
+  }
 `;
 
 const Link = styled(GradientLink)`
-  font-size: 1.5rem;
   font-weight: 500;
-  line-height: 2.1rem;
   letter-spacing: 0.46px;
-  margin-top: 0.2rem;
+
+  font-size: 1.5rem;
+  line-height: 2rem;
+  @media (max-width: 1439px) {
+    font-size: 1.2rem;
+    line-height: 1.7rem;
+  }
 `;
 
 interface Props {
@@ -38,11 +54,11 @@ const Overview = ({ description, link }: Props) => {
       content={
         <Content>
           <Description>{description}</Description>
-          <div>
+          <LinkContainer>
             <Link href={link} target="_blank" rel="noopener noreferrer">
               Find out more in the docs.
             </Link>
-          </div>
+          </LinkContainer>
         </Content>
       }
     />
