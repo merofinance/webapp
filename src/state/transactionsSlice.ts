@@ -78,7 +78,7 @@ export const sortTransactions = (transactions: TransactionInfo[]): TransactionIn
   });
 };
 
-export const transactions: Selector<TransactionInfo[]> = (state: RootState) => {
+export const selectTransactions: Selector<TransactionInfo[]> = (state: RootState) => {
   return sortTransactions(Array.from(state.transactions.transactions));
 };
 

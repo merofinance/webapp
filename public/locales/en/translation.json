@@ -17,6 +17,14 @@
     "wallets": {
       "metaMask": "MetaMask",
       "walletConnect": "WalletConnect"
+    },
+    "details": {
+      "header": "Account",
+      "connected": "Connected with {{wallet}}",
+      "change": "Change",
+      "recentTransactions": "Recent transactions",
+      "clear": "Clear",
+      "empty": "Your transactions will appear here..."
     }
   },
   "landingPage": {
@@ -24,7 +32,9 @@
     "subHeader": "A trustless and interest generating protocol designed to prevent collateralized loans from becoming liquidatable.",
     "viewPools": "View Pools",
     "unsupportedNetwork": "Unsupported Network",
-    "changeNetwork": "Try on Testnet"
+    "comingSoon": "Coming Soon",
+    "changeNetwork": "Try on Testnet",
+    "connectWallet": "Connect Wallet"
   },
   "benefits": {
     "avoidLiquidation": {

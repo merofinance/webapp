@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import close from "../assets/ui/close.svg";
+import closeIcon from "../assets/ui/close.svg";
 import { useDevice } from "../app/hooks/use-device";
 import Button from "./Button";
 
@@ -26,12 +26,18 @@ const ExitEvent = styled.div`
   height: 100%;
 `;
 
+interface PopupContainerProps {
+  small?: boolean;
+}
+
 const PopupContainer = styled.div`
   position: relative;
-  width: 55.4rem;
-  padding: 3.7rem 1.6rem 2.3rem 1.6rem;
+  width: ${(props: PopupContainerProps) => (props.small ? "31.1rem" : "55.4rem")};
+  padding: ${(props: PopupContainerProps) =>
+    props.small ? "2.1rem 1.6rem 2.1rem 1.6rem" : "3.7rem 1.6rem 2.3rem 1.6rem"};
   border-radius: 1.4rem;
   background-color: #252140;
+  overflow: hidden;
 
   @media (max-width: 600px) {
     margin: 0 1rem;
@@ -39,20 +45,21 @@ const PopupContainer = styled.div`
 `;
 
 const Exit = styled.img`
-  height: 2.4rem;
+  height: 1.4rem;
   position: absolute;
-  top: 2.4rem;
-  right: 2.2rem;
+  top: ${(props: PopupContainerProps) => (props.small ? "2.1rem" : "2.9rem")};
+  right: ${(props: PopupContainerProps) => (props.small ? "1.6rem" : "2.7rem")};
   cursor: pointer;
 `;
 
 const Header = styled.div`
   font-weight: 700;
-  line-height: 4.2rem;
-  text-align: center;
 
-  margin-bottom: 2.5rem;
-  font-size: 3.6rem;
+  text-align: ${(props: PopupContainerProps) => (props.small ? "left" : "center")};
+  margin-bottom: ${(props: PopupContainerProps) => (props.small ? "1.8rem" : "2.5rem")};
+  font-size: ${(props: PopupContainerProps) => (props.small ? "1.6rem" : "3.6rem")};
+  line-height: ${(props: PopupContainerProps) => (props.small ? "1.7rem" : "4.2rem")};
+
   @media (max-width: 600px) {
     margin-bottom: 2rem;
     font-size: 2.7rem;
@@ -73,7 +80,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-type Props = {
+interface Props {
   show: boolean;
   close: () => void;
   header?: string;
@@ -81,36 +88,41 @@ type Props = {
   confirm?: boolean;
   submit?: () => void;
   loading?: boolean;
-};
+  small?: boolean;
+}
 
-const Popup = (props: Props): JSX.Element => {
+const Popup = ({
+  show,
+  close,
+  header,
+  content,
+  confirm,
+  submit,
+  loading,
+  small,
+}: Props): JSX.Element => {
   const { isMobile } = useDevice();
 
-  if (!props.show) return <></>;
+  if (!show) return <></>;
 
   return (
     <StyledPopup>
-      <ExitEvent onClick={props.close} />
-      <PopupContainer>
-        <Exit src={close} onClick={props.close} alt="exit button" />
-        {props.header && <Header>{props.header}</Header>}
-        {props.content && props.content}
-        {props.confirm && props.submit && (
+      <ExitEvent onClick={close} />
+      <PopupContainer small={small}>
+        <Exit src={closeIcon} onClick={close} alt="exit button" small={small} />
+        {header && <Header small={small}>{header}</Header>}
+        {content && content}
+        {confirm && submit && (
           <ButtonContainer>
-            <Button
-              medium
-              background="#252140"
-              text={isMobile ? "Back" : "Cancel"}
-              click={props.close}
-            />
+            <Button medium background="#252140" text={isMobile ? "Back" : "Cancel"} click={close} />
             <Button
               primary
               medium
               text="Confirm"
               click={() => {
-                if (props.submit) props.submit();
+                if (submit) submit();
               }}
-              loading={props.loading}
+              loading={loading}
             />
           </ButtonContainer>
         )}

@@ -15,16 +15,18 @@ const CallToActionButton = ({ hero }: Props): JSX.Element => {
   const history = useHistory();
   const { t } = useTranslation();
   const { protocolLive } = useIsLive();
-  const { chainId } = useWeb3React();
+  const { chainId, active } = useWeb3React();
 
   return (
     <Button
       primary
       hero={hero}
       large
-      inactive={!protocolLive && chainId !== 1}
+      inactive={!active || (!protocolLive && chainId !== 1)}
       text={
-        protocolLive
+        !active
+          ? t("landingPage.comingSoon")
+          : protocolLive
           ? t("landingPage.viewPools")
           : chainId === 1
           ? t("landingPage.changeNetwork")

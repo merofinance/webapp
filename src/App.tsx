@@ -16,7 +16,6 @@ import styled from "styled-components";
 import { HelmetProvider } from "react-helmet-async";
 
 import { useMock } from "./app/config";
-import { PrivateRoute } from "./app/private-route";
 import { AppDispatch } from "./app/store";
 import Header from "./components/Header";
 import { ErrorBoundary } from "./components/ErrorBoundary";
@@ -28,7 +27,6 @@ import Footer from "./components/Footer";
 import PoolsPage from "./pages/pools/PoolsPage";
 import StakePage from "./pages/stake/StakePage";
 import LitepaperPage from "./pages/litepaper/LitepaperPage";
-import { ConnectWallet } from "./components/ConnectWallet";
 import ClaimPage from "./pages/claim/ClaimPage";
 import PoolPage from "./pages/pool/PoolPage";
 import { ErrorAlert } from "./components/ErrorAlert";
@@ -100,17 +98,13 @@ const App = (): JSX.Element => {
                 <StyledApp>
                   <Content>
                     <Switch>
-                      <PrivateRoute path="/pool/:poolName">
+                      <Route path="/pool/:poolName">
                         <PoolPage />
-                      </PrivateRoute>
-
-                      <Route path="/connect">
-                        <ConnectWallet />
                       </Route>
 
-                      <PrivateRoute path="/pools">
+                      <Route path="/pools">
                         <PoolsPage />
-                      </PrivateRoute>
+                      </Route>
 
                       {stakingLive && (
                         <Route path="/claim">

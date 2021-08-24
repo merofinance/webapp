@@ -77,7 +77,7 @@ const ConnectorText = styled.div`
   font-weight: 500;
   font-size: 1.5rem;
   letter-spacing: 0.46px;
-  margin-left: 0.9rem;
+  margin-left: ${(props: ConnectedType) => (props.connected ? "0.9rem" : "0")};
 
   background: linear-gradient(
     to right,
@@ -128,7 +128,7 @@ const ConnectorDesktop = ({ connect }: Props): JSX.Element => {
       <Border connected={active}>
         <Innner onClick={() => connect()} connected={active}>
           {active && <PulsingDot success={chainId === 1} />}
-          <ConnectorText>
+          <ConnectorText connected={active}>
             {account ? ens || shortenAddress(account, 8) : t("walletConnect.connectWallet")}
           </ConnectorText>
         </Innner>
