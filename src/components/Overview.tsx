@@ -58,7 +58,7 @@ const Overview = ({ description, link }: Props) => {
           <Description>{description}</Description>
           <LinkContainer>
             <Link href={link} target="_blank" rel="noopener noreferrer">
-              Find out more in the docs.
+              Find out more in the docs
               <LaunchIcon
                 fontSize="small"
                 style={{
