@@ -27,6 +27,10 @@ const StyledPoolPage = styled.div`
   }
 `;
 
+const ContentContainer = styled.div`
+  width: 100%;
+`;
+
 const Content = styled.div`
   width: 100%;
   display: flex;
@@ -66,29 +70,31 @@ const PoolPage = (): JSX.Element => {
         title={`${pool.underlying.symbol} Pool`}
         description={`Deposit ${pool.underlying.symbol} to farm yield while protecting your DeFi loan (Aave, Compound, etc.) from liquidation`}
       />
-      <Content>
-        <Radio
-          options={[
-            {
-              label: "Deposit",
-              value: "deposit",
-            },
-            {
-              label: "Withdraw",
-              value: "withdraw",
-            },
-            {
-              label: isMobile ? "Positions" : "Top-up Positions",
-              value: "positions",
-            },
-          ]}
-          active={tab}
-          setOption={(value: string) => setTab(value)}
-        />
-        {tab === "deposit" && <PoolDeposit pool={pool} />}
-        {tab === "withdraw" && <PoolWithdraw pool={pool} />}
-        {tab === "positions" && <PoolPositions pool={pool} />}
-      </Content>
+      <ContentContainer>
+        <Content>
+          <Radio
+            options={[
+              {
+                label: "Deposit",
+                value: "deposit",
+              },
+              {
+                label: "Withdraw",
+                value: "withdraw",
+              },
+              {
+                label: isMobile ? "Positions" : "Top-up Positions",
+                value: "positions",
+              },
+            ]}
+            active={tab}
+            setOption={(value: string) => setTab(value)}
+          />
+          {tab === "deposit" && <PoolDeposit pool={pool} />}
+          {tab === "withdraw" && <PoolWithdraw pool={pool} />}
+          {tab === "positions" && <PoolPositions pool={pool} />}
+        </Content>
+      </ContentContainer>
       <InfoCards>
         <Overview
           description="Deposit ABC to begin earning yield via the STRATEGY_NAME. Once you have deposited, you can make your liquidity reactive by opening a top-up position."
