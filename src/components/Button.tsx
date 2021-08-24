@@ -259,7 +259,7 @@ const Button = (props: Props): JSX.Element => {
       medium={props.medium}
       square={props.square}
       wide={props.wide}
-      disabled={props.disabled}
+      disabled={props.disabled || props.loading}
       inactive={props.inactive}
       complete={props.complete}
       width={props.width}
