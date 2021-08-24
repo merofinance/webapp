@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import LaunchIcon from "@material-ui/icons/Launch";
+
 import { GradientLink } from "../styles/GradientText";
 import InfoCard from "./InfoCard";
 
@@ -57,6 +59,14 @@ const Overview = ({ description, link }: Props) => {
           <LinkContainer>
             <Link href={link} target="_blank" rel="noopener noreferrer">
               Find out more in the docs.
+              <LaunchIcon
+                fontSize="small"
+                style={{
+                  fill: "var(--secondary)",
+                  transform: "translateY(2px)",
+                  marginLeft: "3px",
+                }}
+              />
             </Link>
           </LinkContainer>
         </Content>
