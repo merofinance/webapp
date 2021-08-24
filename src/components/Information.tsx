@@ -128,7 +128,7 @@ type Props = {
   rows: OverviewRow[];
 };
 
-const Overview = ({ header, rows }: Props): JSX.Element => {
+const Information = ({ header, rows }: Props): JSX.Element => {
   return (
     <InfoCard
       header={header}
@@ -149,4 +149,4 @@ const Overview = ({ header, rows }: Props): JSX.Element => {
   );
 };
 
-export default Overview;
+export default Information;

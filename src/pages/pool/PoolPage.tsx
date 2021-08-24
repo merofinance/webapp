@@ -9,7 +9,7 @@ import Seo from "../../components/Seo";
 import PoolDeposit from "./PoolDeposit";
 import PoolPositions from "./PoolPositions";
 import PoolWithdraw from "./PoolWithdraw";
-import PoolOverview from "./PoolOverview";
+import PoolInformation from "./PoolInformation";
 import { selectBalance } from "../../state/userSlice";
 import { useDevice } from "../../app/hooks/use-device";
 
@@ -91,7 +91,7 @@ const PoolPage = (): JSX.Element => {
         {tab === "positions" && <PoolPositions pool={pool} />}
       </Content>
       <RightColumn>
-        <PoolOverview pool={pool} />
+        <PoolInformation pool={pool} />
         {tab !== "positions" && !balance.isZero() && (
           <ButtonContainer>
             <Button

@@ -7,7 +7,7 @@ import { fetchState, selectPools } from "../../state/poolsListSlice";
 import { Pool } from "../../lib";
 import Seo from "../../components/Seo";
 import PoolsRow from "./PoolsRow";
-import PoolsOverview from "./PoolsOverview";
+import PoolsInformation from "./PoolsInformation";
 import PoolsStatistics from "./PoolsStatistics";
 
 const StyledPoolsPage = styled.div`
@@ -65,6 +65,11 @@ const ChevronHeader = styled.th`
   }
 `;
 
+const InfoCards = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const PoolsPage = (): JSX.Element => {
   const backd = useBackd();
   const dispatch = useDispatch();
@@ -101,7 +106,9 @@ const PoolsPage = (): JSX.Element => {
           </Table>
         }
       />
-      <PoolsOverview />
+      <InfoCards>
+        <PoolsInformation />
+      </InfoCards>
     </StyledPoolsPage>
   );
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Pool } from "../../lib";
-import Overview from "../../components/Overview";
+import Information from "../../components/Information";
 import { selectPrice } from "../../state/selectors";
 import { formatPercent, numberToCompactCurrency } from "../../lib/numeric";
 
@@ -9,12 +9,12 @@ interface Props {
   pool: Pool;
 }
 
-const PoolOverview = ({ pool }: Props): JSX.Element => {
+const PoolInformation = ({ pool }: Props): JSX.Element => {
   const price = useSelector(selectPrice(pool));
   const locked = pool.totalAssets * price;
 
   return (
-    <Overview
+    <Information
       header="Pool Overview"
       rows={[
         {
@@ -37,4 +37,4 @@ const PoolOverview = ({ pool }: Props): JSX.Element => {
   );
 };
 
-export default PoolOverview;
+export default PoolInformation;
