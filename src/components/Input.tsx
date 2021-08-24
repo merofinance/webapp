@@ -170,6 +170,7 @@ const Input = (props: Props): JSX.Element => {
             <Button
               primary
               small
+              uppercase
               text={props.buttonText}
               click={() => {
                 if (props.buttonAction) props.buttonAction();

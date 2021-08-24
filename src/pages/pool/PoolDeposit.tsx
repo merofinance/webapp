@@ -22,8 +22,21 @@ type Props = {
 
 const PoolDeposit = ({ pool }: Props): JSX.Element => {
   const availableToDeposit = useSelector(selectBalance(pool.underlying.address));
-  const [depositAmount, setDepositAmount] = useState("");
   const { isMobile } = useDevice();
+
+  const [depositAmount, setDepositAmount] = useState("");
+  const value = ScaledNumber.fromUnscaled(depositAmount, pool.underlying.decimals);
+
+  const error = () => {
+    if (depositAmount && Number(depositAmount) <= 0) return "Amount must be a positive number";
+    try {
+      const amount = ScaledNumber.fromUnscaled(depositAmount, pool.underlying.decimals);
+      if (amount.gt(availableToDeposit)) return "Amount exceeds available balance";
+      return "";
+    } catch {
+      return "Invalid number";
+    }
+  };
 
   return (
     <ContentSection
@@ -32,7 +45,6 @@ const PoolDeposit = ({ pool }: Props): JSX.Element => {
       content={
         <Content>
           <AmountInput
-            token={pool.underlying}
             value={depositAmount}
             setValue={(v: string) => setDepositAmount(v)}
             label={
@@ -41,11 +53,13 @@ const PoolDeposit = ({ pool }: Props): JSX.Element => {
                 : `Enter an amount of ${pool.underlying.symbol} to deposit`
             }
             max={availableToDeposit}
+            error={error()}
           />
           <DepositButtons
             pool={pool}
-            value={ScaledNumber.fromUnscaled(depositAmount, pool.underlying.decimals)}
+            value={value}
             complete={() => setDepositAmount("")}
+            valid={!error() && !value.isZero()}
           />
         </Content>
       }

@@ -2,10 +2,10 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { selectPools, selectPrices } from "../../state/poolsListSlice";
 import { Pool } from "../../lib";
-import Overview from "../../components/Overview";
+import Information from "../../components/Information";
 import { formatPercent, numberToCompactCurrency } from "../../lib/numeric";
 
-const PoolsOverview = (): JSX.Element => {
+const PoolsInformation = (): JSX.Element => {
   const pools = useSelector(selectPools);
   const prices = useSelector(selectPrices);
 
@@ -14,8 +14,8 @@ const PoolsOverview = (): JSX.Element => {
   const averageApy = pools.reduce((a: number, b: Pool) => a + b.apy, 0) / pools.length;
 
   return (
-    <Overview
-      header="Pools Overview"
+    <Information
+      header="Pools Information"
       rows={[
         {
           label: "Platform TVL",
@@ -38,4 +38,4 @@ const PoolsOverview = (): JSX.Element => {
   );
 };
 
-export default PoolsOverview;
+export default PoolsInformation;

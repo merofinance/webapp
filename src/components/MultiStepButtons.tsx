@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+
 import Button from "./Button";
 import tick from "../assets/ui/tick.svg";
-import { useLoading } from "../app/hooks/use-loading";
 
 interface ButtonsProps {
   stepsOnTop?: boolean;
@@ -88,12 +88,14 @@ const Line = styled.div`
 interface Props {
   disabled: boolean;
   firstText: string;
-  firstAction: () => Promise<void>;
+  firstAction: () => void;
   firstComplete: boolean;
   firstHoverText: string;
+  firstLoading: boolean;
   secondText: string;
-  secondAction: () => Promise<void>;
+  secondAction: () => void;
   secondHoverText: string;
+  secondLoading: boolean;
   stepsOnTop?: boolean;
 }
 
@@ -103,19 +105,13 @@ const MultiStepButtons = ({
   firstAction,
   firstComplete,
   firstHoverText,
+  firstLoading,
   secondText,
   secondAction,
   secondHoverText,
+  secondLoading,
   stepsOnTop,
 }: Props): JSX.Element => {
-  const { loading, setLoading } = useLoading();
-
-  const action = async (action: () => Promise<void>) => {
-    setLoading(true);
-    await action();
-    setLoading(false);
-  };
-
   return (
     <StyledMuliStepButtons stepsOnTop={stepsOnTop}>
       <Buttons stepsOnTop={stepsOnTop}>
@@ -124,9 +120,9 @@ const MultiStepButtons = ({
           medium
           wide
           text={firstText}
-          click={() => action(firstAction)}
+          click={firstAction}
           complete={firstComplete}
-          loading={loading && !firstComplete}
+          loading={firstLoading}
           disabled={disabled}
           hoverText={firstHoverText}
         />
@@ -135,9 +131,9 @@ const MultiStepButtons = ({
           medium
           wide
           text={secondText}
-          click={() => action(secondAction)}
+          click={secondAction}
           disabled={!firstComplete || disabled}
-          loading={loading && firstComplete}
+          loading={secondLoading}
           hoverText={disabled ? firstHoverText : secondHoverText}
         />
       </Buttons>

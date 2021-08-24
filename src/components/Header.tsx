@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import logo from "../assets/logo/logo.svg";
-import { LIVE } from "../lib/constants";
 import Connector from "./Connector";
 import NavItems from "./NavItems";
+import { useIsLive } from "../app/hooks/use-is-live";
 
 type HeaderProps = {
   isSticky: boolean;
@@ -69,7 +69,7 @@ const Header = (): JSX.Element => {
         <Logo src={logo} alt="Backd logo" />
       </Link>
       <NavItems />
-      {LIVE && <Connector />}
+      <Connector />
     </StyledHeader>
   );
 };

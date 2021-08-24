@@ -22,8 +22,8 @@
   "landingPage": {
     "header": "响应式流动资产",
     "subHeader": "一个去信任化利息生成，旨在防止担保贷款被清算的保护协议",
-    "comingSoon": "敬请期待",
-    "viewPools": "查看池子"
+    "viewPools": "查看池子",
+    "comingSoon": "敬请期待"
   },
   "benefits": {
     "avoidLiquidation": {

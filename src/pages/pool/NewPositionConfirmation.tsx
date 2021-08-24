@@ -1,20 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import LaunchIcon from "@material-ui/icons/Launch";
+import { useWeb3React } from "@web3-react/core";
 
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
 import Popup from "../../components/Popup";
 import { GradientLink } from "../../styles/GradientText";
 import Tooltip from "../../components/Tooltip";
-import { setError } from "../../state/errorSlice";
 import { registerPosition } from "../../state/positionsSlice";
 import { shortenAddress } from "../../lib/text";
 import { Pool, Position } from "../../lib/types";
 import { selectPrice } from "../../state/selectors";
-import { ETHERSCAN_URL } from "../../lib/constants";
 import { useDevice } from "../../app/hooks/use-device";
+import { hasPendingTransaction } from "../../state/transactionsSlice";
+import { getEtherscanAddressLink } from "../../lib/web3";
 
 const Content = styled.div`
   width: 100%;
@@ -102,25 +103,22 @@ type Props = {
 
 const NewPositionConfirmation = ({ show, close, position, pool, complete }: Props): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
-  const price = useSelector(selectPrice(pool));
   const backd = useBackd();
+  const price = useSelector(selectPrice(pool));
+  const loading = useSelector(hasPendingTransaction("Register"));
+  const { chainId } = useWeb3React();
   const { isMobile } = useDevice();
 
-  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    if (!loading) {
+      complete();
+      close();
+    }
+  }, [loading]);
 
   const executeRegister = () => {
-    if (!backd) return;
-    setLoading(true);
-
-    dispatch(registerPosition({ position, pool, backd })).then((v: any) => {
-      setLoading(false);
-      if (v.meta.requestStatus === "rejected")
-        dispatch(setError({ error: "Position creation failed" }));
-      else {
-        complete();
-        close();
-      }
-    });
+    if (!backd || loading) return;
+    dispatch(registerPosition({ position, pool, backd }));
   };
 
   return (
@@ -136,7 +134,7 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
           <Summary>
             {`When the collateralization of `}
             <Address
-              href={`${ETHERSCAN_URL}${position.account}`}
+              href={getEtherscanAddressLink(chainId, position.account)}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -165,7 +163,7 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
                 <Tooltip content="The address of the owner of the position to top up (e.g. if Alice is the borrower on Aave that should be topped up then this would be Alice’s address)" />
               </Label>
               <AddressLabel
-                href={`${ETHERSCAN_URL}${position.account}`}
+                href={getEtherscanAddressLink(chainId, position.account)}
                 target="_blank"
                 rel="noopener noreferrer"
               >

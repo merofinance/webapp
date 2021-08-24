@@ -89,12 +89,12 @@ const StakeTokens = ({ token }: Props): JSX.Element => {
       </Description>
       <Content>
         <AmountInput
-          token={token}
           noSlider
           value={value}
           setValue={(v: string) => setValue(v)}
           label={isMobile ? "Amount of BKD to stake" : "Enter an amount of BKD to stake"}
           max={balance}
+          error=""
         />
         <MultiStepButtons
           stepsOnTop
@@ -103,9 +103,11 @@ const StakeTokens = ({ token }: Props): JSX.Element => {
           firstAction={approve}
           firstComplete={approved}
           firstHoverText="Enter Amount"
+          firstLoading={false}
           secondText="Deposit and Stake"
           secondAction={stake}
           secondHoverText={`Approve ${token.symbol}`}
+          secondLoading={false}
         />
       </Content>
     </StyledStakeTokens>

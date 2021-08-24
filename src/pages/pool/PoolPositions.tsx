@@ -12,6 +12,7 @@ import { useBackd } from "../../app/hooks/use-backd";
 import { Position } from "../../lib/types";
 import PositionRow from "./PositionRow";
 import PoolStatistics from "./PoolStatistics";
+import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 
 type HeaderType = {
   label: string;
@@ -129,6 +130,7 @@ const PoolPositions = ({ pool }: Props): JSX.Element => {
   const backd = useBackd();
   const [showShadow, setShowShadow] = useState(true);
   const positionContentRef = useRef<HTMLDivElement>(null);
+  const updated = useWeb3Updated();
 
   const handleScroll = () => {
     setShowShadow(
@@ -139,7 +141,7 @@ const PoolPositions = ({ pool }: Props): JSX.Element => {
   useEffect(() => {
     if (!backd) return;
     dispatch(fetchPositions({ backd }));
-  }, [backd, dispatch, pool]);
+  }, [updated]);
 
   return (
     <ContentSection
