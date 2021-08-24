@@ -7,15 +7,19 @@ interface StyleProps {
   open?: boolean;
 }
 
-const StyledOverview = styled.div`
+const StyledInfoCard = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
   background-color: rgba(37, 33, 64, 0.4);
   border-radius: 1.4rem;
   box-shadow: 0px 0px 12px rgba(23, 18, 22, 0.05);
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  margin-bottom: 2.4rem;
 
-  max-height: ${(props: StyleProps) => (props.open && props.collapsible ? "15rem" : "none")};
+  max-height: ${(props: StyleProps) =>
+    !props.collapsible ? "auto" : props.open ? "18rem" : "5.4rem"};
 
   margin-left: 1.6rem;
   width: 40rem;
@@ -23,11 +27,8 @@ const StyledOverview = styled.div`
   @media (max-width: 1439px) {
     margin-left: 0;
     width: 100%;
-    margin-bottom: 2.4rem;
     padding: 1.6rem;
-    transition: max-height 0.3s ease-out;
-    max-height: ${(props: StyleProps) => (props.open ? "15rem" : "4.8rem")};
-    overflow: hidden;
+    max-height: ${(props: StyleProps) => (props.open ? "18rem" : "4.8rem")};
   }
 `;
 
@@ -41,6 +42,8 @@ const Header = styled.button`
   position: ${(props: StyleProps) => (props.collapsible ? "absolute" : "relative")};
   cursor: ${(props: StyleProps) => (props.collapsible ? "pointer" : "auto")};
   padding-left: ${(props: StyleProps) => (props.collapsible ? "1.6rem" : "0")};
+  height: ${(props: StyleProps) => (props.collapsible ? "5.4rem" : "auto")};
+  width: ${(props: StyleProps) => (props.collapsible ? "100%" : "auto")};
 
   font-size: 2.4rem;
   margin-bottom: 0.6rem;
@@ -61,13 +64,17 @@ const ChevronContainer = styled.div`
   position: absolute;
   right: 0;
   top: 0;
-  height: 4.8rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 5.4rem;
+  display: ${(props: StyleProps) => (props.collapsible ? "flex" : "none")};
+  margin-right: 0.2rem;
 
-  @media (min-width: 1440px) {
-    display: ${(props: StyleProps) => (props.collapsible ? "flex" : "none")};
+  @media (max-width: 1439px) {
+    height: 4.8rem;
+    display: flex;
+    margin-right: 0;
   }
 `;
 
@@ -75,6 +82,8 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+
+  margin-top: ${(props: StyleProps) => (props.collapsible ? "3.6rem" : "0")};
 
   @media (max-width: 1439px) {
     margin-top: 3.2rem;
@@ -91,15 +100,15 @@ const InfoCard = ({ header, content, collapsible }: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
 
   return (
-    <StyledOverview open={open} collapsible={collapsible}>
+    <StyledInfoCard open={open} collapsible={collapsible}>
       <ChevronContainer collapsible={collapsible}>
         <AccordionChevron open={open} />
       </ChevronContainer>
       <Header onClick={() => setOpen(!open)} collapsible={collapsible}>
         {header}
       </Header>
-      <Content>{content}</Content>
-    </StyledOverview>
+      <Content collapsible={collapsible}>{content}</Content>
+    </StyledInfoCard>
   );
 };
 

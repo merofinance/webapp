@@ -45,8 +45,6 @@ const InfoCards = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  margin-top: 2.4rem;
-
   @media (max-width: 1439px) {
     display: none;
   }
