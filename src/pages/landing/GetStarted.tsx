@@ -1,11 +1,9 @@
 import React from "react";
-import { useHistory } from "react-router";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
-import Button from "../../components/Button";
 import { Header2 } from "../../styles/Headers";
-import { useIsLive } from "../../app/hooks/use-is-live";
+import CallToActionButton from "./CallToActionButton";
 
 const StyledGetStarted = styled.div`
   width: 100%;
@@ -60,25 +58,14 @@ const Body = styled.p`
 `;
 
 const GetStarted = (): JSX.Element => {
-  const history = useHistory();
   const { t } = useTranslation();
-  const { protocolLive } = useIsLive();
 
   return (
     <StyledGetStarted>
       <Container>
         <Header2>{t("getStarted.header")}</Header2>
         <Body>{t("getStarted.description")}</Body>
-        <Button
-          primary
-          large
-          inactive={!protocolLive}
-          text={protocolLive ? t("landingPage.viewPools") : t("landingPage.changeNetwork")}
-          click={() => {
-            if (!protocolLive) return;
-            history.push("/pools");
-          }}
-        />
+        <CallToActionButton />
       </Container>
     </StyledGetStarted>
   );

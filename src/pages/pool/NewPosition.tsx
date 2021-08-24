@@ -171,7 +171,8 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
 
     const single = ScaledNumber.fromUnscaled(values.singleTopUp, pool.underlying.decimals);
     const max = ScaledNumber.fromUnscaled(values.maxTopUp, pool.underlying.decimals);
-    if (single.gt(max)) errors.singleTopUp = "Must be less than max top up";
+    if (values.maxTopUp && single.gt(max))
+      errors.singleTopUp = "Must be less than or equal to max top up";
     if (max.gt(balance)) errors.maxTopUp = "Exceeds deposited balance";
 
     return errors;
