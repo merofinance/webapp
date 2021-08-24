@@ -38,9 +38,11 @@ const Overview = ({ description, link }: Props) => {
       content={
         <Content>
           <Description>{description}</Description>
-          <Link href={link} target="_blank" rel="noopener noreferrer">
-            Find out more in the docs.
-          </Link>
+          <div>
+            <Link href={link} target="_blank" rel="noopener noreferrer">
+              Find out more in the docs.
+            </Link>
+          </div>
         </Content>
       }
     />
