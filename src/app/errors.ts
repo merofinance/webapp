@@ -7,6 +7,7 @@ export interface ErrorState {
   title?: string;
   hideContact?: boolean;
   hideButton?: boolean;
+  redirectOnClose?: boolean;
 }
 
 export class BackdError extends CustomError {
@@ -22,6 +23,10 @@ export class BackdError extends CustomError {
     return false;
   }
 
+  get redirectOnClose(): boolean {
+    return false;
+  }
+
   formatMessage(): string {
     return this.message;
   }
@@ -32,6 +37,7 @@ export class BackdError extends CustomError {
       message: this.formatMessage(),
       hideContact: this.hideContact,
       hideButton: this.hideButton,
+      redirectOnClose: this.redirectOnClose,
     };
   }
 }
@@ -50,6 +56,10 @@ export class UnsupportedNetwork extends BackdError {
   }
 
   get hideButton(): boolean {
+    return true;
+  }
+
+  get redirectOnClose(): boolean {
     return true;
   }
 

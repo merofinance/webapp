@@ -1,8 +1,11 @@
 import { useWeb3React } from "@web3-react/core";
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router-dom";
 import { useWeb3Updated } from "../app/hooks/use-web3-updated";
+import { AppDispatch } from "../app/store";
 import { injectedConnector } from "../app/web3";
+import { isConnecting, setConnecting } from "../state/userSlice";
 import ConnectionDetails from "./ConnectionDetails";
 import ConnectorDesktop from "./ConnectorDesktop";
 import ConnectorMobile from "./ConnectorMobile";
@@ -14,9 +17,13 @@ const Connector = (): JSX.Element => {
   const { active, activate } = useWeb3React();
   const updated = useWeb3Updated();
   const location = useLocation();
-  const [connecting, setConnecting] = useState(false);
+  const connecting = useSelector(isConnecting);
   const [showingDetails, setShowingDetails] = useState(false);
   const [wallet, setWallet] = useState("walletConnect.wallets.metaMask");
+  const history = useHistory();
+  const dispatch: AppDispatch = useDispatch();
+
+  const inProtocolPage = PROTOCOL_PAGES.includes(location.pathname.split("/")[1]);
 
   const autoConnect = async () => {
     const authorized = await injectedConnector.isAuthorized();
@@ -27,7 +34,7 @@ const Connector = (): JSX.Element => {
 
   const onClick = () => {
     if (active) setShowingDetails(true);
-    else setConnecting(true);
+    else dispatch(setConnecting(true));
   };
 
   useEffect(() => {
@@ -41,14 +48,17 @@ const Connector = (): JSX.Element => {
       <ConnectionDetails
         show={showingDetails}
         close={() => setShowingDetails(false)}
-        changeWallet={() => setConnecting(true)}
+        changeWallet={() => dispatch(setConnecting(true))}
         wallet={wallet}
       />
       <WalletSelectPopup
-        show={connecting || (!active && PROTOCOL_PAGES.includes(location.pathname.split("/")[1]))}
+        show={connecting || (!active && inProtocolPage)}
         close={() => {
-          setConnecting(false);
           setShowingDetails(false);
+          dispatch(setConnecting(false));
+          if (inProtocolPage) {
+            history.replace("/");
+          }
         }}
         setWallet={(w: string) => setWallet(w)}
       />
