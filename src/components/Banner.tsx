@@ -32,10 +32,12 @@ const Text = styled.div`
   font-size: 1.6rem;
   font-weight: 600;
   line-height: 2.2rem;
+  margin-left: 0.4rem;
 
   @media (max-width: 600px) {
     font-size: 1.2rem;
     line-height: 1.8rem;
+    margin-left: 0;
   }
 `;
 
