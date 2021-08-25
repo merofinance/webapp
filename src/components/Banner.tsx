@@ -2,8 +2,6 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-// Customisable and reusable
-
 const StyledBanner = styled.div`
   width: 100%;
   height: 5.2rem;
