@@ -1,8 +1,7 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-// TODO Show only on landing page
-// Mobile support
 // Customisable and reusable
 
 const StyledBanner = styled.div`
@@ -56,6 +55,10 @@ const Link = styled.a`
 `;
 
 const Banner = (): JSX.Element => {
+  const location = useLocation();
+
+  if (location.pathname !== "/") return <></>;
+
   return (
     <StyledBanner>
       <Content>
