@@ -135,7 +135,7 @@ const Icon = styled.img`
 
 type Props = {
   show: boolean;
-  close: () => void;
+  close: (connected: boolean) => void;
   setWallet: (wallet: string) => void;
 };
 
@@ -146,13 +146,13 @@ const WalletSelectPopup = ({ show, close, setWallet }: Props): JSX.Element => {
   const connect = async (connector: AbstractConnector, walletName: string) => {
     await activate(connector);
     setWallet(walletName);
-    close();
+    close(true);
   };
 
   return (
     <Popup
       show={show}
-      close={close}
+      close={() => close(false)}
       header={t("walletConnect.header")}
       content={
         <Content>

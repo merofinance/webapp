@@ -32,7 +32,7 @@
     "subHeader": "A trustless and interest generating protocol designed to prevent collateralized loans from becoming liquidatable.",
     "viewPools": "View Pools",
     "unsupportedNetwork": "Unsupported Network",
-    "changeNetwork": "Try on Kovan",
+    "changeNetwork": "Try on Testnet",
     "connectWallet": "Connect Wallet"
   },
   "benefits": {

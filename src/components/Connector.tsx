@@ -53,10 +53,10 @@ const Connector = (): JSX.Element => {
       />
       <WalletSelectPopup
         show={connecting || (!active && inProtocolPage)}
-        close={() => {
+        close={(connected: boolean) => {
           setShowingDetails(false);
           dispatch(setConnecting(false));
-          if (inProtocolPage) {
+          if (inProtocolPage && !connected) {
             history.replace("/");
           }
         }}

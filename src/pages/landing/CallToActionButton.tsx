@@ -7,7 +7,6 @@ import { useIsLive } from "../../app/hooks/use-is-live";
 import { AppDispatch } from "../../app/store";
 import Button from "../../components/Button";
 import { changeNetwork } from "../../lib/web3";
-import { setConnecting } from "../../state/userSlice";
 
 interface Props {
   hero?: boolean;
@@ -27,8 +26,7 @@ const CallToActionButton = ({ hero }: Props): JSX.Element => {
       large
       text={!active || protocolLive ? t("landingPage.viewPools") : t("landingPage.changeNetwork")}
       click={() => {
-        if (!active) dispatch(setConnecting(true));
-        else if (protocolLive) history.push("/pools");
+        if (!active || protocolLive) history.push("/pools");
         else changeNetwork(42);
       }}
     />
