@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import logo from "../assets/logo/logo.svg";
 import Connector from "./Connector";
 import NavItems from "./NavItems";
+import Banner from "./Banner";
 
 type HeaderProps = {
   isSticky: boolean;
@@ -28,26 +29,6 @@ const StyledHeader = styled.div`
   @media (max-width: 600px) {
     margin-bottom: 0;
   }
-`;
-
-const Banner = styled.div`
-  width: 100%;
-  height: 5.2rem;
-  background: var(--gradient);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.6rem;
-  font-weight: 600;
-  line-height: 2.2rem;
-`;
-
-const BannerLink = styled.a`
-  font-size: 1.6rem;
-  font-weight: 600;
-  line-height: 2.2rem;
-  text-decoration: underline;
-  margin-left: 0.6rem;
 `;
 
 const Content = styled.div`
@@ -94,16 +75,7 @@ const Header = (): JSX.Element => {
 
   return (
     <StyledHeader isSticky={scrollPosition > 40}>
-      <Banner>
-        🎉 Backd is now live on Kovan Testnet. Connect your wallet to begin or read
-        <BannerLink
-          href="https://backdfund.medium.com/backd-testnet-guide-16540e09c46"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          the blog post
-        </BannerLink>
-      </Banner>
+      <Banner />
       <Content>
         <Link to="/">
           <Logo src={logo} alt="Backd logo" />
