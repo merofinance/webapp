@@ -1,12 +1,13 @@
 import React from "react";
-import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router-dom";
+import styled from "styled-components";
 import { AppDispatch } from "../app/store";
-import Popup from "./Popup";
-import { Paragraph } from "../styles/Headers";
 import { selectError, setError } from "../state/errorSlice";
 import { GradientLink } from "../styles/GradientText";
+import { Paragraph } from "../styles/Headers";
 import Button from "./Button";
+import Popup from "./Popup";
 
 const Content = styled.div`
   width: 100%;
@@ -37,11 +38,20 @@ const Link = styled(GradientLink)`
 export function ErrorAlert(): JSX.Element {
   const error = useSelector(selectError);
   const dispatch: AppDispatch = useDispatch();
+  const location = useLocation();
+  const history = useHistory();
+
+  const handleClose = () => {
+    dispatch(setError({ message: "" }));
+    if (error.redirectOnClose && location.pathname !== "/") {
+      history.replace("/");
+    }
+  };
 
   return (
     <Popup
       show={error.message.length > 0}
-      close={() => dispatch(setError({ message: "" }))}
+      close={handleClose}
       header={error.title || "An Error Occured"}
       content={
         <Content>
@@ -55,13 +65,7 @@ export function ErrorAlert(): JSX.Element {
             </Text>
           )}
           {error.hideButton ? null : (
-            <Button
-              medium
-              primary
-              background="#252140"
-              text="Close"
-              click={() => dispatch(setError({ message: "" }))}
-            />
+            <Button medium primary background="#252140" text="Close" click={handleClose} />
           )}
         </Content>
       }

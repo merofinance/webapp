@@ -7,6 +7,7 @@ import {
   faTimesCircle,
   faTrashAlt,
 } from "@fortawesome/free-solid-svg-icons";
+
 import { Web3ReactProvider } from "@web3-react/core";
 import { ethers } from "ethers";
 import React, { Suspense } from "react";
@@ -15,11 +16,11 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 import { HelmetProvider } from "react-helmet-async";
 
+import { setError } from "./state/errorSlice";
 import { useMock } from "./app/config";
 import { AppDispatch } from "./app/store";
 import Header from "./components/Header";
 import { ErrorBoundary } from "./components/ErrorBoundary";
-import { setError } from "./state/errorSlice";
 import { createBackd } from "./lib/factory";
 import MockSigner from "./lib/mock/signer";
 import LandingPage from "./pages/landing/LandingPage";
