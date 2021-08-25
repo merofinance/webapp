@@ -34,7 +34,11 @@ export interface Backd {
   getPoolInfo(address: Address): Promise<Pool>;
   getPositions(): Promise<PlainPosition[]>;
   registerPosition(pool: Pool, position: Position): Promise<ContractTransaction>;
-  removePosition(account: Address, protocol: string): Promise<ContractTransaction>;
+  removePosition(
+    account: Address,
+    protocol: string,
+    unstake?: boolean
+  ): Promise<ContractTransaction>;
   getBalance(address: Address, account?: Address): Promise<ScaledNumber>;
   getBalances(addresses: Address[], account?: Address): Promise<Balances>;
   getAllowance(token: Token, spender: Address, account?: string): Promise<ScaledNumber>;
@@ -193,8 +197,8 @@ export class Web3Backd implements Backd {
     );
   }
 
-  removePosition(account: Address, protocol: string): Promise<ContractTransaction> {
-    return this.topupAction.resetPosition(account, utils.formatBytes32String(protocol));
+  removePosition(account: Address, protocol: string, unstake = true): Promise<ContractTransaction> {
+    return this.topupAction.resetPosition(account, utils.formatBytes32String(protocol), unstake);
   }
 
   async getAllowance(
