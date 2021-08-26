@@ -137,3 +137,13 @@ test("stringToBigNumber should error for invalid numbers", () => {
     expect(() => stringToBigNumber(value, decimals)).toThrowError("Not a valid number");
   });
 });
+
+test("stringToBigNumber should remove commars", () => {
+  const testCases = [
+    { value: "1,000", decimals: 2, expected: BigNumber.from(100000) },
+    { value: "265,232,123.121", decimals: 6, expected: BigNumber.from(265232123121000) },
+  ];
+  testCases.forEach(({ value, decimals, expected }) => {
+    expect(stringToBigNumber(value, decimals).eq(expected)).toBeTruthy();
+  });
+});
