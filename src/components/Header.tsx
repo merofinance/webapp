@@ -20,7 +20,7 @@ const StyledHeader = styled.div`
   flex-direction: column;
   align-items: center;
   margin-bottom: 8rem;
-  z-index: 1;
+  z-index: 2;
   transition: all 0.3s;
 
   background-color: ${(props: HeaderProps) => (props.isSticky ? "#120e2c" : "transparent")};
