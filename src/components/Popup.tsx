@@ -4,6 +4,10 @@ import closeIcon from "../assets/ui/close.svg";
 import { useDevice } from "../app/hooks/use-device";
 import Button from "./Button";
 
+interface StyledPopupProps {
+  show: boolean;
+}
+
 const StyledPopup = styled.div`
   position: fixed;
   top: 0;
@@ -11,11 +15,12 @@ const StyledPopup = styled.div`
   width: 100%;
   height: 100%;
   z-index: 1;
-  display: flex;
   justify-content: center;
   align-items: center;
   background-color: rgba(5, 1, 32, 0.5);
   backdrop-filter: blur(10px);
+
+  display: ${(props: StyledPopupProps) => (props.show ? "flex" : "none")};
 `;
 
 const ExitEvent = styled.div`
@@ -103,10 +108,8 @@ const Popup = ({
 }: Props): JSX.Element => {
   const { isMobile } = useDevice();
 
-  if (!show) return <></>;
-
   return (
-    <StyledPopup>
+    <StyledPopup show={show}>
       <ExitEvent onClick={close} />
       <PopupContainer small={small}>
         <Exit src={closeIcon} onClick={close} alt="exit button" small={small} />
