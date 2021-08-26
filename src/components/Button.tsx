@@ -291,10 +291,9 @@ const Button = (props: Props): JSX.Element => {
       complete={props.complete}
       width={props.width}
       onClick={() => {
-        if (!props.loading && !pending && !props.disabled && props.click) {
-          if (props.web3) setPending(true);
-          props.click();
-        }
+        if (props.loading || pending || props.disabled || !props.click) return;
+        if (props.web3) setPending(true);
+        props.click();
       }}
     >
       <Content
