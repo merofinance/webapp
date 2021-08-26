@@ -155,9 +155,11 @@ const ConnectorDesktop = ({ connect }: Props): JSX.Element => {
           <ConnectorText>
             {account ? ens || shortenAddress(account, 8) : t("walletConnect.connectWallet")}
           </ConnectorText>
-          <IndicatorContainer>
-            <Loading cat={loading} src={pending} />
-          </IndicatorContainer>
+          {active && (
+            <IndicatorContainer>
+              <Loading cat={loading} src={pending} />
+            </IndicatorContainer>
+          )}
         </Innner>
       </Border>
     </StyledConnectorDesktop>
