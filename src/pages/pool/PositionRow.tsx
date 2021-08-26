@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { CircularProgress } from "@material-ui/core";
@@ -11,6 +11,7 @@ import { useBackd } from "../../app/hooks/use-backd";
 import { Position } from "../../lib/types";
 import { shortenAddress } from "../../lib/text";
 import { hasPendingTransaction } from "../../state/transactionsSlice";
+import { selectError } from "../../state/errorSlice";
 
 const StyledPosition = styled.div`
   width: 100%;
@@ -67,6 +68,12 @@ const PositionRow = ({ position, pool }: Props): JSX.Element => {
   const backd = useBackd();
   const dispatch: AppDispatch = useDispatch();
   const loading = useSelector(hasPendingTransaction("Remove"));
+  const error = useSelector(selectError);
+  const [pending, setPending] = useState(false);
+
+  useEffect(() => {
+    if (error || loading) setPending(false);
+  }, [error, loading]);
 
   const handleRemovePosition = () => {
     if (!backd || loading) return;
@@ -84,7 +91,15 @@ const PositionRow = ({ position, pool }: Props): JSX.Element => {
         <DeleteButton>
           {loading && <CircularProgress size={17} />}
           {!loading && (
-            <Delete src={deleteIcon} alt="delete button" onClick={() => handleRemovePosition()} />
+            <Delete
+              src={deleteIcon}
+              alt="delete button"
+              onClick={() => {
+                if (pending) return;
+                setPending(true);
+                handleRemovePosition();
+              }}
+            />
           )}
         </DeleteButton>
       </Value>
