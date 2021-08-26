@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
@@ -15,6 +15,7 @@ import { ScaledNumber } from "../lib/scaled-number";
 import { shortenAddress } from "../lib/text";
 import { AppDispatch } from "../app/store";
 import { getEtherscanTransactionLink } from "../lib/web3";
+import { useWeb3Updated } from "../app/hooks/use-web3-updated";
 
 const StyledRecentTransactions = styled.div`
   width: calc(100% + 3.2rem);
@@ -114,7 +115,12 @@ const RecentTransactions = () => {
   const { t } = useTranslation();
   const { chainId } = useWeb3React();
   const dispatch: AppDispatch = useDispatch();
+  const update = useWeb3Updated();
   const transactions = useSelector(selectTransactions);
+
+  useEffect(() => {
+    dispatch(clearTransactions());
+  }, [update]);
 
   const getDetails = (tx: TransactionInfo) => {
     if (!tx.description.args) return "";
