@@ -67,6 +67,12 @@ type Props = {
 const AmountSlider = ({ value, max, setValue }: Props): JSX.Element => {
   const percent = max.isZero() ? 0 : Math.round((Number(value) / Number(max.toString())) * 100);
 
+  const updateValue = (percent: number) => {
+    const newValue = max.value.mul(BigNumber.from(percent)).div(BigNumber.from(100));
+    const scaled = new ScaledNumber(newValue, max.decimals);
+    setValue(percent === 100 ? scaled.toString() : scaled.toCryptoString().replace(/,/g, ""));
+  };
+
   return (
     <StyledAmountSlider>
       <BackdSlider
@@ -76,10 +82,7 @@ const AmountSlider = ({ value, max, setValue }: Props): JSX.Element => {
         min={0}
         max={100}
         value={percent}
-        onChange={(e: any, value: any) => {
-          const newValue = max.value.mul(BigNumber.from(value)).div(BigNumber.from(100));
-          setValue(new ScaledNumber(newValue, max.decimals).toString());
-        }}
+        onChange={(e: any, value: any) => updateValue(value)}
         valueLabelDisplay="auto"
         valueLabelFormat={valuetext}
       />
@@ -87,10 +90,7 @@ const AmountSlider = ({ value, max, setValue }: Props): JSX.Element => {
         <SliderStep
           key={step}
           percent={`${step}%`}
-          click={() => {
-            const newValue = max.value.mul(BigNumber.from(step)).div(BigNumber.from(100));
-            setValue(new ScaledNumber(newValue, max.decimals).toString());
-          }}
+          click={() => updateValue(step)}
           active={Number(value || 0) / Number(max.toString()) > step / 100}
         />
       ))}
