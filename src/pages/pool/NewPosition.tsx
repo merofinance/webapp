@@ -220,6 +220,7 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
           <NewPositionInput type="number" name="maxTopUp" formik={formik} />
           <Value>
             <Button
+              web3
               submit
               primary
               small={isMobile}

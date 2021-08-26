@@ -129,6 +129,7 @@ const ClaimAccordion = ({ open, toggle, rows }: Props): JSX.Element => {
           <EndContainer>
             {isDesktop && (
               <Button
+                web3
                 text="Claim all"
                 background="#1c0c37"
                 width="12rem"
@@ -136,7 +137,7 @@ const ClaimAccordion = ({ open, toggle, rows }: Props): JSX.Element => {
                 primary={isMobile}
               />
             )}
-            {isDesktop && <Button primary text="Claim all & Stake" width="18rem" />}
+            {isDesktop && <Button web3 primary text="Claim all & Stake" width="18rem" />}
             <AccordionChevron open={open} />
           </EndContainer>
         </Header>

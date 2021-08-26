@@ -116,6 +116,7 @@ const MultiStepButtons = ({
     <StyledMuliStepButtons stepsOnTop={stepsOnTop}>
       <Buttons stepsOnTop={stepsOnTop}>
         <Button
+          web3
           primary
           medium
           wide
@@ -127,6 +128,7 @@ const MultiStepButtons = ({
           hoverText={firstHoverText}
         />
         <Button
+          web3
           primary
           medium
           wide

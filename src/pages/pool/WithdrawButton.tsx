@@ -48,6 +48,7 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
   return (
     <StyledProgressButtons>
       <Button
+        web3
         primary
         medium
         wide

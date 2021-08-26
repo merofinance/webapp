@@ -66,6 +66,7 @@ const DepositButtons = ({ value, pool, complete, valid }: Props): JSX.Element =>
       )}
       {pool.underlying.address === ETH_DUMMY_ADDRESS && (
         <Button
+          web3
           primary
           medium
           wide

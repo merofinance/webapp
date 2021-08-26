@@ -21,6 +21,7 @@ const CallToActionButton = ({ hero }: Props): JSX.Element => {
 
   return (
     <Button
+      web3={active && !protocolLive}
       primary
       hero={hero}
       large
