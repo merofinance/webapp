@@ -22,7 +22,7 @@ const StyledInfoCard = styled.div`
     !props.collapsible ? "auto" : props.open ? "20rem" : "5.4rem"};
 
   margin-left: 1.6rem;
-  width: 40rem;
+  width: 34rem;
   padding: 2rem 1.8rem;
   @media (max-width: 1439px) {
     margin-left: 0;

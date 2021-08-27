@@ -5,8 +5,6 @@ import InfoCard from "./InfoCard";
 import Tooltip from "./Tooltip";
 import arrow from "../assets/ui/arrow.svg";
 
-// TODO reduce overview anf info width
-
 interface RowDetailType {
   icon: string;
   label: string;
