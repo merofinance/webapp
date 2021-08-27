@@ -11,9 +11,6 @@ import { ScaledNumber } from "../lib/scaled-number";
 import { hasPendingTransaction } from "../state/transactionsSlice";
 import { INFINITE_APPROVE_AMMOUNT } from "../lib/constants";
 
-// TODO Add ETH Support
-// TODO Test approve persist
-
 interface ButtonsProps {
   stepsOnTop?: boolean;
   showApprove?: boolean;
