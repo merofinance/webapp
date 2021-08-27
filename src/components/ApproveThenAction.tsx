@@ -11,6 +11,9 @@ import { ScaledNumber } from "../lib/scaled-number";
 import { hasPendingTransaction } from "../state/transactionsSlice";
 import { INFINITE_APPROVE_AMMOUNT } from "../lib/constants";
 
+// TODO Add ETH Support
+// TODO Test approve persist
+
 interface ButtonsProps {
   stepsOnTop?: boolean;
   showApprove?: boolean;
@@ -122,7 +125,7 @@ const ApproveThenAction = ({
   const approveLoading = useSelector(hasPendingTransaction("Approve"));
   const [persistApprove, setPersistApprove] = useState(false);
 
-  const approved = approvedAmount.gte(value);
+  const approved = value.isZero() ? !approvedAmount.isZero() : approvedAmount.gte(value);
 
   const executeApprove = () => {
     if (!backd || approved || approveLoading) return;
