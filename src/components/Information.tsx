@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { GradientLink } from "../styles/GradientText";
 import InfoCard from "./InfoCard";
 import Tooltip from "./Tooltip";
+import arrow from "../assets/ui/arrow.svg";
+
+// TODO add chevron
+// TODO add links
+// TODO mobile
+// TODO reduce overview anf info width
 
 interface RowDetailType {
   icon: string;
@@ -35,7 +41,8 @@ const InformationRow = styled.div`
 `;
 
 interface RowProps {
-  isAccordion: boolean;
+  isAccordion?: boolean;
+  open?: boolean;
 }
 
 const InformationHeader = styled.button`
@@ -62,6 +69,11 @@ const Label = styled.div`
   }
 `;
 
+const ValueContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const Value = styled.div`
   font-weight: 500;
   line-height: 2.8rem;
@@ -72,6 +84,15 @@ const Value = styled.div`
   @media (max-width: 1439px) {
     font-size: 1.4rem;
   }
+`;
+
+const Chevron = styled.img`
+  width: 1.1rem;
+  margin-left: 0.7rem;
+  transition: all 0.3s;
+
+  display: ${(props: RowProps) => (props.isAccordion ? "block" : "none")};
+  transform: ${(props: RowProps) => (props.open ? "rotate(0deg)" : "rotate(180deg)")};
 `;
 
 const AccordionContent = styled.div`
@@ -105,6 +126,8 @@ type Props = {
 };
 
 const Information = ({ header, rows }: Props): JSX.Element => {
+  const [open, setOpen] = useState(false);
+
   return (
     <InfoCard
       header={header}
@@ -112,12 +135,15 @@ const Information = ({ header, rows }: Props): JSX.Element => {
         <StyledInformation>
           {rows.map((row: InformationRowType) => (
             <InformationRow key={row.label}>
-              <InformationHeader isAccordion={!!row.details}>
+              <InformationHeader isAccordion={!!row.details} onClick={() => setOpen(!open)}>
                 <LabelContainer>
                   <Label>{row.label}</Label>
                   <Tooltip content={row.tooltip} />
                 </LabelContainer>
-                <Value>{row.value}</Value>
+                <ValueContainer>
+                  <Value>{row.value}</Value>
+                  <Chevron src={arrow} isAccordion={!!row.details} open={open} />
+                </ValueContainer>
               </InformationHeader>
               {row.details && (
                 <AccordionContent>
