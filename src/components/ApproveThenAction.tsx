@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -13,6 +13,7 @@ import { INFINITE_APPROVE_AMMOUNT } from "../lib/constants";
 
 interface ButtonsProps {
   stepsOnTop?: boolean;
+  showApprove?: boolean;
 }
 
 const Container = styled.div`
@@ -24,9 +25,11 @@ const Container = styled.div`
 const Buttons = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: ${(props: ButtonsProps) =>
+    props.showApprove ? "repeat(2, 1fr)" : "repeat(1, 1fr)"};
   grid-gap: 1.5rem;
-  margin-bottom: ${(props: ButtonsProps) => (props.stepsOnTop ? "0" : "1rem")};
+  margin-bottom: ${(props: ButtonsProps) =>
+    props.stepsOnTop || !props.showApprove ? "0" : "1rem"};
   margin-top: ${(props: ButtonsProps) => (props.stepsOnTop ? "1.1rem" : "0")};
 
   @media (max-width: 600px) {
@@ -117,11 +120,13 @@ const ApproveThenAction = ({
   const backd = useBackd();
   const approvedAmount = useSelector(selectAllowance(token.address, contract));
   const approveLoading = useSelector(hasPendingTransaction("Approve"));
+  const [persistApprove, setPersistApprove] = useState(false);
 
   const approved = approvedAmount.gte(value);
 
   const executeApprove = () => {
     if (!backd || approved || approveLoading) return;
+    setPersistApprove(true);
     dispatch(
       approve({
         token,
@@ -134,18 +139,20 @@ const ApproveThenAction = ({
 
   return (
     <Container stepsOnTop={stepsOnTop}>
-      <Buttons stepsOnTop={stepsOnTop}>
-        <Button
-          primary
-          medium
-          wide
-          text={`Approve ${token.symbol}`}
-          click={() => executeApprove()}
-          complete={approved}
-          loading={approveLoading}
-          disabled={disabled}
-          hoverText="Enter Amount"
-        />
+      <Buttons stepsOnTop={stepsOnTop} showApprove={!approved || persistApprove}>
+        {(!approved || persistApprove) && (
+          <Button
+            primary
+            medium
+            wide
+            text={`Approve ${token.symbol}`}
+            click={() => executeApprove()}
+            complete={approved}
+            loading={approveLoading}
+            disabled={disabled}
+            hoverText="Enter Amount"
+          />
+        )}
         <Button
           primary
           medium
@@ -157,19 +164,21 @@ const ApproveThenAction = ({
           hoverText={disabled ? "Enter Amount" : `Approve ${token.symbol}`}
         />
       </Buttons>
-      <ProgressContainer>
-        <ProgressSection>
-          <Line complete={approved} disabled={disabled} />
-          <Number complete={approved} disabled={disabled}>
-            {approved && !disabled ? <Tick src={tick} alt="tick" /> : "1"}
-          </Number>
-        </ProgressSection>
-        <ProgressSection>
-          <Number complete={false} disabled={!approved || disabled}>
-            2
-          </Number>
-        </ProgressSection>
-      </ProgressContainer>
+      {(!approved || persistApprove) && (
+        <ProgressContainer>
+          <ProgressSection>
+            <Line complete={approved} disabled={disabled} />
+            <Number complete={approved} disabled={disabled}>
+              {approved && !disabled ? <Tick src={tick} alt="tick" /> : "1"}
+            </Number>
+          </ProgressSection>
+          <ProgressSection>
+            <Number complete={false} disabled={!approved || disabled}>
+              2
+            </Number>
+          </ProgressSection>
+        </ProgressContainer>
+      )}
     </Container>
   );
 };
