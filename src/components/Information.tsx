@@ -5,7 +5,6 @@ import InfoCard from "./InfoCard";
 import Tooltip from "./Tooltip";
 import arrow from "../assets/ui/arrow.svg";
 
-// TODO add chevron
 // TODO add links
 // TODO mobile
 // TODO reduce overview anf info width
@@ -150,7 +149,9 @@ const Information = ({ header, rows }: Props): JSX.Element => {
                   {row.details.map((details: RowDetailType) => (
                     <DetailItem>
                       <DetailIcon src={details.icon} />
-                      <DetailLabel>{details.label}</DetailLabel>
+                      <DetailLabel href={details.link} target="_blank" rel="noopener noreferrer">
+                        {details.label}
+                      </DetailLabel>
                     </DetailItem>
                   ))}
                 </AccordionContent>
