@@ -46,7 +46,7 @@ const PoolInformation = ({ pool }: Props): JSX.Element => {
             {
               icon: memo,
               label: "Read more",
-              link: "https://docs.backd.fund/protocol-architecture/pools/strategies",
+              link: "https://docs.backd.fund/",
             },
           ],
         },
