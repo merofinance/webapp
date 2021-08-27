@@ -5,8 +5,6 @@ import InfoCard from "./InfoCard";
 import Tooltip from "./Tooltip";
 import arrow from "../assets/ui/arrow.svg";
 
-// TODO add links
-// TODO mobile
 // TODO reduce overview anf info width
 
 interface RowDetailType {
@@ -112,11 +110,15 @@ const DetailIcon = styled.img`
 `;
 
 const DetailLabel = styled(GradientLink)`
-  font-size: 1.4rem;
   font-weight: 500;
   line-height: 2.8rem;
   letter-spacing: 0.15px;
   margin-left: 0.7rem;
+
+  font-size: 1.4rem;
+  @media (max-width: 1439px) {
+    font-size: 1.3rem;
+  }
 `;
 
 type Props = {
