@@ -84,19 +84,31 @@ const Value = styled.div`
 `;
 
 const Chevron = styled.img`
-  width: 1.1rem;
   margin-left: 0.7rem;
   transition: all 0.3s;
 
   display: ${(props: RowProps) => (props.isAccordion ? "block" : "none")};
   transform: ${(props: RowProps) => (props.open ? "rotate(0deg)" : "rotate(180deg)")};
+
+  width: 1.1rem;
+  @media (max-width: 1439px) {
+    width: 1rem;
+  }
+`;
+
+const AccordionContainer = styled.div`
+  width: 100%;
+  transition: max-height 0.2s ease-out;
+  overflow: hidden;
+
+  max-height: ${(props: RowProps) => (props.open ? "4rem" : "0")};
 `;
 
 const AccordionContent = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  margin-top: 0.8rem;
+  margin-top: 1.4rem;
 `;
 
 const DetailItem = styled.div`
@@ -111,7 +123,7 @@ const DetailIcon = styled.img`
 
 const DetailLabel = styled(GradientLink)`
   font-weight: 500;
-  line-height: 2.8rem;
+  line-height: 1.8rem;
   letter-spacing: 0.15px;
   margin-left: 0.7rem;
 
@@ -147,16 +159,18 @@ const Information = ({ header, rows }: Props): JSX.Element => {
                 </ValueContainer>
               </InformationHeader>
               {row.details && (
-                <AccordionContent>
-                  {row.details.map((details: RowDetailType) => (
-                    <DetailItem>
-                      <DetailIcon src={details.icon} />
-                      <DetailLabel href={details.link} target="_blank" rel="noopener noreferrer">
-                        {details.label}
-                      </DetailLabel>
-                    </DetailItem>
-                  ))}
-                </AccordionContent>
+                <AccordionContainer open={open}>
+                  <AccordionContent>
+                    {row.details.map((details: RowDetailType) => (
+                      <DetailItem>
+                        <DetailIcon src={details.icon} />
+                        <DetailLabel href={details.link} target="_blank" rel="noopener noreferrer">
+                          {details.label}
+                        </DetailLabel>
+                      </DetailItem>
+                    ))}
+                  </AccordionContent>
+                </AccordionContainer>
               )}
             </InformationRow>
           ))}
