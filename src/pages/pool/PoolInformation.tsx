@@ -1,9 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Pool } from "../../lib";
+
 import Information from "../../components/Information";
+import { Pool } from "../../lib";
 import { selectPrice } from "../../state/selectors";
 import { formatPercent, numberToCompactCurrency } from "../../lib/numeric";
+import etherscan from "../../assets/ui/etherscan.svg";
+import memo from "../../assets/ui/memo.svg";
 
 interface Props {
   pool: Pool;
@@ -31,6 +34,18 @@ const PoolInformation = ({ pool }: Props): JSX.Element => {
           label: "Strategy",
           tooltip: "The current protocol funds are allocated to for yield farming strategies",
           value: pool.name,
+          details: [
+            {
+              icon: etherscan,
+              label: "View Contract",
+              link: "https://www.google.com/",
+            },
+            {
+              icon: memo,
+              label: "Read more",
+              link: "https://www.google.com/",
+            },
+          ],
         },
       ]}
     />
