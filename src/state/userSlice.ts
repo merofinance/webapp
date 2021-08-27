@@ -230,6 +230,13 @@ export function selectDepositAllowance(pool: Pool): Selector<ScaledNumber> {
     return ScaledNumber.fromPlain(state.user.allowances[pool.underlying.address]?.[pool.address]);
   };
 }
+
+export function selectAllowance(token: string, contract: string): Selector<ScaledNumber> {
+  return (state: RootState) => {
+    return ScaledNumber.fromPlain(state.user.allowances[token]?.[contract]);
+  };
+}
+
 export function selectToupAllowance(backd: Backd | undefined, pool: Pool): Selector<ScaledNumber> {
   return (state: RootState) => {
     if (!backd) return new ScaledNumber();
