@@ -1,14 +1,21 @@
 import React from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 
 import Button from "./Button";
 import tick from "../assets/ui/tick.svg";
+import { Token } from "../lib/types";
+import { useBackd } from "../app/hooks/use-backd";
+import { approve, selectAllowance } from "../state/userSlice";
+import { ScaledNumber } from "../lib/scaled-number";
+import { hasPendingTransaction } from "../state/transactionsSlice";
+import { INFINITE_APPROVE_AMMOUNT } from "../lib/constants";
 
 interface ButtonsProps {
   stepsOnTop?: boolean;
 }
 
-const StyledMuliStepButtons = styled.div`
+const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: ${(props: ButtonsProps) => (props.stepsOnTop ? "column-reverse" : "column")};
@@ -86,72 +93,85 @@ const Line = styled.div`
 `;
 
 interface Props {
+  label: string;
+  action: () => void;
+  value: ScaledNumber;
+  loading: boolean;
   disabled: boolean;
-  firstText: string;
-  firstAction: () => void;
-  firstComplete: boolean;
-  firstHoverText: string;
-  firstLoading: boolean;
-  secondText: string;
-  secondAction: () => void;
-  secondHoverText: string;
-  secondLoading: boolean;
+  token: Token;
+  contract: string;
   stepsOnTop?: boolean;
 }
 
-const MultiStepButtons = ({
+const ApproveThenAction = ({
+  label,
+  action,
+  value,
+  loading,
   disabled,
-  firstText,
-  firstAction,
-  firstComplete,
-  firstHoverText,
-  firstLoading,
-  secondText,
-  secondAction,
-  secondHoverText,
-  secondLoading,
+  token,
+  contract,
   stepsOnTop,
 }: Props): JSX.Element => {
+  const dispatch = useDispatch();
+  const backd = useBackd();
+  const approvedAmount = useSelector(selectAllowance(token.address, contract));
+  const approveLoading = useSelector(hasPendingTransaction("Approve"));
+
+  const approved = approvedAmount.gte(value);
+
+  const executeApprove = () => {
+    if (!backd || approved || approveLoading) return;
+    dispatch(
+      approve({
+        token,
+        spender: contract,
+        amount: ScaledNumber.fromUnscaled(INFINITE_APPROVE_AMMOUNT),
+        backd,
+      })
+    );
+  };
+
   return (
-    <StyledMuliStepButtons stepsOnTop={stepsOnTop}>
+    <Container stepsOnTop={stepsOnTop}>
       <Buttons stepsOnTop={stepsOnTop}>
         <Button
           primary
           medium
           wide
-          text={firstText}
-          click={firstAction}
-          complete={firstComplete}
-          loading={firstLoading}
+          text={`Approve ${token.symbol}`}
+          click={() => executeApprove()}
+          complete={approved}
+          loading={approveLoading}
           disabled={disabled}
-          hoverText={firstHoverText}
+          hoverText="Enter Amount"
         />
         <Button
           primary
           medium
           wide
-          text={secondText}
-          click={secondAction}
-          disabled={!firstComplete || disabled}
-          loading={secondLoading}
-          hoverText={disabled ? firstHoverText : secondHoverText}
+          text={label}
+          click={action}
+          disabled={!approved || disabled}
+          loading={loading}
+          hoverText={disabled ? "Enter Amount" : `Approve ${token.symbol}`}
         />
       </Buttons>
       <ProgressContainer>
         <ProgressSection>
-          <Line complete={firstComplete} disabled={disabled} />
-          <Number complete={firstComplete} disabled={disabled}>
-            {firstComplete && !disabled ? <Tick src={tick} alt="tick" /> : "1"}
+          <Line complete={approved} disabled={disabled} />
+          <Number complete={approved} disabled={disabled}>
+            {approved && !disabled ? <Tick src={tick} alt="tick" /> : "1"}
           </Number>
         </ProgressSection>
         <ProgressSection>
-          <Number complete={false} disabled={!firstComplete || disabled}>
+          <Number complete={false} disabled={!approved || disabled}>
             2
           </Number>
         </ProgressSection>
       </ProgressContainer>
-    </StyledMuliStepButtons>
+    </Container>
   );
 };
 
-export default MultiStepButtons;
+export default ApproveThenAction;
