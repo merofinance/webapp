@@ -180,7 +180,7 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
             </SummaryRow>
             <SummaryRow>
               <Label>
-                Singe top-up
+                Single top-up
                 <Tooltip content="Amount of a single top up increment (e.g. top up increments of 2,500 DAI)" />
               </Label>
               <Label>{position.singleTopUp.toCryptoString()}</Label>
