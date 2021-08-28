@@ -2,12 +2,16 @@ import { useWeb3React } from "@web3-react/core";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import { shortenAddress } from "../lib/text";
 import { useBackd } from "../app/hooks/use-backd";
 import { chainIds } from "../lib/constants";
 import PulsingDot from "./PulsingDot";
 import { useWeb3Updated } from "../app/hooks/use-web3-updated";
+import pending from "../assets/ui/status/pending.svg";
+import { spinAnimation } from "../styles/animations/SpinAnimation";
+import { pendingTransactionsCount } from "../state/transactionsSlice";
 
 const StyledConnectorDesktop = styled.div`
   display: flex;
@@ -68,7 +72,7 @@ const Innner = styled.div`
   justify-content: center;
 
   height: ${(props: ConnectedType) => (props.connected ? "4rem" : "4.2rem")};
-  padding: ${(props: ConnectedType) => (props.connected ? "0 1.5rem 0 0.9rem" : "0 2.2rem")};
+  padding: ${(props: ConnectedType) => (props.connected ? "0 2px" : "0 2.2rem")};
   border-radius: ${(props: ConnectedType) => (props.connected ? "7px" : "2.1rem")};
   background-color: ${(props: ConnectedType) => (props.connected ? "#0A0524" : "var(--main)")};
 `;
@@ -76,8 +80,8 @@ const Innner = styled.div`
 const ConnectorText = styled.div`
   font-weight: 500;
   font-size: 1.5rem;
+  line-height: 1.4rem;
   letter-spacing: 0.46px;
-  margin-left: ${(props: ConnectedType) => (props.connected ? "0.9rem" : "0")};
 
   background: linear-gradient(
     to right,
@@ -93,15 +97,31 @@ const ConnectorText = styled.div`
   background-size: 200% auto;
 `;
 
+const IndicatorContainer = styled.div`
+  margin: 0 0.7rem;
+`;
+
+interface LoadingProps {
+  cat: boolean;
+}
+
+const Loading = styled.img`
+  width: 1.2rem;
+  animation: ${spinAnimation} 1s linear infinite;
+  opacity: ${(props: LoadingProps) => (props.cat ? 1 : 0)};
+`;
+
 interface Props {
   connect: () => void;
 }
 
 const ConnectorDesktop = ({ connect }: Props): JSX.Element => {
+  const { t } = useTranslation();
+  const backd = useBackd();
   const { account, active, chainId } = useWeb3React();
   const updated = useWeb3Updated();
-  const backd = useBackd();
-  const { t } = useTranslation();
+  const loading = useSelector(pendingTransactionsCount) > 0;
+
   const [ens, setEns] = useState("");
 
   const updateEns = async () => {
@@ -127,10 +147,19 @@ const ConnectorDesktop = ({ connect }: Props): JSX.Element => {
       {chainId && chainId !== 1 && chainIds[chainId] && <Network>{chainIds[chainId]}</Network>}
       <Border connected={active}>
         <Innner onClick={() => connect()} connected={active}>
-          {active && <PulsingDot success={chainId === 1} />}
-          <ConnectorText connected={active}>
+          {active && (
+            <IndicatorContainer>
+              <PulsingDot success={chainId === 1} />
+            </IndicatorContainer>
+          )}
+          <ConnectorText>
             {account ? ens || shortenAddress(account, 8) : t("walletConnect.connectWallet")}
           </ConnectorText>
+          {active && (
+            <IndicatorContainer>
+              <Loading cat={loading} src={pending} />
+            </IndicatorContainer>
+          )}
         </Innner>
       </Border>
     </StyledConnectorDesktop>
