@@ -70,7 +70,7 @@ const AmountSlider = ({ value, max, setValue }: Props): JSX.Element => {
   const updateValue = (percent: number) => {
     const newValue = max.value.mul(BigNumber.from(percent)).div(BigNumber.from(100));
     const scaled = new ScaledNumber(newValue, max.decimals);
-    setValue(percent === 100 ? scaled.toString() : scaled.toCryptoString().replace(/,/g, ""));
+    setValue(percent === 100 ? scaled.toString() : scaled.toCryptoString({ useGrouping: false }));
   };
 
   return (
