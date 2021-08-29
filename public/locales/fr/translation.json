@@ -12,7 +12,7 @@
   "walletConnect": {
     "connectWallet": "Connecter un portefeuille",
     "header": "Connecter votre portefeuille",
-    "newToEthereum": "Nouveau sur Ethereum?",
+    "newToEthereum": "Nouveau sur Ethereum ?",
     "aboutWallets": "En savoir plus sur les portefeuilles",
     "wallets": {
       "metaMask": "MetaMask",
