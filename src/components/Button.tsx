@@ -1,6 +1,8 @@
 import { CircularProgress } from "@material-ui/core";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { selectError } from "../state/errorSlice";
 
 type ButtonProps = {
   primary?: boolean;
@@ -265,6 +267,13 @@ type Props = {
 };
 
 const Button = (props: Props): JSX.Element => {
+  const error = useSelector(selectError);
+  const [pending, setPending] = useState(false);
+
+  useEffect(() => {
+    if (error || props.loading) setPending(false);
+  }, [error, props.loading]);
+
   return (
     <StyledButton
       type={props.submit ? "submit" : "button"}
@@ -276,12 +285,14 @@ const Button = (props: Props): JSX.Element => {
       small={props.small}
       tiny={props.tiny}
       wide={props.wide}
-      disabled={props.disabled || props.loading}
+      disabled={props.disabled || props.loading || pending}
       inactive={props.inactive}
       complete={props.complete}
       width={props.width}
       onClick={() => {
-        if (!props.loading && !props.disabled && props.click) props.click();
+        if (props.loading || pending || props.disabled || !props.click) return;
+        if (props.loading !== undefined) setPending(true);
+        props.click();
       }}
     >
       <Content

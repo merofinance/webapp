@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { CircularProgress } from "@material-ui/core";
@@ -10,6 +10,7 @@ import { AppDispatch } from "../../app/store";
 import { useBackd } from "../../app/hooks/use-backd";
 import { Position, TransactionInfo } from "../../lib/types";
 import { shortenAddress } from "../../lib/text";
+import { selectError } from "../../state/errorSlice";
 import { selectTransactions } from "../../state/transactionsSlice";
 
 const StyledPosition = styled.div`
@@ -66,7 +67,9 @@ type Props = {
 const PositionRow = ({ position, pool }: Props): JSX.Element => {
   const backd = useBackd();
   const dispatch: AppDispatch = useDispatch();
+  const error = useSelector(selectError);
   const pendingTx = useSelector(selectTransactions);
+  const [pending, setPending] = useState(false);
 
   const loading = pendingTx.some(
     (tx: TransactionInfo) =>
@@ -75,6 +78,10 @@ const PositionRow = ({ position, pool }: Props): JSX.Element => {
       tx.description.args?.position.account === position.account &&
       tx.description.args?.position.protocol === position.protocol
   );
+
+  useEffect(() => {
+    if (error || loading) setPending(false);
+  }, [error, loading]);
 
   const handleRemovePosition = () => {
     if (!backd || loading) return;
@@ -92,7 +99,15 @@ const PositionRow = ({ position, pool }: Props): JSX.Element => {
         <DeleteButton>
           {loading && <CircularProgress size={17} />}
           {!loading && (
-            <Delete src={deleteIcon} alt="delete button" onClick={() => handleRemovePosition()} />
+            <Delete
+              src={deleteIcon}
+              alt="delete button"
+              onClick={() => {
+                if (pending) return;
+                setPending(true);
+                handleRemovePosition();
+              }}
+            />
           )}
         </DeleteButton>
       </Value>
