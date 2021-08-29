@@ -8,10 +8,10 @@ import { Pool } from "../../lib";
 import { removePosition } from "../../state/positionsSlice";
 import { AppDispatch } from "../../app/store";
 import { useBackd } from "../../app/hooks/use-backd";
-import { Position } from "../../lib/types";
+import { Position, TransactionInfo } from "../../lib/types";
 import { shortenAddress } from "../../lib/text";
-import { hasPendingTransaction } from "../../state/transactionsSlice";
 import { selectError } from "../../state/errorSlice";
+import { selectTransactions } from "../../state/transactionsSlice";
 
 const StyledPosition = styled.div`
   width: 100%;
@@ -67,9 +67,17 @@ type Props = {
 const PositionRow = ({ position, pool }: Props): JSX.Element => {
   const backd = useBackd();
   const dispatch: AppDispatch = useDispatch();
-  const loading = useSelector(hasPendingTransaction("Remove"));
   const error = useSelector(selectError);
+  const pendingTx = useSelector(selectTransactions);
   const [pending, setPending] = useState(false);
+
+  const loading = pendingTx.some(
+    (tx: TransactionInfo) =>
+      tx.confirmations === 0 &&
+      tx.description.action === "Remove" &&
+      tx.description.args?.position.account === position.account &&
+      tx.description.args?.position.protocol === position.protocol
+  );
 
   useEffect(() => {
     if (error || loading) setPending(false);

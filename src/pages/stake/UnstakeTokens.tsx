@@ -4,11 +4,12 @@ import styled from "styled-components";
 import LaunchIcon from "@material-ui/icons/Launch";
 
 import AmountInput from "../../components/AmountInput";
-import MultiStepButtons from "../../components/MultiStepButtons";
+import ApproveThenAction from "../../components/ApproveThenAction";
 import { selectBalance } from "../../state/userSlice";
 import { Token } from "../../lib/types";
 import { GradientLink } from "../../styles/GradientText";
 import { useDevice } from "../../app/hooks/use-device";
+import { ScaledNumber } from "../../lib/scaled-number";
 
 const StyledUnstakeTokens = styled.div`
   width: 100%;
@@ -64,14 +65,8 @@ const UnstakeTokens = ({ token }: Props): JSX.Element => {
   const { isMobile } = useDevice();
 
   const [value, setValue] = useState("");
-  const [approved, setApproved] = useState(false);
-
-  const approve = async () => {
-    setApproved(true);
-  };
 
   const unstake = async () => {
-    setApproved(false);
     setValue("");
   };
 
@@ -96,18 +91,15 @@ const UnstakeTokens = ({ token }: Props): JSX.Element => {
           max={balance}
           error=""
         />
-        <MultiStepButtons
+        <ApproveThenAction
           stepsOnTop
+          label="Unstake and Withdraw"
+          action={unstake}
+          value={ScaledNumber.fromUnscaled(value)}
+          loading={false}
           disabled={!value}
-          firstText={`Approve ${token.symbol}`}
-          firstAction={approve}
-          firstComplete={approved}
-          firstHoverText="Enter Amount"
-          firstLoading={false}
-          secondText="Unstake and Withdraw"
-          secondAction={unstake}
-          secondHoverText={`Approve ${token.symbol}`}
-          secondLoading={false}
+          token={token}
+          contract=""
         />
       </Content>
     </StyledUnstakeTokens>

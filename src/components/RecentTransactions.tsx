@@ -1,20 +1,21 @@
-import React from "react";
+import { useWeb3React } from "@web3-react/core";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import styled, { keyframes } from "styled-components";
-import { useWeb3React } from "@web3-react/core";
-
+import styled from "styled-components";
+import { useWeb3Updated } from "../app/hooks/use-web3-updated";
+import { AppDispatch } from "../app/store";
 import externalLink from "../assets/ui/gradient-external-link.svg";
-import { TransactionInfo } from "../lib/types";
-import { clearTransactions, selectTransactions } from "../state/transactionsSlice";
-import { GradientText } from "../styles/GradientText";
+import failure from "../assets/ui/status/failure.svg";
 import pending from "../assets/ui/status/pending.svg";
 import success from "../assets/ui/status/success.svg";
-import failure from "../assets/ui/status/failure.svg";
 import { ScaledNumber } from "../lib/scaled-number";
 import { shortenAddress } from "../lib/text";
-import { AppDispatch } from "../app/store";
+import { TransactionInfo } from "../lib/types";
 import { getEtherscanTransactionLink } from "../lib/web3";
+import { clearTransactions, selectTransactions } from "../state/transactionsSlice";
+import { spinAnimation } from "../styles/animations/SpinAnimation";
+import { GradientText } from "../styles/GradientText";
 
 const StyledRecentTransactions = styled.div`
   width: calc(100% + 3.2rem);
@@ -64,18 +65,9 @@ interface StatusProps {
   pending: boolean;
 }
 
-const spin = keyframes`
-	0% {
-		transform: rotate(0deg);
-	}
-	100% {
-		transform: rotate(360deg);
-	}
-`;
-
 const Status = styled.img`
   height: 1.4rem;
-  animation: ${(props: StatusProps) => (props.pending ? spin : "none")} 1s linear infinite;
+  animation: ${(props: StatusProps) => (props.pending ? spinAnimation : "none")} 1s linear infinite;
 `;
 
 const Type = styled.div`
@@ -110,11 +102,16 @@ const Empty = styled.div`
   margin-top: 0.8rem;
 `;
 
-const RecentTransactions = () => {
+const RecentTransactions = (): JSX.Element => {
   const { t } = useTranslation();
   const { chainId } = useWeb3React();
   const dispatch: AppDispatch = useDispatch();
+  const update = useWeb3Updated();
   const transactions = useSelector(selectTransactions);
+
+  useEffect(() => {
+    dispatch(clearTransactions());
+  }, [update]);
 
   const getDetails = (tx: TransactionInfo) => {
     if (!tx.description.args) return "";
