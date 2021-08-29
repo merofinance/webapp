@@ -87,11 +87,12 @@ export const formatPercent = (number: number): string => {
   return number.toLocaleString(undefined, { maximumFractionDigits: 2, style: "percent" });
 };
 
-export const formatCrypto = (number: number): string => {
+export const formatCrypto = (number: number, parameters: Intl.NumberFormatOptions = {}): string => {
   let decimals = Math.max(5 - Math.floor(number ** (1 / 10)), 0);
   if (number < 0.0001) decimals = 18;
   return number.toLocaleString(undefined, {
     maximumFractionDigits: decimals,
+    ...parameters,
   });
 };
 

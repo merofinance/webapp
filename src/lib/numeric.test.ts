@@ -65,8 +65,12 @@ test("should format numbers as crypto", () => {
     { value: 0, expected: "0" },
     { value: 123102031023, expected: "123,102,031,023" },
     { value: 12.000000111, expected: "12" },
+    { value: 123102031023, expected: "123102031023", parameters: { useGrouping: false } },
+    { value: 121231.120102, expected: "121231.12", parameters: { useGrouping: false } },
   ];
-  testCases.forEach(({ value, expected }) => expect(formatCrypto(value)).toEqual(expected));
+  testCases.forEach(({ value, expected, parameters }) =>
+    expect(formatCrypto(value, parameters)).toEqual(expected)
+  );
 });
 
 test("stringToBigNumber should convert strings to big numbers", () => {
