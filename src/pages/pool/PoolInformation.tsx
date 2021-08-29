@@ -33,23 +33,23 @@ const PoolInformation = ({ pool }: Props): JSX.Element => {
           tooltip: "The current annual percent yield earned by pool LPs",
           value: formatPercent(pool.apy),
         },
-        {
-          label: "Strategy",
-          tooltip: "The current protocol funds are allocated to for yield farming strategies",
-          value: pool.name,
-          details: [
-            {
-              icon: etherscan,
-              label: "View Contract",
-              link: getEtherscanAddressLink(chainId, pool.address),
-            },
-            {
-              icon: memo,
-              label: "Read more",
-              link: "https://docs.backd.fund/",
-            },
-          ],
-        },
+        // {
+        //   label: "Strategy",
+        //   tooltip: "The current protocol funds are allocated to for yield farming strategies",
+        //   value: pool.name,
+        //   details: [
+        //     {
+        //       icon: etherscan,
+        //       label: "View Contract",
+        //       link: getEtherscanAddressLink(chainId, pool.address),
+        //     },
+        //     {
+        //       icon: memo,
+        //       label: "Read more",
+        //       link: "https://docs.backd.fund/",
+        //     },
+        //   ],
+        // },
       ]}
     />
   );
