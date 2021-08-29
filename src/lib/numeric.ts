@@ -87,11 +87,12 @@ export const formatPercent = (number: number): string => {
   return number.toLocaleString(undefined, { maximumFractionDigits: 2, style: "percent" });
 };
 
-export const formatCrypto = (number: number): string => {
+export const formatCrypto = (number: number, parameters: Intl.NumberFormatOptions = {}): string => {
   let decimals = Math.max(5 - Math.floor(number ** (1 / 10)), 0);
   if (number < 0.0001) decimals = 18;
   return number.toLocaleString(undefined, {
     maximumFractionDigits: decimals,
+    ...parameters,
   });
 };
 
@@ -107,6 +108,7 @@ export const bigNumberToString = (number: BigNumber, decimals: number): string =
 export const stringToBigNumber = (value: string, decimals: number): BigNumber => {
   if (!value || value === ".") throw new Error("Not a valid number");
   if (value.substring(0, 1) === "-") throw new Error("Negative numbers not supported");
+  value = value.replace(/,/g, "");
 
   const [num, power] = value.split("e");
 

@@ -98,7 +98,8 @@ export class ScaledNumber {
 
   toString = (): string => bigNumberToString(this._value, this._decimals);
 
-  toCryptoString = (): string => formatCrypto(Number(this.toString()));
+  toCryptoString = (parameters: Intl.NumberFormatOptions = {}): string =>
+    formatCrypto(Number(this.toString()), parameters);
 
   toUsdValue = (price: number): string => formatCurrency(Number(this.toString()) * price);
 }
