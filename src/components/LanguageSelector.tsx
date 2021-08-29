@@ -21,7 +21,7 @@ const languageOptions: SelectorOptionType[] = [
   },
   {
     value: "fr",
-    label: "Française",
+    label: "Français",
   },
 ];
 

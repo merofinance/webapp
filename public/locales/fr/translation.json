@@ -35,12 +35,12 @@
     },
     "feeShare": {
       "header": "Redistribution des frais",
-      "description": "Un petit prélèvement sur le montant utilisé pour renflouer la garantie est redistribué aux fournisseurs de liquidités."
+      "description": "Un petit frais sur le montant utilisé pour renflouer la garantie est redistribué aux fournisseurs de liquidités."
     },
     "readMore": "En savoir plus"
   },
   "howItWorks": {
-    "header": "Comment ca marche",
+    "header": "Comment ça marche",
     "categories": {
       "earnYield": {
         "tabName": "Gagner du rendement",
@@ -48,22 +48,22 @@
           "deposit": {
             "number": "01",
             "header": "Déposer des liquidités",
-            "description": "Déposez des fonds dans les pools de liquidités Backd et recevez en échange des jetons LP symbolisant votre position dans la pool."
+            "description": "Déposez des fonds dans les pools de liquidités Backd et recevez en échange des tokens LP symbolisant votre position dans la pool."
           },
           "earn": {
             "number": "02",
             "header": "Gagner du rendement",
-            "description": "Gagnez des rendements composés à partir des profits générés par nos stratégies et les frais de protocole pendant que vos jetons LP s’apprécient par rapports aux actifs sous-jacents."
+            "description": "Gagnez des rendements composés à partir des profits générés par nos stratégies et les frais de protocole pendant que vos tokens LP s’apprécient par rapports aux actifs sous-jacents."
           },
           "stake": {
             "number": "03",
             "header": "Stakez pour toucher des primes",
-            "description": "Stakes vos tokens LP pour recevoir des primes de la part de Backd"
+            "description": "Stakez vos tokens LP pour recevoir des primes de la part de Backd"
           },
           "claim": {
             "number": "04",
-            "header": "Récupérez vos jetons (unstake) à n'importe quel moment",
-            "description": "Récupérez vos jetons LP (unstake) ou réclamez vos primes Backd à n'importe quel moment"
+            "header": "Récupérez vos tokens (unstake) à n'importe quel moment",
+            "description": "Récupérez vos tokens LP (unstake) ou réclamez vos primes Backd à n'importe quel moment"
           }
         }
       },
@@ -73,22 +73,22 @@
           "deposit": {
             "number": "01",
             "header": "Déposer des liquidités",
-            "description": "Déposez des fonds dans les pools de liquidités Backd et recevez en échange des jetons LP symbolisant votre position dans la pool."
+            "description": "Déposez des fonds dans les pools de liquidités Backd et recevez en échange des tokens LP symbolisant votre position dans la pool."
           },
           "register": {
             "number": "02",
             "header": "Enregistrer votre prêt on-chain",
-            "description": "Enregistrez vos prêts Compound ou Aave on-chain pour recevoir des remises à niveau de garantie sur vos prêts, et stakez vos jetons LP pour gagnez des primes Backd."
+            "description": "Enregistrez vos prêts Compound ou Aave on-chain pour recevoir des remises à niveau de garantie sur vos prêts, et stakez vos tokens LP pour gagnez des primes Backd."
           },
           "protect": {
             "number": "03",
             "header": "Protéger et gagner",
-            "description": "Gagnez des rendements composés et des frais de protocole pendant que vos jetons LP s’apprécient. En même temps, des gardiens keepers surveillent votre prêt et transfèrent votre capital pour éviter les liquidations."
+            "description": "Gagnez des rendements composés et des frais de protocole pendant que vos tokens LP s’apprécient. En même temps, des gardiens surveillent votre prêt et transfèrent votre capital pour éviter les liquidations."
           },
           "claim": {
             "number": "04",
-            "header": "Récupérez vos jetons (unstake) à n'importe quel moment",
-            "description": "Annulez ou mettez à jour une position, retirez vos jetons LP ou réclamez vos primes Backd à tout moment."
+            "header": "Récupérez vos tokens (unstake) à n'importe quel moment",
+            "description": "Annulez ou mettez à jour une position, retirez vos tokens LP ou réclamez vos primes Backd à tout moment."
           }
         }
       }
@@ -100,7 +100,7 @@
   "auditedBy": {
     "preLaunchHeader": "En cours d’audit",
     "header": "Audité par",
-    "description": "dirigé par des experts en sécurité de l’ETH Zurich et ayant reçu la confiance de plus de 85 enteprises de blockchain",
+    "description": "dirigé par des experts en sécurité de l'École polytechnique fédérale de Zurich et ayant reçu la confiance de plus de 85 enteprises de blockchain",
     "viewReport": "Voir le rapport"
   },
   "joinCommunity": {
