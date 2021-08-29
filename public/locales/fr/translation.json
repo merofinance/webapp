@@ -27,7 +27,7 @@
   "benefits": {
     "avoidLiquidation": {
       "header": "Eviter les liquidations",
-      "description": "Les liquidités déposées sur Backd et désignées comme garantie de secours seront automatiquement allouées en cas de nécessités pour maintenir le niveau de garantie d’un prêt."
+      "description": "Les liquidités déposées sur Backd et désignées comme garantie de secours seront automatiquement allouées en cas de nécessité pour maintenir le niveau de garantie d’un prêt."
     },
     "earnYield": {
       "header": "Gagner du rendement",
