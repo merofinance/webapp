@@ -88,7 +88,6 @@ const ButtonContainer = styled.div`
 interface Props {
   show: boolean;
   close: () => void;
-  web3?: boolean;
   header?: string;
   content?: JSX.Element;
   confirm?: boolean;
@@ -100,7 +99,6 @@ interface Props {
 const Popup = ({
   show,
   close,
-  web3,
   header,
   content,
   confirm,
@@ -121,7 +119,6 @@ const Popup = ({
           <ButtonContainer>
             <Button medium background="#252140" text={isMobile ? "Back" : "Cancel"} click={close} />
             <Button
-              web3={web3}
               primary
               medium
               text="Confirm"

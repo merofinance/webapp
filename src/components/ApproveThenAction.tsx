@@ -142,7 +142,6 @@ const ApproveThenAction = ({
       <Buttons stepsOnTop={stepsOnTop} showApprove={!approved || persistApprove}>
         {(!approved || persistApprove) && (
           <Button
-            web3
             primary
             medium
             wide
@@ -155,7 +154,6 @@ const ApproveThenAction = ({
           />
         )}
         <Button
-          web3
           primary
           medium
           wide

@@ -107,8 +107,8 @@ const ClaimRow = ({ index }: Props): JSX.Element => {
       <EndContainer>
         {isDesktop && (
           <>
-            <Button web3 text="Claim" background="#100830" width="12rem" primary={isMobile} />
-            <Button web3 primary text="Claim & Stake" width={isMobile ? "auto" : "18rem"} />
+            <Button text="Claim" background="#100830" width="12rem" primary={isMobile} />
+            <Button primary text="Claim & Stake" width={isMobile ? "auto" : "18rem"} />
           </>
         )}
         {isMobile && (

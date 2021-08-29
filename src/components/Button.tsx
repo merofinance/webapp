@@ -247,7 +247,6 @@ const HoverText = styled.div`
 type Props = {
   text: string;
   click?: () => void;
-  web3?: boolean;
   primary?: boolean;
   hero?: boolean;
   large?: boolean;
@@ -292,7 +291,7 @@ const Button = (props: Props): JSX.Element => {
       width={props.width}
       onClick={() => {
         if (props.loading || pending || props.disabled || !props.click) return;
-        if (props.web3) setPending(true);
+        if (props.loading !== undefined) setPending(true);
         props.click();
       }}
     >
