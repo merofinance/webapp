@@ -1,9 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Pool } from "../../lib";
+import { useWeb3React } from "@web3-react/core";
+
 import Information from "../../components/Information";
+import { Pool } from "../../lib";
 import { selectPrice } from "../../state/selectors";
 import { formatPercent, numberToCompactCurrency } from "../../lib/numeric";
+import etherscan from "../../assets/ui/etherscan.svg";
+import memo from "../../assets/ui/memo.svg";
+import { getEtherscanAddressLink } from "../../lib/web3";
 
 interface Props {
   pool: Pool;
@@ -11,6 +16,7 @@ interface Props {
 
 const PoolInformation = ({ pool }: Props): JSX.Element => {
   const price = useSelector(selectPrice(pool));
+  const { chainId } = useWeb3React();
   const locked = pool.totalAssets * price;
 
   return (
@@ -27,11 +33,23 @@ const PoolInformation = ({ pool }: Props): JSX.Element => {
           tooltip: "The current annual percent yield earned by pool LPs",
           value: formatPercent(pool.apy),
         },
-        {
-          label: "Strategy",
-          tooltip: "The current protocol funds are allocated to for yield farming strategies",
-          value: pool.name,
-        },
+        // {
+        //   label: "Strategy",
+        //   tooltip: "The current protocol funds are allocated to for yield farming strategies",
+        //   value: pool.name,
+        //   details: [
+        //     {
+        //       icon: etherscan,
+        //       label: "View Contract",
+        //       link: getEtherscanAddressLink(chainId, pool.address),
+        //     },
+        //     {
+        //       icon: memo,
+        //       label: "Read more",
+        //       link: "https://docs.backd.fund/",
+        //     },
+        //   ],
+        // },
       ]}
     />
   );
