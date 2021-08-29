@@ -1,0 +1,145 @@
+{
+  "header": {
+    "tabs": {
+      "claim": "réclamer",
+      "pools": "pool",
+      "stake": "staker BKD",
+      "docs": "documentation",
+      "blog": "blog",
+      "newsletter": "newsletter"
+    }
+  },
+  "walletConnect": {
+    "connectWallet": "Connecter un portefeuille",
+    "header": "Connecter votre portefeuille",
+    "newToEthereum": "Nouveau sur Ethereum ?",
+    "aboutWallets": "En savoir plus sur les portefeuilles",
+    "wallets": {
+      "metaMask": "MetaMask",
+      "walletConnect": "WalletConnect"
+    }
+  },
+  "landingPage": {
+    "header": "Liquidité Réactive",
+    "subHeader": "Un protocole qui génére des intérêts sans nécessiter de tiers de confiance. Conçu pour éviter la liquidation de prêts garantis.",
+    "viewPools": "Voir les pools"
+  },
+  "benefits": {
+    "avoidLiquidation": {
+      "header": "Eviter les liquidations",
+      "description": "Les liquidités déposées sur Backd et désignées comme garantie de secours seront automatiquement allouées en cas de nécessité pour maintenir le niveau de garantie d’un prêt."
+    },
+    "earnYield": {
+      "header": "Gagner du rendement",
+      "description": "Gagner des intérêts sur votre liquidité grâce à des stratégies de yield-farming basées sur Curve et Convex."
+    },
+    "feeShare": {
+      "header": "Redistribution des frais",
+      "description": "Un petit frais sur le montant utilisé pour renflouer la garantie est redistribué aux fournisseurs de liquidités."
+    },
+    "readMore": "En savoir plus"
+  },
+  "howItWorks": {
+    "header": "Comment ça marche",
+    "categories": {
+      "earnYield": {
+        "tabName": "Gagner du rendement",
+        "cards": {
+          "deposit": {
+            "number": "01",
+            "header": "Déposer des liquidités",
+            "description": "Déposez des fonds dans les pools de liquidités Backd et recevez en échange des tokens LP symbolisant votre position dans la pool."
+          },
+          "earn": {
+            "number": "02",
+            "header": "Gagner du rendement",
+            "description": "Gagnez des rendements composés à partir des profits générés par nos stratégies et les frais de protocole pendant que vos tokens LP s’apprécient par rapports aux actifs sous-jacents."
+          },
+          "stake": {
+            "number": "03",
+            "header": "Stakez pour toucher des primes",
+            "description": "Stakez vos tokens LP pour recevoir des primes de la part de Backd"
+          },
+          "claim": {
+            "number": "04",
+            "header": "Récupérez vos tokens (unstake) à n'importe quel moment",
+            "description": "Récupérez vos tokens LP (unstake) ou réclamez vos primes Backd à n'importe quel moment"
+          }
+        }
+      },
+      "earnAndProtect": {
+        "tabName": "Gagner et protéger",
+        "cards": {
+          "deposit": {
+            "number": "01",
+            "header": "Déposer des liquidités",
+            "description": "Déposez des fonds dans les pools de liquidités Backd et recevez en échange des tokens LP symbolisant votre position dans la pool."
+          },
+          "register": {
+            "number": "02",
+            "header": "Enregistrer votre prêt on-chain",
+            "description": "Enregistrez vos prêts Compound ou Aave on-chain pour recevoir des remises à niveau de garantie sur vos prêts, et stakez vos tokens LP pour gagnez des primes Backd."
+          },
+          "protect": {
+            "number": "03",
+            "header": "Protéger et gagner",
+            "description": "Gagnez des rendements composés et des frais de protocole pendant que vos tokens LP s’apprécient. En même temps, des gardiens surveillent votre prêt et transfèrent votre capital pour éviter les liquidations."
+          },
+          "claim": {
+            "number": "04",
+            "header": "Récupérez vos tokens (unstake) à n'importe quel moment",
+            "description": "Annulez ou mettez à jour une position, retirez vos tokens LP ou réclamez vos primes Backd à tout moment."
+          }
+        }
+      }
+    }
+  },
+  "supportedBy": {
+    "header": "Soutenu par"
+  },
+  "auditedBy": {
+    "preLaunchHeader": "En cours d’audit",
+    "header": "Audité par",
+    "description": "dirigé par des experts en sécurité de l'École polytechnique fédérale de Zurich et ayant reçu la confiance de plus de 85 enteprises de blockchain",
+    "viewReport": "Voir le rapport"
+  },
+  "joinCommunity": {
+    "header": "Rejoindre la communauté",
+    "socials": {
+      "discord": "Discord",
+      "twitter": "Twitter",
+      "github": "GitHub"
+    }
+  },
+  "getStarted": {
+    "header": "Commencer",
+    "description": "Déposez des liquidités et commencez à gagner du rendement"
+  },
+  "footer": {
+    "community": {
+      "header": "Communauté",
+      "links": {
+        "discord": "Discord",
+        "twitter": "Twitter",
+        "github": "GitHub",
+        "telegram": "Telegram (Chat)"
+      }
+    },
+    "resources": {
+      "header": "Ressources",
+      "links": {
+        "litepaper": "Litepaper",
+        "docs": "Documentation",
+        "blog": "Blog",
+        "factSheet": "Fiche d’information"
+      }
+    },
+    "updates": {
+      "header": "Mises à jour",
+      "links": {
+        "newsletter": "Newsletter",
+        "telegram": "Telegram (Annonces)"
+      }
+    }
+  }
+}
