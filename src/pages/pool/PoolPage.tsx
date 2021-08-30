@@ -119,9 +119,8 @@ const PoolPage = (): JSX.Element => {
         </Content>
       </ContentContainer>
       <InfoCards>
-        {/* TODO */}
         <Overview
-          description={`Deposit ${pool.underlying.symbol} to begin earning yield via the ${pool.name} strategy. Once you have deposited, you can make your liquidity reactive by opening a top-up position.`}
+          description={t("pool.overview", { asset: pool.underlying.symbol, strategy: pool.name })}
           link="https://docs.backd.fund/"
         />
         <PoolInformation pool={pool} />

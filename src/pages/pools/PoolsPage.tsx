@@ -113,10 +113,7 @@ const PoolsPage = (): JSX.Element => {
         }
       />
       <InfoCards>
-        <Overview
-          description="Backd’s single-asset pools aggregate yield across strategies. After depositing an asset, register a top-up position to protect from liquidation on supported collateralized lending protocols."
-          link="https://docs.backd.fund/"
-        />
+        <Overview description={t("pools.overview")} link="https://docs.backd.fund/" />
         <PoolsInformation />
       </InfoCards>
     </StyledPoolsPage>
