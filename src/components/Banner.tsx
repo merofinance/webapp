@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
@@ -53,6 +54,7 @@ const Link = styled.a`
 `;
 
 const Banner = (): JSX.Element => {
+  const { t } = useTranslation();
   const location = useLocation();
 
   if (location.pathname !== "/") return <></>;
@@ -60,15 +62,15 @@ const Banner = (): JSX.Element => {
   return (
     <StyledBanner>
       <Content>
-        <Text>🎉 Backd is now live on Kovan Testnet.</Text>
+        <Text>{t("banner.testnet.live")}</Text>
         <Text>
-          Connect your wallet to begin or read
+          {t("banner.testnet.connect")}
           <Link
             href="https://backdfund.medium.com/backd-testnet-guide-16540e09c46"
             target="_blank"
             rel="noopener noreferrer"
           >
-            the blog post
+            {t("banner.testnet.blogPost")}
           </Link>
         </Text>
       </Content>

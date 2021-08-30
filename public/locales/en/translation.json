@@ -1,4 +1,11 @@
 {
+  "banner": {
+    "testnet": {
+      "live": "🎉 Backd is now live on Kovan Testnet.",
+      "connect": "Connect your wallet to begin or read",
+      "blogPost": "the blog post"
+    }
+  },
   "header": {
     "tabs": {
       "claim": "claim",
