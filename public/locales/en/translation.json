@@ -472,7 +472,8 @@
     "confirm": "Confirm",
     "cancel": "Cancel",
     "back": "Back",
-    "close": "Close"
+    "close": "Close",
+    "moreInDocs": "Find out more in the docs"
   },
   "errors": {
     "header": "An Error Occured",
