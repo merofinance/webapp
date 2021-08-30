@@ -8,7 +8,8 @@ import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
 import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFactory";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
 import { UnsupportedNetwork } from "../app/errors";
-import { getPrices } from "./coingecko";
+import { getPrices as getPricesFromCoingecko } from "./coingecko";
+import { getPrices as getPricesFromBinance } from "./binance";
 import { ETH_DECIMALS, ETH_DUMMY_ADDRESS, INFINITE_APPROVE_AMMOUNT } from "./constants";
 import { bigNumberToFloat, scale } from "./numeric";
 import { ScaledNumber } from "./scaled-number";
@@ -276,9 +277,13 @@ export class Web3Backd implements Backd {
   }
 
   async getPrices(symbols: string[]): Promise<Prices> {
-    return getPrices(symbols).catch((e) => {
-      throw new Error(`failed to fetch prices: ${e.message}`);
-    });
+    return getPricesFromCoingecko(symbols)
+      .catch((e) => {
+        return getPricesFromBinance(symbols);
+      })
+      .catch((e) => {
+        throw new Error(`failed to fetch prices: ${e.message}`);
+      });
   }
 
   async listSupportedProtocols(): Promise<string[]> {
