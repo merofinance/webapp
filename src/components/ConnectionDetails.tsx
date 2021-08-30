@@ -86,11 +86,11 @@ const ConnectionDetails = ({ show, close, changeWallet, wallet }: Props) => {
   const { account, chainId } = useWeb3React();
 
   const networkName = (): string => {
-    if (!chainId) return "Unknown Network";
-    if (chainId === 1) return "Ethereum Mainet";
+    if (!chainId) return t("walletConnect.details.network.unknown");
+    if (chainId === 1) return t("walletConnect.details.network.ethereum");
     const network = chainIds[chainId.toString()];
-    if (!network) return `Chain id ${chainId}`;
-    return `Ethereum ${network} Testnet`;
+    if (!network) return t("walletConnect.details.network.chainId", { id: chainId });
+    return t("walletConnect.details.network.testnet", { network });
   };
 
   return (

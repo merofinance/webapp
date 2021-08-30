@@ -31,7 +31,13 @@
       "change": "Change",
       "recentTransactions": "Recent transactions",
       "clear": "Clear",
-      "empty": "Your transactions will appear here..."
+      "empty": "Your transactions will appear here...",
+      "network": {
+        "unknown": "Unknown Network",
+        "ethereum": "Ethereum Mainet",
+        "chainId": "Chain id {{id}}",
+        "testnet": "Ethereum {{network}} Testnet"
+      }
     }
   },
   "landingPage": {
