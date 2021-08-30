@@ -17,13 +17,23 @@
     "wallets": {
       "metaMask": "MetaMask",
       "walletConnect": "WalletConnect"
+    },
+    "details": {
+      "header": "Account",
+      "connected": "Connected with {{wallet}}",
+      "change": "Change",
+      "recentTransactions": "Recent transactions",
+      "clear": "Clear",
+      "empty": "Your transactions will appear here..."
     }
   },
   "landingPage": {
     "header": "Reactive Liquidity",
     "subHeader": "A trustless and interest generating protocol designed to prevent collateralized loans from becoming liquidatable.",
-    "comingSoon": "coming soon",
-    "viewPools": "view pools"
+    "viewPools": "View Pools",
+    "unsupportedNetwork": "Unsupported Network",
+    "changeNetwork": "Try on Testnet",
+    "connectWallet": "Connect Wallet"
   },
   "benefits": {
     "avoidLiquidation": {

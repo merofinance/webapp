@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
-import { LIVE, STAKING_LIVE } from "../lib/constants";
+import { useIsLive } from "../app/hooks/use-is-live";
 
 type NavItemType = {
   label: string;
@@ -93,22 +93,23 @@ const ExternalLink = styled.a`
 
 const NavItems = (): JSX.Element => {
   const { t } = useTranslation();
+  const { protocolLive, stakingLive } = useIsLive();
 
   return (
     <StyledNavItems id="nav-items">
-      {LIVE && !STAKING_LIVE && (
+      {protocolLive && !stakingLive && (
         <NavItem>
           <InternalLink to="/pools">{t("header.tabs.pools")}</InternalLink>
         </NavItem>
       )}
-      {LIVE &&
-        STAKING_LIVE &&
+      {protocolLive &&
+        stakingLive &&
         navItems.map((navItem: NavItemType) => (
           <NavItem key={navItem.label}>
             <InternalLink to={navItem.link}>{t(navItem.label)}</InternalLink>
           </NavItem>
         ))}
-      {!LIVE &&
+      {!protocolLive &&
         preLaunchItems.map((navItem: NavItemType) => (
           <NavItem key={navItem.label}>
             <ExternalLink

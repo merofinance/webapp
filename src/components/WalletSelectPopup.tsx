@@ -135,22 +135,24 @@ const Icon = styled.img`
 
 type Props = {
   show: boolean;
-  close: () => void;
+  close: (connected: boolean) => void;
+  setWallet: (wallet: string) => void;
 };
 
-const WalletSelectPopup = (props: Props): JSX.Element => {
+const WalletSelectPopup = ({ show, close, setWallet }: Props): JSX.Element => {
   const { activate } = useWeb3React();
   const { t } = useTranslation();
 
-  const connect = async (connector: AbstractConnector) => {
+  const connect = async (connector: AbstractConnector, walletName: string) => {
     await activate(connector);
-    props.close();
+    setWallet(walletName);
+    close(true);
   };
 
   return (
     <Popup
-      show={props.show}
-      close={props.close}
+      show={show}
+      close={() => close(false)}
       header={t("walletConnect.header")}
       content={
         <Content>
@@ -171,7 +173,7 @@ const WalletSelectPopup = (props: Props): JSX.Element => {
               key={option.name}
               leftColor={option.leftColor}
               rightColor={option.rightColor}
-              onClick={() => connect(option.connector)}
+              onClick={() => connect(option.connector, option.name)}
             >
               <Name>{t(option.name)}</Name>
               <IconContainer>

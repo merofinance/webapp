@@ -1,11 +1,9 @@
 import React from "react";
-import { useHistory } from "react-router";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
-import Button from "../../components/Button";
 import { Header2 } from "../../styles/Headers";
-import { LIVE } from "../../lib/constants";
+import CallToActionButton from "./CallToActionButton";
 
 const StyledGetStarted = styled.div`
   width: 100%;
@@ -60,7 +58,6 @@ const Body = styled.p`
 `;
 
 const GetStarted = (): JSX.Element => {
-  const history = useHistory();
   const { t } = useTranslation();
 
   return (
@@ -68,16 +65,7 @@ const GetStarted = (): JSX.Element => {
       <Container>
         <Header2>{t("getStarted.header")}</Header2>
         <Body>{t("getStarted.description")}</Body>
-        <Button
-          primary
-          large
-          inactive={!LIVE}
-          text={LIVE ? t("landingPage.viewPools") : t("landingPage.comingSoon")}
-          click={() => {
-            if (!LIVE) return;
-            history.push("/pools");
-          }}
-        />
+        <CallToActionButton />
       </Container>
     </StyledGetStarted>
   );

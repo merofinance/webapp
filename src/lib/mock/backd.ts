@@ -107,7 +107,11 @@ export default class MockBackd implements Backd {
     return makeContractTransaction(this.topupActionAddress, account);
   }
 
-  async removePosition(account: Address, protocol: string): Promise<ContractTransaction> {
+  async removePosition(
+    account: Address,
+    protocol: string,
+    unstake?: boolean
+  ): Promise<ContractTransaction> {
     return makeContractTransaction(this.topupActionAddress, account);
   }
 }

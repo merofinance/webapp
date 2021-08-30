@@ -1,6 +1,6 @@
 <div align="center">
   <br>
-	<a href="https://backd.fund/"><img src="https://backd.fund/bkd-full-dark.png" width="200"></a>
+	<a href="https://backd.fund/"><img src="public/favicon/android-chrome-512x512.png" width="200"></a>
   <br>
   <br>
   <p>
@@ -24,7 +24,7 @@
 
 # Backd Website
 
-Welcome to the repo for the Backd Website - a React project implementing Web3 which allows users to interract with the Backd Protocol.  
+Welcome to the repository for the Backd Website - a React project implementing Web3 which allows users to interract with the Backd Protocol.  
 If you are interested in contributing, please check out our [Contribution Guide](https://github.com/backdfund/webapp/blob/master/.github/CONTRIBUTING.md)
 
 ## Development

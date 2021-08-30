@@ -4,10 +4,10 @@ import { useTranslation } from "react-i18next";
 
 import { selectPools, selectPrices } from "../../state/poolsListSlice";
 import { Pool } from "../../lib";
-import Overview from "../../components/Overview";
+import Information from "../../components/Information";
 import { formatPercent, numberToCompactCurrency } from "../../lib/numeric";
 
-const PoolsOverview = (): JSX.Element => {
+const PoolsInformation = (): JSX.Element => {
   const { t } = useTranslation();
   const pools = useSelector(selectPools);
   const prices = useSelector(selectPrices);
@@ -17,7 +17,8 @@ const PoolsOverview = (): JSX.Element => {
   const averageApy = pools.reduce((a: number, b: Pool) => a + b.apy, 0) / pools.length;
 
   return (
-    <Overview
+    // TODO
+    <Information
       header={t("pools.overview.header")}
       rows={[
         {
@@ -40,4 +41,4 @@ const PoolsOverview = (): JSX.Element => {
   );
 };
 
-export default PoolsOverview;
+export default PoolsInformation;

@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
         --secondary-gradient: #24bde3;
         --success: #4CAF50;
         --error: #F44336;
+        --neutral: #8966F6;
         --gradient: linear-gradient(to right, var(--primary), var(--secondary));
 
         --section-margin: 8rem 0;

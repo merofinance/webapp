@@ -65,7 +65,7 @@ const StyledHowItWorks = styled.div`
   flex-direction: column;
   align-items: center;
 
-  @media (max-width: 600px) {
+  @media (max-width: 713px) {
     margin: var(--mobile-section-margin);
   }
 `;
@@ -79,7 +79,7 @@ const CardContainer = styled.div`
   display: ${(props: CardContainerType) => (props.show ? "flex" : "none")};
   margin: 1rem 0;
 
-  @media (max-width: 600px) {
+  @media (max-width: 713px) {
     margin: 0;
     margin-top: 2.4rem;
     flex-direction: column;
@@ -96,7 +96,7 @@ const Card = styled.div`
   flex-direction: column;
   backdrop-filter: blur(8px);
 
-  @media (max-width: 600px) {
+  @media (max-width: 713px) {
     flex-direction: column;
     margin: 0;
     margin-bottom: 1.2rem;
@@ -109,7 +109,7 @@ const Number = styled.div`
   line-height: 2.2rem;
   margin-bottom: 1.4rem;
 
-  @media (max-width: 600px) {
+  @media (max-width: 713px) {
     font-size: 1.2rem;
     line-height: 1.5rem;
     margin-bottom: 1.2rem;
@@ -122,7 +122,7 @@ const Body = styled.p`
   line-height: 2.4rem;
   letter-spacing: 0.15px;
 
-  @media (max-width: 600px) {
+  @media (max-width: 713px) {
     font-size: 1.2rem;
     line-height: 1.8rem;
   }
@@ -132,7 +132,7 @@ const Header = styled(Header4)`
   text-align: left;
   margin-bottom: 1rem;
 
-  @media (max-width: 600px) {
+  @media (max-width: 713px) {
     margin-bottom: 1.4rem;
   }
 `;

@@ -1,14 +1,15 @@
 import React from "react";
-import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { useHistory, useLocation } from "react-router-dom";
+import styled from "styled-components";
 
 import { AppDispatch } from "../app/store";
-import Popup from "./Popup";
-import { Paragraph } from "../styles/Headers";
 import { selectError, setError } from "../state/errorSlice";
 import { GradientLink } from "../styles/GradientText";
+import { Paragraph } from "../styles/Headers";
 import Button from "./Button";
+import Popup from "./Popup";
 
 const Content = styled.div`
   width: 100%;
@@ -17,7 +18,9 @@ const Content = styled.div`
 `;
 
 const Text = styled(Paragraph)`
+  width: 100%;
   margin-bottom: 3rem;
+  text-align: center;
 `;
 
 const Link = styled(GradientLink)`
@@ -38,28 +41,36 @@ export function ErrorAlert(): JSX.Element {
   const { t } = useTranslation();
   const error = useSelector(selectError);
   const dispatch: AppDispatch = useDispatch();
+  const location = useLocation();
+  const history = useHistory();
+
+  const handleClose = () => {
+    dispatch(setError({ message: "" }));
+    if (error.redirectOnClose && location.pathname !== "/") {
+      history.replace("/");
+    }
+  };
 
   return (
     <Popup
-      show={!!error}
-      close={() => dispatch(setError({ error: "" }))}
-      header={t("errors.header")}
+      show={error.message.length > 0}
+      close={handleClose}
+      header={error.title || t("errors.header")}
       content={
         <Content>
-          <Text>{`Error: ${t(error)}`}</Text>
-          <Text>
-            {t("errors.support")}
-            <Link href="https://discord.gg/jpGvaFV3Rv" target="_blank" rel="noopener noreferrer">
-              {t("footer.community.links.discord")}
-            </Link>
-          </Text>
-          <Button
-            medium
-            primary
-            background="#252140"
-            text="Close"
-            click={() => dispatch(setError({ error: "" }))}
-          />
+          <Text>{t(error.message)}</Text>
+          {error.hideContact ? null : (
+            <Text>
+              {t("errors.support")}
+              <Link href="https://discord.gg/jpGvaFV3Rv" target="_blank" rel="noopener noreferrer">
+                {t("footer.community.links.discord")}
+              </Link>
+            </Text>
+          )}
+          {error.hideButton ? null : (
+            // TODO
+            <Button medium primary background="#252140" text="Close" click={handleClose} />
+          )}
         </Content>
       }
     />

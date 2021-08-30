@@ -3,11 +3,11 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
 import PoolsRow from "../pools/PoolsRow";
-import swirl1 from "../../assets/background/swirl-1.svg";
-import swirl2 from "../../assets/background/swirl-2.svg";
+import swirls from "../../assets/background/swirls.svg";
 import { useBackd } from "../../app/hooks/use-backd";
 import { fetchState, selectPools } from "../../state/poolsListSlice";
 import { Pool } from "../../lib";
+import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 
 const StyledPreview = styled.div`
   position: relative;
@@ -67,12 +67,12 @@ const ChevronHeader = styled.th`
   }
 `;
 
-const Swirl = styled.img`
+const Swirls = styled.img`
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100vw;
+  width: 98vw;
 
   @media (max-width: 600px) {
     display: none;
@@ -83,16 +83,16 @@ const Preview = (): JSX.Element => {
   const backd = useBackd();
   const dispatch = useDispatch();
   const pools = useSelector(selectPools);
+  const updated = useWeb3Updated();
 
   useEffect(() => {
     if (!backd) return;
     dispatch(fetchState(backd));
-  }, [backd, dispatch]);
+  }, [updated]);
 
   return (
     <StyledPreview>
-      <Swirl src={swirl1} alt="decorative swirl" />
-      <Swirl src={swirl2} alt="decorative swirl" />
+      <Swirls src={swirls} alt="decorative swirls" />
       <Table>
         <thead>
           <HeaderRow>

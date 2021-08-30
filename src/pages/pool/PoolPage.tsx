@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
@@ -11,21 +11,35 @@ import Seo from "../../components/Seo";
 import PoolDeposit from "./PoolDeposit";
 import PoolPositions from "./PoolPositions";
 import PoolWithdraw from "./PoolWithdraw";
-import PoolOverview from "./PoolOverview";
+import PoolInformation from "./PoolInformation";
 import { selectBalance } from "../../state/userSlice";
 import { useDevice } from "../../app/hooks/use-device";
+import Overview from "../../components/Overview";
+import { useBackd } from "../../app/hooks/use-backd";
+import { fetchState } from "../../state/poolsListSlice";
+import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
+import BackButton from "../../components/BackButton";
 
 type DepositWithdrawParams = {
   poolName: string;
 };
 
 const StyledPoolPage = styled.div`
+  position: relative;
   width: 100%;
   display: flex;
 
   @media (max-width: 1439px) {
-    flex-direction: column-reverse;
+    flex-direction: column;
+
+    > div:nth-child(2) {
+      order: 3;
+    }
   }
+`;
+
+const ContentContainer = styled.div`
+  width: 100%;
 `;
 
 const Content = styled.div`
@@ -34,7 +48,7 @@ const Content = styled.div`
   flex-direction: column;
 `;
 
-const RightColumn = styled.div`
+const InfoCards = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,8 +60,6 @@ const RightColumn = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  margin-top: 2.4rem;
-
   @media (max-width: 1439px) {
     display: none;
   }
@@ -56,47 +68,63 @@ const ButtonContainer = styled.div`
 const PoolPage = (): JSX.Element => {
   const { t } = useTranslation();
   const { poolName } = useParams<DepositWithdrawParams>();
+  const backd = useBackd();
+  const dispatch = useDispatch();
+  const updated = useWeb3Updated();
   const pool = useSelector(selectPool(poolName));
   const balance = useSelector(selectBalance(pool));
   const { isMobile } = useDevice();
 
   const [tab, setTab] = useState("deposit");
 
+  useEffect(() => {
+    if (!backd) return;
+    dispatch(fetchState(backd));
+  }, [updated]);
+
   if (!pool) return <Redirect to="/" />;
 
   return (
     <StyledPoolPage>
+      <BackButton />
       <Seo
         title={`${pool.underlying.symbol} Pool`}
         description={`Deposit ${pool.underlying.symbol} to farm yield while protecting your DeFi loan (Aave, Compound, etc.) from liquidation`}
       />
-      <Content>
-        <Radio
-          options={[
-            {
-              label: t("pool.tabs.deposit.tab"),
-              value: "deposit",
-            },
-            {
-              label: t("pool.tabs.withdraw.tab"),
-              value: "withdraw",
-            },
-            {
-              label: isMobile
-                ? t("pool.tabs.positions.tabMobile")
-                : t("pool.tabs.positions.tabDesktop"),
-              value: "positions",
-            },
-          ]}
-          active={tab}
-          setOption={(value: string) => setTab(value)}
+      <ContentContainer>
+        <Content>
+          <Radio
+            options={[
+              {
+                label: t("pool.tabs.deposit.tab"),
+                value: "deposit",
+              },
+              {
+                label: t("pool.tabs.withdraw.tab"),
+                value: "withdraw",
+              },
+              {
+                label: isMobile
+                  ? t("pool.tabs.positions.tabMobile")
+                  : t("pool.tabs.positions.tabDesktop"),
+                value: "positions",
+              },
+            ]}
+            active={tab}
+            setOption={(value: string) => setTab(value)}
+          />
+          {tab === "deposit" && <PoolDeposit pool={pool} />}
+          {tab === "withdraw" && <PoolWithdraw pool={pool} />}
+          {tab === "positions" && <PoolPositions pool={pool} />}
+        </Content>
+      </ContentContainer>
+      <InfoCards>
+        {/* TODO */}
+        <Overview
+          description={`Deposit ${pool.underlying.symbol} to begin earning yield via the ${pool.name} strategy. Once you have deposited, you can make your liquidity reactive by opening a top-up position.`}
+          link="https://docs.backd.fund/"
         />
-        {tab === "deposit" && <PoolDeposit pool={pool} />}
-        {tab === "withdraw" && <PoolWithdraw pool={pool} />}
-        {tab === "positions" && <PoolPositions pool={pool} />}
-      </Content>
-      <RightColumn>
-        <PoolOverview pool={pool} />
+        <PoolInformation pool={pool} />
         {tab !== "positions" && !balance.isZero() && (
           <ButtonContainer>
             <Button
@@ -107,7 +135,7 @@ const PoolPage = (): JSX.Element => {
             />
           </ButtonContainer>
         )}
-      </RightColumn>
+      </InfoCards>
     </StyledPoolPage>
   );
 };
