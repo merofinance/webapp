@@ -17,23 +17,22 @@ const PoolsInformation = (): JSX.Element => {
   const averageApy = pools.reduce((a: number, b: Pool) => a + b.apy, 0) / pools.length;
 
   return (
-    // TODO
     <Information
-      header={t("pools.overview.header")}
+      header={t("pools.information.header")}
       rows={[
         {
-          label: t("pools.overview.tvl.header"),
-          tooltip: t("pools.overview.tvl.tooltip"),
+          label: t("pools.information.tvl.header"),
+          tooltip: t("pools.information.tvl.tooltip"),
           value: numberToCompactCurrency(locked),
         },
         {
-          label: t("pools.overview.apy.header"),
-          tooltip: t("pools.overview.apy.tooltip"),
+          label: t("pools.information.apy.header"),
+          tooltip: t("pools.information.apy.tooltip"),
           value: formatPercent(averageApy),
         },
         // {
-        //   label: t("pools.overview.revenue.header"),
-        //   tooltip: t("pools.overview.revenue.tooltip"),
+        //   label: t("pools.information.revenue.header"),
+        //   tooltip: t("pools.information.revenue.tooltip"),
         //   value: "$0",
         // },
       ]}
