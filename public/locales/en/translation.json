@@ -457,8 +457,8 @@
   "components": {
     "dropdownChoose": "choose",
     "confirm": "Confirm",
-    "cancelDesktop": "Cancel",
-    "cancelMobile": "Back",
+    "cancel": "Cancel",
+    "back": "Back",
     "close": "Close"
   },
   "errors": {

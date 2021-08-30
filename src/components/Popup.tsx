@@ -123,7 +123,7 @@ const Popup = ({
             <Button
               medium
               background="#252140"
-              text={isMobile ? t("components.cancelMobile") : t("components.cancelDesktop")}
+              text={isMobile ? t("components.back") : t("components.cancel")}
               click={close}
             />
             <Button
