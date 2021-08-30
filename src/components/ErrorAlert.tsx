@@ -68,8 +68,13 @@ export function ErrorAlert(): JSX.Element {
             </Text>
           )}
           {error.hideButton ? null : (
-            // TODO
-            <Button medium primary background="#252140" text="Close" click={handleClose} />
+            <Button
+              medium
+              primary
+              background="#252140"
+              text={t("components.close")}
+              click={handleClose}
+            />
           )}
         </Content>
       }

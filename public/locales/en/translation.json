@@ -486,7 +486,8 @@
     "dropdownChoose": "choose",
     "confirm": "Confirm",
     "cancelDesktop": "Cancel",
-    "cancelMobile": "Back"
+    "cancelMobile": "Back",
+    "close": "Close"
   },
   "errors": {
     "header": "An Error Occured",
