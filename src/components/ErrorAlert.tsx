@@ -55,7 +55,7 @@ export function ErrorAlert(): JSX.Element {
     <Popup
       show={error.message.length > 0}
       close={handleClose}
-      header={error.title || t("errors.header")}
+      header={error.title ? t(error.title) : t("errors.header")}
       content={
         <Content>
           <Text>{t(error.message)}</Text>
