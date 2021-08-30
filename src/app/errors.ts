@@ -44,11 +44,11 @@ export class BackdError extends CustomError {
 
 export class UnsupportedNetwork extends BackdError {
   constructor(readonly chainId: number) {
-    super("unsupported network selected");
+    super("errors.unsupportedNetwork");
   }
 
   get title(): string {
-    return "Network not supported";
+    return "errors.unsupportedNetwork";
   }
 
   get hideContact(): boolean {
@@ -69,8 +69,7 @@ export class UnsupportedNetwork extends BackdError {
       network = `chain id ${this.chainId}`;
     }
 
-    if (this.chainId === 1)
-      return "Backd is not yet live on mainnet. You can test it now on Kovan by switching networks.";
+    if (this.chainId === 1) return "errors.tryTestnet";
 
     return (
       `Please change network. You are currently using ${network}, which is not supported. ` +

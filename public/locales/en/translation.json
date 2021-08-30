@@ -483,6 +483,8 @@
     "fetchPrices": "failed to fetch prices: {{error}}",
     "invalidNumber": "Not a valid number",
     "negativeNumber": "Negative numbers not supported",
-    "transactionType": "Transaction type not supported"
+    "transactionType": "Transaction type not supported",
+    "unsupportedNetwork": "Network not supported",
+    "tryTestnet": "Backd is not yet live on mainnet. You can test it now on Kovan by switching networks."
   }
 }
