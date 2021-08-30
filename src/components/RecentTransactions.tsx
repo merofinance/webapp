@@ -128,7 +128,7 @@ const RecentTransactions = (): JSX.Element => {
       const { position } = tx.description.args;
       return `${shortenAddress(position.account, 8)} ${position.protocol}`;
     }
-    throw Error("Transaction type not supported");
+    throw Error("errors.transactionType");
   };
 
   return (

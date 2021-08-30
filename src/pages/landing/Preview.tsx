@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import PoolsRow from "../pools/PoolsRow";
 import swirls from "../../assets/background/swirls.svg";
@@ -80,6 +81,7 @@ const Swirls = styled.img`
 `;
 
 const Preview = (): JSX.Element => {
+  const { t } = useTranslation();
   const backd = useBackd();
   const dispatch = useDispatch();
   const pools = useSelector(selectPools);
@@ -96,9 +98,9 @@ const Preview = (): JSX.Element => {
       <Table>
         <thead>
           <HeaderRow>
-            <Header>Asset</Header>
-            <Header>APY</Header>
-            <Header>TVL</Header>
+            <Header>{t("headers.asset")}</Header>
+            <Header>{t("headers.apy")}</Header>
+            <Header>{t("headers.tvl")}</Header>
             <ChevronHeader />
           </HeaderRow>
         </thead>
