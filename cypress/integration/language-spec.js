@@ -37,7 +37,7 @@ describe("Setting Language with Query Parameter", () => {
   });
 
   it("Should Show Chinese with ZH Parameter", () => {
-    cy.visit("/?lng=zh");
+    cy.visit("/?lng=zh-Hant");
     isChinese();
   });
 
@@ -68,7 +68,7 @@ describe("Language Switching", () => {
 
   it("Should Change Language to Chinese", () => {
     cy.get("#language-selector").click();
-    cy.get("#zh").click();
+    cy.get('[id="zh-Hant"]').click();
   });
 
   it("Should Show Chinese", () => {
