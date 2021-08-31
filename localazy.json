@@ -1,0 +1,12 @@
+{
+  "upload": {
+    "files": {
+      "type": "json",
+      "pattern": "public/locales/*/translation.json",
+      "lang": "${autodetectLang}"
+    }
+  },
+  "download": {
+    "files": "public/locales/${lang}/translation.json"
+  }
+}

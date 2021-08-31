@@ -12,7 +12,7 @@ const languageOptions: SelectorOptionType[] = [
     label: "English",
   },
   {
-    value: "zh",
+    value: "zh-Hant",
     label: "中文",
   },
   {

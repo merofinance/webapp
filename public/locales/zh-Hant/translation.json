@@ -1,64 +1,64 @@
 {
   "auditedBy": {
-    "description": "dirigé par des experts en sécurité de l'École polytechnique fédérale de Zurich et ayant reçu la confiance de plus de 85 enteprises de blockchain",
-    "header": "Audité par",
-    "preLaunchHeader": "En cours d’audit",
-    "viewReport": "Voir le rapport"
+    "description": "由苏黎世联邦理工学院安全专家领导，逾85家区块链公司和组织信任",
+    "header": "审计机构",
+    "preLaunchHeader": "正在审计",
+    "viewReport": "查看报告"
   },
   "benefits": {
     "avoidLiquidation": {
-      "description": "Les liquidités déposées sur Backd et désignées comme garantie de secours seront automatiquement allouées en cas de nécessité pour maintenir le niveau de garantie d’un prêt.",
-      "header": "Eviter les liquidations"
+      "description": "当需要补充保证金时，存放在Backd的备用资产将自动转到贷款协议以作保证金",
+      "header": "避免清算"
     },
     "earnYield": {
-      "description": "Gagner des intérêts sur votre liquidité grâce à des stratégies de yield-farming basées sur Curve et Convex.",
-      "header": "Gagner du rendement"
+      "description": "透过建基于Convex和Curve的流动资产挖矿策略赚取最大回报",
+      "header": "赚取收益"
     },
     "feeShare": {
-      "description": "Un petit frais sur le montant utilisé pour renflouer la garantie est redistribué aux fournisseurs de liquidités.",
-      "header": "Redistribution des frais"
+      "description": "流动性提供者能分享从补充保证金服务所获得的手续费",
+      "header": "手续费分润"
     },
-    "readMore": "En savoir plus"
+    "readMore": "了解更多"
   },
   "footer": {
     "community": {
-      "header": "Communauté",
+      "header": "社区",
       "links": {
         "discord": "Discord",
         "github": "GitHub",
-        "telegram": "Telegram (Chat)",
-        "twitter": "Twitter"
+        "telegram": "电报群",
+        "twitter": "推特"
       }
     },
     "resources": {
-      "header": "Ressources",
+      "header": "资源",
       "links": {
-        "blog": "Blog",
-        "docs": "Documentation",
-        "factSheet": "Fiche d’information",
-        "litepaper": "Litepaper"
+        "blog": "博客",
+        "docs": "文档",
+        "factSheet": "资料页",
+        "litepaper": "简版白皮书"
       }
     },
     "updates": {
-      "header": "Mises à jour",
+      "header": "最新消息",
       "links": {
-        "newsletter": "Newsletter",
-        "telegram": "Telegram (Annonces)"
+        "newsletter": "订阅",
+        "telegram": "电报频道"
       }
     }
   },
   "getStarted": {
-    "description": "Déposez des liquidités et commencez à gagner du rendement",
-    "header": "Commencer"
+    "description": "存入流动资产以赚取收益",
+    "header": "开始使用"
   },
   "header": {
     "tabs": {
-      "blog": "blog",
-      "claim": "réclamer",
-      "docs": "documentation",
-      "newsletter": "newsletter",
-      "pools": "pool",
-      "stake": "staker BKD"
+      "blog": "博客",
+      "claim": "领取",
+      "docs": "文档",
+      "newsletter": "订阅",
+      "pools": "池子",
+      "stake": "质押BKD"
     }
   },
   "howItWorks": {
@@ -66,71 +66,71 @@
       "earnAndProtect": {
         "cards": {
           "claim": {
-            "description": "Annulez ou mettez à jour une position, retirez vos tokens LP ou réclamez vos primes Backd à tout moment.",
-            "header": "Récupérez vos tokens (unstake) à n'importe quel moment",
-            "number": "04"
+            "description": "随时取消登记、更新仓位、提取LP凭证或领取Backd收益",
+            "header": "随时解除质押",
+            "number": "四"
           },
           "deposit": {
-            "description": "Déposez des fonds dans les pools de liquidités Backd et recevez en échange des tokens LP symbolisant votre position dans la pool.",
-            "header": "Déposer des liquidités",
-            "number": "01"
+            "description": "为Backd流动性池存款以获得LP凭证",
+            "header": "存入流动性",
+            "number": "一"
           },
           "protect": {
-            "description": "Gagnez des rendements composés et des frais de protocole pendant que vos tokens LP s’apprécient. En même temps, des gardiens surveillent votre prêt et transfèrent votre capital pour éviter les liquidations.",
-            "header": "Protéger et gagner",
-            "number": "03"
+            "description": "赚取随LP凭证单价增长的复合收益，同时享受守门人(Keeper)保障免受清算的服务",
+            "header": "安全放心地赚取",
+            "number": "三"
           },
           "register": {
-            "description": "Enregistrez vos prêts Compound ou Aave on-chain pour recevoir des remises à niveau de garantie sur vos prêts, et stakez vos tokens LP pour gagnez des primes Backd.",
-            "header": "Enregistrer votre prêt on-chain",
-            "number": "02"
+            "description": "登记来自Compound或Aave的链上贷款以获得抵押品补充并质押LP凭证以赚取Backd收益",
+            "header": "登记链上贷款",
+            "number": "二"
           }
         },
-        "tabName": "Gagner et protéger"
+        "tabName": "安全赚取"
       },
       "earnYield": {
         "cards": {
           "claim": {
-            "description": "Récupérez vos tokens LP (unstake) ou réclamez vos primes Backd à n'importe quel moment",
-            "header": "Récupérez vos tokens (unstake) à n'importe quel moment",
-            "number": "04"
+            "description": "随时解除LP凭证的质押或领取Backd收益",
+            "header": "随时解除质押",
+            "number": "四"
           },
           "deposit": {
-            "description": "Déposez des fonds dans les pools de liquidités Backd et recevez en échange des tokens LP symbolisant votre position dans la pool.",
-            "header": "Déposer des liquidités",
-            "number": "01"
+            "description": "为Backd流动性池存款以获得LP凭证",
+            "header": "存入流动性",
+            "number": "一"
           },
           "earn": {
-            "description": "Gagnez des rendements composés à partir des profits générés par nos stratégies et les frais de protocole pendant que vos tokens LP s’apprécient par rapports aux actifs sous-jacents.",
-            "header": "Gagner du rendement",
-            "number": "02"
+            "description": "透过策略收益和协议收入，赚取随LP凭证单价增长的复合收益",
+            "header": "赚取收益",
+            "number": "二"
           },
           "stake": {
-            "description": "Stakez vos tokens LP pour recevoir des primes de la part de Backd",
-            "header": "Stakez pour toucher des primes",
-            "number": "03"
+            "description": "质押LP凭证以获得Backd收益",
+            "header": "质押盈利",
+            "number": "三"
           }
         },
-        "tabName": "Gagner du rendement"
+        "tabName": "赚取收益"
       }
     },
-    "header": "Comment ça marche"
+    "header": "机制介绍"
   },
   "joinCommunity": {
-    "header": "Rejoindre la communauté",
+    "header": "加入社区",
     "socials": {
       "discord": "Discord",
       "github": "GitHub",
-      "twitter": "Twitter"
+      "twitter": "推特"
     }
   },
   "landingPage": {
     "changeNetwork": "Try on Testnet",
     "connectWallet": "Connect Wallet",
-    "header": "Liquidité Réactive",
-    "subHeader": "Un protocole qui génére des intérêts sans nécessiter de tiers de confiance. Conçu pour éviter la liquidation de prêts garantis.",
+    "header": "响应式流动资产",
+    "subHeader": "一个去信任化利息生成，旨在防止担保贷款被清算的保护协议",
     "unsupportedNetwork": "Unsupported Network",
-    "viewPools": "Voir les pools"
+    "viewPools": "查看池子"
   },
   "litepaper": {
     "components": {
@@ -231,11 +231,11 @@
     }
   },
   "supportedBy": {
-    "header": "Soutenu par"
+    "header": "合作机构"
   },
   "walletConnect": {
-    "aboutWallets": "En savoir plus sur les portefeuilles",
-    "connectWallet": "Connecter un portefeuille",
+    "aboutWallets": "什么是钱包",
+    "connectWallet": "连接钱包",
     "details": {
       "change": "Change",
       "clear": "Clear",
@@ -244,8 +244,8 @@
       "header": "Account",
       "recentTransactions": "Recent transactions"
     },
-    "header": "Connecter votre portefeuille",
-    "newToEthereum": "Nouveau sur Ethereum ?",
+    "header": "连接你的钱包",
+    "newToEthereum": "以太坊新手？",
     "wallets": {
       "metaMask": "MetaMask",
       "walletConnect": "WalletConnect"
