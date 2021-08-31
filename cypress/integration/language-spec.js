@@ -68,7 +68,7 @@ describe("Language Switching", () => {
 
   it("Should Change Language to Chinese", () => {
     cy.get("#language-selector").click();
-    cy.get("#zh-Hant").click();
+    cy.get('[id="zh-Hant"]').click();
   });
 
   it("Should Show Chinese", () => {
