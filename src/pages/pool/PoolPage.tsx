@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
 import Radio from "../../components/Radio";
 import Button from "../../components/Button";
 import { selectPool } from "../../state/selectors";
@@ -64,6 +66,7 @@ const ButtonContainer = styled.div`
 `;
 
 const PoolPage = (): JSX.Element => {
+  const { t } = useTranslation();
   const { poolName } = useParams<DepositWithdrawParams>();
   const backd = useBackd();
   const dispatch = useDispatch();
@@ -93,15 +96,17 @@ const PoolPage = (): JSX.Element => {
           <Radio
             options={[
               {
-                label: "Deposit",
+                label: t("pool.tabs.deposit.tab"),
                 value: "deposit",
               },
               {
-                label: "Withdraw",
+                label: t("pool.tabs.withdraw.tab"),
                 value: "withdraw",
               },
               {
-                label: isMobile ? "Positions" : "Top-up Positions",
+                label: isMobile
+                  ? t("pool.tabs.positions.tabMobile")
+                  : t("pool.tabs.positions.tabDesktop"),
                 value: "positions",
               },
             ]}
@@ -115,7 +120,7 @@ const PoolPage = (): JSX.Element => {
       </ContentContainer>
       <InfoCards>
         <Overview
-          description={`Deposit ${pool.underlying.symbol} to begin earning yield via the ${pool.name} strategy. Once you have deposited, you can make your liquidity reactive by opening a top-up position.`}
+          description={t("pool.overview", { asset: pool.underlying.symbol, strategy: pool.name })}
           link="https://docs.backd.fund/"
         />
         <PoolInformation pool={pool} />
@@ -123,7 +128,7 @@ const PoolPage = (): JSX.Element => {
           <ButtonContainer>
             <Button
               medium
-              text="+ Create a Top-up Position"
+              text={`+ ${t("pool.tabs.positions.buttons.nav")}`}
               click={() => setTab("positions")}
               background="#0A0525"
             />

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import Button from "./Button";
 import tick from "../assets/ui/tick.svg";
@@ -116,6 +117,7 @@ const ApproveThenAction = ({
   contract,
   stepsOnTop,
 }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const backd = useBackd();
   const approvedAmount = useSelector(selectAllowance(token.address, contract));
@@ -145,12 +147,12 @@ const ApproveThenAction = ({
             primary
             medium
             wide
-            text={`Approve ${token.symbol}`}
+            text={t("amountInput.approve", { asset: token.symbol })}
             click={() => executeApprove()}
             complete={approved}
             loading={approveLoading}
             disabled={disabled}
-            hoverText="Enter Amount"
+            hoverText={t("amountInput.enter")}
           />
         )}
         <Button
@@ -161,7 +163,9 @@ const ApproveThenAction = ({
           click={action}
           disabled={!approved || disabled}
           loading={loading}
-          hoverText={disabled ? "Enter Amount" : `Approve ${token.symbol}`}
+          hoverText={
+            disabled ? t("amountInput.enter") : t("amountInput.approve", { asset: token.symbol })
+          }
         />
       </Buttons>
       {(!approved || persistApprove) && (

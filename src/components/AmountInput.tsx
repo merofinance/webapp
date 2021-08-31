@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { ScaledNumber } from "../lib/scaled-number";
 import AmountSlider from "./AmountSlider";
@@ -31,9 +32,11 @@ type Props = {
 };
 
 const AmountInput = ({ value, setValue, label, max, noSlider, error }: Props): JSX.Element => {
+  const { t } = useTranslation();
+
   return (
     <StyledAmountInput>
-      <Available>{`Available: ${max.toCryptoString()}`}</Available>
+      <Available>{t("amountInput.available", { amount: max.toCryptoString() })}</Available>
       <Input
         valid={!error}
         label={label}
@@ -41,7 +44,7 @@ const AmountInput = ({ value, setValue, label, max, noSlider, error }: Props): J
         type="number"
         onChange={(v: string) => setValue(v)}
         background="#100830"
-        buttonText="max"
+        buttonText={t("amountInput.max")}
         buttonAction={() => setValue(max.toString())}
         errorMessage={error}
       />

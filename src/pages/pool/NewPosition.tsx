@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { ethers } from "ethers";
 import * as yup from "yup";
 import { FormikErrors, useFormik } from "formik";
+import { useTranslation } from "react-i18next";
 
 import { useBackd } from "../../app/hooks/use-backd";
 import Dropdown from "../../components/Dropdown";
@@ -40,29 +41,36 @@ const validationSchema = yup.object().shape({
   protocol: yup.string().required(),
   account: yup
     .string()
-    .required("Address is required")
+    .required("pool.tabs.positions.fields.address.required")
     .test(
       "is-address",
-      "Invalid Address",
+      "pool.tabs.positions.fields.address.invalid",
       (s: any) => typeof s === "string" && ethers.utils.isAddress(s)
     ),
-  threshold: yup.number().required("Threshold is required").moreThan(1.0, "Must be greater than 1"),
+  threshold: yup
+    .number()
+    .required("pool.tabs.positions.fields.threshold.required")
+    .moreThan(1.0, "pool.tabs.positions.fields.threshold.greaterThanOne"),
   singleTopUp: yup
     .string()
-    .required("Single Top Up is required")
-    .test("is-valid-number", "Invalid number", (s: any) => ScaledNumber.isValid(s))
+    .required("pool.tabs.positions.fields.single.required")
+    .test("is-valid-number", "pool.tabs.positions.fields.single.invalid", (s: any) =>
+      ScaledNumber.isValid(s)
+    )
     .test(
       "is-positive-number",
-      "Must be positive number",
+      "pool.tabs.positions.fields.single.positive",
       (s: any) => !ScaledNumber.fromUnscaled(s).isZero()
     ),
   maxTopUp: yup
     .string()
-    .required("Max Top Up required")
-    .test("is-valid-number", "Invalid number", (s: any) => ScaledNumber.isValid(s))
+    .required("pool.tabs.positions.fields.max.required")
+    .test("is-valid-number", "pool.tabs.positions.fields.max.invalid", (s: any) =>
+      ScaledNumber.isValid(s)
+    )
     .test(
       "is-positive-number",
-      "Must be positive number",
+      "pool.tabs.positions.fields.max.invalid",
       (s: any) => !ScaledNumber.fromUnscaled(s).isZero()
     ),
 });
@@ -133,6 +141,7 @@ interface Props {
 }
 
 const NewPosition = ({ pool }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();
   const { isMobile } = useDevice();
@@ -167,13 +176,13 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
         position.protocol === values.protocol && position.account === values.account
     );
     if (values.protocol && matchingPositions.length > 0)
-      errors.account = "Max of one position per protocol and address";
+      errors.account = "pool.tabs.positions.fields.address.unique";
 
     const single = ScaledNumber.fromUnscaled(values.singleTopUp, pool.underlying.decimals);
     const max = ScaledNumber.fromUnscaled(values.maxTopUp, pool.underlying.decimals);
     if (values.maxTopUp && single.gt(max))
-      errors.singleTopUp = "Must be less than or equal to max top up";
-    if (max.gt(balance)) errors.maxTopUp = "Exceeds deposited balance";
+      errors.singleTopUp = "pool.tabs.positions.fields.single.lessThanMax";
+    if (max.gt(balance)) errors.maxTopUp = "pool.tabs.positions.fields.max.exceedsBalance";
 
     return errors;
   };
@@ -196,11 +205,11 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
   };
 
   const buttonHoverText = () => {
-    if (!formik.values.protocol) return "Select Protocol";
-    if (!formik.values.account) return "Enter Address";
-    if (!formik.values.threshold) return "Enter Threshold";
-    if (!formik.values.singleTopUp) return "Enter Single Top Up";
-    if (!formik.values.maxTopUp) return "Enter Max Top Up";
+    if (!formik.values.protocol) return t("pool.tabs.positions.fields.protocol.hover");
+    if (!formik.values.account) return t("pool.tabs.positions.fields.protocol.hover");
+    if (!formik.values.threshold) return t("pool.tabs.positions.fields.protocol.hover");
+    if (!formik.values.singleTopUp) return t("pool.tabs.positions.fields.protocol.hover");
+    if (!formik.values.maxTopUp) return t("pool.tabs.positions.fields.protocol.hover");
     return "";
   };
 
@@ -224,7 +233,11 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
               primary
               small={isMobile}
               disabled={!formik.dirty || !formik.isValid || loading}
-              text={approved && formik.values.maxTopUp !== "" ? "create 2/2" : "approve 1/2"}
+              text={
+                approved && formik.values.maxTopUp !== ""
+                  ? t("pool.tabs.positions.buttons.create")
+                  : t("pool.tabs.positions.buttons.approve")
+              }
               hoverText={buttonHoverText()}
               loading={loading}
             />

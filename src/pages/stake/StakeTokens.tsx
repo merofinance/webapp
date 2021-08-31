@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import LaunchIcon from "@material-ui/icons/Launch";
+import { useTranslation } from "react-i18next";
 
 import AmountInput from "../../components/AmountInput";
 import ApproveThenAction from "../../components/ApproveThenAction";
@@ -61,6 +62,7 @@ type Props = {
 };
 
 const StakeTokens = ({ token }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const balance = useSelector(selectBalance(token.address));
   const { isMobile } = useDevice();
 
@@ -73,9 +75,9 @@ const StakeTokens = ({ token }: Props): JSX.Element => {
   return (
     <StyledStakeTokens>
       <Description>
-        Stake BKD and earn a share in x% of platform revenue, paid out in bkdDAI tokens.{" "}
+        {t("stake.tabs.stake.description")}{" "}
         <MoreLink href="" target="_blank" rel="noopener noreferrer">
-          More
+          {t("stake.tabs.stake.more")}
           <LaunchIcon
             fontSize={isMobile ? "small" : "medium"}
             style={{ fill: "var(--secondary)", transform: "translateY(2px)" }}
@@ -87,13 +89,13 @@ const StakeTokens = ({ token }: Props): JSX.Element => {
           noSlider
           value={value}
           setValue={(v: string) => setValue(v)}
-          label={isMobile ? "Amount of BKD to stake" : "Enter an amount of BKD to stake"}
+          label={isMobile ? t("stake.tabs.stake.inputMobile") : t("stake.tabs.stake.inputDesktop")}
           max={balance}
           error=""
         />
         <ApproveThenAction
           stepsOnTop
-          label="Deposit and Stake"
+          label={t("stake.tabs.stake.action")}
           action={stake}
           value={ScaledNumber.fromUnscaled(value)}
           loading={false}

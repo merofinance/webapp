@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
 import closeIcon from "../assets/ui/close.svg";
 import { useDevice } from "../app/hooks/use-device";
 import Button from "./Button";
@@ -106,6 +108,7 @@ const Popup = ({
   loading,
   small,
 }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const { isMobile } = useDevice();
 
   return (
@@ -117,11 +120,16 @@ const Popup = ({
         {content && content}
         {confirm && submit && (
           <ButtonContainer>
-            <Button medium background="#252140" text={isMobile ? "Back" : "Cancel"} click={close} />
+            <Button
+              medium
+              background="#252140"
+              text={isMobile ? t("components.back") : t("components.cancel")}
+              click={close}
+            />
             <Button
               primary
               medium
-              text="Confirm"
+              text={t("components.confirm")}
               click={() => {
                 if (submit) submit();
               }}

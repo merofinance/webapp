@@ -278,9 +278,7 @@ export class Web3Backd implements Backd {
 
   async getPrices(symbols: string[]): Promise<Prices> {
     return getPricesFromCoingecko(symbols)
-      .catch((e) => {
-        return getPricesFromBinance(symbols);
-      })
+      .catch((_e) => getPricesFromBinance(symbols))
       .catch((e) => {
         throw new Error(`failed to fetch prices: ${e.message}`);
       });

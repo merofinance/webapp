@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 
@@ -35,11 +36,13 @@ const Text = styled.div`
 `;
 
 const BackButton = () => {
+  const { t } = useTranslation();
   const history = useHistory();
+
   return (
     <StyledBackButton onClick={() => history.goBack()}>
       <Arrow src={back} />
-      <Text>Back</Text>
+      <Text>{t("components.back")}</Text>
     </StyledBackButton>
   );
 };

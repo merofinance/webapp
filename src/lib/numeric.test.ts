@@ -128,7 +128,7 @@ test("stringToBigNumber should error for negative numbers", () => {
     { value: (100 - 300).toString(), decimals: 2 },
   ];
   testCases.forEach(({ value, decimals }) => {
-    expect(() => stringToBigNumber(value, decimals)).toThrowError("Negative numbers not supported");
+    expect(() => stringToBigNumber(value, decimals)).toThrowError("errors.negativeNumber");
   });
 });
 
@@ -138,7 +138,7 @@ test("stringToBigNumber should error for invalid numbers", () => {
     { value: ".", decimals: 2 },
   ];
   testCases.forEach(({ value, decimals }) => {
-    expect(() => stringToBigNumber(value, decimals)).toThrowError("Not a valid number");
+    expect(() => stringToBigNumber(value, decimals)).toThrowError("errors.invalidNumber");
   });
 });
 

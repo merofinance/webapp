@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import ContentSection from "../../components/ContentSection";
 import NewPosition from "./NewPosition";
@@ -21,26 +22,24 @@ type HeaderType = {
 
 const headers: HeaderType[] = [
   {
-    label: "Protocol",
-    tooltip:
-      "The lending protocol on which the user is borrowing funds (currently compatible with Aave and Compound)",
+    label: "pool.tabs.positions.fields.protocol.label",
+    tooltip: "pool.tabs.positions.fields.protocol.tooltip",
   },
   {
-    label: "Address",
-    tooltip:
-      "The address of the owner of the position to top up (e.g. if Alice is the borrower on Aave that should be topped up then this would be Alice’s address)",
+    label: "pool.tabs.positions.fields.address.label",
+    tooltip: "pool.tabs.positions.fields.address.tooltip",
   },
   {
-    label: "Threshold",
-    tooltip: "The health factor threshold a collateral top up should occur at",
+    label: "pool.tabs.positions.fields.threshold.label",
+    tooltip: "pool.tabs.positions.fields.threshold.tooltip",
   },
   {
-    label: "Single Top Up",
-    tooltip: "Amount of a single top up increment (e.g. top up increments of 2,500 DAI)",
+    label: "pool.tabs.positions.fields.single.label",
+    tooltip: "pool.tabs.positions.fields.single.tooltip",
   },
   {
-    label: "Max Top Up",
-    tooltip: "Maximum top up amount (value of your liquidity allocated for top ups)",
+    label: "pool.tabs.positions.fields.max.label",
+    tooltip: "pool.tabs.positions.fields.max.tooltip",
   },
 ];
 
@@ -125,6 +124,7 @@ type Props = {
 };
 
 const PoolPositions = ({ pool }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const positions = useSelector(selectPoolPositions(pool));
   const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();
@@ -145,7 +145,7 @@ const PoolPositions = ({ pool }: Props): JSX.Element => {
 
   return (
     <ContentSection
-      header={`Top-up ${pool.underlying.symbol} positions`}
+      header={t("pool.tabs.positions.header", { asset: pool.underlying.symbol })}
       statistics={<PoolStatistics pool={pool} />}
       content={
         <>
@@ -154,7 +154,8 @@ const PoolPositions = ({ pool }: Props): JSX.Element => {
               <Headers>
                 {headers.map((header: HeaderType) => (
                   <Header key={header.label}>
-                    <HeaderText>{header.label}</HeaderText> <Tooltip content={header.tooltip} />
+                    <HeaderText>{t(header.label)}</HeaderText>
+                    <Tooltip content={t(header.tooltip)} />
                   </Header>
                 ))}
                 <Header />

@@ -6,11 +6,11 @@ const ClaimSummary = (): JSX.Element => {
     <SummaryStatistics
       statistics={[
         {
-          label: "claimable",
+          label: "claim.overview.claimable",
           value: "$1,243.34",
         },
         {
-          label: "your total deposits",
+          label: "claim.overview.deposits",
           value: "$65,530.34",
         },
       ]}

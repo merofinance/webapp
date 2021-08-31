@@ -175,11 +175,11 @@ const StakeAccordion = ({ open, toggle }: Props): JSX.Element => {
           <Tabs
             tabs={[
               {
-                label: "stake",
+                label: "stake.tabs.stake.header",
                 content: <StakeTokens token={token} />,
               },
               {
-                label: "unstake",
+                label: "stake.tabs.unstake.header",
                 content: <UnstakeTokens token={token} />,
               },
             ]}

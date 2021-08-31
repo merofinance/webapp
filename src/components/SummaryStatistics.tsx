@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 export interface SummaryStatisticType {
@@ -68,11 +69,13 @@ interface Props {
 }
 
 const SummaryStatistics = ({ statistics }: Props): JSX.Element => {
+  const { t } = useTranslation();
+
   return (
     <StyledSummaryStatistics>
       {statistics.map((statistic: SummaryStatisticType) => (
         <Container key={statistic.label}>
-          <Label>{statistic.label}</Label>
+          <Label>{t(statistic.label)}</Label>
           <Number>{statistic.value}</Number>
         </Container>
       ))}

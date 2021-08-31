@@ -1,7 +1,9 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { useHistory, useLocation } from "react-router-dom";
 import styled from "styled-components";
+
 import { AppDispatch } from "../app/store";
 import { selectError, setError } from "../state/errorSlice";
 import { GradientLink } from "../styles/GradientText";
@@ -36,6 +38,7 @@ const Link = styled(GradientLink)`
 `;
 
 export function ErrorAlert(): JSX.Element {
+  const { t } = useTranslation();
   const error = useSelector(selectError);
   const dispatch: AppDispatch = useDispatch();
   const location = useLocation();
@@ -52,20 +55,26 @@ export function ErrorAlert(): JSX.Element {
     <Popup
       show={error.message.length > 0}
       close={handleClose}
-      header={error.title || "An Error Occured"}
+      header={error.title ? t(error.title) : t("errors.header")}
       content={
         <Content>
-          <Text>{error.message}</Text>
+          <Text>{t(error.message)}</Text>
           {error.hideContact ? null : (
             <Text>
-              Please try again in a moment. If the error persists, you can contact us on
+              {t("errors.support")}
               <Link href="https://discord.gg/jpGvaFV3Rv" target="_blank" rel="noopener noreferrer">
-                Discord
+                {t("footer.community.links.discord")}
               </Link>
             </Text>
           )}
           {error.hideButton ? null : (
-            <Button medium primary background="#252140" text="Close" click={handleClose} />
+            <Button
+              medium
+              primary
+              background="#252140"
+              text={t("components.close")}
+              click={handleClose}
+            />
           )}
         </Content>
       }

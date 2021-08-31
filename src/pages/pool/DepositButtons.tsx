@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { Pool } from "../../lib";
 import { deposit } from "../../state/userSlice";
@@ -17,6 +18,7 @@ type Props = {
 };
 
 const DepositButtons = ({ value, pool, complete, valid }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const dispatch: AppDispatch = useDispatch();
   const backd = useBackd();
   const depositLoading = useSelector(hasPendingTransaction("Deposit"));
@@ -32,7 +34,7 @@ const DepositButtons = ({ value, pool, complete, valid }: Props): JSX.Element =>
 
   return (
     <ApproveThenAction
-      label="Deposit and Stake"
+      label={t("pool.tabs.deposit.action")}
       action={executeDeposit}
       value={value}
       loading={depositLoading}
