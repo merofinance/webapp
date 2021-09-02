@@ -22,6 +22,14 @@ const isJapanese = () => {
   cy.get("#how-it-works-2").contains("利益獲得のための預け入れ");
 };
 
+const isSpanish = () => {
+  cy.get("h1").contains("Liquidez reactiva");
+  cy.get("h3").contains(
+    "Un protocolo trustless y generador de intereses diseñado para prevenir que préstamos colaterizados se conviertan en liquidables."
+  );
+  cy.get("#how-it-works-2").contains("Deposita para obtener recompensas");
+};
+
 const isFrench = () => {
   cy.get("h1").contains("Liquidité Réactive");
   cy.get("h3").contains(
@@ -44,6 +52,11 @@ describe("Setting Language with Query Parameter", () => {
   it("Should Show Japanese with JA Parameter", () => {
     cy.visit("/?lng=ja");
     isJapanese();
+  });
+
+  it("Should Show Spanish with ES Parameter", () => {
+    cy.visit("/?lng=es");
+    isSpanish();
   });
 
   it("Should Show French with FR Parameter", () => {
@@ -89,6 +102,19 @@ describe("Language Switching", () => {
   });
 
   it("Percy Should Screenshot Japanese Landing Page", () => {
+    percySnapshot();
+  });
+
+  it("Should Change Language to Spanish", () => {
+    cy.get('[id="language-selector"]').click();
+    cy.get('[id="es"]').click();
+  });
+
+  it("Should Show Spanish", () => {
+    isSpanish();
+  });
+
+  it("Percy Should Screenshot Spanish Landing Page", () => {
     percySnapshot();
   });
 
