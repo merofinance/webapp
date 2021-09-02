@@ -1,0 +1,159 @@
+{
+  "header": {
+    "tabs": {
+      "claim": "reclamar",
+      "pools": "fondos",
+      "stake": "deposita BKD",
+      "docs": "docs",
+      "blog": "blog",
+      "newsletter": "newsletter"
+    }
+  },
+  "walletConnect": {
+    "connectWallet": "Conectar cartera",
+    "header": "Conectar cartera",
+    "newToEthereum": "Nuevo en Ethereum?",
+    "aboutWallets": "Aprende sobre carteras",
+    "wallets": {
+      "metaMask": "MetaMask",
+      "walletConnect": "WalletConnect"
+    },
+    "details": {
+      "header": "Account",
+      "connected": "Connected with {{wallet}}",
+      "change": "Change",
+      "recentTransactions": "Recent transactions",
+      "clear": "Clear",
+      "empty": "Your transactions will appear here...",
+      "network": {
+        "unknown": "Unknown Network",
+        "ethereum": "Ethereum Mainet",
+        "chainId": "Chain id {{id}}",
+        "testnet": "Ethereum {{network}} Testnet"
+      }
+    }
+  },
+  "landingPage": {
+    "header": "Liquidez reactiva",
+    "subHeader": "Un protocolo trustless y generador de intereses diseñado para prevenir que préstamos colaterizados se conviertan en liquidables.",
+    "viewPools": "ver fondos"
+  },
+  "benefits": {
+    "avoidLiquidation": {
+      "header": "Evitar Liquidación",
+      "description": "La liquidez depositada y marcada como colateral de back-up en Backd será transformada automaticamente cuando sea necesario realizar top-ups de colateral"
+    },
+    "earnYield": {
+      "header": "Consigue rendimiento",
+      "description": "Consigue intereses sobre tu liqudiez mediante estrategias de yield-farming basadas en Curve y Convex."
+    },
+    "feeShare": {
+      "header": "Distribución de Comisiones",
+      "description": "Una pequeña comisión sobre el colateral de top-up que se repartirá entre los proveedores de liquidez (LPs)"
+    },
+    "readMore": "Leer Más"
+  },
+  "howItWorks": {
+    "header": "Como funciona?",
+    "categories": {
+      "earnYield": {
+        "tabName": "Obten rendimiento",
+        "cards": {
+          "deposit": {
+            "number": "01",
+            "header": "Deposita liquidez",
+            "description": "Deposita fondos en los fondos de liquidez de Backd y recibe tokens de LP"
+          },
+          "earn": {
+            "number": "02",
+            "header": "Obtener rendimiento",
+            "description": "Obten rendimiento compuesto de comisiones del protocolo "
+          },
+          "stake": {
+            "number": "03",
+            "header": "Deposita para obtener recompensas",
+            "description": "Deposita tus tokens de LP para recibir recompensas de Backd"
+          },
+          "claim": {
+            "number": "04",
+            "header": "Retira en cualquier momento",
+            "description": "Retira en cualquier momento y reclamana tus recompensas de Backd en cualquier momento"
+          }
+        }
+      },
+      "earnAndProtect": {
+        "tabName": "Gana y protege",
+        "cards": {
+          "deposit": {
+            "number": "01",
+            "header": "Deposita liquidez y empieza a obtener rendimiento",
+            "description": "Deposit funds into Backd liquidity pools and receive pool LP tokens "
+          },
+          "register": {
+            "number": "02",
+            "header": "Registra prestamos on-chain",
+            "description": "Registra prestamos on-chain de Compound o Aave para recibir top-ups de colateral y depositar tus tokens de LP para obtener recompensas de Backd"
+          },
+          "protect": {
+            "number": "03",
+            "header": "Protege y Gana",
+            "description": "Consigue rendimientos compuestos y comisiones de protocolo mientras los tokens de LP se aprecian, y los keepers monitorizan tus prestamos y transfieren tu capital para evitar liquidaciones"
+          },
+          "claim": {
+            "number": "04",
+            "header": "Retira en cualquier momento",
+            "description": "Actualiza o anula una posición, retira tokens de LP o hac claim de las recompensas de Backd en cualquier momento"
+          }
+        }
+      }
+    }
+  },
+  "supportedBy": {
+    "header": "Apoyado por"
+  },
+  "auditedBy": {
+    "preLaunchHeader": "Auditoria en progreso",
+    "header": "Auditado por",
+    "description": "Dirigido por expertos en seguridad de ETH Zurich y con la confianza de 85+ compañias y corporaciones blockchain",
+    "viewReport": "Ver reporte"
+  },
+  "joinCommunity": {
+    "header": "Únete a la comunidad",
+    "socials": {
+      "discord": "Discord",
+      "twitter": "Twitter",
+      "github": "GitHub"
+    }
+  },
+  "getStarted": {
+    "header": "Empieza aquí",
+    "description": "Deposita liquidez y empieza a obtener rendimiento"
+  },
+  "footer": {
+    "community": {
+      "header": "Comunidad",
+      "links": {
+        "discord": "Discord",
+        "twitter": "Twitter",
+        "github": "GitHub",
+        "telegram": "Telegram Chat"
+      }
+    },
+    "resources": {
+      "header": "Recursos",
+      "links": {
+        "litepaper": "Litepaper",
+        "docs": "Docs",
+        "blog": "Blog",
+        "factSheet": "Hoja Informativa"
+      }
+    },
+    "updates": {
+      "header": "updates",
+      "links": {
+        "newsletter": "Newsletter",
+        "telegram": "Telegram Ann."
+      }
+    }
+  }
+}
