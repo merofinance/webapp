@@ -99,50 +99,52 @@ const PoolPage = (): JSX.Element => {
         description={`Deposit ${pool.underlying.symbol} to farm yield while protecting your DeFi loan (Aave, Compound, etc.) from liquidation`}
       />
       <BetaSnackbar />
-      <ContentContainer>
-        <Content>
-          <Radio
-            options={[
-              {
-                label: t("pool.tabs.deposit.tab"),
-                value: "deposit",
-              },
-              {
-                label: t("pool.tabs.withdraw.tab"),
-                value: "withdraw",
-              },
-              {
-                label: isMobile
-                  ? t("pool.tabs.positions.tabMobile")
-                  : t("pool.tabs.positions.tabDesktop"),
-                value: "positions",
-              },
-            ]}
-            active={tab}
-            setOption={(value: string) => setTab(value)}
-          />
-          {tab === "deposit" && <PoolDeposit pool={pool} />}
-          {tab === "withdraw" && <PoolWithdraw pool={pool} />}
-          {tab === "positions" && <PoolPositions pool={pool} />}
-        </Content>
-      </ContentContainer>
-      <InfoCards>
-        <Overview
-          description={t("pool.overview", { asset: pool.underlying.symbol, strategy: pool.name })}
-          link="https://docs.backd.fund/"
-        />
-        <PoolInformation pool={pool} />
-        {tab !== "positions" && !balance.isZero() && (
-          <ButtonContainer>
-            <Button
-              medium
-              text={`+ ${t("pool.tabs.positions.buttons.nav")}`}
-              click={() => setTab("positions")}
-              background="#0A0525"
+      <PageContent>
+        <ContentContainer>
+          <Content>
+            <Radio
+              options={[
+                {
+                  label: t("pool.tabs.deposit.tab"),
+                  value: "deposit",
+                },
+                {
+                  label: t("pool.tabs.withdraw.tab"),
+                  value: "withdraw",
+                },
+                {
+                  label: isMobile
+                    ? t("pool.tabs.positions.tabMobile")
+                    : t("pool.tabs.positions.tabDesktop"),
+                  value: "positions",
+                },
+              ]}
+              active={tab}
+              setOption={(value: string) => setTab(value)}
             />
-          </ButtonContainer>
-        )}
-      </InfoCards>
+            {tab === "deposit" && <PoolDeposit pool={pool} />}
+            {tab === "withdraw" && <PoolWithdraw pool={pool} />}
+            {tab === "positions" && <PoolPositions pool={pool} />}
+          </Content>
+        </ContentContainer>
+        <InfoCards>
+          <Overview
+            description={t("pool.overview", { asset: pool.underlying.symbol, strategy: pool.name })}
+            link="https://docs.backd.fund/"
+          />
+          <PoolInformation pool={pool} />
+          {tab !== "positions" && !balance.isZero() && (
+            <ButtonContainer>
+              <Button
+                medium
+                text={`+ ${t("pool.tabs.positions.buttons.nav")}`}
+                click={() => setTab("positions")}
+                background="#0A0525"
+              />
+            </ButtonContainer>
+          )}
+        </InfoCards>
+      </PageContent>
     </StyledPoolPage>
   );
 };

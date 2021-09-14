@@ -100,30 +100,32 @@ const PoolsPage = (): JSX.Element => {
         description="Increase leverage, farm yield, & prevent DeFi loans (Aave, Compound, etc.) from liquidation"
       />
       <BetaSnackbar />
-      <ContentSection
-        header={t("pools.header")}
-        statistics={<PoolsStatistics />}
-        content={
-          <Table>
-            <thead>
-              <HeaderRow>
-                <Header>{t("headers.asset")}</Header>
-                <Header>{t("headers.apy")}</Header>
-                <Header>{t("headers.tvl")}</Header>
-                <Header hideOnMobile>{t("headers.deposits")}</Header>
-                <ChevronHeader />
-              </HeaderRow>
-            </thead>
-            {pools.map((pool: Pool) => (
-              <PoolsRow key={pool.address} pool={pool} />
-            ))}
-          </Table>
-        }
-      />
-      <InfoCards>
-        <Overview description={t("pools.overview")} link="https://docs.backd.fund/" />
-        <PoolsInformation />
-      </InfoCards>
+      <PageContent>
+        <ContentSection
+          header={t("pools.header")}
+          statistics={<PoolsStatistics />}
+          content={
+            <Table>
+              <thead>
+                <HeaderRow>
+                  <Header>{t("headers.asset")}</Header>
+                  <Header>{t("headers.apy")}</Header>
+                  <Header>{t("headers.tvl")}</Header>
+                  <Header hideOnMobile>{t("headers.deposits")}</Header>
+                  <ChevronHeader />
+                </HeaderRow>
+              </thead>
+              {pools.map((pool: Pool) => (
+                <PoolsRow key={pool.address} pool={pool} />
+              ))}
+            </Table>
+          }
+        />
+        <InfoCards>
+          <Overview description={t("pools.overview")} link="https://docs.backd.fund/" />
+          <PoolsInformation />
+        </InfoCards>
+      </PageContent>
     </StyledPoolsPage>
   );
 };
