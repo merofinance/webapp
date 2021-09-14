@@ -12,6 +12,7 @@ import { useWeb3Updated } from "../app/hooks/use-web3-updated";
 import pending from "../assets/ui/status/pending.svg";
 import { spinAnimation } from "../styles/animations/SpinAnimation";
 import { pendingTransactionsCount } from "../state/transactionsSlice";
+import { useWindowPosition } from "../app/hooks/use-window-position";
 
 const StyledConnectorDesktop = styled.div`
   display: flex;
@@ -66,15 +67,22 @@ const Border = styled.button`
   }
 `;
 
+interface InnerProps {
+  connected: boolean;
+  lightBackground: boolean;
+}
+
 const Innner = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background-color 0.3s;
 
-  height: ${(props: ConnectedType) => (props.connected ? "4rem" : "4.2rem")};
-  padding: ${(props: ConnectedType) => (props.connected ? "0 2px" : "0 2.2rem")};
-  border-radius: ${(props: ConnectedType) => (props.connected ? "7px" : "2.1rem")};
-  background-color: ${(props: ConnectedType) => (props.connected ? "#0A0524" : "var(--main)")};
+  height: ${(props: InnerProps) => (props.connected ? "4rem" : "4.2rem")};
+  padding: ${(props: InnerProps) => (props.connected ? "0 2px" : "0 2.2rem")};
+  border-radius: ${(props: InnerProps) => (props.connected ? "7px" : "2.1rem")};
+  background-color: ${(props: InnerProps) =>
+    props.connected ? (props.lightBackground ? "#120e2c" : "#0A0524") : "var(--main)"};
 `;
 
 const ConnectorText = styled.div`
@@ -120,6 +128,7 @@ const ConnectorDesktop = ({ connect }: Props): JSX.Element => {
   const backd = useBackd();
   const { account, active, chainId } = useWeb3React();
   const updated = useWeb3Updated();
+  const windowPosition = useWindowPosition();
   const loading = useSelector(pendingTransactionsCount) > 0;
 
   const [ens, setEns] = useState("");
@@ -146,7 +155,7 @@ const ConnectorDesktop = ({ connect }: Props): JSX.Element => {
     <StyledConnectorDesktop>
       {chainId && chainId !== 1 && chainIds[chainId] && <Network>{chainIds[chainId]}</Network>}
       <Border connected={active}>
-        <Innner onClick={() => connect()} connected={active}>
+        <Innner onClick={() => connect()} connected={active} lightBackground={windowPosition > 40}>
           {active && (
             <IndicatorContainer>
               <PulsingDot success={chainId === 1} />
