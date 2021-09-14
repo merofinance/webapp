@@ -105,7 +105,7 @@ const IconGlass = styled.div`
   backdrop-filter: blur(5px);
 
   @media (max-width: 600px) {
-    top: ${(props: IconGlassProps) => (props.top ? "0rem" : "0.7rem")};
+    top: ${(props: IconGlassProps) => (props.top ? "0.3rem" : "2.2rem")};
     left: calc(50% + ${(props: IconGlassProps) => (props.right ? "0.3rem" : "-2.7rem")});
     backdrop-filter: blur(3px);
     width: 3rem;
