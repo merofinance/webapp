@@ -4,12 +4,12 @@ import { makeStyles, Tooltip } from "@material-ui/core";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 
 import info from "../assets/ui/info.svg";
+import { useDevice } from "../app/hooks/use-device";
 
 const Icon = styled.img`
   position: relative;
   cursor: pointer;
 
-  margin-top: 2px;
   margin-left: 0.9rem;
   height: 1.2rem;
   @media (max-width: 600px) {
@@ -35,6 +35,7 @@ interface Props {
 
 const BackdTooltip = ({ content }: Props): JSX.Element => {
   const [open, setOpen] = React.useState(false);
+  const { isMobile } = useDevice();
 
   const handleTooltipClose = () => {
     setOpen(false);
@@ -45,22 +46,31 @@ const BackdTooltip = ({ content }: Props): JSX.Element => {
   };
 
   return (
-    <ClickAwayListener onClickAway={handleTooltipClose}>
-      <div>
-        <Tooltip
-          arrow
-          title={content}
-          classes={tooltipStyles()}
-          onClose={handleTooltipClose}
-          open={open}
-          disableFocusListener
-          disableHoverListener
-          disableTouchListener
-        >
+    <>
+      {!isMobile && (
+        <Tooltip arrow title={content} classes={tooltipStyles()}>
           <Icon src={info} alt="help icon" onClick={handleTooltipOpen} />
         </Tooltip>
-      </div>
-    </ClickAwayListener>
+      )}
+      {isMobile && (
+        <ClickAwayListener onClickAway={handleTooltipClose}>
+          <div>
+            <Tooltip
+              arrow
+              title={content}
+              classes={tooltipStyles()}
+              onClose={handleTooltipClose}
+              open={open}
+              disableFocusListener
+              disableHoverListener
+              disableTouchListener
+            >
+              <Icon src={info} alt="help icon" onClick={handleTooltipOpen} />
+            </Tooltip>
+          </div>
+        </ClickAwayListener>
+      )}
+    </>
   );
 };
 
