@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
@@ -91,14 +91,9 @@ const Icon = styled.img`
 type IconGlassProps = {
   right: boolean;
   top: boolean;
-  transform: string;
 };
 
-const IconGlass = styled.div.attrs((props: IconGlassProps) => ({
-  style: {
-    transform: props.transform,
-  },
-}))`
+const IconGlass = styled.div`
   position: absolute;
   top: ${(props: IconGlassProps) => (props.top ? "1rem" : "3.8rem")};
   left: calc(50% + ${(props: IconGlassProps) => (props.right ? "0.5rem" : "-4.5rem")});
@@ -106,7 +101,6 @@ const IconGlass = styled.div.attrs((props: IconGlassProps) => ({
   height: 4.8rem;
   border-radius: 13px;
   overflow: hidden;
-  transition: transform 0.1s ease-out;
 
   backdrop-filter: blur(5px);
 
@@ -149,21 +143,7 @@ const ReadMore = styled(GradientLink)`
 
 const Benefits = (): JSX.Element => {
   const benefitsRef = useRef<HTMLDivElement>(null);
-  const [scrollPosition, setScrollPosition] = useState(0);
   const { t } = useTranslation();
-
-  const handleScroll = () => {
-    const position = window.pageYOffset;
-    setScrollPosition(position);
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   return (
     <StyledBenefits ref={benefitsRef}>
@@ -172,11 +152,7 @@ const Benefits = (): JSX.Element => {
           <IconContainer>
             <Icon src={benefit.icon} alt="benefit icon" />
           </IconContainer>
-          <IconGlass
-            right={index % 2 === 0}
-            top={index === 2}
-            transform={`translateY(${-(scrollPosition - 380) / (window.innerHeight / 50)}px)`}
-          >
+          <IconGlass right={index % 2 === 0} top={index === 2}>
             <IconGlassGradient rotate={index === 1 ? 90 : index === 2 ? -90 : 0} />
           </IconGlass>
           <Header4>{t(benefit.header)}</Header4>

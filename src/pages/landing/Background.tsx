@@ -18,7 +18,6 @@ const Ovals = styled.img`
   top: 2.4rem;
   left: 0;
   width: 100%;
-  transition: transform 0.1s ease-out;
 
   @media (max-width: 600px) {
     display: none;
@@ -30,7 +29,6 @@ const Icons = styled.img`
   top: 19rem;
   left: -2%;
   width: 104%;
-  transition: transform 0.1s ease-out;
 
   @media (max-width: 600px) {
     width: 140%;
@@ -44,7 +42,6 @@ const DarkIcons = styled.img`
   top: 175rem;
   left: 0;
   width: 100%;
-  transition: transform 0.1s ease-out;
 
   @media (max-width: 600px) {
     display: none;
