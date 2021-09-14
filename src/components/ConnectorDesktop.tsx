@@ -37,9 +37,9 @@ const Network = styled.div`
   margin-right: 1.6rem;
 `;
 
-type ConnectedType = {
+interface BorderProps {
   connected: boolean;
-};
+}
 
 const Border = styled.button`
   display: flex;
@@ -48,9 +48,9 @@ const Border = styled.button`
   background: linear-gradient(to right, rgba(197, 50, 249, 0.7), rgba(50, 178, 229, 0.7));
   cursor: pointer;
 
-  border-radius: ${(props: ConnectedType) => (props.connected ? "8px" : "2.7rem")};
-  padding: ${(props: ConnectedType) => (props.connected ? "1px" : "6px 7px")};
-  background: ${(props: ConnectedType) =>
+  border-radius: ${(props: BorderProps) => (props.connected ? "8px" : "2.7rem")};
+  padding: ${(props: BorderProps) => (props.connected ? "1px" : "6px 7px")};
+  background: ${(props: BorderProps) =>
     props.connected
       ? "linear-gradient(to right, var(--primary-gradient) 0%, var(--secondary-gradient) 50%, var(--primary-gradient) 100%)"
       : "linear-gradient(to right, rgba(197, 50, 249, 0.7) 0%, rgba(50, 178, 229, 0.7) 50%, rgba(197, 50, 249, 0.7) 100%)"};

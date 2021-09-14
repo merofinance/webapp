@@ -8,9 +8,9 @@ import NavItems from "./NavItems";
 import Banner from "./Banner";
 import { useWindowPosition } from "../app/hooks/use-window-position";
 
-type HeaderProps = {
+interface HeaderProps {
   isSticky: boolean;
-};
+}
 
 const StyledHeader = styled.div`
   position: sticky;

@@ -8,12 +8,12 @@ import shield from "../../assets/benefits/shield.svg";
 import { GradientLink } from "../../styles/GradientText";
 import { Header4, Header5 } from "../../styles/Headers";
 
-type BenfitsType = {
+interface BenfitsType {
   icon: string;
   header: string;
   description: string;
   url: string;
-};
+}
 
 const benefits: BenfitsType[] = [
   {
@@ -88,10 +88,10 @@ const Icon = styled.img`
   }
 `;
 
-type IconGlassProps = {
+interface IconGlassProps {
   right: boolean;
   top: boolean;
-};
+}
 
 const IconGlass = styled.div`
   position: absolute;
@@ -114,9 +114,9 @@ const IconGlass = styled.div`
   }
 `;
 
-type IconGlassGradientProps = {
+interface IconGlassGradientProps {
   rotate: number;
-};
+}
 
 const IconGlassGradient = styled.div`
   width: 100%;
