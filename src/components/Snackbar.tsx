@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 import exit from "../assets/ui/snackbar-exit.svg";
@@ -53,14 +54,17 @@ interface Props {
 }
 
 const Snackbar = ({ show, close, text, link }: Props) => {
+  const { t } = useTranslation();
+
   if (!show) return null;
+
   return (
     <StyledSnackbar>
       <Text>
-        {text}
+        {t(text)}
         {link && (
           <Link href={link.link} target="_blank" rel="noopener noreferrer">
-            {link.label}
+            {t(link.label)}
           </Link>
         )}
       </Text>

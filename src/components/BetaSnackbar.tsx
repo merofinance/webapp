@@ -11,9 +11,9 @@ const BetaSnackbar = () => {
     <Snackbar
       show={!dismissed && true}
       close={() => dispatch(dismissBetaSnackbar())}
-      text="Currently, all pools are in a shielded state. This allows for a maximum TVL of $1m per pool."
+      text="components.betaSnackbar"
       link={{
-        label: "Find out more.",
+        label: "components.findOutMore",
         link: "",
       }}
     />
