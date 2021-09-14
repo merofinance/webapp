@@ -136,15 +136,15 @@
     "components": {
       "components": {
         "handlers": {
-          "decription": "These are the contracts that contain the logic for performing a collateral top up for a particular protocol, such as Aave.",
-          "header": "Top Up Handlers:"
+          "decription": "These are the contracts that contain the logic for performing a collateral top-up for a particular protocol, such as Aave.",
+          "header": "Top-up Handlers:"
         },
         "keepers": {
-          "decription": "As on-chain monitoring is not feasible on Ethereum, Backd relies on off-chain keepers to report registered positions eligible for top up. An open source out of the box Backd keeper implementation will made available prior launch. However, it is encouraged that operators of Backd keepers further improve upon the initial keeper version (or create their own).",
+          "decription": "As on-chain monitoring is not feasible on Ethereum, Backd relies on off-chain keepers to report registered positions eligible for top-up. An open source out of the box Backd keeper implementation will made available prior launch. However, it is encouraged that operators of Backd keepers further improve upon the initial keeper version (or create their own).",
           "header": "Keepers:"
         },
         "pools": {
-          "decription": "When LPs deposit funds on Backd, they have to chose a single-asset pool to deposit into. If an LP wants some (or all) of their deposits to be used as backup collateral on some other protocol, they can register their top up positions via the pool’s registry. A liquidity pool maintains a running total of the deposits which are registered as backup collateral. A pool allocates deposits that are not registered as backup collateral, plus a proportion of the registered backup collateral to a pool-specific vault.",
+          "decription": "When LPs deposit funds on Backd, they have to chose a single-asset pool to deposit into. If an LP wants some (or all) of their deposits to be used as backup collateral on some other protocol, they can register their top-up positions via the pool’s registry. A liquidity pool maintains a running total of the deposits which are registered as backup collateral. A pool allocates deposits that are not registered as backup collateral, plus a proportion of the registered backup collateral to a pool-specific vault.",
           "header": "Liquidity pools:"
         },
         "strategies": {
@@ -161,7 +161,7 @@
     },
     "farming": {
       "header": "Yield-farming",
-      "paragraph": "Each Backd pool employs a yield farming strategy using external protocols. As yield is generated through a pool’s strategy and top up fees, the pool’s LP token appreciates, distributing the earnings to the pool’s liquidity providers. Similar to collateral top ups, yield farming strategies are subject to a performance fee, which is split between their creator (i.e. the strategist) and a reserve fund."
+      "paragraph": "Each Backd pool employs a yield farming strategy using external protocols. As yield is generated through a pool’s strategy and top-up fees, the pool’s LP token appreciates, distributing the earnings to the pool’s liquidity providers. Similar to collateral top-ups, yield farming strategies are subject to a performance fee, which is split between their creator (i.e. the strategist) and a reserve fund."
     },
     "governance": {
       "disclaimer": "Disclaimer: a Backd governance token does not exist at this point, so please do not fall for scams.",
@@ -177,7 +177,7 @@
     },
     "keepers": {
       "header": "Backd Keepers",
-      "paragraph": "Keepers are an integral part of Backd’s collateral top up mechanism. A keeper is an off-chain bot that monitors Backd top up registrations and reports eligible collateral top ups to the Backd smart contract. The Backd smart contract handles users’ funds and executes top ups by injecting capital into registered collateral. Keepers collect a percentage of the generated top up fee every time they report an eligible top up. In addition to this, keepers are also distributed Backd rewards in proportion to the top up value they have executed.  Anyone can operate an off-chain keeper bot for Backd."
+      "paragraph": "Keepers are an integral part of Backd’s collateral top-up mechanism. A keeper is an off-chain bot that monitors Backd top-up registrations and reports eligible collateral top-ups to the Backd smart contract. The Backd smart contract handles users’ funds and executes top-ups by injecting capital into registered collateral. Keepers collect a percentage of the generated top-up fee every time they report an eligible top-up. In addition to this, keepers are also distributed Backd rewards in proportion to the top-up value they have executed.  Anyone can operate an off-chain keeper bot for Backd."
     },
     "pools": {
       "differences": {
@@ -186,7 +186,7 @@
           "header": "Assets:"
         },
         "parameterization": {
-          "description": "Pools are very customizable. For instance, each pool has a required reserve ratio, which specifies the percentage of the backing funds that need to remain idle in the pool, i.e., funds which cannot be allocated to strategies but are reserved solely for the purpose of top ups. Intuitively, a lower reserve ratio comes with higher expected earnings (as more funds are allocated to a strategy), at the cost of increased insolvency risk, i.e., insufficient funds available for top up.  Furthermore, pools can differ in terms of fees charged on top ups and strategy performance.",
+          "description": "Pools are very customizable. For instance, each pool has a required reserve ratio, which specifies the percentage of the backing funds that need to remain idle in the pool, i.e., funds which cannot be allocated to strategies but are reserved solely for the purpose of top-ups. Intuitively, a lower reserve ratio comes with higher expected earnings (as more funds are allocated to a strategy), at the cost of increased insolvency risk, i.e., insufficient funds available for top-up.  Furthermore, pools can differ in terms of fees charged on top-ups and strategy performance.",
           "header": "Parameterization:"
         },
         "strategy": {
@@ -195,20 +195,20 @@
         }
       },
       "header": "Liquidity Pools",
-      "paragraph1": "Through the combination of collateral top ups and yield-farming strategies, Backd enables novel multi-utility liquidity pools. This empowers borrowers to increase the capital efficiency of their positions while better managing liquidation risk. Backd achieves this through the administration of single-asset liquidity pools. Users who deposit funds into a pool (liquidity providers) receive Backd LP tokens which can be registered for collateral top ups (liquidation protection) and staked to earn further rewards. Furthermore, as collateral top ups occur, LPs receive a share of the collateral top up fees, in addition to any net profits harvested from a pool’s strategy.",
-      "paragraph2": "Liquidity pools function in isolation from one another with each asset having its own pool.  Backd will launch with liquidity pools for DAI, USDC, and ETH. In order to ensure that a sufficient amount of the underlying asset is available for collateral top ups, each pool maintains a required reserve ratio. This ratio defines the percentage of total pool assets which cannot be utilized by yield farming strategies and remain idle at all times. This allows the protocol to invariably execute collateral top ups, while reducing the transaction cost of withdrawals (including top ups).",
+      "paragraph1": "Through the combination of collateral top-ups and yield-farming strategies, Backd enables novel multi-utility liquidity pools. This empowers borrowers to increase the capital efficiency of their positions while better managing liquidation risk. Backd achieves this through the administration of single-asset liquidity pools. Users who deposit funds into a pool (liquidity providers) receive Backd LP tokens which can be registered for collateral top-ups (liquidation protection) and staked to earn further rewards. Furthermore, as collateral top-ups occur, LPs receive a share of the collateral top-up fees, in addition to any net profits harvested from a pool’s strategy.",
+      "paragraph2": "Liquidity pools function in isolation from one another with each asset having its own pool.  Backd will launch with liquidity pools for DAI, USDC, and ETH. In order to ensure that a sufficient amount of the underlying asset is available for collateral top-ups, each pool maintains a required reserve ratio. This ratio defines the percentage of total pool assets which cannot be utilized by yield farming strategies and remain idle at all times. This allows the protocol to invariably execute collateral top-ups, while reducing the transaction cost of withdrawals (including top-ups).",
       "paragraph3": "Liquidity pools on Backd differ in several ways from one another:"
     },
     "topUps": {
-      "header": "Collateral Top Ups",
-      "paragraph1": "All Backd LPs have the option to register their LP tokens as backup collateral. Top up registration is personalized to the user by allowing individuals to select the parameters that best serve their borrow positions and risk tolerance. The parameters required to register a top up position are:",
-      "paragraph2": "Once registered, the user will continue to earn yield on the registered funds until a collateral top up is triggered. A collateral top up refers to using funds to increase the collateral for a particular borrow position. When this occurs, liquidity is shifted from Backd to the respective protocol, the collateralization ratio of the topped up position increases, and in turn mitigates liquidation risk. Collateral top up eligibility is determined by the health factor of registered positions and is reported by Backd keepers.",
+      "header": "Collateral Top-ups",
+      "paragraph1": "All Backd LPs have the option to register their LP tokens as backup collateral. Top-up registration is personalized to the user by allowing individuals to select the parameters that best serve their borrow positions and risk tolerance. The parameters required to register a top-up position are:",
+      "paragraph2": "Once registered, the user will continue to earn yield on the registered funds until a collateral top-up is triggered. A collateral top-up refers to using funds to increase the collateral for a particular borrow position. When this occurs, liquidity is shifted from Backd to the respective protocol, the collateralization ratio of the topped up position increases, and in turn mitigates liquidation risk. Collateral top-up eligibility is determined by the health factor of registered positions and is reported by Backd keepers.",
       "parameters": {
         "address": "Ethereum address that should be topped up",
         "max": "Maximum allocation (the total amount that may be topped up)",
         "protocol": "Protocol (that the loan is on, e.g. Compound)",
-        "single": "Top up increments (the value of a single collateral top up)",
-        "threshold": "Health factor threshold at which a top up should occur"
+        "single": "Top-up increments (the value of a single collateral top-up)",
+        "threshold": "Health factor threshold at which a top-up should occur"
       }
     }
   },

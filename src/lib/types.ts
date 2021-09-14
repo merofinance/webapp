@@ -65,8 +65,8 @@ export function positionFromPartial<T>(pool: Pool<T>, position: Partial<Position
   if (!position.protocol) throw Error("Missing protocol when creating position");
   if (!position.account) throw Error("Missing account when creating position");
   if (!position.threshold) throw Error("Missing threshold when creating position");
-  if (!position.singleTopUp) throw Error("Missing single top up when creating position");
-  if (!position.maxTopUp) throw Error("Missing max top up when creating position");
+  if (!position.singleTopUp) throw Error("Missing single top-up when creating position");
+  if (!position.maxTopUp) throw Error("Missing max top-up when creating position");
   return {
     protocol: position.protocol,
     account: position.account,
