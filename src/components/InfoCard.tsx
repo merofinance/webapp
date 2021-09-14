@@ -30,6 +30,12 @@ const StyledInfoCard = styled.div`
     padding: 1.6rem;
     max-height: ${(props: StyleProps) => (props.open ? "19rem" : "4.8rem")};
   }
+
+  transition: background-color 0.3s;
+  :hover {
+    background-color: ${(props: StyleProps) =>
+      props.collapsible ? "#181532" : "rgba(37, 33, 64, 0.4)"};
+  }
 `;
 
 const Header = styled.button`
