@@ -1,6 +1,8 @@
 import { CircularProgress } from "@material-ui/core";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { selectError } from "../state/errorSlice";
 
 type ButtonProps = {
   primary?: boolean;
@@ -8,7 +10,9 @@ type ButtonProps = {
   large?: boolean;
   medium?: boolean;
   small?: boolean;
+  tiny?: boolean;
   square?: boolean;
+  uppercase?: boolean;
   loading?: boolean;
   wide?: boolean;
   disabled?: boolean;
@@ -41,6 +45,8 @@ const StyledButton = styled.button`
     if (props.large) return "3.2rem";
     if (props.medium) return "1.5rem";
     if (props.square) return "1.5rem";
+    if (props.small) return "0.5rem";
+    if (props.tiny) return "0.8rem";
     return "2rem";
   }};
   margin-top: ${(props: ButtonProps) => {
@@ -90,6 +96,7 @@ const Content = styled.div`
     if (props.large) return "6.2rem";
     if (props.medium) return "4.8rem";
     if (props.small) return "2.8rem";
+    if (props.tiny) return "2.3rem";
     if (props.square) return "5.6rem";
     return "3.8rem";
   }};
@@ -97,6 +104,7 @@ const Content = styled.div`
     if (props.large) return "3.1rem";
     if (props.medium) return "1.4rem";
     if (props.small) return "0.4rem";
+    if (props.tiny) return "0.7rem";
     if (props.square) return "1.4rem";
     return "1.9rem";
   }};
@@ -105,6 +113,7 @@ const Content = styled.div`
       if (props.large) return "5rem";
       if (props.medium) return "1.9rem";
       if (props.small) return "1.1rem";
+      if (props.tiny) return "0.9rem";
       if (props.square) return "3rem";
       return "2.6rem";
     }};
@@ -113,11 +122,13 @@ const Content = styled.div`
     height: ${(props: ButtonProps) => {
       if (props.square) return "2.6rem";
       if (props.small) return "2.8rem";
+      if (props.tiny) return "2.3rem";
       if (props.primary) return "4.8rem";
     }};
     border-radius: ${(props: ButtonProps) => {
       if (props.square) return "0.4rem";
       if (props.small) return "0.4rem";
+      if (props.tiny) return "0.7rem";
       if (props.medium) return "1.4rem";
       if (props.primary) return "2.4rem";
       return "1.9rem";
@@ -126,6 +137,7 @@ const Content = styled.div`
       ${(props: ButtonProps) => {
         if (props.square) return "1rem";
         if (props.small) return "1.1rem";
+        if (props.tiny) return "0.9rem";
         if (props.primary) return "5.2rem";
       }};
   }
@@ -148,8 +160,9 @@ const Text = styled.div`
     return "var(--main)";
   }};
   text-transform: ${(props: ButtonProps) => {
+    if (props.large) return "none";
     if (props.medium) return "none";
-    if (props.small) return "uppercase";
+    if (props.uppercase) return "uppercase";
     return "capitalize";
   }};
   letter-spacing: ${(props: ButtonProps) => {
@@ -158,11 +171,13 @@ const Text = styled.div`
   }};
   line-height: ${(props: ButtonProps) => {
     if (props.large) return "2.8rem";
+    if (props.tiny) return "1.8rem";
     return "2.6rem";
   }};
   font-size: ${(props: ButtonProps) => {
     if (props.large) return "2.1rem";
     if (props.small) return "1.3rem";
+    if (props.tiny) return "1.2rem";
     if (props.square) return "1.4rem";
     return "1.5rem";
   }};
@@ -192,6 +207,7 @@ const Text = styled.div`
     font-size: ${(props: ButtonProps) => {
       if (props.large) return "1.4rem";
       if (props.small) return "1.4rem";
+      if (props.tiny) return "1.2rem";
       if (props.square) return "1.2rem";
       return "1.4rem";
     }};
@@ -236,7 +252,9 @@ type Props = {
   large?: boolean;
   medium?: boolean;
   small?: boolean;
+  tiny?: boolean;
   square?: boolean;
+  uppercase?: boolean;
   loading?: boolean;
   submit?: boolean;
   wide?: boolean;
@@ -249,6 +267,13 @@ type Props = {
 };
 
 const Button = (props: Props): JSX.Element => {
+  const error = useSelector(selectError);
+  const [pending, setPending] = useState(false);
+
+  useEffect(() => {
+    if (error || props.loading) setPending(false);
+  }, [error, props.loading]);
+
   return (
     <StyledButton
       type={props.submit ? "submit" : "button"}
@@ -257,13 +282,17 @@ const Button = (props: Props): JSX.Element => {
       large={props.large}
       medium={props.medium}
       square={props.square}
+      small={props.small}
+      tiny={props.tiny}
       wide={props.wide}
-      disabled={props.disabled}
+      disabled={props.disabled || props.loading || pending}
       inactive={props.inactive}
       complete={props.complete}
       width={props.width}
       onClick={() => {
-        if (!props.loading && !props.disabled && props.click) props.click();
+        if (props.loading || pending || props.disabled || !props.click) return;
+        if (props.loading !== undefined) setPending(true);
+        props.click();
       }}
     >
       <Content
@@ -271,6 +300,7 @@ const Button = (props: Props): JSX.Element => {
         large={props.large}
         medium={props.medium}
         small={props.small}
+        tiny={props.tiny}
         square={props.square}
         disabled={props.disabled}
         complete={props.complete}
@@ -284,7 +314,9 @@ const Button = (props: Props): JSX.Element => {
             large={props.large}
             medium={props.medium}
             small={props.small}
+            tiny={props.tiny}
             square={props.square}
+            uppercase={props.uppercase}
             disabled={props.disabled}
           >
             {props.text}

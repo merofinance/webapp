@@ -1,5 +1,7 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+
 import { useDevice } from "../../app/hooks/use-device";
 import Asset from "../../components/Asset";
 import Button from "../../components/Button";
@@ -84,11 +86,12 @@ interface Props {
 }
 
 const ClaimRow = ({ index }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const { isMobile, isDesktop } = useDevice();
 
   return (
     <StyledClaimRow index={index}>
-      <Label>ETH pool</Label>
+      <Label>{t("claim.pool", { asset: "DAI" })}</Label>
       <ValueContainer>
         <Asset
           token={{
@@ -107,19 +110,30 @@ const ClaimRow = ({ index }: Props): JSX.Element => {
       <EndContainer>
         {isDesktop && (
           <>
-            <Button text="Claim" background="#100830" width="12rem" primary={isMobile} />
-            <Button primary text="Claim & Stake" width={isMobile ? "auto" : "18rem"} />
+            <Button
+              text={t("claim.buttons.claim")}
+              background="#100830"
+              width="12rem"
+              primary={isMobile}
+            />
+            <Button
+              primary
+              text={t("claim.buttons.claimAndStake")}
+              width={isMobile ? "auto" : "18rem"}
+            />
           </>
         )}
         {isMobile && (
           <SplitButton
             buttons={[
               {
-                label: "Claim & Stake",
+                value: "claim-and-stake",
+                label: t("claim.buttons.claim"),
                 action: () => console.log("not implemented"),
               },
               {
-                label: "Claim",
+                value: "claim",
+                label: t("claim.buttons.claimAndStake"),
                 action: () => console.log("not implemented"),
               },
             ]}

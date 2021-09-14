@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
 import { GradientText } from "../../styles/GradientText";
 import { Header2 } from "../../styles/Headers";
 import discord from "../../assets/socials/discord.svg";
@@ -14,17 +16,17 @@ type SocialType = {
 
 const socials: SocialType[] = [
   {
-    label: "Discord →",
+    label: "joinCommunity.socials.discord",
     icon: discord,
     link: "https://discord.gg/jpGvaFV3Rv",
   },
   {
-    label: "Twitter →",
+    label: "joinCommunity.socials.twitter",
     icon: twitter,
     link: "https://twitter.com/backdfund",
   },
   {
-    label: "GitHub →",
+    label: "joinCommunity.socials.github",
     icon: github,
     link: "https://github.com/backdfund",
   },
@@ -107,19 +109,21 @@ const Icon = styled.img`
 `;
 
 const JoinCommunity = (): JSX.Element => {
+  const { t } = useTranslation();
+
   return (
     <StyledJoinCommunity>
-      <Header2>join the community</Header2>
+      <Header2>{t("joinCommunity.header")}</Header2>
       <Socials>
         {socials.map((social: SocialType) => (
           <Social
             key={social.label}
-            id={`Join Community - ${social.label}`}
+            id={social.label}
             href={social.link}
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Label>{social.label}</Label>
+            <Label>{`${t(social.label)} →`}</Label>
             <IconContainer>
               <Icon src={social.icon} alt={`${social.label} logo`} />
             </IconContainer>

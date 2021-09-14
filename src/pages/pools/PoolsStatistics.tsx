@@ -1,5 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+
 import { selectPools, selectPrices } from "../../state/poolsListSlice";
 import { selectBalances } from "../../state/userSlice";
 import { Pool } from "../../lib";
@@ -10,6 +12,7 @@ import { formatCurrency } from "../../lib/numeric";
 import { ScaledNumber } from "../../lib/scaled-number";
 
 const PoolsStatistics = (): JSX.Element => {
+  const { t } = useTranslation();
   const pools = useSelector(selectPools);
   const prices = useSelector(selectPrices);
   const balances = useSelector(selectBalances);
@@ -35,19 +38,18 @@ const PoolsStatistics = (): JSX.Element => {
     <Statistics
       statistics={[
         {
-          header: "Your deposits",
-          tooltip: "The current value of your assets held in Backd liquidity pools",
+          header: t("pools.statistics.deposits.header"),
+          tooltip: t("pools.statistics.deposits.tooltip"),
           value: formatCurrency(Number(deposits.toString())),
         },
         {
-          header: "Locked in position",
-          tooltip:
-            "The current value of your assets registered for top-ups (liquidation protection)",
+          header: t("pools.statistics.locked.header"),
+          tooltip: t("pools.statistics.locked.tooltip"),
           value: formatCurrency(Number(locked.toString())),
         },
         // {
-        //   header: "Rewards accrued",
-        //   tooltip: "The current value of earned rewards that have yet to be claimed",
+        //   header: t("pools.statistics.rewards.header"),
+        //   tooltip: t("pools.statistics.rewards.tooltip"),
         //   value: "$0.00",
         // },
       ]}

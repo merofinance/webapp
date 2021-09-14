@@ -1,9 +1,9 @@
 import React from "react";
-import { useHistory } from "react-router";
 import styled from "styled-components";
-import Button from "../../components/Button";
+import { useTranslation } from "react-i18next";
+
 import { Header1, Header3 } from "../../styles/Headers";
-import { LIVE } from "../../lib/constants";
+import CallToActionButton from "./CallToActionButton";
 
 const StyledHero = styled.div`
   width: 100%;
@@ -18,26 +18,13 @@ const StyledHero = styled.div`
 `;
 
 const Hero = (): JSX.Element => {
-  const history = useHistory();
+  const { t } = useTranslation();
 
   return (
     <StyledHero>
-      <Header1>reactive liquidity</Header1>
-      <Header3>
-        A trustless and interest generating protocol designed to prevent collateralized loans from
-        becoming liquidatable.
-      </Header3>
-      <Button
-        primary
-        hero
-        large
-        inactive={!LIVE}
-        text={LIVE ? "view pools" : "coming soon"}
-        click={() => {
-          if (!LIVE) return;
-          history.push("/pools");
-        }}
-      />
+      <Header1>{t("landingPage.header")}</Header1>
+      <Header3>{t("landingPage.subHeader")}</Header3>
+      <CallToActionButton hero />
     </StyledHero>
   );
 };

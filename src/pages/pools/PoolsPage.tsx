@@ -1,15 +1,19 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
 import { useBackd } from "../../app/hooks/use-backd";
 import ContentSection from "../../components/ContentSection";
 import { fetchState, selectPools } from "../../state/poolsListSlice";
 import { Pool } from "../../lib";
 import Seo from "../../components/Seo";
 import PoolsRow from "./PoolsRow";
-import PoolsOverview from "./PoolsOverview";
+import PoolsInformation from "./PoolsInformation";
 import PoolsStatistics from "./PoolsStatistics";
 import BetaSnackbar from "../../components/BetaSnackbar";
+import Overview from "../../components/Overview";
+import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 
 const StyledPoolsPage = styled.div`
   width: 100%;
@@ -72,15 +76,22 @@ const ChevronHeader = styled.th`
   }
 `;
 
+const InfoCards = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const PoolsPage = (): JSX.Element => {
+  const { t } = useTranslation();
   const backd = useBackd();
   const dispatch = useDispatch();
   const pools = useSelector(selectPools);
+  const updated = useWeb3Updated();
 
   useEffect(() => {
     if (!backd) return;
     dispatch(fetchState(backd));
-  }, [backd, dispatch]);
+  }, [updated]);
 
   return (
     <StyledPoolsPage>
@@ -89,29 +100,30 @@ const PoolsPage = (): JSX.Element => {
         description="Increase leverage, farm yield, & prevent DeFi loans (Aave, Compound, etc.) from liquidation"
       />
       <BetaSnackbar />
-      <PageContent>
-        <ContentSection
-          header="All pools"
-          statistics={<PoolsStatistics />}
-          content={
-            <Table>
-              <thead>
-                <HeaderRow>
-                  <Header>Asset</Header>
-                  <Header>APY</Header>
-                  <Header>TVL</Header>
-                  <Header hideOnMobile>Your deposits</Header>
-                  <ChevronHeader />
-                </HeaderRow>
-              </thead>
-              {pools.map((pool: Pool) => (
-                <PoolsRow key={pool.address} pool={pool} />
-              ))}
-            </Table>
-          }
-        />
-        <PoolsOverview />
-      </PageContent>
+      <ContentSection
+        header={t("pools.header")}
+        statistics={<PoolsStatistics />}
+        content={
+          <Table>
+            <thead>
+              <HeaderRow>
+                <Header>{t("headers.asset")}</Header>
+                <Header>{t("headers.apy")}</Header>
+                <Header>{t("headers.tvl")}</Header>
+                <Header hideOnMobile>{t("headers.deposits")}</Header>
+                <ChevronHeader />
+              </HeaderRow>
+            </thead>
+            {pools.map((pool: Pool) => (
+              <PoolsRow key={pool.address} pool={pool} />
+            ))}
+          </Table>
+        }
+      />
+      <InfoCards>
+        <Overview description={t("pools.overview")} link="https://docs.backd.fund/" />
+        <PoolsInformation />
+      </InfoCards>
     </StyledPoolsPage>
   );
 };

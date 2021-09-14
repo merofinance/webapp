@@ -1,10 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
 import background from "../../assets/audit/background.svg";
 import chainSecurityMobile from "../../assets/audit/chain-security-mobile.svg";
 import chainSecurity from "../../assets/audit/chain-security.svg";
 import { GradientLink } from "../../styles/GradientText";
-import { LIVE } from "../../lib/constants";
+
+const AUDIT_COMPLETED = false;
 
 const StyledAuditedBy = styled.div`
   width: 100%;
@@ -115,21 +118,22 @@ const Background = styled.img`
 `;
 
 const AuditedBy = (): JSX.Element => {
+  const { t } = useTranslation();
+
   return (
     <StyledAuditedBy>
       <Container>
         <Background src={background} alt="decorative background" />
         <Logo src={chainSecurity} alt="Chain Security logo" />
         <Content>
-          <Header>{LIVE ? "audited by" : "audit in progress"}</Header>
+          <Header>
+            {AUDIT_COMPLETED ? t("auditedBy.header") : t("auditedBy.preLaunchHeader")}
+          </Header>
           <MobileLogo src={chainSecurityMobile} alt="Chain Security logo" />
-          <Description>
-            Led by security experts from ETH Zurich and trusted by 85+ blockchain companies and
-            corporations.
-          </Description>
-          {LIVE && (
+          <Description>{t("auditedBy.description")}</Description>
+          {AUDIT_COMPLETED && (
             <ViewReport href="" target="_blank" rel="noopener noreferrer">
-              View Report →
+              {`${t("auditedBy.viewReport")} →`}
             </ViewReport>
           )}
         </Content>

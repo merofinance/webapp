@@ -1,3 +1,5 @@
+import { percySnapshot } from "../support";
+
 describe("Innitial Load", () => {
   it("Should Load Litepaper Page", () => {
     cy.visit("/litepaper");
@@ -12,6 +14,6 @@ describe("Page Content", () => {
 
 describe("Percy", () => {
   it("Should Screenshot Litepaper Page", () => {
-    cy.percySnapshot();
+    percySnapshot();
   });
 });

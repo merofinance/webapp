@@ -1,8 +1,10 @@
 import { useWeb3React } from "@web3-react/core";
 import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 import LaunchIcon from "@material-ui/icons/Launch";
 import { AbstractConnector } from "@web3-react/abstract-connector";
+
 import { injectedConnector, walletConnectConnector } from "../app/web3";
 import metamask from "../assets/wallets/metamask.svg";
 import walletConnect from "../assets/wallets/wallet-connect.svg";
@@ -18,14 +20,14 @@ type WalletOption = {
 
 const walletOptions: WalletOption[] = [
   {
-    name: "MetaMask",
+    name: "walletConnect.wallets.metaMask",
     icon: metamask,
     leftColor: "#FF5407",
     rightColor: "#FFD523",
     connector: injectedConnector,
   },
   {
-    name: "WalletConnect",
+    name: "walletConnect.wallets.walletConnect",
     icon: walletConnect,
     leftColor: "#8400FE",
     rightColor: "#0C00FE",
@@ -133,32 +135,35 @@ const Icon = styled.img`
 
 type Props = {
   show: boolean;
-  close: () => void;
+  close: (connected: boolean) => void;
+  setWallet: (wallet: string) => void;
 };
 
-const WalletSelectPopup = (props: Props): JSX.Element => {
+const WalletSelectPopup = ({ show, close, setWallet }: Props): JSX.Element => {
   const { activate } = useWeb3React();
+  const { t } = useTranslation();
 
-  const connect = async (connector: AbstractConnector) => {
+  const connect = async (connector: AbstractConnector, walletName: string) => {
     await activate(connector);
-    props.close();
+    setWallet(walletName);
+    close(true);
   };
 
   return (
     <Popup
-      show={props.show}
-      close={props.close}
-      header="Connect your wallet"
+      show={show}
+      close={() => close(false)}
+      header={t("walletConnect.header")}
       content={
         <Content>
           <SubHeaderContainer>
-            <SubHeader>New to Ethereum?</SubHeader>
+            <SubHeader>{t("walletConnect.newToEthereum")}</SubHeader>
             <Highlight
               href="https://backd-1.gitbook.io/backd/resources/faq/general"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Find out about wallets
+              {t("walletConnect.aboutWallets")}
               <LaunchIcon style={{ fill: "var(--secondary)" }} />
             </Highlight>
           </SubHeaderContainer>
@@ -168,9 +173,9 @@ const WalletSelectPopup = (props: Props): JSX.Element => {
               key={option.name}
               leftColor={option.leftColor}
               rightColor={option.rightColor}
-              onClick={() => connect(option.connector)}
+              onClick={() => connect(option.connector, option.name)}
             >
-              <Name>{option.name}</Name>
+              <Name>{t(option.name)}</Name>
               <IconContainer>
                 <Icon src={option.icon} alt={`${option.name} logo`} />
               </IconContainer>

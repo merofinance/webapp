@@ -7,20 +7,20 @@ import {
   faTimesCircle,
   faTrashAlt,
 } from "@fortawesome/free-solid-svg-icons";
+
 import { Web3ReactProvider } from "@web3-react/core";
 import { ethers } from "ethers";
-import React from "react";
+import React, { Suspense } from "react";
 import { useDispatch } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 import { HelmetProvider } from "react-helmet-async";
 
+import { setError } from "./state/errorSlice";
 import { useMock } from "./app/config";
-import { PrivateRoute } from "./app/private-route";
 import { AppDispatch } from "./app/store";
 import Header from "./components/Header";
 import { ErrorBoundary } from "./components/ErrorBoundary";
-import { setError } from "./state/errorSlice";
 import { createBackd } from "./lib/factory";
 import MockSigner from "./lib/mock/signer";
 import LandingPage from "./pages/landing/LandingPage";
@@ -28,12 +28,12 @@ import Footer from "./components/Footer";
 import PoolsPage from "./pages/pools/PoolsPage";
 import StakePage from "./pages/stake/StakePage";
 import LitepaperPage from "./pages/litepaper/LitepaperPage";
-import { ConnectWallet } from "./components/ConnectWallet";
 import ClaimPage from "./pages/claim/ClaimPage";
 import PoolPage from "./pages/pool/PoolPage";
-import { LIVE, STAKING_LIVE } from "./lib/constants";
 import { ErrorAlert } from "./components/ErrorAlert";
 import NotFoundPage from "./pages/not-found/NotFoundPage";
+import { BackdError } from "./app/errors";
+import { useIsLive } from "./app/hooks/use-is-live";
 
 const Background = styled.div`
   background: radial-gradient(rgba(11, 3, 60, 0.2), rgba(10, 5, 38, 0.3));
@@ -48,7 +48,6 @@ const StyledApp = styled.div`
   padding: 0 10rem;
   padding-bottom: 3rem;
   min-height: calc(100vh - 18.2rem);
-  overflow: hidden;
 
   @media (max-width: 600px) {
     padding: 0 1.6rem;
@@ -74,6 +73,8 @@ library.add(faInfoCircle, faClock, faCheck, faTimesCircle, faExternalLinkAlt, fa
 const App = (): JSX.Element => {
   const dispatch: AppDispatch = useDispatch();
 
+  const { stakingLive } = useIsLive();
+
   const getLibrary = (rawProvider: any, connector: any) => {
     const provider = new ethers.providers.Web3Provider(rawProvider);
     const signer = useMock ? new MockSigner() : provider.getSigner();
@@ -82,71 +83,64 @@ const App = (): JSX.Element => {
     try {
       return createBackd(signer, options);
     } catch (e) {
-      dispatch(setError({ error: e.message }));
+      const error = e instanceof BackdError ? e.toErrorState() : { message: e.message };
+      dispatch(setError(error));
     }
   };
 
   return (
-    <HelmetProvider>
-      <ErrorBoundary dispatch={dispatch}>
-        <Web3ReactProvider getLibrary={getLibrary}>
-          <Router>
-            <Background>
-              <Header />
-              <StyledApp>
-                <Content>
-                  <Switch>
-                    {LIVE && (
-                      <PrivateRoute path="/pool/:poolName">
+    <Suspense fallback={<div />}>
+      <HelmetProvider>
+        <ErrorBoundary dispatch={dispatch}>
+          <Web3ReactProvider getLibrary={getLibrary}>
+            <Router>
+              <Background>
+                <Header />
+                <StyledApp>
+                  <Content>
+                    <Switch>
+                      <Route path="/pool/:poolName">
                         <PoolPage />
-                      </PrivateRoute>
-                    )}
-
-                    {LIVE && (
-                      <Route path="/connect">
-                        <ConnectWallet />
                       </Route>
-                    )}
 
-                    {LIVE && (
-                      <PrivateRoute path="/pools">
+                      <Route path="/pools">
                         <PoolsPage />
-                      </PrivateRoute>
-                    )}
-
-                    {STAKING_LIVE && (
-                      <Route path="/claim">
-                        <ClaimPage />
                       </Route>
-                    )}
 
-                    {STAKING_LIVE && (
-                      <Route path="/stake">
-                        <StakePage />
+                      {stakingLive && (
+                        <Route path="/claim">
+                          <ClaimPage />
+                        </Route>
+                      )}
+
+                      {stakingLive && (
+                        <Route path="/stake">
+                          <StakePage />
+                        </Route>
+                      )}
+
+                      <Route path="/litepaper">
+                        <LitepaperPage />
                       </Route>
-                    )}
 
-                    <Route path="/litepaper">
-                      <LitepaperPage />
-                    </Route>
+                      <Route exact path="/">
+                        <LandingPage />
+                      </Route>
 
-                    <Route exact path="/">
-                      <LandingPage />
-                    </Route>
-
-                    <Route>
-                      <NotFoundPage />
-                    </Route>
-                  </Switch>
-                </Content>
-                <Footer />
-                <ErrorAlert />
-              </StyledApp>
-            </Background>
-          </Router>
-        </Web3ReactProvider>
-      </ErrorBoundary>
-    </HelmetProvider>
+                      <Route>
+                        <NotFoundPage />
+                      </Route>
+                    </Switch>
+                  </Content>
+                  <Footer />
+                  <ErrorAlert />
+                </StyledApp>
+              </Background>
+            </Router>
+          </Web3ReactProvider>
+        </ErrorBoundary>
+      </HelmetProvider>
+    </Suspense>
   );
 };
 

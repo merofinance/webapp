@@ -1,0 +1,254 @@
+{
+  "auditedBy": {
+    "description": "85以上のブロックチェーン企業や法人企業からの信頼されている、チューリッヒ工科大学のセキュリティ専門家が主導しております。",
+    "header": "監査元",
+    "preLaunchHeader": "進行中の監査",
+    "viewReport": "報告を見る"
+  },
+  "benefits": {
+    "avoidLiquidation": {
+      "description": "Backdに預け入れられ、予備の担保とされた流動性資産は担保の補充が必要とされた際に自動的に移動されます。",
+      "header": "清算を回避する"
+    },
+    "earnYield": {
+      "description": "CurveとConvexに基づくイールドファーミング戦略を通じて流動資産の利回りを稼ぎます。",
+      "header": "利回りを稼ぐ"
+    },
+    "feeShare": {
+      "description": "担保額に課せられる少額の手数料が、流動資産提供者間で分配されます。",
+      "header": "手数料の分担"
+    },
+    "readMore": "続きを読む"
+  },
+  "footer": {
+    "community": {
+      "header": "Backdのコミュニティへに参加",
+      "links": {
+        "discord": "Discord",
+        "github": "GitHub",
+        "telegram": "Telegram Chat",
+        "twitter": "Twitter"
+      }
+    },
+    "resources": {
+      "header": "resources",
+      "links": {
+        "blog": "ブログ",
+        "docs": "ドキュメント",
+        "factSheet": "概況報告",
+        "litepaper": "Litepaper"
+      }
+    },
+    "updates": {
+      "header": "最新情報",
+      "links": {
+        "newsletter": "メルマガ",
+        "telegram": "Telegram Ann."
+      }
+    }
+  },
+  "getStarted": {
+    "description": "流動資産を預金し、利回りを獲得",
+    "header": "はじめませんか？"
+  },
+  "header": {
+    "tabs": {
+      "blog": "ブログ",
+      "claim": "ご請求",
+      "docs": "ドキュメント",
+      "newsletter": "メルマガ",
+      "pools": "プール",
+      "stake": "BKDへの出資"
+    }
+  },
+  "howItWorks": {
+    "categories": {
+      "earnAndProtect": {
+        "cards": {
+          "claim": {
+            "description": "いつでも、持ち高の登録解除・更新・LPトークンのお引き出し・Backdの報酬の請求を行うことが可能です。",
+            "header": "お引き出しはいつでも可能",
+            "number": "04"
+          },
+          "deposit": {
+            "description": "資金をBackdの流動資産プールに預け入れ、プールのLPトークンを受け取ります。",
+            "header": "流動資産の入金",
+            "number": "01"
+          },
+          "protect": {
+            "description": "Keeperがお客様のローンを追跡し清算から守り、お客様の資本を転送している間、LPトークンの価値が上がるにつれて、複合利回りとプロトコル料金を獲得します。",
+            "header": "安全に稼ぐ",
+            "number": "03"
+          },
+          "register": {
+            "description": "オンチェーンのCompoundローンまたはAaveローンを登録して担保の上積みを受け取り、プールのLPトークンに出資してBackdの報酬を得ます。",
+            "header": "オンチェーンのローンを登録する",
+            "number": "02"
+          }
+        },
+        "tabName": "安全に稼ぐ"
+      },
+      "earnYield": {
+        "cards": {
+          "claim": {
+            "description": "LPトークンの出資はいつでもご解約いただけます。また、Backdの報酬もいつでもご請求いただけます。",
+            "header": "お引き出しはいつでも可能",
+            "number": "04"
+          },
+          "deposit": {
+            "description": "Backdの流動資産プールに資金を預け入ることで、プールのLPトークンを受け取ります。",
+            "header": "流動資産の入金",
+            "number": "01"
+          },
+          "earn": {
+            "description": "LPトークンが、原資産トークンよりも価値が上がるため、戦略利益とプロトコルの手数料から複合利回りを稼ぐことができます。",
+            "header": "利回りを稼ぐ",
+            "number": "02"
+          },
+          "stake": {
+            "description": "Backdの報酬を受け取るためにプールのLPトークンを出資する.",
+            "header": "利益獲得のための預け入れ",
+            "number": "03"
+          }
+        },
+        "tabName": "利回りを稼ぐ"
+      }
+    },
+    "header": "Backdの使い方"
+  },
+  "joinCommunity": {
+    "header": "コミュニティへのご参加",
+    "socials": {
+      "discord": "Discord",
+      "github": "GitHub",
+      "twitter": "Twitter"
+    }
+  },
+  "landingPage": {
+    "changeNetwork": "Try on Testnet",
+    "connectWallet": "ウォレットと接続",
+    "header": "リアクティブ流動資産",
+    "subHeader": "担保付ローンを清算から防ぐために設計された、管理者不在の利子生成プロトコルです。",
+    "unsupportedNetwork": "Unsupported Network",
+    "viewPools": "プールを見る"
+  },
+  "litepaper": {
+    "components": {
+      "components": {
+        "handlers": {
+          "decription": "These are the contracts that contain the logic for performing a collateral top up for a particular protocol, such as Aave.",
+          "header": "Top Up Handlers:"
+        },
+        "keepers": {
+          "decription": "As on-chain monitoring is not feasible on Ethereum, Backd relies on off-chain keepers to report registered positions eligible for top up. An open source out of the box Backd keeper implementation will made available prior launch. However, it is encouraged that operators of Backd keepers further improve upon the initial keeper version (or create their own).",
+          "header": "Keepers:"
+        },
+        "pools": {
+          "decription": "When LPs deposit funds on Backd, they have to chose a single-asset pool to deposit into. If an LP wants some (or all) of their deposits to be used as backup collateral on some other protocol, they can register their top up positions via the pool’s registry. A liquidity pool maintains a running total of the deposits which are registered as backup collateral. A pool allocates deposits that are not registered as backup collateral, plus a proportion of the registered backup collateral to a pool-specific vault.",
+          "header": "Liquidity pools:"
+        },
+        "strategies": {
+          "decription": "A strategy contains logic for yield-farming using the funds allocated from the vault. The performance of a strategy is tracked by the depositing vault and allocations are rebalanced according to the vault parameters (e.g. debt limits). Profits can be harvested and any unrealized profits are compounded by the strategy. The protocol charges a performance fee on strategy profits. Part of this fee is paid to a strategy’s strategist in LP tokens. The remainder of the performance fee is directed to the Backd treasury.",
+          "header": "Strategies:"
+        },
+        "vaults": {
+          "decription": "Each liquidity pool has a vault, which handles all deposit and withdrawal interaction with a strategy. For backd v1, single strategy vaults are supported.  Vaults contain a target allocation factor, which specifies the ratio of Vault deposits that should be allocated to the associated strategy. Hence, a vault typically holds an amount of idle funds for reduced gas costs.",
+          "header": "Vaults:"
+        }
+      },
+      "header": "Components",
+      "paragraph": "The Backd protocol consists of several key components. Let’s briefly examine each of these in a bit more detail:"
+    },
+    "farming": {
+      "header": "Yield-farming",
+      "paragraph": "Each Backd pool employs a yield farming strategy using external protocols. As yield is generated through a pool’s strategy and top up fees, the pool’s LP token appreciates, distributing the earnings to the pool’s liquidity providers. Similar to collateral top ups, yield farming strategies are subject to a performance fee, which is split between their creator (i.e. the strategist) and a reserve fund."
+    },
+    "governance": {
+      "disclaimer": "Disclaimer: a Backd governance token does not exist at this point, so please do not fall for scams.",
+      "header": "Governance",
+      "paragraph": "Backd will rely on a decentralized governance scheme, which will be introduced after the protocol launch. The protocol offers a lot of room for parameterization, such as required reserve ratios for pools, strategy allocation weights, reserve requirement weights for vaults or LP and keeper fees. Furthermore, new pools, strategies and supported protocols can be added via governance."
+    },
+    "header": "Backd Litepaper",
+    "introduction": {
+      "header": "Introduction",
+      "paragraph1": "Backd is an Ethereum based protocol designed to increase the capital efficiency of borrowing assets in DeFi. Unlike other DeFi protocols, Backd liquidity pools react to market conditions and users’ needs. In other words, users can optimize their debt positions by depositing assets into Backd pools which are then automatically deployed to where they are the most efficient.",
+      "paragraph2": "The Backd protocol solves the problem borrowers of over-collateralized loans in DeFi are faced with: the higher the amount of excess collateral posted, the higher the opportunity cost of not being able to earn interest on these funds elsewhere. At the same time, low collateral-to-debt ratios result in higher liquidation risk to the borrower. Hence, borrowers are left with the non-trivial and potentially very costly challenge of manually allocating deposits across protocols, optimizing for high interest and low liquidation risk.",
+      "paragraph3": "A solution is offered by Backd, which introduces the concept of reactive liquidity, whereby deposits are automatically shifted between protocols depending on the state of over-collateralized loans and the profitability of yield generating opportunities. More specifically, a liquidity provider (LP) on Backd is able to register deposits as “backup collateral”. Thereby the deposited funds can earn interest through yield farming strategies until needed to increase the user’s collateral-to-debt ratio on different protocols during times of market volatility."
+    },
+    "keepers": {
+      "header": "Backd Keepers",
+      "paragraph": "Keepers are an integral part of Backd’s collateral top up mechanism. A keeper is an off-chain bot that monitors Backd top up registrations and reports eligible collateral top ups to the Backd smart contract. The Backd smart contract handles users’ funds and executes top ups by injecting capital into registered collateral. Keepers collect a percentage of the generated top up fee every time they report an eligible top up. In addition to this, keepers are also distributed Backd rewards in proportion to the top up value they have executed.  Anyone can operate an off-chain keeper bot for Backd."
+    },
+    "pools": {
+      "differences": {
+        "assets": {
+          "description": "Pools are single-asset pools. Furthermore, for Backd v1, there will be only one pool per asset to prevent liquidity fragmentation.",
+          "header": "Assets:"
+        },
+        "parameterization": {
+          "description": "Pools are very customizable. For instance, each pool has a required reserve ratio, which specifies the percentage of the backing funds that need to remain idle in the pool, i.e., funds which cannot be allocated to strategies but are reserved solely for the purpose of top ups. Intuitively, a lower reserve ratio comes with higher expected earnings (as more funds are allocated to a strategy), at the cost of increased insolvency risk, i.e., insufficient funds available for top up.  Furthermore, pools can differ in terms of fees charged on top ups and strategy performance.",
+          "header": "Parameterization:"
+        },
+        "strategy": {
+          "description": "The yield farming strategy used by a pool may differ to the ones used by other pools.",
+          "header": "Strategy:"
+        }
+      },
+      "header": "Liquidity Pools",
+      "paragraph1": "Through the combination of collateral top ups and yield-farming strategies, Backd enables novel multi-utility liquidity pools. This empowers borrowers to increase the capital efficiency of their positions while better managing liquidation risk. Backd achieves this through the administration of single-asset liquidity pools. Users who deposit funds into a pool (liquidity providers) receive Backd LP tokens which can be registered for collateral top ups (liquidation protection) and staked to earn further rewards. Furthermore, as collateral top ups occur, LPs receive a share of the collateral top up fees, in addition to any net profits harvested from a pool’s strategy.",
+      "paragraph2": "Liquidity pools function in isolation from one another with each asset having its own pool.  Backd will launch with liquidity pools for DAI, USDC, and ETH. In order to ensure that a sufficient amount of the underlying asset is available for collateral top ups, each pool maintains a required reserve ratio. This ratio defines the percentage of total pool assets which cannot be utilized by yield farming strategies and remain idle at all times. This allows the protocol to invariably execute collateral top ups, while reducing the transaction cost of withdrawals (including top ups).",
+      "paragraph3": "Liquidity pools on Backd differ in several ways from one another:"
+    },
+    "topUps": {
+      "header": "Collateral Top Ups",
+      "paragraph1": "All Backd LPs have the option to register their LP tokens as backup collateral. Top up registration is personalized to the user by allowing individuals to select the parameters that best serve their borrow positions and risk tolerance. The parameters required to register a top up position are:",
+      "paragraph2": "Once registered, the user will continue to earn yield on the registered funds until a collateral top up is triggered. A collateral top up refers to using funds to increase the collateral for a particular borrow position. When this occurs, liquidity is shifted from Backd to the respective protocol, the collateralization ratio of the topped up position increases, and in turn mitigates liquidation risk. Collateral top up eligibility is determined by the health factor of registered positions and is reported by Backd keepers.",
+      "parameters": {
+        "address": "Ethereum address that should be topped up",
+        "max": "Maximum allocation (the total amount that may be topped up)",
+        "protocol": "Protocol (that the loan is on, e.g. Compound)",
+        "single": "Top up increments (the value of a single collateral top up)",
+        "threshold": "Health factor threshold at which a top up should occur"
+      }
+    }
+  },
+  "notFound": {
+    "header": {
+      "desktop": "Page could not be found.",
+      "mobile": "Page not found"
+    },
+    "links": {
+      "claim": "claim page",
+      "docs": "ドキュメント",
+      "home": "home page",
+      "pools": "view all pools"
+    },
+    "number": "404",
+    "subHeader": {
+      "end": "if you believe there is an issue.",
+      "getInTouch": "get in touch",
+      "start": "Try one of the handy links below - or"
+    }
+  },
+  "supportedBy": {
+    "header": "助成"
+  },
+  "walletConnect": {
+    "aboutWallets": "ウォレットについて調べる",
+    "connectWallet": "ウォレットと接続",
+    "details": {
+      "change": "Change",
+      "clear": "Clear",
+      "connected": "Connected with {{wallet}}",
+      "empty": "Your transactions will appear here...",
+      "header": "アカウント",
+      "recentTransactions": "Recent transactions"
+    },
+    "header": "ウォレットのアカウントと接続",
+    "newToEthereum": "イーサリアムのご利用は初めてですか？",
+    "wallets": {
+      "metaMask": "MetaMask",
+      "walletConnect": "ウォレットを接続する"
+    }
+  }
+}

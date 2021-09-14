@@ -7,9 +7,11 @@ import { StakerVaultFactory } from "@backdfund/protocol/typechain/StakerVaultFac
 import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
 import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFactory";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
-import { getPrices } from "./coingecko";
+import { UnsupportedNetwork } from "../app/errors";
+import { getPrices as getPricesFromCoingecko } from "./coingecko";
+import { getPrices as getPricesFromBinance } from "./binance";
 import { ETH_DECIMALS, ETH_DUMMY_ADDRESS, INFINITE_APPROVE_AMMOUNT } from "./constants";
-import { bigNumberToFloat, floatToBigNumber, scale } from "./numeric";
+import { bigNumberToFloat, scale } from "./numeric";
 import { ScaledNumber } from "./scaled-number";
 import {
   Address,
@@ -33,7 +35,11 @@ export interface Backd {
   getPoolInfo(address: Address): Promise<Pool>;
   getPositions(): Promise<PlainPosition[]>;
   registerPosition(pool: Pool, position: Position): Promise<ContractTransaction>;
-  removePosition(account: Address, protocol: string): Promise<ContractTransaction>;
+  removePosition(
+    account: Address,
+    protocol: string,
+    unstake?: boolean
+  ): Promise<ContractTransaction>;
   getBalance(address: Address, account?: Address): Promise<ScaledNumber>;
   getBalances(addresses: Address[], account?: Address): Promise<Balances>;
   getAllowance(token: Token, spender: Address, account?: string): Promise<ScaledNumber>;
@@ -61,7 +67,7 @@ export class Web3Backd implements Backd {
     // eslint-disable-next-line dot-notation
     this.controller = ControllerFactory.connect(contracts["Controller"][0], _provider);
     // eslint-disable-next-line dot-notation
-    this.topupAction = TopUpActionFactory.connect(contracts["MockTopUpAction"][0], _provider);
+    this.topupAction = TopUpActionFactory.connect(contracts["TopUpAction"][0], _provider);
   }
 
   get topupActionAddress(): string {
@@ -79,10 +85,12 @@ export class Web3Backd implements Backd {
 
   private getContracts(chainId: number): Record<string, string[]> {
     switch (chainId) {
+      case 42:
+        return contracts["42"];
       case 1337:
         return contracts["1337"];
       default:
-        throw new Error("Wrong network selected, please use a development network");
+        throw new UnsupportedNetwork(chainId);
     }
   }
 
@@ -190,8 +198,8 @@ export class Web3Backd implements Backd {
     );
   }
 
-  removePosition(account: Address, protocol: string): Promise<ContractTransaction> {
-    return this.topupAction.resetPosition(account, utils.formatBytes32String(protocol));
+  removePosition(account: Address, protocol: string, unstake = true): Promise<ContractTransaction> {
+    return this.topupAction.resetPosition(account, utils.formatBytes32String(protocol), unstake);
   }
 
   async getAllowance(
@@ -269,9 +277,11 @@ export class Web3Backd implements Backd {
   }
 
   async getPrices(symbols: string[]): Promise<Prices> {
-    return getPrices(symbols).catch((e) => {
-      throw new Error(`failed to fetch prices: ${e.message}`);
-    });
+    return getPricesFromCoingecko(symbols)
+      .catch((_e) => getPricesFromBinance(symbols))
+      .catch((e) => {
+        throw new Error(`failed to fetch prices: ${e.message}`);
+      });
   }
 
   async listSupportedProtocols(): Promise<string[]> {

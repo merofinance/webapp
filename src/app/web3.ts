@@ -1,7 +1,5 @@
-import { Web3ReactContextInterface } from "@web3-react/core/dist/types";
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
-import { Backd } from "../lib/backd";
 import { INFURA_ID } from "../lib/constants";
 
 export const injectedConnector = new InjectedConnector({
