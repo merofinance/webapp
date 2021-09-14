@@ -223,12 +223,7 @@
       "home": "home page",
       "pools": "view all pools"
     },
-    "number": "404",
-    "subHeader": {
-      "end": "if you believe there is an issue.",
-      "getInTouch": "get in touch",
-      "start": "Try one of the handy links below - or"
-    }
+    "number": "404"
   },
   "supportedBy": {
     "header": "助成"

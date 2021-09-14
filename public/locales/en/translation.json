@@ -172,11 +172,7 @@
       "desktop": "Page could not be found.",
       "mobile": "Page not found"
     },
-    "subHeader": {
-      "start": "Try one of the handy links below - or",
-      "getInTouch": "get in touch",
-      "end": "if you believe there is an issue."
-    },
+    "subHeader": "Try one of the handy links below - or <0>get in touch</0> if you believe there is an issue.",
     "links": {
       "home": "home page",
       "pools": "view all pools",
