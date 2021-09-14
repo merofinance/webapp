@@ -1,29 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import ovals from "../../assets/background/ovals.svg";
 import icons from "../../assets/background/icons.svg";
 import darkIcons from "../../assets/background/dark-icons.svg";
 
 const StyledBackground = styled.div`
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
   height: 100%;
+  overflow: hidden;
 `;
 
-type ScrollProps = {
-  transform: string;
-};
-
-const Ovals = styled.img.attrs((props: ScrollProps) => ({
-  style: {
-    transform: props.transform,
-  },
-}))`
+const Ovals = styled.img`
   position: absolute;
-  top: ${(props: ScrollProps) => (props.transform ? 0 : 0)};
-  top: 0;
+  top: 2.4rem;
   left: 0;
   width: 100%;
   transition: transform 0.1s ease-out;
@@ -33,31 +25,23 @@ const Ovals = styled.img.attrs((props: ScrollProps) => ({
   }
 `;
 
-const Icons = styled.img.attrs((props: ScrollProps) => ({
-  style: {
-    transform: props.transform,
-  },
-}))`
+const Icons = styled.img`
   position: absolute;
-  top: ${(props: ScrollProps) => (props.transform ? "14rem" : "14rem")};
-  left: 0;
-  width: 100%;
+  top: 19rem;
+  left: -2%;
+  width: 104%;
   transition: transform 0.1s ease-out;
 
   @media (max-width: 600px) {
-    width: 130%;
-    left: -15%;
-    top: 5rem;
+    width: 140%;
+    left: -20%;
+    top: 10rem;
   }
 `;
 
-const DarkIcons = styled.img.attrs((props: ScrollProps) => ({
-  style: {
-    transform: props.transform,
-  },
-}))`
+const DarkIcons = styled.img`
   position: absolute;
-  top: ${(props: ScrollProps) => (props.transform ? "100rem" : "100rem")};
+  top: 175rem;
   left: 0;
   width: 100%;
   transition: transform 0.1s ease-out;
@@ -68,38 +52,11 @@ const DarkIcons = styled.img.attrs((props: ScrollProps) => ({
 `;
 
 const Background = (): JSX.Element => {
-  const [scrollPosition, setScrollPosition] = useState(0);
-
-  const handleScroll = () => {
-    const position = window.pageYOffset;
-    setScrollPosition(position);
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
     <StyledBackground>
-      <Ovals
-        src={ovals}
-        transform={`translateY(${-scrollPosition / 4}px)`}
-        alt="decorative ovals"
-      />
-      <Icons
-        src={icons}
-        transform={`translateY(${-scrollPosition / 2}px)`}
-        alt="decorative icons"
-      />
-      <DarkIcons
-        src={darkIcons}
-        transform={`translateY(${-scrollPosition / 2}px)`}
-        alt="decorative dark icons"
-      />
+      <Ovals src={ovals} alt="decorative ovals" />
+      <Icons src={icons} alt="decorative icons" />
+      <DarkIcons src={darkIcons} alt="decorative dark icons" />
     </StyledBackground>
   );
 };
