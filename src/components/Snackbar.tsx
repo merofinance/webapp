@@ -12,29 +12,49 @@ const StyledSnackbar = styled.div`
   border: 2px solid var(--info);
   display: flex;
   justify-content: space-between;
+
   margin-bottom: 5rem;
+  @media (max-width: 600px) {
+    margin-bottom: 2.5rem;
+  }
 `;
 
 const Text = styled.div`
   color: var(--info);
   font-weight: 500;
+  letter-spacing: 0.15px;
+
   font-size: 1.6rem;
   line-height: 2.8rem;
-  letter-spacing: 0.15px;
+  @media (max-width: 600px) {
+    font-size: 1.3rem;
+    line-height: 1.8rem;
+  }
 `;
 
 const Link = styled.a`
   color: var(--info);
   font-weight: 500;
-  font-size: 1.6rem;
-  line-height: 2.8rem;
   letter-spacing: 0.15px;
   text-decoration: underline;
   margin-left: 0.4rem;
+
+  font-size: 1.6rem;
+  line-height: 2.8rem;
+  @media (max-width: 600px) {
+    font-size: 1.3rem;
+    line-height: 1.8rem;
+  }
 `;
 
 const ExitButton = styled.button`
   cursor: pointer;
+  margin-left: 1rem;
+  padding: 0.6rem 0;
+  height: 2rem;
+
+  @media (max-width: 600px) {
+  }
 `;
 
 const ExitIcon = styled.img`
