@@ -16,7 +16,7 @@ const StyledPopup = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 2;
   justify-content: center;
   align-items: center;
   background-color: rgba(5, 1, 32, 0.5);
