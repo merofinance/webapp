@@ -74,6 +74,19 @@ const Header = styled.div`
   }
 `;
 
+const Body = styled.div`
+  width: 100%;
+  font-weight: 400;
+  line-height: 2.4rem;
+  letter-spacing: 0.15px;
+  margin-bottom: 3rem;
+
+  font-size: 1.6rem;
+  @media (max-width: 600px) {
+    font-size: 1.4rem;
+  }
+`;
+
 const ButtonContainer = styled.div`
   width: 100%;
   display: grid;
@@ -91,6 +104,7 @@ interface Props {
   show: boolean;
   close: () => void;
   header?: string;
+  body?: string;
   content?: JSX.Element;
   confirm?: boolean;
   submit?: () => void;
@@ -102,6 +116,7 @@ const Popup = ({
   show,
   close,
   header,
+  body,
   content,
   confirm,
   submit,
@@ -117,6 +132,7 @@ const Popup = ({
       <PopupContainer small={small}>
         <Exit src={closeIcon} onClick={close} alt="exit button" small={small} />
         {header && <Header small={small}>{header}</Header>}
+        {body && <Body>{body}</Body>}
         {content && content}
         {confirm && submit && (
           <ButtonContainer>
