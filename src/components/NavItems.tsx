@@ -98,9 +98,14 @@ const NavItems = (): JSX.Element => {
   return (
     <StyledNavItems id="nav-items">
       {protocolLive && !stakingLive && (
-        <NavItem>
-          <InternalLink to="/pools">{t("header.tabs.pools")}</InternalLink>
-        </NavItem>
+        <>
+          <NavItem>
+            <InternalLink to="/pools">{t("header.tabs.pools")}</InternalLink>
+          </NavItem>
+          <NavItem>
+            <InternalLink to="/actions">{t("header.tabs.actions")}</InternalLink>
+          </NavItem>
+        </>
       )}
       {protocolLive &&
         stakingLive &&
