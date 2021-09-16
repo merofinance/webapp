@@ -17,10 +17,10 @@ export interface Reserve {
 
 export interface Lending {
   totalCollateralETH: ScaledNumber;
-  totalDebt: number;
-  availableBorrows: number;
-  currentLiquidationThreshold: number;
-  healthFactor: number;
+  totalDebtETH: ScaledNumber;
+  availableBorrowsETH: ScaledNumber;
+  currentLiquidationThreshold: ScaledNumber;
+  healthFactor: ScaledNumber;
   reserves: Reserve[];
 }
 

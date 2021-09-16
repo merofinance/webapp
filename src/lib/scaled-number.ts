@@ -96,6 +96,11 @@ export class ScaledNumber {
     return new ScaledNumber(this.value.mul(scaledValue).div(scale), this.decimals);
   }
 
+  div(value: ScaledNumber): ScaledNumber {
+    const scale = BigNumber.from(10).pow(this.decimals);
+    return new ScaledNumber(this.value.mul(scale).div(value.value), this.decimals);
+  }
+
   toString = (): string => bigNumberToString(this._value, this._decimals);
 
   toCryptoString = (parameters: Intl.NumberFormatOptions = {}): string =>

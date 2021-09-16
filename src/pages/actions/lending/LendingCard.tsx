@@ -13,6 +13,14 @@ const LendingData = styled.div`
   font-size: 3rem;
 `;
 
+const Header = styled.div`
+  font-size: 2.5rem;
+`;
+
+const Item = styled.div`
+  font-size: 1.7rem;
+`;
+
 interface Props {
   lending?: Lending;
 }
@@ -20,16 +28,16 @@ interface Props {
 const LendingCard = ({ lending }: Props): JSX.Element => {
   const ethPrice = useSelector(selectEthPrice);
 
-  if (!lending || !lending.totalCollateralETH.toUsdValue) return <div>meow</div>; // TODO Make this a sceleton UI
+  if (!lending || !lending.totalCollateralETH.toUsdValue) return <Item>meow</Item>; // TODO Make this a sceleton UI
 
   return (
     <LendingData>
-      <div>Aave</div>
-      <div>{`Total Collateral: ${lending.totalCollateralETH.toUsdValue(ethPrice)}`}</div>
-      <div>{`Total Debt: ${lending.totalDebt}`}</div>
-      <div>{`Avialable to Borrow: ${lending.availableBorrows}`}</div>
-      <div>{`Liquidation Threshold: ${lending.currentLiquidationThreshold}`}</div>
-      <div>{`Health Factor: ${lending.healthFactor}`}</div>
+      <Header>Aave</Header>
+      <Item>{`Total Collateral: ${lending.totalCollateralETH.toUsdValue(ethPrice)}`}</Item>
+      <Item>{`Total Debt: ${lending.totalDebtETH.toUsdValue(ethPrice)}`}</Item>
+      <Item>{`Avialable to Borrow: ${lending.availableBorrowsETH.toUsdValue(ethPrice)}`}</Item>
+      <Item>{`Liquidation Threshold: ${lending.currentLiquidationThreshold.toCryptoString()}`}</Item>
+      <Item>{`Health Factor: ${lending.healthFactor.toCryptoString()}`}</Item>
     </LendingData>
   );
 };

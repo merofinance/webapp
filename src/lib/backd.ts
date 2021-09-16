@@ -171,10 +171,12 @@ export class Web3Backd implements Backd {
     console.log(meow.toCryptoString());
     return {
       totalCollateralETH: new ScaledNumber(userAccountData.totalCollateralETH),
-      totalDebt: account.length > 1 ? 2 : 10,
-      availableBorrows: 4,
-      currentLiquidationThreshold: 10,
-      healthFactor: 1,
+      totalDebtETH: new ScaledNumber(userAccountData.totalDebtETH),
+      availableBorrowsETH: new ScaledNumber(userAccountData.availableBorrowsETH),
+      currentLiquidationThreshold: ScaledNumber.fromUnscaled("1", 4).div(
+        new ScaledNumber(userAccountData.currentLiquidationThreshold, 4)
+      ),
+      healthFactor: new ScaledNumber(userAccountData.healthFactor),
       reserves: [],
     };
   }

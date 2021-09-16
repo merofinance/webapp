@@ -26,13 +26,14 @@ const LendingInformation = (): JSX.Element => {
           label: "Borrow Balance",
           tooltip:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut",
-          value: "$7,000",
+          value:
+            !aave || !aave.totalDebtETH.toUsdValue ? "---" : aave.totalDebtETH.toUsdValue(ethPrice),
         },
         {
           label: "Health Factor",
           tooltip:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut",
-          value: "1.3",
+          value: !aave ? "---" : aave.totalCollateralETH.div(aave.totalDebtETH).toCryptoString(),
         },
       ]}
     />
