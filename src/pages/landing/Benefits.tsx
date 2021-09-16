@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
@@ -7,6 +7,7 @@ import plus from "../../assets/benefits/plus.svg";
 import shield from "../../assets/benefits/shield.svg";
 import { GradientLink } from "../../styles/GradientText";
 import { Header4, Header5 } from "../../styles/Headers";
+import useWindowPosition from "../../app/hooks/use-window-position";
 
 type BenfitsType = {
   icon: string;
@@ -91,14 +92,9 @@ const Icon = styled.img`
 type IconGlassProps = {
   right: boolean;
   top: boolean;
-  transform: string;
 };
 
-const IconGlass = styled.div.attrs((props: IconGlassProps) => ({
-  style: {
-    transform: props.transform,
-  },
-}))`
+const IconGlass = styled.div`
   position: absolute;
   top: ${(props: IconGlassProps) => (props.top ? "1rem" : "3.8rem")};
   left: calc(50% + ${(props: IconGlassProps) => (props.right ? "0.5rem" : "-4.5rem")});
@@ -148,22 +144,9 @@ const ReadMore = styled(GradientLink)`
 `;
 
 const Benefits = (): JSX.Element => {
-  const benefitsRef = useRef<HTMLDivElement>(null);
-  const [scrollPosition, setScrollPosition] = useState(0);
   const { t } = useTranslation();
-
-  const handleScroll = () => {
-    const position = window.pageYOffset;
-    setScrollPosition(position);
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  const benefitsRef = useRef<HTMLDivElement>(null);
+  const windowPosition = useWindowPosition();
 
   return (
     <StyledBenefits ref={benefitsRef}>
@@ -175,7 +158,9 @@ const Benefits = (): JSX.Element => {
           <IconGlass
             right={index % 2 === 0}
             top={index === 2}
-            transform={`translateY(${-(scrollPosition - 380) / (window.innerHeight / 50)}px)`}
+            style={{
+              transform: `translateY(${-(windowPosition - 380) / (window.innerHeight / 50)}px)`,
+            }}
           >
             <IconGlassGradient rotate={index === 1 ? 90 : index === 2 ? -90 : 0} />
           </IconGlass>
