@@ -16,7 +16,7 @@ export interface Reserve {
 }
 
 export interface Lending {
-  totalCollateral: number;
+  totalCollateralETH: ScaledNumber;
   totalDebt: number;
   availableBorrows: number;
   currentLiquidationThreshold: number;

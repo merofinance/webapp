@@ -25,6 +25,8 @@ import {
   transformPool,
 } from "./types";
 import { Lending } from "../state/lendingSlice";
+import { ProtocolDataProviderFactory } from "./contracts/aave/ProtocolDataProvider";
+import { LendingPoolFactory } from "./contracts/aave/LendingPool";
 
 export type BackdOptions = {
   chainId: number;
@@ -154,9 +156,21 @@ export class Web3Backd implements Backd {
   }
 
   async getAave(): Promise<Lending> {
+    console.log("Getting aave");
     const account = await this.currentAccount();
+    console.log("Got account");
+    // const protocolDataProviderContract = ProtocolDataProviderFactory.connect(this._provider);
+    const lendingPoolContract = LendingPoolFactory.connect(this._provider);
+    console.log("Got contract");
+    console.log(lendingPoolContract);
+    console.log(account);
+    const userAccountData = await lendingPoolContract.getUserAccountData(account);
+    console.log("Got stuff");
+    console.log(userAccountData);
+    const meow = new ScaledNumber(userAccountData.totalCollateralETH);
+    console.log(meow.toCryptoString());
     return {
-      totalCollateral: 2,
+      totalCollateralETH: new ScaledNumber(userAccountData.totalCollateralETH),
       totalDebt: account.length > 1 ? 2 : 10,
       availableBorrows: 4,
       currentLiquidationThreshold: 10,

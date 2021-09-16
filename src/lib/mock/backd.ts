@@ -39,7 +39,7 @@ export default class MockBackd implements Backd {
 
   getAave(): Promise<Lending> {
     return Promise.resolve({
-      totalCollateral: 2,
+      totalCollateralETH: new ScaledNumber(),
       totalDebt: 10,
       availableBorrows: 4,
       currentLiquidationThreshold: 10,
