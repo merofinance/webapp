@@ -75,4 +75,6 @@ export const selectPools = (state: RootState): Pool[] => state.pools.pools;
 
 export const selectPrices = (state: RootState): Prices => state.pools.prices;
 
+export const selectEthPrice = (state: RootState): number => state.pools.prices.ETH;
+
 export default poolsSlice.reducer;
