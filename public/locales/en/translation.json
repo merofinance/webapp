@@ -13,7 +13,8 @@
       "stake": "stake BKD",
       "docs": "docs",
       "blog": "blog",
-      "newsletter": "newsletter"
+      "newsletter": "newsletter",
+      "actions": "actions"
     }
   },
   "walletConnect": {
@@ -408,6 +409,15 @@
       }
     }
   },
+  "actions": {
+    "lending": {
+      "header": "Lending",
+      "overview": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut"
+    },
+    "limitOrders": {
+      "header": "Limit Orders"
+    }
+  },
   "claim": {
     "overview": {
       "claimable": "claimable",
@@ -473,7 +483,8 @@
     "cancel": "Cancel",
     "back": "Back",
     "close": "Close",
-    "moreInDocs": "Find out more in the docs"
+    "moreInDocs": "Find out more in the docs",
+    "comingSoon": "Coming Soon"
   },
   "errors": {
     "header": "An Error Occured",
