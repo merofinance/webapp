@@ -12,7 +12,7 @@ import { useWeb3Updated } from "../app/hooks/use-web3-updated";
 import pending from "../assets/ui/status/pending.svg";
 import { spinAnimation } from "../styles/animations/SpinAnimation";
 import { pendingTransactionsCount } from "../state/transactionsSlice";
-import { useWindowPosition } from "../app/hooks/use-window-position";
+import useWindowPosition from "../app/hooks/use-window-position";
 
 const StyledConnectorDesktop = styled.div`
   display: flex;
