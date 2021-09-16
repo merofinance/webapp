@@ -1,5 +1,6 @@
 import { BigNumber, ContractTransaction, providers } from "ethers";
 import { Pool } from "..";
+import { Lending } from "../../state/lendingSlice";
 import { Backd } from "../backd";
 import { bigNumberToFloat } from "../numeric";
 import { ScaledNumber } from "../scaled-number";
@@ -34,6 +35,17 @@ export default class MockBackd implements Backd {
     const pool = pools.find((pool) => pool.address === address);
     if (!pool) throw Error("No pool found for address");
     return Promise.resolve(transformPool(pool, bigNumberToFloat));
+  }
+
+  getAave(): Promise<Lending> {
+    return Promise.resolve({
+      totalCollateral: 2,
+      totalDebt: 10,
+      availableBorrows: 4,
+      currentLiquidationThreshold: 10,
+      healthFactor: 1,
+      reserves: [],
+    });
   }
 
   getAllowance(token: Token, spender: Address, account?: string): Promise<ScaledNumber> {

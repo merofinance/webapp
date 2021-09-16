@@ -24,6 +24,7 @@ import {
   Token,
   transformPool,
 } from "./types";
+import { Lending } from "../state/lendingSlice";
 
 export type BackdOptions = {
   chainId: number;
@@ -33,6 +34,7 @@ export interface Backd {
   currentAccount(): Promise<Address>;
   listPools(): Promise<Pool[]>;
   getPoolInfo(address: Address): Promise<Pool>;
+  getAave(): Promise<Lending>;
   getPositions(): Promise<PlainPosition[]>;
   registerPosition(pool: Pool, position: Position): Promise<ContractTransaction>;
   removePosition(
@@ -149,6 +151,18 @@ export class Web3Backd implements Backd {
       stakerVaultAddress,
     };
     return transformPool(rawPool, bigNumberToFloat);
+  }
+
+  async getAave(): Promise<Lending> {
+    const account = await this.currentAccount();
+    return {
+      totalCollateral: 2,
+      totalDebt: account.length > 1 ? 2 : 10,
+      availableBorrows: 4,
+      currentLiquidationThreshold: 10,
+      healthFactor: 1,
+      reserves: [],
+    };
   }
 
   async getPositions(): Promise<PlainPosition[]> {
