@@ -34,6 +34,7 @@ import { ErrorAlert } from "./components/ErrorAlert";
 import NotFoundPage from "./pages/not-found/NotFoundPage";
 import { BackdError } from "./app/errors";
 import { useIsLive } from "./app/hooks/use-is-live";
+import ActionsPage from "./pages/actions/ActionsPage";
 
 const Background = styled.div`
   background: radial-gradient(rgba(11, 3, 60, 0.2), rgba(10, 5, 38, 0.3));
@@ -105,6 +106,10 @@ const App = (): JSX.Element => {
 
                       <Route path="/pools">
                         <PoolsPage />
+                      </Route>
+
+                      <Route path="/actions">
+                        <ActionsPage />
                       </Route>
 
                       {stakingLive && (
