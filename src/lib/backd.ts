@@ -177,7 +177,6 @@ export class Web3Backd implements Backd {
         new ScaledNumber(userAccountData.currentLiquidationThreshold, 4)
       ),
       healthFactor: new ScaledNumber(userAccountData.healthFactor),
-      reserves: [],
     };
   }
 

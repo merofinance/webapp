@@ -3,25 +3,12 @@ import { RootState } from "../app/store";
 import { Backd } from "../lib/backd";
 import { ScaledNumber } from "../lib/scaled-number";
 
-export interface Reserve {
-  currentATokenBalance: ScaledNumber;
-  currentStableDebt: ScaledNumber;
-  currentVariableDebt: ScaledNumber;
-  principalStableDebt: ScaledNumber;
-  scaledVariableDebt: ScaledNumber;
-  stableBorrowRate: ScaledNumber;
-  liquidityRate: ScaledNumber;
-  stableRateLastUpdated: Date;
-  usageAsCollateralEnabled: boolean;
-}
-
 export interface Lending {
   totalCollateralETH: ScaledNumber;
   totalDebtETH: ScaledNumber;
   availableBorrowsETH: ScaledNumber;
   currentLiquidationThreshold: ScaledNumber;
   healthFactor: ScaledNumber;
-  reserves: Reserve[];
 }
 
 interface LendingState {

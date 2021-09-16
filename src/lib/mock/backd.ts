@@ -44,7 +44,6 @@ export default class MockBackd implements Backd {
       availableBorrowsETH: new ScaledNumber(),
       currentLiquidationThreshold: new ScaledNumber(),
       healthFactor: new ScaledNumber(),
-      reserves: [],
     });
   }
 
