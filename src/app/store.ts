@@ -34,7 +34,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: "root",
   version: 1,
-  blacklist: ["error"],
+  blacklist: ["error", "user", "positions", "transactions"],
   storage,
 };
 
