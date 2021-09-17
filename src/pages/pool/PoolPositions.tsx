@@ -107,16 +107,19 @@ interface ScrollShadowProps {
 
 const ScrollShadow = styled.div`
   position: absolute;
-  right: 0;
+  right: -1px;
   top: 50%;
-  background-color: #10082f;
-  filter: blur(5px);
+  background: linear-gradient(to right, transparent, #10082f 90%, #10082f 100%);
   width: 20px;
-  transform: translate(50%, -50%);
+  transform: translateY(-50%);
   height: 90%;
 
   transition: opacity 0.3s;
   opacity: ${(props: ScrollShadowProps) => (props.show ? 1 : 0)};
+
+  @media (min-width: 901px) {
+    display: none;
+  }
 `;
 
 type Props = {

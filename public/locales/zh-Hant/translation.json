@@ -1,9 +1,27 @@
 {
+  "amountInput": {
+    "approve": "Approve {{asset}}",
+    "available": "Available: {{amount}}",
+    "enter": "Enter Amount",
+    "max": "max",
+    "validation": {
+      "exceedsBalance": "Amount exceeds available balance",
+      "invalid": "Invalid number",
+      "positive": "Amount must be a positive number"
+    }
+  },
   "auditedBy": {
     "description": "由苏黎世联邦理工学院安全专家领导，逾85家区块链公司和组织信任",
     "header": "审计机构",
     "preLaunchHeader": "正在审计",
     "viewReport": "查看报告"
+  },
+  "banner": {
+    "testnet": {
+      "blogPost": "the blog post",
+      "connect": "Connect your wallet to begin or read",
+      "live": "🎉 Backd is now live on Kovan Testnet."
+    }
   },
   "benefits": {
     "avoidLiquidation": {
@@ -19,6 +37,41 @@
       "header": "手续费分润"
     },
     "readMore": "了解更多"
+  },
+  "claim": {
+    "breakdown": "Breakdown of claimable earnings:",
+    "buttons": {
+      "claim": "Claim",
+      "claimAll": "Claim all",
+      "claimAllAndStake": "Claim all & Stake",
+      "claimAndStake": "Claim & Stake"
+    },
+    "helpText": "Where are my pool rewards?",
+    "overview": {
+      "claimable": "claimable",
+      "deposits": "your total deposits"
+    },
+    "pool": "{{asset}} pool"
+  },
+  "components": {
+    "back": "Back",
+    "cancel": "Cancel",
+    "close": "Close",
+    "confirm": "Confirm",
+    "dropdownChoose": "choose",
+    "moreInDocs": "Find out more in the docs"
+  },
+  "errors": {
+    "fetchPrices": "failed to fetch prices: {{error}}",
+    "header": "An Error Occured",
+    "invalidNumber": "Not a valid number",
+    "negativeNumber": "Negative numbers not supported",
+    "positionCreation": "Position creation failed",
+    "support": "Please try again in a moment. If the error persists, you can contact us on",
+    "transactionType": "Transaction type not supported",
+    "tryTestnet": "Backd is not yet live on mainnet. You can test it now on Kovan by switching networks.",
+    "unsupportedNetwork": "Network not supported",
+    "wrongNetwork": "Wrong network selected, please use a development network"
   },
   "footer": {
     "community": {
@@ -60,6 +113,15 @@
       "pools": "池子",
       "stake": "质押BKD"
     }
+  },
+  "headers": {
+    "apr": "APR",
+    "apy": "APY",
+    "asset": "Asset",
+    "claimable": "Claimable (USD)",
+    "deposits": "Your deposits",
+    "staked": "Staked",
+    "tvl": "TVL"
   },
   "howItWorks": {
     "categories": {
@@ -126,7 +188,7 @@
   },
   "landingPage": {
     "changeNetwork": "Try on Testnet",
-    "connectWallet": "Connect Wallet",
+    "connectWallet": "连接钱包",
     "header": "响应式流动资产",
     "subHeader": "一个去信任化利息生成，旨在防止担保贷款被清算的保护协议",
     "unsupportedNetwork": "Unsupported Network",
@@ -219,7 +281,7 @@
     },
     "links": {
       "claim": "claim page",
-      "docs": "docs",
+      "docs": "文档",
       "home": "home page",
       "pools": "view all pools"
     },
@@ -228,6 +290,174 @@
       "end": "if you believe there is an issue.",
       "getInTouch": "get in touch",
       "start": "Try one of the handy links below - or"
+    }
+  },
+  "pool": {
+    "information": {
+      "apy": {
+        "header": "APY",
+        "tooltip": "The current annual percent yield earned by pool LPs"
+      },
+      "header": "Pool Information",
+      "strategy": {
+        "details": {
+          "readMore": "Read More",
+          "viewContract": "View Contract"
+        },
+        "header": "Strategy",
+        "tooltip": "The current protocol funds are allocated to for yield farming strategies"
+      },
+      "tvl": {
+        "header": "Pool TVL",
+        "tooltip": "The market capitalization of assets held in the pool (total value locked)"
+      }
+    },
+    "overview": "Deposit {{asset}} to begin earning yield via the {{strategy}} strategy. Once you have deposited, you can make your liquidity reactive by opening a top-up position.",
+    "statistics": {
+      "deposits": {
+        "header": "Your deposits",
+        "tooltip": "The current value of your assets held in the pools"
+      },
+      "locked": {
+        "header": "Locked in position",
+        "tooltip": "The current value of your assets registered for top-ups (liquidation protection)"
+      },
+      "rewards": {
+        "header": "Rewards accrued",
+        "tooltip": "The current value of earned rewards that have yet to be claimed"
+      }
+    },
+    "tabs": {
+      "deposit": {
+        "action": "Deposit and Stake",
+        "header": "Deposit {{asset}}",
+        "input": {
+          "labelDesktop": "Enter an amount of {{asset}} to deposit",
+          "labelMobile": "Enter amount to deposit"
+        },
+        "tab": "Deposit"
+      },
+      "positions": {
+        "buttons": {
+          "approve": "approve 1/2",
+          "create": "create 2/2",
+          "nav": "Create a Top-up Position"
+        },
+        "confirmation": {
+          "header": "Confirm top-up position",
+          "summaryEnd": "drops below {{threshold}}, it will be topped up with {{single}} {{asset}} ({{singleUsd}}). This will be repeated each time the collateralization ratio drops below {{threshold}}, until a total of {{max}} {{asset}} ({{maxUsd}}) is topped up.",
+          "summaryStart": "When the collateralization of"
+        },
+        "fields": {
+          "address": {
+            "hover": "Enter Address",
+            "invalid": "Invalid Address",
+            "label": "Address",
+            "required": "Address is required",
+            "tooltip": "The address of the owner of the position to top up (e.g. if Alice is the borrower on Aave that should be topped up then this would be Alice’s address)",
+            "unique": "Max of one position per protocol and address"
+          },
+          "max": {
+            "exceedsBalance": "Exceeds deposited balance",
+            "hover": "Enter Max Top Up",
+            "invalid": "Invalid number",
+            "label": "Max Top Up",
+            "positive": "Must be positive number",
+            "required": "Max Top Up required",
+            "tooltip": "Maximum top up amount (value of your liquidity allocated for top ups)"
+          },
+          "protocol": {
+            "hover": "Select Protocol",
+            "label": "Protocol",
+            "tooltip": "The lending protocol on which the user is borrowing funds (currently compatible with Aave and Compound)"
+          },
+          "single": {
+            "hover": "Enter Single Top Up",
+            "invalid": "Invalid number",
+            "label": "Single Top Up",
+            "lessThanMax": "Must be less than max top up",
+            "positive": "Must be positive number",
+            "required": "Single Top Up is required",
+            "tooltip": "Amount of a single top up increment (e.g. top up increments of 2,500 DAI)"
+          },
+          "threshold": {
+            "greaterThanOne": "Must be greater than 1",
+            "hover": "Enter Threshold",
+            "label": "Threshold",
+            "required": "Threshold is required",
+            "tooltip": "The health factor threshold a collateral top up should occur at"
+          }
+        },
+        "header": "Top-up {{asset}} positions",
+        "tabDesktop": "Top-up Positions",
+        "tabMobile": "Positions"
+      },
+      "withdraw": {
+        "action": "Withdraw {{asset}}",
+        "header": "Withdraw {{asset}}",
+        "input": {
+          "labelDesktop": "Enter an amount of {{asset}} to withdraw",
+          "labelMobile": "Enter amount to withdraw"
+        },
+        "tab": "Withdraw"
+      }
+    }
+  },
+  "pools": {
+    "header": "All pools",
+    "information": {
+      "apy": {
+        "header": "Average APY",
+        "tooltip": "The average annual percent yield over a 30 day period"
+      },
+      "header": "Pools Information",
+      "revenue": {
+        "header": "Revenue",
+        "tooltip": "The total value of fees generated by the Backd protocol"
+      },
+      "tvl": {
+        "header": "Platform TVL",
+        "tooltip": "The market capitalization of total assets held in Backd liquidity pools (total value locked)"
+      }
+    },
+    "overview": "Backd’s single-asset pools aggregate yield across strategies. After depositing an asset, register a top-up position to protect from liquidation on supported collateralized lending protocols.",
+    "statistics": {
+      "deposits": {
+        "header": "Your deposits",
+        "tooltip": "The current value of your assets held in Backd liquidity pools"
+      },
+      "locked": {
+        "header": "Locked in position",
+        "tooltip": "The current value of your assets registered for top-ups (liquidation protection)"
+      },
+      "rewards": {
+        "header": "Rewards accrued",
+        "tooltip": "The current value of earned rewards that have yet to be claimed"
+      }
+    }
+  },
+  "stake": {
+    "overview": {
+      "claimable": "claimable",
+      "deposits": "your total deposits"
+    },
+    "tabs": {
+      "stake": {
+        "action": "Deposit and Stake",
+        "description": "Stake BKD and earn a share in x% of platform revenue, paid out in bkdDAI tokens.",
+        "header": "stake",
+        "inputDesktop": "Enter an amount of BKD to stake",
+        "inputMobile": "Amount of BKD to stake",
+        "more": "More"
+      },
+      "unstake": {
+        "action": "Unstake and Withdraw",
+        "description": "Stake BKD and earn a share in x% of platform revenue, paid out in bkdDAI tokens.",
+        "header": "unstake",
+        "inputDesktop": "Enter an amount of BKD to unstake",
+        "inputMobile": "Amount of BKD to unstake",
+        "more": "More"
+      }
     }
   },
   "supportedBy": {
@@ -242,6 +472,12 @@
       "connected": "Connected with {{wallet}}",
       "empty": "Your transactions will appear here...",
       "header": "Account",
+      "network": {
+        "chainId": "Chain id {{id}}",
+        "ethereum": "Ethereum Mainet",
+        "testnet": "Ethereum {{network}} Testnet",
+        "unknown": "Unknown Network"
+      },
       "recentTransactions": "Recent transactions"
     },
     "header": "连接你的钱包",

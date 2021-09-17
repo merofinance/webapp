@@ -81,7 +81,7 @@ const ClaimPage = (): JSX.Element => {
     <StyledPoolsPage>
       <Seo
         title="Claim Rewards & Yield"
-        description="Claim rewards from Backd yield farming strategies and collateral top up fees"
+        description="Claim rewards from Backd yield farming strategies and collateral top-up fees"
       />
       <ClaimSummary />
       <Headers>
