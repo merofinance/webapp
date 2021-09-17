@@ -56,7 +56,7 @@ const Overview = ({ description, link }: Props) => {
     <InfoCard
       defaultOpen
       collapsible
-      header="Overview"
+      header={t("components.overview")}
       content={
         <Content>
           <Description>{description}</Description>
