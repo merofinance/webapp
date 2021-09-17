@@ -290,7 +290,7 @@
       },
       "locked": {
         "header": "Locked in position",
-        "tooltip": "The current value of your assets registered for top-ups (liquidation protection)"
+        "tooltip": "The current value of your assets registered for top-ups (liquidation protection). Assets locked in a position still earn yield"
       },
       "rewards": {
         "header": "Rewards accrued",
