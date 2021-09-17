@@ -6,7 +6,9 @@ import { LiquidityPoolFactory } from "@backdfund/protocol/typechain/LiquidityPoo
 import { StakerVaultFactory } from "@backdfund/protocol/typechain/StakerVaultFactory";
 import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
 import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFactory";
+import { ComptrollerFactory } from "@backdfund/protocol/typechain/ComptrollerFactory";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
+
 import { UnsupportedNetwork } from "../app/errors";
 import { getPrices as getPricesFromCoingecko } from "./coingecko";
 import { getPrices as getPricesFromBinance } from "./binance";
@@ -25,8 +27,8 @@ import {
   transformPool,
 } from "./types";
 import { Lending } from "../state/lendingSlice";
-import { ProtocolDataProviderFactory } from "./contracts/aave/ProtocolDataProvider";
 import { LendingPoolFactory } from "./contracts/aave/LendingPool";
+import { CTokenFactory } from "./contracts/compound/CToken";
 
 export type BackdOptions = {
   chainId: number;
@@ -173,18 +175,33 @@ export class Web3Backd implements Backd {
 
   async getCompound(): Promise<Lending> {
     const account = await this.currentAccount();
-    const accountResponse = await fetch(
-      `https://api.compound.finance/api/v2/account?addresses[]=${account}`
-    );
-    const content = await accountResponse.json();
-    const data = content.accounts[0];
-    return {
-      totalCollateralETH: ScaledNumber.fromUnscaled(data.total_collateral_value_in_eth.value),
-      totalDebtETH: ScaledNumber.fromUnscaled(data.total_borrow_value_in_eth.value),
-      availableBorrowsETH: ScaledNumber.fromUnscaled("0"),
+    const ADDRESS = "0x5eae89dc1c671724a672ff0630122ee834098657";
+    const comptrollerContract = ComptrollerFactory.connect(ADDRESS, this._provider);
+    const assets = await comptrollerContract.getAssetsIn(account);
+    const cTokenContract = CTokenFactory.connect(assets[0], this._provider);
+    console.log("meow");
+    const decimals = await cTokenContract.decimals();
+    console.log(decimals);
+    const underlying = await cTokenContract.underlying();
+    console.log("Chhese");
+    console.log(underlying);
+    const underlyingContract = Ierc20FullFactory.connect(underlying, this._provider);
+    const underlyingDecimals = await underlyingContract.decimals();
+    const borrowsBN = await cTokenContract.borrowBalanceStored(account);
+    const borrows = new ScaledNumber(borrowsBN, decimals);
+    const balanceBN = await cTokenContract.balanceOf(account);
+    const balance = new ScaledNumber(balanceBN, decimals);
+    const exchangeRateBN = await cTokenContract.exchangeRateStored();
+    const exchangeRate = new ScaledNumber(exchangeRateBN, 18 - 8 + underlyingDecimals);
+    console.log(exchangeRate.toCryptoString());
+
+    return Promise.resolve({
+      totalCollateralETH: new ScaledNumber(),
+      totalDebtETH: new ScaledNumber(),
+      availableBorrowsETH: new ScaledNumber(),
       currentLiquidationThreshold: new ScaledNumber(),
-      healthFactor: ScaledNumber.fromUnscaled(data.health ? data.health.value : "1"),
-    };
+      healthFactor: new ScaledNumber(),
+    });
   }
 
   async getPositions(): Promise<PlainPosition[]> {
