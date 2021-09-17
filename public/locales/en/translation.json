@@ -478,7 +478,8 @@
     "cancel": "Cancel",
     "back": "Back",
     "close": "Close",
-    "moreInDocs": "Find out more in the docs"
+    "moreInDocs": "Find out more in the docs",
+    "overview": "Overview"
   },
   "errors": {
     "header": "An Error Occured",
