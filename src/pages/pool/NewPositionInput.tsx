@@ -80,9 +80,10 @@ type Props = {
   type: string;
   name: keyof FormType;
   formik: FormikFormType;
+  placeholder: string;
 };
 
-const NewPositionInput = ({ type, name, formik }: Props): JSX.Element => {
+const NewPositionInput = ({ type, name, formik, placeholder }: Props): JSX.Element => {
   const { t } = useTranslation();
   const valid = !formik.touched[name] || !formik.errors[name];
 
@@ -94,7 +95,7 @@ const NewPositionInput = ({ type, name, formik }: Props): JSX.Element => {
             type={type}
             name={name}
             value={formik.values[name]}
-            placeholder="0"
+            placeholder={placeholder}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />

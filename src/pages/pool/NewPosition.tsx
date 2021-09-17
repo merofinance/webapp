@@ -223,10 +223,20 @@ const NewPosition = ({ pool }: Props): JSX.Element => {
           <Value>
             <Dropdown formik={formik} name="protocol" options={["Aave", "Compound"]} />
           </Value>
-          <NewPositionInput type="text" name="account" formik={formik} />
-          <NewPositionInput type="number" name="threshold" formik={formik} />
-          <NewPositionInput type="number" name="singleTopUp" formik={formik} />
-          <NewPositionInput type="number" name="maxTopUp" formik={formik} />
+          <NewPositionInput type="text" name="account" formik={formik} placeholder="0x09...A98E" />
+          <NewPositionInput type="number" name="threshold" formik={formik} placeholder="1.4" />
+          <NewPositionInput
+            type="number"
+            name="singleTopUp"
+            formik={formik}
+            placeholder={`2,000 ${pool.underlying.symbol}`}
+          />
+          <NewPositionInput
+            type="number"
+            name="maxTopUp"
+            formik={formik}
+            placeholder={`10,000 ${pool.underlying.symbol}`}
+          />
           <Value>
             <Button
               submit
