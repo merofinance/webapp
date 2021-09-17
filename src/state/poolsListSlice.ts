@@ -3,7 +3,7 @@ import { AppThunk, RootState } from "../app/store";
 import { Pool } from "../lib";
 import { Backd } from "../lib/backd";
 import { Prices } from "../lib/types";
-import { fetchAave } from "./lendingSlice";
+import { fetchAave, fetchCompound } from "./lendingSlice";
 import { fetchAllowances, fetchBalances } from "./userSlice";
 
 interface PoolsState {
@@ -62,6 +62,7 @@ export const fetchState =
   (backd: Backd): AppThunk =>
   (dispatch) => {
     dispatch(fetchAave({ backd }));
+    dispatch(fetchCompound({ backd }));
     dispatch(fetchPools({ backd })).then((v) => {
       if (v.meta.requestStatus !== "fulfilled") return;
       const pools = v.payload as Pool[];

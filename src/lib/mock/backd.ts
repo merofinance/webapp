@@ -47,6 +47,16 @@ export default class MockBackd implements Backd {
     });
   }
 
+  getCompound(): Promise<Lending> {
+    return Promise.resolve({
+      totalCollateralETH: new ScaledNumber(),
+      totalDebtETH: new ScaledNumber(),
+      availableBorrowsETH: new ScaledNumber(),
+      currentLiquidationThreshold: new ScaledNumber(),
+      healthFactor: new ScaledNumber(),
+    });
+  }
+
   getAllowance(token: Token, spender: Address, account?: string): Promise<ScaledNumber> {
     return Promise.resolve(this.allowances[token.address][spender] || 0);
   }

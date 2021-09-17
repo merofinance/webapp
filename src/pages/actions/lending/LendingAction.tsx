@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import Seo from "../../../components/Seo";
 import Overview from "../../../components/Overview";
 import LendingInformation from "./LendingInformation";
-import { selectAave } from "../../../state/lendingSlice";
+import { selectAave, selectCompound } from "../../../state/lendingSlice";
 import LendingCard from "./LendingCard";
 
 const StyledPoolsPage = styled.div`
@@ -42,12 +42,13 @@ const InfoCards = styled.div`
 const LendingAction = (): JSX.Element => {
   const { t } = useTranslation();
   const aave = useSelector(selectAave);
+  const compound = useSelector(selectCompound);
 
   return (
     <StyledPoolsPage>
       <Content>
-        <LendingCard lending={aave} />
-        <LendingCard lending={aave} />
+        <LendingCard protocol="Aave" lending={aave} />
+        <LendingCard protocol="Compound" lending={compound} />
       </Content>
       <InfoCards>
         <Overview description={t("actions.lending.overview")} link="https://docs.backd.fund/" />

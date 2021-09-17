@@ -3,6 +3,8 @@ import { RootState } from "../app/store";
 import { Backd } from "../lib/backd";
 import { ScaledNumber } from "../lib/scaled-number";
 
+// TODO Serialise these
+
 export interface Lending {
   totalCollateralETH: ScaledNumber;
   totalDebtETH: ScaledNumber;
@@ -28,6 +30,13 @@ export const fetchAave = createAsyncThunk(
   }
 );
 
+export const fetchCompound = createAsyncThunk(
+  "lending/fetch-compound",
+  async ({ backd }: { backd: Backd }) => {
+    return backd.getCompound();
+  }
+);
+
 export const lendingSlice = createSlice({
   name: "lending",
   initialState,
@@ -35,6 +44,9 @@ export const lendingSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchAave.fulfilled, (state, action) => {
       state.aave = action.payload;
+    });
+    builder.addCase(fetchCompound.fulfilled, (state, action) => {
+      state.compound = action.payload;
     });
   },
 });

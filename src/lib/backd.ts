@@ -37,6 +37,7 @@ export interface Backd {
   listPools(): Promise<Pool[]>;
   getPoolInfo(address: Address): Promise<Pool>;
   getAave(): Promise<Lending>;
+  getCompound(): Promise<Lending>;
   getPositions(): Promise<PlainPosition[]>;
   registerPosition(pool: Pool, position: Position): Promise<ContractTransaction>;
   removePosition(
@@ -156,19 +157,9 @@ export class Web3Backd implements Backd {
   }
 
   async getAave(): Promise<Lending> {
-    console.log("Getting aave");
     const account = await this.currentAccount();
-    console.log("Got account");
-    // const protocolDataProviderContract = ProtocolDataProviderFactory.connect(this._provider);
     const lendingPoolContract = LendingPoolFactory.connect(this._provider);
-    console.log("Got contract");
-    console.log(lendingPoolContract);
-    console.log(account);
     const userAccountData = await lendingPoolContract.getUserAccountData(account);
-    console.log("Got stuff");
-    console.log(userAccountData);
-    const meow = new ScaledNumber(userAccountData.totalCollateralETH);
-    console.log(meow.toCryptoString());
     return {
       totalCollateralETH: new ScaledNumber(userAccountData.totalCollateralETH),
       totalDebtETH: new ScaledNumber(userAccountData.totalDebtETH),
@@ -177,6 +168,22 @@ export class Web3Backd implements Backd {
         new ScaledNumber(userAccountData.currentLiquidationThreshold, 4)
       ),
       healthFactor: new ScaledNumber(userAccountData.healthFactor),
+    };
+  }
+
+  async getCompound(): Promise<Lending> {
+    const account = await this.currentAccount();
+    const accountResponse = await fetch(
+      `https://api.compound.finance/api/v2/account?addresses[]=${account}`
+    );
+    const content = await accountResponse.json();
+    const data = content.accounts[0];
+    return {
+      totalCollateralETH: ScaledNumber.fromUnscaled(data.total_collateral_value_in_eth.value),
+      totalDebtETH: ScaledNumber.fromUnscaled(data.total_borrow_value_in_eth.value),
+      availableBorrowsETH: ScaledNumber.fromUnscaled("0"),
+      currentLiquidationThreshold: new ScaledNumber(),
+      healthFactor: ScaledNumber.fromUnscaled(data.health ? data.health.value : "1"),
     };
   }
 

@@ -15,24 +15,27 @@ const LendingData = styled.div`
 
 const Header = styled.div`
   font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
 `;
 
 const Item = styled.div`
-  font-size: 1.7rem;
+  font-size: 1.6rem;
 `;
 
 interface Props {
+  protocol: string;
   lending?: Lending;
 }
 
-const LendingCard = ({ lending }: Props): JSX.Element => {
+const LendingCard = ({ protocol, lending }: Props): JSX.Element => {
   const ethPrice = useSelector(selectEthPrice);
 
   if (!lending || !lending.totalCollateralETH.toUsdValue) return <Item>meow</Item>; // TODO Make this a sceleton UI
 
   return (
     <LendingData>
-      <Header>Aave</Header>
+      <Header>{protocol}</Header>
       <Item>{`Total Collateral: ${lending.totalCollateralETH.toUsdValue(ethPrice)}`}</Item>
       <Item>{`Total Debt: ${lending.totalDebtETH.toUsdValue(ethPrice)}`}</Item>
       <Item>{`Avialable to Borrow: ${lending.availableBorrowsETH.toUsdValue(ethPrice)}`}</Item>
