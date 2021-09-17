@@ -267,6 +267,7 @@
   "pools": {
     "header": "All pools",
     "overview": "Backd’s single-asset pools aggregate yield across strategies. After depositing an asset, register a top-up position to protect from liquidation on supported collateralized lending protocols.",
+    "deposit": "deposit",
     "information": {
       "header": "Pools Information",
       "tvl": {

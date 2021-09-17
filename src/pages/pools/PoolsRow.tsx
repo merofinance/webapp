@@ -2,6 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
 import chevron from "../../assets/ui/chevron.svg";
 import Asset from "../../components/Asset";
 import Button from "../../components/Button";
@@ -123,6 +125,7 @@ type Props = {
 };
 
 const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const history = useHistory();
 
   const price = useSelector(selectPrice(pool));
@@ -151,7 +154,7 @@ const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
           <Chevron src={chevron} alt="right arrow" />
         </ChevronData>
         <Data right preview={preview}>
-          <Button text="deposit" background="#141128" />
+          <Button text={t("pools.deposit")} background="#141128" />
         </Data>
       </Row>
     </tbody>
