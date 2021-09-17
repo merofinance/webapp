@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { CircularProgress } from "@material-ui/core";
 
 import deleteIcon from "../../assets/ui/delete.svg";
 import { Pool } from "../../lib";
-import { removePosition } from "../../state/positionsSlice";
-import { AppDispatch } from "../../app/store";
-import { useBackd } from "../../app/hooks/use-backd";
 import { Position, TransactionInfo } from "../../lib/types";
 import { shortenAddress } from "../../lib/text";
-import { selectError } from "../../state/errorSlice";
 import { selectTransactions } from "../../state/transactionsSlice";
+import DeletePositionConfirmation from "./DeletePositionConfirmation";
 
 const StyledPosition = styled.div`
   width: 100%;
@@ -65,11 +62,8 @@ type Props = {
 };
 
 const PositionRow = ({ position, pool }: Props): JSX.Element => {
-  const backd = useBackd();
-  const dispatch: AppDispatch = useDispatch();
-  const error = useSelector(selectError);
   const pendingTx = useSelector(selectTransactions);
-  const [pending, setPending] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const loading = pendingTx.some(
     (tx: TransactionInfo) =>
@@ -79,39 +73,37 @@ const PositionRow = ({ position, pool }: Props): JSX.Element => {
       tx.description.args?.position.protocol === position.protocol
   );
 
-  useEffect(() => {
-    if (error || loading) setPending(false);
-  }, [error, loading]);
-
-  const handleRemovePosition = () => {
-    if (!backd || loading) return;
-    dispatch(removePosition({ backd, pool, position }));
-  };
-
   return (
-    <StyledPosition>
-      <Value>{position.protocol}</Value>
-      <Value>{shortenAddress(position.account, 10)}</Value>
-      <Value>{position.threshold.toString()}</Value>
-      <Value>{`${position.singleTopUp} ${pool.underlying.symbol.toUpperCase()}`}</Value>
-      <Value>{`${position.maxTopUp} ${pool.underlying.symbol.toUpperCase()}`}</Value>
-      <Value>
-        <DeleteButton>
-          {loading && <CircularProgress size={17} />}
-          {!loading && (
-            <Delete
-              src={deleteIcon}
-              alt="delete button"
-              onClick={() => {
-                if (pending) return;
-                setPending(true);
-                handleRemovePosition();
-              }}
-            />
-          )}
-        </DeleteButton>
-      </Value>
-    </StyledPosition>
+    <>
+      <StyledPosition>
+        <Value>{position.protocol}</Value>
+        <Value>{shortenAddress(position.account, 10)}</Value>
+        <Value>{position.threshold.toString()}</Value>
+        <Value>{`${position.singleTopUp} ${pool.underlying.symbol.toUpperCase()}`}</Value>
+        <Value>{`${position.maxTopUp} ${pool.underlying.symbol.toUpperCase()}`}</Value>
+        <Value>
+          <DeleteButton>
+            {loading && <CircularProgress size={17} />}
+            {!loading && (
+              <Delete
+                src={deleteIcon}
+                alt="delete button"
+                onClick={() => {
+                  if (!loading) setDeleting(true);
+                }}
+              />
+            )}
+          </DeleteButton>
+        </Value>
+      </StyledPosition>
+      <DeletePositionConfirmation
+        show={deleting}
+        close={() => setDeleting(false)}
+        position={position}
+        pool={pool}
+        loading={loading}
+      />
+    </>
   );
 };
 
