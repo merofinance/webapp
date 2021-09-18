@@ -24,10 +24,6 @@
     }
   },
   "benefits": {
-    "avoidLiquidation": {
-      "description": "Les liquidités déposées sur Backd et désignées comme garantie de secours seront automatiquement allouées en cas de nécessité pour maintenir le niveau de garantie d’un prêt.",
-      "header": "Eviter les liquidations"
-    },
     "earnYield": {
       "description": "Gagner des intérêts sur votre liquidité grâce à des stratégies de yield-farming basées sur Curve et Convex.",
       "header": "Gagner du rendement"

@@ -19,8 +19,8 @@ type BenfitsType = {
 const benefits: BenfitsType[] = [
   {
     icon: shield,
-    header: "benefits.avoidLiquidation.header",
-    description: "benefits.avoidLiquidation.description",
+    header: "benefits.reactiveLiquidity.header",
+    description: "benefits.reactiveLiquidity.description",
     url: "https://docs.backd.fund/protocol-architecture/top-ups",
   },
   {

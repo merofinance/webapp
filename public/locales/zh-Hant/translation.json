@@ -24,10 +24,6 @@
     }
   },
   "benefits": {
-    "avoidLiquidation": {
-      "description": "当需要补充保证金时，存放在Backd的备用资产将自动转到贷款协议以作保证金",
-      "header": "避免清算"
-    },
     "earnYield": {
       "description": "透过建基于Convex和Curve的流动资产挖矿策略赚取最大回报",
       "header": "赚取收益"

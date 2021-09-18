@@ -68,7 +68,7 @@ export const Header5 = styled.h5`
   text-align: center;
   margin-bottom: 1.5rem;
   color: var(--sub);
-  max-width: 42rem;
+  max-width: 54rem;
 
   @media (max-width: 600px) {
     font-size: 1.2rem;
