@@ -33,9 +33,9 @@ const Icons = styled.img`
   transition: transform 0.1s ease-out;
 
   @media (max-width: 600px) {
-    width: 130%;
-    left: -15%;
-    top: 5rem;
+    width: 140%;
+    left: -20%;
+    top: 10rem;
   }
 `;
 
