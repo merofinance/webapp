@@ -9,12 +9,15 @@ import { useBackd } from "../../app/hooks/use-backd";
 import { fetchState, selectPools } from "../../state/poolsListSlice";
 import { Pool } from "../../lib";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
+import { Header2, Header4 } from "../../styles/Headers";
 
 const StyledPreview = styled.div`
   position: relative;
   width: 100%;
   margin: var(--section-margin);
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
 
   @media (max-width: 600px) {
@@ -94,8 +97,10 @@ const Preview = (): JSX.Element => {
 
   return (
     <StyledPreview>
-      <Swirls src={swirls} alt="decorative swirls" />
+      <Header2>{t("pools.preview.header")}</Header2>
+      <Header4>{t("pools.preview.subHeader")}</Header4>
       <Table>
+        <Swirls src={swirls} alt="decorative swirls" />
         <thead>
           <HeaderRow>
             <Header>{t("headers.asset")}</Header>
