@@ -34,6 +34,7 @@ const Row = styled.tr`
   padding: 0 1.7rem;
   cursor: pointer;
 
+  transition: background-color 0.3s;
   :hover {
     background-color: #1a1438;
   }
