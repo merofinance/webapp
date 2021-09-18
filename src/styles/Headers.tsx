@@ -22,7 +22,7 @@ export const Header2 = styled.h2`
   font-size: 2.2rem;
   line-height: 3rem;
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 1.8rem;
   letter-spacing: 2px;
   color: var(--sub);
 
@@ -48,6 +48,14 @@ export const Header3 = styled.h3`
 `;
 
 export const Header4 = styled.h4`
+  font-size: 4.2rem;
+  font-weight: 700;
+  line-height: 4.9rem;
+  text-align: center;
+  margin-bottom: 5.7rem;
+`;
+
+export const Header5 = styled.h5`
   font-weight: 700;
   font-size: 2.6rem;
   line-height: 3.4rem;
