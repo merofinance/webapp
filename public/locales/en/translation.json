@@ -64,7 +64,8 @@
     "readMore": "Read more"
   },
   "howItWorks": {
-    "header": "how it works",
+    "header": "action 01: liquidation protection",
+    "subHeader": "Protect your loans from liquidation",
     "categories": {
       "earnYield": {
         "tabName": "earn yield",

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
-import { Header2, Header4 } from "../../styles/Headers";
+import { Header2, Header4, Header5 } from "../../styles/Headers";
 import Radio, { RadioOptionType } from "../../components/Radio";
 
 type CardType = {
@@ -128,7 +128,7 @@ const Body = styled.p`
   }
 `;
 
-const Header = styled(Header4)`
+const Header = styled(Header5)`
   text-align: left;
   margin-bottom: 1rem;
 
@@ -155,6 +155,7 @@ const HowItWorks = (): JSX.Element => {
   return (
     <StyledHowItWorks>
       <Header2>{t("howItWorks.header")}</Header2>
+      <Header4>{t("howItWorks.subHeader")}</Header4>
       <Radio
         options={categories}
         active={category}
