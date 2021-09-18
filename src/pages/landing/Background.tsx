@@ -28,8 +28,8 @@ const Ovals = styled.img`
 const Icons = styled.img`
   position: absolute;
   top: 14rem;
-  left: 0;
-  width: 100%;
+  left: -8%;
+  width: 116%;
   transition: transform 0.1s ease-out;
 
   @media (max-width: 600px) {
