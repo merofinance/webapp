@@ -145,11 +145,14 @@ const Header = styled(Header5)`
 `;
 
 const ButtonContainer = styled.div`
-  margin: auto;
   position: absolute;
   bottom: 0;
   left: 50%;
   transform: translate(-50%, 50%);
+
+  @media (max-width: 713px) {
+    display: none;
+  }
 `;
 
 const HowItWorks = (): JSX.Element => {
