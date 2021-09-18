@@ -66,6 +66,7 @@
   "howItWorks": {
     "header": "action 01: liquidation protection",
     "subHeader": "Protect your loans from liquidation",
+    "deposit": "Deposit now",
     "categories": {
       "earnYield": {
         "tabName": "earn yield",
