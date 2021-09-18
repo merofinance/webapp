@@ -120,6 +120,32 @@
       }
     }
   },
+  "futureActions": {
+    "header": "future",
+    "subHeader": "More actions planned",
+    "actions": {
+      "uniswap": {
+        "header": "Uniswap V3 LP Management",
+        "description": "Backd Keepers detect when the price has moved outside of your defined range and move the liquidity into Backd’s yield pools. Once the price is back within range, Keepers move your liquidity back into Uniswap."
+      },
+      "limitOrders": {
+        "header": "Limit Orders",
+        "description": "Once a limit order can be filled, a Keeper can withdraw the required funds from yield pools and execute the trade on the AMM."
+      },
+      "curveImbalance": {
+        "header": "Curve Imbalance Protection",
+        "description": "Keepers can detect when LP pools become imbalanaced and remove liquidity for you on your behalf - saving you from substantial losses."
+      },
+      "nfts": {
+        "header": "Limit Orders for NFTs",
+        "description": "Create a limit order for an NFT with a specific set of rarity traits. Once the price drops within your desired amount, a purchase Action is executed and liquidity is removed from Backd’s yield pools."
+      },
+      "propose": {
+        "header": "Propose your own",
+        "description": "Actions can be added through the Backd DAO. Join the Backd community and propose a new action!"
+      }
+    }
+  },
   "supportedBy": {
     "header": "supported by"
   },
