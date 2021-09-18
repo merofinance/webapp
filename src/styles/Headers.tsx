@@ -61,7 +61,7 @@ export const Header4 = styled.h4`
   }
 `;
 
-export const Header5 = styled.h5`
+export const Header6 = styled.h6`
   font-weight: 500;
   font-size: 2rem;
   line-height: 2.8rem;
