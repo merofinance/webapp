@@ -1,6 +1,6 @@
 <div align="center">
   <br>
-	<a href="https://backd.fund/"><img src="https://backd.fund/bkd-full-dark.png" width="200"></a>
+	<a href="https://backd.fund/"><img src="public/favicon/android-chrome-512x512.png" width="200"></a>
   <br>
   <br>
   <p>

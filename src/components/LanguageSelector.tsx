@@ -12,12 +12,20 @@ const languageOptions: SelectorOptionType[] = [
     label: "English",
   },
   {
-    value: "zh",
+    value: "zh-Hant",
     label: "中文",
   },
   {
     value: "ja",
     label: "日本語",
+  },
+  {
+    value: "es",
+    label: "Español",
+  },
+  {
+    value: "fr",
+    label: "Français",
   },
 ];
 
@@ -72,7 +80,7 @@ const LanguageSelector = () => {
   const [open, setOpen] = useState(false);
 
   const matchingLanguages = languageOptions.filter(
-    (option: SelectorOptionType) => option.value === i18n.language.split("-")[0]
+    (option: SelectorOptionType) => option.value.split("-")[0] === i18n.language.split("-")[0]
   );
   const activeLanguage = matchingLanguages.length > 0 ? matchingLanguages[0] : languageOptions[0];
 

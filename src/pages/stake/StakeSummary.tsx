@@ -6,11 +6,11 @@ const StakeSummary = (): JSX.Element => {
     <SummaryStatistics
       statistics={[
         {
-          label: "claimable",
+          label: "stake.overview.claimable",
           value: "$1,243.34",
         },
         {
-          label: "your total deposits",
+          label: "stake.overview.deposits",
           value: "$65,530.34",
         },
       ]}

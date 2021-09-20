@@ -22,6 +22,22 @@ const isJapanese = () => {
   cy.get("#how-it-works-2").contains("利益獲得のための預け入れ");
 };
 
+const isSpanish = () => {
+  cy.get("h1").contains("Liquidez reactiva");
+  cy.get("h3").contains(
+    "Un protocolo trustless y generador de intereses diseñado para prevenir que préstamos colaterizados se conviertan en liquidables."
+  );
+  cy.get("#how-it-works-2").contains("Deposita para obtener recompensas");
+};
+
+const isFrench = () => {
+  cy.get("h1").contains("Liquidité Réactive");
+  cy.get("h3").contains(
+    "Un protocole qui génére des intérêts sans nécessiter de tiers de confiance. Conçu pour éviter la liquidation de prêts garantis."
+  );
+  cy.get("#how-it-works-2").contains("Stakez pour toucher des primes");
+};
+
 describe("Setting Language with Query Parameter", () => {
   it("Should Show English with no Parameter", () => {
     cy.visit("/");
@@ -29,13 +45,23 @@ describe("Setting Language with Query Parameter", () => {
   });
 
   it("Should Show Chinese with ZH Parameter", () => {
-    cy.visit("/?lng=zh");
+    cy.visit("/?lng=zh-Hant");
     isChinese();
   });
 
   it("Should Show Japanese with JA Parameter", () => {
     cy.visit("/?lng=ja");
     isJapanese();
+  });
+
+  it("Should Show Spanish with ES Parameter", () => {
+    cy.visit("/?lng=es");
+    isSpanish();
+  });
+
+  it("Should Show French with FR Parameter", () => {
+    cy.visit("/?lng=fr");
+    isFrench();
   });
 
   it("Should Show English with EN Parameter", () => {
@@ -55,7 +81,7 @@ describe("Language Switching", () => {
 
   it("Should Change Language to Chinese", () => {
     cy.get("#language-selector").click();
-    cy.get("#zh").click();
+    cy.get('[id="zh-Hant"]').click();
   });
 
   it("Should Show Chinese", () => {
@@ -76,6 +102,32 @@ describe("Language Switching", () => {
   });
 
   it("Percy Should Screenshot Japanese Landing Page", () => {
+    percySnapshot();
+  });
+
+  it("Should Change Language to Spanish", () => {
+    cy.get('[id="language-selector"]').click();
+    cy.get('[id="es"]').click();
+  });
+
+  it("Should Show Spanish", () => {
+    isSpanish();
+  });
+
+  it("Percy Should Screenshot Spanish Landing Page", () => {
+    percySnapshot();
+  });
+
+  it("Should Change Language to French", () => {
+    cy.get('[id="language-selector"]').click();
+    cy.get('[id="fr"]').click();
+  });
+
+  it("Should Show French", () => {
+    isFrench();
+  });
+
+  it("Percy Should Screenshot French Landing Page", () => {
     percySnapshot();
   });
 

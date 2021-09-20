@@ -1,36 +1,47 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import logo from "../assets/logo/logo.svg";
 import Connector from "./Connector";
 import NavItems from "./NavItems";
-import { useIsLive } from "../app/hooks/use-is-live";
+import Banner from "./Banner";
+import useWindowPosition from "../app/hooks/use-window-position";
 
 type HeaderProps = {
   isSticky: boolean;
 };
 
 const StyledHeader = styled.div`
-  position: relative;
   position: sticky;
   top: 0;
   left: 0;
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   margin-bottom: 8rem;
-  z-index: 1;
+  z-index: 2;
   transition: all 0.3s;
-  padding: 2.4rem 12.4rem;
 
   background-color: ${(props: HeaderProps) => (props.isSticky ? "#120e2c" : "transparent")};
   box-shadow: -4px 0px 4px rgba(0, 0, 0, ${(props: HeaderProps) => (props.isSticky ? "0.25" : "0")});
 
   @media (max-width: 600px) {
-    padding: 2.3rem 1.6rem;
     margin-bottom: 0;
+  }
+`;
+
+const Content = styled.div`
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2.4rem 12.4rem;
+
+  @media (max-width: 600px) {
+    padding: 2.3rem 1.6rem;
   }
 
   @media (min-width: 601px) and (max-width: 1224px) {
@@ -48,28 +59,18 @@ const Logo = styled.img`
 `;
 
 const Header = (): JSX.Element => {
-  const [scrollPosition, setScrollPosition] = useState(0);
-
-  const handleScroll = () => {
-    const position = window.pageYOffset;
-    setScrollPosition(position);
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  const windowPosition = useWindowPosition();
 
   return (
-    <StyledHeader isSticky={scrollPosition > 40}>
-      <Link to="/">
-        <Logo src={logo} alt="Backd logo" />
-      </Link>
-      <NavItems />
-      <Connector />
+    <StyledHeader isSticky={windowPosition > 40}>
+      <Banner />
+      <Content>
+        <Link to="/">
+          <Logo src={logo} alt="Backd logo" />
+        </Link>
+        <NavItems />
+        <Connector />
+      </Content>
     </StyledHeader>
   );
 };

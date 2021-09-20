@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
 import Seo from "../../components/Seo";
 import ClaimSummary from "./ClaimSummary";
 import ClaimAccordion from "./ClaimAccordion";
@@ -62,6 +64,8 @@ const Note = styled.a`
 `;
 
 const ClaimPage = (): JSX.Element => {
+  const { t } = useTranslation();
+
   const [openAccordions, setOpenAccordions] = useState<number[]>([0]);
 
   const isOpen = (index: number): boolean => openAccordions.includes(index);
@@ -77,13 +81,13 @@ const ClaimPage = (): JSX.Element => {
     <StyledPoolsPage>
       <Seo
         title="Claim Rewards & Yield"
-        description="Claim rewards from Backd yield farming strategies and collateral top up fees"
+        description="Claim rewards from Backd yield farming strategies and collateral top-up fees"
       />
       <ClaimSummary />
       <Headers>
-        <Header>Asset</Header>
-        <Header>Claimable (USD)</Header>
-        <Header hideMobile>APR</Header>
+        <Header>{t("headers.asset")}</Header>
+        <Header>{t("headers.claimable")}</Header>
+        <Header hideMobile>{t("headers.apr")}</Header>
         <ButtonHeader />
       </Headers>
       {claims.map((claim: string, index: number) => (
@@ -95,7 +99,7 @@ const ClaimPage = (): JSX.Element => {
         />
       ))}
       <Note href="https://google.com/" target="_blank" rel="noopener noreferrer">
-        Where are my pool rewards?
+        {t("claim.helpText")}
       </Note>
     </StyledPoolsPage>
   );

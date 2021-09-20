@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import Button from "../../components/Button";
 import { Pool } from "../../lib";
@@ -24,6 +25,7 @@ type Props = {
 };
 
 const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const dispatch: AppDispatch = useDispatch();
   const backd = useBackd();
   const totalBalance = useSelector(selectBalance(pool));
@@ -51,7 +53,7 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
         primary
         medium
         wide
-        text={`Withdraw ${pool.underlying.symbol.toUpperCase()}`}
+        text={t("pool.tabs.withdraw.action", { asset: pool.underlying.symbol.toUpperCase() })}
         click={() => {
           if (!valid) return;
           if (value.lte(availableToWithdraw)) executeWithdraw(value);
@@ -59,7 +61,7 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
         }}
         disabled={!valid}
         loading={loading}
-        hoverText="Enter Amount"
+        hoverText={t("amountInput.enter")}
       />
     </StyledProgressButtons>
   );

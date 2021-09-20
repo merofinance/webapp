@@ -1,5 +1,6 @@
 import { FormControl, makeStyles, MenuItem, Select } from "@material-ui/core";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { FormikFormType, FormType } from "../pages/pool/NewPosition";
 
 const useStyles = makeStyles(() => ({
@@ -55,6 +56,7 @@ type Props = {
 };
 
 const Dropdown = ({ formik, name, options }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const classes = useStyles();
 
   return (
@@ -71,7 +73,7 @@ const Dropdown = ({ formik, name, options }: Props): JSX.Element => {
         disableUnderline
       >
         <MenuItem value="" className={classes.menuItem}>
-          choose
+          {t("components.dropdownChoose")}
         </MenuItem>
         {options.map((option: string) => (
           <MenuItem key={option} value={option} className={classes.menuItem}>

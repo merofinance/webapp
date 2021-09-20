@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
 import { useBackd } from "../../app/hooks/use-backd";
 import ContentSection from "../../components/ContentSection";
 import { fetchState, selectPools } from "../../state/poolsListSlice";
@@ -73,6 +75,7 @@ const InfoCards = styled.div`
 `;
 
 const PoolsPage = (): JSX.Element => {
+  const { t } = useTranslation();
   const backd = useBackd();
   const dispatch = useDispatch();
   const pools = useSelector(selectPools);
@@ -90,16 +93,16 @@ const PoolsPage = (): JSX.Element => {
         description="Increase leverage, farm yield, & prevent DeFi loans (Aave, Compound, etc.) from liquidation"
       />
       <ContentSection
-        header="All pools"
+        header={t("pools.header")}
         statistics={<PoolsStatistics />}
         content={
           <Table>
             <thead>
               <HeaderRow>
-                <Header>Asset</Header>
-                <Header>APY</Header>
-                <Header>TVL</Header>
-                <Header hideOnMobile>Your deposits</Header>
+                <Header>{t("headers.asset")}</Header>
+                <Header>{t("headers.apy")}</Header>
+                <Header>{t("headers.tvl")}</Header>
+                <Header hideOnMobile>{t("headers.deposits")}</Header>
                 <ChevronHeader />
               </HeaderRow>
             </thead>
@@ -110,10 +113,7 @@ const PoolsPage = (): JSX.Element => {
         }
       />
       <InfoCards>
-        <Overview
-          description="Backd’s single-asset pools aggregate yield across strategies. After depositing an asset, register a top-up position to protect from liquidation on supported collateralized lending protocols."
-          link="https://docs.backd.fund/"
-        />
+        <Overview description={t("pools.overview")} link="https://docs.backd.fund/" />
         <PoolsInformation />
       </InfoCards>
     </StyledPoolsPage>

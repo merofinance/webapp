@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import LaunchIcon from "@material-ui/icons/Launch";
+import { useTranslation } from "react-i18next";
 
 import AmountInput from "../../components/AmountInput";
-import MultiStepButtons from "../../components/MultiStepButtons";
+import ApproveThenAction from "../../components/ApproveThenAction";
 import { selectBalance } from "../../state/userSlice";
 import { Token } from "../../lib/types";
 import { GradientLink } from "../../styles/GradientText";
 import { useDevice } from "../../app/hooks/use-device";
+import { ScaledNumber } from "../../lib/scaled-number";
 
 const StyledUnstakeTokens = styled.div`
   width: 100%;
@@ -60,27 +62,22 @@ type Props = {
 };
 
 const UnstakeTokens = ({ token }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const balance = useSelector(selectBalance(token.address));
   const { isMobile } = useDevice();
 
   const [value, setValue] = useState("");
-  const [approved, setApproved] = useState(false);
-
-  const approve = async () => {
-    setApproved(true);
-  };
 
   const unstake = async () => {
-    setApproved(false);
     setValue("");
   };
 
   return (
     <StyledUnstakeTokens>
       <Description>
-        Stake BKD and earn a share in x% of platform revenue, paid out in bkdDAI tokens.{" "}
+        {t("stake.tabs.unstake.description")}{" "}
         <MoreLink href="" target="_blank" rel="noopener noreferrer">
-          More
+          {t("stake.tabs.unstake.more")}
           <LaunchIcon
             fontSize={isMobile ? "small" : "medium"}
             style={{ fill: "var(--secondary)", transform: "translateY(2px)" }}
@@ -92,22 +89,21 @@ const UnstakeTokens = ({ token }: Props): JSX.Element => {
           noSlider
           value={value}
           setValue={(v: string) => setValue(v)}
-          label={isMobile ? "Amount of BKD to unstake" : "Enter an amount of BKD to unstake"}
+          label={
+            isMobile ? t("stake.tabs.unstake.inputMobile") : t("stake.tabs.unstake.inputDesktop")
+          }
           max={balance}
           error=""
         />
-        <MultiStepButtons
+        <ApproveThenAction
           stepsOnTop
+          label={t("stake.tabs.unstake.action")}
+          action={unstake}
+          value={ScaledNumber.fromUnscaled(value)}
+          loading={false}
           disabled={!value}
-          firstText={`Approve ${token.symbol}`}
-          firstAction={approve}
-          firstComplete={approved}
-          firstHoverText="Enter Amount"
-          firstLoading={false}
-          secondText="Unstake and Withdraw"
-          secondAction={unstake}
-          secondHoverText={`Approve ${token.symbol}`}
-          secondLoading={false}
+          token={token}
+          contract=""
         />
       </Content>
     </StyledUnstakeTokens>

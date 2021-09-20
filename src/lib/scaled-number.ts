@@ -21,6 +21,7 @@ export class ScaledNumber {
   }
 
   static fromPlain(value: PlainScaledNumber): ScaledNumber {
+    if (!value) return new ScaledNumber();
     return new ScaledNumber(BigNumber.from(value.value), value.decimals);
   }
 
@@ -98,7 +99,8 @@ export class ScaledNumber {
 
   toString = (): string => bigNumberToString(this._value, this._decimals);
 
-  toCryptoString = (): string => formatCrypto(Number(this.toString()));
+  toCryptoString = (parameters: Intl.NumberFormatOptions = {}): string =>
+    formatCrypto(Number(this.toString()), parameters);
 
   toUsdValue = (price: number): string => formatCurrency(Number(this.toString()) * price);
 }

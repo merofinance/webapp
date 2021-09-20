@@ -7,6 +7,7 @@ export interface ErrorState {
   title?: string;
   hideContact?: boolean;
   hideButton?: boolean;
+  redirectOnClose?: boolean;
 }
 
 export class BackdError extends CustomError {
@@ -22,6 +23,10 @@ export class BackdError extends CustomError {
     return false;
   }
 
+  get redirectOnClose(): boolean {
+    return false;
+  }
+
   formatMessage(): string {
     return this.message;
   }
@@ -32,17 +37,18 @@ export class BackdError extends CustomError {
       message: this.formatMessage(),
       hideContact: this.hideContact,
       hideButton: this.hideButton,
+      redirectOnClose: this.redirectOnClose,
     };
   }
 }
 
 export class UnsupportedNetwork extends BackdError {
   constructor(readonly chainId: number) {
-    super("unsupported network selected");
+    super("errors.unsupportedNetwork");
   }
 
   get title(): string {
-    return "Network not supported";
+    return "errors.unsupportedNetwork";
   }
 
   get hideContact(): boolean {
@@ -53,14 +59,17 @@ export class UnsupportedNetwork extends BackdError {
     return true;
   }
 
+  get redirectOnClose(): boolean {
+    return true;
+  }
+
   formatMessage(): string {
     let network = chainIds[this.chainId];
     if (!network) {
       network = `chain id ${this.chainId}`;
     }
 
-    if (this.chainId === 1)
-      return "Backd is not yet live on mainnet. You can test it now on Kovan by switching networks.";
+    if (this.chainId === 1) return "errors.tryTestnet";
 
     return (
       `Please change network. You are currently using ${network}, which is not supported. ` +

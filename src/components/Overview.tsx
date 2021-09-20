@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import LaunchIcon from "@material-ui/icons/Launch";
+import { useTranslation } from "react-i18next";
 
 import { GradientLink } from "../styles/GradientText";
 import InfoCard from "./InfoCard";
@@ -49,17 +50,19 @@ interface Props {
 }
 
 const Overview = ({ description, link }: Props) => {
+  const { t } = useTranslation();
+
   return (
     <InfoCard
       defaultOpen
       collapsible
-      header="Overview"
+      header={t("components.overview")}
       content={
         <Content>
           <Description>{description}</Description>
           <LinkContainer>
             <Link href={link} target="_blank" rel="noopener noreferrer">
-              Find out more in the docs
+              {t("components.moreInDocs")}
               <LaunchIcon
                 fontSize="small"
                 style={{

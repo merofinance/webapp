@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import PoolsRow from "../pools/PoolsRow";
-import swirl1 from "../../assets/background/swirl-1.svg";
-import swirl2 from "../../assets/background/swirl-2.svg";
+import swirls from "../../assets/background/swirls.svg";
 import { useBackd } from "../../app/hooks/use-backd";
 import { fetchState, selectPools } from "../../state/poolsListSlice";
 import { Pool } from "../../lib";
@@ -16,7 +16,6 @@ const StyledPreview = styled.div`
   margin: var(--section-margin);
   display: flex;
   justify-content: center;
-  overflow: hidden;
 
   @media (max-width: 600px) {
     margin: var(--mobile-section-margin);
@@ -69,12 +68,12 @@ const ChevronHeader = styled.th`
   }
 `;
 
-const Swirl = styled.img`
+const Swirls = styled.img`
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100vw;
+  width: 98vw;
 
   @media (max-width: 600px) {
     display: none;
@@ -82,6 +81,7 @@ const Swirl = styled.img`
 `;
 
 const Preview = (): JSX.Element => {
+  const { t } = useTranslation();
   const backd = useBackd();
   const dispatch = useDispatch();
   const pools = useSelector(selectPools);
@@ -94,14 +94,13 @@ const Preview = (): JSX.Element => {
 
   return (
     <StyledPreview>
-      <Swirl src={swirl1} alt="decorative swirl" />
-      <Swirl src={swirl2} alt="decorative swirl" />
+      <Swirls src={swirls} alt="decorative swirls" />
       <Table>
         <thead>
           <HeaderRow>
-            <Header>Asset</Header>
-            <Header>APY</Header>
-            <Header>TVL</Header>
+            <Header>{t("headers.asset")}</Header>
+            <Header>{t("headers.apy")}</Header>
+            <Header>{t("headers.tvl")}</Header>
             <ChevronHeader />
           </HeaderRow>
         </thead>

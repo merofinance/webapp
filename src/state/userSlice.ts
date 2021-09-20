@@ -22,11 +22,13 @@ import { handleTransactionConfirmation } from "../lib/transactionsUtils";
 interface UserState {
   balances: PlainBalances;
   allowances: PlainAllowances;
+  connecting: boolean;
 }
 
 const initialState: UserState = {
   balances: {},
   allowances: {},
+  connecting: false,
 };
 
 export const fetchBalances = createAsyncThunk(
@@ -73,6 +75,9 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    setConnecting: (state, action: PayloadAction<boolean>) => {
+      state.connecting = action.payload;
+    },
     setAllowance: (
       state,
       action: PayloadAction<{ token: Token; spender: Address; amount: PlainScaledNumber }>
@@ -129,7 +134,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setAllowance, decreaseAllowance } = userSlice.actions;
+export const { setAllowance, decreaseAllowance, setConnecting } = userSlice.actions;
 
 export const approve = createAsyncThunk(
   "user/approve",
@@ -216,11 +221,22 @@ export function selectBalance(addressOrPool: string | Optional<Pool>): Selector<
   };
 }
 
+export function isConnecting(state: RootState): boolean {
+  return state.user.connecting;
+}
+
 export function selectDepositAllowance(pool: Pool): Selector<ScaledNumber> {
   return (state: RootState) => {
     return ScaledNumber.fromPlain(state.user.allowances[pool.underlying.address]?.[pool.address]);
   };
 }
+
+export function selectAllowance(token: string, contract: string): Selector<ScaledNumber> {
+  return (state: RootState) => {
+    return ScaledNumber.fromPlain(state.user.allowances[token]?.[contract]);
+  };
+}
+
 export function selectToupAllowance(backd: Backd | undefined, pool: Pool): Selector<ScaledNumber> {
   return (state: RootState) => {
     if (!backd) return new ScaledNumber();

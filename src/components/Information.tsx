@@ -1,98 +1,51 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import AccordionChevron from "./AccordionChevron";
+import { GradientLink } from "../styles/GradientText";
 import InfoCard from "./InfoCard";
 import Tooltip from "./Tooltip";
+import arrow from "../assets/ui/arrow.svg";
 
-interface OverviewRow {
+interface RowDetailType {
+  icon: string;
+  label: string;
+  link: string;
+}
+
+interface InformationRowType {
   label: string;
   tooltip: string;
   value: string;
+  details?: RowDetailType[];
 }
 
-const Container = styled.div`
-  @media (max-width: 1439px) {
-    width: 100%;
-  }
-`;
-
-interface OverviewProps {
-  open: boolean;
-}
-
-const StyledOverview = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  background-color: rgba(37, 33, 64, 0.4);
-  border-radius: 1.4rem;
-  box-shadow: 0px 0px 12px rgba(23, 18, 22, 0.05);
-
-  margin-left: 1.6rem;
-  width: 40rem;
-  padding: 2rem 1.8rem;
-  @media (max-width: 1439px) {
-    margin-left: 0;
-    width: 100%;
-    margin-bottom: 2.4rem;
-    padding: 1.6rem;
-    transition: max-height 0.3s ease-out;
-    max-height: ${(props: OverviewProps) => (props.open ? "15rem" : "4.8rem")};
-    overflow: hidden;
-  }
-`;
-
-const Header = styled.button`
-  font-weight: 700;
-  letter-spacing: 0.25px;
-  text-align: left;
-
-  font-size: 2.4rem;
-  margin-bottom: 0.6rem;
-  @media (max-width: 1439px) {
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin-bottom: 0;
-    height: 4.8rem;
-    width: 100%;
-    font-size: 1.8rem;
-    cursor: pointer;
-    background: none;
-    padding-left: 1.6rem;
-    line-height: 42px;
-  }
-`;
-
-const ChevronContainer = styled.div`
-  position: absolute;
-  right: 0;
-  top: 0;
-  height: 4.8rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  @media (min-width: 1440px) {
-    display: none;
-  }
-`;
-
-const Statistics = styled.div`
+const StyledInformation = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
 `;
 
-const StatisticContainer = styled.div`
+const InformationRow = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
 
   margin-top: 1.4rem;
   @media (max-width: 1439px) {
     margin-top: 0.2rem;
   }
+`;
+
+interface RowProps {
+  isAccordion?: boolean;
+  open?: boolean;
+}
+
+const InformationHeader = styled.button`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  cursor: ${(props: RowProps) => (props.isAccordion ? "pointer" : "auto")};
 `;
 
 const LabelContainer = styled.div`
@@ -111,6 +64,11 @@ const Label = styled.div`
   }
 `;
 
+const ValueContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const Value = styled.div`
   font-weight: 500;
   line-height: 2.8rem;
@@ -123,27 +81,98 @@ const Value = styled.div`
   }
 `;
 
+const Chevron = styled.img`
+  margin-left: 0.7rem;
+  transition: all 0.3s;
+
+  display: ${(props: RowProps) => (props.isAccordion ? "block" : "none")};
+  transform: ${(props: RowProps) => (props.open ? "rotate(0deg)" : "rotate(180deg)")};
+
+  width: 1.1rem;
+  @media (max-width: 1439px) {
+    width: 1rem;
+  }
+`;
+
+const AccordionContainer = styled.div`
+  width: 100%;
+  transition: max-height 0.2s ease-out;
+  overflow: hidden;
+
+  max-height: ${(props: RowProps) => (props.open ? "4rem" : "0")};
+`;
+
+const AccordionContent = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-top: 1.4rem;
+`;
+
+const DetailItem = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+`;
+
+const DetailIcon = styled.img`
+  width: 1.4rem;
+`;
+
+const DetailLabel = styled(GradientLink)`
+  font-weight: 500;
+  line-height: 1.8rem;
+  letter-spacing: 0.15px;
+  margin-left: 0.7rem;
+
+  font-size: 1.4rem;
+  @media (max-width: 1439px) {
+    font-size: 1.3rem;
+  }
+`;
+
 type Props = {
   header: string;
-  rows: OverviewRow[];
+  rows: InformationRowType[];
 };
 
 const Information = ({ header, rows }: Props): JSX.Element => {
+  const [open, setOpen] = useState(false);
+
   return (
     <InfoCard
       header={header}
       content={
-        <Statistics>
-          {rows.map((row: OverviewRow) => (
-            <StatisticContainer key={row.label}>
-              <LabelContainer>
-                <Label>{row.label}</Label>
-                <Tooltip content={row.tooltip} />
-              </LabelContainer>
-              <Value>{row.value}</Value>
-            </StatisticContainer>
+        <StyledInformation>
+          {rows.map((row: InformationRowType) => (
+            <InformationRow key={row.label}>
+              <InformationHeader isAccordion={!!row.details} onClick={() => setOpen(!open)}>
+                <LabelContainer>
+                  <Label>{row.label}</Label>
+                  <Tooltip content={row.tooltip} />
+                </LabelContainer>
+                <ValueContainer>
+                  <Value>{row.value}</Value>
+                  <Chevron src={arrow} isAccordion={!!row.details} open={open} />
+                </ValueContainer>
+              </InformationHeader>
+              {row.details && (
+                <AccordionContainer open={open}>
+                  <AccordionContent>
+                    {row.details.map((details: RowDetailType) => (
+                      <DetailItem>
+                        <DetailIcon src={details.icon} />
+                        <DetailLabel href={details.link} target="_blank" rel="noopener noreferrer">
+                          {details.label}
+                        </DetailLabel>
+                      </DetailItem>
+                    ))}
+                  </AccordionContent>
+                </AccordionContainer>
+              )}
+            </InformationRow>
           ))}
-        </Statistics>
+        </StyledInformation>
       }
     />
   );

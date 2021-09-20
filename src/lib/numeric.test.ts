@@ -65,8 +65,12 @@ test("should format numbers as crypto", () => {
     { value: 0, expected: "0" },
     { value: 123102031023, expected: "123,102,031,023" },
     { value: 12.000000111, expected: "12" },
+    { value: 123102031023, expected: "123102031023", parameters: { useGrouping: false } },
+    { value: 121231.120102, expected: "121231.12", parameters: { useGrouping: false } },
   ];
-  testCases.forEach(({ value, expected }) => expect(formatCrypto(value)).toEqual(expected));
+  testCases.forEach(({ value, expected, parameters }) =>
+    expect(formatCrypto(value, parameters)).toEqual(expected)
+  );
 });
 
 test("stringToBigNumber should convert strings to big numbers", () => {
@@ -124,7 +128,7 @@ test("stringToBigNumber should error for negative numbers", () => {
     { value: (100 - 300).toString(), decimals: 2 },
   ];
   testCases.forEach(({ value, decimals }) => {
-    expect(() => stringToBigNumber(value, decimals)).toThrowError("Negative numbers not supported");
+    expect(() => stringToBigNumber(value, decimals)).toThrowError("errors.negativeNumber");
   });
 });
 
@@ -134,6 +138,16 @@ test("stringToBigNumber should error for invalid numbers", () => {
     { value: ".", decimals: 2 },
   ];
   testCases.forEach(({ value, decimals }) => {
-    expect(() => stringToBigNumber(value, decimals)).toThrowError("Not a valid number");
+    expect(() => stringToBigNumber(value, decimals)).toThrowError("errors.invalidNumber");
+  });
+});
+
+test("stringToBigNumber should remove commars", () => {
+  const testCases = [
+    { value: "1,000", decimals: 2, expected: BigNumber.from(100000) },
+    { value: "265,232,123.121", decimals: 6, expected: BigNumber.from(265232123121000) },
+  ];
+  testCases.forEach(({ value, decimals, expected }) => {
+    expect(stringToBigNumber(value, decimals).eq(expected)).toBeTruthy();
   });
 });

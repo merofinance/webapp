@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+
 import { GradientText } from "../styles/GradientText";
 
 export interface TabType {
@@ -108,6 +110,7 @@ interface Props {
 }
 
 const Tabs = ({ tabs }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
@@ -115,8 +118,8 @@ const Tabs = ({ tabs }: Props): JSX.Element => {
       <Options>
         {tabs.map((tab: TabType, index: number) => (
           <Option onClick={() => setActiveIndex(index)}>
-            <OptionText>{tab.label}</OptionText>
-            <GradientOptionText active={activeIndex === index}>{tab.label}</GradientOptionText>
+            <OptionText>{t(tab.label)}</OptionText>
+            <GradientOptionText active={activeIndex === index}>{t(tab.label)}</GradientOptionText>
           </Option>
         ))}
       </Options>

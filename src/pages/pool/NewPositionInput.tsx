@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { FormikFormType, FormType, Value } from "./NewPosition";
 
@@ -79,9 +80,11 @@ type Props = {
   type: string;
   name: keyof FormType;
   formik: FormikFormType;
+  placeholder: string;
 };
 
-const NewPositionInput = ({ type, name, formik }: Props): JSX.Element => {
+const NewPositionInput = ({ type, name, formik, placeholder }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const valid = !formik.touched[name] || !formik.errors[name];
 
   return (
@@ -92,11 +95,11 @@ const NewPositionInput = ({ type, name, formik }: Props): JSX.Element => {
             type={type}
             name={name}
             value={formik.values[name]}
-            placeholder="0"
+            placeholder={placeholder}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
-          {!valid && <Error>{formik.errors[name]}</Error>}
+          {!valid && <Error>{t(formik.errors[name] || "")}</Error>}
         </InputBorder>
       </StyledNewPositionInput>
     </Value>

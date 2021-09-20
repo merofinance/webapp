@@ -6,7 +6,6 @@ import background from "../../assets/audit/background.svg";
 import chainSecurityMobile from "../../assets/audit/chain-security-mobile.svg";
 import chainSecurity from "../../assets/audit/chain-security.svg";
 import { GradientLink } from "../../styles/GradientText";
-import { useIsLive } from "../../app/hooks/use-is-live";
 
 const AUDIT_COMPLETED = false;
 

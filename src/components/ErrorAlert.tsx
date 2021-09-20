@@ -1,12 +1,15 @@
 import React from "react";
-import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { useHistory, useLocation } from "react-router-dom";
+import styled from "styled-components";
+
 import { AppDispatch } from "../app/store";
-import Popup from "./Popup";
-import { Paragraph } from "../styles/Headers";
 import { selectError, setError } from "../state/errorSlice";
 import { GradientLink } from "../styles/GradientText";
+import { Paragraph } from "../styles/Headers";
 import Button from "./Button";
+import Popup from "./Popup";
 
 const Content = styled.div`
   width: 100%;
@@ -35,22 +38,32 @@ const Link = styled(GradientLink)`
 `;
 
 export function ErrorAlert(): JSX.Element {
+  const { t } = useTranslation();
   const error = useSelector(selectError);
   const dispatch: AppDispatch = useDispatch();
+  const location = useLocation();
+  const history = useHistory();
+
+  const handleClose = () => {
+    dispatch(setError({ message: "" }));
+    if (error.redirectOnClose && location.pathname !== "/") {
+      history.replace("/");
+    }
+  };
 
   return (
     <Popup
       show={error.message.length > 0}
-      close={() => dispatch(setError({ message: "" }))}
-      header={error.title || "An Error Occured"}
+      close={handleClose}
+      header={error.title ? t(error.title) : t("errors.header")}
       content={
         <Content>
-          <Text>{error.message}</Text>
+          <Text>{t(error.message)}</Text>
           {error.hideContact ? null : (
             <Text>
-              Please try again in a moment. If the error persists, you can contact us on
+              {t("errors.support")}
               <Link href="https://discord.gg/jpGvaFV3Rv" target="_blank" rel="noopener noreferrer">
-                Discord
+                {t("footer.community.links.discord")}
               </Link>
             </Text>
           )}
@@ -59,8 +72,8 @@ export function ErrorAlert(): JSX.Element {
               medium
               primary
               background="#252140"
-              text="Close"
-              click={() => dispatch(setError({ message: "" }))}
+              text={t("components.close")}
+              click={handleClose}
             />
           )}
         </Content>
