@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { Header2, Header4, Header5 } from "../../styles/Headers";
 import arrow from "../../assets/ui/pink-arrow.svg";
-import uniswap from "../../assets/actions/uniswap.svg";
+import uniswap from "../../assets/actions/uniswap.png";
 import limit from "../../assets/actions/limit.svg";
 import inbalance from "../../assets/actions/inbalance.svg";
 import nfts from "../../assets/actions/nfts.svg";
