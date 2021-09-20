@@ -4,8 +4,10 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import LaunchIcon from "@material-ui/icons/Launch";
 import { AbstractConnector } from "@web3-react/abstract-connector";
+import Web3 from "web3";
+import { ethers } from "ethers";
 
-import { injectedConnector, walletConnectConnector } from "../app/web3";
+import { injectedConnector, walletConnectConnector, privateKeyConnector } from "../app/web3";
 import metamask from "../assets/wallets/metamask.svg";
 import walletConnect from "../assets/wallets/wallet-connect.svg";
 import Popup from "./Popup";
@@ -144,9 +146,26 @@ const WalletSelectPopup = ({ show, close, setWallet }: Props): JSX.Element => {
   const { t } = useTranslation();
 
   const connect = async (connector: AbstractConnector, walletName: string) => {
-    await activate(connector);
+    const web3 = new Web3((window as any).web3.currentProvider);
+    // (window as any).ethereum = web3.eth;
+    const provider = new ethers.providers.Web3Provider(web3.eth.currentProvider as any, "any");
+    (window as any).ethereum = provider;
+    const meow = await provider.send("eth_accounts", []);
+    const netVersion = await provider.send("net_version", []);
+    console.log(netVersion);
+    console.log(meow);
+    const balance = await provider.getBalance("0x8B78D3EeFf975C668FcbDd2b559b852c8f6d93fb");
+    // const balance = await web3.eth.getBalance("0x8B78D3EeFf975C668FcbDd2b559b852c8f6d93fb");
+    // const provider = ethers.getDefaultProvider();
+    console.log(balance);
+    console.log("Activate");
+    // await activate(connector);
+    await activate(privateKeyConnector);
+    console.log("Activate DOne");
     setWallet(walletName);
+    console.log("Wallet set");
     close(true);
+    console.log("Closed");
   };
 
   return (
@@ -170,6 +189,7 @@ const WalletSelectPopup = ({ show, close, setWallet }: Props): JSX.Element => {
 
           {walletOptions.map((option: WalletOption) => (
             <Option
+              id={option.name}
               key={option.name}
               leftColor={option.leftColor}
               rightColor={option.rightColor}
