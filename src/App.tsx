@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 import { HelmetProvider } from "react-helmet-async";
+import Web3 from "web3";
 
 import { setError } from "./state/errorSlice";
 import { useMock } from "./app/config";
@@ -76,9 +77,18 @@ const App = (): JSX.Element => {
   const { stakingLive } = useIsLive();
 
   const getLibrary = (rawProvider: any, connector: any) => {
-    const provider = new ethers.providers.Web3Provider(rawProvider);
+    let provider;
+    if ((window as any).web3) {
+      const web3 = new Web3((window as any).web3.currentProvider);
+      (window as any).ethereum = web3.eth;
+      provider = new ethers.providers.Web3Provider((window as any).ethereum.currentProvider, "any");
+    } else {
+      provider = new ethers.providers.Web3Provider(rawProvider);
+    }
+
     const signer = useMock ? new MockSigner() : provider.getSigner();
-    const options = { chainId: parseInt(rawProvider.chainId, 16) };
+    // const options = { chainId: parseInt(rawProvider.chainId, 16) };
+    const options = { chainId: 42 };
 
     try {
       return createBackd(signer, options);
