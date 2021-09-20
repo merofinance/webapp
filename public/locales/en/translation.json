@@ -129,7 +129,7 @@
         "description": "Backd Keepers detect when the price has moved outside of your defined range and move the liquidity into Backd’s yield pools. Once the price is back within range, Keepers move your liquidity back into Uniswap."
       },
       "limitOrders": {
-        "header": "Limit Orders",
+        "header": "AMM Limit Orders",
         "description": "Once a limit order can be filled, a Keeper can withdraw the required funds from yield pools and execute the trade on the AMM."
       },
       "curveImbalance": {
