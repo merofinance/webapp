@@ -128,6 +128,7 @@ type Props = {
   type?: string;
   errorMessage: string;
   note?: string;
+  id?: string;
 };
 
 const Input = (props: Props): JSX.Element => {
@@ -140,6 +141,7 @@ const Input = (props: Props): JSX.Element => {
       <InputContainer onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
         <Glow focused={focused} valid={props.valid} />
         <StyledInput
+          id={props.id}
           ref={inputRef}
           type={props.type ?? "text"}
           value={props.value}
@@ -162,6 +164,7 @@ const Input = (props: Props): JSX.Element => {
         {props.buttonText && (
           <ButtonContainer>
             <Button
+              id={props.buttonText.toLowerCase().replace(" ", "-")}
               primary
               small
               uppercase
