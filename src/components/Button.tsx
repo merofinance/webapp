@@ -33,16 +33,16 @@ const StyledButton = styled.button`
   margin-top: ${(props: ButtonProps) => (props.hero ? "8rem" : "0")};
 
   width: ${(props: ButtonProps) => {
-    if (props.width) return props.width; // TODO Make sure we adjust this width for new sustem
+    if (props.width) return props.width;
     if (props.wide) return "100%";
     return "auto";
   }};
   height: ${(props: ButtonProps) => {
-    if (props.large) return "6.2rem"; // TODO think all these heights will need to be adjusted
-    if (props.medium) return "4.8rem";
-    if (props.small) return "2.8rem";
-    if (props.tiny) return "2.3rem";
-    if (props.square) return "5.6rem";
+    if (props.large) return props.primary ? "6.2rem" : "6.4rem";
+    if (props.medium) return props.primary ? "4.8rem" : "5rem";
+    if (props.small) return props.primary ? "2.8rem" : "3rem";
+    if (props.tiny) return props.primary ? "2.3rem" : "2.5rem";
+    if (props.square) return props.primary ? "5.6rem" : "5.8rem";
     return "3.8rem";
   }};
   border-radius: ${(props: ButtonProps) => {

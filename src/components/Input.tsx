@@ -18,7 +18,7 @@ type InputProps = {
 const InputContainer = styled.div`
   position: relative;
   width: 100%;
-  height: 5.6rem;
+  height: 5.4rem;
 `;
 
 const Glow = styled.div`
@@ -47,6 +47,7 @@ const StyledInput = styled.input`
   align-items: center;
   letter-spacing: 0.15px;
   -moz-appearance: textfield;
+  transform: translateY(-1px);
 
   /* Border */
   border-radius: ${(props: InputProps) =>
