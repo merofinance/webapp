@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import AccordionChevron from "./AccordionChevron";
 
 interface StyleProps {
   collapsible?: boolean;
   open?: boolean;
+  wide?: boolean;
 }
 
 const StyledInfoCard = styled.div`
@@ -22,7 +24,7 @@ const StyledInfoCard = styled.div`
     !props.collapsible ? "auto" : props.open ? "22rem" : "5.4rem"};
 
   margin-left: 1.6rem;
-  width: 34rem;
+  width: ${(props: StyleProps) => (props.wide ? "40rem" : "34rem")};
   padding: 2rem 1.8rem;
   @media (max-width: 1439px) {
     margin-left: 0;
@@ -103,18 +105,20 @@ type Props = {
 };
 
 const InfoCard = ({ header, content, collapsible, defaultOpen }: Props): JSX.Element => {
+  const { i18n } = useTranslation();
   const [open, setOpen] = useState(false);
+  const isWide = i18n.language === "ja";
 
   useEffect(() => {
     setOpen(!!defaultOpen);
   }, []);
 
   return (
-    <StyledInfoCard open={open} collapsible={collapsible}>
+    <StyledInfoCard open={open} collapsible={collapsible} wide={isWide}>
       <ChevronContainer collapsible={collapsible}>
         <AccordionChevron open={open} />
       </ChevronContainer>
-      <Header onClick={() => setOpen(!open)} collapsible={collapsible}>
+      <Header onClick={() => setOpen(!open)} collapsible={collapsible} wide={isWide}>
         {header}
       </Header>
       <Content collapsible={collapsible}>{content}</Content>
