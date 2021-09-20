@@ -47,7 +47,6 @@ const StyledInput = styled.input`
   align-items: center;
   letter-spacing: 0.15px;
   -moz-appearance: textfield;
-  transform: translateY(-1px);
 
   /* Border */
   border-radius: ${(props: InputProps) =>
@@ -79,8 +78,8 @@ const StyledInput = styled.input`
 
 const Label = styled.label`
   position: absolute;
-  left: 0.7rem;
-  top: 1.5rem;
+  left: 0.8rem;
+  top: 1.6rem;
   padding: 0 5px;
   letter-spacing: 0.15px;
 
@@ -89,7 +88,7 @@ const Label = styled.label`
   background-color: ${(props: InputProps) => props.background ?? "var(--bg)"};
   font-weight: ${(props: InputProps) => (props.focused ? "600" : "400")};
   transform: ${(props: InputProps) =>
-    props.focused ? "translate(0.4rem, -2.7rem) scale(0.75)" : "translate(0, 0) scale(1)"};
+    props.focused ? "translate(0.5rem, -2.6rem) scale(0.75)" : "translate(0, 0) scale(1)"};
   cursor: ${(props: InputProps) => (props.focused ? "auto" : "text")};
   color: ${(props: InputProps) => (props.valid ? "var(--main)" : "var(--error)")};
 
