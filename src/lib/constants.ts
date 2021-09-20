@@ -6,7 +6,7 @@ export const INFINITE_APPROVE_AMMOUNT = 10 ** 10;
 export const DEFAULT_DECIMALS = ETH_DECIMALS;
 export const DEFAULT_SCALE = BigNumber.from(10).pow(DEFAULT_DECIMALS);
 export const STAKING_LIVE = false;
-export const INFURA_ID = "f42c3f37e40b4ab1bc5a0d7bf5612d0f";
+export const INFURA_ID = "86649f1c65e44460bd82775481bfd97c";
 
 export const chainIds: Record<string, string> = {
   "1": "Mainet",
