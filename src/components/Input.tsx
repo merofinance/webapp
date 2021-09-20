@@ -49,7 +49,6 @@ const StyledInput = styled.input`
   -moz-appearance: textfield;
 
   /* Border */
-  /* transition: background-color 0.3s, border-width 0.3s; */
   border-radius: ${(props: InputProps) =>
     props.hover || props.focused || !props.valid ? "1.6rem" : "1.5rem"};
   border: ${(props: InputProps) => (props.hover || props.focused || !props.valid ? "2px" : "1px")}

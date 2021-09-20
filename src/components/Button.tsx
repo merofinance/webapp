@@ -22,13 +22,6 @@ type ButtonProps = {
   width?: string;
 };
 
-// const StyledButton = styled.button`
-//   background-image: ${(props: ButtonProps) => {
-//     if (props.primary) return "linear-gradient(to right, transparent)";
-//     return "linear-gradient(to right, var(--primary-gradient) 0%, var(--secondary-gradient) 100%);";
-//   }};
-// `;
-
 const StyledButton = styled.button`
   position: relative;
   display: flex;
@@ -60,14 +53,6 @@ const StyledButton = styled.button`
     if (props.tiny) return "0.8rem";
     return "2rem";
   }};
-  /* border-radius: ${(props: ButtonProps) => {
-    if (props.large) return "3.1rem";
-    if (props.medium) return "1.4rem";
-    if (props.small) return "0.4rem";
-    if (props.tiny) return "0.7rem";
-    if (props.square) return "1.4rem";
-    return "1.9rem";
-  }}; */
   padding: 0
     ${(props: ButtonProps) => {
       if (props.large) return "5rem";
