@@ -43,7 +43,7 @@ const StyledButton = styled.button`
     if (props.small) return props.primary ? "2.8rem" : "3rem";
     if (props.tiny) return props.primary ? "2.3rem" : "2.5rem";
     if (props.square) return props.primary ? "5.6rem" : "5.8rem";
-    return "3.8rem";
+    return props.primary ? "3.8rem" : "4rem";
   }};
   border-radius: ${(props: ButtonProps) => {
     if (props.large) return "3.2rem";
