@@ -36,8 +36,11 @@ const AmountInput = ({ value, setValue, label, max, noSlider, error }: Props): J
 
   return (
     <StyledAmountInput>
-      <Available>{t("amountInput.available", { amount: max.toCryptoString() })}</Available>
+      <Available id="available-amount">
+        {t("amountInput.available", { amount: max.toCryptoString() })}
+      </Available>
       <Input
+        id="amount-input"
         valid={!error}
         label={label}
         value={value}
