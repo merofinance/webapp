@@ -7,37 +7,14 @@ import { Header2, Header4, Header5 } from "../../styles/Headers";
 import Radio, { RadioOptionType } from "../../components/Radio";
 import Button from "../../components/Button";
 
-type CardType = {
+interface CardType {
   number: string;
   header: string;
   description: string;
   depositButton?: boolean;
-};
+}
 
 const cardsList: CardType[][] = [
-  [
-    {
-      number: "howItWorks.categories.earnYield.cards.deposit.number",
-      header: "howItWorks.categories.earnYield.cards.deposit.header",
-      description: "howItWorks.categories.earnYield.cards.deposit.description",
-      depositButton: true,
-    },
-    {
-      number: "howItWorks.categories.earnYield.cards.earn.number",
-      header: "howItWorks.categories.earnYield.cards.earn.header",
-      description: "howItWorks.categories.earnYield.cards.earn.description",
-    },
-    {
-      number: "howItWorks.categories.earnYield.cards.stake.number",
-      header: "howItWorks.categories.earnYield.cards.stake.header",
-      description: "howItWorks.categories.earnYield.cards.stake.description",
-    },
-    {
-      number: "howItWorks.categories.earnYield.cards.claim.number",
-      header: "howItWorks.categories.earnYield.cards.claim.header",
-      description: "howItWorks.categories.earnYield.cards.claim.description",
-    },
-  ],
   [
     {
       number: "howItWorks.categories.earnAndProtect.cards.deposit.number",
@@ -61,6 +38,29 @@ const cardsList: CardType[][] = [
       description: "howItWorks.categories.earnAndProtect.cards.claim.description",
     },
   ],
+  [
+    {
+      number: "howItWorks.categories.earnYield.cards.deposit.number",
+      header: "howItWorks.categories.earnYield.cards.deposit.header",
+      description: "howItWorks.categories.earnYield.cards.deposit.description",
+      depositButton: true,
+    },
+    {
+      number: "howItWorks.categories.earnYield.cards.earn.number",
+      header: "howItWorks.categories.earnYield.cards.earn.header",
+      description: "howItWorks.categories.earnYield.cards.earn.description",
+    },
+    {
+      number: "howItWorks.categories.earnYield.cards.stake.number",
+      header: "howItWorks.categories.earnYield.cards.stake.header",
+      description: "howItWorks.categories.earnYield.cards.stake.description",
+    },
+    {
+      number: "howItWorks.categories.earnYield.cards.claim.number",
+      header: "howItWorks.categories.earnYield.cards.claim.header",
+      description: "howItWorks.categories.earnYield.cards.claim.description",
+    },
+  ],
 ];
 
 const StyledHowItWorks = styled.div`
@@ -75,9 +75,9 @@ const StyledHowItWorks = styled.div`
   }
 `;
 
-type CardContainerType = {
+interface CardContainerType {
   show: boolean;
-};
+}
 
 const CardContainer = styled.div`
   width: 100%;
@@ -158,16 +158,16 @@ const ButtonContainer = styled.div`
 const HowItWorks = (): JSX.Element => {
   const { t } = useTranslation();
   const history = useHistory();
-  const [category, setCategory] = useState("earn");
+  const [category, setCategory] = useState("protect");
 
   const categories: RadioOptionType[] = [
     {
-      value: "earn",
-      label: t("howItWorks.categories.earnYield.tabName"),
-    },
-    {
       value: "protect",
       label: t("howItWorks.categories.earnAndProtect.tabName"),
+    },
+    {
+      value: "earn",
+      label: t("howItWorks.categories.earnYield.tabName"),
     },
   ];
 
