@@ -8,7 +8,7 @@ import uniswap from "../../assets/actions/uniswap.png";
 import limit from "../../assets/actions/limit.png";
 import inbalance from "../../assets/actions/inbalance.png";
 import nfts from "../../assets/actions/nfts.png";
-import propose from "../../assets/actions/propose.svg";
+import propose from "../../assets/actions/propose.png";
 
 type ActionType = {
   image: string;
