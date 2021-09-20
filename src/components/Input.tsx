@@ -18,7 +18,7 @@ type InputProps = {
 const InputContainer = styled.div`
   position: relative;
   width: 100%;
-  height: 5.2rem;
+  height: 5.6rem;
 `;
 
 const Glow = styled.div`
@@ -30,29 +30,8 @@ const Glow = styled.div`
   border-radius: 1.8rem;
 
   transition: all 0.3s;
-  width: ${(props: InputProps) => (props.focused && props.valid ? "calc(100% + 12px)" : "100%")};
-  height: ${(props: InputProps) => (props.focused && props.valid ? "calc(100% + 12px)" : "100%")};
-`;
-
-const Border = styled.div`
-  position: absolute;
-  width: 100%;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-
-  border-radius: ${(props: InputProps) =>
-    props.hover || props.focused || !props.valid ? "1.6rem" : "1.5rem"};
-  width: ${(props: InputProps) =>
-    props.hover || props.focused || !props.valid ? "calc(100% + 4px)" : "calc(100% + 2px)"};
-  height: ${(props: InputProps) =>
-    props.hover || props.focused || !props.valid ? "calc(100% + 4px)" : "calc(100% + 2px)"};
-  background: ${(props: InputProps) =>
-    !props.valid
-      ? "var(--error)"
-      : props.focused
-      ? "linear-gradient(to right, rgb(197, 50, 249), rgb(50, 178, 229))"
-      : "rgba(209, 209, 209, 1)"};
+  width: ${(props: InputProps) => (props.focused && props.valid ? "calc(100% + 8px)" : "100%")};
+  height: ${(props: InputProps) => (props.focused && props.valid ? "calc(100% + 8px)" : "100%")};
 `;
 
 const StyledInput = styled.input`
@@ -68,7 +47,25 @@ const StyledInput = styled.input`
   align-items: center;
   letter-spacing: 0.15px;
   -moz-appearance: textfield;
-  border-radius: 1.4rem;
+
+  /* Border */
+  /* transition: background-color 0.3s, border-width 0.3s; */
+  border-radius: ${(props: InputProps) =>
+    props.hover || props.focused || !props.valid ? "1.6rem" : "1.5rem"};
+  border: ${(props: InputProps) => (props.hover || props.focused || !props.valid ? "2px" : "1px")}
+    solid transparent;
+  background: linear-gradient(
+      ${(props: InputProps) => props.background ?? "var(--bg)"},
+      ${(props: InputProps) => props.background ?? "var(--bg)"}
+    ),
+    ${(props: InputProps) =>
+      !props.valid
+        ? "linear-gradient(var(--error), var(--error))"
+        : props.focused
+        ? "var(--gradient)"
+        : "linear-gradient(rgba(209, 209, 209, 1), rgba(209, 209, 209, 1))"};
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
 
   ::-webkit-outer-spin-button {
     display: none;
@@ -78,7 +75,6 @@ const StyledInput = styled.input`
   }
 
   color: ${(props: InputProps) => (props.valid ? "var(--main)" : "var(--error)")};
-  background-color: ${(props: InputProps) => props.background ?? "var(--bg)"};
 `;
 
 const Label = styled.label`
@@ -144,7 +140,6 @@ const Input = (props: Props): JSX.Element => {
     <Container>
       <InputContainer onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
         <Glow focused={focused} valid={props.valid} />
-        <Border hover={hover} focused={focused || !!props.value} valid={props.valid} />
         <StyledInput
           ref={inputRef}
           type={props.type ?? "text"}
