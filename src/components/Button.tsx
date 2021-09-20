@@ -22,24 +22,35 @@ type ButtonProps = {
   width?: string;
 };
 
+// const StyledButton = styled.button`
+//   background-image: ${(props: ButtonProps) => {
+//     if (props.primary) return "linear-gradient(to right, transparent)";
+//     return "linear-gradient(to right, var(--primary-gradient) 0%, var(--secondary-gradient) 100%);";
+//   }};
+// `;
+
 const StyledButton = styled.button`
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   cursor: ${(props: ButtonProps) => (props.complete ? "auto" : "pointer")};
-  transition: 0.5s;
   pointer-events: ${(props: ButtonProps) => (props.inactive ? "none" : "auto")};
+  margin-top: ${(props: ButtonProps) => (props.hero ? "8rem" : "0")};
 
   width: ${(props: ButtonProps) => {
-    if (props.width) return props.width;
+    if (props.width) return props.width; // TODO Make sure we adjust this width for new sustem
     if (props.wide) return "100%";
     return "auto";
   }};
-  background-image: ${(props: ButtonProps) => {
-    if (props.primary) return "linear-gradient(to right, transparent)";
-    return "linear-gradient(to right, var(--primary-gradient) 0%, var(--secondary-gradient) 100%);";
-  }};
-  padding: ${(props: ButtonProps) => {
-    if (props.primary) return "0";
-    return "1px";
+  height: ${(props: ButtonProps) => {
+    if (props.large) return "6.2rem"; // TODO think all these heights will need to be adjusted
+    if (props.medium) return "4.8rem";
+    if (props.small) return "2.8rem";
+    if (props.tiny) return "2.3rem";
+    if (props.square) return "5.6rem";
+    return "3.8rem";
   }};
   border-radius: ${(props: ButtonProps) => {
     if (props.large) return "3.2rem";
@@ -49,16 +60,46 @@ const StyledButton = styled.button`
     if (props.tiny) return "0.8rem";
     return "2rem";
   }};
-  margin-top: ${(props: ButtonProps) => {
-    if (props.hero) return "8rem";
-    return "0";
+  /* border-radius: ${(props: ButtonProps) => {
+    if (props.large) return "3.1rem";
+    if (props.medium) return "1.4rem";
+    if (props.small) return "0.4rem";
+    if (props.tiny) return "0.7rem";
+    if (props.square) return "1.4rem";
+    return "1.9rem";
+  }}; */
+  padding: 0
+    ${(props: ButtonProps) => {
+      if (props.large) return "5rem";
+      if (props.medium) return "1.9rem";
+      if (props.small) return "1.1rem";
+      if (props.tiny) return "0.9rem";
+      if (props.square) return "3rem";
+      return "2.6rem";
+    }};
+
+  /* Background and animations  */
+  transition: all 0.5s;
+  background-size: 200% auto;
+  border: ${(props: ButtonProps) => (props.primary ? "0" : "1px")} solid transparent;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  background-image: ${(props: ButtonProps) => {
+    if (props.disabled) return "linear-gradient(#535068, #535068)";
+    if (props.complete) return "linear-gradient(#16C784, #16C784)";
+    if (props.primary)
+      return "linear-gradient(to right, var(--primary-gradient) 0%, var(--secondary-gradient) 50%, var(--primary-gradient) 100%)";
+    return `linear-gradient(${props.background ? props.background : "var(--bg)"}, ${
+      props.background ? props.background : "var(--bg)"
+    }), linear-gradient(to right, var(--primary-gradient) 0%, var(--secondary-gradient) 50%, var(--primary-gradient) 100%)`;
   }};
 
-  @media (max-width: 600px) {
-    margin-top: ${(props: ButtonProps) => {
-      if (props.hero) return "4.5rem";
-      return "0";
-    }};
+  :hover {
+    background-position: right center;
+
+    div {
+      background-position: right center;
+    }
   }
 
   :disabled {
@@ -70,54 +111,8 @@ const StyledButton = styled.button`
       transform: scale(1);
     }
   }
-`;
 
-const Content = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: 0.5s;
-  background-size: 200% auto;
-
-  :hover {
-    background-position: right center;
-  }
-
-  background-image: ${(props: ButtonProps) => {
-    if (props.disabled) return "linear-gradient(#535068, #535068)";
-    if (props.complete) return "linear-gradient(#16C784, #16C784)";
-    if (props.primary)
-      return "linear-gradient(270deg, var(--primary-gradient) 0%, var(--secondary-gradient) 50%, var(--primary-gradient) 100%);";
-    if (props.background) return `linear-gradient(${props.background}, ${props.background})`;
-    return "linear-gradient(var(--bg), var(--bg))";
-  }};
-  height: ${(props: ButtonProps) => {
-    if (props.large) return "6.2rem";
-    if (props.medium) return "4.8rem";
-    if (props.small) return "2.8rem";
-    if (props.tiny) return "2.3rem";
-    if (props.square) return "5.6rem";
-    return "3.8rem";
-  }};
-  border-radius: ${(props: ButtonProps) => {
-    if (props.large) return "3.1rem";
-    if (props.medium) return "1.4rem";
-    if (props.small) return "0.4rem";
-    if (props.tiny) return "0.7rem";
-    if (props.square) return "1.4rem";
-    return "1.9rem";
-  }};
-  padding: 0
-    ${(props: ButtonProps) => {
-      if (props.large) return "5rem";
-      if (props.medium) return "1.9rem";
-      if (props.small) return "1.1rem";
-      if (props.tiny) return "0.9rem";
-      if (props.square) return "3rem";
-      return "2.6rem";
-    }};
-
+  /* Mobile */
   @media (max-width: 600px) {
     height: ${(props: ButtonProps) => {
       if (props.square) return "2.6rem";
@@ -188,8 +183,10 @@ const Text = styled.div`
   }};
   background: ${(props: ButtonProps) => {
     if (props.primary) return "none";
-    return "var(--gradient)";
+    return "linear-gradient(to right, var(--primary-gradient) 0%, var(--secondary-gradient) 50%, var(--primary-gradient) 100%)";
   }};
+  background-size: 200% auto;
+  transition: background-position 0.5s;
   background-clip: ${(props: ButtonProps) => {
     if (props.primary) return "none";
     return "text";
@@ -277,17 +274,18 @@ const Button = (props: Props): JSX.Element => {
   return (
     <StyledButton
       type={props.submit ? "submit" : "button"}
-      primary={props.primary}
       hero={props.hero}
+      primary={props.primary}
       large={props.large}
       medium={props.medium}
-      square={props.square}
       small={props.small}
       tiny={props.tiny}
+      square={props.square}
       wide={props.wide}
       disabled={props.disabled || props.loading || pending}
-      inactive={props.inactive}
       complete={props.complete}
+      inactive={props.inactive}
+      background={props.background}
       width={props.width}
       onClick={() => {
         if (props.loading || pending || props.disabled || !props.click) return;
@@ -295,34 +293,22 @@ const Button = (props: Props): JSX.Element => {
         props.click();
       }}
     >
-      <Content
-        primary={props.primary}
-        large={props.large}
-        medium={props.medium}
-        small={props.small}
-        tiny={props.tiny}
-        square={props.square}
-        disabled={props.disabled}
-        complete={props.complete}
-        background={props.background}
-      >
-        <TextContainer>
-          {props.loading && <CircularProgress size={props.large ? 31 : 17} />}
-          <Text
-            primary={props.primary}
-            hero={props.hero}
-            large={props.large}
-            medium={props.medium}
-            small={props.small}
-            tiny={props.tiny}
-            square={props.square}
-            uppercase={props.uppercase}
-            disabled={props.disabled}
-          >
-            {props.text}
-          </Text>
-        </TextContainer>
-      </Content>
+      <TextContainer>
+        {props.loading && <CircularProgress size={props.large ? 31 : 17} />}
+        <Text
+          primary={props.primary}
+          hero={props.hero}
+          large={props.large}
+          medium={props.medium}
+          small={props.small}
+          tiny={props.tiny}
+          square={props.square}
+          uppercase={props.uppercase}
+          disabled={props.disabled}
+        >
+          {props.text}
+        </Text>
+      </TextContainer>
       {props.hoverText && props.disabled && (
         <HoverTextContainer>
           <HoverText>{props.hoverText}</HoverText>
