@@ -1,6 +1,18 @@
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
+import { PrivateKeyConnector } from "../lib/private-key-connector";
 import { INFURA_ID } from "../lib/constants";
+
+export const privateKeyConnector = new PrivateKeyConnector({
+  supportedChainIds: [
+    1, // Mainet
+    3, // Ropsten
+    4, // Rinkeby
+    5, // Goerli
+    42, // Kovan
+    1337, // Dev
+  ],
+});
 
 export const injectedConnector = new InjectedConnector({
   supportedChainIds: [
