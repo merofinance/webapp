@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { Grow } from "@material-ui/core";
 
+import { useDevice } from "../../app/hooks/use-device";
 import { Header2, Header4, Header5 } from "../../styles/Headers";
 import arrow from "../../assets/ui/pink-arrow.svg";
 import uniswap from "../../assets/actions/uniswap.png";
@@ -10,13 +11,12 @@ import limit from "../../assets/actions/limit.png";
 import inbalance from "../../assets/actions/inbalance.png";
 import nfts from "../../assets/actions/nfts.png";
 import propose from "../../assets/actions/propose.png";
-import { useDevice } from "../../app/hooks/use-device";
 
-type ActionType = {
+interface ActionType {
   image: string;
   header: string;
   description: string;
-};
+}
 
 const actions: ActionType[] = [
   {
