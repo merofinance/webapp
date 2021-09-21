@@ -164,7 +164,7 @@ const Input = (props: Props): JSX.Element => {
         {props.buttonText && (
           <ButtonContainer>
             <Button
-              id={props.buttonText.toLowerCase().replace(" ", "-")}
+              id="input-button"
               primary
               small
               uppercase
