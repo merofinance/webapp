@@ -14,6 +14,15 @@ describe("Page Load", () => {
       win.web3 = new Web3(provider);
     });
     cy.visit("/pools");
+  });
+
+  it("Should show walet connect popup", () => {
+    cy.get("#wallet-select-link")
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "https://backd-1.gitbook.io/backd/resources/faq/general");
+  });
+
+  it("Should connect wallet", () => {
     cy.get('[id="walletConnect.wallets.metaMask"]').click();
   });
 
