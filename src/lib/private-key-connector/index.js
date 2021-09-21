@@ -1,3 +1,3 @@
 "use strict";
 
-module.exports = require("./injected-connector.cjs.development.js");
+module.exports = require("./private-key-connector.js");
