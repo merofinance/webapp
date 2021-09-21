@@ -143,7 +143,9 @@ const ConnectorDesktop = ({ connect }: Props): JSX.Element => {
 
   return (
     <StyledConnectorDesktop>
-      {chainId && chainId !== 1 && chainIds[chainId] && <Network>{chainIds[chainId]}</Network>}
+      {chainId && chainId !== 1 && chainIds[chainId] && (
+        <Network id="network-name">{chainIds[chainId]}</Network>
+      )}
       <Button onClick={() => connect()} connected={active} lightBackground={windowPosition > 40}>
         {active && (
           <IndicatorContainer>

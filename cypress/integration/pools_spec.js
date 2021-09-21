@@ -26,6 +26,18 @@ describe("Page Load", () => {
     cy.get('[id="walletConnect.wallets.metaMask"]').click();
   });
 
+  it("Should show address in connector", () => {
+    cy.get("#connector-address").contains("...");
+  });
+
+  it("Should show network color dot for Kovan", () => {
+    cy.get("#connector-network-dot").should("have.css", "background-color", "rgb(137, 102, 246)");
+  });
+
+  it("Should show network label Kovan", () => {
+    cy.get("#network-name").contains("Kovan");
+  });
+
   it("Should show overview by default", () => {
     cy.get("#overview").contains("Overview");
     cy.get("#overview").invoke("outerHeight").should("be.gt", 48);
