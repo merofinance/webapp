@@ -146,26 +146,16 @@ const WalletSelectPopup = ({ show, close, setWallet }: Props): JSX.Element => {
   const { t } = useTranslation();
 
   const connect = async (connector: AbstractConnector, walletName: string) => {
-    const web3 = new Web3((window as any).web3.currentProvider);
-    // (window as any).ethereum = web3.eth;
-    const provider = new ethers.providers.Web3Provider(web3.eth.currentProvider as any, "any");
-    (window as any).ethereum = provider;
-    const meow = await provider.send("eth_accounts", []);
-    const netVersion = await provider.send("net_version", []);
-    console.log(netVersion);
-    console.log(meow);
-    const balance = await provider.getBalance("0x8B78D3EeFf975C668FcbDd2b559b852c8f6d93fb");
-    // const balance = await web3.eth.getBalance("0x8B78D3EeFf975C668FcbDd2b559b852c8f6d93fb");
-    // const provider = ethers.getDefaultProvider();
-    console.log(balance);
-    console.log("Activate");
-    // await activate(connector);
-    await activate(privateKeyConnector);
-    console.log("Activate DOne");
+    if ((window as any).testing) {
+      const web3 = new Web3((window as any).web3.currentProvider);
+      const provider = new ethers.providers.Web3Provider(web3.eth.currentProvider as any, "any");
+      (window as any).ethereum = provider;
+      await activate(privateKeyConnector);
+    } else {
+      await activate(connector);
+    }
     setWallet(walletName);
-    console.log("Wallet set");
     close(true);
-    console.log("Closed");
   };
 
   return (
