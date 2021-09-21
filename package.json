@@ -83,7 +83,7 @@
     "extends": "react-app"
   },
   "eslintIgnore": [
-    "**/*.js"
+    "**/private-key-connector.js"
   ],
   "browserslist": {
     "production": [
