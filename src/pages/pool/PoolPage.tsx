@@ -20,9 +20,9 @@ import { fetchState } from "../../state/poolsListSlice";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import BackButton from "../../components/BackButton";
 
-type DepositWithdrawParams = {
+interface PoolParams {
   poolName: string;
-};
+}
 
 const StyledPoolPage = styled.div`
   position: relative;
@@ -67,7 +67,7 @@ const ButtonContainer = styled.div`
 
 const PoolPage = (): JSX.Element => {
   const { t } = useTranslation();
-  const { poolName } = useParams<DepositWithdrawParams>();
+  const { poolName } = useParams<PoolParams>();
   const backd = useBackd();
   const dispatch = useDispatch();
   const updated = useWeb3Updated();

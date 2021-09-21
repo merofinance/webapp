@@ -3,12 +3,23 @@ import { initWeb3, percySnapshot } from "../support";
 describe("Page Load", () => {
   it("Should Innitialise Web3", () => {
     initWeb3();
-    cy.visit("/pools/pool/bDAI");
+    cy.visit("/pools");
+    cy.get('[id="walletConnect.wallets.metaMask"]').click();
+    cy.get("#pool-row-bdai", { timeout: 30_000 }).click();
   });
 });
 
 describe("Default state", () => {
-  cy.get("#content-header").contains("Deposit DAI");
+  it("Should have DAI Header", () => {
+    cy.get("#content-header").contains("Deposit DAI");
+  });
+  it("Should have disabled button", () => {
+    cy.get("#action-button").contains("Deposit and Stake");
+    cy.get("#action-button").should("be.disabled");
+  });
+  it("Should have max button", () => {
+    cy.get("#input-button").contains("max");
+  });
 });
 
 describe("Innitial Data", () => {
