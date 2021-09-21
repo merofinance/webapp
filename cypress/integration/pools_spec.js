@@ -5,8 +5,10 @@ describe("Page Load", () => {
     initWeb3();
     cy.visit("/pools");
   });
+});
 
-  it("Should show walet connect popup", () => {
+describe("Wallet Select Popup", () => {
+  it("Should have link", () => {
     cy.get("#wallet-select-link")
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://backd-1.gitbook.io/backd/resources/faq/general");
@@ -15,8 +17,10 @@ describe("Page Load", () => {
   it("Should connect wallet", () => {
     cy.get('[id="walletConnect.wallets.metaMask"]').click();
   });
+});
 
-  it("Should show address in connector", () => {
+describe("Connector", () => {
+  it("Should show address", () => {
     cy.get("#connector-address").contains("...");
   });
 
@@ -27,7 +31,9 @@ describe("Page Load", () => {
   it("Should show network label Kovan", () => {
     cy.get("#network-name").contains("Kovan");
   });
+});
 
+describe("Overview", () => {
   it("Should show overview by default", () => {
     cy.get("#overview").contains("Overview");
     cy.get("#overview").invoke("outerHeight").should("be.gt", 48);
@@ -48,7 +54,9 @@ describe("Page Load", () => {
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://docs.backd.fund/");
   });
+});
 
+describe("Pools", () => {
   it("Should load Pools", () => {
     cy.get("#pool-row-bdai", { timeout: 30_000 }).should("be.visible");
   });
