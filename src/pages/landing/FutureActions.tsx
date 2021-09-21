@@ -110,6 +110,10 @@ const Actions = styled.div`
   justify-items: center;
   grid-column-gap: 1.6rem;
   transform: translateY(${(props: ActionsProps) => `-${38.4 * props.slide}rem`});
+
+  @media (max-width: 713px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const Card = styled.div`
