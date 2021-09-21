@@ -1,18 +1,10 @@
-import { percySnapshot } from "../support";
-import { INFURA_ID } from "../../src/lib/constants";
+import { initWeb3, percySnapshot } from "../support";
 import PrivateKeyProvider from "truffle-privatekey-provider";
 import Web3 from "web3";
 
 describe("Page Load", () => {
   it("Should Innitialise Web3", () => {
-    cy.on("window:before:load", (win) => {
-      win.testing = true;
-      const provider = new PrivateKeyProvider(
-        "633361498918c6396a2d2e35de29285192cbed197ca3bcdacced769c21107bd7",
-        `https://kovan.infura.io/v3/${INFURA_ID}`
-      );
-      win.web3 = new Web3(provider);
-    });
+    initWeb3();
     cy.visit("/pools");
   });
 
