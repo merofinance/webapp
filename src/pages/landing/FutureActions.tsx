@@ -171,10 +171,6 @@ const FutureActions = (): JSX.Element => {
   const rows = width > 1431 ? 3 : width > 895 ? 2 : 1;
   const isMin = slide === 0;
   const isMax = slide === Math.ceil(actions.length / rows) - 1;
-  console.log("calcing");
-  console.log(actions.length);
-  console.log(rows);
-  console.log(slide);
 
   const changeSlide = (slide: number) => {
     setZoomIn(false);
