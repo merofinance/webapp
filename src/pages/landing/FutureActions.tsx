@@ -129,7 +129,6 @@ const Card = styled.div`
   @media (max-width: 713px) {
     flex-direction: column;
     margin: 0;
-    margin-bottom: 1.2rem;
   }
 `;
 
