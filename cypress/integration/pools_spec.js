@@ -1,6 +1,4 @@
 import { initWeb3, percySnapshot } from "../support";
-import PrivateKeyProvider from "truffle-privatekey-provider";
-import Web3 from "web3";
 
 describe("Page Load", () => {
   it("Should Innitialise Web3", () => {
