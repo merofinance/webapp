@@ -28,6 +28,48 @@ describe("Innitial Data", () => {
   });
 });
 
+describe("Validation", () => {
+  it("Should error on 0", () => {
+    cy.get("#amount-input").type("0");
+    cy.get("#input-label").should("have.css", "color", "rgb(244, 67, 54)");
+    cy.get("#input-note").contains("Amount must be a positive number");
+    cy.get("#amount-input").clear();
+  });
+  it("Should error on above amount", () => {
+    cy.get("#amount-input").type("1000000000000");
+    cy.get("#input-label").should("have.css", "color", "rgb(244, 67, 54)");
+    cy.get("#input-note").contains("Amount exceeds available balance");
+    cy.get("#amount-input").clear();
+  });
+});
+
+describe("Input Methods", () => {
+  it("Should input max amount", () => {
+    cy.get("#input-button").click();
+    cy.get("#amount-input")
+      .invoke("val")
+      .then((val) => +val)
+      .should("be.gt", 10);
+    cy.get("#amount-input").clear();
+  });
+  it("Should input 50%", () => {
+    cy.get("#slider-50").click();
+    cy.get("#amount-input")
+      .invoke("val")
+      .then((val) => +val)
+      .should("be.gt", 10);
+    cy.get("#amount-input").clear();
+  });
+  it("Should input 100%", () => {
+    cy.get("#slider-100").click();
+    cy.get("#amount-input")
+      .invoke("val")
+      .then((val) => +val)
+      .should("be.gt", 20);
+    cy.get("#amount-input").clear();
+  });
+});
+
 describe("Depositing", () => {
   it("Should input value", () => {
     cy.get("#amount-input").focus();

@@ -281,7 +281,9 @@ const Button = (props: Props): JSX.Element => {
       }}
     >
       <TextContainer>
-        {props.loading && <CircularProgress size={props.large ? 31 : 17} />}
+        {props.loading && (
+          <CircularProgress id="buttong-loading-indicator" size={props.large ? 31 : 17} />
+        )}
         <Text
           primary={props.primary}
           hero={props.hero}

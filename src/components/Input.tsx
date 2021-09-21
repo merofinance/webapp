@@ -154,6 +154,7 @@ const Input = (props: Props): JSX.Element => {
           valid={props.valid}
         />
         <Label
+          id="input-label"
           onClick={() => inputRef.current?.focus()}
           focused={focused || !!props.value}
           background={props.background}
@@ -177,7 +178,9 @@ const Input = (props: Props): JSX.Element => {
         )}
       </InputContainer>
       {(props.note || !props.valid) && (
-        <Note valid={props.valid}>{props.valid ? props.note : props.errorMessage}</Note>
+        <Note id="input-note" valid={props.valid}>
+          {props.valid ? props.note : props.errorMessage}
+        </Note>
       )}
     </Container>
   );
