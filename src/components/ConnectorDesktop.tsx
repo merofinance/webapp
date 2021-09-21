@@ -150,7 +150,7 @@ const ConnectorDesktop = ({ connect }: Props): JSX.Element => {
             <PulsingDot success={chainId === 1} />
           </IndicatorContainer>
         )}
-        <ConnectorText>
+        <ConnectorText id="connector-address">
           {account ? ens || shortenAddress(account, 8) : t("walletConnect.connectWallet")}
         </ConnectorText>
         {active && (
