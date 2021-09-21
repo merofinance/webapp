@@ -168,6 +168,7 @@ const WalletSelectPopup = ({ show, close, setWallet }: Props): JSX.Element => {
           <SubHeaderContainer>
             <SubHeader>{t("walletConnect.newToEthereum")}</SubHeader>
             <Highlight
+              id="wallet-select-link"
               href="https://backd-1.gitbook.io/backd/resources/faq/general"
               target="_blank"
               rel="noopener noreferrer"
