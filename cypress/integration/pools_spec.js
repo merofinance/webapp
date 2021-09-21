@@ -67,4 +67,11 @@ describe("Pools", () => {
       expect(loc.pathname).to.eq("/pool/bDAI");
     });
   });
+
+  it("Should navigate back to pools", () => {
+    cy.get("#back-button").click();
+    cy.location().should((loc) => {
+      expect(loc.pathname).to.eq("/pools");
+    });
+  });
 });
