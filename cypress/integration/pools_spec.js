@@ -17,6 +17,27 @@ describe("Page Load", () => {
     cy.get('[id="walletConnect.wallets.metaMask"]').click();
   });
 
+  it("Should show overview by default", () => {
+    cy.get("#overview").contains("Overview");
+    cy.get("#overview").invoke("outerHeight").should("be.gt", 48);
+  });
+
+  it("Should close overview", () => {
+    cy.get("#overview-header").click();
+    cy.get("#overview").invoke("outerHeight").should("be.lt", 80);
+  });
+
+  it("Should open overview", () => {
+    cy.get("#overview-header").click();
+    cy.get("#overview").invoke("outerHeight").should("be.gt", 48);
+  });
+
+  it("Should should have overview link", () => {
+    cy.get("#overview-link")
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "https://docs.backd.fund/");
+  });
+
   it("Should load Pools", () => {
     cy.get("#pool-row-bdai", { timeout: 30_000 }).should("be.visible");
   });
