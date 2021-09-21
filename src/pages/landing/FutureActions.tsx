@@ -1,6 +1,7 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import { Grow } from "@material-ui/core";
 
 import { Header2, Header4, Header5 } from "../../styles/Headers";
 import arrow from "../../assets/ui/pink-arrow.svg";
@@ -9,6 +10,7 @@ import limit from "../../assets/actions/limit.png";
 import inbalance from "../../assets/actions/inbalance.png";
 import nfts from "../../assets/actions/nfts.png";
 import propose from "../../assets/actions/propose.png";
+import { useDevice } from "../../app/hooks/use-device";
 
 type ActionType = {
   image: string;
@@ -94,25 +96,25 @@ const ActionsContainer = styled.div`
   overflow: hidden;
 `;
 
-interface ActionProps {
-  right: boolean;
-  containerWidth: string;
+interface ActionsProps {
+  slide: number;
 }
 
 const Actions = styled.div`
-  display: flex;
   position: absolute;
-  transition: all 0.6s;
+  width: 100%;
   left: 0;
-  transform: translateX(
-    calc(${(props: ActionProps) => (props.right ? props.containerWidth : "100%")} - 100%)
-  );
+  top: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
+  justify-items: center;
+  grid-column-gap: 1.6rem;
+  transform: translateY(${(props: ActionsProps) => `-${38.4 * props.slide}rem`});
 `;
 
 const Card = styled.div`
   position: relative;
   flex: 1;
-  margin: 0 0.8rem;
   background-color: rgba(34, 31, 55, 0.6);
   border-radius: 1.4rem;
   padding: 2.4rem 1.6rem;
@@ -121,7 +123,8 @@ const Card = styled.div`
   backdrop-filter: blur(8px);
   padding-bottom: 5.3rem;
   height: 38.4rem;
-  width: 40rem;
+  width: 100%;
+  max-width: 40rem;
 
   @media (max-width: 713px) {
     flex-direction: column;
@@ -159,36 +162,63 @@ const Body = styled.p`
 
 const FutureActions = (): JSX.Element => {
   const { t } = useTranslation();
-  const [right, setRight] = useState(false);
-  const actionsContainerRef = useRef<HTMLDivElement>(null);
+  const { width } = useDevice();
+  const [slide, setSlide] = useState(0);
+  const [zoomIn, setZoomIn] = useState(true);
+  const rows = width > 1431 ? 3 : width > 895 ? 2 : 1;
+  const isMin = slide === 0;
+  const isMax = slide === Math.ceil(actions.length / rows) - 1;
+  console.log("calcing");
+  console.log(actions.length);
+  console.log(rows);
+  console.log(slide);
+
+  const changeSlide = (slide: number) => {
+    setZoomIn(false);
+    setTimeout(() => {
+      setSlide(slide);
+      setZoomIn(true);
+    }, 500);
+  };
 
   return (
     <StyledFutureActions>
       <Header2>{t("futureActions.header")}</Header2>
       <Header4>{t("futureActions.subHeader")}</Header4>
       <Navigation>
-        <ArrowButton onClick={() => setRight(false)}>
-          <Arrow src={arrow} disabled={!right} left />
+        <ArrowButton
+          onClick={() => {
+            if (isMin) return;
+            changeSlide(slide - 1);
+          }}
+        >
+          <Arrow src={arrow} disabled={isMin} left />
         </ArrowButton>
-        <ArrowButton onClick={() => setRight(true)}>
-          <Arrow src={arrow} disabled={right} />
+        <ArrowButton
+          onClick={() => {
+            if (isMax) return;
+            changeSlide(slide + 1);
+          }}
+        >
+          <Arrow src={arrow} disabled={isMax} />
         </ArrowButton>
       </Navigation>
-      <ActionsContainer ref={actionsContainerRef}>
-        <Actions
-          right={right}
-          containerWidth={
-            actionsContainerRef.current ? `${actionsContainerRef.current.clientWidth}px` : "100%"
-          }
-        >
-          {actions.map((action: ActionType) => (
-            <Card key={action.header}>
-              <div>
-                <Image src={action.image} />
-              </div>
-              <Header>{t(action.header)}</Header>
-              <Body>{t(action.description)}</Body>
-            </Card>
+      <ActionsContainer>
+        <Actions slide={slide}>
+          {actions.map((action: ActionType, index: number) => (
+            <Grow
+              in={zoomIn}
+              style={{ transformOrigin: "0 0 0" }}
+              {...(zoomIn ? { timeout: ((index % rows) + 1) * 300 } : {})}
+            >
+              <Card key={action.header}>
+                <div>
+                  <Image src={action.image} />
+                </div>
+                <Header>{t(action.header)}</Header>
+                <Body>{t(action.description)}</Body>
+              </Card>
+            </Grow>
           ))}
         </Actions>
       </ActionsContainer>
