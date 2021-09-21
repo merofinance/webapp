@@ -100,13 +100,13 @@ const IndicatorContainer = styled.div`
 `;
 
 interface LoadingProps {
-  cat: boolean;
+  pending: boolean;
 }
 
 const Loading = styled.img`
   width: 1.2rem;
   animation: ${spinAnimation} 1s linear infinite;
-  opacity: ${(props: LoadingProps) => (props.cat ? 1 : 0)};
+  opacity: ${(props: LoadingProps) => (props.pending ? 1 : 0)};
 `;
 
 interface Props {
@@ -146,7 +146,12 @@ const ConnectorDesktop = ({ connect }: Props): JSX.Element => {
       {chainId && chainId !== 1 && chainIds[chainId] && (
         <Network id="network-name">{chainIds[chainId]}</Network>
       )}
-      <Button onClick={() => connect()} connected={active} lightBackground={windowPosition > 40}>
+      <Button
+        id="desktop-connector"
+        onClick={() => connect()}
+        connected={active}
+        lightBackground={windowPosition > 40}
+      >
         {active && (
           <IndicatorContainer>
             <PulsingDot success={chainId === 1} />
@@ -157,7 +162,7 @@ const ConnectorDesktop = ({ connect }: Props): JSX.Element => {
         </ConnectorText>
         {active && (
           <IndicatorContainer>
-            <Loading cat={loading} src={pending} />
+            <Loading id="connector-loading-indicator" pending={loading} src={pending} />
           </IndicatorContainer>
         )}
       </Button>

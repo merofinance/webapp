@@ -79,4 +79,39 @@ describe("Depositing", () => {
   it("Should Deposit", () => {
     cy.get("#action-button").click();
   });
+
+  it("Should show loading button", () => {
+    cy.get("#button-loading-indicator", { timeout: 30_000 }).should("be.visible");
+  });
+});
+
+describe("Account Details", () => {
+  it("Should show loading indicator on connector", () => {
+    cy.get("#connector-loading-indicator", { timeout: 30_000 }).should("be.visible");
+  });
+  it("Should open Account Details", () => {
+    cy.get("#desktop-connector").click();
+  });
+  it("Should show pending transaction", () => {
+    cy.get("#account-details-transactions div").first().contains("Deposit");
+  });
+  it("Should show wallet type", () => {
+    cy.get("#account-details-wallet").contains("MetaMask");
+  });
+  it("Should show address", () => {
+    cy.get("#account-details-address").contains("...");
+  });
+  it("Should network as Kovan", () => {
+    cy.get("#account-details-network").contains("Ethereum Kovan Testnet");
+  });
+  it("Should finish loading", () => {
+    cy.get("#connector-loading-indicator", { timeout: 30_000 }).should("have.css", "opacity", "0");
+  });
+  it("Should clear transactions", () => {
+    cy.get("#account-details-clear").click();
+    cy.get("#account-details-transactions").children().should("have.length", 0);
+  });
+  it("Should close", () => {
+    cy.get("#popup-exit").click();
+  });
 });
