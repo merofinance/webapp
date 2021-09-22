@@ -26,6 +26,9 @@ describe("Innitial Data", () => {
   it("Should load balance", () => {
     cy.get("#available-amount", { timeout: 30_000 }).contains(".", { timeout: 30_000 });
   });
+  it("Should snapshot page", () => {
+    percySnapshot();
+  });
 });
 
 describe("Deposit Validation", () => {
@@ -75,11 +78,12 @@ describe("Depositing", () => {
     cy.get("#amount-input").focus();
     cy.get("#amount-input").type("10");
   });
-
+  it("Should snapshot page", () => {
+    percySnapshot();
+  });
   it("Should Deposit", () => {
     cy.get("#action-button").click();
   });
-
   it("Should show loading button", () => {
     cy.get("#button-loading-indicator", { timeout: 30_000 }).should("be.visible");
   });
@@ -106,6 +110,9 @@ describe("Account Details", () => {
   });
   it("Should finish loading", () => {
     cy.get("#connector-loading-indicator", { timeout: 30_000 }).should("have.css", "opacity", "0");
+  });
+  it("Should snapshot page", () => {
+    percySnapshot();
   });
   it("Should clear transactions", () => {
     cy.get("#account-details-clear").click();
@@ -143,6 +150,7 @@ describe("Withdraw Validation", () => {
     cy.get("#amount-input").type("1000000000000");
     cy.get("#input-label").should("have.css", "color", "rgb(244, 67, 54)");
     cy.get("#input-note").contains("Amount exceeds available balance");
+    percySnapshot();
     cy.get("#amount-input").clear();
   });
 });
@@ -153,7 +161,8 @@ describe("Withdraw Input Methods", () => {
     cy.get("#amount-input")
       .invoke("val")
       .then((val) => +val)
-      .should("be.gt", 10);
+      .should("be.gt", 9)
+      .should("be.lt", 11);
     cy.get("#amount-input").clear();
   });
   it("Should input 50%", () => {
@@ -161,7 +170,8 @@ describe("Withdraw Input Methods", () => {
     cy.get("#amount-input")
       .invoke("val")
       .then((val) => +val)
-      .should("be.gt", 10);
+      .should("be.gt", 4)
+      .should("be.lt", 6);
     cy.get("#amount-input").clear();
   });
   it("Should input 100%", () => {
@@ -169,7 +179,8 @@ describe("Withdraw Input Methods", () => {
     cy.get("#amount-input")
       .invoke("val")
       .then((val) => +val)
-      .should("be.gt", 20);
+      .should("be.gt", 9)
+      .should("be.lt", 11);
     cy.get("#amount-input").clear();
   });
 });
