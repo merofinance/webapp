@@ -121,8 +121,8 @@
     }
   },
   "futureActions": {
-    "header": "future",
-    "subHeader": "More actions planned",
+    "header": "future actions",
+    "subHeader": "Building out essential DeFi infrastructure",
     "actions": {
       "uniswap": {
         "header": "Uniswap V3 LP Management",
