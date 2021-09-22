@@ -127,6 +127,7 @@ const PoolPage = (): JSX.Element => {
         {tab !== "positions" && !balance.isZero() && (
           <ButtonContainer>
             <Button
+              id="create-topup-button"
               medium
               text={`+ ${t("pool.tabs.positions.buttons.nav")}`}
               click={() => setTab("positions")}
