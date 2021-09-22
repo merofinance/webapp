@@ -137,6 +137,9 @@ describe("Withdraw Tab", () => {
   it("Should have max button", () => {
     cy.get("#input-button").contains("max");
   });
+  it("Should load balance", () => {
+    cy.get("#available-amount", { timeout: 30_000 }).contains(".", { timeout: 30_000 });
+  });
 });
 
 describe("Withdraw Validation", () => {
@@ -161,8 +164,7 @@ describe("Withdraw Input Methods", () => {
     cy.get("#amount-input")
       .invoke("val")
       .then((val) => +val)
-      .should("be.gt", 9)
-      .should("be.lt", 11);
+      .should("be.gt", 9);
     cy.get("#amount-input").clear();
   });
   it("Should input 50%", () => {
@@ -170,8 +172,7 @@ describe("Withdraw Input Methods", () => {
     cy.get("#amount-input")
       .invoke("val")
       .then((val) => +val)
-      .should("be.gt", 4)
-      .should("be.lt", 6);
+      .should("be.gt", 4);
     cy.get("#amount-input").clear();
   });
   it("Should input 100%", () => {
@@ -179,8 +180,7 @@ describe("Withdraw Input Methods", () => {
     cy.get("#amount-input")
       .invoke("val")
       .then((val) => +val)
-      .should("be.gt", 9)
-      .should("be.lt", 11);
+      .should("be.gt", 9);
     cy.get("#amount-input").clear();
   });
 });
