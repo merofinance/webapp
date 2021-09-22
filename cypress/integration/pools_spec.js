@@ -61,6 +61,10 @@ describe("Pools", () => {
     cy.get("#pool-row-bdai", { timeout: 30_000 }).should("be.visible");
   });
 
+  it("Should snapshot page", () => {
+    percySnapshot();
+  });
+
   it("Should navigate to Pool", () => {
     cy.get("#pool-row-bdai", { timeout: 30_000 }).click();
     cy.location().should((loc) => {
