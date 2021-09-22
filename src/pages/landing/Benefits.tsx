@@ -6,7 +6,7 @@ import percent from "../../assets/benefits/percent.svg";
 import plus from "../../assets/benefits/plus.svg";
 import shield from "../../assets/benefits/shield.svg";
 import { GradientLink } from "../../styles/GradientText";
-import { Header4, Header5 } from "../../styles/Headers";
+import { Header5, Header6 } from "../../styles/Headers";
 import useWindowPosition from "../../app/hooks/use-window-position";
 
 type BenfitsType = {
@@ -19,8 +19,8 @@ type BenfitsType = {
 const benefits: BenfitsType[] = [
   {
     icon: shield,
-    header: "benefits.avoidLiquidation.header",
-    description: "benefits.avoidLiquidation.description",
+    header: "benefits.reactiveLiquidity.header",
+    description: "benefits.reactiveLiquidity.description",
     url: "https://docs.backd.fund/protocol-architecture/top-ups",
   },
   {
@@ -164,8 +164,8 @@ const Benefits = (): JSX.Element => {
           >
             <IconGlassGradient rotate={index === 1 ? 90 : index === 2 ? -90 : 0} />
           </IconGlass>
-          <Header4>{t(benefit.header)}</Header4>
-          <Header5>{t(benefit.description)}</Header5>
+          <Header5>{t(benefit.header)}</Header5>
+          <Header6>{t(benefit.description)}</Header6>
           <ReadMore href={benefit.url} target="_blank" rel="noopener noreferrer">
             {`${t("benefits.readMore")} →`}
           </ReadMore>

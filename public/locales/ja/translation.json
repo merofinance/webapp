@@ -24,10 +24,6 @@
     }
   },
   "benefits": {
-    "avoidLiquidation": {
-      "description": "Backdに預け入れられ、予備の担保とされた流動性資産は担保の補充が必要とされた際に自動的に移動されます。",
-      "header": "清算を回避する"
-    },
     "earnYield": {
       "description": "CurveとConvexに基づくイールドファーミング戦略を通じて流動資産の利回りを稼ぎます。",
       "header": "利回りを稼ぐ"

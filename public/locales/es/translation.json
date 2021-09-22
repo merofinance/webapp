@@ -24,10 +24,6 @@
     }
   },
   "benefits": {
-    "avoidLiquidation": {
-      "description": "La liquidez depositada y marcada como colateral de back-up en Backd será transformada automaticamente cuando sea necesario realizar top-ups de colateral",
-      "header": "Evitar Liquidación"
-    },
     "earnYield": {
       "description": "Consigue intereses sobre tu liqudiez mediante estrategias de yield-farming basadas en Curve y Convex.",
       "header": "Consigue rendimiento"
