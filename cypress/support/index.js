@@ -14,7 +14,7 @@ export const initWeb3 = () => {
   cy.on("window:before:load", (win) => {
     win.testing = true;
     const provider = new PrivateKeyProvider(
-      "633361498918c6396a2d2e35de29285192cbed197ca3bcdacced769c21107bd7",
+      Cypress.env("PRIVATE_KEY"),
       `https://kovan.infura.io/v3/${INFURA_ID}`
     );
     win.web3 = new Web3(provider);
