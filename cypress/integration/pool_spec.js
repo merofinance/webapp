@@ -78,10 +78,17 @@ describe("Depositing", () => {
     cy.get("#amount-input").focus();
     cy.get("#amount-input").type("10");
   });
+  it("Should have input value", () => {
+    cy.get("#amount-input").should("have.value", "10");
+  });
+  it("Should have no errors", () => {
+    cy.get("#input-note").should("not.exist");
+  });
   it("Should snapshot page", () => {
     percySnapshot();
   });
   it("Should Deposit", () => {
+    cy.get("#action-button").should("be.enabled");
     cy.get("#action-button").click();
   });
   it("Should show loading button", () => {
