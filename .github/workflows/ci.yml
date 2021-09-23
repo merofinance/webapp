@@ -1,6 +1,14 @@
 name: Build on PR
 "on": pull_request
 jobs:
+  localazy_upload:
+    needs: deploy
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Upload Translations
+        run: npx @localazy/cli upload -w ${{ secrets.LOCALAZY_WRITE_KEY }} -r ${{ secrets.LOCALAZY_READ_KEY }}
   unit_test:
     runs-on: ubuntu-latest
     steps:
