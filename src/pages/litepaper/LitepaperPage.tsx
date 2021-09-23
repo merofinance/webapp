@@ -66,7 +66,7 @@ const LitepaperPage = (): JSX.Element => {
     <StyledLitepaperPage>
       <Seo
         title="Backd Litepaper"
-        description="DeFi collateralized debt positions made capital efficient (reactive liquidity)"
+        description="How Backd combines actions (e.g. Aave & Compound liquidation protection) with yield-farming (Curve & Convex)"
       />
       <Header1>{t("litepaper.header")}</Header1>
       <Header>{t("litepaper.introduction.header")}</Header>
