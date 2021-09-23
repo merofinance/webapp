@@ -90,7 +90,7 @@ const PoolsPage = (): JSX.Element => {
     <StyledPoolsPage>
       <Seo
         title="Backd Pools"
-        description="Increase leverage, farm yield, & prevent DeFi loans (Aave, Compound, etc.) from liquidation"
+        description="Earn yield and governance tokens while executing other acitons such as collateral top ups (Aave & Compound) "
       />
       <ContentSection
         header={t("pools.header")}
