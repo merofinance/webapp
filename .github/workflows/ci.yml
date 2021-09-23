@@ -6,12 +6,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Installing Dependencies
+        run: yarn
       - name: Upload Translations
         run: npx @localazy/cli upload -w ${{ secrets.LOCALAZY_WRITE_KEY }} -r ${{ secrets.LOCALAZY_READ_KEY }}
   unit_test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+        uses: actions/checkout@v2
       - name: Installing Dependencies
         run: yarn
       - name: Running Unit Tests
@@ -19,7 +21,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+        uses: actions/checkout@v2
       - name: Installing Dependencies
         run: yarn
       - name: Building App
