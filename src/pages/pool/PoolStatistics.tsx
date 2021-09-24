@@ -35,13 +35,13 @@ const PoolStatistics = ({ pool }: Props): JSX.Element => {
         {
           header: t("pool.statistics.deposits.header"),
           tooltip: t("pool.statistics.deposits.tooltip"),
-          value: deposits.toCryptoString(),
+          value: `${deposits.toCryptoString()} ${pool.underlying.symbol}`,
           usd: numberToCompactCurrency(Number(depositsUsd.toString())),
         },
         {
           header: t("pool.statistics.locked.header"),
           tooltip: t("pool.statistics.locked.tooltip"),
-          value: locked.toCryptoString(),
+          value: `${locked.toCryptoString()} ${pool.underlying.symbol}`,
           usd: formatCurrency(Number(lockedUsd.toString())),
         },
         // {
