@@ -6,6 +6,7 @@ interface StatisticType {
   header: string;
   tooltip: string;
   value: string;
+  usd?: string;
 }
 
 const StyledStatistics = styled.div`
@@ -52,10 +53,28 @@ const Header = styled.div`
   }
 `;
 
+const ValueContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const Value = styled.div`
   font-weight: 500;
   line-height: 2.8rem;
   letter-spacing: 0.15px;
+
+  font-size: 2rem;
+  @media (max-width: 600px) {
+    font-size: 1.4rem;
+  }
+`;
+
+const Usd = styled.div`
+  font-weight: 400;
+  line-height: 2.8rem;
+  letter-spacing: 0.15px;
+  opacity: 0.6;
+  margin-left: 0.5rem;
 
   font-size: 2rem;
   @media (max-width: 600px) {
@@ -76,7 +95,10 @@ const Statistics = ({ statistics }: Props): JSX.Element => {
             <Header>{statistic.header}</Header>
             <Tooltip content={statistic.tooltip} />
           </HeaderContaner>
-          <Value>{statistic.value}</Value>
+          <ValueContainer>
+            <Value>{statistic.value}</Value>
+            {statistic.usd && <Usd>{`=${statistic.usd}`}</Usd>}
+          </ValueContainer>
         </Statistic>
       ))}
     </StyledStatistics>
