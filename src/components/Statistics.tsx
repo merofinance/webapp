@@ -22,7 +22,7 @@ const StyledStatistics = styled.div`
 `;
 
 const Statistic = styled.div`
-  width: 24.8rem;
+  width: 28rem;
   display: flex;
   flex-direction: column;
 
