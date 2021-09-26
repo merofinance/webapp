@@ -55,36 +55,38 @@ const Header = styled.div`
 
 const ValueContainer = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: column;
 `;
 
 const Value = styled.div`
   font-weight: 500;
-  line-height: 2.8rem;
   letter-spacing: 0.15px;
 
   font-size: 2rem;
+  line-height: 2.8rem;
   @media (max-width: 600px) {
     font-size: 1.4rem;
+    line-height: 1.8rem;
   }
 `;
 
 const Usd = styled.div`
   font-weight: 400;
-  line-height: 2.8rem;
   letter-spacing: 0.15px;
   opacity: 0.6;
-  margin-left: 0.5rem;
+  margin-top: 0.2rem;
 
-  font-size: 2rem;
+  font-size: 1.8rem;
+  line-height: 2.2rem;
   @media (max-width: 600px) {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
   }
 `;
 
-type Props = {
+interface Props {
   statistics: StatisticType[];
-};
+}
 
 const Statistics = ({ statistics }: Props): JSX.Element => {
   return (
@@ -97,7 +99,7 @@ const Statistics = ({ statistics }: Props): JSX.Element => {
           </HeaderContaner>
           <ValueContainer>
             <Value>{statistic.value}</Value>
-            {statistic.usd && <Usd>{`=${statistic.usd}`}</Usd>}
+            {statistic.usd && <Usd>{statistic.usd}</Usd>}
           </ValueContainer>
         </Statistic>
       ))}
