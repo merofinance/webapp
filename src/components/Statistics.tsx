@@ -74,9 +74,9 @@ const Usd = styled.div`
   font-weight: 400;
   letter-spacing: 0.15px;
   opacity: 0.6;
-  margin-top: 0.2rem;
+  margin-top: 0.1rem;
 
-  font-size: 1.8rem;
+  font-size: 1.7rem;
   line-height: 2.2rem;
   @media (max-width: 600px) {
     font-size: 1.2rem;
