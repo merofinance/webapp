@@ -1,19 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import ContentSection from "../../components/ContentSection";
 import NewPosition from "./NewPosition";
 import Tooltip from "../../components/Tooltip";
 import { Pool } from "../../lib";
-import { fetchPositions, selectPoolPositions } from "../../state/positionsSlice";
-import { AppDispatch } from "../../app/store";
-import { useBackd } from "../../app/hooks/use-backd";
+import { selectPoolPositions } from "../../state/positionsSlice";
 import { Position } from "../../lib/types";
 import PositionRow from "./PositionRow";
 import PoolStatistics from "./PoolStatistics";
-import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 
 type HeaderType = {
   label: string;
@@ -129,22 +126,14 @@ type Props = {
 const PoolPositions = ({ pool }: Props): JSX.Element => {
   const { t } = useTranslation();
   const positions = useSelector(selectPoolPositions(pool));
-  const dispatch = useDispatch<AppDispatch>();
-  const backd = useBackd();
   const [showShadow, setShowShadow] = useState(true);
   const positionContentRef = useRef<HTMLDivElement>(null);
-  const updated = useWeb3Updated();
 
   const handleScroll = () => {
     setShowShadow(
       (positionContentRef.current?.getBoundingClientRect().right || 1000) > window.innerWidth
     );
   };
-
-  useEffect(() => {
-    if (!backd) return;
-    dispatch(fetchPositions({ backd }));
-  }, [updated]);
 
   return (
     <ContentSection
