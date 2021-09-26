@@ -24,10 +24,8 @@ const PoolStatistics = ({ pool }: Props): JSX.Element => {
     (a: ScaledNumber, b: Position) => a.add(b.maxTopUp),
     new ScaledNumber()
   );
-  const lockedUsd = locked.mul(price);
 
   const deposits = locked.add(balance);
-  const depositsUsd = deposits.mul(price);
 
   return (
     <Statistics
@@ -36,13 +34,13 @@ const PoolStatistics = ({ pool }: Props): JSX.Element => {
           header: t("pool.statistics.deposits.header"),
           tooltip: t("pool.statistics.deposits.tooltip"),
           value: `${deposits.toCryptoString()} ${pool.underlying.symbol}`,
-          usd: numberToCompactCurrency(Number(depositsUsd.toString())),
+          usd: deposits.toUsdValue(price),
         },
         {
           header: t("pool.statistics.locked.header"),
           tooltip: t("pool.statistics.locked.tooltip"),
           value: `${locked.toCryptoString()} ${pool.underlying.symbol}`,
-          usd: formatCurrency(Number(lockedUsd.toString())),
+          usd: locked.toUsdValue(price),
         },
         // {
         //   header: t("pool.statistics.rewards.header"),
