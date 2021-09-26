@@ -7,7 +7,6 @@ import { Pool, Position } from "../../lib/types";
 import { selectPrice } from "../../state/selectors";
 import { selectBalance } from "../../state/userSlice";
 import { selectPoolPositions } from "../../state/positionsSlice";
-import { formatCurrency } from "../../lib/numeric";
 import { ScaledNumber } from "../../lib/scaled-number";
 
 type Props = {
@@ -21,10 +20,11 @@ const PoolStatistics = ({ pool }: Props): JSX.Element => {
   const positions = useSelector(selectPoolPositions(pool));
 
   const locked = positions.reduce(
-    (a: ScaledNumber, b: Position) => a.add(b.maxTopUp.mul(price)),
+    (a: ScaledNumber, b: Position) => a.add(b.maxTopUp),
     new ScaledNumber()
   );
-  const deposits = locked.add(balance.mul(price));
+
+  const deposits = locked.add(balance);
 
   return (
     <Statistics
@@ -32,12 +32,14 @@ const PoolStatistics = ({ pool }: Props): JSX.Element => {
         {
           header: t("pool.statistics.deposits.header"),
           tooltip: t("pool.statistics.deposits.tooltip"),
-          value: formatCurrency(Number(deposits.toString())),
+          value: `${deposits.toCryptoString()} ${pool.underlying.symbol}`,
+          usd: deposits.toUsdValue(price),
         },
         {
           header: t("pool.statistics.locked.header"),
           tooltip: t("pool.statistics.locked.tooltip"),
-          value: formatCurrency(Number(locked.toString())),
+          value: `${locked.toCryptoString()} ${pool.underlying.symbol}`,
+          usd: locked.toUsdValue(price),
         },
         // {
         //   header: t("pool.statistics.rewards.header"),
