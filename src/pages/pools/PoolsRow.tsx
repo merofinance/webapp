@@ -148,9 +148,7 @@ const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
           <Apy>{formatPercent(pool.apy)}</Apy>
         </Data>
         <Data>{numberToCompactCurrency(pool.totalAssets * price)}</Data>
-        <DepositedData preview={preview}>
-          {formatCurrency(Number(locked.toString()) * price)}
-        </DepositedData>
+        <DepositedData preview={preview}>{locked.toCompactUsdValue(price)}</DepositedData>
         <ChevronData preview={preview}>
           <Chevron src={chevron} alt="right arrow" />
         </ChevronData>
