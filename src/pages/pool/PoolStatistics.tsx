@@ -7,7 +7,6 @@ import { Pool, Position } from "../../lib/types";
 import { selectPrice } from "../../state/selectors";
 import { selectBalance } from "../../state/userSlice";
 import { selectPoolPositions } from "../../state/positionsSlice";
-import { formatCurrency, numberToCompactCurrency } from "../../lib/numeric";
 import { ScaledNumber } from "../../lib/scaled-number";
 
 type Props = {
