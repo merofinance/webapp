@@ -61,14 +61,15 @@ const Data = styled.td`
   display: flex;
   flex: 1;
   align-items: center;
-  font-weight: 400;
   letter-spacing: 0.15px;
   justify-content: ${(props: DataProps) => (props.right ? "flex-end" : "flex-start")};
   display: ${(props: DataProps) => (!props.preview && props.right ? "none" : "flex")};
 
+  font-weight: 900;
   font-size: 1.6rem;
-  line-height: 1.4rem;
+  line-height: 2rem;
   @media (max-width: 600px) {
+    font-weight: 700;
     font-size: 1.4rem;
     line-height: 2.1rem;
     display: ${(props: DataProps) => (props.right ? "none" : "flex")};
