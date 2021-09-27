@@ -198,8 +198,20 @@ export class Web3Backd implements Backd {
     );
   }
 
-  removePosition(account: Address, protocol: string, unstake = true): Promise<ContractTransaction> {
-    return this.topupAction.resetPosition(account, utils.formatBytes32String(protocol), unstake);
+  async removePosition(
+    account: Address,
+    protocol: string,
+    unstake = true
+  ): Promise<ContractTransaction> {
+    const gasEstimate = await this.topupAction.estimateGas.resetPosition(
+      account,
+      utils.formatBytes32String(protocol),
+      unstake
+    );
+    const gasLimit = gasEstimate.mul(11).div(10);
+    return this.topupAction.resetPosition(account, utils.formatBytes32String(protocol), unstake, {
+      gasLimit,
+    });
   }
 
   async getAllowance(
