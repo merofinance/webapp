@@ -6,10 +6,11 @@ import { useTranslation } from "react-i18next";
 import PoolsRow from "../pools/PoolsRow";
 import swirls from "../../assets/background/swirls.svg";
 import { useBackd } from "../../app/hooks/use-backd";
-import { fetchState, selectPools } from "../../state/poolsListSlice";
+import { fetchPreviewState, fetchState, selectPools } from "../../state/poolsListSlice";
 import { Pool } from "../../lib";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import { Header2, Header4 } from "../../styles/Headers";
+import { AppDispatch } from "../../app/store";
 
 const StyledPreview = styled.div`
   position: relative;
@@ -86,12 +87,15 @@ const Swirls = styled.img`
 const Preview = (): JSX.Element => {
   const { t } = useTranslation();
   const backd = useBackd();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const pools = useSelector(selectPools);
   const updated = useWeb3Updated();
 
   useEffect(() => {
-    if (!backd) return;
+    if (!backd) {
+      dispatch(fetchPreviewState());
+      return;
+    }
     dispatch(fetchState(backd));
   }, [updated]);
 
