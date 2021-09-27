@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { useIsLive } from "../../app/hooks/use-is-live";
 import AuditedBy from "./AuditedBy";
 import Background from "./Background";
 import Benefits from "./Benefits";
@@ -25,15 +24,13 @@ const Content = styled.div`
 `;
 
 const LandingPage = (): JSX.Element => {
-  const { protocolLive } = useIsLive();
-
   return (
     <StyledLanding>
       <Background />
       <Content>
         <Hero />
         <Benefits />
-        {protocolLive && <Preview />}
+        <Preview />
         <HowItWorks />
         <FutureActions />
         <SupportedBy />
