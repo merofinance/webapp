@@ -208,7 +208,7 @@ export class Web3Backd implements Backd {
       utils.formatBytes32String(protocol),
       unstake
     );
-    const gasLimit = gasEstimate.mul(11).div(10);
+    const gasLimit = gasEstimate.mul(12).div(10);
     return this.topupAction.resetPosition(account, utils.formatBytes32String(protocol), unstake, {
       gasLimit,
     });
