@@ -294,7 +294,7 @@
       "subHeader": "Begin earning yield immediately"
     },
     "header": "All pools",
-    "overview": "Backd’s single-asset pools aggregate yield across strategies. After depositing an asset, register a top-up position to protect from liquidation on supported collateralized lending protocols.",
+    "overview": "Backd’s single-asset pools aggregate yield across strategies. After depositing an asset, register an action to automate your liquidity to where it is needed most.",
     "deposit": "deposit",
     "information": {
       "header": "Pools Information",
@@ -317,8 +317,8 @@
         "tooltip": "The current value of your assets held in Backd liquidity pools"
       },
       "locked": {
-        "header": "Locked in position",
-        "tooltip": "The current value of your assets registered for top-ups (liquidation protection). Assets locked in a position still earn yield"
+        "header": "Locked in actions",
+        "tooltip": "The current value of your assets locked in actions. Assets locked in actions still earn yield"
       },
       "rewards": {
         "header": "Rewards accrued",
@@ -327,7 +327,7 @@
     }
   },
   "pool": {
-    "overview": "Deposit {{asset}} to begin earning yield via the {{strategy}} strategy. Once you have deposited, you can make your liquidity reactive by opening a top-up position.",
+    "overview": "Deposit {{asset}} to begin earning yield via the {{strategy}} strategy. Once you have deposited, you can make your liquidity reactive by creating an action.",
     "information": {
       "header": "Pool Information",
       "tvl": {
@@ -353,8 +353,8 @@
         "tooltip": "The current value of your assets held in the pool"
       },
       "locked": {
-        "header": "Locked in position",
-        "tooltip": "The current value of your assets registered for top-ups (liquidation protection). Assets locked in a position still earn yield"
+        "header": "Locked in actions",
+        "tooltip": "The current value of your assets locked in actions. Assets locked in actions still earn yield"
       },
       "rewards": {
         "header": "Rewards accrued",
