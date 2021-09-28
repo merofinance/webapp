@@ -65,7 +65,7 @@ const Data = styled.td`
   justify-content: ${(props: DataProps) => (props.right ? "flex-end" : "flex-start")};
   display: ${(props: DataProps) => (!props.preview && props.right ? "none" : "flex")};
 
-  font-weight: 900;
+  font-weight: 700;
   font-size: 1.6rem;
   line-height: 2rem;
   @media (max-width: 600px) {
