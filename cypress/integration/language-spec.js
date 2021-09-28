@@ -88,10 +88,6 @@ describe("Language Switching", () => {
     isChinese();
   });
 
-  it("Percy Should Screenshot Chinese Landing Page", () => {
-    percySnapshot();
-  });
-
   it("Should Change Language to Japanese", () => {
     cy.get('[id="language-selector"]').click();
     cy.get('[id="ja"]').click();
@@ -99,10 +95,6 @@ describe("Language Switching", () => {
 
   it("Should Show Japanese", () => {
     isJapanese();
-  });
-
-  it("Percy Should Screenshot Japanese Landing Page", () => {
-    percySnapshot();
   });
 
   it("Should Change Language to Spanish", () => {
@@ -114,10 +106,6 @@ describe("Language Switching", () => {
     isSpanish();
   });
 
-  it("Percy Should Screenshot Spanish Landing Page", () => {
-    percySnapshot();
-  });
-
   it("Should Change Language to French", () => {
     cy.get('[id="language-selector"]').click();
     cy.get('[id="fr"]').click();
@@ -125,10 +113,6 @@ describe("Language Switching", () => {
 
   it("Should Show French", () => {
     isFrench();
-  });
-
-  it("Percy Should Screenshot French Landing Page", () => {
-    percySnapshot();
   });
 
   it("Should Change Language back to English", () => {
