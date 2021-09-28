@@ -69,7 +69,7 @@ const Data = styled.td`
   font-size: 1.6rem;
   line-height: 2rem;
   @media (max-width: 600px) {
-    font-weight: 700;
+    font-weight: 500;
     font-size: 1.4rem;
     line-height: 2.1rem;
     display: ${(props: DataProps) => (props.right ? "none" : "flex")};
