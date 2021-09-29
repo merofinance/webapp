@@ -2,6 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
 import chevron from "../../assets/ui/chevron.svg";
 import Asset from "../../components/Asset";
 import Button from "../../components/Button";
@@ -32,6 +34,7 @@ const Row = styled.tr`
   padding: 0 1.7rem;
   cursor: pointer;
 
+  transition: background-color 0.3s;
   :hover {
     background-color: #1a1438;
   }
@@ -58,14 +61,15 @@ const Data = styled.td`
   display: flex;
   flex: 1;
   align-items: center;
-  font-weight: 400;
   letter-spacing: 0.15px;
   justify-content: ${(props: DataProps) => (props.right ? "flex-end" : "flex-start")};
   display: ${(props: DataProps) => (!props.preview && props.right ? "none" : "flex")};
 
+  font-weight: 700;
   font-size: 1.6rem;
-  line-height: 1.4rem;
+  line-height: 2rem;
   @media (max-width: 600px) {
+    font-weight: 500;
     font-size: 1.4rem;
     line-height: 2.1rem;
     display: ${(props: DataProps) => (props.right ? "none" : "flex")};
@@ -123,6 +127,7 @@ type Props = {
 };
 
 const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const history = useHistory();
 
   const price = useSelector(selectPrice(pool));
@@ -144,14 +149,12 @@ const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
           <Apy>{formatPercent(pool.apy)}</Apy>
         </Data>
         <Data>{numberToCompactCurrency(pool.totalAssets * price)}</Data>
-        <DepositedData preview={preview}>
-          {formatCurrency(Number(locked.toString()) * price)}
-        </DepositedData>
+        <DepositedData preview={preview}>{locked.toCompactUsdValue(price)}</DepositedData>
         <ChevronData preview={preview}>
           <Chevron src={chevron} alt="right arrow" />
         </ChevronData>
         <Data right preview={preview}>
-          <Button text="deposit" background="#141128" />
+          <Button text={t("pools.deposit")} background="#141128" />
         </Data>
       </Row>
     </tbody>

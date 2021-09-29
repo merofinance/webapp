@@ -4,6 +4,7 @@ import { useIsLive } from "../../app/hooks/use-is-live";
 import AuditedBy from "./AuditedBy";
 import Background from "./Background";
 import Benefits from "./Benefits";
+import FutureActions from "./FutureActions";
 import GetStarted from "./GetStarted";
 import Hero from "./Hero";
 import HowItWorks from "./HowItWorks";
@@ -34,6 +35,7 @@ const LandingPage = (): JSX.Element => {
         <Benefits />
         {protocolLive && <Preview />}
         <HowItWorks />
+        <FutureActions />
         <SupportedBy />
         <AuditedBy />
         <JoinCommunity />

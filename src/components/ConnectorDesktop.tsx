@@ -37,25 +37,35 @@ const Network = styled.div`
   margin-right: 1.6rem;
 `;
 
-interface BorderProps {
+interface ButtonProps {
   connected: boolean;
+  lightBackground: boolean;
 }
 
-const Border = styled.button`
+const Button = styled.button`
   display: flex;
-  justify-content: center;
   align-items: center;
-  background: linear-gradient(to right, rgba(197, 50, 249, 0.7), rgba(50, 178, 229, 0.7));
+  justify-content: center;
   cursor: pointer;
 
-  border-radius: ${(props: BorderProps) => (props.connected ? "8px" : "2.7rem")};
-  padding: ${(props: BorderProps) => (props.connected ? "1px" : "6px 7px")};
-  background: ${(props: BorderProps) =>
-    props.connected
-      ? "linear-gradient(to right, var(--primary-gradient) 0%, var(--secondary-gradient) 50%, var(--primary-gradient) 100%)"
-      : "linear-gradient(to right, rgba(197, 50, 249, 0.7) 0%, rgba(50, 178, 229, 0.7) 50%, rgba(197, 50, 249, 0.7) 100%)"};
+  height: ${(props: ButtonProps) => (props.connected ? "4.2rem" : "5.4rem")};
+  padding: ${(props: ButtonProps) => (props.connected ? "0 2px" : "0 2.2rem")};
+  border-radius: ${(props: ButtonProps) => (props.connected ? "8px" : "2.7rem")};
 
-  transition: background-position 0.5s;
+  transition: background-color 0.3s, background-position 0.5s;
+  border: ${(props: ButtonProps) => (props.connected ? "1px" : "6px")} solid transparent;
+  background: linear-gradient(
+      ${(props: ButtonProps) =>
+        props.connected ? (props.lightBackground ? "#120e2c" : "#0A0524") : "var(--main)"},
+      ${(props: ButtonProps) =>
+        props.connected ? (props.lightBackground ? "#120e2c" : "#0A0524") : "var(--main)"}
+    ),
+    ${(props: ButtonProps) =>
+      props.connected
+        ? "linear-gradient(to right, var(--primary-gradient) 0%, var(--secondary-gradient) 50%, var(--primary-gradient) 100%)"
+        : "linear-gradient(to right, rgba(197, 50, 249, 0.7) 0%, rgba(50, 178, 229, 0.7) 50%, rgba(197, 50, 249, 0.7) 100%)"};
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
   background-size: 200% auto;
 
   :hover {
@@ -65,24 +75,6 @@ const Border = styled.button`
       background-position: right center;
     }
   }
-`;
-
-interface InnerProps {
-  connected: boolean;
-  lightBackground: boolean;
-}
-
-const Innner = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s;
-
-  height: ${(props: InnerProps) => (props.connected ? "4rem" : "4.2rem")};
-  padding: ${(props: InnerProps) => (props.connected ? "0 2px" : "0 2.2rem")};
-  border-radius: ${(props: InnerProps) => (props.connected ? "7px" : "2.1rem")};
-  background-color: ${(props: InnerProps) =>
-    props.connected ? (props.lightBackground ? "#120e2c" : "#0A0524") : "var(--main)"};
 `;
 
 const ConnectorText = styled.div`
@@ -152,23 +144,21 @@ const ConnectorDesktop = ({ connect }: Props): JSX.Element => {
   return (
     <StyledConnectorDesktop>
       {chainId && chainId !== 1 && chainIds[chainId] && <Network>{chainIds[chainId]}</Network>}
-      <Border connected={active}>
-        <Innner onClick={() => connect()} connected={active} lightBackground={windowPosition > 40}>
-          {active && (
-            <IndicatorContainer>
-              <PulsingDot success={chainId === 1} />
-            </IndicatorContainer>
-          )}
-          <ConnectorText>
-            {account ? ens || shortenAddress(account, 8) : t("walletConnect.connectWallet")}
-          </ConnectorText>
-          {active && (
-            <IndicatorContainer>
-              <Loading cat={loading} src={pending} />
-            </IndicatorContainer>
-          )}
-        </Innner>
-      </Border>
+      <Button onClick={() => connect()} connected={active} lightBackground={windowPosition > 40}>
+        {active && (
+          <IndicatorContainer>
+            <PulsingDot success={chainId === 1} />
+          </IndicatorContainer>
+        )}
+        <ConnectorText>
+          {account ? ens || shortenAddress(account, 8) : t("walletConnect.connectWallet")}
+        </ConnectorText>
+        {active && (
+          <IndicatorContainer>
+            <Loading cat={loading} src={pending} />
+          </IndicatorContainer>
+        )}
+      </Button>
     </StyledConnectorDesktop>
   );
 };
