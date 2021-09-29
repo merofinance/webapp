@@ -46,7 +46,7 @@ const Content = styled.div`
 
 type Props = {
   header: string;
-  statistics: JSX.Element;
+  statistics?: JSX.Element;
   content: JSX.Element;
 };
 
@@ -55,8 +55,8 @@ const ContentSection = ({ header, statistics, content }: Props): JSX.Element => 
     <StyledContentSection>
       <Header>{header}</Header>
       <Line large />
-      {statistics}
-      <Line />
+      {statistics && statistics}
+      {statistics && <Line />}
       <Content>{content}</Content>
     </StyledContentSection>
   );
