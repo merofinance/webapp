@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router";
 
 import ContentSection from "../../components/ContentSection";
 import { Position } from "../../lib/types";
@@ -31,6 +32,7 @@ const ButtonContainer = styled.div`
 const RegisteredActions = () => {
   const { t } = useTranslation();
   const positions = useSelector(selectPositions);
+  const history = useHistory();
 
   return (
     <ContentSection
@@ -42,7 +44,13 @@ const RegisteredActions = () => {
           {/* TODO Add the position */}
           {positions.length > 0 && positions.map((position: Position) => <div>Cool position</div>)}
           <ButtonContainer>
-            <Button primary medium width="44%" text={t("actions.register")} />
+            <Button
+              primary
+              medium
+              width="44%"
+              text={t("actions.register.button")}
+              click={() => history.push("/actions/register")}
+            />
           </ButtonContainer>
         </Content>
       }
