@@ -174,27 +174,24 @@ export class Web3Backd implements Backd {
   }
 
   async getCompound(): Promise<Lending> {
-    const account = await this.currentAccount();
-    const ADDRESS = "0x5eae89dc1c671724a672ff0630122ee834098657";
-    const comptrollerContract = ComptrollerFactory.connect(ADDRESS, this._provider);
-    const assets = await comptrollerContract.getAssetsIn(account);
-    const cTokenContract = CTokenFactory.connect(assets[0], this._provider);
-    console.log("meow");
-    const decimals = await cTokenContract.decimals();
-    console.log(decimals);
-    const underlying = await cTokenContract.underlying();
-    console.log("Chhese");
-    console.log(underlying);
-    const underlyingContract = Ierc20FullFactory.connect(underlying, this._provider);
-    const underlyingDecimals = await underlyingContract.decimals();
-    const borrowsBN = await cTokenContract.borrowBalanceStored(account);
-    const borrows = new ScaledNumber(borrowsBN, decimals);
-    const balanceBN = await cTokenContract.balanceOf(account);
-    const balance = new ScaledNumber(balanceBN, decimals);
-    const exchangeRateBN = await cTokenContract.exchangeRateStored();
-    const exchangeRate = new ScaledNumber(exchangeRateBN, 18 - 8 + underlyingDecimals);
-    console.log(exchangeRate.toCryptoString());
-
+    // const account = await this.currentAccount();
+    const account = "0x1a27881E041737bc7eF5c616A8aF08Ec7E51Db40";
+    const response = await fetch(
+      `https://api.compound.finance/api/v2/account?addresses[]=${account}`
+    );
+    const data = await response.json();
+    if (data.accounts && data.accounts.length > 0) {
+      const accountData = data.accounts[0];
+      const collateral = ScaledNumber.fromUnscaled(accountData.total_collateral_value_in_eth.value);
+      const debt = ScaledNumber.fromUnscaled(accountData.total_borrow_value_in_eth.value);
+      return Promise.resolve({
+        totalCollateralETH: collateral,
+        totalDebtETH: debt,
+        availableBorrowsETH: new ScaledNumber(), // Not returned by API, leaving as 0 as not needed in UI at the moment
+        currentLiquidationThreshold: new ScaledNumber(), // Not returned by API, leaving as 0 as not needed in UI at the moment
+        healthFactor: debt.isZero() ? new ScaledNumber() : collateral.div(debt),
+      });
+    }
     return Promise.resolve({
       totalCollateralETH: new ScaledNumber(),
       totalDebtETH: new ScaledNumber(),
