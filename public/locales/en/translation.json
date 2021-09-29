@@ -470,7 +470,8 @@
       "description": "Use your Backd deposits as back-up collateral to protect your overcollateralised loans on Aave or Compound from getting liquidated.",
       "stages": {
         "loan": {
-          "meow": "meow"
+          "header": "Select a loan to protect",
+          "subHeader": "Backd has detected the following loans on supported platforms associated with your current connected wallet:"
         }
       }
     },

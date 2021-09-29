@@ -22,7 +22,13 @@ const Header = styled.div`
   font-size: 2.2rem;
   font-weight: 600;
   letter-spacing: 0.25px;
-  margin-bottom: 3rem;
+  margin-bottom: 1.6rem;
+`;
+
+const SubHeader = styled.div`
+  font-size: 1.7rem;
+  font-weight: 500;
+  opacity: 0.8;
 `;
 
 const ButtonContainer = styled.div`
@@ -46,7 +52,8 @@ const RegisterTopupLoan = () => {
         nav="2/4"
         content={
           <Content>
-            <Header>{t("actions.register.choose")}</Header>
+            <Header>{t("actions.topup.stages.loan.header")}</Header>
+            <SubHeader>{t("actions.topup.stages.loan.subHeader")}</SubHeader>
             <ButtonContainer>
               <Button
                 primary
