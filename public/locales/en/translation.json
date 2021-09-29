@@ -443,7 +443,11 @@
     }
   },
   "actions": {
-    "register": "Register an Action",
+    "register": {
+      "button": "Register an Action",
+      "header": "Register an Action",
+      "choose": "Choose the type of Action"
+    },
     "registered": {
       "header": "Registered Actions",
       "empty": "You have not registered any Actions yet.."
@@ -460,6 +464,21 @@
         },
         "register": "Register top-up position"
       }
+    },
+    "topup": {
+      "label": "Top-up Position"
+    },
+    "uniswap": {
+      "label": "Uniswap V3 LP"
+    },
+    "limitOrder": {
+      "label": "AMM limit order"
+    },
+    "curve": {
+      "label": "Curve Protection"
+    },
+    "nfts": {
+      "label": "NFT limit order"
     }
   },
   "claim": {
