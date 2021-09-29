@@ -447,6 +447,18 @@
     "registered": {
       "header": "Registered Actions",
       "empty": "You have not registered any Actions yet.."
+    },
+    "suggestions": {
+      "topup": {
+        "header": "We have found a protectable loan!",
+        "subHeader": "The wallet you have connected has a loan with Aave that you can create a top-up position for.",
+        "labels": {
+          "protocol": "Protocol",
+          "healthFactor": "Health Factor",
+          "totalCollateral": "Collateral Value",
+          "totalLoan": "Loan Amount"
+        }
+      }
     }
   },
   "claim": {
