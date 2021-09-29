@@ -10,7 +10,6 @@ import Seo from "../../components/Seo";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import RegisteredActions from "./RegisteredActions";
 import Overview from "../../components/Overview";
-import LendingInformation from "./lending/LendingInformation";
 import ProtectableLoans from "./lending/ProtectableLoans";
 import RegisterAction from "./RegisterAction";
 
@@ -44,7 +43,6 @@ const ActionsPage = (): JSX.Element => {
   const dispatch = useDispatch();
   const updated = useWeb3Updated();
   const { stage } = useParams<ActionParams>();
-  console.log(stage);
 
   useEffect(() => {
     if (!backd) return;
@@ -67,7 +65,6 @@ const ActionsPage = (): JSX.Element => {
       </ContentContainer>
       <InfoCards>
         <Overview description={t("actions.lending.overview")} link="https://docs.backd.fund/" />
-        <LendingInformation />
       </InfoCards>
     </StyledActionsPage>
   );
