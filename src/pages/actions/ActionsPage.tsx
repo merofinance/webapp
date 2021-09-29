@@ -10,6 +10,7 @@ import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import RegisteredActions from "./RegisteredActions";
 import Overview from "../../components/Overview";
 import LendingInformation from "./lending/LendingInformation";
+import ProtectableLoans from "./lending/ProtectableLoans";
 
 const StyledActionsPage = styled.div`
   width: 100%;
@@ -46,6 +47,7 @@ const ActionsPage = (): JSX.Element => {
       <Seo title="Backd Actions" description="TODO" />
       <ContentContainer>
         <Content>
+          <ProtectableLoans />
           <RegisteredActions />
         </Content>
       </ContentContainer>
