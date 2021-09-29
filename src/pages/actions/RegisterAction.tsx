@@ -7,6 +7,11 @@ import ContentSection from "../../components/ContentSection";
 import Radio, { RadioOptionType } from "../../components/Radio";
 import icon from "../../assets/logo/white-logo.svg";
 import Button from "../../components/Button";
+import BackButton from "../../components/BackButton";
+
+const Container = styled.div`
+  position: relative;
+`;
 
 const Content = styled.div`
   width: 100%;
@@ -79,33 +84,36 @@ const RegisterAction = () => {
   ];
 
   return (
-    <ContentSection
-      header={t("actions.register.header")}
-      nav="1/4"
-      content={
-        <Content>
-          <Header>{t("actions.register.choose")}</Header>
-          <Radio
-            options={actions}
-            active={action}
-            setOption={(value: string) => setAction(value)}
-          />
-          <NoteContainer>
-            <BackdIcon src={icon} />
-            <Note>{t("actions.topup.description")}</Note>
-          </NoteContainer>
-          <ButtonContainer>
-            <Button
-              primary
-              medium
-              width="44%"
-              text={t("components.continue")}
-              click={() => history.push(`/actions/register/${action}`)}
+    <Container>
+      <BackButton />
+      <ContentSection
+        header={t("actions.register.header")}
+        nav="1/4"
+        content={
+          <Content>
+            <Header>{t("actions.register.choose")}</Header>
+            <Radio
+              options={actions}
+              active={action}
+              setOption={(value: string) => setAction(value)}
             />
-          </ButtonContainer>
-        </Content>
-      }
-    />
+            <NoteContainer>
+              <BackdIcon src={icon} />
+              <Note>{t("actions.topup.description")}</Note>
+            </NoteContainer>
+            <ButtonContainer>
+              <Button
+                primary
+                medium
+                width="44%"
+                text={t("components.continue")}
+                click={() => history.push(`/actions/register/${action}`)}
+              />
+            </ButtonContainer>
+          </Content>
+        }
+      />
+    </Container>
   );
 };
 
