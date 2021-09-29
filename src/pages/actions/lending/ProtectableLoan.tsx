@@ -2,8 +2,10 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+
 import { Lending } from "../../../state/lendingSlice";
 import { selectEthPrice } from "../../../state/poolsListSlice";
+import Button from "../../../components/Button";
 
 const StyledProtectableLoan = styled.div`
   width: 100%;
@@ -13,7 +15,7 @@ const StyledProtectableLoan = styled.div`
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 1.4rem;
-  padding: 1.4rem;
+  padding: 1.3rem 1.4rem;
   margin-top: 1rem;
 `;
 
@@ -65,6 +67,9 @@ const ProtectableLoan = ({ protocol, loan }: Props) => {
       <Column>
         <Header>{t("actions.suggestions.topup.labels.totalLoan")}</Header>
         <Value>{loan.totalDebtETH.toUsdValue(ethPrice)}</Value>
+      </Column>
+      <Column>
+        <Button medium text={t("actions.suggestions.topup.register")} background="#3A3550" />
       </Column>
     </StyledProtectableLoan>
   );

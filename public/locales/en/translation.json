@@ -457,7 +457,8 @@
           "healthFactor": "Health Factor",
           "totalCollateral": "Collateral Value",
           "totalLoan": "Loan Amount"
-        }
+        },
+        "register": "Register top-up position"
       }
     }
   },

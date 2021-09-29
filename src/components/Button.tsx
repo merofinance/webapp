@@ -39,7 +39,7 @@ const StyledButton = styled.button`
   }};
   height: ${(props: ButtonProps) => {
     if (props.large) return props.primary ? "6.2rem" : "6.4rem";
-    if (props.medium) return props.primary ? "4.8rem" : "5rem";
+    if (props.medium) return props.primary ? "4.6rem" : "4.8rem";
     if (props.small) return props.primary ? "2.8rem" : "3rem";
     if (props.tiny) return props.primary ? "2.3rem" : "2.5rem";
     if (props.square) return props.primary ? "5.6rem" : "5.8rem";
