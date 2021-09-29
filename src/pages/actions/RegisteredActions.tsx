@@ -1,11 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
 import ContentSection from "../../components/ContentSection";
 import { Position } from "../../lib/types";
 import { selectPositions } from "../../state/positionsSlice";
 import Button from "../../components/Button";
-import { useTranslation } from "react-i18next";
 
 const Content = styled.div`
   flex: 1;
