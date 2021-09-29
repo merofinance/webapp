@@ -9,25 +9,40 @@ const StyledContentSection = styled.div`
   background-color: rgba(21, 14, 59, 0.5);
 `;
 
-const Header = styled.h2`
+const HeaderContainer = styled.h2`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: rgba(252, 40, 211, 0.05);
   box-shadow: 0px 0px 12px rgba(23, 18, 22, 0.05);
-  font-weight: 700;
-  letter-spacing: 0.25px;
   border-top-right-radius: 1.4rem;
   border-top-left-radius: 1.4rem;
 
-  font-size: 2.4rem;
   padding: 2rem 1.6rem;
   @media (max-width: 600px) {
-    font-size: 1.8rem;
     padding: 1.6rem;
   }
 `;
 
-type LineProps = {
+const Header = styled.h2`
+  font-weight: 700;
+  letter-spacing: 0.25px;
+
+  font-size: 2.4rem;
+  @media (max-width: 600px) {
+    font-size: 1.8rem;
+  }
+`;
+
+const Key = styled.div`
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: 0.25px;
+`;
+
+interface LineProps {
   large?: boolean;
-};
+}
 
 const Line = styled.div`
   width: 100%;
@@ -44,16 +59,20 @@ const Content = styled.div`
   padding: 2.4rem 1.6rem;
 `;
 
-type Props = {
+interface Props {
   header: string;
   statistics?: JSX.Element;
   content: JSX.Element;
-};
+  nav?: string;
+}
 
-const ContentSection = ({ header, statistics, content }: Props): JSX.Element => {
+const ContentSection = ({ header, statistics, content, nav }: Props): JSX.Element => {
   return (
     <StyledContentSection>
-      <Header>{header}</Header>
+      <HeaderContainer>
+        <Header>{header}</Header>
+        {nav && <Key>{nav}</Key>}
+      </HeaderContainer>
       <Line large />
       {statistics && statistics}
       {statistics && <Line />}
