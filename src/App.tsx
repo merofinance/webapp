@@ -108,6 +108,10 @@ const App = (): JSX.Element => {
                         <PoolsPage />
                       </Route>
 
+                      <Route path="/actions/:stage">
+                        <ActionsPage />
+                      </Route>
+
                       <Route path="/actions">
                         <ActionsPage />
                       </Route>
