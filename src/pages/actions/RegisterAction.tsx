@@ -26,7 +26,7 @@ const Content = styled.div`
 
 const Header = styled.div`
   font-size: 2.2rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.25px;
   margin-bottom: 3rem;
 `;

@@ -12,7 +12,7 @@ interface StatisticType {
 const StyledStatistics = styled.div`
   width: 100%;
   display: flex;
-  padding: 2.2rem 1.6rem;
+  padding: 2.2rem 2.4rem;
 
   padding-bottom: 2.6rem;
   @media (max-width: 600px) {

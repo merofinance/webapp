@@ -18,20 +18,30 @@ const HeaderContainer = styled.h2`
   border-top-right-radius: 1.4rem;
   border-top-left-radius: 1.4rem;
 
-  padding: 2rem 1.6rem;
+  padding: 2rem 2.4rem;
   @media (max-width: 600px) {
     padding: 1.6rem;
   }
 `;
 
+const HeaderTextContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const Header = styled.h2`
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.25px;
 
   font-size: 2.4rem;
   @media (max-width: 600px) {
     font-size: 1.8rem;
   }
+`;
+
+const SubHeader = styled(Header)`
+  margin-left: 1.3rem;
+  opacity: 0.6;
 `;
 
 const Key = styled.div`
@@ -56,21 +66,25 @@ const Content = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 2.4rem 1.6rem;
+  padding: 2.4rem 2.4rem;
 `;
 
 interface Props {
   header: string;
+  subHeader?: string;
   statistics?: JSX.Element;
   content: JSX.Element;
   nav?: string;
 }
 
-const ContentSection = ({ header, statistics, content, nav }: Props): JSX.Element => {
+const ContentSection = ({ header, subHeader, statistics, content, nav }: Props): JSX.Element => {
   return (
     <StyledContentSection>
       <HeaderContainer>
-        <Header>{header}</Header>
+        <HeaderTextContainer>
+          <Header>{header}</Header>
+          {subHeader && <SubHeader>{subHeader}</SubHeader>}
+        </HeaderTextContainer>
         {nav && <Key>{nav}</Key>}
       </HeaderContainer>
       <Line large />

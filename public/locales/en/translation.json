@@ -467,7 +467,12 @@
     },
     "topup": {
       "label": "Top-up Position",
-      "description": "Use your Backd deposits as back-up collateral to protect your overcollateralised loans on Aave or Compound from getting liquidated."
+      "description": "Use your Backd deposits as back-up collateral to protect your overcollateralised loans on Aave or Compound from getting liquidated.",
+      "stages": {
+        "loan": {
+          "meow": "meow"
+        }
+      }
     },
     "uniswap": {
       "label": "Uniswap V3 LP"
