@@ -2,10 +2,8 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { ETH_DUMMY_ADDRESS } from "../../../lib/constants";
-import { Lending, selectAave, selectCompound } from "../../../state/lendingSlice";
+import { Lending } from "../../../state/lendingSlice";
 import { selectEthPrice } from "../../../state/poolsListSlice";
-import { selectPrice } from "../../../state/selectors";
 
 const StyledProtectableLoan = styled.div`
   width: 100%;
@@ -16,6 +14,7 @@ const StyledProtectableLoan = styled.div`
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 1.4rem;
   padding: 1.4rem;
+  margin-top: 1rem;
 `;
 
 const Column = styled.div`
@@ -27,15 +26,14 @@ const Column = styled.div`
 const Header = styled.div`
   font-size: 1.2rem;
   font-weight: 700;
-  line-height: 3.3rem;
   letter-spacing: 0.2px;
   opacity: 0.6;
+  margin-bottom: 0.5rem;
 `;
 
 const Value = styled.div`
   font-size: 1.8rem;
   font-weight: 700;
-  line-height: 3.4rem;
   letter-spacing: 0.2px;
 `;
 

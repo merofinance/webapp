@@ -2,7 +2,6 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { ScaledNumber } from "../../../lib/scaled-number";
 import { selectAave, selectCompound } from "../../../state/lendingSlice";
 import ProtectableLoan from "./ProtectableLoan";
 
@@ -13,6 +12,7 @@ const StyledProtectableLoans = styled.div`
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 1.4rem;
   padding: 2.4rem 1.6rem;
+  margin-bottom: 2.4rem;
 `;
 
 const Header = styled.div`
@@ -20,6 +20,7 @@ const Header = styled.div`
   font-weight: 700;
   line-height: 4.2rem;
   letter-spacing: 0.25px;
+  margin-bottom: 0.2rem;
 `;
 
 const SubHeader = styled.div`
@@ -28,6 +29,7 @@ const SubHeader = styled.div`
   line-height: 2.1rem;
   letter-spacing: 0.46px;
   opacity: 0.8;
+  margin-bottom: 0.4rem;
 `;
 
 const ProtectableLoans = () => {
