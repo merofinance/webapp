@@ -472,6 +472,9 @@
         "loan": {
           "header": "Select a loan to protect",
           "subHeader": "Backd has detected the following loans on supported platforms associated with your current connected wallet:"
+        },
+        "pool": {
+          "header": "Which pool do you want the top-up to come from?"
         }
       }
     },

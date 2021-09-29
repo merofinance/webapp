@@ -44,7 +44,7 @@ const RegisterTopupPool = () => {
         nav="3/4"
         content={
           <Content>
-            <Header>{t("actions.register.choose")}</Header>
+            <Header>{t("actions.topup.stages.pool.header")}</Header>
             <ButtonContainer>
               <Button
                 primary
