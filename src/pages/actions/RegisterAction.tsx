@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 
 import ContentSection from "../../components/ContentSection";
 import Radio, { RadioOptionType } from "../../components/Radio";
 import icon from "../../assets/logo/white-logo.svg";
 import Button from "../../components/Button";
 import BackButton from "../../components/BackButton";
+import RegisterTopup from "./lending/RegisterTopup";
+
+interface RegisterParams {
+  action: string;
+}
 
 const Container = styled.div`
   position: relative;
@@ -54,7 +59,8 @@ const ButtonContainer = styled.div`
 const RegisterAction = () => {
   const { t } = useTranslation();
   const history = useHistory();
-  const [action, setAction] = useState("topup");
+  const [actionOption, setActionOption] = useState("topup");
+  const { action } = useParams<RegisterParams>();
 
   const actions: RadioOptionType[] = [
     {
@@ -86,33 +92,36 @@ const RegisterAction = () => {
   return (
     <Container>
       <BackButton />
-      <ContentSection
-        header={t("actions.register.header")}
-        nav="1/4"
-        content={
-          <Content>
-            <Header>{t("actions.register.choose")}</Header>
-            <Radio
-              options={actions}
-              active={action}
-              setOption={(value: string) => setAction(value)}
-            />
-            <NoteContainer>
-              <BackdIcon src={icon} />
-              <Note>{t("actions.topup.description")}</Note>
-            </NoteContainer>
-            <ButtonContainer>
-              <Button
-                primary
-                medium
-                width="44%"
-                text={t("components.continue")}
-                click={() => history.push(`/actions/register/${action}`)}
+      {action && <RegisterTopup />}
+      {!action && (
+        <ContentSection
+          header={t("actions.register.header")}
+          nav="1/4"
+          content={
+            <Content>
+              <Header>{t("actions.register.choose")}</Header>
+              <Radio
+                options={actions}
+                active={actionOption}
+                setOption={(value: string) => setActionOption(value)}
               />
-            </ButtonContainer>
-          </Content>
-        }
-      />
+              <NoteContainer>
+                <BackdIcon src={icon} />
+                <Note>{t("actions.topup.description")}</Note>
+              </NoteContainer>
+              <ButtonContainer>
+                <Button
+                  primary
+                  medium
+                  width="44%"
+                  text={t("components.continue")}
+                  click={() => history.push(`/actions/register/${actionOption}`)}
+                />
+              </ButtonContainer>
+            </Content>
+          }
+        />
+      )}
     </Container>
   );
 };
