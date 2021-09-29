@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
@@ -7,14 +7,27 @@ import { useBackd } from "../../app/hooks/use-backd";
 import { fetchState } from "../../state/poolsListSlice";
 import Seo from "../../components/Seo";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
-import Radio from "../../components/Radio";
-import LendingAction from "./lending/LendingAction";
+import RegisteredActions from "./RegisteredActions";
+import Overview from "../../components/Overview";
+import LendingInformation from "./lending/LendingInformation";
 
-const StyledPoolsPage = styled.div`
+const StyledActionsPage = styled.div`
   width: 100%;
   display: flex;
+`;
+
+const ContentContainer = styled.div`
+  flex: 1;
+`;
+
+const Content = styled.div`
+  width: 100%;
+  display: flex;
+`;
+
+const InfoCards = styled.div`
+  display: flex;
   flex-direction: column;
-  align-items: center;
 `;
 
 const ActionsPage = (): JSX.Element => {
@@ -23,33 +36,24 @@ const ActionsPage = (): JSX.Element => {
   const dispatch = useDispatch();
   const updated = useWeb3Updated();
 
-  const [tab, setTab] = useState("lending");
-
   useEffect(() => {
     if (!backd) return;
     dispatch(fetchState(backd));
   }, [updated]);
 
   return (
-    <StyledPoolsPage>
+    <StyledActionsPage>
       <Seo title="Backd Actions" description="TODO" />
-      <Radio
-        options={[
-          {
-            label: t("actions.lending.header"),
-            value: "lending",
-          },
-          {
-            label: t("actions.limitOrders.header"),
-            value: "limit",
-            disabledText: t("components.comingSoon"),
-          },
-        ]}
-        active={tab}
-        setOption={(value: string) => setTab(value)}
-      />
-      <LendingAction />
-    </StyledPoolsPage>
+      <ContentContainer>
+        <Content>
+          <RegisteredActions />
+        </Content>
+      </ContentContainer>
+      <InfoCards>
+        <Overview description={t("actions.lending.overview")} link="https://docs.backd.fund/" />
+        <LendingInformation />
+      </InfoCards>
+    </StyledActionsPage>
   );
 };
 
