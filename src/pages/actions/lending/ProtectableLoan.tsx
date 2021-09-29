@@ -2,6 +2,8 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { useWeb3React } from "@web3-react/core";
+import { useHistory } from "react-router";
 
 import { Lending } from "../../../state/lendingSlice";
 import { selectEthPrice } from "../../../state/poolsListSlice";
@@ -46,6 +48,8 @@ interface Props {
 
 const ProtectableLoan = ({ protocol, loan }: Props) => {
   const { t } = useTranslation();
+  const { account } = useWeb3React();
+  const history = useHistory();
   const ethPrice = useSelector(selectEthPrice);
 
   if (!loan) return <></>;
@@ -69,7 +73,12 @@ const ProtectableLoan = ({ protocol, loan }: Props) => {
         <Value>{loan.totalDebtETH.toUsdValue(ethPrice)}</Value>
       </Column>
       <Column>
-        <Button medium text={t("actions.suggestions.topup.register")} background="#3A3550" />
+        <Button
+          medium
+          text={t("actions.suggestions.topup.register")}
+          background="#3A3550"
+          click={() => history.push(`/actions/register/topup/${account}/${protocol.toLowerCase()}`)}
+        />
       </Column>
     </StyledProtectableLoan>
   );
