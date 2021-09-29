@@ -81,6 +81,7 @@ const RegisterAction = () => {
   return (
     <ContentSection
       header={t("actions.register.header")}
+      nav="1/4"
       content={
         <Content>
           <Header>{t("actions.register.choose")}</Header>
