@@ -43,7 +43,7 @@ const RegisterTopupLoan = () => {
       <ContentSection
         header={t("actions.register.header")}
         subHeader={t("actions.topup.label")}
-        nav="1/4"
+        nav="2/4"
         content={
           <Content>
             <Header>{t("actions.register.choose")}</Header>

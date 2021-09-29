@@ -40,7 +40,8 @@ const RegisterTopupConditions = () => {
       <BackButton />
       <ContentSection
         header={t("actions.register.header")}
-        nav="1/4"
+        subHeader={t("actions.topup.label")}
+        nav="4/4"
         content={
           <Content>
             <Header>{t("actions.register.choose")}</Header>

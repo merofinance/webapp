@@ -40,7 +40,8 @@ const RegisterTopupPool = () => {
       <BackButton />
       <ContentSection
         header={t("actions.register.header")}
-        nav="1/4"
+        subHeader={t("actions.topup.label")}
+        nav="3/4"
         content={
           <Content>
             <Header>{t("actions.register.choose")}</Header>
@@ -50,7 +51,7 @@ const RegisterTopupPool = () => {
                 medium
                 width="44%"
                 text={t("components.continue")}
-                click={() => history.push(`/actions/register/sskdfk/skdfk/ksdkf`)}
+                click={() => history.push(`/actions/register/sskdfk/skdfk/ksdkf/sdf`)}
               />
             </ButtonContainer>
           </Content>
