@@ -475,6 +475,10 @@
         },
         "pool": {
           "header": "Which pool do you want the top-up to come from?"
+        },
+        "conditions": {
+          "header": "Enter top-up conditions",
+          "subHeader": "TODO!!!"
         }
       }
     },

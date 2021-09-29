@@ -24,6 +24,12 @@ const Header = styled.div`
   margin-bottom: 3rem;
 `;
 
+const SubHeader = styled.div`
+  font-size: 1.7rem;
+  font-weight: 500;
+  opacity: 0.8;
+`;
+
 const ButtonContainer = styled.div`
   width: 100%;
   display: flex;
@@ -44,7 +50,8 @@ const RegisterTopupConditions = () => {
         nav="4/4"
         content={
           <Content>
-            <Header>{t("actions.register.choose")}</Header>
+            <Header>{t("actions.topup.stages.conditions.header")}</Header>
+            <SubHeader>{t("actions.topup.stages.conditions.subHeader")}</SubHeader>
             <ButtonContainer>
               <Button
                 primary
