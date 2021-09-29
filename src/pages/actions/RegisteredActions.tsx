@@ -5,6 +5,7 @@ import ContentSection from "../../components/ContentSection";
 import { Position } from "../../lib/types";
 import { selectPositions } from "../../state/positionsSlice";
 import Button from "../../components/Button";
+import { useTranslation } from "react-i18next";
 
 const Content = styled.div`
   flex: 1;
@@ -27,19 +28,20 @@ const ButtonContainer = styled.div`
 `;
 
 const RegisteredActions = () => {
+  const { t } = useTranslation();
   const positions = useSelector(selectPositions);
 
   return (
     <ContentSection
-      header="Registered Actions"
+      header={t("actions.registered.header")}
       content={
         <Content>
           {/* TODO Check the styling of this */}
-          {positions.length === 0 && <Empty>You have not registered any Actions yet..</Empty>}
+          {positions.length === 0 && <Empty>{t("actions.registered.empty")}</Empty>}
           {/* TODO Add the position */}
           {positions.length > 0 && positions.map((position: Position) => <div>Cool position</div>)}
           <ButtonContainer>
-            <Button primary medium width="44%" text="Register an Action" />
+            <Button primary medium width="44%" text={t("actions.register")} />
           </ButtonContainer>
         </Content>
       }

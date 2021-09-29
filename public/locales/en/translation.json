@@ -443,12 +443,10 @@
     }
   },
   "actions": {
-    "lending": {
-      "header": "Lending",
-      "overview": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut"
-    },
-    "limitOrders": {
-      "header": "Limit Orders"
+    "register": "Register an Action",
+    "registered": {
+      "header": "Registered Actions",
+      "empty": "You have not registered any Actions yet.."
     }
   },
   "claim": {
