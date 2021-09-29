@@ -20,9 +20,9 @@ import { fetchState } from "../../state/poolsListSlice";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import BackButton from "../../components/BackButton";
 
-type DepositWithdrawParams = {
+interface DepositWithdrawParams {
   poolName: string;
-};
+}
 
 const StyledPoolPage = styled.div`
   position: relative;
