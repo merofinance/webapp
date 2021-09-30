@@ -39,9 +39,7 @@ const RegisteredActions = () => {
       header={t("actions.registered.header")}
       content={
         <Content>
-          {/* TODO Check the styling of this */}
           {positions.length === 0 && <Empty>{t("actions.registered.empty")}</Empty>}
-          {/* TODO Add the position */}
           {positions.length > 0 && positions.map((position: Position) => <div>Cool position</div>)}
           <ButtonContainer>
             <Button
