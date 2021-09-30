@@ -11,6 +11,7 @@ const StyledRowSelector = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  margin-top: 3rem;
 `;
 
 interface Props {
