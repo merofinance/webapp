@@ -64,7 +64,7 @@ const ActionsPage = (): JSX.Element => {
         </Content>
       </ContentContainer>
       <InfoCards>
-        <Overview description={t("actions.lending.overview")} link="https://docs.backd.fund/" />
+        <Overview description={t("actions.overview")} link="https://docs.backd.fund/" />
       </InfoCards>
     </StyledActionsPage>
   );

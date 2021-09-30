@@ -443,6 +443,7 @@
     }
   },
   "actions": {
+    "overview": "Use this screen to monitor your Actions. Actions are a set of predefined market triggers, that when occur, something is done on your behalf.",
     "register": {
       "button": "Register an Action",
       "header": "Register an Action",
