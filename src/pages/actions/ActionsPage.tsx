@@ -14,6 +14,7 @@ import ProtectableLoans from "./lending/ProtectableLoans";
 import RegisterAction from "./RegisterAction";
 import YourDeposits from "./YourDeposits";
 import Button from "../../components/Button";
+import { GradientLink } from "../../styles/GradientText";
 
 interface ActionParams {
   stage: string;
@@ -39,9 +40,17 @@ const InfoCards = styled.div`
   flex-direction: column;
 `;
 
-const ProposeLink = styled.a`
+const ProposeContainer = styled.div`
   width: 100%;
   padding-left: 1.6rem;
+  display: flex;
+  justify-content: center;
+`;
+
+const ProposeLink = styled(GradientLink)`
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.46px;
 `;
 
 const ActionsPage = (): JSX.Element => {
@@ -73,9 +82,15 @@ const ActionsPage = (): JSX.Element => {
       <InfoCards>
         <Overview description={t("actions.overview")} link="https://docs.backd.fund/" />
         <YourDeposits />
-        <ProposeLink href="https://discord.gg/jpGvaFV3Rv" target="_blank" rel="noopener noreferrer">
-          <Button medium wide text={t("actions.propose")} background="#0A0525" />
-        </ProposeLink>
+        <ProposeContainer>
+          <ProposeLink
+            href="https://discord.gg/jpGvaFV3Rv"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            + Propose a new Action on Discord
+          </ProposeLink>
+        </ProposeContainer>
       </InfoCards>
     </StyledActionsPage>
   );
