@@ -9,7 +9,6 @@ import { selectBalances } from "../../state/userSlice";
 import Asset from "../../components/Asset";
 import { ScaledNumber } from "../../lib/scaled-number";
 import { formatCurrency } from "../../lib/numeric";
-import { GradientText } from "../../styles/GradientText";
 
 const Content = styled.div`
   width: 100%;
@@ -53,25 +52,6 @@ const Total = styled.div`
   margin-top: 0.4rem;
 `;
 
-const DepositsButton = styled.button`
-  margin-top: 2rem;
-  @media (max-width: 1439px) {
-    margin-top: 2rem;
-  }
-`;
-
-const Deposits = styled(GradientText)`
-  font-weight: 500;
-  letter-spacing: 0.46px;
-
-  font-size: 1.5rem;
-  line-height: 2rem;
-  @media (max-width: 1439px) {
-    font-size: 1.2rem;
-    line-height: 1.7rem;
-  }
-`;
-
 const YourDeposits = () => {
   const { t } = useTranslation();
   const pools = useSelector(selectPools);
@@ -109,9 +89,6 @@ const YourDeposits = () => {
             </Row>
           ))}
           <Total>{`= ${formatCurrency(Number(totalUsd.toString()))}`}</Total>
-          <DepositsButton>
-            <Deposits>{t("actions.manageDeposits")}</Deposits>
-          </DepositsButton>
         </Content>
       }
     />
