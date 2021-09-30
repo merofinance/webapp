@@ -15,13 +15,17 @@ const StyledRowOption = styled.button`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: ${(props: RowOptionProps) =>
+
+  border: ${(props: RowOptionProps) => (props.active ? "2px" : "1px")} solid transparent;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  background-image: ${(props: RowOptionProps) =>
     props.active
-      ? "linear-gradient(to right, rgba(197, 50, 249, 0.1), rgba(50, 178, 229, 0.1))"
-      : "rgba(20, 17, 40, 1)"};
-  /* border: 1px solid rgba(255, 255, 255, 0.2); */
+      ? "linear-gradient(to right, #1D0B38, #101839), var(--gradient)"
+      : "linear-gradient(rgba(20, 17, 40, 1), rgba(20, 17, 40, 1)), linear-gradient(#494758, #494758)"};
+
   border-radius: 1.4rem;
-  padding: 1.3rem 1.4rem;
+  padding: ${(props: RowOptionProps) => (props.active ? "1.2rem 1.3rem" : "1.3rem 1.4rem")};
   margin-top: 1rem;
   cursor: pointer;
 `;
