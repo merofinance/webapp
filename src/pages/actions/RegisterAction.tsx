@@ -101,6 +101,7 @@ const RegisterAction = () => {
             <Content>
               <Header>{t("actions.register.choose")}</Header>
               <Radio
+                gradient
                 options={actions}
                 active={actionOption}
                 setOption={(value: string) => setActionOption(value)}
