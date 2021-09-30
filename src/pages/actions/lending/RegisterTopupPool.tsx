@@ -100,6 +100,8 @@ const RegisterTopupPool = () => {
                 width="44%"
                 text={t("components.continue")}
                 click={() => history.push(`/actions/register/sskdfk/skdfk/ksdkf/sdf`)}
+                disabled={!pool}
+                hoverText={t("actions.topup.stages.pool.incomplete")}
               />
             </ButtonContainer>
           </Content>
