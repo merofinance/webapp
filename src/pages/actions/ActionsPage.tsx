@@ -12,6 +12,7 @@ import RegisteredActions from "./RegisteredActions";
 import Overview from "../../components/Overview";
 import ProtectableLoans from "./lending/ProtectableLoans";
 import RegisterAction from "./RegisterAction";
+import YourDeposits from "./YourDeposits";
 
 interface ActionParams {
   stage: string;
@@ -65,6 +66,7 @@ const ActionsPage = (): JSX.Element => {
       </ContentContainer>
       <InfoCards>
         <Overview description={t("actions.overview")} link="https://docs.backd.fund/" />
+        <YourDeposits />
       </InfoCards>
     </StyledActionsPage>
   );
