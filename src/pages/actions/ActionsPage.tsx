@@ -13,6 +13,7 @@ import Overview from "../../components/Overview";
 import ProtectableLoans from "./lending/ProtectableLoans";
 import RegisterAction from "./RegisterAction";
 import YourDeposits from "./YourDeposits";
+import Button from "../../components/Button";
 
 interface ActionParams {
   stage: string;
@@ -36,6 +37,11 @@ const Content = styled.div`
 const InfoCards = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const ProposeLink = styled.a`
+  width: 100%;
+  padding-left: 1.6rem;
 `;
 
 const ActionsPage = (): JSX.Element => {
@@ -67,6 +73,9 @@ const ActionsPage = (): JSX.Element => {
       <InfoCards>
         <Overview description={t("actions.overview")} link="https://docs.backd.fund/" />
         <YourDeposits />
+        <ProposeLink href="https://discord.gg/jpGvaFV3Rv" target="_blank" rel="noopener noreferrer">
+          <Button medium wide text={t("actions.propose")} background="#0A0525" />
+        </ProposeLink>
       </InfoCards>
     </StyledActionsPage>
   );
