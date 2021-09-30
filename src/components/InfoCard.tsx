@@ -21,7 +21,7 @@ const StyledInfoCard = styled.div`
   margin-bottom: 2.4rem;
 
   max-height: ${(props: StyleProps) =>
-    !props.collapsible ? "auto" : props.open ? "22rem" : "5.4rem"};
+    !props.collapsible ? "auto" : props.open ? "24rem" : "5.4rem"};
 
   margin-left: 1.6rem;
   width: ${(props: StyleProps) => (props.wide ? "40rem" : "34rem")};
