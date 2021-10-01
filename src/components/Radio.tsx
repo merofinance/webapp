@@ -22,7 +22,6 @@ interface OptionProps {
 const RadioOption = styled.button`
   text-transform: capitalize;
   position: relative;
-  width: 15.2rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,6 +41,7 @@ const RadioOption = styled.button`
         : "rgba(197, 50, 249, 0.5)"};
   margin-right: ${(props: OptionProps) => (props.gradient ? "1.6rem" : "0")};
   height: ${(props: OptionProps) => (props.gradient ? "3.8rem" : "4.9rem")};
+  width: ${(props: OptionProps) => (props.gradient ? "22.8rem" : "15.2rem")};
 
   :hover {
     opacity: ${(props: OptionProps) => (props.active || props.disabled ? "1" : "0.7")};
