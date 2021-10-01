@@ -479,7 +479,8 @@
       "stages": {
         "loan": {
           "header": "Select a loan to protect",
-          "subHeader": "Backd has detected the following loans on supported platforms associated with your current connected wallet:"
+          "subHeader": "Backd has detected the following loans on supported platforms associated with your current connected wallet:",
+          "search": "Or, enter wallet address with a loan:"
         },
         "pool": {
           "header": "Which pool do you want the top-up to come from?",
