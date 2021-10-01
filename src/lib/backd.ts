@@ -38,8 +38,8 @@ export interface Backd {
   currentAccount(): Promise<Address>;
   listPools(): Promise<Pool[]>;
   getPoolInfo(address: Address): Promise<Pool>;
-  getAave(): Promise<Loan>;
-  getCompound(): Promise<Loan>;
+  getAave(address?: Address): Promise<Loan>;
+  getCompound(address?: Address): Promise<Loan>;
   getPositions(): Promise<PlainPosition[]>;
   registerPosition(pool: Pool, position: Position): Promise<ContractTransaction>;
   removePosition(
@@ -158,8 +158,8 @@ export class Web3Backd implements Backd {
     return transformPool(rawPool, bigNumberToFloat);
   }
 
-  async getAave(): Promise<Loan> {
-    const account = await this.currentAccount();
+  async getAave(address?: Address): Promise<Loan> {
+    const account = address || (await this.currentAccount());
     const lendingPoolContract = LendingPoolFactory.connect(this._provider);
     const userAccountData = await lendingPoolContract.getUserAccountData(account);
     return {
@@ -174,8 +174,8 @@ export class Web3Backd implements Backd {
     };
   }
 
-  async getCompound(): Promise<Loan> {
-    // const account = await this.currentAccount();
+  async getCompound(address?: Address): Promise<Loan> {
+    // const account = address || (await this.currentAccount());
     const account = "0x1a27881E041737bc7eF5c616A8aF08Ec7E51Db40";
     const response = await fetch(
       `https://api.compound.finance/api/v2/account?addresses[]=${account}`
