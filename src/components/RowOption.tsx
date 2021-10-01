@@ -28,6 +28,12 @@ const StyledRowOption = styled.button`
   padding: ${(props: RowOptionProps) => (props.active ? "1.2rem 1.3rem" : "1.3rem 1.4rem")};
   margin-top: 1rem;
   cursor: pointer;
+
+  transition: filter 0.3s;
+  filter: brightness(1);
+  :hover {
+    filter: brightness(1.15);
+  }
 `;
 
 const Column = styled.div`
