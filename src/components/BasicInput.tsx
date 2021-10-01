@@ -5,10 +5,9 @@ const StyledBasicInput = styled.div`
   width: 60%;
   display: flex;
   flex-direction: column;
-  align-items: center;
 `;
 
-interface InputBorderProps {
+interface InputProps {
   valid: boolean;
 }
 
@@ -17,7 +16,7 @@ const InputBorder = styled.div`
   width: 100%;
   padding: 1px;
 
-  background: ${(props: InputBorderProps) =>
+  background: ${(props: InputProps) =>
     props.valid
       ? "linear-gradient(to right, #c532f9, #32b2e5)"
       : "linear-gradient(to right, var(--error), var(--error))"};
@@ -41,6 +40,8 @@ const Input = styled.input`
   letter-spacing: 0.15px;
   font-weight: 400;
 
+  color: ${(props: InputProps) => (props.valid ? "var(--main)" : "var(--error)")};
+
   font-size: 1.6rem;
   border-radius: 13px;
   @media (max-width: 600px) {
@@ -62,16 +63,14 @@ const Input = styled.input`
 `;
 
 const Error = styled.div`
-  position: absolute;
-  left: 50%;
-  top: calc(100% + 0.6rem);
-  transform: translateX(-50%);
-  background-color: var(--error);
-  border-radius: 4px;
-  padding: 4px 8px;
-  font-weight: 500;
-  font-size: 1rem;
-  white-space: nowrap;
+  font-weight: 400;
+  color: var(--error);
+  margin-top: 0.6rem;
+
+  font-size: 1.6rem;
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+  }
 `;
 
 interface Props {
@@ -83,17 +82,20 @@ interface Props {
 }
 
 const BasicInput = ({ value, setValue, placeholder, type, error }: Props): JSX.Element => {
+  const valid = !error;
+
   return (
     <StyledBasicInput>
-      <InputBorder valid={!error}>
+      <InputBorder valid={valid}>
         <Input
+          valid={valid}
           type={type || "text"}
           value={value}
           placeholder={placeholder}
           onChange={(e) => setValue(e.target.value)}
         />
-        {error && <Error>{error}</Error>}
       </InputBorder>
+      {!valid && <Error>{error}</Error>}
     </StyledBasicInput>
   );
 };
