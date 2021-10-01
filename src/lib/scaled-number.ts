@@ -104,6 +104,7 @@ export class ScaledNumber {
   }
 
   div(value: ScaledNumber): ScaledNumber {
+    if (value.isZero()) return new ScaledNumber();
     const scale = BigNumber.from(10).pow(this.decimals);
     return new ScaledNumber(this.value.mul(scale).div(value.value), this.decimals);
   }
