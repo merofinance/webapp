@@ -63,9 +63,10 @@ const Input = styled.input`
 `;
 
 const Error = styled.div`
-  font-weight: 400;
+  font-weight: 500;
   color: var(--error);
   margin-top: 0.6rem;
+  margin-left: 1.3rem;
 
   font-size: 1.6rem;
   @media (max-width: 600px) {
