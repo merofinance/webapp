@@ -50,33 +50,35 @@ const RegisterTopupLoan = () => {
   const loans = useSelector(selectLoans);
   const ethPrice = useSelector(selectEthPrice);
   const [protocol, setProtocol] = useState("");
-  const [address, setAddress] = useState(account);
+  const [address, setAddress] = useState<string | null | undefined>("");
 
   const isAccountsLoan = address === account;
 
-  const options: RowOptionType[] = loans.map((loan: Loan) => {
-    return {
-      value: loan.protocol,
-      columns: [
-        {
-          label: t("actions.suggestions.topup.labels.protocol"),
-          value: loan.protocol,
-        },
-        {
-          label: t("actions.suggestions.topup.labels.healthFactor"),
-          value: loan.healthFactor.toCryptoString(),
-        },
-        {
-          label: t("actions.suggestions.topup.labels.totalCollateral"),
-          value: loan.totalCollateralETH.toUsdValue(ethPrice),
-        },
-        {
-          label: t("actions.suggestions.topup.labels.totalLoan"),
-          value: loan.totalDebtETH.toUsdValue(ethPrice),
-        },
-      ],
-    };
-  });
+  const options: RowOptionType[] = loans
+    .filter((loan: Loan) => loan.healthFactor.toCryptoString)
+    .map((loan: Loan) => {
+      return {
+        value: loan.protocol,
+        columns: [
+          {
+            label: t("actions.suggestions.topup.labels.protocol"),
+            value: loan.protocol,
+          },
+          {
+            label: t("actions.suggestions.topup.labels.healthFactor"),
+            value: loan.healthFactor.toCryptoString(),
+          },
+          {
+            label: t("actions.suggestions.topup.labels.totalCollateral"),
+            value: loan.totalCollateralETH.toUsdValue(ethPrice),
+          },
+          {
+            label: t("actions.suggestions.topup.labels.totalLoan"),
+            value: loan.totalDebtETH.toUsdValue(ethPrice),
+          },
+        ],
+      };
+    });
 
   return (
     <Container>
@@ -108,9 +110,11 @@ const RegisterTopupLoan = () => {
               <Button
                 primary
                 medium
+                disabled={!address}
                 width="44%"
                 text={t("components.continue")}
                 click={() => history.push(`/actions/register/topup/${address}/${protocol}`)}
+                hoverText={t("actions.topup.stages.loan.header")}
               />
             </ButtonContainer>
           </Content>
