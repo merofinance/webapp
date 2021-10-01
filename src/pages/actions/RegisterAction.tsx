@@ -68,23 +68,8 @@ const RegisterAction = () => {
       label: t("actions.topup.label"),
     },
     {
-      value: "uniswap",
-      label: t("actions.uniswap.label"),
-      disabledText: t("components.comingSoon"),
-    },
-    {
-      value: "limit",
-      label: t("actions.limitOrder.label"),
-      disabledText: t("components.comingSoon"),
-    },
-    {
-      value: "curve",
-      label: t("actions.curve.label"),
-      disabledText: t("components.comingSoon"),
-    },
-    {
-      value: "nfts",
-      label: t("actions.nfts.label"),
+      value: "null",
+      label: t("actions.more.label"),
       disabledText: t("components.comingSoon"),
     },
   ];

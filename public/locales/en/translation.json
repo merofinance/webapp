@@ -491,17 +491,8 @@
         }
       }
     },
-    "uniswap": {
-      "label": "Uniswap V3 LP"
-    },
-    "limitOrder": {
-      "label": "AMM limit order"
-    },
-    "curve": {
-      "label": "Curve Protection"
-    },
-    "nfts": {
-      "label": "NFT limit order"
+    "more": {
+      "label": "More Actions"
     }
   },
   "claim": {
