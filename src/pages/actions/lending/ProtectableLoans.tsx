@@ -2,7 +2,9 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { Position } from "../../../lib/types";
 import { selectAave, selectCompound } from "../../../state/lendingSlice";
+import { selectPositions } from "../../../state/positionsSlice";
 import ProtectableLoan from "./ProtectableLoan";
 
 const StyledProtectableLoans = styled.div`
@@ -36,9 +38,20 @@ const ProtectableLoans = () => {
   const { t } = useTranslation();
   const aave = useSelector(selectAave);
   const compound = useSelector(selectCompound);
+  const positions = useSelector(selectPositions);
 
-  const hasAave = aave?.totalCollateralETH?.isZero && !aave.totalCollateralETH.isZero();
-  const hasCompound = compound?.totalCollateralETH?.isZero && !compound.totalCollateralETH.isZero();
+  const hasPositionForProtocol = (protocol: string) =>
+    positions.some((position: Position) => position.protocol === protocol);
+
+  const hasAave =
+    aave?.totalCollateralETH?.isZero &&
+    !aave.totalCollateralETH.isZero() &&
+    !hasPositionForProtocol("Aave");
+
+  const hasCompound =
+    compound?.totalCollateralETH?.isZero &&
+    !compound.totalCollateralETH.isZero() &&
+    !hasPositionForProtocol("Compound");
 
   if (!hasAave && !hasCompound) return <></>;
 
