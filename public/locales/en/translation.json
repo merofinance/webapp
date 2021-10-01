@@ -454,7 +454,11 @@
     },
     "registered": {
       "header": "Registered Actions",
-      "empty": "You have not registered any Actions yet.."
+      "empty": "You have not registered any Actions yet..",
+      "columns": {
+        "type": "Type",
+        "locked": "Amount Locked"
+      }
     },
     "suggestions": {
       "topup": {
