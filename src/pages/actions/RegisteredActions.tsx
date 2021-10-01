@@ -35,19 +35,22 @@ const RegisteredActions = () => {
   const positions = useSelector(selectPositions);
   const history = useHistory();
 
+  const hasPosition = positions.length > 0;
+
   return (
     <ContentSection
       header={t("actions.registered.header")}
       content={
         <Content>
-          {positions.length === 0 && <Empty>{t("actions.registered.empty")}</Empty>}
-          {positions.length > 0 &&
+          {!hasPosition && <Empty>{t("actions.registered.empty")}</Empty>}
+          {hasPosition &&
             positions.map((position: Position) => <RegisteredAction position={position} />)}
           <ButtonContainer>
             <Button
-              primary
+              primary={!hasPosition}
               medium
               width="44%"
+              background="#0F0830"
               text={t("actions.register.button")}
               click={() => history.push("/actions/register")}
             />
