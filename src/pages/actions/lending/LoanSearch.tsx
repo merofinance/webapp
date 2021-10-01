@@ -2,7 +2,15 @@ import { ethers } from "ethers";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
+
+import { useBackd } from "../../../app/hooks/use-backd";
 import BasicInput from "../../../components/BasicInput";
+import { Loan } from "../../../state/lendingSlice";
+import { spinAnimation } from "../../../styles/animations/SpinAnimation";
+import pending from "../../../assets/ui/status/pending.svg";
+import RowSelector, { RowOptionType } from "../../../components/RowSelector";
+import { selectEthPrice } from "../../../state/poolsListSlice";
 
 const StyledLoanSearch = styled.div`
   width: 100%;
@@ -18,23 +26,111 @@ const Header = styled.div`
   margin-bottom: 3rem;
 `;
 
-const LoanSearch = () => {
+const InputContainer = styled.div`
+  width: 100%;
+  display: flex;
+`;
+
+interface LoadingProps {
+  show: boolean;
+}
+
+const Loading = styled.img`
+  width: 2.2rem;
+  animation: ${spinAnimation} 1s linear infinite;
+  display: ${(props: LoadingProps) => (props.show ? "block" : "none")};
+  margin-left: 1rem;
+`;
+
+const NotFound = styled.div`
+  font-weight: 500;
+  color: var(--error);
+  margin-top: 0.6rem;
+  margin-left: 1.3rem;
+
+  font-size: 1.6rem;
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+  }
+`;
+
+interface Props {
+  value: string;
+  setValue: (value: string, newAddress: string) => void;
+}
+
+const LoanSearch = ({ value, setValue }: Props) => {
   const { t } = useTranslation();
+  const backd = useBackd();
+  const ethPrice = useSelector(selectEthPrice);
   const [address, setAddress] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [loans, setLoans] = useState<Loan[]>([]);
+  const [retrieved, setRetrieved] = useState(false);
+
+  const hasLoans = loans.length > 0;
+
+  const getLoans = (newAddress: string) => {
+    if (!backd) return;
+    setLoading(true);
+    Promise.all([backd.getAave(newAddress), backd.getCompound(newAddress)]).then((v: Loan[]) => {
+      setLoans(v);
+      setRetrieved(true);
+      setLoading(false);
+    });
+  };
+
+  const options: RowOptionType[] = loans.map((loan: Loan) => {
+    return {
+      value: loan.protocol,
+      columns: [
+        {
+          label: t("actions.suggestions.topup.labels.protocol"),
+          value: loan.protocol,
+        },
+        {
+          label: t("actions.suggestions.topup.labels.healthFactor"),
+          value: loan.healthFactor.toCryptoString(),
+        },
+        {
+          label: t("actions.suggestions.topup.labels.totalCollateral"),
+          value: loan.totalCollateralETH.toUsdValue(ethPrice),
+        },
+        {
+          label: t("actions.suggestions.topup.labels.totalLoan"),
+          value: loan.totalDebtETH.toUsdValue(ethPrice),
+        },
+      ],
+    };
+  });
 
   return (
     <StyledLoanSearch>
       <Header>{t("actions.topup.stages.loan.search")}</Header>
-      <BasicInput
-        value={address}
-        setValue={(value: string) => setAddress(value)}
-        placeholder="e.g. 0x09...A98E"
-        error={
-          address && !ethers.utils.isAddress(address)
-            ? t("pool.tabs.positions.fields.address.invalid")
-            : ""
-        }
-      />
+      <InputContainer>
+        <BasicInput
+          value={address}
+          setValue={(value: string) => {
+            if (ethers.utils.isAddress(value)) getLoans(value);
+            setAddress(value);
+          }}
+          placeholder="e.g. 0x09...A98E"
+          error={
+            address && !ethers.utils.isAddress(address)
+              ? t("pool.tabs.positions.fields.address.invalid")
+              : ""
+          }
+        />
+        <Loading src={pending} show={loading} />
+      </InputContainer>
+      {retrieved && !hasLoans && <NotFound>{t("actions.topup.stages.loan.notFound")}</NotFound>}
+      {retrieved && !hasLoans && (
+        <RowSelector
+          options={options}
+          value={value}
+          setValue={(value: string) => setValue(value, address)}
+        />
+      )}
     </StyledLoanSearch>
   );
 };

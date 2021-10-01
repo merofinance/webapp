@@ -50,6 +50,9 @@ const RegisterTopupLoan = () => {
   const loans = useSelector(selectLoans);
   const ethPrice = useSelector(selectEthPrice);
   const [protocol, setProtocol] = useState("");
+  const [address, setAddress] = useState(account);
+
+  const isAccountsLoan = address === account;
 
   const options: RowOptionType[] = loans.map((loan: Loan) => {
     return {
@@ -88,17 +91,26 @@ const RegisterTopupLoan = () => {
             <SubHeader>{t("actions.topup.stages.loan.subHeader")}</SubHeader>
             <RowSelector
               options={options}
-              value={protocol}
-              setValue={(value: string) => setProtocol(value)}
+              value={isAccountsLoan ? protocol : ""}
+              setValue={(value: string) => {
+                setProtocol(value);
+                setAddress(account);
+              }}
             />
-            <LoanSearch />
+            <LoanSearch
+              value={!isAccountsLoan ? protocol : ""}
+              setValue={(value: string, newAddress: string) => {
+                setProtocol(value);
+                setAddress(newAddress);
+              }}
+            />
             <ButtonContainer>
               <Button
                 primary
                 medium
                 width="44%"
                 text={t("components.continue")}
-                click={() => history.push(`/actions/register/topup/${account}/${protocol}`)}
+                click={() => history.push(`/actions/register/topup/${address}/${protocol}`)}
               />
             </ButtonContainer>
           </Content>
