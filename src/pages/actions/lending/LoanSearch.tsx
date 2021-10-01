@@ -1,3 +1,4 @@
+import { ethers } from "ethers";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
@@ -28,6 +29,11 @@ const LoanSearch = () => {
         value={address}
         setValue={(value: string) => setAddress(value)}
         placeholder="e.g. 0x09...A98E"
+        error={
+          address && !ethers.utils.isAddress(address)
+            ? t("pool.tabs.positions.fields.address.invalid")
+            : ""
+        }
       />
     </StyledLoanSearch>
   );
