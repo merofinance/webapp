@@ -11,6 +11,7 @@ import BackButton from "../../../components/BackButton";
 import RowSelector, { RowOptionType } from "../../../components/RowSelector";
 import { selectEthPrice } from "../../../state/poolsListSlice";
 import { Loan, selectLoans } from "../../../state/lendingSlice";
+import LoanSearch from "./LoanSearch";
 
 const Container = styled.div`
   position: relative;
@@ -90,7 +91,7 @@ const RegisterTopupLoan = () => {
               value={protocol}
               setValue={(value: string) => setProtocol(value)}
             />
-            {/* TODO Disabled state */}
+            <LoanSearch />
             <ButtonContainer>
               <Button
                 primary
