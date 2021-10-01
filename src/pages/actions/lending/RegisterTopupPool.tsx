@@ -32,6 +32,13 @@ const Header = styled.div`
   letter-spacing: 0.25px;
 `;
 
+const SubHeader = styled.div`
+  font-size: 1.7rem;
+  font-weight: 500;
+  opacity: 0.8;
+  margin-top: 1.6rem;
+`;
+
 const ButtonContainer = styled.div`
   width: 100%;
   display: flex;
@@ -47,6 +54,8 @@ const RegisterTopupPool = () => {
   const positions = useSelector(selectPositions);
   const prices = useSelector(selectPrices);
   const [pool, setPool] = useState("");
+
+  const hasDeposits = pools.some((pool: Pool) => pool.totalAssets > 0);
 
   const options: RowOptionType[] = pools.map((pool: Pool) => {
     return {
@@ -87,7 +96,12 @@ const RegisterTopupPool = () => {
         nav="3/4"
         content={
           <Content>
-            <Header>{t("actions.topup.stages.pool.header")}</Header>
+            <Header>
+              {hasDeposits
+                ? t("actions.topup.stages.pool.header")
+                : t("actions.topup.stages.pool.noDepositsHeader")}
+            </Header>
+            {!hasDeposits && <SubHeader>{t("actions.topup.stages.pool.subHeader")}</SubHeader>}
             <RowSelector
               value={pool}
               setValue={(value: string) => setPool(value)}
