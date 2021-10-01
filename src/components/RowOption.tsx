@@ -22,7 +22,7 @@ const StyledRowOption = styled.button`
   background-image: ${(props: RowOptionProps) =>
     props.active
       ? "linear-gradient(to right, #1D0B38, #101839), var(--gradient)"
-      : "linear-gradient(rgba(20, 17, 40, 1), rgba(20, 17, 40, 1)), linear-gradient(#494758, #494758)"};
+      : "linear-gradient(rgba(20, 17, 40, 1), rgba(20, 17, 40, 1)), linear-gradient(#2B293D, #2B293D)"};
 
   border-radius: 1.4rem;
   padding: ${(props: RowOptionProps) => (props.active ? "1.2rem 1.3rem" : "1.3rem 1.4rem")};
