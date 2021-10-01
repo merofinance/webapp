@@ -38,8 +38,8 @@ export interface Backd {
   currentAccount(): Promise<Address>;
   listPools(): Promise<Pool[]>;
   getPoolInfo(address: Address): Promise<Pool>;
-  getAave(address?: Address): Promise<Loan>;
-  getCompound(address?: Address): Promise<Loan>;
+  getAave(address?: Address): Promise<Loan | null>;
+  getCompound(address?: Address): Promise<Loan | null>;
   getPositions(): Promise<PlainPosition[]>;
   registerPosition(pool: Pool, position: Position): Promise<ContractTransaction>;
   removePosition(
@@ -158,10 +158,11 @@ export class Web3Backd implements Backd {
     return transformPool(rawPool, bigNumberToFloat);
   }
 
-  async getAave(address?: Address): Promise<Loan> {
+  async getAave(address?: Address): Promise<Loan | null> {
     const account = address || (await this.currentAccount());
     const lendingPoolContract = LendingPoolFactory.connect(this._provider);
     const userAccountData = await lendingPoolContract.getUserAccountData(account);
+    if (new ScaledNumber(userAccountData.totalCollateralETH).isZero()) return null;
     return {
       protocol: "Aave",
       totalCollateralETH: new ScaledNumber(userAccountData.totalCollateralETH),
@@ -174,33 +175,25 @@ export class Web3Backd implements Backd {
     };
   }
 
-  async getCompound(address?: Address): Promise<Loan> {
+  async getCompound(address?: Address): Promise<Loan | null> {
     // const account = address || (await this.currentAccount());
     const account = "0x1a27881E041737bc7eF5c616A8aF08Ec7E51Db40";
     const response = await fetch(
       `https://api.compound.finance/api/v2/account?addresses[]=${account}`
     );
     const data = await response.json();
-    if (data.accounts && data.accounts.length > 0) {
-      const accountData = data.accounts[0];
-      const collateral = ScaledNumber.fromUnscaled(accountData.total_collateral_value_in_eth.value);
-      const debt = ScaledNumber.fromUnscaled(accountData.total_borrow_value_in_eth.value);
-      return Promise.resolve({
-        protocol: "Compound",
-        totalCollateralETH: collateral,
-        totalDebtETH: debt,
-        availableBorrowsETH: new ScaledNumber(), // Not returned by API, leaving as 0 as not needed in UI at the moment
-        currentLiquidationThreshold: new ScaledNumber(), // Not returned by API, leaving as 0 as not needed in UI at the moment
-        healthFactor: debt.isZero() ? new ScaledNumber() : collateral.div(debt),
-      });
-    }
+    if (!data.accounts || data.accounts.length === 0) return null;
+
+    const accountData = data.accounts[0];
+    const collateral = ScaledNumber.fromUnscaled(accountData.total_collateral_value_in_eth.value);
+    const debt = ScaledNumber.fromUnscaled(accountData.total_borrow_value_in_eth.value);
     return Promise.resolve({
       protocol: "Compound",
-      totalCollateralETH: new ScaledNumber(),
-      totalDebtETH: new ScaledNumber(),
-      availableBorrowsETH: new ScaledNumber(),
-      currentLiquidationThreshold: new ScaledNumber(),
-      healthFactor: new ScaledNumber(),
+      totalCollateralETH: collateral,
+      totalDebtETH: debt,
+      availableBorrowsETH: new ScaledNumber(), // Not returned by API, leaving as 0 as not needed in UI at the moment
+      currentLiquidationThreshold: new ScaledNumber(), // Not returned by API, leaving as 0 as not needed in UI at the moment
+      healthFactor: debt.isZero() ? new ScaledNumber() : collateral.div(debt),
     });
   }
 

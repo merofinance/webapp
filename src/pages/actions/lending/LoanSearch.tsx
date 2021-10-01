@@ -70,14 +70,19 @@ const LoanSearch = ({ value, setValue }: Props) => {
 
   const hasLoans = loans.length > 0;
 
-  const getLoans = (newAddress: string) => {
+  const getLoans = async (newaddress: string) => {
     if (!backd) return;
     setLoading(true);
-    Promise.all([backd.getAave(newAddress), backd.getCompound(newAddress)]).then((v: Loan[]) => {
-      setLoans(v);
-      setRetrieved(true);
-      setLoading(false);
-    });
+    const loans: Loan[] = [];
+    const [aave, compound] = await Promise.all([
+      backd.getAave(newaddress),
+      backd.getCompound(newaddress),
+    ]);
+    if (aave) loans.push(aave);
+    if (compound) loans.push(compound);
+    setLoans(loans);
+    setRetrieved(true);
+    setLoading(false);
   };
 
   const options: RowOptionType[] = loans.map((loan: Loan) => {
@@ -124,7 +129,7 @@ const LoanSearch = ({ value, setValue }: Props) => {
         <Loading src={pending} show={loading} />
       </InputContainer>
       {retrieved && !hasLoans && <NotFound>{t("actions.topup.stages.loan.notFound")}</NotFound>}
-      {retrieved && !hasLoans && (
+      {retrieved && hasLoans && (
         <RowSelector
           options={options}
           value={value}

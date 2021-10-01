@@ -23,7 +23,11 @@ const initialState: LendingState = {
 export const fetchLoans = createAsyncThunk(
   "lending/fetch-loans",
   async ({ backd }: { backd: Backd }) => {
-    return Promise.all([backd.getAave(), backd.getCompound()]);
+    const loans: Loan[] = [];
+    const [aave, compound] = await Promise.all([backd.getAave(), backd.getCompound()]);
+    if (aave) loans.push(aave);
+    if (compound) loans.push(compound);
+    return loans;
   }
 );
 
