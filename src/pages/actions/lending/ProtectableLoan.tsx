@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { useWeb3React } from "@web3-react/core";
 import { useHistory } from "react-router";
 
-import { Lending } from "../../../state/lendingSlice";
+import { Loan } from "../../../state/lendingSlice";
 import { selectEthPrice } from "../../../state/poolsListSlice";
 import Button from "../../../components/Button";
 
@@ -42,11 +42,10 @@ const Value = styled.div`
 `;
 
 interface Props {
-  protocol: string;
-  loan?: Lending;
+  loan: Loan;
 }
 
-const ProtectableLoan = ({ protocol, loan }: Props) => {
+const ProtectableLoan = ({ loan }: Props) => {
   const { t } = useTranslation();
   const { account } = useWeb3React();
   const history = useHistory();
@@ -58,7 +57,7 @@ const ProtectableLoan = ({ protocol, loan }: Props) => {
     <StyledProtectableLoan>
       <Column>
         <Header>{t("actions.suggestions.topup.labels.protocol")}</Header>
-        <Value>{protocol}</Value>
+        <Value>{loan.protocol}</Value>
       </Column>
       <Column>
         <Header>{t("actions.suggestions.topup.labels.healthFactor")}</Header>
@@ -77,7 +76,9 @@ const ProtectableLoan = ({ protocol, loan }: Props) => {
           medium
           text={t("actions.suggestions.topup.register")}
           background="#3A3550"
-          click={() => history.push(`/actions/register/topup/${account}/${protocol.toLowerCase()}`)}
+          click={() =>
+            history.push(`/actions/register/topup/${account}/${loan.protocol.toLowerCase()}`)
+          }
         />
       </Column>
     </StyledProtectableLoan>

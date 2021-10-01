@@ -26,7 +26,7 @@ import {
   Token,
   transformPool,
 } from "./types";
-import { Lending } from "../state/lendingSlice";
+import { Loan } from "../state/lendingSlice";
 import { LendingPoolFactory } from "./contracts/aave/LendingPool";
 import { CTokenFactory } from "./contracts/compound/CToken";
 
@@ -38,8 +38,8 @@ export interface Backd {
   currentAccount(): Promise<Address>;
   listPools(): Promise<Pool[]>;
   getPoolInfo(address: Address): Promise<Pool>;
-  getAave(): Promise<Lending>;
-  getCompound(): Promise<Lending>;
+  getAave(): Promise<Loan>;
+  getCompound(): Promise<Loan>;
   getPositions(): Promise<PlainPosition[]>;
   registerPosition(pool: Pool, position: Position): Promise<ContractTransaction>;
   removePosition(
@@ -158,11 +158,12 @@ export class Web3Backd implements Backd {
     return transformPool(rawPool, bigNumberToFloat);
   }
 
-  async getAave(): Promise<Lending> {
+  async getAave(): Promise<Loan> {
     const account = await this.currentAccount();
     const lendingPoolContract = LendingPoolFactory.connect(this._provider);
     const userAccountData = await lendingPoolContract.getUserAccountData(account);
     return {
+      protocol: "Aave",
       totalCollateralETH: new ScaledNumber(userAccountData.totalCollateralETH),
       totalDebtETH: new ScaledNumber(userAccountData.totalDebtETH),
       availableBorrowsETH: new ScaledNumber(userAccountData.availableBorrowsETH),
@@ -173,7 +174,7 @@ export class Web3Backd implements Backd {
     };
   }
 
-  async getCompound(): Promise<Lending> {
+  async getCompound(): Promise<Loan> {
     // const account = await this.currentAccount();
     const account = "0x1a27881E041737bc7eF5c616A8aF08Ec7E51Db40";
     const response = await fetch(
@@ -185,6 +186,7 @@ export class Web3Backd implements Backd {
       const collateral = ScaledNumber.fromUnscaled(accountData.total_collateral_value_in_eth.value);
       const debt = ScaledNumber.fromUnscaled(accountData.total_borrow_value_in_eth.value);
       return Promise.resolve({
+        protocol: "Compound",
         totalCollateralETH: collateral,
         totalDebtETH: debt,
         availableBorrowsETH: new ScaledNumber(), // Not returned by API, leaving as 0 as not needed in UI at the moment
@@ -193,6 +195,7 @@ export class Web3Backd implements Backd {
       });
     }
     return Promise.resolve({
+      protocol: "Compound",
       totalCollateralETH: new ScaledNumber(),
       totalDebtETH: new ScaledNumber(),
       availableBorrowsETH: new ScaledNumber(),

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { Position } from "../../../lib/types";
-import { selectAave, selectCompound } from "../../../state/lendingSlice";
+import { Loan, selectLoans } from "../../../state/lendingSlice";
 import { selectPositions } from "../../../state/positionsSlice";
 import ProtectableLoan from "./ProtectableLoan";
 
@@ -36,31 +36,25 @@ const SubHeader = styled.div`
 
 const ProtectableLoans = () => {
   const { t } = useTranslation();
-  const aave = useSelector(selectAave);
-  const compound = useSelector(selectCompound);
+  const loans = useSelector(selectLoans);
   const positions = useSelector(selectPositions);
 
-  const hasPositionForProtocol = (protocol: string) =>
-    positions.some((position: Position) => position.protocol === protocol);
+  const protectableLoans = loans.filter(
+    (loan: Loan) =>
+      loan.totalCollateralETH?.isZero &&
+      !loan.totalCollateralETH.isZero() &&
+      !positions.some((position: Position) => position.protocol === loan.protocol)
+  );
 
-  const hasAave =
-    aave?.totalCollateralETH?.isZero &&
-    !aave.totalCollateralETH.isZero() &&
-    !hasPositionForProtocol("Aave");
-
-  const hasCompound =
-    compound?.totalCollateralETH?.isZero &&
-    !compound.totalCollateralETH.isZero() &&
-    !hasPositionForProtocol("Compound");
-
-  if (!hasAave && !hasCompound) return <></>;
+  if (protectableLoans.length === 0) return <></>;
 
   return (
     <StyledProtectableLoans>
       <Header>{t("actions.suggestions.topup.header")}</Header>
       <SubHeader>{t("actions.suggestions.topup.subHeader")}</SubHeader>
-      {hasAave && <ProtectableLoan protocol="Aave" loan={aave} />}
-      {hasCompound && <ProtectableLoan protocol="Compound" loan={compound} />}
+      {protectableLoans.map((loan: Loan) => (
+        <ProtectableLoan loan={loan} />
+      ))}
     </StyledProtectableLoans>
   );
 };

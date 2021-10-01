@@ -9,8 +9,8 @@ import ContentSection from "../../../components/ContentSection";
 import Button from "../../../components/Button";
 import BackButton from "../../../components/BackButton";
 import RowSelector, { RowOptionType } from "../../../components/RowSelector";
-import { selectAave, selectCompound } from "../../../state/lendingSlice";
 import { selectEthPrice } from "../../../state/poolsListSlice";
+import { Loan, selectLoans } from "../../../state/lendingSlice";
 
 const Container = styled.div`
   position: relative;
@@ -46,63 +46,33 @@ const RegisterTopupLoan = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const { account } = useWeb3React();
-  const aave = useSelector(selectAave);
-  const compound = useSelector(selectCompound);
+  const loans = useSelector(selectLoans);
   const ethPrice = useSelector(selectEthPrice);
   const [protocol, setProtocol] = useState("");
 
-  // TODO Change these in state to a list and use mapping to gen the options
-  const hasAave = aave?.totalCollateralETH?.isZero && !aave.totalCollateralETH.isZero();
-  const hasCompound = compound?.totalCollateralETH?.isZero && !compound.totalCollateralETH.isZero();
-
-  const getOptions = () => {
-    const options: RowOptionType[] = [];
-    if (hasAave && aave)
-      options.push({
-        value: "Aave",
-        columns: [
-          {
-            label: t("actions.suggestions.topup.labels.protocol"),
-            value: "Aave",
-          },
-          {
-            label: t("actions.suggestions.topup.labels.healthFactor"),
-            value: aave.healthFactor.toCryptoString(),
-          },
-          {
-            label: t("actions.suggestions.topup.labels.totalCollateral"),
-            value: aave.totalCollateralETH.toUsdValue(ethPrice),
-          },
-          {
-            label: t("actions.suggestions.topup.labels.totalLoan"),
-            value: aave.totalDebtETH.toUsdValue(ethPrice),
-          },
-        ],
-      });
-    if (hasCompound && compound)
-      options.push({
-        value: "Compound",
-        columns: [
-          {
-            label: t("actions.suggestions.topup.labels.protocol"),
-            value: "Compound",
-          },
-          {
-            label: t("actions.suggestions.topup.labels.healthFactor"),
-            value: compound.healthFactor.toCryptoString(),
-          },
-          {
-            label: t("actions.suggestions.topup.labels.totalCollateral"),
-            value: compound.totalCollateralETH.toUsdValue(ethPrice),
-          },
-          {
-            label: t("actions.suggestions.topup.labels.totalLoan"),
-            value: compound.totalDebtETH.toUsdValue(ethPrice),
-          },
-        ],
-      });
-    return options;
-  };
+  const options: RowOptionType[] = loans.map((loan: Loan) => {
+    return {
+      value: loan.protocol,
+      columns: [
+        {
+          label: t("actions.suggestions.topup.labels.protocol"),
+          value: loan.protocol,
+        },
+        {
+          label: t("actions.suggestions.topup.labels.healthFactor"),
+          value: loan.healthFactor.toCryptoString(),
+        },
+        {
+          label: t("actions.suggestions.topup.labels.totalCollateral"),
+          value: loan.totalCollateralETH.toUsdValue(ethPrice),
+        },
+        {
+          label: t("actions.suggestions.topup.labels.totalLoan"),
+          value: loan.totalDebtETH.toUsdValue(ethPrice),
+        },
+      ],
+    };
+  });
 
   return (
     <Container>
@@ -116,7 +86,7 @@ const RegisterTopupLoan = () => {
             <Header>{t("actions.topup.stages.loan.header")}</Header>
             <SubHeader>{t("actions.topup.stages.loan.subHeader")}</SubHeader>
             <RowSelector
-              options={getOptions()}
+              options={options}
               value={protocol}
               setValue={(value: string) => setProtocol(value)}
             />

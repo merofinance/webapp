@@ -1,6 +1,6 @@
 import { BigNumber, ContractTransaction, providers } from "ethers";
 import { Pool } from "..";
-import { Lending } from "../../state/lendingSlice";
+import { Loan } from "../../state/lendingSlice";
 import { Backd } from "../backd";
 import { bigNumberToFloat } from "../numeric";
 import { ScaledNumber } from "../scaled-number";
@@ -37,8 +37,9 @@ export default class MockBackd implements Backd {
     return Promise.resolve(transformPool(pool, bigNumberToFloat));
   }
 
-  getAave(): Promise<Lending> {
+  getAave(): Promise<Loan> {
     return Promise.resolve({
+      protocol: "Aave",
       totalCollateralETH: new ScaledNumber(),
       totalDebtETH: new ScaledNumber(),
       availableBorrowsETH: new ScaledNumber(),
@@ -47,8 +48,9 @@ export default class MockBackd implements Backd {
     });
   }
 
-  getCompound(): Promise<Lending> {
+  getCompound(): Promise<Loan> {
     return Promise.resolve({
+      protocol: "Compound",
       totalCollateralETH: new ScaledNumber(),
       totalDebtETH: new ScaledNumber(),
       availableBorrowsETH: new ScaledNumber(),

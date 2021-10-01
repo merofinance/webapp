@@ -3,9 +3,8 @@ import { RootState } from "../app/store";
 import { Backd } from "../lib/backd";
 import { ScaledNumber } from "../lib/scaled-number";
 
-// TODO Serialise these
-
-export interface Lending {
+export interface Loan {
+  protocol: string;
   totalCollateralETH: ScaledNumber;
   totalDebtETH: ScaledNumber;
   availableBorrowsETH: ScaledNumber;
@@ -14,26 +13,17 @@ export interface Lending {
 }
 
 interface LendingState {
-  aave?: Lending;
-  compound?: Lending;
+  loans: Loan[];
 }
 
 const initialState: LendingState = {
-  aave: undefined,
-  compound: undefined,
+  loans: [],
 };
 
-export const fetchAave = createAsyncThunk(
-  "lending/fetch-aave",
+export const fetchLoans = createAsyncThunk(
+  "lending/fetch-loans",
   async ({ backd }: { backd: Backd }) => {
-    return backd.getAave();
-  }
-);
-
-export const fetchCompound = createAsyncThunk(
-  "lending/fetch-compound",
-  async ({ backd }: { backd: Backd }) => {
-    return backd.getCompound();
+    return Promise.all([backd.getAave(), backd.getCompound()]);
   }
 );
 
@@ -42,17 +32,12 @@ export const lendingSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchAave.fulfilled, (state, action) => {
-      state.aave = action.payload;
-    });
-    builder.addCase(fetchCompound.fulfilled, (state, action) => {
-      state.compound = action.payload;
+    builder.addCase(fetchLoans.fulfilled, (state, action) => {
+      state.loans = action.payload;
     });
   },
 });
 
-export const selectAave = (state: RootState): Lending | undefined => state.lending.aave;
-
-export const selectCompound = (state: RootState): Lending | undefined => state.lending.compound;
+export const selectLoans = (state: RootState): Loan[] => state.lending.loans;
 
 export default lendingSlice.reducer;
