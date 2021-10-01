@@ -8,6 +8,7 @@ import ContentSection from "../../components/ContentSection";
 import { Position } from "../../lib/types";
 import { selectPositions } from "../../state/positionsSlice";
 import Button from "../../components/Button";
+import RegisteredAction from "./RegisteredAction";
 
 const Content = styled.div`
   flex: 1;
@@ -40,7 +41,8 @@ const RegisteredActions = () => {
       content={
         <Content>
           {positions.length === 0 && <Empty>{t("actions.registered.empty")}</Empty>}
-          {positions.length > 0 && positions.map((position: Position) => <div>Cool position</div>)}
+          {positions.length > 0 &&
+            positions.map((position: Position) => <RegisteredAction position={position} />)}
           <ButtonContainer>
             <Button
               primary
