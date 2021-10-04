@@ -105,6 +105,7 @@ interface Props {
   token: Token;
   contract: string;
   stepsOnTop?: boolean;
+  hoverText?: string;
 }
 
 const ApproveThenAction = ({
@@ -116,6 +117,7 @@ const ApproveThenAction = ({
   token,
   contract,
   stepsOnTop,
+  hoverText,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -152,7 +154,7 @@ const ApproveThenAction = ({
             complete={approved}
             loading={approveLoading}
             disabled={disabled}
-            hoverText={t("amountInput.enter")}
+            hoverText={hoverText || t("amountInput.enter")}
           />
         )}
         <Button
@@ -164,7 +166,9 @@ const ApproveThenAction = ({
           disabled={!approved || disabled}
           loading={loading}
           hoverText={
-            disabled ? t("amountInput.enter") : t("amountInput.approve", { asset: token.symbol })
+            disabled
+              ? hoverText || t("amountInput.enter")
+              : t("amountInput.approve", { asset: token.symbol })
           }
         />
       </Buttons>
