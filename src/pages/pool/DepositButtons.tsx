@@ -15,9 +15,10 @@ type Props = {
   pool: Pool;
   complete: () => void;
   valid: boolean;
+  stepsOnTop?: boolean;
 };
 
-const DepositButtons = ({ value, pool, complete, valid }: Props): JSX.Element => {
+const DepositButtons = ({ value, pool, complete, valid, stepsOnTop }: Props): JSX.Element => {
   const { t } = useTranslation();
   const dispatch: AppDispatch = useDispatch();
   const backd = useBackd();
@@ -41,6 +42,7 @@ const DepositButtons = ({ value, pool, complete, valid }: Props): JSX.Element =>
       disabled={!valid}
       token={pool.underlying}
       contract={pool.address}
+      stepsOnTop={stepsOnTop}
     />
   );
 };
