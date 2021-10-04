@@ -19,6 +19,7 @@ import { hasPendingTransaction } from "../../../state/transactionsSlice";
 import NewPositionConfirmation from "../../pool/NewPositionConfirmation";
 import ApproveThenAction from "../../../components/ApproveThenAction";
 import RegisterTopupInput from "./RegisterTopupInput";
+import ActionSummary from "./ActionSummary";
 
 interface TopupParams {
   address: string;
@@ -89,7 +90,8 @@ const Header = styled.div`
   font-size: 2.2rem;
   font-weight: 600;
   letter-spacing: 0.25px;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
+  margin-top: 3rem;
 `;
 
 const SubHeader = styled.div`
@@ -200,6 +202,7 @@ const RegisterTopupConditions = () => {
         nav="4/4"
         content={
           <Content>
+            <ActionSummary />
             <Header>{t("actions.topup.stages.conditions.header")}</Header>
             <SubHeader>{t("actions.topup.stages.conditions.subHeader")}</SubHeader>
             <Form noValidate onSubmit={formik.handleSubmit}>
