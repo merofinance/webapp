@@ -487,7 +487,12 @@
           "header": "Which pool do you want the top-up to come from?",
           "noDepositsHeader": "To register an action you must deposit assets into a Backd pool",
           "subHeader": "Liquidity deposited into a Backd pool can be earmarked for top-up protection. You will earn yield and BKD rewards while your liquidity is in a Backd pool.",
-          "incomplete": "Select a pool"
+          "incomplete": "Select a pool",
+          "deposit": {
+            "header": "Enter an amount of {{asset}} to deposit",
+            "subHeader": "This {{asset}} can be transported over to protect your position in one or multiple lots. ",
+            "incomplete": "Deposit {{asset}} to continue"
+          }
         },
         "conditions": {
           "header": "Enter top-up conditions",
