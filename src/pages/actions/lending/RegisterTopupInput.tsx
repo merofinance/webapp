@@ -2,8 +2,26 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { FormikFormType, FormType } from "./RegisterTopupConditions";
+import Tooltip from "../../../components/Tooltip";
 
 const StyledRegisterTopupInput = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const LabelContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Label = styled.div`
+  font-weight: 700;
+  font-size: 1.8rem;
+  line-height: 4.2rem;
+`;
+
+const InputContainer = styled.div`
   width: 60%;
   display: flex;
   flex-direction: column;
@@ -77,30 +95,45 @@ const Error = styled.div`
 `;
 
 type Props = {
+  label: string;
+  tooltip: string;
   type: string;
   name: keyof FormType;
   formik: FormikFormType;
   placeholder: string;
 };
 
-const RegisterTopupInput = ({ type, name, formik, placeholder }: Props): JSX.Element => {
+const RegisterTopupInput = ({
+  label,
+  tooltip,
+  type,
+  name,
+  formik,
+  placeholder,
+}: Props): JSX.Element => {
   const { t } = useTranslation();
   const valid = !formik.touched[name] || !formik.errors[name];
 
   return (
     <StyledRegisterTopupInput>
-      <InputBorder valid={valid}>
-        <Input
-          valid={valid}
-          type={type}
-          name={name}
-          value={formik.values[name]}
-          placeholder={placeholder}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-        />
-      </InputBorder>
-      {!valid && <Error>{t(formik.errors[name] || "")}</Error>}
+      <LabelContainer>
+        <Label>{label}</Label>
+        <Tooltip content={tooltip} />
+      </LabelContainer>
+      <InputContainer>
+        <InputBorder valid={valid}>
+          <Input
+            valid={valid}
+            type={type}
+            name={name}
+            value={formik.values[name]}
+            placeholder={placeholder}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+        </InputBorder>
+        {!valid && <Error>{t(formik.errors[name] || "")}</Error>}
+      </InputContainer>
     </StyledRegisterTopupInput>
   );
 };
