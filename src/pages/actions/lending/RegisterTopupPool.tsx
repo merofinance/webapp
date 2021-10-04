@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { useSelector } from "react-redux";
 
 import ContentSection from "../../../components/ContentSection";
@@ -15,6 +15,12 @@ import { selectBalances } from "../../../state/userSlice";
 import { selectPositions } from "../../../state/positionsSlice";
 import { ScaledNumber } from "../../../lib/scaled-number";
 import { Position } from "../../../lib/types";
+import RegisterTopupPoolDeposit from "./RegisterTopupPoolDeposit";
+
+interface TopupParams {
+  address: string;
+  protocol: string;
+}
 
 const Container = styled.div`
   position: relative;
@@ -48,12 +54,14 @@ const ButtonContainer = styled.div`
 
 const RegisterTopupPool = () => {
   const { t } = useTranslation();
+  const { address, protocol } = useParams<TopupParams>();
   const history = useHistory();
   const pools = useSelector(selectPools);
   const balances = useSelector(selectBalances);
   const positions = useSelector(selectPositions);
   const prices = useSelector(selectPrices);
   const [pool, setPool] = useState("");
+  const [depositing, setDepositing] = useState(false);
 
   const hasDeposits = pools.some((pool: Pool) => pool.totalAssets > 0);
   const selected = pools.filter((p: Pool) => p.lpToken.symbol.toLocaleLowerCase() === pool)[0];
@@ -88,6 +96,8 @@ const RegisterTopupPool = () => {
     };
   });
 
+  if (depositing) return <RegisterTopupPoolDeposit poolName={selected.lpToken.symbol} />;
+
   return (
     <Container>
       <BackButton />
@@ -115,8 +125,10 @@ const RegisterTopupPool = () => {
                 width="44%"
                 text={t("components.continue")}
                 click={() => {
-                  if (selected.totalAssets === 0) history.push("");
-                  history.push(`/actions/register/sskdfk/skdfk/ksdkf/sdf`);
+                  const lpBalance = Number(balances[selected.lpToken.address]);
+                  const usdBalance = lpBalance * prices[selected.underlying.symbol];
+                  if (usdBalance < 50) setDepositing(true);
+                  else history.push(`/actions/register/topup/${address}/${protocol}/${pool}`);
                 }}
                 disabled={!pool}
                 hoverText={t("actions.topup.stages.pool.incomplete")}
