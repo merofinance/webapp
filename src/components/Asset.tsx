@@ -42,7 +42,7 @@ interface LabelProps {
 }
 
 const Label = styled.div`
-  font-weight: ${(props: LabelProps) => (props.small || props.tiny ? "500" : "700")};
+  font-weight: ${(props: LabelProps) => (props.small ? "500" : props.tiny ? "600" : "700")};
   letter-spacing: ${(props: LabelProps) =>
     props.tiny ? "0.46px" : props.large ? "0.25px" : "0.15px"};
   white-space: nowrap;
