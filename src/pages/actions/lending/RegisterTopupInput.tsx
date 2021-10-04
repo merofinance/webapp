@@ -13,12 +13,13 @@ const StyledRegisterTopupInput = styled.div`
 const LabelContainer = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 1.5rem;
+  margin-top: 4rem;
 `;
 
 const Label = styled.div`
   font-weight: 700;
   font-size: 1.8rem;
-  line-height: 4.2rem;
 `;
 
 const InputContainer = styled.div`
