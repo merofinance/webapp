@@ -467,7 +467,8 @@
           "protocol": "Protocol",
           "healthFactor": "Health Factor",
           "totalCollateral": "Collateral Value",
-          "totalLoan": "Loan Amount"
+          "totalLoan": "Loan Amount",
+          "pool": "Protecting with"
         },
         "register": "Register top-up position"
       }
@@ -571,7 +572,8 @@
     "close": "Close",
     "moreInDocs": "Find out more in the docs",
     "comingSoon": "Coming Soon",
-    "overview": "Overview"
+    "overview": "Overview",
+    "change": "Change"
   },
   "errors": {
     "header": "An Error Occured",
