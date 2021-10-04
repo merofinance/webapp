@@ -56,6 +56,7 @@ const RegisterTopupPool = () => {
   const [pool, setPool] = useState("");
 
   const hasDeposits = pools.some((pool: Pool) => pool.totalAssets > 0);
+  const selected = pools.filter((p: Pool) => p.lpToken.symbol.toLocaleLowerCase() === pool)[0];
 
   const options: RowOptionType[] = pools.map((pool: Pool) => {
     return {
@@ -113,7 +114,10 @@ const RegisterTopupPool = () => {
                 medium
                 width="44%"
                 text={t("components.continue")}
-                click={() => history.push(`/actions/register/sskdfk/skdfk/ksdkf/sdf`)}
+                click={() => {
+                  if (selected.totalAssets === 0) history.push("");
+                  history.push(`/actions/register/sskdfk/skdfk/ksdkf/sdf`);
+                }}
                 disabled={!pool}
                 hoverText={t("actions.topup.stages.pool.incomplete")}
               />
