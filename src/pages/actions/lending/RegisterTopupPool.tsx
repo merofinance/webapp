@@ -63,7 +63,13 @@ const RegisterTopupPool = () => {
   const [pool, setPool] = useState("");
   const [depositing, setDepositing] = useState(false);
 
-  const hasDeposits = pools.some((pool: Pool) => pool.totalAssets > 0);
+  const hasSufficientBalance = (pool: Pool) => {
+    const lpBalance = Number(balances[pool.lpToken.address]);
+    const usdBalance = lpBalance * prices[pool.underlying.symbol];
+    return usdBalance >= 50;
+  };
+
+  const hasDeposits = pools.some((pool: Pool) => hasSufficientBalance(pool));
   const selected = pools.filter((p: Pool) => p.lpToken.symbol.toLocaleLowerCase() === pool)[0];
 
   const options: RowOptionType[] = pools.map((pool: Pool) => {
@@ -125,9 +131,7 @@ const RegisterTopupPool = () => {
                 width="44%"
                 text={t("components.continue")}
                 click={() => {
-                  const lpBalance = Number(balances[selected.lpToken.address]);
-                  const usdBalance = lpBalance * prices[selected.underlying.symbol];
-                  if (usdBalance < 50) setDepositing(true);
+                  if (hasSufficientBalance(selected)) setDepositing(true);
                   else history.push(`/actions/register/topup/${address}/${protocol}/${pool}`);
                 }}
                 disabled={!pool}
