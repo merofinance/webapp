@@ -9,7 +9,6 @@ import Button from "../../components/Button";
 import { selectPool } from "../../state/selectors";
 import Seo from "../../components/Seo";
 import PoolDeposit from "./PoolDeposit";
-import PoolPositions from "./PoolPositions";
 import PoolWithdraw from "./PoolWithdraw";
 import PoolInformation from "./PoolInformation";
 import { selectBalance } from "../../state/userSlice";
@@ -103,19 +102,12 @@ const PoolPage = (): JSX.Element => {
                 label: t("pool.tabs.withdraw.tab"),
                 value: "withdraw",
               },
-              {
-                label: isMobile
-                  ? t("pool.tabs.positions.tabMobile")
-                  : t("pool.tabs.positions.tabDesktop"),
-                value: "positions",
-              },
             ]}
             active={tab}
             setOption={(value: string) => setTab(value)}
           />
           {tab === "deposit" && <PoolDeposit pool={pool} />}
           {tab === "withdraw" && <PoolWithdraw pool={pool} />}
-          {tab === "positions" && <PoolPositions pool={pool} />}
         </Content>
       </ContentContainer>
       <InfoCards>
