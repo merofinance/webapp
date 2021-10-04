@@ -7,15 +7,12 @@ import { useSelector } from "react-redux";
 import ContentSection from "../../../components/ContentSection";
 import Button from "../../../components/Button";
 import BackButton from "../../../components/BackButton";
-import RowSelector, { RowOptionType } from "../../../components/RowSelector";
-import { selectPools, selectPrices } from "../../../state/poolsListSlice";
-import { Pool } from "../../../lib";
-import { formatPercent, numberToCompactCurrency } from "../../../lib/numeric";
-import { selectBalance, selectBalances } from "../../../state/userSlice";
-import { selectPositions } from "../../../state/positionsSlice";
+import { selectBalance } from "../../../state/userSlice";
 import { ScaledNumber } from "../../../lib/scaled-number";
-import { Position } from "../../../lib/types";
 import { selectPool, selectPrice } from "../../../state/selectors";
+import AmountInput from "../../../components/AmountInput";
+import { useDevice } from "../../../app/hooks/use-device";
+import DepositButtons from "../../pool/DepositButtons";
 
 interface TopupParams {
   address: string;
@@ -45,13 +42,30 @@ const SubHeader = styled.div`
   margin-top: 1.6rem;
 `;
 
+const DepositSection = styled.div`
+  width: 100%;
+  display: grid;
+  align-items: flex-start;
+  grid-gap: 1.8rem;
+  margin-top: 6rem;
+
+  > div:last-child {
+    display: flex;
+    margin-top: 2.3rem;
+  }
+
+  grid-template-columns: repeat(2, 1fr);
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+`;
+
 const ButtonContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
   margin-top: 6rem;
 `;
-
 interface Props {
   poolName: string;
 }
@@ -59,10 +73,35 @@ interface Props {
 const RegisterTopupPoolDeposit = ({ poolName }: Props) => {
   const { t } = useTranslation();
   const history = useHistory();
+  const { isMobile } = useDevice();
   const { address, protocol } = useParams<TopupParams>();
   const pool = useSelector(selectPool(poolName));
-  const balance = useSelector(selectBalance(pool));
+  const underlyingBalance = useSelector(selectBalance(pool?.underlying.address || ""));
+  const depositedBalance = useSelector(selectBalance(pool));
   const price = useSelector(selectPrice(pool));
+  const [depositAmount, setDepositAmount] = useState("");
+
+  if (!pool) {
+    history.push("/");
+    throw Error("Pool not found");
+  }
+
+  const value = ScaledNumber.fromUnscaled(depositAmount, pool.underlying.decimals);
+
+  const inputLabel = isMobile
+    ? t("pool.tabs.deposit.input.labelMobile")
+    : t("pool.tabs.deposit.input.labelDesktop", { asset: pool.underlying.symbol });
+
+  const error = () => {
+    if (depositAmount && Number(depositAmount) <= 0) return t("amountInput.validation.positive");
+    try {
+      const amount = ScaledNumber.fromUnscaled(depositAmount, pool.underlying.decimals);
+      if (amount.gt(underlyingBalance)) return t("amountInput.validation.exceedsBalance");
+      return "";
+    } catch {
+      return t("amountInput.validation.invalid");
+    }
+  };
 
   return (
     <Container>
@@ -74,12 +113,28 @@ const RegisterTopupPoolDeposit = ({ poolName }: Props) => {
         content={
           <Content>
             <Header>
-              {t("actions.topup.stages.pool.deposit.header", { asset: pool?.underlying.symbol })}
+              {t("actions.topup.stages.pool.deposit.header", { asset: pool.underlying.symbol })}
             </Header>
             <SubHeader>
-              {t("actions.topup.stages.pool.deposit.subHeader", { asset: pool?.underlying.symbol })}
+              {t("actions.topup.stages.pool.deposit.subHeader", { asset: pool.underlying.symbol })}
             </SubHeader>
-
+            <DepositSection>
+              <AmountInput
+                noSlider
+                value={depositAmount}
+                setValue={(v: string) => setDepositAmount(v)}
+                label={inputLabel}
+                max={underlyingBalance}
+                error={error()}
+              />
+              <DepositButtons
+                stepsOnTop
+                pool={pool}
+                value={value}
+                complete={() => setDepositAmount("")}
+                valid={!error() && !value.isZero()}
+              />
+            </DepositSection>
             <ButtonContainer>
               <Button
                 primary
@@ -88,10 +143,10 @@ const RegisterTopupPoolDeposit = ({ poolName }: Props) => {
                 text={t("components.continue")}
                 click={() =>
                   history.push(
-                    `/actions/register/topup/${address}/${protocol}/${pool?.lpToken.symbol}`
+                    `/actions/register/topup/${address}/${protocol}/${pool.lpToken.symbol}`
                   )
                 }
-                disabled={!pool || Number(balance.toString()) * price < 50}
+                disabled={!pool || Number(depositedBalance.toString()) * price < 50}
                 hoverText={t("actions.topup.stages.pool.deposit.incomplete", {
                   asset: pool?.underlying.symbol,
                 })}
