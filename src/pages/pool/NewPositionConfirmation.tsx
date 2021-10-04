@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import LaunchIcon from "@material-ui/icons/Launch";
@@ -111,12 +111,14 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
   const loading = useSelector(hasPendingTransaction("Register"));
   const { chainId } = useWeb3React();
   const { isMobile } = useDevice();
+  const [initialised, setInitialised] = useState(false);
 
   useEffect(() => {
-    if (!loading) {
+    if (initialised && !loading) {
       complete();
       close();
     }
+    setInitialised(true);
   }, [loading]);
 
   const executeRegister = () => {

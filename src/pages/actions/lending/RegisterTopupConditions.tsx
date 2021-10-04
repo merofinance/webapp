@@ -96,6 +96,7 @@ const SubHeader = styled.div`
   font-size: 1.7rem;
   font-weight: 500;
   opacity: 0.8;
+  margin-bottom: 2rem;
 `;
 
 const Form = styled.form`
@@ -250,7 +251,10 @@ const RegisterTopupConditions = () => {
         close={() => setConfirming(false)}
         position={position}
         pool={pool}
-        complete={() => formik.resetForm({ values: initialValues })}
+        complete={() => {
+          formik.resetForm({ values: initialValues });
+          history.push("/actions");
+        }}
       />
     </Container>
   );
