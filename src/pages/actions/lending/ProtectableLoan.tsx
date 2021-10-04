@@ -76,9 +76,7 @@ const ProtectableLoan = ({ loan }: Props) => {
           medium
           text={t("actions.suggestions.topup.register")}
           background="#3A3550"
-          click={() =>
-            history.push(`/actions/register/topup/${account}/${loan.protocol.toLowerCase()}`)
-          }
+          click={() => history.push(`/actions/register/topup/${account}/${loan.protocol}`)}
         />
       </Column>
     </StyledProtectableLoan>
