@@ -387,8 +387,7 @@
         "header": "Top-up {{asset}} positions",
         "buttons": {
           "nav": "Create a Top-up Position",
-          "approve": "approve 1/2",
-          "create": "create 2/2"
+          "create": "Confirm Top-up Position"
         },
         "fields": {
           "protocol": {
