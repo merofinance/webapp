@@ -7,13 +7,13 @@ import RegisterTopupPool from "./RegisterTopupPool";
 interface TopupParams {
   address: string;
   protocol: string;
-  pool: string;
+  poolName: string;
 }
 
 const RegisterTopup = () => {
-  const { address, protocol, pool } = useParams<TopupParams>();
+  const { address, protocol, poolName } = useParams<TopupParams>();
   if (!address || !protocol) return <RegisterTopupLoan />;
-  if (!pool) return <RegisterTopupPool />;
+  if (!poolName) return <RegisterTopupPool />;
   return <RegisterTopupConditions />;
 };
 
