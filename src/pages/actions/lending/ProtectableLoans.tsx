@@ -53,7 +53,7 @@ const ProtectableLoans = () => {
       <Header>{t("actions.suggestions.topup.header")}</Header>
       <SubHeader>{t("actions.suggestions.topup.subHeader")}</SubHeader>
       {protectableLoans.map((loan: Loan) => (
-        <ProtectableLoan loan={loan} />
+        <ProtectableLoan key={loan.protocol} loan={loan} />
       ))}
     </StyledProtectableLoans>
   );
