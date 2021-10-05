@@ -7,7 +7,7 @@ import { Position, Pool } from "../../lib/types";
 import { selectPools } from "../../state/poolsListSlice";
 import chevron from "../../assets/ui/chevron.svg";
 import { selectPrice } from "../../state/selectors";
-import Popup from "../../components/Popup";
+import TopupAction from "./lending/TopupAction";
 
 const StyledRegisteredAction = styled.button`
   width: 100%;
@@ -98,7 +98,7 @@ const RegisteredAction = ({ position }: Props) => {
           <Chevron src={chevron} alt="right arrow" />
         </ChevronData>
       </StyledRegisteredAction>
-      <Popup show={open} close={() => setOpen(false)} header="test" content={<p>test</p>} />
+      <TopupAction show={open} close={() => setOpen(false)} position={position} pool={pool} />
     </>
   );
 };
