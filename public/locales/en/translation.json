@@ -444,8 +444,10 @@
   },
   "actions": {
     "overview": "Use this screen to monitor your Actions. Actions are a set of predefined market triggers, that when occur, something is done on your behalf.",
-    "deposits": "Your deposits",
-    "manageDeposits": "Manage deposits →",
+    "deposits": {
+      "header": "Your deposits",
+      "empty": "You do not have any existing Deposits..."
+    },
     "propose": "+ Propose a new Action on Discord",
     "register": {
       "button": "Register an Action",

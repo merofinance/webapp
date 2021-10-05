@@ -17,6 +17,14 @@ const Content = styled.div`
   align-items: flex-end;
 `;
 
+const EmptyText = styled.div`
+  font-weight: 400;
+  font-size: 1.5rem;
+  letter-spacing: 0.46px;
+  opacity: 0.8;
+  width: 100%;
+`;
+
 const Row = styled.div`
   width: 100%;
   display: flex;
@@ -59,6 +67,7 @@ const YourDeposits = () => {
   const prices = useSelector(selectPrices);
 
   const depositedPools = pools.filter((pool: Pool) => !balances[pool.lpToken.address]?.isZero());
+  const hasDeposits = depositedPools.length > 0;
 
   const getBalance = (pool: Pool) => balances[pool.lpToken.address] || new ScaledNumber();
   const getPrice = (pool: Pool) => prices[pool.underlying.symbol] || 0;
@@ -71,24 +80,29 @@ const YourDeposits = () => {
     <InfoCard
       defaultOpen
       collapsible
-      header={t("headers.deposits")}
+      header={t("actions.deposits.header")}
       content={
         <Content>
-          {depositedPools.map((pool: Pool) => (
-            <Row key={pool.name}>
-              <Asset tiny token={pool.underlying} />
-              <Balances>
-                <Underlying>{`${balances[pool.lpToken.address]?.toCryptoString() || 0} ${
-                  pool.underlying.symbol
-                }`}</Underlying>
-                <Usd>
-                  {balances[pool.lpToken.address]?.toUsdValue(prices[pool.underlying.symbol]) ||
-                    "$0"}
-                </Usd>
-              </Balances>
-            </Row>
-          ))}
-          <Total>{`= ${formatCurrency(Number(totalUsd.toString()))}`}</Total>
+          {!hasDeposits && <EmptyText>{t("actions.deposits.empty")}</EmptyText>}
+          {hasDeposits && (
+            <>
+              {depositedPools.map((pool: Pool) => (
+                <Row key={pool.name}>
+                  <Asset tiny token={pool.underlying} />
+                  <Balances>
+                    <Underlying>{`${balances[pool.lpToken.address]?.toCryptoString() || 0} ${
+                      pool.underlying.symbol
+                    }`}</Underlying>
+                    <Usd>
+                      {balances[pool.lpToken.address]?.toUsdValue(prices[pool.underlying.symbol]) ||
+                        "$0"}
+                    </Usd>
+                  </Balances>
+                </Row>
+              ))}
+              <Total>{`= ${formatCurrency(Number(totalUsd.toString()))}`}</Total>
+            </>
+          )}
         </Content>
       }
     />
