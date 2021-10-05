@@ -1,12 +1,28 @@
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+
 import { useBackd } from "../../../app/hooks/use-backd";
 import { AppDispatch } from "../../../app/store";
 import Popup from "../../../components/Popup";
 import { Position, Pool, TransactionInfo } from "../../../lib/types";
 import { removePosition } from "../../../state/positionsSlice";
 import { selectTransactions } from "../../../state/transactionsSlice";
+import Button from "../../../components/Button";
+
+const ButtonContainer = styled.div`
+  width: 100%;
+  display: grid;
+  margin-top: 4rem;
+
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1.7rem;
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 1.8rem;
+  }
+`;
 
 interface Props {
   show: boolean;
@@ -54,8 +70,24 @@ const DeletePositionConfirmation = ({ show, close, position, pool, complete }: P
         max: position.maxTopUp.toCryptoString(),
         protocol: position.protocol,
       })}
-      confirm
-      submit={() => handleRemovePosition()}
+      content={
+        <ButtonContainer>
+          <Button
+            medium
+            background="#252140"
+            text={t("pool.tabs.positions.delete.cancel")}
+            click={() => close()}
+          />
+          <Button
+            medium
+            primary
+            destructive
+            text={t("pool.tabs.positions.delete.header")}
+            loading={loading}
+            click={() => handleRemovePosition()}
+          />
+        </ButtonContainer>
+      }
       loading={loading}
     />
   );

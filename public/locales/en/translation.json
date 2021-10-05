@@ -436,7 +436,8 @@
         },
         "delete": {
           "header": "Delete Top-up Position",
-          "body": "Deleting this top-up position will remove automated collateral top-ups of {{asset}} on {{protocol}}. {{max}} {{asset}} will be unstaked and can be withdrawn after removing the position."
+          "body": "Deleting this top-up position will remove automated collateral top-ups of {{asset}} on {{protocol}}. {{max}} {{asset}} will be unstaked and can be withdrawn after removing the position.",
+          "cancel": "Do not delete"
         }
       }
     }
