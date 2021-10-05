@@ -13,7 +13,6 @@ import Overview from "../../components/Overview";
 import ProtectableLoans from "./lending/ProtectableLoans";
 import RegisterAction from "./RegisterAction";
 import YourDeposits from "./YourDeposits";
-import Button from "../../components/Button";
 import { GradientLink } from "../../styles/GradientText";
 
 interface ActionParams {
