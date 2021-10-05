@@ -20,6 +20,7 @@ type ButtonProps = {
   complete?: boolean;
   background?: string;
   width?: string;
+  destructive?: boolean;
 };
 
 const StyledButton = styled.button`
@@ -71,6 +72,7 @@ const StyledButton = styled.button`
   background-clip: padding-box, border-box;
   background-image: ${(props: ButtonProps) => {
     if (props.disabled) return "linear-gradient(#535068, #535068)";
+    if (props.destructive) return "linear-gradient(var(--error), var(--error))";
     if (props.complete) return "linear-gradient(#16C784, #16C784)";
     if (props.primary)
       return "linear-gradient(to right, var(--primary-gradient) 0%, var(--secondary-gradient) 50%, var(--primary-gradient) 100%)";
@@ -246,6 +248,7 @@ type Props = {
   background?: string;
   hoverText?: string;
   width?: string;
+  destructive?: boolean;
 };
 
 const Button = (props: Props): JSX.Element => {
@@ -272,6 +275,7 @@ const Button = (props: Props): JSX.Element => {
       inactive={props.inactive}
       background={props.background}
       width={props.width}
+      destructive={props.destructive}
       onClick={() => {
         if (props.loading || pending || props.disabled || !props.click) return;
         if (props.loading !== undefined) setPending(true);
