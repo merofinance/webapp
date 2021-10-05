@@ -16,7 +16,7 @@ import { INFINITE_APPROVE_AMMOUNT } from "../../../lib/constants";
 import { selectPool } from "../../../state/selectors";
 import { Position } from "../../../lib/types";
 import { hasPendingTransaction } from "../../../state/transactionsSlice";
-import NewPositionConfirmation from "../../pool/NewPositionConfirmation";
+import NewPositionConfirmation from "./RegisterTopupConfirmation";
 import ApproveThenAction from "../../../components/ApproveThenAction";
 import RegisterTopupInput from "./RegisterTopupInput";
 import ActionSummary from "./ActionSummary";
