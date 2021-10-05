@@ -53,7 +53,7 @@ const PositionSummary = styled.div`
   flex-direction: column;
   padding: 1.6rem;
 
-  margin-top: 4.8rem;
+  margin-top: 3.5rem;
   @media (max-width: 600px) {
     margin-top: 1.8rem;
   }
