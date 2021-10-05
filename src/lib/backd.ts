@@ -176,11 +176,9 @@ export class Web3Backd implements Backd {
   }
 
   async getCompound(address?: Address): Promise<Loan | null> {
-    // const account = address || (await this.currentAccount());
-    const account = "0x1a27881E041737bc7eF5c616A8aF08Ec7E51Db40";
-    const response = await fetch(
-      `https://api.compound.finance/api/v2/account?addresses[]=${account}`
-    );
+    const COMPOUND_API = "https://api.compound.finance/api/v2/account";
+    const account = address || (await this.currentAccount());
+    const response = await fetch(`${COMPOUND_API}?addresses[]=${account}&network=mainnet`);
     const data = await response.json();
     if (!data.accounts || data.accounts.length === 0) return null;
 
