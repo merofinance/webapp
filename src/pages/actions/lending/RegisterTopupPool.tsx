@@ -131,7 +131,7 @@ const RegisterTopupPool = () => {
                 width="44%"
                 text={t("components.continue")}
                 click={() => {
-                  if (hasSufficientBalance(selected)) setDepositing(true);
+                  if (!hasSufficientBalance(selected)) setDepositing(true);
                   else history.push(`/actions/register/topup/${address}/${protocol}/${pool}`);
                 }}
                 disabled={!pool}
