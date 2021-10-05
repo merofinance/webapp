@@ -2,10 +2,16 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { useParams } from "react-router";
+
 import InfoCard from "../../components/InfoCard";
 import { selectPositions } from "../../state/positionsSlice";
 import { Position } from "../../lib/types";
 import ExistingAction from "./ExistingAction";
+
+interface ActionParams {
+  stage: string;
+}
 
 const Content = styled.div`
   width: 100%;
@@ -42,8 +48,11 @@ const Header = styled.div`
 const ExistingActions = () => {
   const { t } = useTranslation();
   const positions = useSelector(selectPositions);
+  const { stage } = useParams<ActionParams>();
 
   const hasPosition = positions.length > 0;
+
+  if (!stage) return <></>;
 
   return (
     <InfoCard
