@@ -32,7 +32,7 @@ interface Props {
   complete: () => void;
 }
 
-const DeletePositionConfirmation = ({ show, close, position, pool, complete }: Props) => {
+const DeleteTopupConfirmation = ({ show, close, position, pool, complete }: Props) => {
   const { t } = useTranslation();
   const backd = useBackd();
   const dispatch = useDispatch<AppDispatch>();
@@ -93,4 +93,4 @@ const DeletePositionConfirmation = ({ show, close, position, pool, complete }: P
   );
 };
 
-export default DeletePositionConfirmation;
+export default DeleteTopupConfirmation;
