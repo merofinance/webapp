@@ -173,14 +173,17 @@ export class Web3Backd implements Backd {
     };
   }
 
+  // We are calling the Compound API here instead of their contracts to get the data
+  // Innitially I looked into using the contracts and started implementing that
+  // But they don't have a clean API in their contracts for this data
+  // And it ended up being a lot of different calls to get it and became quite messy and slow
+  // I suppose that's why they created the API for this
   async getCompound(address?: Address): Promise<PlainLoan | null> {
     const COMPOUND_API = "https://api.compound.finance/api/v2/account";
     const account = address || (await this.currentAccount());
 
-    // Kovan version is not working, have asked Compound support about it.
-    // Setting as mainnet for now so won't work on testnet.
-    // Have tested with mainnet accounts though and works fine :)
-    const response = await fetch(`${COMPOUND_API}?addresses[]=${account}&network=mainnet`);
+    // Only Mainnet is supported by the API, so we can't get Kovan data from this unfortunately
+    const response = await fetch(`${COMPOUND_API}?addresses[]=${account}`);
 
     const data = await response.json();
     if (!data.accounts || data.accounts.length === 0) return null;
