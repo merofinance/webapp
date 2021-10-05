@@ -456,10 +456,12 @@
     },
     "registered": {
       "header": "Registered Actions",
+      "existing": "Existing Actions",
       "empty": "You have not registered any Actions yet..",
       "columns": {
         "type": "Type",
-        "locked": "Amount Locked"
+        "locked": "Amount Locked",
+        "lockedShort": "Locked"
       }
     },
     "suggestions": {
@@ -576,7 +578,8 @@
     "moreInDocs": "Find out more in the docs",
     "comingSoon": "Coming Soon",
     "overview": "Overview",
-    "change": "Change"
+    "change": "Change",
+    "view": "View"
   },
   "errors": {
     "header": "An Error Occured",
