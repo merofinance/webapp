@@ -5,18 +5,18 @@ import LaunchIcon from "@material-ui/icons/Launch";
 import { useTranslation } from "react-i18next";
 import { useWeb3React } from "@web3-react/core";
 
-import { useBackd } from "../../app/hooks/use-backd";
-import { AppDispatch } from "../../app/store";
-import Popup from "../../components/Popup";
-import { GradientLink } from "../../styles/GradientText";
-import Tooltip from "../../components/Tooltip";
-import { registerPosition } from "../../state/positionsSlice";
-import { shortenAddress } from "../../lib/text";
-import { Pool, Position } from "../../lib/types";
-import { selectPrice } from "../../state/selectors";
-import { useDevice } from "../../app/hooks/use-device";
-import { hasPendingTransaction } from "../../state/transactionsSlice";
-import { getEtherscanAddressLink } from "../../lib/web3";
+import { useBackd } from "../../../app/hooks/use-backd";
+import { AppDispatch } from "../../../app/store";
+import Popup from "../../../components/Popup";
+import { GradientLink } from "../../../styles/GradientText";
+import Tooltip from "../../../components/Tooltip";
+import { registerPosition } from "../../../state/positionsSlice";
+import { shortenAddress } from "../../../lib/text";
+import { Pool, Position } from "../../../lib/types";
+import { selectPrice } from "../../../state/selectors";
+import { useDevice } from "../../../app/hooks/use-device";
+import { hasPendingTransaction } from "../../../state/transactionsSlice";
+import { getEtherscanAddressLink } from "../../../lib/web3";
 
 const Content = styled.div`
   width: 100%;
@@ -103,7 +103,13 @@ type Props = {
   complete: () => void;
 };
 
-const NewPositionConfirmation = ({ show, close, position, pool, complete }: Props): JSX.Element => {
+const RegisterTopupConfirmation = ({
+  show,
+  close,
+  position,
+  pool,
+  complete,
+}: Props): JSX.Element => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();
@@ -205,4 +211,4 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
   );
 };
 
-export default NewPositionConfirmation;
+export default RegisterTopupConfirmation;
