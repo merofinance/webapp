@@ -178,7 +178,12 @@ export class Web3Backd implements Backd {
   async getCompound(address?: Address): Promise<Loan | null> {
     const COMPOUND_API = "https://api.compound.finance/api/v2/account";
     const account = address || (await this.currentAccount());
+
+    // Kovan version is not working, have asked Compound support about it.
+    // Setting as mainnet for now so won't work on testnet.
+    // Have tested with mainnet accounts though and works fine :)
     const response = await fetch(`${COMPOUND_API}?addresses[]=${account}&network=mainnet`);
+
     const data = await response.json();
     if (!data.accounts || data.accounts.length === 0) return null;
 
