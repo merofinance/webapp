@@ -67,7 +67,7 @@ const RowOption = ({ columns, active, select }: Props) => {
   return (
     <StyledRowOption active={active} onClick={() => select()}>
       {columns.map((column: ColumnType) => (
-        <Column>
+        <Column key={column.label}>
           <Header>{column.label}</Header>
           <Value>{column.value}</Value>
         </Column>
