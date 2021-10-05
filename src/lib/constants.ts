@@ -9,7 +9,7 @@ export const STAKING_LIVE = false;
 export const INFURA_ID = "f42c3f37e40b4ab1bc5a0d7bf5612d0f";
 
 export const chainIds: Record<string, string> = {
-  "1": "Mainet",
+  "1": "Mainnet",
   "3": "Ropsten",
   "4": "Rinkeby",
   "5": "Goerli",
