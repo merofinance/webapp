@@ -1,6 +1,5 @@
 import { BigNumber, ContractTransaction, providers } from "ethers";
 import { Pool } from "..";
-import { Loan } from "../../state/lendingSlice";
 import { Backd } from "../backd";
 import { bigNumberToFloat } from "../numeric";
 import { ScaledNumber } from "../scaled-number";
@@ -13,6 +12,7 @@ import {
   PlainPosition,
   Token,
   transformPool,
+  PlainLoan,
 } from "../types";
 import { balances, makeContractTransaction, masterAccount, pools, positions, prices } from "./data";
 
@@ -37,25 +37,25 @@ export default class MockBackd implements Backd {
     return Promise.resolve(transformPool(pool, bigNumberToFloat));
   }
 
-  getAave(): Promise<Loan> {
+  getAave(): Promise<PlainLoan> {
     return Promise.resolve({
       protocol: "Aave",
-      totalCollateralETH: new ScaledNumber(),
-      totalDebtETH: new ScaledNumber(),
-      availableBorrowsETH: new ScaledNumber(),
-      currentLiquidationThreshold: new ScaledNumber(),
-      healthFactor: new ScaledNumber(),
+      totalCollateralETH: new ScaledNumber().toPlain(),
+      totalDebtETH: new ScaledNumber().toPlain(),
+      availableBorrowsETH: new ScaledNumber().toPlain(),
+      currentLiquidationThreshold: new ScaledNumber().toPlain(),
+      healthFactor: new ScaledNumber().toPlain(),
     });
   }
 
-  getCompound(): Promise<Loan> {
+  getCompound(): Promise<PlainLoan> {
     return Promise.resolve({
       protocol: "Compound",
-      totalCollateralETH: new ScaledNumber(),
-      totalDebtETH: new ScaledNumber(),
-      availableBorrowsETH: new ScaledNumber(),
-      currentLiquidationThreshold: new ScaledNumber(),
-      healthFactor: new ScaledNumber(),
+      totalCollateralETH: new ScaledNumber().toPlain(),
+      totalDebtETH: new ScaledNumber().toPlain(),
+      availableBorrowsETH: new ScaledNumber().toPlain(),
+      currentLiquidationThreshold: new ScaledNumber().toPlain(),
+      healthFactor: new ScaledNumber().toPlain(),
     });
   }
 

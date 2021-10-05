@@ -5,9 +5,9 @@ import styled from "styled-components";
 import { useWeb3React } from "@web3-react/core";
 import { useHistory } from "react-router";
 
-import { Loan } from "../../../state/lendingSlice";
 import { selectEthPrice } from "../../../state/poolsListSlice";
 import Button from "../../../components/Button";
+import { Loan } from "../../../lib/types";
 
 const StyledProtectableLoan = styled.div`
   width: 100%;

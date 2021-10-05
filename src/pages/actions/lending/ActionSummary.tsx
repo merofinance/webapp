@@ -5,11 +5,12 @@ import styled from "styled-components";
 import { useWeb3React } from "@web3-react/core";
 import { useHistory, useParams } from "react-router";
 
-import { Loan, selectLoans } from "../../../state/lendingSlice";
+import { selectLoans } from "../../../state/lendingSlice";
 import { selectEthPrice } from "../../../state/poolsListSlice";
 import Asset from "../../../components/Asset";
 import { selectPool } from "../../../state/selectors";
 import { GradientText } from "../../../styles/GradientText";
+import { Loan } from "../../../lib/types";
 
 interface TopupParams {
   address: string;
@@ -62,8 +63,7 @@ const ChangePoolText = styled(GradientText)`
 
 const ActionSummary = () => {
   const { t } = useTranslation();
-  const { address, protocol, poolName } = useParams<TopupParams>();
-  const { account } = useWeb3React();
+  const { protocol, poolName } = useParams<TopupParams>();
   const history = useHistory();
   const ethPrice = useSelector(selectEthPrice);
   const loans = useSelector(selectLoans);
@@ -97,7 +97,6 @@ const ActionSummary = () => {
           <ChangePoolButton onClick={() => history.goBack()}>
             <ChangePoolText>{t("components.change")}</ChangePoolText>
           </ChangePoolButton>
-          {/* {loan.totalDebtETH.toUsdValue(ethPrice)} */}
         </Value>
       </Column>
     </StyledActionSummary>

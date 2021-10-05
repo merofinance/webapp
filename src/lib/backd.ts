@@ -6,7 +6,6 @@ import { LiquidityPoolFactory } from "@backdfund/protocol/typechain/LiquidityPoo
 import { StakerVaultFactory } from "@backdfund/protocol/typechain/StakerVaultFactory";
 import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
 import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFactory";
-import { ComptrollerFactory } from "@backdfund/protocol/typechain/ComptrollerFactory";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
 
 import { UnsupportedNetwork } from "../app/errors";
@@ -25,10 +24,9 @@ import {
   PlainPosition,
   Token,
   transformPool,
+  PlainLoan,
 } from "./types";
-import { Loan } from "../state/lendingSlice";
 import { LendingPoolFactory } from "./contracts/aave/LendingPool";
-import { CTokenFactory } from "./contracts/compound/CToken";
 
 export type BackdOptions = {
   chainId: number;
@@ -38,8 +36,8 @@ export interface Backd {
   currentAccount(): Promise<Address>;
   listPools(): Promise<Pool[]>;
   getPoolInfo(address: Address): Promise<Pool>;
-  getAave(address?: Address): Promise<Loan | null>;
-  getCompound(address?: Address): Promise<Loan | null>;
+  getAave(address?: Address): Promise<PlainLoan | null>;
+  getCompound(address?: Address): Promise<PlainLoan | null>;
   getPositions(): Promise<PlainPosition[]>;
   registerPosition(pool: Pool, position: Position): Promise<ContractTransaction>;
   removePosition(
@@ -158,24 +156,24 @@ export class Web3Backd implements Backd {
     return transformPool(rawPool, bigNumberToFloat);
   }
 
-  async getAave(address?: Address): Promise<Loan | null> {
+  async getAave(address?: Address): Promise<PlainLoan | null> {
     const account = address || (await this.currentAccount());
     const lendingPoolContract = LendingPoolFactory.connect(this._provider);
     const userAccountData = await lendingPoolContract.getUserAccountData(account);
     if (new ScaledNumber(userAccountData.totalCollateralETH).isZero()) return null;
     return {
       protocol: "Aave",
-      totalCollateralETH: new ScaledNumber(userAccountData.totalCollateralETH),
-      totalDebtETH: new ScaledNumber(userAccountData.totalDebtETH),
-      availableBorrowsETH: new ScaledNumber(userAccountData.availableBorrowsETH),
-      currentLiquidationThreshold: ScaledNumber.fromUnscaled("1", 4).div(
-        new ScaledNumber(userAccountData.currentLiquidationThreshold, 4)
-      ),
-      healthFactor: new ScaledNumber(userAccountData.healthFactor),
+      totalCollateralETH: new ScaledNumber(userAccountData.totalCollateralETH).toPlain(),
+      totalDebtETH: new ScaledNumber(userAccountData.totalDebtETH).toPlain(),
+      availableBorrowsETH: new ScaledNumber(userAccountData.availableBorrowsETH).toPlain(),
+      currentLiquidationThreshold: ScaledNumber.fromUnscaled("1", 4)
+        .div(new ScaledNumber(userAccountData.currentLiquidationThreshold, 4))
+        .toPlain(),
+      healthFactor: new ScaledNumber(userAccountData.healthFactor).toPlain(),
     };
   }
 
-  async getCompound(address?: Address): Promise<Loan | null> {
+  async getCompound(address?: Address): Promise<PlainLoan | null> {
     const COMPOUND_API = "https://api.compound.finance/api/v2/account";
     const account = address || (await this.currentAccount());
 
@@ -192,11 +190,11 @@ export class Web3Backd implements Backd {
     const debt = ScaledNumber.fromUnscaled(accountData.total_borrow_value_in_eth.value);
     return Promise.resolve({
       protocol: "Compound",
-      totalCollateralETH: collateral,
-      totalDebtETH: debt,
-      availableBorrowsETH: new ScaledNumber(), // Not returned by API, leaving as 0 as not needed in UI at the moment
-      currentLiquidationThreshold: new ScaledNumber(), // Not returned by API, leaving as 0 as not needed in UI at the moment
-      healthFactor: debt.isZero() ? new ScaledNumber() : collateral.div(debt),
+      totalCollateralETH: collateral.toPlain(),
+      totalDebtETH: debt.toPlain(),
+      availableBorrowsETH: new ScaledNumber().toPlain(), // Not returned by API, leaving as 0 as not needed in UI at the moment
+      currentLiquidationThreshold: new ScaledNumber().toPlain(), // Not returned by API, leaving as 0 as not needed in UI at the moment
+      healthFactor: debt.isZero() ? new ScaledNumber().toPlain() : collateral.div(debt).toPlain(),
     });
   }
 

@@ -2,8 +2,8 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { Position } from "../../../lib/types";
-import { Loan, selectLoans } from "../../../state/lendingSlice";
+import { Loan, Position } from "../../../lib/types";
+import { selectLoans } from "../../../state/lendingSlice";
 import { selectPositions } from "../../../state/positionsSlice";
 import ProtectableLoan from "./ProtectableLoan";
 

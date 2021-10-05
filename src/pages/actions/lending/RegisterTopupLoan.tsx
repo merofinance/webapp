@@ -10,8 +10,9 @@ import Button from "../../../components/Button";
 import BackButton from "../../../components/BackButton";
 import RowSelector, { RowOptionType } from "../../../components/RowSelector";
 import { selectEthPrice } from "../../../state/poolsListSlice";
-import { Loan, selectLoans } from "../../../state/lendingSlice";
+import { selectLoans } from "../../../state/lendingSlice";
 import LoanSearch from "./LoanSearch";
+import { Loan } from "../../../lib/types";
 
 const Container = styled.div`
   position: relative;

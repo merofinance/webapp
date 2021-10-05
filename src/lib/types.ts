@@ -43,6 +43,24 @@ export interface PlainPosition {
   depositToken: Address;
 }
 
+export interface Loan {
+  protocol: string;
+  totalCollateralETH: ScaledNumber;
+  totalDebtETH: ScaledNumber;
+  availableBorrowsETH: ScaledNumber;
+  currentLiquidationThreshold: ScaledNumber;
+  healthFactor: ScaledNumber;
+}
+
+export interface PlainLoan {
+  protocol: string;
+  totalCollateralETH: PlainScaledNumber;
+  totalDebtETH: PlainScaledNumber;
+  availableBorrowsETH: PlainScaledNumber;
+  currentLiquidationThreshold: PlainScaledNumber;
+  healthFactor: PlainScaledNumber;
+}
+
 export const toPlainPosition = (position: Position): PlainPosition => {
   return {
     ...position,

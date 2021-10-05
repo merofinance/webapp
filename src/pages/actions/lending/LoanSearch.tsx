@@ -6,11 +6,12 @@ import { useSelector } from "react-redux";
 
 import { useBackd } from "../../../app/hooks/use-backd";
 import BasicInput from "../../../components/BasicInput";
-import { Loan } from "../../../state/lendingSlice";
 import { spinAnimation } from "../../../styles/animations/SpinAnimation";
 import pending from "../../../assets/ui/status/pending.svg";
 import RowSelector, { RowOptionType } from "../../../components/RowSelector";
 import { selectEthPrice } from "../../../state/poolsListSlice";
+import { Loan } from "../../../lib/types";
+import { fromPlainLoan } from "../../../state/lendingSlice";
 
 const StyledLoanSearch = styled.div`
   width: 100%;
@@ -78,8 +79,8 @@ const LoanSearch = ({ value, setValue }: Props) => {
       backd.getAave(newaddress),
       backd.getCompound(newaddress),
     ]);
-    if (aave) loans.push(aave);
-    if (compound) loans.push(compound);
+    if (aave) loans.push(fromPlainLoan(aave));
+    if (compound) loans.push(fromPlainLoan(compound));
     setLoans(loans);
     setRetrieved(true);
     setLoading(false);
