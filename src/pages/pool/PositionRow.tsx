@@ -8,7 +8,7 @@ import { Pool } from "../../lib";
 import { Position, TransactionInfo } from "../../lib/types";
 import { shortenAddress } from "../../lib/text";
 import { selectTransactions } from "../../state/transactionsSlice";
-import DeletePositionConfirmation from "./DeletePositionConfirmation";
+import DeletePositionConfirmation from "../actions/lending/DeletePositionConfirmation";
 
 const StyledPosition = styled.div`
   width: 100%;
@@ -101,7 +101,7 @@ const PositionRow = ({ position, pool }: Props): JSX.Element => {
         close={() => setDeleting(false)}
         position={position}
         pool={pool}
-        loading={loading}
+        complete={close}
       />
     </>
   );
