@@ -66,7 +66,10 @@ const ActionsPage = (): JSX.Element => {
 
   return (
     <StyledActionsPage>
-      <Seo title="Backd Actions" description="TODO" />
+      <Seo
+        title="Backd Actions"
+        description="Create Actions to automate your liquidity to where it is needed most"
+      />
       <ContentContainer>
         <Content>
           {!stage && (
