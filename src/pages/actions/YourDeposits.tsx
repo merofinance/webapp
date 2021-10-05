@@ -75,7 +75,7 @@ const YourDeposits = () => {
       content={
         <Content>
           {depositedPools.map((pool: Pool) => (
-            <Row>
+            <Row key={pool.name}>
               <Asset tiny token={pool.underlying} />
               <Balances>
                 <Underlying>{`${balances[pool.lpToken.address]?.toCryptoString() || 0} ${
