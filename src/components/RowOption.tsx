@@ -32,7 +32,7 @@ const StyledRowOption = styled.button`
   transition: filter 0.3s;
   filter: brightness(1);
   :hover {
-    filter: brightness(1.15);
+    filter: brightness(1.25);
   }
 `;
 
