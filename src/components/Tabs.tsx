@@ -90,13 +90,11 @@ const ActiveLine = styled.div`
   background: var(--gradient);
 
   transition: transform 0.3s;
+  transform: translateX(${(props: ActiveLineProps) => `calc(18rem * ${props.activeIndex})`});
 
   width: 18rem;
   @media (max-width: 600px) {
     width: calc((100vw - 32px) / 2);
-    transform: translateX(
-      ${(props: ActiveLineProps) => `calc(((100vw - 32px) / 2) * ${props.activeIndex})`}
-    );
   }
 `;
 
