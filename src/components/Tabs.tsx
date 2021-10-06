@@ -28,6 +28,12 @@ const Option = styled.button`
   align-items: center;
   cursor: pointer;
 
+  :hover {
+    div {
+      color: rgba(255, 255, 255, 0.75);
+    }
+  }
+
   width: 18rem;
   padding: 1.6rem 0;
   @media (max-width: 600px) {
@@ -42,6 +48,7 @@ const OptionText = styled.div`
   letter-spacing: 0.46px;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.54);
+  transition: color 0.3s;
 
   font-size: 1.6rem;
   @media (max-width: 600px) {
