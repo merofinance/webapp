@@ -85,7 +85,7 @@ const ActionsPage = (): JSX.Element => {
       <InfoCards>
         <Overview
           description={stage ? t("actions.register.overview") : t("actions.overview")}
-          link="https://docs.backd.fund/"
+          link="https://docs.backd.fund/protocol-architecture/top-ups"
         />
         <YourDeposits />
         <ExistingActions />
