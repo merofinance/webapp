@@ -61,12 +61,16 @@ const Line = styled.div`
   opacity: 0.2;
 `;
 
+interface ContentProps {
+  noContentPadding?: boolean;
+}
+
 const Content = styled.div`
   position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 2.4rem 2.4rem;
+  padding: ${(props: ContentProps) => (props.noContentPadding ? "0" : "2.4rem 2.4rem")};
 `;
 
 interface Props {
@@ -75,9 +79,17 @@ interface Props {
   statistics?: JSX.Element;
   content: JSX.Element;
   nav?: string;
+  noContentPadding?: boolean;
 }
 
-const ContentSection = ({ header, subHeader, statistics, content, nav }: Props): JSX.Element => {
+const ContentSection = ({
+  header,
+  subHeader,
+  statistics,
+  content,
+  nav,
+  noContentPadding,
+}: Props): JSX.Element => {
   return (
     <StyledContentSection>
       <HeaderContainer>
@@ -90,7 +102,7 @@ const ContentSection = ({ header, subHeader, statistics, content, nav }: Props):
       <Line large />
       {statistics && statistics}
       {statistics && <Line />}
-      <Content>{content}</Content>
+      <Content noContentPadding={noContentPadding}>{content}</Content>
     </StyledContentSection>
   );
 };
