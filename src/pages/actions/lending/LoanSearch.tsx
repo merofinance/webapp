@@ -19,11 +19,15 @@ const StyledLoanSearch = styled.div`
   flex-direction: column;
 `;
 
+interface HeaderProps {
+  topMargin: boolean;
+}
+
 const Header = styled.div`
   font-size: 2.2rem;
   font-weight: 600;
   letter-spacing: 0.25px;
-  margin-top: 5rem;
+  margin-top: ${(props: HeaderProps) => (props.topMargin ? "5rem" : "0")};
   margin-bottom: 3rem;
 `;
 
@@ -58,9 +62,10 @@ const NotFound = styled.div`
 interface Props {
   value: string;
   setValue: (value: string, newAddress: string) => void;
+  hasExistingLoans: boolean;
 }
 
-const LoanSearch = ({ value, setValue }: Props) => {
+const LoanSearch = ({ value, setValue, hasExistingLoans }: Props) => {
   const { t } = useTranslation();
   const backd = useBackd();
   const ethPrice = useSelector(selectEthPrice);
@@ -112,7 +117,11 @@ const LoanSearch = ({ value, setValue }: Props) => {
 
   return (
     <StyledLoanSearch>
-      <Header>{t("actions.topup.stages.loan.search")}</Header>
+      <Header topMargin={hasExistingLoans}>
+        {hasExistingLoans
+          ? t("actions.topup.stages.loan.search")
+          : t("actions.topup.stages.loan.enterAddress")}
+      </Header>
       <InputContainer>
         <BasicInput
           value={address}

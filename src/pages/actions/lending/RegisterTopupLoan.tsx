@@ -54,6 +54,7 @@ const RegisterTopupLoan = () => {
   const [address, setAddress] = useState<string | null | undefined>("");
 
   const isAccountsLoan = address === account;
+  const hasLoans = loans.length > 0;
 
   const options: RowOptionType[] = loans
     .filter((loan: Loan) => loan.healthFactor.toCryptoString)
@@ -90,22 +91,27 @@ const RegisterTopupLoan = () => {
         nav="2/4"
         content={
           <Content>
-            <Header>{t("actions.topup.stages.loan.header")}</Header>
-            <SubHeader>{t("actions.topup.stages.loan.subHeader")}</SubHeader>
-            <RowSelector
-              options={options}
-              value={isAccountsLoan ? protocol : ""}
-              setValue={(value: string) => {
-                setProtocol(value);
-                setAddress(account);
-              }}
-            />
+            {hasLoans && (
+              <>
+                <Header>{t("actions.topup.stages.loan.header")}</Header>
+                <SubHeader>{t("actions.topup.stages.loan.subHeader")}</SubHeader>
+                <RowSelector
+                  options={options}
+                  value={isAccountsLoan ? protocol : ""}
+                  setValue={(value: string) => {
+                    setProtocol(value);
+                    setAddress(account);
+                  }}
+                />
+              </>
+            )}
             <LoanSearch
               value={!isAccountsLoan ? protocol : ""}
               setValue={(value: string, newAddress: string) => {
                 setProtocol(value);
                 setAddress(newAddress);
               }}
+              hasExistingLoans={hasLoans}
             />
             <ButtonContainer>
               <Button

@@ -486,6 +486,7 @@
           "header": "Select a loan to protect",
           "subHeader": "Backd has detected the following loans on supported platforms associated with your current connected wallet:",
           "search": "Or, enter wallet address with a loan:",
+          "enterAddress": "Enter the wallet address that the loan is associated with:",
           "notFound": "No loans associated with this address."
         },
         "pool": {
