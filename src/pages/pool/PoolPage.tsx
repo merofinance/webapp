@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory, useParams } from "react-router";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
-import Radio from "../../components/Radio";
 import Button from "../../components/Button";
 import { selectPool } from "../../state/selectors";
 import Seo from "../../components/Seo";
@@ -53,11 +52,6 @@ const InfoCards = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  margin-top: 6.4rem;
-  @media (max-width: 1439px) {
-    margin-top: 0;
-  }
 `;
 
 const ButtonContainer = styled.div`
