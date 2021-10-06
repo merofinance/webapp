@@ -72,9 +72,6 @@ const ExistingActions = () => {
               {positions.map((position: Position) => (
                 <ExistingAction position={position} />
               ))}
-              {positions.map((position: Position) => (
-                <ExistingAction position={position} />
-              ))}
             </>
           )}
         </Content>
