@@ -26,7 +26,7 @@ const Description = styled.div`
 `;
 
 const LinkContainer = styled.div`
-  margin-top: 0.2rem;
+  margin-top: 0.3rem;
   @media (max-width: 1439px) {
     margin-top: 0.4rem;
   }
