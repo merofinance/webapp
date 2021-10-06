@@ -156,14 +156,14 @@ const TopupInformation = ({ position, pool }: Props): JSX.Element => {
             {t("pool.tabs.positions.fields.single.label")}
             <Tooltip content={t("pool.tabs.positions.fields.single.tooltip")} />
           </Label>
-          <Label>{position.singleTopUp.toCryptoString()}</Label>
+          <Label>{`${position.singleTopUp.toCryptoString()} ${pool.underlying.symbol}`}</Label>
         </SummaryRow>
         <SummaryRow>
           <Label>
             {t("pool.tabs.positions.fields.max.label")}
             <Tooltip content={t("pool.tabs.positions.fields.max.tooltip")} />
           </Label>
-          <Label>{position.maxTopUp.toCryptoString()}</Label>
+          <Label>{`${position.maxTopUp.toCryptoString()} ${pool.underlying.symbol}`}</Label>
         </SummaryRow>
       </PositionSummary>
     </StyledTopupInformation>
