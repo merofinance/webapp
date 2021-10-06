@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useParams } from "react-router";
+import { Redirect, useHistory, useParams } from "react-router";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
@@ -17,6 +17,7 @@ import { useBackd } from "../../app/hooks/use-backd";
 import { fetchState } from "../../state/poolsListSlice";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import BackButton from "../../components/BackButton";
+import Tabs from "../../components/Tabs";
 
 interface DepositWithdrawParams {
   poolName: string;
@@ -58,6 +59,8 @@ const InfoCards = styled.div`
 `;
 
 const ButtonContainer = styled.div`
+  width: 100%;
+  padding-left: 2rem;
   @media (max-width: 1439px) {
     display: none;
   }
@@ -65,6 +68,7 @@ const ButtonContainer = styled.div`
 
 const PoolPage = (): JSX.Element => {
   const { t } = useTranslation();
+  const history = useHistory();
   const { poolName } = useParams<DepositWithdrawParams>();
   const backd = useBackd();
   const dispatch = useDispatch();
@@ -90,22 +94,18 @@ const PoolPage = (): JSX.Element => {
       />
       <ContentContainer>
         <Content>
-          <Radio
-            options={[
+          <Tabs
+            tabs={[
               {
-                label: t("pool.tabs.deposit.tab"),
-                value: "deposit",
+                label: "pool.tabs.deposit.tab",
+                content: <PoolDeposit pool={pool} />,
               },
               {
-                label: t("pool.tabs.withdraw.tab"),
-                value: "withdraw",
+                label: "pool.tabs.withdraw.tab",
+                content: <PoolWithdraw pool={pool} />,
               },
             ]}
-            active={tab}
-            setOption={(value: string) => setTab(value)}
           />
-          {tab === "deposit" && <PoolDeposit pool={pool} />}
-          {tab === "withdraw" && <PoolWithdraw pool={pool} />}
         </Content>
       </ContentContainer>
       <InfoCards>
@@ -114,12 +114,13 @@ const PoolPage = (): JSX.Element => {
           link="https://docs.backd.fund/"
         />
         <PoolInformation pool={pool} />
-        {tab !== "positions" && !balance.isZero() && (
+        {!balance.isZero() && (
           <ButtonContainer>
             <Button
               medium
+              wide
               text={`+ ${t("pool.tabs.positions.buttons.nav")}`}
-              click={() => setTab("positions")}
+              click={() => history.push("/actions")}
               background="#0A0525"
             />
           </ButtonContainer>

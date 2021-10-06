@@ -386,7 +386,7 @@
         "tabMobile": "Positions",
         "header": "Top-up {{asset}} positions",
         "buttons": {
-          "nav": "Create a Top-up Position",
+          "nav": "Register an Action",
           "create": "Confirm Top-up Position"
         },
         "fields": {
