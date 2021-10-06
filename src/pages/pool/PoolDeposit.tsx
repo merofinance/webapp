@@ -5,12 +5,10 @@ import { useTranslation } from "react-i18next";
 
 import { useDevice } from "../../app/hooks/use-device";
 import AmountInput from "../../components/AmountInput";
-import ContentSection from "../../components/ContentSection";
 import { selectBalance } from "../../state/userSlice";
 import { Pool } from "../../lib";
 import { ScaledNumber } from "../../lib/scaled-number";
 import DepositButtons from "./DepositButtons";
-import PoolStatistics from "./PoolStatistics";
 
 const Content = styled.div`
   width: 100%;
@@ -18,9 +16,9 @@ const Content = styled.div`
   flex-direction: column;
 `;
 
-type Props = {
+interface Props {
   pool: Pool;
-};
+}
 
 const PoolDeposit = ({ pool }: Props): JSX.Element => {
   const { t } = useTranslation();
@@ -45,27 +43,21 @@ const PoolDeposit = ({ pool }: Props): JSX.Element => {
   };
 
   return (
-    <ContentSection
-      header={t("pool.tabs.deposit.header", { asset: pool.underlying.symbol })}
-      statistics={<PoolStatistics pool={pool} />}
-      content={
-        <Content>
-          <AmountInput
-            value={depositAmount}
-            setValue={(v: string) => setDepositAmount(v)}
-            label={inputLabel}
-            max={availableToDeposit}
-            error={error()}
-          />
-          <DepositButtons
-            pool={pool}
-            value={value}
-            complete={() => setDepositAmount("")}
-            valid={!error() && !value.isZero()}
-          />
-        </Content>
-      }
-    />
+    <Content>
+      <AmountInput
+        value={depositAmount}
+        setValue={(v: string) => setDepositAmount(v)}
+        label={inputLabel}
+        max={availableToDeposit}
+        error={error()}
+      />
+      <DepositButtons
+        pool={pool}
+        value={value}
+        complete={() => setDepositAmount("")}
+        valid={!error() && !value.isZero()}
+      />
+    </Content>
   );
 };
 

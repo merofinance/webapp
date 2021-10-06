@@ -18,6 +18,8 @@ import { fetchState } from "../../state/poolsListSlice";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import BackButton from "../../components/BackButton";
 import Tabs from "../../components/Tabs";
+import PoolStatistics from "./PoolStatistics";
+import ContentSection from "../../components/ContentSection";
 
 interface DepositWithdrawParams {
   poolName: string;
@@ -76,8 +78,6 @@ const PoolPage = (): JSX.Element => {
   const pool = useSelector(selectPool(poolName));
   const balance = useSelector(selectBalance(pool));
 
-  const [tab, setTab] = useState("deposit");
-
   useEffect(() => {
     if (!backd) return;
     dispatch(fetchState(backd));
@@ -94,17 +94,24 @@ const PoolPage = (): JSX.Element => {
       />
       <ContentContainer>
         <Content>
-          <Tabs
-            tabs={[
-              {
-                label: "pool.tabs.deposit.tab",
-                content: <PoolDeposit pool={pool} />,
-              },
-              {
-                label: "pool.tabs.withdraw.tab",
-                content: <PoolWithdraw pool={pool} />,
-              },
-            ]}
+          <ContentSection
+            noContentPadding
+            header={t("pool.header", { asset: pool.underlying.symbol })}
+            statistics={<PoolStatistics pool={pool} />}
+            content={
+              <Tabs
+                tabs={[
+                  {
+                    label: "pool.tabs.deposit.tab",
+                    content: <PoolDeposit pool={pool} />,
+                  },
+                  {
+                    label: "pool.tabs.withdraw.tab",
+                    content: <PoolWithdraw pool={pool} />,
+                  },
+                ]}
+              />
+            }
           />
         </Content>
       </ContentContainer>
