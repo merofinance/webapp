@@ -35,6 +35,7 @@ const ExitEvent = styled.div`
 
 interface PopupContainerProps {
   small?: boolean;
+  centreHeader?: boolean;
 }
 
 const PopupContainer = styled.div`
@@ -62,7 +63,7 @@ const Exit = styled.img`
 const Header = styled.div`
   font-weight: 700;
 
-  text-align: ${(props: PopupContainerProps) => (props.small ? "left" : "center")};
+  text-align: ${(props: PopupContainerProps) => (props.centreHeader ? "center" : "left")};
   margin-bottom: ${(props: PopupContainerProps) => (props.small ? "1.8rem" : "2.5rem")};
   font-size: ${(props: PopupContainerProps) => (props.small ? "1.6rem" : "3.6rem")};
   line-height: ${(props: PopupContainerProps) => (props.small ? "1.7rem" : "4.2rem")};
@@ -110,6 +111,7 @@ interface Props {
   submit?: () => void;
   loading?: boolean;
   small?: boolean;
+  centreHeader?: boolean;
 }
 
 const Popup = ({
@@ -122,6 +124,7 @@ const Popup = ({
   submit,
   loading,
   small,
+  centreHeader,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
   const { isMobile } = useDevice();
@@ -131,7 +134,11 @@ const Popup = ({
       <ExitEvent onClick={close} />
       <PopupContainer small={small}>
         <Exit src={closeIcon} onClick={close} alt="exit button" small={small} />
-        {header && <Header small={small}>{header}</Header>}
+        {header && (
+          <Header small={small} centreHeader={centreHeader}>
+            {header}
+          </Header>
+        )}
         {body && <Body>{body}</Body>}
         {content && content}
         {confirm && submit && (
