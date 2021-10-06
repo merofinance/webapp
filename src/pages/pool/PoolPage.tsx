@@ -12,7 +12,6 @@ import PoolDeposit from "./PoolDeposit";
 import PoolWithdraw from "./PoolWithdraw";
 import PoolInformation from "./PoolInformation";
 import { selectBalance } from "../../state/userSlice";
-import { useDevice } from "../../app/hooks/use-device";
 import Overview from "../../components/Overview";
 import { useBackd } from "../../app/hooks/use-backd";
 import { fetchState } from "../../state/poolsListSlice";
@@ -72,7 +71,6 @@ const PoolPage = (): JSX.Element => {
   const updated = useWeb3Updated();
   const pool = useSelector(selectPool(poolName));
   const balance = useSelector(selectBalance(pool));
-  const { isMobile } = useDevice();
 
   const [tab, setTab] = useState("deposit");
 
