@@ -452,7 +452,8 @@
     "register": {
       "button": "Register an Action",
       "header": "Register an Action",
-      "choose": "Choose the type of Action"
+      "choose": "Choose the type of Action",
+      "overview": "Define the market triggers that will enable your action using this interface."
     },
     "registered": {
       "header": "Registered Actions",

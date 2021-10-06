@@ -83,7 +83,10 @@ const ActionsPage = (): JSX.Element => {
         </Content>
       </ContentContainer>
       <InfoCards>
-        <Overview description={t("actions.overview")} link="https://docs.backd.fund/" />
+        <Overview
+          description={stage ? t("actions.register.overview") : t("actions.overview")}
+          link="https://docs.backd.fund/"
+        />
         <YourDeposits />
         <ExistingActions />
         <ProposeContainer>
