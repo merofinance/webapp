@@ -17,6 +17,7 @@ const StyledStatistics = styled.div`
   padding-bottom: 2.6rem;
   @media (max-width: 600px) {
     flex-direction: column;
+    padding: 1.6rem;
     padding-bottom: 1rem;
   }
 `;

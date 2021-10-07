@@ -39,9 +39,17 @@ const Content = styled.div`
   flex-direction: column;
 `;
 
+interface InfoCardsProps {
+  hideMobile: boolean;
+}
+
 const InfoCards = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 1439px) {
+    display: ${(props: InfoCardsProps) => (props.hideMobile ? "none" : "flex")};
+  }
 `;
 
 const ProposeContainer = styled.div`
@@ -90,7 +98,7 @@ const ActionsPage = (): JSX.Element => {
           {stage && <RegisterAction />}
         </Content>
       </ContentContainer>
-      <InfoCards>
+      <InfoCards hideMobile={!!stage}>
         <Overview
           description={stage ? t("actions.register.overview") : t("actions.overview")}
           link="https://docs.backd.fund/protocol-architecture/top-ups"

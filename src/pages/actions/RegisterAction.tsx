@@ -9,6 +9,7 @@ import icon from "../../assets/logo/white-logo.svg";
 import Button from "../../components/Button";
 import BackButton from "../../components/BackButton";
 import RegisterTopup from "./lending/RegisterTopup";
+import { useDevice } from "../../app/hooks/use-device";
 
 interface RegisterParams {
   action: string;
@@ -25,42 +26,65 @@ const Content = styled.div`
 `;
 
 const Header = styled.div`
-  font-size: 2.2rem;
   font-weight: 600;
   letter-spacing: 0.25px;
+
+  font-size: 2.2rem;
   margin-bottom: 3rem;
+  @media (max-width: 600px) {
+    font-size: 1.6rem;
+    margin-bottom: 2rem;
+  }
 `;
 
 const NoteContainer = styled.div`
   display: flex;
   align-items: flex-start;
+
   margin-top: 1.5rem;
+  @media (max-width: 600px) {
+    margin-top: 1.2rem;
+  }
 `;
 
 const BackdIcon = styled.img`
-  width: 2.2rem;
   margin-right: 1rem;
+
+  width: 2.2rem;
+  @media (max-width: 600px) {
+    width: 2rem;
+  }
 `;
 
 const Note = styled.div`
-  font-size: 1.6rem;
   font-weight: 500;
-  line-height: 2.3rem;
   opacity: 0.8;
+
+  font-size: 1.6rem;
+  line-height: 2.3rem;
+  @media (max-width: 600px) {
+    font-size: 1.4rem;
+    line-height: 2rem;
+  }
 `;
 
 const ButtonContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+
   margin-top: 6rem;
+  @media (max-width: 600px) {
+    margin-top: 4rem;
+  }
 `;
 
 const RegisterAction = () => {
   const { t } = useTranslation();
   const history = useHistory();
-  const [actionOption, setActionOption] = useState("topup");
+  const { isMobile } = useDevice();
   const { action } = useParams<RegisterParams>();
+  const [actionOption, setActionOption] = useState("topup");
 
   const actions: RadioOptionType[] = [
     {
@@ -69,7 +93,7 @@ const RegisterAction = () => {
     },
     {
       value: "null",
-      label: t("actions.more.label"),
+      label: isMobile ? t("components.comingSoon") : t("actions.more.label"),
       disabledText: t("components.comingSoon"),
     },
   ];
@@ -99,7 +123,7 @@ const RegisterAction = () => {
                 <Button
                   primary
                   medium
-                  width="44%"
+                  width={isMobile ? "100%" : "44%"}
                   text={t("components.continue")}
                   click={() => history.push(`/actions/register/${actionOption}`)}
                 />

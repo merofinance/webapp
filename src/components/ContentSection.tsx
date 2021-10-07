@@ -71,6 +71,10 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   padding: ${(props: ContentProps) => (props.noContentPadding ? "0" : "2.4rem 2.4rem")};
+
+  @media (max-width: 600px) {
+    padding: ${(props: ContentProps) => (props.noContentPadding ? "0" : "1.6rem")};
+  }
 `;
 
 interface Props {
