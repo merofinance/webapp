@@ -187,9 +187,9 @@ const RegisterTopupConditions = () => {
   };
 
   const buttonHoverText = () => {
-    if (!formik.values.threshold) return t("pool.tabs.positions.fields.protocol.hover");
-    if (!formik.values.singleTopUp) return t("pool.tabs.positions.fields.protocol.hover");
-    if (!formik.values.maxTopUp) return t("pool.tabs.positions.fields.protocol.hover");
+    if (!formik.values.threshold) return t("pool.tabs.positions.fields.threshold.hover");
+    if (!formik.values.singleTopUp) return t("pool.tabs.positions.fields.single.hover");
+    if (!formik.values.maxTopUp) return t("pool.tabs.positions.fields.max.hover");
     return "";
   };
 
