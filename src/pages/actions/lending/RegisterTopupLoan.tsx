@@ -84,7 +84,6 @@ const RegisterTopupLoan = () => {
 
   return (
     <Container>
-      <BackButton />
       <ContentSection
         header={t("actions.register.header")}
         subHeader={t("actions.topup.label")}
