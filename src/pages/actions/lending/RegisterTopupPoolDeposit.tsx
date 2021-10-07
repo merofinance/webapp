@@ -42,16 +42,20 @@ const SubHeader = styled.div`
   margin-top: 1.6rem;
 `;
 
+interface DepositSectionProps {
+  error: boolean;
+}
+
 const DepositSection = styled.div`
   width: 100%;
   display: grid;
-  align-items: flex-start;
+  align-items: flex-end;
   grid-gap: 1.8rem;
   margin-top: 6rem;
 
   > div:last-child {
     display: flex;
-    margin-top: 2.3rem;
+    margin-bottom: ${(props: DepositSectionProps) => (props.error ? "2.4rem" : "0.3rem")};
   }
 
   grid-template-columns: repeat(2, 1fr);
@@ -118,7 +122,7 @@ const RegisterTopupPoolDeposit = ({ poolName }: Props) => {
             <SubHeader>
               {t("actions.topup.stages.pool.deposit.subHeader", { asset: pool.underlying.symbol })}
             </SubHeader>
-            <DepositSection>
+            <DepositSection error={!!error()}>
               <AmountInput
                 noSlider
                 value={depositAmount}
