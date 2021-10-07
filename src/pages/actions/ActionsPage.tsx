@@ -23,6 +23,10 @@ interface ActionParams {
 const StyledActionsPage = styled.div`
   width: 100%;
   display: flex;
+
+  @media (max-width: 1439px) {
+    flex-direction: column-reverse;
+  }
 `;
 
 const ContentContainer = styled.div`
@@ -45,6 +49,10 @@ const ProposeContainer = styled.div`
   padding-left: 1.6rem;
   display: flex;
   justify-content: center;
+
+  @media (max-width: 1439px) {
+    display: none;
+  }
 `;
 
 const ProposeLink = styled(GradientLink)`

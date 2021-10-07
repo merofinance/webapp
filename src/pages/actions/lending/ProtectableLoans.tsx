@@ -18,20 +18,31 @@ const StyledProtectableLoans = styled.div`
 `;
 
 const Header = styled.div`
-  font-size: 2.4rem;
   font-weight: 700;
-  line-height: 4.2rem;
   letter-spacing: 0.25px;
+
+  font-size: 2.4rem;
+  line-height: 4.2rem;
   margin-bottom: 0.2rem;
+  @media (max-width: 600px) {
+    font-size: 1.8rem;
+    line-height: 2.2rem;
+    margin-bottom: 0.3rem;
+  }
 `;
 
 const SubHeader = styled.div`
-  font-size: 1.5rem;
   font-weight: 500;
-  line-height: 2.1rem;
   letter-spacing: 0.46px;
   opacity: 0.8;
   margin-bottom: 0.4rem;
+
+  font-size: 1.5rem;
+  line-height: 2.1rem;
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+    line-height: 1.7rem;
+  }
 `;
 
 const ProtectableLoans = () => {

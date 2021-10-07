@@ -40,24 +40,36 @@ const Balances = styled.div`
 `;
 
 const Underlying = styled.div`
-  font-size: 1.4rem;
   font-weight: 500;
   letter-spacing: 0.46px;
   margin-bottom: 0.2rem;
+
+  font-size: 1.4rem;
+  @media (max-width: 600px) {
+    font-size: 1.3rem;
+  }
 `;
 
 const Usd = styled.div`
-  font-size: 1.2rem;
   font-weight: 500;
   letter-spacing: 0.46px;
   opacity: 0.5;
+
+  font-size: 1.2rem;
+  @media (max-width: 600px) {
+    font-size: 1.1rem;
+  }
 `;
 
 const Total = styled.div`
-  font-size: 1.8rem;
   font-weight: 500;
   letter-spacing: 0.46px;
   margin-top: 0.4rem;
+
+  font-size: 1.8rem;
+  @media (max-width: 600px) {
+    font-size: 1.4rem;
+  }
 `;
 
 const YourDeposits = () => {
@@ -78,7 +90,6 @@ const YourDeposits = () => {
 
   return (
     <InfoCard
-      defaultOpen
       collapsible
       header={t("actions.deposits.header")}
       content={

@@ -21,24 +21,42 @@ const StyledProtectableLoan = styled.div`
   margin-top: 1rem;
 `;
 
+interface ColumnProps {
+  hideMobile?: boolean;
+}
+
 const Column = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 600px) {
+    flex: auto;
+    display: ${(props: ColumnProps) => (props.hideMobile ? "none" : "flex")};
+  }
 `;
 
 const Header = styled.div`
-  font-size: 1.2rem;
   font-weight: 700;
   letter-spacing: 0.2px;
   opacity: 0.6;
+
+  font-size: 1.2rem;
   margin-bottom: 0.5rem;
+  @media (max-width: 600px) {
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+  }
 `;
 
 const Value = styled.div`
-  font-size: 1.8rem;
   font-weight: 700;
   letter-spacing: 0.2px;
+
+  font-size: 1.8rem;
+  @media (max-width: 600px) {
+    font-size: 1.6rem;
+  }
 `;
 
 interface Props {
@@ -59,15 +77,15 @@ const ProtectableLoan = ({ loan }: Props) => {
         <Header>{t("actions.suggestions.topup.labels.protocol")}</Header>
         <Value>{loan.protocol}</Value>
       </Column>
-      <Column>
+      <Column hideMobile>
         <Header>{t("actions.suggestions.topup.labels.healthFactor")}</Header>
         <Value>{loan.healthFactor.toCryptoString()}</Value>
       </Column>
-      <Column>
+      <Column hideMobile>
         <Header>{t("actions.suggestions.topup.labels.totalCollateral")}</Header>
         <Value>{loan.totalCollateralETH.toUsdValue(ethPrice)}</Value>
       </Column>
-      <Column>
+      <Column hideMobile>
         <Header>{t("actions.suggestions.topup.labels.totalLoan")}</Header>
         <Value>{loan.totalDebtETH.toUsdValue(ethPrice)}</Value>
       </Column>

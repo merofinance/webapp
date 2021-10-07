@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import AccordionChevron from "./AccordionChevron";
+import { useDevice } from "../app/hooks/use-device";
 
 interface StyleProps {
   collapsible?: boolean;
@@ -97,20 +98,21 @@ const Content = styled.div`
   }
 `;
 
-type Props = {
+interface Props {
   header: string;
   content: JSX.Element;
   collapsible?: boolean;
   defaultOpen?: boolean;
-};
+}
 
 const InfoCard = ({ header, content, collapsible, defaultOpen }: Props): JSX.Element => {
   const { i18n } = useTranslation();
+  const { isDesktop } = useDevice();
   const [open, setOpen] = useState(false);
   const isWide = i18n.language === "ja";
 
   useEffect(() => {
-    setOpen(!!defaultOpen);
+    setOpen(!!defaultOpen || isDesktop);
   }, []);
 
   return (

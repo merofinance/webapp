@@ -9,6 +9,7 @@ import { Position } from "../../lib/types";
 import { selectPositions } from "../../state/positionsSlice";
 import Button from "../../components/Button";
 import RegisteredAction from "./RegisteredAction";
+import { useDevice } from "../../app/hooks/use-device";
 
 const Content = styled.div`
   flex: 1;
@@ -17,23 +18,31 @@ const Content = styled.div`
 `;
 
 const Empty = styled.div`
-  font-size: 1.5rem;
-  line-height: 2.1rem;
   letter-spacing: 0.46px;
   opacity: 0.8;
+
+  font-size: 1.5rem;
+  @media (max-width: 600px) {
+    font-size: 1.3rem;
+  }
 `;
 
 const ButtonContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+
   margin-top: 6rem;
+  @media (max-width: 600px) {
+    margin-top: 4rem;
+  }
 `;
 
 const RegisteredActions = () => {
   const { t } = useTranslation();
   const positions = useSelector(selectPositions);
   const history = useHistory();
+  const { isMobile } = useDevice();
 
   const hasPosition = positions.length > 0;
 
@@ -49,7 +58,7 @@ const RegisteredActions = () => {
             <Button
               primary={!hasPosition}
               medium
-              width="44%"
+              width={isMobile ? "100%" : "44%"}
               background="#0F0830"
               text={t("actions.register.button")}
               click={() => history.push("/actions/register")}
