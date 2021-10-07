@@ -17,6 +17,7 @@ import { ScaledNumber } from "../../../lib/scaled-number";
 import { Position } from "../../../lib/types";
 import RegisterTopupPoolDeposit from "./RegisterTopupPoolDeposit";
 import Asset from "../../../components/Asset";
+import { useDevice } from "../../../app/hooks/use-device";
 
 interface TopupParams {
   address: string;
@@ -34,9 +35,13 @@ const Content = styled.div`
 `;
 
 const Header = styled.div`
-  font-size: 2.2rem;
   font-weight: 600;
   letter-spacing: 0.25px;
+
+  font-size: 2.2rem;
+  @media (max-width: 600px) {
+    font-size: 1.6rem;
+  }
 `;
 
 const SubHeader = styled.div`
@@ -50,13 +55,18 @@ const ButtonContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+
   margin-top: 6rem;
+  @media (max-width: 600px) {
+    margin-top: 4rem;
+  }
 `;
 
 const RegisterTopupPool = () => {
   const { t } = useTranslation();
   const { address, protocol } = useParams<TopupParams>();
   const history = useHistory();
+  const { isMobile } = useDevice();
   const pools = useSelector(selectPools);
   const balances = useSelector(selectBalances);
   const positions = useSelector(selectPositions);
@@ -82,14 +92,6 @@ const RegisterTopupPool = () => {
           value: <Asset tiny token={pool.underlying} />,
         },
         {
-          label: t("headers.apy"),
-          value: formatPercent(pool.apy),
-        },
-        {
-          label: t("headers.tvl"),
-          value: numberToCompactCurrency(pool.totalAssets * prices[pool.underlying.symbol]),
-        },
-        {
           label: t("headers.deposits"),
           value: (balances[pool.lpToken.address] || new ScaledNumber())
             .add(
@@ -99,6 +101,14 @@ const RegisterTopupPool = () => {
             )
             .toCompactUsdValue(prices[pool.underlying.symbol]),
         },
+        {
+          label: t("headers.apy"),
+          value: formatPercent(pool.apy),
+        },
+        {
+          label: t("headers.tvl"),
+          value: numberToCompactCurrency(pool.totalAssets * prices[pool.underlying.symbol]),
+        },
       ],
     };
   });
@@ -107,7 +117,6 @@ const RegisterTopupPool = () => {
 
   return (
     <Container>
-      <BackButton />
       <ContentSection
         header={t("actions.register.header")}
         subHeader={t("actions.topup.label")}
@@ -129,7 +138,7 @@ const RegisterTopupPool = () => {
               <Button
                 primary
                 medium
-                width="44%"
+                width={isMobile ? "100%" : "44%"}
                 text={t("components.continue")}
                 click={() => {
                   if (!hasSufficientBalance(selected)) setDepositing(true);
