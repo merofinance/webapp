@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useWeb3React } from "@web3-react/core";
 import { useHistory, useParams } from "react-router";
 
-import { selectLoans } from "../../../state/lendingSlice";
+import { fromPlainLoan } from "../../../state/lendingSlice";
 import { selectEthPrice } from "../../../state/poolsListSlice";
 import Asset from "../../../components/Asset";
 import { selectPool } from "../../../state/selectors";
 import { GradientText } from "../../../styles/GradientText";
-import { Loan } from "../../../lib/types";
+import { Loan, PlainLoan } from "../../../lib/types";
+import { useWeb3Updated } from "../../../app/hooks/use-web3-updated";
+import { useBackd } from "../../../app/hooks/use-backd";
 
 interface TopupParams {
   address: string;
@@ -63,12 +65,29 @@ const ChangePoolText = styled(GradientText)`
 
 const ActionSummary = () => {
   const { t } = useTranslation();
-  const { protocol, poolName } = useParams<TopupParams>();
+  const { address, protocol, poolName } = useParams<TopupParams>();
   const history = useHistory();
+  const backd = useBackd();
+  const update = useWeb3Updated();
+  const { account } = useWeb3React();
   const ethPrice = useSelector(selectEthPrice);
-  const loans = useSelector(selectLoans);
   const pool = useSelector(selectPool(poolName));
-  const loan = loans.filter((l: Loan) => l.protocol === protocol)[0];
+  const [loan, setLoan] = useState<Loan | null>(null);
+
+  const redirectToRegister = () => history.push("/actions/register/topup");
+
+  const getLoan = async () => {
+    if (!account || !backd) return;
+    let plainLoan: PlainLoan | null = null;
+    if (protocol === "Aave") plainLoan = await backd.getAave(address);
+    else if (protocol === "Compound") plainLoan = await backd.getCompound(address);
+    if (!plainLoan) redirectToRegister();
+    else setLoan(fromPlainLoan(plainLoan));
+  };
+
+  useEffect(() => {
+    getLoan();
+  }, [update, backd]);
 
   if (!loan || !pool) return <></>;
 
