@@ -129,18 +129,7 @@ const RegisterTopupConditions = () => {
   const balance = useSelector(selectBalance(pool));
   const loading = useSelector(hasPendingTransaction("Approve"));
   const [confirming, setConfirming] = useState(false);
-
-  if (!pool) {
-    history.push("/");
-    throw Error("Pool not found");
-  }
-
-  if (!backd) {
-    history.push("/");
-    throw Error("Wallet not connected");
-  }
-
-  const allowance = useSelector(selectToupAllowance(backd, pool));
+  const allowance = pool ? useSelector(selectToupAllowance(backd, pool)) : new ScaledNumber();
 
   const onSubmit = () => {
     if (approved) setConfirming(true);
@@ -148,7 +137,7 @@ const RegisterTopupConditions = () => {
   };
 
   const executeApprove = () => {
-    if (!backd) return;
+    if (!backd || !pool) return;
     dispatch(
       approve({
         amount: ScaledNumber.fromUnscaled(INFINITE_APPROVE_AMMOUNT, pool.underlying.decimals),
@@ -161,6 +150,7 @@ const RegisterTopupConditions = () => {
 
   const validate = (values: FormType): FormikErrors<FormType> => {
     const errors: FormikErrors<FormType> = {};
+    if (!pool) return errors;
     const single = ScaledNumber.fromUnscaled(values.singleTopUp, pool.underlying.decimals);
     const max = ScaledNumber.fromUnscaled(values.maxTopUp, pool.underlying.decimals);
     if (values.maxTopUp && single.gt(max))
@@ -170,6 +160,13 @@ const RegisterTopupConditions = () => {
   };
 
   const formik = useFormik({ initialValues, validationSchema, onSubmit, validate });
+
+  if (!pool) {
+    history.push(`/actions/register/topup/${address}/${protocol}`);
+    return <></>;
+  }
+
+  if (!backd) return <></>;
 
   const approved = allowance.gte(
     ScaledNumber.fromUnscaled(formik.values.maxTopUp, pool.underlying.decimals)
