@@ -333,61 +333,6 @@
         },
         "tab": "預金"
       },
-      "positions": {
-        "buttons": {
-          "approve": "承認 1/2",
-          "create": "作成 2/2",
-          "nav": "補充ポジションの作成"
-        },
-        "confirmation": {
-          "header": "補充ポジションの確認",
-          "summaryEnd": "{{threshold}} を下回ると、{{single}} {{asset}} ({{singleUSD}}) で補充されます。これは、担保比率が {{threshold}} を下回るたびに、合計 {{max}} {{asset}}（{{maxUSD}}）が補充されるまで繰り返されます。",
-          "summaryStart": "When the collateralization of"
-        },
-        "fields": {
-          "address": {
-            "hover": "住所を入力",
-            "invalid": "無効なアドレスです",
-            "label": "住所",
-            "required": "アドレスをご入力ください。",
-            "tooltip": "補充するポジションの所有者の住所 (例 : AさんがAaveの借り手であり、そこに対して補充が必要である場合、Aさんの住所になります。)",
-            "unique": "プロトコルと住所ごとに、最大1つのポジション"
-          },
-          "max": {
-            "exceedsBalance": "預金残高を超えています。",
-            "hover": "最大補充金額を入力",
-            "invalid": "有効な値ではありません。",
-            "label": "最大補充額",
-            "positive": "正の数のみが有効です。",
-            "required": "最大補充の必要があります。",
-            "tooltip": "補充最大金額(補充に割り当てられるお客様の流動資産の金額)"
-          },
-          "protocol": {
-            "hover": "プロトコルの選択",
-            "label": "プロトコル",
-            "tooltip": "お客様が資金を借りている貸出プロトコル（現在、AaveおよびCompoundと互換性のあるもの）"
-          },
-          "single": {
-            "hover": "単一補充額を入力",
-            "invalid": "有効な値ではありません。",
-            "label": "単一補充額",
-            "lessThanMax": "1回の補充可能最大額よりも少ない金額をご入力ください。",
-            "positive": "正の数でご入力ください。",
-            "required": "単一補充の必要があります。",
-            "tooltip": "単一補充増額の量 (例 : 2,500 DAIの補充増加)"
-          },
-          "threshold": {
-            "greaterThanOne": "1 より大きい値でご入力ください。",
-            "hover": "閾値を入力",
-            "label": "閾値",
-            "required": "閾値をご入力ください。",
-            "tooltip": "担保補充の発生する健康指数の閾値"
-          }
-        },
-        "header": "補充 {{asset}} ポジション",
-        "tabDesktop": "補充ポジション",
-        "tabMobile": "ポジション"
-      },
       "withdraw": {
         "action": "{{asset}} 引き出す",
         "header": "{{asset}}を引き出す",
@@ -396,6 +341,57 @@
           "labelMobile": "出金する金額を入力"
         },
         "tab": "引き出す"
+      }
+    }
+  },
+  "actions": {
+    "topup": {
+      "stages": {
+        "confirmation": {
+          "header": "補充ポジションの確認",
+          "summaryEnd": "{{threshold}} を下回ると、{{single}} {{asset}} ({{singleUSD}}) で補充されます。これは、担保比率が {{threshold}} を下回るたびに、合計 {{max}} {{asset}}（{{maxUSD}}）が補充されるまで繰り返されます。",
+          "summaryStart": "When the collateralization of"
+        }
+      },
+      "fields": {
+        "address": {
+          "hover": "住所を入力",
+          "invalid": "無効なアドレスです",
+          "label": "住所",
+          "required": "アドレスをご入力ください。",
+          "tooltip": "補充するポジションの所有者の住所 (例 : AさんがAaveの借り手であり、そこに対して補充が必要である場合、Aさんの住所になります。)",
+          "unique": "プロトコルと住所ごとに、最大1つのポジション"
+        },
+        "max": {
+          "exceedsBalance": "預金残高を超えています。",
+          "hover": "最大補充金額を入力",
+          "invalid": "有効な値ではありません。",
+          "label": "最大補充額",
+          "positive": "正の数のみが有効です。",
+          "required": "最大補充の必要があります。",
+          "tooltip": "補充最大金額(補充に割り当てられるお客様の流動資産の金額)"
+        },
+        "protocol": {
+          "hover": "プロトコルの選択",
+          "label": "プロトコル",
+          "tooltip": "お客様が資金を借りている貸出プロトコル（現在、AaveおよびCompoundと互換性のあるもの）"
+        },
+        "single": {
+          "hover": "単一補充額を入力",
+          "invalid": "有効な値ではありません。",
+          "label": "単一補充額",
+          "lessThanMax": "1回の補充可能最大額よりも少ない金額をご入力ください。",
+          "positive": "正の数でご入力ください。",
+          "required": "単一補充の必要があります。",
+          "tooltip": "単一補充増額の量 (例 : 2,500 DAIの補充増加)"
+        },
+        "threshold": {
+          "greaterThanOne": "1 より大きい値でご入力ください。",
+          "hover": "閾値を入力",
+          "label": "閾値",
+          "required": "閾値をご入力ください。",
+          "tooltip": "担保補充の発生する健康指数の閾値"
+        }
       }
     }
   },

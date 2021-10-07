@@ -120,7 +120,7 @@ const PoolPage = (): JSX.Element => {
             <Button
               medium
               wide
-              text={`+ ${t("pool.tabs.positions.buttons.nav")}`}
+              text={`+ ${t("actions.register.nav")}`}
               click={() => history.push("/actions")}
               background="#0A0525"
             />

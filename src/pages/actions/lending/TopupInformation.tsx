@@ -104,7 +104,7 @@ const TopupInformation = ({ position, pool }: Props): JSX.Element => {
   return (
     <StyledTopupInformation>
       <Summary>
-        {t("pool.tabs.positions.confirmation.summaryStart")}
+        {t("actions.topup.stages.confirmation.summaryStart")}
         <Address
           href={getEtherscanAddressLink(chainId, position.account)}
           target="_blank"
@@ -113,7 +113,7 @@ const TopupInformation = ({ position, pool }: Props): JSX.Element => {
           {shortenAddress(position.account, isMobile ? 10 : 26)}
           <LaunchIcon style={{ fill: "var(--secondary)" }} />
         </Address>
-        {t("pool.tabs.positions.confirmation.summaryEnd", {
+        {t("actions.topup.stages.confirmation.summaryEnd", {
           threshold: position.threshold,
           single: position.singleTopUp,
           asset: pool.underlying.symbol,
@@ -125,15 +125,15 @@ const TopupInformation = ({ position, pool }: Props): JSX.Element => {
       <PositionSummary>
         <SummaryRow>
           <Label>
-            {t("pool.tabs.positions.fields.protocol.label")}
-            <Tooltip content={t("pool.tabs.positions.fields.protocol.tooltip")} />
+            {t("actions.topup.fields.protocol.label")}
+            <Tooltip content={t("actions.topup.fields.protocol.tooltip")} />
           </Label>
           <Label>{position.protocol}</Label>
         </SummaryRow>
         <SummaryRow>
           <Label>
-            {t("pool.tabs.positions.fields.address.label")}
-            <Tooltip content={t("pool.tabs.positions.fields.address.tooltip")} />
+            {t("actions.topup.fields.address.label")}
+            <Tooltip content={t("actions.topup.fields.address.tooltip")} />
           </Label>
           <AddressLabel
             href={getEtherscanAddressLink(chainId, position.account)}
@@ -146,22 +146,22 @@ const TopupInformation = ({ position, pool }: Props): JSX.Element => {
         </SummaryRow>
         <SummaryRow>
           <Label>
-            {t("pool.tabs.positions.fields.threshold.label")}
-            <Tooltip content={t("pool.tabs.positions.fields.threshold.tooltip")} />
+            {t("actions.topup.fields.threshold.label")}
+            <Tooltip content={t("actions.topup.fields.threshold.tooltip")} />
           </Label>
           <Label>{position.threshold.toString()}</Label>
         </SummaryRow>
         <SummaryRow>
           <Label>
-            {t("pool.tabs.positions.fields.single.label")}
-            <Tooltip content={t("pool.tabs.positions.fields.single.tooltip")} />
+            {t("actions.topup.fields.single.label")}
+            <Tooltip content={t("actions.topup.fields.single.tooltip")} />
           </Label>
           <Label>{`${position.singleTopUp.toCryptoString()} ${pool.underlying.symbol}`}</Label>
         </SummaryRow>
         <SummaryRow>
           <Label>
-            {t("pool.tabs.positions.fields.max.label")}
-            <Tooltip content={t("pool.tabs.positions.fields.max.tooltip")} />
+            {t("actions.topup.fields.max.label")}
+            <Tooltip content={t("actions.topup.fields.max.tooltip")} />
           </Label>
           <Label>{`${position.maxTopUp.toCryptoString()} ${pool.underlying.symbol}`}</Label>
         </SummaryRow>

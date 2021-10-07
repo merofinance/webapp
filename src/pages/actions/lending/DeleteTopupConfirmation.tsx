@@ -64,8 +64,8 @@ const DeleteTopupConfirmation = ({ show, close, position, pool, complete }: Prop
     <Popup
       show={show}
       close={close}
-      header={t("pool.tabs.positions.delete.header")}
-      body={t("pool.tabs.positions.delete.body", {
+      header={t("actions.topup.delete.header")}
+      body={t("actions.topup.delete.body", {
         asset: pool.underlying.symbol,
         max: position.maxTopUp.toCryptoString(),
         protocol: position.protocol,
@@ -75,14 +75,14 @@ const DeleteTopupConfirmation = ({ show, close, position, pool, complete }: Prop
           <Button
             medium
             background="#252140"
-            text={t("pool.tabs.positions.delete.cancel")}
+            text={t("actions.topup.delete.cancel")}
             click={() => close()}
           />
           <Button
             medium
             primary
             destructive
-            text={t("pool.tabs.positions.delete.header")}
+            text={t("actions.topup.delete.header")}
             loading={loading}
             click={() => handleRemovePosition()}
           />

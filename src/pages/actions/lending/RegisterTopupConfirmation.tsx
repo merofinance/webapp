@@ -48,7 +48,7 @@ const RegisterTopupConfirmation = ({
     <Popup
       show={show}
       close={close}
-      header={t("pool.tabs.positions.confirmation.header")}
+      header={t("actions.topup.stages.confirmation.header")}
       confirm
       submit={() => executeRegister()}
       loading={loading}

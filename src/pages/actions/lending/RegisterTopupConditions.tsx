@@ -42,28 +42,28 @@ const initialValues: FormType = {
 const validationSchema = yup.object().shape({
   threshold: yup
     .number()
-    .required("pool.tabs.positions.fields.threshold.required")
-    .moreThan(1.0, "pool.tabs.positions.fields.threshold.greaterThanOne"),
+    .required("actions.topup.fields.threshold.required")
+    .moreThan(1.0, "actions.topup.fields.threshold.greaterThanOne"),
   singleTopUp: yup
     .string()
-    .required("pool.tabs.positions.fields.single.required")
-    .test("is-valid-number", "pool.tabs.positions.fields.single.invalid", (s: any) =>
+    .required("actions.topup.fields.single.required")
+    .test("is-valid-number", "actions.topup.fields.single.invalid", (s: any) =>
       ScaledNumber.isValid(s)
     )
     .test(
       "is-positive-number",
-      "pool.tabs.positions.fields.single.positive",
+      "actions.topup.fields.single.positive",
       (s: any) => !ScaledNumber.fromUnscaled(s).isZero()
     ),
   maxTopUp: yup
     .string()
-    .required("pool.tabs.positions.fields.max.required")
-    .test("is-valid-number", "pool.tabs.positions.fields.max.invalid", (s: any) =>
+    .required("actions.topup.fields.max.required")
+    .test("is-valid-number", "actions.topup.fields.max.invalid", (s: any) =>
       ScaledNumber.isValid(s)
     )
     .test(
       "is-positive-number",
-      "pool.tabs.positions.fields.max.invalid",
+      "actions.topup.fields.max.invalid",
       (s: any) => !ScaledNumber.fromUnscaled(s).isZero()
     ),
 });
@@ -164,8 +164,8 @@ const RegisterTopupConditions = () => {
     const single = ScaledNumber.fromUnscaled(values.singleTopUp, pool.underlying.decimals);
     const max = ScaledNumber.fromUnscaled(values.maxTopUp, pool.underlying.decimals);
     if (values.maxTopUp && single.gt(max))
-      errors.singleTopUp = "pool.tabs.positions.fields.single.lessThanMax";
-    if (max.gt(balance)) errors.maxTopUp = "pool.tabs.positions.fields.max.exceedsBalance";
+      errors.singleTopUp = "actions.topup.fields.single.lessThanMax";
+    if (max.gt(balance)) errors.maxTopUp = "actions.topup.fields.max.exceedsBalance";
     return errors;
   };
 
@@ -187,9 +187,9 @@ const RegisterTopupConditions = () => {
   };
 
   const buttonHoverText = () => {
-    if (!formik.values.threshold) return t("pool.tabs.positions.fields.threshold.hover");
-    if (!formik.values.singleTopUp) return t("pool.tabs.positions.fields.single.hover");
-    if (!formik.values.maxTopUp) return t("pool.tabs.positions.fields.max.hover");
+    if (!formik.values.threshold) return t("actions.topup.fields.threshold.hover");
+    if (!formik.values.singleTopUp) return t("actions.topup.fields.single.hover");
+    if (!formik.values.maxTopUp) return t("actions.topup.fields.max.hover");
     return "";
   };
 
@@ -207,24 +207,24 @@ const RegisterTopupConditions = () => {
             <SubHeader>{t("actions.topup.stages.conditions.subHeader")}</SubHeader>
             <Form noValidate onSubmit={formik.handleSubmit}>
               <RegisterTopupInput
-                label={t("pool.tabs.positions.fields.threshold.label")}
-                tooltip={t("pool.tabs.positions.fields.threshold.tooltip")}
+                label={t("actions.topup.fields.threshold.label")}
+                tooltip={t("actions.topup.fields.threshold.tooltip")}
                 type="number"
                 name="threshold"
                 formik={formik}
                 placeholder="1.4"
               />
               <RegisterTopupInput
-                label={t("pool.tabs.positions.fields.single.label")}
-                tooltip={t("pool.tabs.positions.fields.single.tooltip")}
+                label={t("actions.topup.fields.single.label")}
+                tooltip={t("actions.topup.fields.single.tooltip")}
                 type="number"
                 name="singleTopUp"
                 formik={formik}
                 placeholder={`2,000 ${pool.underlying.symbol}`}
               />
               <RegisterTopupInput
-                label={t("pool.tabs.positions.fields.max.label")}
-                tooltip={t("pool.tabs.positions.fields.max.tooltip")}
+                label={t("actions.topup.fields.max.label")}
+                tooltip={t("actions.topup.fields.max.tooltip")}
                 type="number"
                 name="maxTopUp"
                 formik={formik}
@@ -232,7 +232,7 @@ const RegisterTopupConditions = () => {
               />
               <ButtonContainer>
                 <ApproveThenAction
-                  label={t("pool.tabs.positions.buttons.create")}
+                  label={t("actions.register.create")}
                   action={formik.handleSubmit}
                   value={ScaledNumber.fromUnscaled(
                     formik.values.maxTopUp,

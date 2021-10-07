@@ -91,7 +91,7 @@ const RegisteredAction = ({ position }: Props) => {
           <Value>{position.protocol}</Value>
         </Column>
         <Column>
-          <Header>{t("pool.tabs.positions.fields.threshold.label")}</Header>
+          <Header>{t("actions.topup.fields.threshold.label")}</Header>
           <Value>{position.threshold.toCryptoString()}</Value>
         </Column>
         <ChevronData>

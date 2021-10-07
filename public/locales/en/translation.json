@@ -379,62 +379,6 @@
           "labelDesktop": "Enter an amount of {{asset}} to withdraw"
         },
         "action": "Withdraw {{asset}}"
-      },
-      "positions": {
-        "buttons": {
-          "nav": "Register an Action",
-          "create": "Confirm Top-up Position"
-        },
-        "fields": {
-          "protocol": {
-            "label": "Protocol",
-            "tooltip": "The lending protocol on which the user is borrowing funds (currently compatible with Aave and Compound)",
-            "hover": "Select Protocol"
-          },
-          "address": {
-            "label": "Address",
-            "tooltip": "The address of the owner of the position to top-up (e.g. if Alice is the borrower on Aave that should be topped up then this would be Alice’s address)",
-            "hover": "Enter Address",
-            "required": "Address is required",
-            "invalid": "Invalid Address",
-            "unique": "Max of one position per protocol and address"
-          },
-          "threshold": {
-            "label": "Threshold",
-            "tooltip": "The health factor threshold a collateral top-up should occur at",
-            "hover": "Enter Threshold",
-            "required": "Threshold is required",
-            "greaterThanOne": "Must be greater than 1"
-          },
-          "single": {
-            "label": "Single Top-up",
-            "tooltip": "Amount of a single top-up increment (e.g. top-up increments of 2,500 DAI)",
-            "hover": "Enter Single Top-up",
-            "required": "Single Top-up is required",
-            "invalid": "Invalid number",
-            "positive": "Must be positive number",
-            "lessThanMax": "Must be less than max top-up"
-          },
-          "max": {
-            "label": "Max Top-up",
-            "tooltip": "Maximum top-up amount (value of your liquidity allocated for top-ups)",
-            "hover": "Enter Max Top-up",
-            "required": "Max Top-up required",
-            "invalid": "Invalid number",
-            "positive": "Must be positive number",
-            "exceedsBalance": "Exceeds deposited balance"
-          }
-        },
-        "confirmation": {
-          "header": "Confirm top-up position",
-          "summaryStart": "When the collateralization of",
-          "summaryEnd": "drops below {{threshold}}, it will be topped up with {{single}} {{asset}} ({{singleUsd}}). This will be repeated each time the collateralization ratio drops below {{threshold}}, until a total of {{max}} {{asset}} ({{maxUsd}}) is topped up."
-        },
-        "delete": {
-          "header": "Delete Top-up Position",
-          "body": "Deleting this top-up position will remove automated collateral top-ups of {{asset}} on {{protocol}}. {{max}} {{asset}} will be unstaked and can be withdrawn after removing the position.",
-          "cancel": "Do not delete"
-        }
       }
     }
   },
@@ -448,6 +392,8 @@
     "register": {
       "button": "Register an Action",
       "header": "Register an Action",
+      "nav": "Register an Action",
+      "create": "Confirm Top-up Position",
       "choose": "Choose the type of Action",
       "overview": "Define the market triggers that will enable your action using this interface."
     },
@@ -500,6 +446,56 @@
         "conditions": {
           "header": "Enter top-up conditions",
           "subHeader": "TODO!!!"
+        },
+        "confirmation": {
+          "header": "Confirm top-up position",
+          "summaryStart": "When the collateralization of",
+          "summaryEnd": "drops below {{threshold}}, it will be topped up with {{single}} {{asset}} ({{singleUsd}}). This will be repeated each time the collateralization ratio drops below {{threshold}}, until a total of {{max}} {{asset}} ({{maxUsd}}) is topped up."
+        }
+      },
+      "delete": {
+        "header": "Delete Top-up Position",
+        "body": "Deleting this top-up position will remove automated collateral top-ups of {{asset}} on {{protocol}}. {{max}} {{asset}} will be unstaked and can be withdrawn after removing the position.",
+        "cancel": "Do not delete"
+      },
+      "fields": {
+        "protocol": {
+          "label": "Protocol",
+          "tooltip": "The lending protocol on which the user is borrowing funds (currently compatible with Aave and Compound)",
+          "hover": "Select Protocol"
+        },
+        "address": {
+          "label": "Address",
+          "tooltip": "The address of the owner of the position to top-up (e.g. if Alice is the borrower on Aave that should be topped up then this would be Alice’s address)",
+          "hover": "Enter Address",
+          "required": "Address is required",
+          "invalid": "Invalid Address",
+          "unique": "Max of one position per protocol and address"
+        },
+        "threshold": {
+          "label": "Threshold",
+          "tooltip": "The health factor threshold a collateral top-up should occur at",
+          "hover": "Enter Threshold",
+          "required": "Threshold is required",
+          "greaterThanOne": "Must be greater than 1"
+        },
+        "single": {
+          "label": "Single Top-up",
+          "tooltip": "Amount of a single top-up increment (e.g. top-up increments of 2,500 DAI)",
+          "hover": "Enter Single Top-up",
+          "required": "Single Top-up is required",
+          "invalid": "Invalid number",
+          "positive": "Must be positive number",
+          "lessThanMax": "Must be less than max top-up"
+        },
+        "max": {
+          "label": "Max Top-up",
+          "tooltip": "Maximum top-up amount (value of your liquidity allocated for top-ups)",
+          "hover": "Enter Max Top-up",
+          "required": "Max Top-up required",
+          "invalid": "Invalid number",
+          "positive": "Must be positive number",
+          "exceedsBalance": "Exceeds deposited balance"
         }
       }
     },

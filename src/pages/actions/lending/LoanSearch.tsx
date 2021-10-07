@@ -132,7 +132,7 @@ const LoanSearch = ({ value, setValue, hasExistingLoans }: Props) => {
           placeholder="e.g. 0x09...A98E"
           error={
             address && !ethers.utils.isAddress(address)
-              ? t("pool.tabs.positions.fields.address.invalid")
+              ? t("actions.topup.fields.address.invalid")
               : ""
           }
         />
