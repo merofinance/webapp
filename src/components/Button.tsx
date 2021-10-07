@@ -65,7 +65,7 @@ const StyledButton = styled.button`
     }};
 
   /* Background and animations  */
-  transition: all 0.5s;
+  transition: background-position 0.5s;
   background-size: 200% auto;
   border: ${(props: ButtonProps) => (props.primary ? "0" : "1px")} solid transparent;
   background-origin: border-box;
