@@ -474,6 +474,7 @@
         },
         "threshold": {
           "label": "Threshold",
+          "question": "What health factor do you want the top-up Action to trigger at?",
           "tooltip": "The health factor threshold a collateral top-up should occur at",
           "hover": "Enter Threshold",
           "required": "Threshold is required",
@@ -481,6 +482,7 @@
         },
         "single": {
           "label": "Single Top-up",
+          "question": "How much would you like to transfer per single top-up?",
           "tooltip": "Amount of a single top-up increment (e.g. top-up increments of 2,500 DAI)",
           "hover": "Enter Single Top-up",
           "required": "Single Top-up is required",
@@ -490,6 +492,7 @@
         },
         "max": {
           "label": "Max Top-up",
+          "question": "What would you like the total top-up amount to be?",
           "tooltip": "Maximum top-up amount (value of your liquidity allocated for top-ups)",
           "hover": "Enter Max Top-up",
           "required": "Max Top-up required",

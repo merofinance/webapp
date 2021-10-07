@@ -204,7 +204,7 @@ const RegisterTopupConditions = () => {
             <SubHeader>{t("actions.topup.stages.conditions.subHeader")}</SubHeader>
             <Form noValidate onSubmit={formik.handleSubmit}>
               <RegisterTopupInput
-                label={t("actions.topup.fields.threshold.label")}
+                label={t("actions.topup.fields.threshold.question")}
                 tooltip={t("actions.topup.fields.threshold.tooltip")}
                 type="number"
                 name="threshold"
@@ -212,7 +212,7 @@ const RegisterTopupConditions = () => {
                 placeholder="1.4"
               />
               <RegisterTopupInput
-                label={t("actions.topup.fields.single.label")}
+                label={t("actions.topup.fields.single.question")}
                 tooltip={t("actions.topup.fields.single.tooltip")}
                 type="number"
                 name="singleTopUp"
@@ -220,7 +220,7 @@ const RegisterTopupConditions = () => {
                 placeholder={`2,000 ${pool.underlying.symbol}`}
               />
               <RegisterTopupInput
-                label={t("actions.topup.fields.max.label")}
+                label={t("actions.topup.fields.max.question")}
                 tooltip={t("actions.topup.fields.max.tooltip")}
                 type="number"
                 name="maxTopUp"
