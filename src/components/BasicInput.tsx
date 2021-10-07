@@ -75,6 +75,7 @@ const Error = styled.div`
   font-size: 1.6rem;
   @media (max-width: 600px) {
     font-size: 1.2rem;
+    margin-left: 0.9rem;
   }
 `;
 

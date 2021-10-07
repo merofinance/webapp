@@ -7,7 +7,6 @@ import { FormikErrors, useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 
 import ContentSection from "../../../components/ContentSection";
-import BackButton from "../../../components/BackButton";
 import { AppDispatch } from "../../../app/store";
 import { approve, selectBalance, selectToupAllowance } from "../../../state/userSlice";
 import { useBackd } from "../../../app/hooks/use-backd";
@@ -20,6 +19,7 @@ import NewPositionConfirmation from "./RegisterTopupConfirmation";
 import ApproveThenAction from "../../../components/ApproveThenAction";
 import RegisterTopupInput from "./RegisterTopupInput";
 import ActionSummary from "./ActionSummary";
+import { useDevice } from "../../../app/hooks/use-device";
 
 interface TopupParams {
   address: string;
@@ -87,18 +87,28 @@ const Content = styled.div`
 `;
 
 const Header = styled.div`
-  font-size: 2.2rem;
   font-weight: 600;
   letter-spacing: 0.25px;
-  margin-bottom: 2rem;
   margin-top: 3rem;
+
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  @media (max-width: 600px) {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const SubHeader = styled.div`
-  font-size: 1.7rem;
   font-weight: 500;
   opacity: 0.8;
+
+  font-size: 1.7rem;
   margin-bottom: 2rem;
+  @media (max-width: 600px) {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
 `;
 
 const Form = styled.form`
@@ -116,7 +126,11 @@ const ButtonContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+
   margin-top: 6rem;
+  @media (max-width: 600px) {
+    margin-top: 4rem;
+  }
 `;
 
 const RegisterTopupConditions = () => {
@@ -124,6 +138,7 @@ const RegisterTopupConditions = () => {
   const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();
   const history = useHistory();
+  const { isMobile } = useDevice();
   const { address, protocol, poolName } = useParams<TopupParams>();
   const pool = useSelector(selectPool(poolName));
   const balance = useSelector(selectBalance(pool));
@@ -192,7 +207,6 @@ const RegisterTopupConditions = () => {
 
   return (
     <Container>
-      <BackButton />
       <ContentSection
         header={t("actions.register.header")}
         subHeader={t("actions.topup.label")}
@@ -204,7 +218,11 @@ const RegisterTopupConditions = () => {
             <SubHeader>{t("actions.topup.stages.conditions.subHeader")}</SubHeader>
             <Form noValidate onSubmit={formik.handleSubmit}>
               <RegisterTopupInput
-                label={t("actions.topup.fields.threshold.question")}
+                label={
+                  isMobile
+                    ? t("actions.topup.fields.threshold.label")
+                    : t("actions.topup.fields.threshold.question")
+                }
                 tooltip={t("actions.topup.fields.threshold.tooltip")}
                 type="number"
                 name="threshold"
@@ -212,7 +230,11 @@ const RegisterTopupConditions = () => {
                 placeholder="1.4"
               />
               <RegisterTopupInput
-                label={t("actions.topup.fields.single.question")}
+                label={
+                  isMobile
+                    ? t("actions.topup.fields.single.label")
+                    : t("actions.topup.fields.single.question")
+                }
                 tooltip={t("actions.topup.fields.single.tooltip")}
                 type="number"
                 name="singleTopUp"
@@ -220,7 +242,11 @@ const RegisterTopupConditions = () => {
                 placeholder={`2,000 ${pool.underlying.symbol}`}
               />
               <RegisterTopupInput
-                label={t("actions.topup.fields.max.question")}
+                label={
+                  isMobile
+                    ? t("actions.topup.fields.max.label")
+                    : t("actions.topup.fields.max.question")
+                }
                 tooltip={t("actions.topup.fields.max.tooltip")}
                 type="number"
                 name="maxTopUp"

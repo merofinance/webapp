@@ -36,6 +36,8 @@ const Buttons = styled.div`
   @media (max-width: 600px) {
     grid-template-columns: repeat(1, 1fr);
     grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: ${(props: ButtonsProps) =>
+      props.showApprove ? "repeat(2, 1fr)" : "repeat(1, 1fr)"};
     grid-gap: 1.8rem;
   }
 `;

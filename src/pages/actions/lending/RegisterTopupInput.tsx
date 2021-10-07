@@ -13,19 +13,32 @@ const StyledRegisterTopupInput = styled.div`
 const LabelContainer = styled.div`
   display: flex;
   align-items: center;
+
   margin-bottom: 1.5rem;
   margin-top: 4rem;
+  @media (max-width: 600px) {
+    margin-bottom: 1rem;
+    margin-top: 2.5rem;
+  }
 `;
 
 const Label = styled.div`
   font-weight: 700;
+
   font-size: 1.8rem;
+  @media (max-width: 600px) {
+    font-size: 1.4rem;
+  }
 `;
 
 const InputContainer = styled.div`
-  width: 60%;
   display: flex;
   flex-direction: column;
+
+  width: 60%;
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 interface InputProps {
@@ -45,8 +58,8 @@ const InputBorder = styled.div`
   height: 4.5rem;
   border-radius: 14px;
   @media (max-width: 600px) {
-    height: 2.4rem;
-    border-radius: 4px;
+    height: 3.4rem;
+    border-radius: 10px;
   }
 `;
 
@@ -66,8 +79,8 @@ const Input = styled.input`
   font-size: 1.6rem;
   border-radius: 13px;
   @media (max-width: 600px) {
-    font-size: 1.2rem;
-    border-radius: 3px;
+    font-size: 1.3rem;
+    border-radius: 9px;
   }
 
   -moz-appearance: textfield;
@@ -87,22 +100,23 @@ const Error = styled.div`
   font-weight: 500;
   color: var(--error);
   margin-top: 0.6rem;
-  margin-left: 1.3rem;
 
   font-size: 1.6rem;
+  margin-left: 1.3rem;
   @media (max-width: 600px) {
     font-size: 1.2rem;
+    margin-left: 0.9rem;
   }
 `;
 
-type Props = {
+interface Props {
   label: string;
   tooltip: string;
   type: string;
   name: keyof FormType;
   formik: FormikFormType;
   placeholder: string;
-};
+}
 
 const RegisterTopupInput = ({
   label,
