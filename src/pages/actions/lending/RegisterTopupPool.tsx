@@ -16,6 +16,7 @@ import { selectPositions } from "../../../state/positionsSlice";
 import { ScaledNumber } from "../../../lib/scaled-number";
 import { Position } from "../../../lib/types";
 import RegisterTopupPoolDeposit from "./RegisterTopupPoolDeposit";
+import Asset from "../../../components/Asset";
 
 interface TopupParams {
   address: string;
@@ -78,7 +79,7 @@ const RegisterTopupPool = () => {
       columns: [
         {
           label: t("headers.asset"),
-          value: pool.underlying.symbol,
+          value: <Asset tiny token={pool.underlying} />,
         },
         {
           label: t("headers.apy"),
