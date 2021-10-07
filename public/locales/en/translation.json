@@ -381,9 +381,6 @@
         "action": "Withdraw {{asset}}"
       },
       "positions": {
-        "tabDesktop": "Top-up Positions",
-        "tabMobile": "Positions",
-        "header": "Top-up {{asset}} positions",
         "buttons": {
           "nav": "Register an Action",
           "create": "Confirm Top-up Position"
