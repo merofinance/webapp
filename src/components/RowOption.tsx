@@ -34,27 +34,50 @@ const StyledRowOption = styled.button`
   :hover {
     filter: brightness(1.25);
   }
+
+  @media (max-width: 600px) {
+    div:nth-child(4) {
+      display: none;
+    }
+  }
 `;
+
+interface ColumnProps {
+  hideMobile?: boolean;
+}
 
 const Column = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+
+  @media (max-width: 600px) {
+    display: ${(props: ColumnProps) => (props.hideMobile ? "none" : "flex")};
+  }
 `;
 
 const Header = styled.div`
-  font-size: 1.2rem;
   font-weight: 700;
   letter-spacing: 0.2px;
   opacity: 0.6;
+
+  font-size: 1.2rem;
   margin-bottom: 0.5rem;
+  @media (max-width: 600px) {
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+  }
 `;
 
 const Value = styled.div`
-  font-size: 1.8rem;
   font-weight: 700;
   letter-spacing: 0.2px;
+
+  font-size: 1.8rem;
+  @media (max-width: 600px) {
+    font-size: 1.4rem;
+  }
 `;
 
 interface Props {

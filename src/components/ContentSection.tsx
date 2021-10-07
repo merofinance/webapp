@@ -42,6 +42,10 @@ const Header = styled.h2`
 const SubHeader = styled(Header)`
   margin-left: 1.3rem;
   opacity: 0.6;
+
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const Key = styled.div`

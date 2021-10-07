@@ -2,9 +2,13 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledBasicInput = styled.div`
-  width: 60%;
   display: flex;
   flex-direction: column;
+
+  width: 60%;
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 interface InputProps {
@@ -24,8 +28,8 @@ const InputBorder = styled.div`
   height: 4.5rem;
   border-radius: 14px;
   @media (max-width: 600px) {
-    height: 2.4rem;
-    border-radius: 4px;
+    height: 3.4rem;
+    border-radius: 10px;
   }
 `;
 
@@ -45,8 +49,8 @@ const Input = styled.input`
   font-size: 1.6rem;
   border-radius: 13px;
   @media (max-width: 600px) {
-    font-size: 1.2rem;
-    border-radius: 3px;
+    font-size: 1.3rem;
+    border-radius: 9px;
   }
 
   -moz-appearance: textfield;

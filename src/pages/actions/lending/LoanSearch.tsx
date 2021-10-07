@@ -24,11 +24,17 @@ interface HeaderProps {
 }
 
 const Header = styled.div`
-  font-size: 2.2rem;
   font-weight: 600;
   letter-spacing: 0.25px;
-  margin-top: ${(props: HeaderProps) => (props.topMargin ? "5rem" : "0")};
+
+  font-size: 2.2rem;
   margin-bottom: 3rem;
+  margin-top: ${(props: HeaderProps) => (props.topMargin ? "5rem" : "0")};
+  @media (max-width: 600px) {
+    font-size: 1.6rem;
+    margin-bottom: 2rem;
+    margin-top: ${(props: HeaderProps) => (props.topMargin ? "3rem" : "0")};
+  }
 `;
 
 const InputContainer = styled.div`
@@ -105,11 +111,11 @@ const LoanSearch = ({ value, setValue, hasExistingLoans }: Props) => {
         },
         {
           label: t("actions.suggestions.topup.labels.totalCollateral"),
-          value: loan.totalCollateralETH.toUsdValue(ethPrice),
+          value: loan.totalCollateralETH.toCompactUsdValue(ethPrice),
         },
         {
           label: t("actions.suggestions.topup.labels.totalLoan"),
-          value: loan.totalDebtETH.toUsdValue(ethPrice),
+          value: loan.totalDebtETH.toCompactUsdValue(ethPrice),
         },
       ],
     };

@@ -7,12 +7,12 @@ import { useSelector } from "react-redux";
 
 import ContentSection from "../../../components/ContentSection";
 import Button from "../../../components/Button";
-import BackButton from "../../../components/BackButton";
 import RowSelector, { RowOptionType } from "../../../components/RowSelector";
 import { selectEthPrice } from "../../../state/poolsListSlice";
 import { selectLoans } from "../../../state/lendingSlice";
 import LoanSearch from "./LoanSearch";
 import { Loan } from "../../../lib/types";
+import { useDevice } from "../../../app/hooks/use-device";
 
 const Container = styled.div`
   position: relative;
@@ -25,29 +25,43 @@ const Content = styled.div`
 `;
 
 const Header = styled.div`
-  font-size: 2.2rem;
   font-weight: 600;
   letter-spacing: 0.25px;
+
+  font-size: 2.2rem;
   margin-bottom: 1.6rem;
+  @media (max-width: 600px) {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const SubHeader = styled.div`
-  font-size: 1.7rem;
   font-weight: 500;
   opacity: 0.8;
+
+  font-size: 1.7rem;
+  @media (max-width: 600px) {
+    font-size: 1.3rem;
+  }
 `;
 
 const ButtonContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+
   margin-top: 6rem;
+  @media (max-width: 600px) {
+    margin-top: 4rem;
+  }
 `;
 
 const RegisterTopupLoan = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const { account } = useWeb3React();
+  const { isMobile } = useDevice();
   const loans = useSelector(selectLoans);
   const ethPrice = useSelector(selectEthPrice);
   const [protocol, setProtocol] = useState("");
@@ -72,11 +86,11 @@ const RegisterTopupLoan = () => {
           },
           {
             label: t("actions.suggestions.topup.labels.totalCollateral"),
-            value: loan.totalCollateralETH.toUsdValue(ethPrice),
+            value: loan.totalCollateralETH.toCompactUsdValue(ethPrice),
           },
           {
             label: t("actions.suggestions.topup.labels.totalLoan"),
-            value: loan.totalDebtETH.toUsdValue(ethPrice),
+            value: loan.totalDebtETH.toCompactUsdValue(ethPrice),
           },
         ],
       };
@@ -117,7 +131,7 @@ const RegisterTopupLoan = () => {
                 primary
                 medium
                 disabled={!address}
-                width="44%"
+                width={isMobile ? "100%" : "44%"}
                 text={t("components.continue")}
                 click={() => history.push(`/actions/register/topup/${address}/${protocol}`)}
                 hoverText={t("actions.topup.stages.loan.header")}
