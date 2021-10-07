@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export interface ColumnType {
   label: string;
-  value: string;
+  value: string | JSX.Element;
 }
 
 interface RowOptionProps {
@@ -69,7 +69,7 @@ const RowOption = ({ columns, active, select }: Props) => {
       {columns.map((column: ColumnType) => (
         <Column key={column.label}>
           <Header>{column.label}</Header>
-          <Value>{column.value}</Value>
+          {typeof column.value === "string" ? <Value>{column.value}</Value> : column.value}
         </Column>
       ))}
     </StyledRowOption>
