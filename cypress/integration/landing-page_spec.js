@@ -68,12 +68,6 @@ describe("How it Works", () => {
 });
 
 describe("Supported By", () => {
-  it("Should have Divergence Link", () => {
-    cy.get("#supported-by-divergence")
-      .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://www.div.vc/");
-  });
-
   it("Should have Curve Link", () => {
     cy.get("#supported-by-curve")
       .should("have.attr", "target", "_blank")
