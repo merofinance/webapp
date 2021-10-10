@@ -26,9 +26,6 @@ describe("Innitial Data", () => {
   it("Should load balance", () => {
     cy.get("#available-amount", { timeout: 30_000 }).contains(".", { timeout: 30_000 });
   });
-  it("Should snapshot page", () => {
-    percySnapshot();
-  });
 });
 
 describe("Deposit Validation", () => {
@@ -117,9 +114,6 @@ describe("Account Details", () => {
   });
   it("Should finish loading", () => {
     cy.get("#connector-loading-indicator", { timeout: 30_000 }).should("have.css", "opacity", "0");
-  });
-  it("Should snapshot page", () => {
-    percySnapshot();
   });
   it("Should clear transactions", () => {
     cy.get("#account-details-clear").click();
