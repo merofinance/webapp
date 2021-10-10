@@ -141,7 +141,11 @@ const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
 
   return (
     <tbody>
-      <Row onClick={() => history.push(`/pool/${pool.lpToken.symbol}`)} preview={preview}>
+      <Row
+        id={`pool-row-${pool.lpToken.symbol.toLowerCase()}`}
+        onClick={() => history.push(`/pool/${pool.lpToken.symbol}`)}
+        preview={preview}
+      >
         <Data>
           <Asset token={pool.underlying} />
         </Data>

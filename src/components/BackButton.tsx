@@ -40,7 +40,7 @@ const BackButton = () => {
   const history = useHistory();
 
   return (
-    <StyledBackButton onClick={() => history.goBack()}>
+    <StyledBackButton id="back-button" onClick={() => history.goBack()}>
       <Arrow src={back} />
       <Text>{t("components.back")}</Text>
     </StyledBackButton>

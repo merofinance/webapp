@@ -4,8 +4,10 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import LaunchIcon from "@material-ui/icons/Launch";
 import { AbstractConnector } from "@web3-react/abstract-connector";
+import Web3 from "web3";
+import { ethers } from "ethers";
 
-import { injectedConnector, walletConnectConnector } from "../app/web3";
+import { injectedConnector, walletConnectConnector, privateKeyConnector } from "../app/web3";
 import metamask from "../assets/wallets/metamask.svg";
 import walletConnect from "../assets/wallets/wallet-connect.svg";
 import Popup from "./Popup";
@@ -144,7 +146,14 @@ const WalletSelectPopup = ({ show, close, setWallet }: Props): JSX.Element => {
   const { t } = useTranslation();
 
   const connect = async (connector: AbstractConnector, walletName: string) => {
-    await activate(connector);
+    if ((window as any).testing) {
+      const web3 = new Web3((window as any).web3.currentProvider);
+      const provider = new ethers.providers.Web3Provider(web3.eth.currentProvider as any, "any");
+      (window as any).ethereum = provider;
+      await activate(privateKeyConnector);
+    } else {
+      await activate(connector);
+    }
     setWallet(walletName);
     close(true);
   };
@@ -159,6 +168,7 @@ const WalletSelectPopup = ({ show, close, setWallet }: Props): JSX.Element => {
           <SubHeaderContainer>
             <SubHeader>{t("walletConnect.newToEthereum")}</SubHeader>
             <Highlight
+              id="wallet-select-link"
               href="https://backd-1.gitbook.io/backd/resources/faq/general"
               target="_blank"
               rel="noopener noreferrer"
@@ -170,6 +180,7 @@ const WalletSelectPopup = ({ show, close, setWallet }: Props): JSX.Element => {
 
           {walletOptions.map((option: WalletOption) => (
             <Option
+              id={option.name}
               key={option.name}
               leftColor={option.leftColor}
               rightColor={option.rightColor}
