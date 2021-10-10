@@ -34,6 +34,7 @@ const Row = styled.tr`
   padding: 0 1.7rem;
   cursor: pointer;
 
+  transition: background-color 0.3s;
   :hover {
     background-color: #1a1438;
   }
@@ -60,14 +61,15 @@ const Data = styled.td`
   display: flex;
   flex: 1;
   align-items: center;
-  font-weight: 400;
   letter-spacing: 0.15px;
   justify-content: ${(props: DataProps) => (props.right ? "flex-end" : "flex-start")};
   display: ${(props: DataProps) => (!props.preview && props.right ? "none" : "flex")};
 
+  font-weight: 700;
   font-size: 1.6rem;
-  line-height: 1.4rem;
+  line-height: 2rem;
   @media (max-width: 600px) {
+    font-weight: 500;
     font-size: 1.4rem;
     line-height: 2.1rem;
     display: ${(props: DataProps) => (props.right ? "none" : "flex")};
@@ -151,9 +153,7 @@ const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
           <Apy>{formatPercent(pool.apy)}</Apy>
         </Data>
         <Data>{numberToCompactCurrency(pool.totalAssets * price)}</Data>
-        <DepositedData preview={preview}>
-          {formatCurrency(Number(locked.toString()) * price)}
-        </DepositedData>
+        <DepositedData preview={preview}>{locked.toCompactUsdValue(price)}</DepositedData>
         <ChevronData preview={preview}>
           <Chevron src={chevron} alt="right arrow" />
         </ChevronData>

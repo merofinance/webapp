@@ -1,5 +1,11 @@
 import { BigNumber } from "ethers";
-import { bigNumberToString, formatCrypto, formatCurrency, stringToBigNumber } from "./numeric";
+import {
+  bigNumberToString,
+  formatCrypto,
+  formatCurrency,
+  numberToCompactCurrency,
+  stringToBigNumber,
+} from "./numeric";
 
 export interface PlainScaledNumber {
   value: string;
@@ -103,4 +109,7 @@ export class ScaledNumber {
     formatCrypto(Number(this.toString()), parameters);
 
   toUsdValue = (price: number): string => formatCurrency(Number(this.toString()) * price);
+
+  toCompactUsdValue = (price: number): string =>
+    numberToCompactCurrency(Number(this.toString()) * price);
 }

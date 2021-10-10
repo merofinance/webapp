@@ -7,6 +7,8 @@ import { StakerVaultFactory } from "@backdfund/protocol/typechain/StakerVaultFac
 import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
 import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFactory";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
+import fromEntries from "fromentries";
+
 import { UnsupportedNetwork } from "../app/errors";
 import { getPrices as getPricesFromCoingecko } from "./coingecko";
 import { getPrices as getPricesFromBinance } from "./binance";
@@ -198,8 +200,20 @@ export class Web3Backd implements Backd {
     );
   }
 
-  removePosition(account: Address, protocol: string, unstake = true): Promise<ContractTransaction> {
-    return this.topupAction.resetPosition(account, utils.formatBytes32String(protocol), unstake);
+  async removePosition(
+    account: Address,
+    protocol: string,
+    unstake = true
+  ): Promise<ContractTransaction> {
+    const gasEstimate = await this.topupAction.estimateGas.resetPosition(
+      account,
+      utils.formatBytes32String(protocol),
+      unstake
+    );
+    const gasLimit = gasEstimate.mul(12).div(10);
+    return this.topupAction.resetPosition(account, utils.formatBytes32String(protocol), unstake, {
+      gasLimit,
+    });
   }
 
   async getAllowance(
@@ -273,7 +287,7 @@ export class Web3Backd implements Backd {
   async getBalances(addresses: string[], account?: string): Promise<Balances> {
     const promises = addresses.map((a) => this.getBalance(a, account));
     const balances = await Promise.all(promises);
-    return Object.fromEntries(addresses.map((a, i) => [a, balances[i]]));
+    return fromEntries(addresses.map((a, i) => [a, balances[i]]));
   }
 
   async getPrices(symbols: string[]): Promise<Prices> {

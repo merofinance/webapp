@@ -28,7 +28,7 @@ describe("Nav Items", () => {
 
 describe("Benefits", () => {
   it("Should have Avoid Liquidation Benefit", () => {
-    cy.get('[id="benefits.avoidLiquidation.header"] > a')
+    cy.get('[id="benefits.reactiveLiquidity.header"] > a')
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://docs.backd.fund/protocol-architecture/top-ups");
   });
@@ -51,21 +51,10 @@ describe("Benefits", () => {
 });
 
 describe("How it Works", () => {
-  it("Should Show Earn Yeild Options", () => {
-    cy.get("#how-it-works-0").contains("Deposit Liquidity");
-    cy.get("#how-it-works-1").contains("Earn Yield");
-    cy.get("#how-it-works-2").contains("Stake to Earn Rewards");
-    cy.get("#how-it-works-3").contains("Unstake Any Time");
-  });
-
-  it("Should Change to Earn & Protect Tab", () => {
-    cy.get("#radio-option-protect").click();
-  });
-
   it("Should Show Earn & Protect Options", () => {
     cy.get("#how-it-works-0").contains("Deposit Liquidity");
-    cy.get('[id="how-it-works-1"]').contains("Register Loan on-Chain");
-    cy.get('[id="how-it-works-2"]').contains("Protect & Earn");
+    cy.get("#how-it-works-1").contains("Register Loan on-Chain");
+    cy.get("#how-it-works-2").contains("Protect & Earn");
     cy.get("#how-it-works-3").contains("Unstake Any Time");
   });
 
@@ -73,21 +62,12 @@ describe("How it Works", () => {
     cy.get("#radio-option-earn").click();
   });
 
-  it("Should Show Earn Yeild Options", () => {
-    cy.get("#how-it-works-0").contains("Deposit Liquidity");
-    cy.get("#how-it-works-1").contains("Earn Yield");
-    cy.get("#how-it-works-2").contains("Stake to Earn Rewards");
-    cy.get("#how-it-works-3").contains("Unstake Any Time");
+  it("Should Change to Earn & Protect Tab", () => {
+    cy.get("#radio-option-protect").click();
   });
 });
 
 describe("Supported By", () => {
-  it("Should have Divergence Link", () => {
-    cy.get("#supported-by-divergence")
-      .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://www.div.vc/");
-  });
-
   it("Should have Curve Link", () => {
     cy.get("#supported-by-curve")
       .should("have.attr", "target", "_blank")

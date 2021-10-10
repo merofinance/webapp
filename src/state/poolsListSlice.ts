@@ -3,6 +3,7 @@ import { AppThunk, RootState } from "../app/store";
 import { Pool } from "../lib";
 import { Backd } from "../lib/backd";
 import { Prices } from "../lib/types";
+import { fetchPositions } from "./positionsSlice";
 import { fetchAllowances, fetchBalances } from "./userSlice";
 
 interface PoolsState {
@@ -67,6 +68,7 @@ export const fetchState =
       dispatch(fetchPrices({ backd, pools }));
       dispatch(fetchAllowances({ backd, pools }));
     });
+    dispatch(fetchPositions({ backd }));
   };
 
 export const selectPools = (state: RootState): Pool[] => state.pools.pools;

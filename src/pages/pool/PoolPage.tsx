@@ -89,7 +89,7 @@ const PoolPage = (): JSX.Element => {
       <BackButton />
       <Seo
         title={`${pool.underlying.symbol} Pool`}
-        description={`Deposit ${pool.underlying.symbol} to farm yield while protecting your DeFi loan (Aave, Compound, etc.) from liquidation`}
+        description={`Deposit ${pool.underlying.symbol} to farm yield and register LP tokens for actions such as liquidation protection (Aave & Compound)`}
       />
       <ContentContainer>
         <Content>

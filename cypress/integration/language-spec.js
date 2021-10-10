@@ -3,15 +3,15 @@ import { percySnapshot } from "../support";
 const isEnglish = () => {
   cy.get("h1").contains("Reactive Liquidity");
   cy.get("h3").contains(
-    "A trustless and interest generating protocol designed to prevent collateralized loans from becoming liquidatable."
+    "Maximize the power of your assets and start earning yield with Backd's liquidity pools."
   );
-  cy.get("#how-it-works-2").contains("Stake to Earn Rewards");
+  cy.get("#how-it-works-2").contains("Protect & Earn");
 };
 
 const isChinese = () => {
   cy.get("h1").contains("响应式流动资产");
   cy.get("h3").contains("一个去信任化利息生成，旨在防止担保贷款被清算的保护协议");
-  cy.get("#how-it-works-2").contains("质押盈利");
+  cy.get("#how-it-works-2").contains("安全放心地赚取");
 };
 
 const isJapanese = () => {
@@ -19,7 +19,7 @@ const isJapanese = () => {
   cy.get("h3").contains(
     "担保付ローンを清算から防ぐために設計された、管理者不在の利子生成プロトコルです。"
   );
-  cy.get("#how-it-works-2").contains("利益獲得のための預け入れ");
+  cy.get("#how-it-works-2").contains("安全に稼ぐ");
 };
 
 const isSpanish = () => {
@@ -27,7 +27,7 @@ const isSpanish = () => {
   cy.get("h3").contains(
     "Un protocolo trustless y generador de intereses diseñado para prevenir que préstamos colaterizados se conviertan en liquidables."
   );
-  cy.get("#how-it-works-2").contains("Deposita para obtener recompensas");
+  cy.get("#how-it-works-2").contains("Protege y Gana");
 };
 
 const isFrench = () => {
@@ -35,7 +35,7 @@ const isFrench = () => {
   cy.get("h3").contains(
     "Un protocole qui génére des intérêts sans nécessiter de tiers de confiance. Conçu pour éviter la liquidation de prêts garantis."
   );
-  cy.get("#how-it-works-2").contains("Stakez pour toucher des primes");
+  cy.get("#how-it-works-2").contains("Protéger et gagner");
 };
 
 describe("Setting Language with Query Parameter", () => {
@@ -88,10 +88,6 @@ describe("Language Switching", () => {
     isChinese();
   });
 
-  it("Percy Should Screenshot Chinese Landing Page", () => {
-    percySnapshot();
-  });
-
   it("Should Change Language to Japanese", () => {
     cy.get('[id="language-selector"]').click();
     cy.get('[id="ja"]').click();
@@ -99,10 +95,6 @@ describe("Language Switching", () => {
 
   it("Should Show Japanese", () => {
     isJapanese();
-  });
-
-  it("Percy Should Screenshot Japanese Landing Page", () => {
-    percySnapshot();
   });
 
   it("Should Change Language to Spanish", () => {
@@ -114,10 +106,6 @@ describe("Language Switching", () => {
     isSpanish();
   });
 
-  it("Percy Should Screenshot Spanish Landing Page", () => {
-    percySnapshot();
-  });
-
   it("Should Change Language to French", () => {
     cy.get('[id="language-selector"]').click();
     cy.get('[id="fr"]').click();
@@ -125,10 +113,6 @@ describe("Language Switching", () => {
 
   it("Should Show French", () => {
     isFrench();
-  });
-
-  it("Percy Should Screenshot French Landing Page", () => {
-    percySnapshot();
   });
 
   it("Should Change Language back to English", () => {
