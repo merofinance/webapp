@@ -400,7 +400,7 @@
     "registered": {
       "header": "Registered Actions",
       "existing": "Existing Actions",
-      "empty": "You have not registered any Actions yet..",
+      "empty": "You have not registered any Actions yet...",
       "columns": {
         "type": "Type",
         "locked": "Amount Locked",
