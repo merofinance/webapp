@@ -52,6 +52,7 @@ const TopupAction = ({ show, close, position, pool }: Props): JSX.Element => {
   return (
     <>
       <Popup
+        id="topup-action"
         show={show}
         close={close}
         header={t("actions.topup.label")}

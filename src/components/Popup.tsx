@@ -112,6 +112,7 @@ interface Props {
   loading?: boolean;
   small?: boolean;
   centreHeader?: boolean;
+  id?: string;
 }
 
 const Popup = ({
@@ -125,6 +126,7 @@ const Popup = ({
   loading,
   small,
   centreHeader,
+  id,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
   const { isMobile } = useDevice();
@@ -133,25 +135,31 @@ const Popup = ({
     <StyledPopup show={show}>
       <ExitEvent onClick={close} />
       <PopupContainer small={small}>
-        <Exit id="popup-exit" src={closeIcon} onClick={close} alt="exit button" small={small} />
+        <Exit
+          id={`${id}-popup-exit`}
+          src={closeIcon}
+          onClick={close}
+          alt="exit button"
+          small={small}
+        />
         {header && (
-          <Header id="popup-header" small={small} centreHeader={centreHeader}>
+          <Header id={`${id}-popup-header`} small={small} centreHeader={centreHeader}>
             {header}
           </Header>
         )}
-        {body && <Body id="popup-body">{body}</Body>}
+        {body && <Body id={`${id}-popup-body`}>{body}</Body>}
         {content && content}
         {confirm && submit && (
           <ButtonContainer>
             <Button
-              id="popup-cancel"
+              id={`${id}-popup-cancel`}
               medium
               background="#252140"
               text={isMobile ? t("components.back") : t("components.cancel")}
               click={close}
             />
             <Button
-              id="popup-button"
+              id={`${id}-popup-button`}
               primary
               medium
               text={t("components.confirm")}

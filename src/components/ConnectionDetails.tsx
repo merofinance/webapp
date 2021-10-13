@@ -95,6 +95,7 @@ const ConnectionDetails = ({ show, close, changeWallet, wallet }: Props) => {
 
   return (
     <Popup
+      id="connection-details"
       small
       show={show}
       close={close}

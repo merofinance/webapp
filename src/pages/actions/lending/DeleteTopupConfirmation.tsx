@@ -62,6 +62,7 @@ const DeleteTopupConfirmation = ({ show, close, position, pool, complete }: Prop
 
   return (
     <Popup
+      id="delete-topup-confirmation"
       show={show}
       close={close}
       header={t("actions.topup.delete.header")}

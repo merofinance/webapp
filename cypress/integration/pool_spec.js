@@ -120,7 +120,7 @@ describe("Account Details", () => {
     cy.get("#account-details-transactions").children().should("have.length", 0);
   });
   it("Should close", () => {
-    cy.get("#popup-exit").click();
+    cy.get("#connection-details-popup-exit").click();
   });
 });
 
@@ -209,6 +209,6 @@ describe("Withdraw", () => {
     cy.get("#connector-loading-indicator", { timeout: 30_000 }).should("have.css", "opacity", "0");
   });
   it("Should close", () => {
-    cy.get("#popup-exit").click();
+    cy.get("#connection-details-popup-exit").click();
   });
 });

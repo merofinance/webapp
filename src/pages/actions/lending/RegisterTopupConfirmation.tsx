@@ -46,6 +46,7 @@ const RegisterTopupConfirmation = ({
 
   return (
     <Popup
+      id="register-topup-confirmation"
       show={show}
       close={close}
       header={t("actions.topup.stages.confirmation.header")}

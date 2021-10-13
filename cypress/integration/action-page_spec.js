@@ -239,7 +239,7 @@ describe("Pool Selection", () => {
     cy.get("#register-topup-pool-button").click();
     cy.location().should((loc) => {
       expect(loc.pathname).to.eq(
-        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/bDAI"
+        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
       );
     });
   });
@@ -285,10 +285,10 @@ describe("Pool Deposit", () => {
     cy.get("#button-loading-indicator", { timeout: 30_000 }).should("be.visible");
   });
   it("Should show deposit in info card", () => {
-    cy.get("#your-deposits-dai").should("exist");
+    cy.get("#your-deposits-dai", { timeout: 30_000 }).should("exist");
   });
   it("Should show your deposits total", () => {
-    cy.get("#your-deposits-total").should("exist");
+    cy.get("#your-deposits-total", { timeout: 30_000 }).should("exist");
   });
   it("Should take snapshot", () => {
     percySnapshot();
@@ -332,7 +332,7 @@ describe("Conditions Page", () => {
     cy.get("#register-topup-pool-button").click();
     cy.location().should((loc) => {
       expect(loc.pathname).to.eq(
-        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
+        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/bdai"
       );
     });
   });
@@ -344,18 +344,18 @@ describe("Conditions Page", () => {
     cy.get("#register-topup-threshold-error").should("not.exist");
   });
   it("Should show threshold error on no entry", () => {
-    cy.get("#register-topup-threshold-error").focus();
-    cy.get("#register-topup-threshold-error").blur();
+    cy.get("#register-topup-threshold-input").focus();
+    cy.get("#register-topup-threshold-input").blur();
     cy.get("#register-topup-threshold-error").contains("Threshold is required");
   });
   it("Should show threshold error on 0", () => {
-    cy.get("#register-topup-threshold-error").focus();
-    cy.get("#register-topup-threshold-error").type("0");
+    cy.get("#register-topup-threshold-input").focus();
+    cy.get("#register-topup-threshold-input").type("0");
     cy.get("#register-topup-threshold-error").contains("Must be greater than 1");
   });
   it("Should enter threshold", () => {
-    cy.get("#register-topup-threshold-error").clear();
-    cy.get("#register-topup-threshold-error").type("2");
+    cy.get("#register-topup-threshold-input").clear();
+    cy.get("#register-topup-threshold-input").type("2");
     cy.get("#register-topup-threshold-error").should("not.exist");
   });
 
@@ -366,18 +366,18 @@ describe("Conditions Page", () => {
     cy.get("#register-topup-singletopup-error").should("not.exist");
   });
   it("Should show single error on no entry", () => {
-    cy.get("#register-topup-singletopup-error").focus();
-    cy.get("#register-topup-singletopup-error").blur();
+    cy.get("#register-topup-singletopup-input").focus();
+    cy.get("#register-topup-singletopup-input").blur();
     cy.get("#register-topup-singletopup-error").contains("Single Top-up is required");
   });
   it("Should show single error on 0", () => {
-    cy.get("#register-topup-singletopup-error").focus();
-    cy.get("#register-topup-singletopup-error").type("0");
+    cy.get("#register-topup-singletopup-input").focus();
+    cy.get("#register-topup-singletopup-input").type("0");
     cy.get("#register-topup-singletopup-error").contains("Must be positive number");
   });
   it("Should enter single", () => {
-    cy.get("#register-topup-singletopup-error").clear();
-    cy.get("#register-topup-singletopup-error").type("2");
+    cy.get("#register-topup-singletopup-input").clear();
+    cy.get("#register-topup-singletopup-input").type("2");
     cy.get("#register-topup-singletopup-error").should("not.exist");
   });
 
@@ -388,23 +388,23 @@ describe("Conditions Page", () => {
     cy.get("#register-topup-maxtopup-error").should("not.exist");
   });
   it("Should show total error on no entry", () => {
-    cy.get("#register-topup-maxtopup-error").focus();
-    cy.get("#register-topup-maxtopup-error").blur();
+    cy.get("#register-topup-maxtopup-input").focus();
+    cy.get("#register-topup-maxtopup-input").blur();
     cy.get("#register-topup-maxtopup-error").contains("Max Top-up required");
   });
   it("Should show total error on 0", () => {
-    cy.get("#register-topup-maxtopup-error").focus();
-    cy.get("#register-topup-maxtopup-error").type("0");
+    cy.get("#register-topup-maxtopup-input").focus();
+    cy.get("#register-topup-maxtopup-input").type("0");
     cy.get("#register-topup-maxtopup-error").contains("Invalid number");
   });
   it("Should show total error less than single", () => {
-    cy.get("#register-topup-maxtopup-error").clear();
-    cy.get("#register-topup-maxtopup-error").type("1");
+    cy.get("#register-topup-maxtopup-input").clear();
+    cy.get("#register-topup-maxtopup-input").type("1");
     cy.get("#register-topup-singletopup-error").contains("Must be less than max top-up");
   });
   it("Should enter total", () => {
-    cy.get("#register-topup-maxtopup-error").clear();
-    cy.get("#register-topup-maxtopup-error").type("4");
+    cy.get("#register-topup-maxtopup-input").clear();
+    cy.get("#register-topup-maxtopup-input").type("4");
     cy.get("#register-topup-maxtopup-error").should("not.exist");
   });
   it("Should take snapshot", () => {
@@ -418,29 +418,29 @@ describe("Conditions Page", () => {
 
 describe("Top-up Position Confirmation", () => {
   it("Should be visible", () => {
-    cy.get("#popup-header").contains("Confirm top-up position");
+    cy.get("#register-topup-confirmation-popup-header").contains("Confirm top-up position");
   });
   it("Should close", () => {
-    cy.get("#popup-exit").click();
+    cy.get("#register-topup-confirmation-popup-exit").click();
   });
   it("Should not be visible", () => {
-    cy.get("#popup-header").should("not.be.visible");
+    cy.get("#register-topup-confirmation-popup-header").should("not.be.visible");
   });
   it("Should open", () => {
     cy.get("#action-button").should("be.enabled");
     cy.get("#action-button").click();
-    cy.get("#popup-header").contains("Confirm top-up position");
+    cy.get("#register-topup-confirmation-popup-header").contains("Confirm top-up position");
   });
   it("Should cancel", () => {
-    cy.get("#popup-cancel").click();
+    cy.get("#register-topup-confirmation-popup-cancel").click();
   });
   it("Should not be visible", () => {
-    cy.get("#popup-header").should("not.be.visible");
+    cy.get("#register-topup-confirmation-popup-header").should("not.be.visible");
   });
   it("Should open", () => {
     cy.get("#action-button").should("be.enabled");
     cy.get("#action-button").click();
-    cy.get("#popup-header").contains("Confirm top-up position");
+    cy.get("#register-topup-confirmation-popup-header").contains("Confirm top-up position");
   });
   it("Should have position data", () => {
     cy.get("#topup-information-protocol").contains("Aave");
@@ -452,8 +452,8 @@ describe("Top-up Position Confirmation", () => {
     percySnapshot();
   });
   it("Should Confirm", () => {
-    cy.get("#popup-button").should("be.enabled");
-    cy.get("#popup-button").click();
+    cy.get("#register-topup-confirmation-popup-button").should("be.enabled");
+    cy.get("#register-topup-confirmation-popup-button").click();
   });
   it("Should show loading button", () => {
     cy.get("#button-loading-indicator", { timeout: 30_000 }).should("be.visible");
@@ -495,10 +495,10 @@ describe("Existing Topup View", () => {
     cy.get("#existing-action-aave-view").click();
   });
   it("Should show existing action view popup", () => {
-    cy.get("#popup-header").contains("Top-up Position");
+    cy.get("#topup-action-popup-header").contains("Top-up Position");
   });
   it("Should close popup", () => {
-    cy.get("#popup-exit").click();
+    cy.get("#topup-action-popup-exit").click();
   });
   it("Should go back to actions page", () => {
     cy.get("#back-button").click();
@@ -523,18 +523,18 @@ describe("Existing Topup View", () => {
   });
   it("Should show delete Top-up Position confirmation", () => {
     cy.get("#delete-action-button").click();
-    cy.get("#popup-header").contains("Delete Top-up Position");
+    cy.get("#delete-topup-confirmation-popup-header").contains("Delete Top-up Position");
   });
   it("Should show delete confirmation description", () => {
-    cy.get("#popup-body").contains(
-      "Deleting this top-up position will remove automated collateral top-ups of DAI on Aave. 2 DAI will be unstaked and can be withdrawn after removing the position."
+    cy.get("#delete-topup-confirmation-popup-body").contains(
+      "Deleting this top-up position will remove automated collateral top-ups of DAI on Aave. 4 DAI will be unstaked and can be withdrawn after removing the position."
     );
   });
   it("Should have cancel button", () => {
-    cy.get("#popup-cancel").contains("Do not delete");
+    cy.get("#delete-topup-confirmation-popup-cancel").contains("Do not delete");
   });
   it("Should have delete button", () => {
-    cy.get("#popup-button").contains("Delete Top-up Position");
+    cy.get("#delete-topup-confirmation-popup-button").contains("Delete Top-up Position");
     cy.get("#register-action-button").should(
       "have.css",
       "background-image",
@@ -542,14 +542,14 @@ describe("Existing Topup View", () => {
     );
   });
   it("Should Confirm", () => {
-    cy.get("#popup-button").should("be.enabled");
-    cy.get("#popup-button").click();
+    cy.get("#delete-topup-confirmation-popup-button").should("be.enabled");
+    cy.get("#delete-topup-confirmation-popup-button").click();
   });
   it("Should show loading button", () => {
     cy.get("#button-loading-indicator", { timeout: 30_000 }).should("be.visible");
   });
   it("Should not show popups", () => {
-    cy.get("#popup-header").should("not.be.visible");
+    cy.get("#delete-topup-confirmation-popup-header").should("not.be.visible");
   });
   it("Should have no Actions", () => {
     cy.get("#register-positions-empty").contains("You have not registered any Actions yet..");
