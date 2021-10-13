@@ -4,17 +4,14 @@ import styled from "styled-components";
 import { useHistory, useParams } from "react-router";
 import * as yup from "yup";
 import { FormikErrors, useFormik } from "formik";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import ContentSection from "../../../components/ContentSection";
-import { AppDispatch } from "../../../app/store";
-import { approve, selectBalance, selectToupAllowance } from "../../../state/userSlice";
+import { selectBalance } from "../../../state/userSlice";
 import { useBackd } from "../../../app/hooks/use-backd";
 import { ScaledNumber } from "../../../lib/scaled-number";
-import { INFINITE_APPROVE_AMMOUNT } from "../../../lib/constants";
 import { selectPool } from "../../../state/selectors";
 import { Position } from "../../../lib/types";
-import { hasPendingTransaction } from "../../../state/transactionsSlice";
 import NewPositionConfirmation from "./RegisterTopupConfirmation";
 import ApproveThenAction from "../../../components/ApproveThenAction";
 import RegisterTopupInput from "./RegisterTopupInput";
@@ -135,33 +132,14 @@ const ButtonContainer = styled.div`
 
 const RegisterTopupConditions = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();
   const history = useHistory();
   const { isMobile } = useDevice();
   const { address, protocol, poolName } = useParams<TopupParams>();
   const pool = useSelector(selectPool(poolName));
   const balance = useSelector(selectBalance(pool));
-  const loading = useSelector(hasPendingTransaction("Approve"));
+  const [loading, setLoading] = useState(false);
   const [confirming, setConfirming] = useState(false);
-  const allowance = pool ? useSelector(selectToupAllowance(backd, pool)) : new ScaledNumber();
-
-  const onSubmit = () => {
-    if (approved) setConfirming(true);
-    else executeApprove();
-  };
-
-  const executeApprove = () => {
-    if (!backd || !pool) return;
-    dispatch(
-      approve({
-        amount: ScaledNumber.fromUnscaled(INFINITE_APPROVE_AMMOUNT, pool.underlying.decimals),
-        backd,
-        spender: backd.topupActionAddress,
-        token: pool.lpToken,
-      })
-    );
-  };
 
   const validate = (values: FormType): FormikErrors<FormType> => {
     const errors: FormikErrors<FormType> = {};
@@ -174,7 +152,15 @@ const RegisterTopupConditions = () => {
     return errors;
   };
 
-  const formik = useFormik({ initialValues, validationSchema, onSubmit, validate });
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: () => {
+      setConfirming(true);
+      setLoading(true);
+    },
+    validate,
+  });
 
   if (!pool) {
     history.push(`/actions/register/topup/${address}/${protocol}`);
@@ -182,10 +168,6 @@ const RegisterTopupConditions = () => {
   }
 
   if (!backd) return <></>;
-
-  const approved = allowance.gte(
-    ScaledNumber.fromUnscaled(formik.values.maxTopUp, pool.underlying.decimals)
-  );
 
   const position: Position = {
     protocol,
@@ -214,7 +196,9 @@ const RegisterTopupConditions = () => {
         content={
           <Content>
             <ActionSummary />
-            <Header>{t("actions.topup.stages.conditions.header")}</Header>
+            <Header id="register-topup-conditions-header">
+              {t("actions.topup.stages.conditions.header")}
+            </Header>
             <SubHeader>{t("actions.topup.stages.conditions.subHeader")}</SubHeader>
             <Form noValidate onSubmit={formik.handleSubmit}>
               <RegisterTopupInput
@@ -274,7 +258,10 @@ const RegisterTopupConditions = () => {
       />
       <NewPositionConfirmation
         show={confirming}
-        close={() => setConfirming(false)}
+        close={() => {
+          setConfirming(false);
+          setLoading(false);
+        }}
         position={position}
         pool={pool}
         complete={() => {
