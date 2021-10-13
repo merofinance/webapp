@@ -128,7 +128,7 @@ const TopupInformation = ({ position, pool }: Props): JSX.Element => {
             {t("actions.topup.fields.protocol.label")}
             <Tooltip content={t("actions.topup.fields.protocol.tooltip")} />
           </Label>
-          <Label>{position.protocol}</Label>
+          <Label id="topup-information-protocol">{position.protocol}</Label>
         </SummaryRow>
         <SummaryRow>
           <Label>
@@ -149,21 +149,25 @@ const TopupInformation = ({ position, pool }: Props): JSX.Element => {
             {t("actions.topup.fields.threshold.label")}
             <Tooltip content={t("actions.topup.fields.threshold.tooltip")} />
           </Label>
-          <Label>{position.threshold.toString()}</Label>
+          <Label id="topup-information-threshold">{position.threshold.toString()}</Label>
         </SummaryRow>
         <SummaryRow>
           <Label>
             {t("actions.topup.fields.single.label")}
             <Tooltip content={t("actions.topup.fields.single.tooltip")} />
           </Label>
-          <Label>{`${position.singleTopUp.toCryptoString()} ${pool.underlying.symbol}`}</Label>
+          <Label id="topup-information-single-topup">{`${position.singleTopUp.toCryptoString()} ${
+            pool.underlying.symbol
+          }`}</Label>
         </SummaryRow>
         <SummaryRow>
           <Label>
             {t("actions.topup.fields.max.label")}
             <Tooltip content={t("actions.topup.fields.max.tooltip")} />
           </Label>
-          <Label>{`${position.maxTopUp.toCryptoString()} ${pool.underlying.symbol}`}</Label>
+          <Label id="topup-information-max-topup">{`${position.maxTopUp.toCryptoString()} ${
+            pool.underlying.symbol
+          }`}</Label>
         </SummaryRow>
       </PositionSummary>
     </StyledTopupInformation>

@@ -90,15 +90,18 @@ const YourDeposits = () => {
 
   return (
     <InfoCard
+      id="your-deposits"
       collapsible
       header={t("actions.deposits.header")}
       content={
         <Content>
-          {!hasDeposits && <EmptyText>{t("actions.deposits.empty")}</EmptyText>}
+          {!hasDeposits && (
+            <EmptyText id="your-deposits-empty">{t("actions.deposits.empty")}</EmptyText>
+          )}
           {hasDeposits && (
             <>
               {depositedPools.map((pool: Pool) => (
-                <Row key={pool.name}>
+                <Row id={`your-deposits-${pool.underlying.symbol.toLowerCase()}`} key={pool.name}>
                   <Asset tiny token={pool.underlying} />
                   <Balances>
                     <Underlying>{`${balances[pool.lpToken.address]?.toCryptoString() || 0} ${
@@ -111,7 +114,9 @@ const YourDeposits = () => {
                   </Balances>
                 </Row>
               ))}
-              <Total>{`= ${formatCurrency(Number(totalUsd.toString()))}`}</Total>
+              <Total id="your-deposits-total">{`= ${formatCurrency(
+                Number(totalUsd.toString())
+              )}`}</Total>
             </>
           )}
         </Content>

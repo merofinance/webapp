@@ -113,7 +113,7 @@ const ActionSummary = () => {
   if (!loan || !pool) return <></>;
 
   return (
-    <StyledActionSummary>
+    <StyledActionSummary id="action-summary">
       <Column>
         <Header>{t("actions.suggestions.topup.labels.protocol")}</Header>
         <Value>{loan.protocol}</Value>
@@ -134,7 +134,7 @@ const ActionSummary = () => {
         <Header>{t("actions.suggestions.topup.labels.pool")}</Header>
         <Value>
           <Asset tiny token={pool.underlying} />
-          <ChangePoolButton onClick={() => history.goBack()}>
+          <ChangePoolButton id="action-summary-change-pool" onClick={() => history.goBack()}>
             <ChangePoolText>{t("components.change")}</ChangePoolText>
           </ChangePoolButton>
         </Value>

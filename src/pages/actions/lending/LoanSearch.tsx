@@ -123,7 +123,7 @@ const LoanSearch = ({ value, setValue, hasExistingLoans }: Props) => {
 
   return (
     <StyledLoanSearch>
-      <Header topMargin={hasExistingLoans}>
+      <Header id="loan-search-header" topMargin={hasExistingLoans}>
         {hasExistingLoans
           ? t("actions.topup.stages.loan.search")
           : t("actions.topup.stages.loan.enterAddress")}

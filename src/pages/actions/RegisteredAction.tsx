@@ -99,7 +99,10 @@ const RegisteredAction = ({ position }: Props) => {
 
   return (
     <>
-      <StyledRegisteredAction onClick={() => setOpen(true)}>
+      <StyledRegisteredAction
+        id={`registered-action-${position.protocol.toLowerCase()}`}
+        onClick={() => setOpen(true)}
+      >
         <Column>
           <Header>{t("actions.registered.columns.type")}</Header>
           <Value>{t("actions.topup.label")}</Value>

@@ -60,7 +60,7 @@ const Overview = ({ description, link }: Props) => {
       header={t("components.overview")}
       content={
         <Content>
-          <Description>{description}</Description>
+          <Description id="overview-description">{description}</Description>
           <LinkContainer>
             <Link id="overview-link" href={link} target="_blank" rel="noopener noreferrer">
               {t("components.moreInDocs")}

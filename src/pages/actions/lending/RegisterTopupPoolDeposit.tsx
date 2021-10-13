@@ -116,7 +116,7 @@ const RegisterTopupPoolDeposit = ({ poolName }: Props) => {
         nav="3/4"
         content={
           <Content>
-            <Header>
+            <Header id="register-topup-pool-deposit">
               {t("actions.topup.stages.pool.deposit.header", { asset: pool.underlying.symbol })}
             </Header>
             <SubHeader>
@@ -141,6 +141,7 @@ const RegisterTopupPoolDeposit = ({ poolName }: Props) => {
             </DepositSection>
             <ButtonContainer>
               <Button
+                id="register-topup-pool-deposit-button"
                 primary
                 medium
                 width="44%"

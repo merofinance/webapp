@@ -138,6 +138,7 @@ const RegisterTopupInput = ({
       <InputContainer>
         <InputBorder valid={valid}>
           <Input
+            id={`register-topup-${name.toLowerCase()}-input`}
             valid={valid}
             type={type}
             name={name}
@@ -147,7 +148,11 @@ const RegisterTopupInput = ({
             onBlur={formik.handleBlur}
           />
         </InputBorder>
-        {!valid && <Error>{t(formik.errors[name] || "")}</Error>}
+        {!valid && (
+          <Error id={`register-topup-${name.toLowerCase()}-error`}>
+            {t(formik.errors[name] || "")}
+          </Error>
+        )}
       </InputContainer>
     </StyledRegisterTopupInput>
   );

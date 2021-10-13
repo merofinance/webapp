@@ -5,6 +5,7 @@ import RowOption, { ColumnType } from "./RowOption";
 export interface RowOptionType {
   value: string;
   columns: ColumnType[];
+  id?: string;
 }
 
 const StyledRowSelector = styled.div`
@@ -29,6 +30,7 @@ const RowSelector = ({ options, value, setValue }: Props) => {
     <StyledRowSelector>
       {options.map((option: RowOptionType) => (
         <RowOption
+          id={option.id}
           key={option.value}
           columns={option.columns}
           active={option.value === value}

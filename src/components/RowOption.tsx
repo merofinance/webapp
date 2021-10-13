@@ -84,11 +84,12 @@ interface Props {
   columns: ColumnType[];
   active: boolean;
   select: () => void;
+  id?: string;
 }
 
-const RowOption = ({ columns, active, select }: Props) => {
+const RowOption = ({ columns, active, select, id }: Props) => {
   return (
-    <StyledRowOption active={active} onClick={() => select()}>
+    <StyledRowOption id={id} active={active} onClick={() => select()}>
       {columns.map((column: ColumnType) => (
         <Column key={column.label}>
           <Header>{column.label}</Header>

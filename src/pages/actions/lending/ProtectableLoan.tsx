@@ -72,7 +72,7 @@ const ProtectableLoan = ({ loan }: Props) => {
   if (!loan) return <></>;
 
   return (
-    <StyledProtectableLoan>
+    <StyledProtectableLoan id={`${loan.protocol.toLowerCase()}-protectable-loan`}>
       <Column>
         <Header>{t("actions.suggestions.topup.labels.protocol")}</Header>
         <Value>{loan.protocol}</Value>

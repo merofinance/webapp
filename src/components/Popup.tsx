@@ -135,7 +135,7 @@ const Popup = ({
       <PopupContainer small={small}>
         <Exit id="popup-exit" src={closeIcon} onClick={close} alt="exit button" small={small} />
         {header && (
-          <Header small={small} centreHeader={centreHeader}>
+          <Header id="popup-header" small={small} centreHeader={centreHeader}>
             {header}
           </Header>
         )}
@@ -144,12 +144,14 @@ const Popup = ({
         {confirm && submit && (
           <ButtonContainer>
             <Button
+              id="popup-cancel"
               medium
               background="#252140"
               text={isMobile ? t("components.back") : t("components.cancel")}
               click={close}
             />
             <Button
+              id="popup-button"
               primary
               medium
               text={t("components.confirm")}

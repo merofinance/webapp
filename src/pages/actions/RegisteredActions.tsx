@@ -51,11 +51,14 @@ const RegisteredActions = () => {
       header={t("actions.registered.header")}
       content={
         <Content>
-          {!hasPosition && <Empty>{t("actions.registered.empty")}</Empty>}
+          {!hasPosition && (
+            <Empty id="register-positions-empty">{t("actions.registered.empty")}</Empty>
+          )}
           {hasPosition &&
             positions.map((position: Position) => <RegisteredAction position={position} />)}
           <ButtonContainer>
             <Button
+              id="register-action-button"
               primary={!hasPosition}
               medium
               width={isMobile ? "100%" : "44%"}

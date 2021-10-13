@@ -56,12 +56,15 @@ const ExistingActions = () => {
 
   return (
     <InfoCard
+      id="existing-actions"
       defaultOpen
       collapsible
       header={t("actions.registered.existing")}
       content={
         <Content>
-          {!hasPosition && <EmptyText>{t("actions.registered.empty")}</EmptyText>}
+          {!hasPosition && (
+            <EmptyText id="existing-actions-empty">{t("actions.registered.empty")}</EmptyText>
+          )}
           {hasPosition && (
             <>
               <Headers>

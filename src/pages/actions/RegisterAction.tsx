@@ -117,10 +117,11 @@ const RegisterAction = () => {
               />
               <NoteContainer>
                 <BackdIcon src={icon} />
-                <Note>{t("actions.topup.description")}</Note>
+                <Note id="top-up-note">{t("actions.topup.description")}</Note>
               </NoteContainer>
               <ButtonContainer>
                 <Button
+                  id="register-action-button"
                   primary
                   medium
                   width={isMobile ? "100%" : "44%"}

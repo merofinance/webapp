@@ -86,6 +86,7 @@ const RegisterTopupPool = () => {
   const options: RowOptionType[] = pools.map((pool: Pool) => {
     return {
       value: pool.lpToken.symbol.toLowerCase(),
+      id: `${pool.underlying.symbol.toLowerCase()}-pool-option`,
       columns: [
         {
           label: t("headers.asset"),
@@ -123,7 +124,7 @@ const RegisterTopupPool = () => {
         nav="3/4"
         content={
           <Content>
-            <Header>
+            <Header id="register-topup-pool-header">
               {hasDeposits
                 ? t("actions.topup.stages.pool.header")
                 : t("actions.topup.stages.pool.noDepositsHeader")}
@@ -136,6 +137,7 @@ const RegisterTopupPool = () => {
             />
             <ButtonContainer>
               <Button
+                id="register-topup-pool-button"
                 primary
                 medium
                 width={isMobile ? "100%" : "44%"}

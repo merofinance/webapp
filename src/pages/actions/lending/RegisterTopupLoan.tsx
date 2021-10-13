@@ -74,6 +74,7 @@ const RegisterTopupLoan = () => {
     .filter((loan: Loan) => loan.healthFactor.toCryptoString)
     .map((loan: Loan) => {
       return {
+        id: `${loan.protocol.toLowerCase()}-option`,
         value: loan.protocol,
         columns: [
           {
@@ -106,7 +107,9 @@ const RegisterTopupLoan = () => {
           <Content>
             {hasLoans && (
               <>
-                <Header>{t("actions.topup.stages.loan.header")}</Header>
+                <Header id="register-topup-loan-header">
+                  {t("actions.topup.stages.loan.header")}
+                </Header>
                 <SubHeader>{t("actions.topup.stages.loan.subHeader")}</SubHeader>
                 <RowSelector
                   options={options}
@@ -128,6 +131,7 @@ const RegisterTopupLoan = () => {
             />
             <ButtonContainer>
               <Button
+                id="register-topup-loan-button"
                 primary
                 medium
                 disabled={!address}

@@ -103,9 +103,9 @@ const ContentSection = ({
       <HeaderContainer>
         <HeaderTextContainer>
           <Header id="content-header">{header}</Header>
-          {subHeader && <SubHeader>{subHeader}</SubHeader>}
+          {subHeader && <SubHeader id="content-sub-header">{subHeader}</SubHeader>}
         </HeaderTextContainer>
-        {nav && <Key>{nav}</Key>}
+        {nav && <Key id="content-key">{nav}</Key>}
       </HeaderContainer>
       <Line large />
       {statistics && statistics}
