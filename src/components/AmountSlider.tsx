@@ -88,6 +88,7 @@ const AmountSlider = ({ value, max, setValue }: Props): JSX.Element => {
       />
       {steps.map((step: number) => (
         <SliderStep
+          id={`slider-${step}`}
           key={step}
           percent={`${step}%`}
           click={() => updateValue(step)}

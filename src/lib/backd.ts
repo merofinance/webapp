@@ -7,6 +7,7 @@ import { StakerVaultFactory } from "@backdfund/protocol/typechain/StakerVaultFac
 import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
 import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFactory";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
+import fromEntries from "fromentries";
 
 import { UnsupportedNetwork } from "../app/errors";
 import { getPrices as getPricesFromCoingecko } from "./coingecko";
@@ -335,7 +336,7 @@ export class Web3Backd implements Backd {
   async getBalances(addresses: string[], account?: string): Promise<Balances> {
     const promises = addresses.map((a) => this.getBalance(a, account));
     const balances = await Promise.all(promises);
-    return Object.fromEntries(addresses.map((a, i) => [a, balances[i]]));
+    return fromEntries(addresses.map((a, i) => [a, balances[i]]));
   }
 
   async getPrices(symbols: string[]): Promise<Prices> {

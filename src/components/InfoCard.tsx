@@ -103,9 +103,10 @@ interface Props {
   content: JSX.Element;
   collapsible?: boolean;
   defaultOpen?: boolean;
+  id?: string;
 }
 
-const InfoCard = ({ header, content, collapsible, defaultOpen }: Props): JSX.Element => {
+const InfoCard = ({ header, content, collapsible, defaultOpen, id }: Props): JSX.Element => {
   const { i18n } = useTranslation();
   const { isDesktop } = useDevice();
   const [open, setOpen] = useState(false);
@@ -116,11 +117,16 @@ const InfoCard = ({ header, content, collapsible, defaultOpen }: Props): JSX.Ele
   }, []);
 
   return (
-    <StyledInfoCard open={open} collapsible={collapsible} wide={isWide}>
+    <StyledInfoCard id={id} open={open} collapsible={collapsible} wide={isWide}>
       <ChevronContainer collapsible={collapsible}>
         <AccordionChevron open={open} />
       </ChevronContainer>
-      <Header onClick={() => setOpen(!open)} collapsible={collapsible} wide={isWide}>
+      <Header
+        id={`${id}-header`}
+        onClick={() => setOpen(!open)}
+        collapsible={collapsible}
+        wide={isWide}
+      >
         {header}
       </Header>
       <Content collapsible={collapsible}>{content}</Content>

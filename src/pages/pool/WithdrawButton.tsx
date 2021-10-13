@@ -50,6 +50,7 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
   return (
     <StyledProgressButtons>
       <Button
+        id="withdraw-button"
         primary
         medium
         wide

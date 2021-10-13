@@ -20,7 +20,7 @@ import Tabs from "../../components/Tabs";
 import PoolStatistics from "./PoolStatistics";
 import ContentSection from "../../components/ContentSection";
 
-interface DepositWithdrawParams {
+interface PoolParams {
   poolName: string;
 }
 
@@ -65,7 +65,7 @@ const ButtonContainer = styled.div`
 const PoolPage = (): JSX.Element => {
   const { t } = useTranslation();
   const history = useHistory();
-  const { poolName } = useParams<DepositWithdrawParams>();
+  const { poolName } = useParams<PoolParams>();
   const backd = useBackd();
   const dispatch = useDispatch();
   const updated = useWeb3Updated();
@@ -118,6 +118,7 @@ const PoolPage = (): JSX.Element => {
         {!balance.isZero() && (
           <ButtonContainer>
             <Button
+              id="create-topup-button"
               medium
               wide
               text={`+ ${t("actions.register.nav")}`}

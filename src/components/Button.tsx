@@ -249,6 +249,7 @@ type Props = {
   hoverText?: string;
   width?: string;
   destructive?: boolean;
+  id?: string;
 };
 
 const Button = (props: Props): JSX.Element => {
@@ -261,6 +262,7 @@ const Button = (props: Props): JSX.Element => {
 
   return (
     <StyledButton
+      id={props.id}
       type={props.submit ? "submit" : "button"}
       hero={props.hero}
       primary={props.primary}
@@ -283,7 +285,9 @@ const Button = (props: Props): JSX.Element => {
       }}
     >
       <TextContainer>
-        {props.loading && <CircularProgress size={props.large ? 31 : 17} />}
+        {props.loading && (
+          <CircularProgress id="button-loading-indicator" size={props.large ? 31 : 17} />
+        )}
         <Text
           primary={props.primary}
           hero={props.hero}

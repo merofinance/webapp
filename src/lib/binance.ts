@@ -1,3 +1,4 @@
+import fromEntries from "fromentries";
 import { Prices } from "./types";
 
 const apiBaseURL = "https://api.binance.com/api/v3";
@@ -12,5 +13,5 @@ async function fetchPrice(symbol: string, quote: string): Promise<PriceResponse>
 export async function getPrices(symbols: string[], quote = "USDT"): Promise<Prices> {
   const requests = symbols.map((s) => fetchPrice(s, quote));
   const responses = await Promise.all(requests);
-  return Object.fromEntries(responses.map((res, i) => [symbols[i], Number(res.price)]));
+  return fromEntries(responses.map((res, i) => [symbols[i], Number(res.price)]));
 }

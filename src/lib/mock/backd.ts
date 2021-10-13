@@ -1,4 +1,6 @@
 import { BigNumber, ContractTransaction, providers } from "ethers";
+import fromEntries from "fromentries";
+
 import { Pool } from "..";
 import { Backd } from "../backd";
 import { bigNumberToFloat } from "../numeric";
@@ -102,12 +104,12 @@ export default class MockBackd implements Backd {
 
   async getBalances(pools: Address[], account?: Address): Promise<Balances> {
     const balances = await Promise.all(pools.map((p) => this.getBalance(p, account)));
-    return Object.fromEntries(pools.map((p, i) => [p, balances[i]]));
+    return fromEntries(pools.map((p, i) => [p, balances[i]]));
   }
 
   getPrices(symbols: string[]): Promise<Prices> {
     return Promise.resolve(
-      Object.fromEntries(
+      fromEntries(
         symbols.map((symbol) => [symbol, bigNumberToFloat(prices[symbol] || BigNumber.from(0))])
       )
     );

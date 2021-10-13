@@ -133,7 +133,7 @@ const Popup = ({
     <StyledPopup show={show}>
       <ExitEvent onClick={close} />
       <PopupContainer small={small}>
-        <Exit src={closeIcon} onClick={close} alt="exit button" small={small} />
+        <Exit id="popup-exit" src={closeIcon} onClick={close} alt="exit button" small={small} />
         {header && (
           <Header small={small} centreHeader={centreHeader}>
             {header}

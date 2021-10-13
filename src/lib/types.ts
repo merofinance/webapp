@@ -1,4 +1,6 @@
 import { TransactionReceipt } from "@ethersproject/providers";
+import fromEntries from "fromentries";
+
 import { PlainScaledNumber, ScaledNumber } from "./scaled-number";
 
 export type Optional<T> = T | null;
@@ -112,11 +114,11 @@ export type Balances = Record<string, ScaledNumber>;
 export type PlainBalances = Record<string, PlainScaledNumber>;
 
 export const toPlainBalances = (balances: Balances): PlainBalances => {
-  return Object.fromEntries(Object.entries(balances).map(([key, value]) => [key, value.toPlain()]));
+  return fromEntries(Object.entries(balances).map(([key, value]) => [key, value.toPlain()]));
 };
 
 export const fromPlainBalances = (balances: PlainBalances): Balances => {
-  return Object.fromEntries(
+  return fromEntries(
     Object.entries(balances).map(([key, value]) => [key, ScaledNumber.fromPlain(value)])
   );
 };
@@ -125,13 +127,13 @@ export type Allowances = Record<string, Balances>;
 export type PlainAllowances = Record<string, PlainBalances>;
 
 export const toPlainAllowances = (allowances: Allowances): PlainAllowances => {
-  return Object.fromEntries(
+  return fromEntries(
     Object.entries(allowances).map(([key, value]) => [key, toPlainBalances(value)])
   );
 };
 
 export const fromPlainAllowances = (allowances: PlainAllowances): Allowances => {
-  return Object.fromEntries(
+  return fromEntries(
     Object.entries(allowances).map(([key, value]) => [key, fromPlainBalances(value)])
   );
 };

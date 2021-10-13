@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-type StepProps = {
+interface StepProps {
   percent: string;
   active: boolean;
-};
+}
 
 const Step = styled.button`
   position: absolute;
@@ -60,18 +60,19 @@ const PercentText = styled.div`
   transform: rotate(45deg);
 `;
 
-type Props = {
+interface Props {
   percent: string;
   active: boolean;
   click: () => void;
-};
+  id: string;
+}
 
-const SliderStep = (props: Props): JSX.Element => {
+const SliderStep = ({ id, percent, active, click }: Props): JSX.Element => {
   return (
-    <Step percent={props.percent} onClick={() => props.click()} active={props.active}>
+    <Step id={id} percent={percent} onClick={() => click()} active={active}>
       <PercentContainer>
         <PercentBackground>
-          <PercentText>{props.percent}</PercentText>
+          <PercentText>{percent}</PercentText>
         </PercentBackground>
       </PercentContainer>
     </Step>

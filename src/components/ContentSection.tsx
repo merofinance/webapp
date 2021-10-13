@@ -102,7 +102,7 @@ const ContentSection = ({
     <StyledContentSection>
       <HeaderContainer>
         <HeaderTextContainer>
-          <Header>{header}</Header>
+          <Header id="content-header">{header}</Header>
           {subHeader && <SubHeader>{subHeader}</SubHeader>}
         </HeaderTextContainer>
         {nav && <Key>{nav}</Key>}
