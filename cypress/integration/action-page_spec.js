@@ -2,15 +2,8 @@ import { initWeb3, percySnapshot } from "../support";
 
 // Add snapshots
 // Test Navigation from Protectable Loans
-// Test that deposits show in sidebar
-// Test that actions show in sidebar
-// Test the empty state of Loans
-// Test the pool selection
 // TEst search address
 // Add back buttons for all pages
-// Test view
-// Test delete
-// Test existng actions info card
 
 describe("Page Load", () => {
   it("Should Innitialise Web3", () => {
@@ -58,6 +51,9 @@ describe("Default state", () => {
   it("Should show Aave loan", () => {
     cy.get("#aave-protectable-loan", { timeout: 30_000 }).should("exist");
   });
+  it("Should take snapshot", () => {
+    percySnapshot();
+  });
   it("Should navigate to register page", () => {
     cy.get("#register-action-button").click();
     cy.location().should((loc) => {
@@ -99,6 +95,9 @@ describe("Register Page", () => {
     cy.get("#top-up-note").contains(
       "Use your Backd deposits as back-up collateral to protect your overcollateralised loans on Aave or Compound from getting liquidated."
     );
+  });
+  it("Should take snapshot", () => {
+    percySnapshot();
   });
   it("Should navigate to Loan Selection", () => {
     cy.get("#register-action-button").click();
@@ -144,6 +143,9 @@ describe("Loan Selection", () => {
   });
   it("Should select Aave loan", () => {
     cy.get("#aave-option").click();
+  });
+  it("Should take snapshot", () => {
+    percySnapshot();
   });
   it("Should navigate to pool selection", () => {
     cy.get("#register-topup-loan-button").click();
@@ -202,6 +204,9 @@ describe("Pool Selection", () => {
   it("Should select DAI Pool", () => {
     cy.get("#dai-pool-option").click();
   });
+  it("Should take snapshot", () => {
+    percySnapshot();
+  });
   it("Should navigate to deposit stage", () => {
     cy.get("#register-topup-pool-button").click();
     cy.location().should((loc) => {
@@ -256,6 +261,9 @@ describe("Pool Deposit", () => {
   });
   it("Should show your deposits total", () => {
     cy.get("#your-deposits-total").should("exist");
+  });
+  it("Should take snapshot", () => {
+    percySnapshot();
   });
   it("Should navigate to conditions page", () => {
     cy.get("#register-topup-pool-deposit-button").click();
@@ -371,7 +379,9 @@ describe("Conditions Page", () => {
     cy.get("#register-topup-maxtopup-error").type("4");
     cy.get("#register-topup-maxtopup-error").should("not.exist");
   });
-
+  it("Should take snapshot", () => {
+    percySnapshot();
+  });
   it("Should Show Top-up Creation Confirmation", () => {
     cy.get("#action-button").should("be.enabled");
     cy.get("#action-button").click();
@@ -409,6 +419,9 @@ describe("Top-up Position Confirmation", () => {
     cy.get("#topup-information-threshold").contains("2");
     cy.get("#topup-information-single-topup").contains("2");
     cy.get("#topup-information-max-topup").contains("4");
+  });
+  it("Should take snapshot", () => {
+    percySnapshot();
   });
   it("Should Confirm", () => {
     cy.get("#popup-button").should("be.enabled");
@@ -465,6 +478,9 @@ describe("Existing Topup View", () => {
     cy.location().should((loc) => {
       expect(loc.pathname).to.eq("/actions");
     });
+  });
+  it("Should take snapshot", () => {
+    percySnapshot();
   });
   it("Should open action view", () => {
     cy.get("#registered-action-aave").click();
