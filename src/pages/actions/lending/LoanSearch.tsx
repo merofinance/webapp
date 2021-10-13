@@ -100,6 +100,7 @@ const LoanSearch = ({ value, setValue, hasExistingLoans }: Props) => {
   const options: RowOptionType[] = loans.map((loan: Loan) => {
     return {
       value: loan.protocol,
+      id: `loan-search-row-${loan.protocol.toLowerCase()}`,
       columns: [
         {
           label: t("actions.suggestions.topup.labels.protocol"),
@@ -130,6 +131,7 @@ const LoanSearch = ({ value, setValue, hasExistingLoans }: Props) => {
       </Header>
       <InputContainer>
         <BasicInput
+          id="loan-search"
           value={address}
           setValue={(value: string) => {
             if (ethers.utils.isAddress(value)) getLoans(value);
@@ -142,7 +144,7 @@ const LoanSearch = ({ value, setValue, hasExistingLoans }: Props) => {
               : ""
           }
         />
-        <Loading src={pending} show={loading} />
+        <Loading id="loan-search-spinner" src={pending} show={loading} />
       </InputContainer>
       {retrieved && !hasLoans && <NotFound>{t("actions.topup.stages.loan.notFound")}</NotFound>}
       {retrieved && hasLoans && (

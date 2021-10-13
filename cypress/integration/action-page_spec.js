@@ -1,7 +1,6 @@
 import { initWeb3, percySnapshot } from "../support";
 
 // TEst search address
-// Add back buttons for all pages
 
 describe("Page Load", () => {
   it("Should Innitialise Web3", () => {
@@ -147,6 +146,25 @@ describe("Loan Selection", () => {
   });
   it("Should have loan search header", () => {
     cy.get("#loan-search-header").contains("Or, enter wallet address with a loan:");
+  });
+  it("Should show error on searching invalid address", () => {
+    cy.get("#loan-search-input").focus();
+    cy.get("#loan-search-input").type("not a valid address");
+    cy.get("#loan-search-error").contains("Invalid Address");
+  });
+  it("Should enter valid address", () => {
+    cy.get("#loan-search-input").clear();
+    cy.get("#loan-search-input").type("0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D");
+    cy.get("#loan-search-error").should("not.exist");
+  });
+  it("Should show loading spinner", () => {
+    cy.get("#loan-search-spinner", { timeout: 30_000 }).should("be.visible");
+  });
+  it("Should show loading spinner", () => {
+    cy.get("#loan-search-spinner", { timeout: 30_000 }).should("not.be.visible");
+  });
+  it("Should show aave from search", () => {
+    cy.get("#loan-search-row-aave", { timeout: 30_000 }).should("exist");
   });
   it("Should have disabled button", () => {
     cy.get("#register-topup-loan-button").should("be.disabled");
