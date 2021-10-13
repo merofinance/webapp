@@ -53,10 +53,13 @@ const ExistingAction = ({ position }: Props) => {
 
   return (
     <>
-      <StyledRegisteredAction onClick={() => setOpen(true)}>
+      <StyledRegisteredAction id={`existing-action-${position.protocol.toLowerCase()}`}>
         <Value flex={5}>{t("actions.topup.label")}</Value>
         <Value flex={3}>{position.maxTopUp.toCompactUsdValue(price)}</Value>
-        <ViewButton>
+        <ViewButton
+          id={`existing-action-${position.protocol.toLowerCase()}-view`}
+          onClick={() => setOpen(true)}
+        >
           <ViewText>{t("components.view")}</ViewText>
         </ViewButton>
       </StyledRegisteredAction>

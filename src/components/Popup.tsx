@@ -139,7 +139,7 @@ const Popup = ({
             {header}
           </Header>
         )}
-        {body && <Body>{body}</Body>}
+        {body && <Body id="popup-body">{body}</Body>}
         {content && content}
         {confirm && submit && (
           <ButtonContainer>

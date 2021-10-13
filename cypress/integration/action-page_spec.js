@@ -32,7 +32,7 @@ describe("Default state", () => {
     cy.get("#register-action-button").should("have.css", "background-clip", "none");
   });
   it("Should have Your Deposits Info Card", () => {
-    cy.get("#your-deposits-header").contains("Your deposits");
+    cy.get("#your-deposits-header").contains("Your Deposits");
   });
   it("Should have no deposits", () => {
     cy.get("#your-deposits-empty").contains("You do not have any existing Deposits...");
@@ -74,7 +74,7 @@ describe("Register Page", () => {
     cy.get("#content-key").contains("1/4");
   });
   it("Should have Your Deposits Info Card", () => {
-    cy.get("#your-deposits-header").contains("Your deposits");
+    cy.get("#your-deposits-header").contains("Your Deposits");
   });
   it("Should have no deposits", () => {
     cy.get("#your-deposits-empty").contains("You do not have any existing Deposits...");
@@ -90,7 +90,7 @@ describe("Register Page", () => {
       .should("have.attr", "href", "https://docs.backd.fund/protocol-architecture/top-ups");
   });
   it("Should have Existing Actions Info Card", () => {
-    cy.get("#existing-actions-header").contains("Your deposits");
+    cy.get("#existing-actions-header").contains("Existing Actions");
   });
   it("Should have no deposits", () => {
     cy.get("#existing-actions-empty").contains("You have not registered any Actions yet...");
@@ -233,7 +233,7 @@ describe("Pool Deposit", () => {
     cy.get("#register-topup-pool-deposit-button").should("be.disabled");
   });
   it("Should have Your Deposits Info Card", () => {
-    cy.get("#your-deposits-header").contains("Your deposits");
+    cy.get("#your-deposits-header").contains("Your Deposits");
   });
   it("Should have no deposits", () => {
     cy.get("#your-deposits-empty").contains("You do not have any existing Deposits...");
@@ -431,5 +431,96 @@ describe("Existing Topup View", () => {
   });
   it("Should show registered action", () => {
     cy.get("#registered-action-aave", { timeout: 30_000 }).should("exist");
+  });
+  it("Should not show protectable loans", () => {
+    cy.get("#aave-protectable-loan", { timeout: 30_000 }).should("not.exist");
+  });
+  it("Should have Register an Action Button", () => {
+    cy.get("#register-action-button").contains("Register an Action");
+    cy.get("#register-action-button").should("have.css", "background-clip", "text");
+  });
+  it("Should navigate to register page", () => {
+    cy.get("#register-action-button").click();
+    cy.location().should((loc) => {
+      expect(loc.pathname).to.eq("/actions/register");
+    });
+  });
+  it("Should have Existing Actions Info Card", () => {
+    cy.get("#existing-actions-header").contains("Existing Actions");
+  });
+  it("Should show existing action", () => {
+    cy.get("#existing-action-aave").should("exist");
+  });
+  it("Should view existing action", () => {
+    cy.get("#existing-action-aave-view").click();
+  });
+  it("Should show existing action view popup", () => {
+    cy.get("#popup-header").contains("Top-up Position");
+  });
+  it("Should close popup", () => {
+    cy.get("#popup-exit").click();
+  });
+  it("Should go back to actions page", () => {
+    cy.get("#back-button").click();
+    cy.location().should((loc) => {
+      expect(loc.pathname).to.eq("/actions");
+    });
+  });
+  it("Should open action view", () => {
+    cy.get("#registered-action-aave").click();
+  });
+  it("Should have position data", () => {
+    cy.get("#topup-information-protocol").contains("Aave");
+    cy.get("#topup-information-threshold").contains("2");
+    cy.get("#topup-information-single-topup").contains("2");
+    cy.get("#topup-information-max-topup").contains("4");
+  });
+  it("Should have delete button", () => {
+    cy.get("#delete-action-button").contains("Delete Top-up Position");
+  });
+  it("Should show delete Top-up Position confirmation", () => {
+    cy.get("#delete-action-button").click();
+    cy.get("#popup-header").contains("Delete Top-up Position");
+  });
+  it("Should show delete confirmation description", () => {
+    cy.get("#popup-body").contains(
+      "Deleting this top-up position will remove automated collateral top-ups of DAI on Aave. 2 DAI will be unstaked and can be withdrawn after removing the position."
+    );
+  });
+  it("Should have cancel button", () => {
+    cy.get("#popup-cancel").contains("Do not delete");
+  });
+  it("Should have delete button", () => {
+    cy.get("#popup-button").contains("Delete Top-up Position");
+    cy.get("#register-action-button").should(
+      "have.css",
+      "background-image",
+      "linear-gradient(var(--error),var(--error))"
+    );
+  });
+  it("Should Confirm", () => {
+    cy.get("#popup-button").should("be.enabled");
+    cy.get("#popup-button").click();
+  });
+  it("Should show loading button", () => {
+    cy.get("#button-loading-indicator", { timeout: 30_000 }).should("be.visible");
+  });
+  it("Should not show popups", () => {
+    cy.get("#popup-header").should("not.be.visible");
+  });
+  it("Should have no Actions", () => {
+    cy.get("#register-positions-empty").contains("You have not registered any Actions yet..");
+  });
+  it("Should have Register an Action Button", () => {
+    cy.get("#register-action-button").contains("Register an Action");
+    cy.get("#register-action-button").should("have.css", "background-clip", "none");
+  });
+  it("Should have Protectable Loans", () => {
+    cy.get("#protectable-loans-header", { timeout: 30_000 }).contains(
+      "We have found a protectable loan!"
+    );
+  });
+  it("Should show Aave loan", () => {
+    cy.get("#aave-protectable-loan", { timeout: 30_000 }).should("exist");
   });
 });
