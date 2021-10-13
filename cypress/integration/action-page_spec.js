@@ -1,0 +1,435 @@
+import { initWeb3, percySnapshot } from "../support";
+
+// Add snapshots
+// Test Navigation from Protectable Loans
+// Test that deposits show in sidebar
+// Test that actions show in sidebar
+// Test the empty state of Loans
+// Test the pool selection
+// TEst search address
+// Add back buttons for all pages
+// Test view
+// Test delete
+// Test existng actions info card
+
+describe("Page Load", () => {
+  it("Should Innitialise Web3", () => {
+    initWeb3();
+    cy.visit("/actions");
+    cy.get('[id="walletConnect.wallets.metaMask"]').click();
+  });
+});
+
+describe("Default state", () => {
+  it("Should have Registered Actions Header", () => {
+    cy.get("#content-header").contains("Registered Actions");
+  });
+  it("Should have no Actions", () => {
+    cy.get("#register-positions-empty").contains("You have not registered any Actions yet..");
+  });
+  it("Should have Register an Action Button", () => {
+    cy.get("#register-action-button").contains("Register an Action");
+    cy.get("#register-action-button").should("have.css", "background-clip", "none");
+  });
+  it("Should have Your Deposits Info Card", () => {
+    cy.get("#your-deposits-header").contains("Your deposits");
+  });
+  it("Should have no deposits", () => {
+    cy.get("#your-deposits-empty").contains("You do not have any existing Deposits...");
+  });
+  it("Should have Overview Info Card", () => {
+    cy.get("#overview-empty").contains("Overview");
+  });
+  it("Should have Overview Description", () => {
+    cy.get("#overview-description").contains(
+      "Use this screen to monitor your Actions. Actions are a set of predefined market triggers, that when occur, something is done on your behalf."
+    );
+  });
+  it("Should have Overview Link", () => {
+    cy.get("#overview-link")
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "https://docs.backd.fund/protocol-architecture/top-ups");
+  });
+  it("Should have Protectable Loans", () => {
+    cy.get("#protectable-loans-header", { timeout: 30_000 }).contains(
+      "We have found a protectable loan!"
+    );
+  });
+  it("Should show Aave loan", () => {
+    cy.get("#aave-protectable-loan", { timeout: 30_000 }).should("exist");
+  });
+  it("Should navigate to register page", () => {
+    cy.get("#register-action-button").click();
+    cy.location().should((loc) => {
+      expect(loc.pathname).to.eq("/actions/register");
+    });
+  });
+});
+
+describe("Register Page", () => {
+  it("Should have Register Action Header", () => {
+    cy.get("#content-header").contains("Register an Action");
+  });
+  it("Should have stage indicator", () => {
+    cy.get("#content-key").contains("1/4");
+  });
+  it("Should have Your Deposits Info Card", () => {
+    cy.get("#your-deposits-header").contains("Your deposits");
+  });
+  it("Should have no deposits", () => {
+    cy.get("#your-deposits-empty").contains("You do not have any existing Deposits...");
+  });
+  it("Should have Overview Description", () => {
+    cy.get("#overview-description").contains(
+      "Define the market triggers that will enable your action using this interface."
+    );
+  });
+  it("Should have Overview Link", () => {
+    cy.get("#overview-link")
+      .should("have.attr", "target", "_blank")
+      .should("have.attr", "href", "https://docs.backd.fund/protocol-architecture/top-ups");
+  });
+  it("Should have Existing Actions Info Card", () => {
+    cy.get("#existing-actions-header").contains("Your deposits");
+  });
+  it("Should have no deposits", () => {
+    cy.get("#existing-actions-empty").contains("You have not registered any Actions yet...");
+  });
+  it("Should have Top-up Note", () => {
+    cy.get("#top-up-note").contains(
+      "Use your Backd deposits as back-up collateral to protect your overcollateralised loans on Aave or Compound from getting liquidated."
+    );
+  });
+  it("Should navigate to Loan Selection", () => {
+    cy.get("#register-action-button").click();
+    cy.location().should((loc) => {
+      expect(loc.pathname).to.eq("/actions/register/topup");
+    });
+  });
+});
+
+describe("Loan Selection", () => {
+  it("Should have Loan Selection Header", () => {
+    cy.get("#content-header").contains("Register an Action");
+  });
+  it("Should have Loan Selection Sub Header", () => {
+    cy.get("#content-sub-header").contains("Top-up Position");
+  });
+  it("Should have stage indicator", () => {
+    cy.get("#content-key").contains("2/4");
+  });
+  it("Should have Overview Description", () => {
+    cy.get("#overview-description").contains(
+      "Define the market triggers that will enable your action using this interface."
+    );
+  });
+  it("Should navigate back", () => {
+    cy.get("#back-button").click();
+    cy.location().should((loc) => {
+      expect(loc.pathname).to.eq("/actions/register");
+    });
+    cy.get("#register-action-button").click();
+    cy.location().should((loc) => {
+      expect(loc.pathname).to.eq("/actions/register/topup");
+    });
+  });
+  it("Should have header", () => {
+    cy.get("#register-topup-loan-header").contains("Select a loan to protect");
+  });
+  it("Should have loan search header", () => {
+    cy.get("#loan-search-header").contains("Or, enter wallet address with a loan:");
+  });
+  it("Should have disabled button", () => {
+    cy.get("#register-topup-loan-button").should("be.disabled");
+  });
+  it("Should select Aave loan", () => {
+    cy.get("#aave-option").click();
+  });
+  it("Should navigate to pool selection", () => {
+    cy.get("#register-topup-loan-button").click();
+    cy.location().should((loc) => {
+      expect(loc.pathname).to.eq(
+        "/actions/register/topup/0x8B78D3EeFf975C668FcbDd2b559b852c8f6d93fb/Aave"
+      );
+    });
+  });
+});
+
+describe("Pool Selection", () => {
+  it("Should have Pool Selection Header", () => {
+    cy.get("#content-header").contains("Register an Action");
+  });
+  it("Should have Loan Selection Sub Header", () => {
+    cy.get("#content-sub-header").contains("Top-up Position");
+  });
+  it("Should have stage indicator", () => {
+    cy.get("#content-key").contains("3/4");
+  });
+  it("Should have Overview Description", () => {
+    cy.get("#overview-description").contains(
+      "Define the market triggers that will enable your action using this interface."
+    );
+  });
+  it("Should navigate back", () => {
+    cy.get("#back-button").click();
+    cy.location().should((loc) => {
+      expect(loc.pathname).to.eq("/actions/register/topup");
+    });
+    cy.get("#register-topup-loan-button").click();
+    cy.location().should((loc) => {
+      expect(loc.pathname).to.eq(
+        "/actions/register/topup/0x8B78D3EeFf975C668FcbDd2b559b852c8f6d93fb/Aave"
+      );
+    });
+  });
+  it("Should have header", () => {
+    cy.get("#register-topup-pool-header").contains(
+      "To register an action you must deposit assets into a Backd pool"
+    );
+  });
+  it("Should have DAI Pool", () => {
+    cy.get("#dai-pool-option").should("exist");
+  });
+  it("Should have ETH Pool", () => {
+    cy.get("#eth-pool-option").should("exist");
+  });
+  it("Should have disabled button", () => {
+    cy.get("#register-topup-pool-button").should("be.disabled");
+  });
+  it("Should have ETH Pool", () => {
+    cy.get("#eth-pool-option").should("exist");
+  });
+  it("Should select DAI Pool", () => {
+    cy.get("#dai-pool-option").click();
+  });
+  it("Should navigate to deposit stage", () => {
+    cy.get("#register-topup-pool-button").click();
+    cy.location().should((loc) => {
+      expect(loc.pathname).to.eq(
+        "/actions/register/topup/0x8B78D3EeFf975C668FcbDd2b559b852c8f6d93fb/Aave"
+      );
+    });
+  });
+});
+
+describe("Pool Deposit", () => {
+  it("Should have stage indicator", () => {
+    cy.get("#content-key").contains("3/4");
+  });
+  it("Should have deposit header", () => {
+    cy.get("#register-topup-pool-deposit").contains("Enter an amount of DAI to deposit");
+  });
+  it("Should input value", () => {
+    cy.get("#amount-input").focus();
+    cy.get("#amount-input").type("200");
+  });
+  it("Should have input value", () => {
+    cy.get("#amount-input").should("have.value", "200");
+  });
+  it("Should have no errors", () => {
+    cy.get("#input-note").should("not.exist");
+  });
+  it("Should have disabled button", () => {
+    cy.get("#register-topup-pool-deposit-button").should("be.disabled");
+  });
+  it("Should have Your Deposits Info Card", () => {
+    cy.get("#your-deposits-header").contains("Your deposits");
+  });
+  it("Should have no deposits", () => {
+    cy.get("#your-deposits-empty").contains("You do not have any existing Deposits...");
+  });
+  it("Should not show dai in info card", () => {
+    cy.get("#your-deposits-dai").should("not.exist");
+  });
+  it("Should not show your deposits total", () => {
+    cy.get("#your-deposits-total").should("not.exist");
+  });
+  it("Should Deposit", () => {
+    cy.get("#action-button").should("be.enabled");
+    cy.get("#action-button").click();
+  });
+  it("Should show loading button", () => {
+    cy.get("#button-loading-indicator", { timeout: 30_000 }).should("be.visible");
+  });
+  it("Should show deposit in info card", () => {
+    cy.get("#your-deposits-dai").should("exist");
+  });
+  it("Should show your deposits total", () => {
+    cy.get("#your-deposits-total").should("exist");
+  });
+  it("Should navigate to conditions page", () => {
+    cy.get("#register-topup-pool-deposit-button").click();
+    cy.location().should((loc) => {
+      expect(loc.pathname).to.eq(
+        "/actions/register/topup/0x8B78D3EeFf975C668FcbDd2b559b852c8f6d93fb/Aave/bDAI"
+      );
+    });
+  });
+});
+
+describe("Conditions Page", () => {
+  it("Should have stage indicator", () => {
+    cy.get("#content-key").contains("4/4");
+  });
+  it("Should have top-up conditions header", () => {
+    cy.get("#register-topup-conditions-header").contains("Enter top-up conditions");
+  });
+  it("Should have top-up conditions header", () => {
+    cy.get("#register-topup-conditions-header").contains("Enter top-up conditions");
+  });
+  it("Should have disabled button", () => {
+    cy.get("#action-button").should("be.disabled");
+  });
+
+  it("Should have Action Summary", () => {
+    cy.get("#action-summary", { timeout: 30_000 }).should("exist");
+  });
+  it("Should Change Pools", () => {
+    cy.get("#action-summary-change-pool").should("exist");
+    cy.get("#action-summary-change-pool").click();
+    cy.location().should((loc) => {
+      expect(loc.pathname).to.eq(
+        "/actions/register/topup/0x8B78D3EeFf975C668FcbDd2b559b852c8f6d93fb/Aave"
+      );
+    });
+    cy.get("#dai-pool-option").click();
+    cy.get("#register-topup-pool-button").click();
+    cy.location().should((loc) => {
+      expect(loc.pathname).to.eq(
+        "/actions/register/topup/0x8B78D3EeFf975C668FcbDd2b559b852c8f6d93fb/Aave"
+      );
+    });
+  });
+
+  it("Should have nothing in threshold input", () => {
+    cy.get("#register-topup-threshold-input").should("have.value", "");
+  });
+  it("Should not have threshold error", () => {
+    cy.get("#register-topup-threshold-error").should("not.exist");
+  });
+  it("Should show threshold error on no entry", () => {
+    cy.get("#register-topup-threshold-error").focus();
+    cy.get("#register-topup-threshold-error").blur();
+    cy.get("#register-topup-threshold-error").contains("Threshold is required");
+  });
+  it("Should show threshold error on 0", () => {
+    cy.get("#register-topup-threshold-error").focus();
+    cy.get("#register-topup-threshold-error").type("0");
+    cy.get("#register-topup-threshold-error").contains("Must be greater than 1");
+  });
+  it("Should enter threshold", () => {
+    cy.get("#register-topup-threshold-error").clear();
+    cy.get("#register-topup-threshold-error").type("2");
+    cy.get("#register-topup-threshold-error").should("not.exist");
+  });
+
+  it("Should have nothing in single input", () => {
+    cy.get("#register-topup-singletopup-input").should("have.value", "");
+  });
+  it("Should not have single error", () => {
+    cy.get("#register-topup-singletopup-error").should("not.exist");
+  });
+  it("Should show single error on no entry", () => {
+    cy.get("#register-topup-singletopup-error").focus();
+    cy.get("#register-topup-singletopup-error").blur();
+    cy.get("#register-topup-singletopup-error").contains("Single Top-up is required");
+  });
+  it("Should show single error on 0", () => {
+    cy.get("#register-topup-singletopup-error").focus();
+    cy.get("#register-topup-singletopup-error").type("0");
+    cy.get("#register-topup-singletopup-error").contains("Must be positive number");
+  });
+  it("Should enter single", () => {
+    cy.get("#register-topup-singletopup-error").clear();
+    cy.get("#register-topup-singletopup-error").type("2");
+    cy.get("#register-topup-singletopup-error").should("not.exist");
+  });
+
+  it("Should have nothing in total input", () => {
+    cy.get("#register-topup-maxtopup-input").should("have.value", "");
+  });
+  it("Should not have total error", () => {
+    cy.get("#register-topup-maxtopup-error").should("not.exist");
+  });
+  it("Should show total error on no entry", () => {
+    cy.get("#register-topup-maxtopup-error").focus();
+    cy.get("#register-topup-maxtopup-error").blur();
+    cy.get("#register-topup-maxtopup-error").contains("Max Top-up required");
+  });
+  it("Should show total error on 0", () => {
+    cy.get("#register-topup-maxtopup-error").focus();
+    cy.get("#register-topup-maxtopup-error").type("0");
+    cy.get("#register-topup-maxtopup-error").contains("Invalid number");
+  });
+  it("Should show total error less than single", () => {
+    cy.get("#register-topup-maxtopup-error").clear();
+    cy.get("#register-topup-maxtopup-error").type("1");
+    cy.get("#register-topup-singletopup-error").contains("Must be less than max top-up");
+  });
+  it("Should enter total", () => {
+    cy.get("#register-topup-maxtopup-error").clear();
+    cy.get("#register-topup-maxtopup-error").type("4");
+    cy.get("#register-topup-maxtopup-error").should("not.exist");
+  });
+
+  it("Should Show Top-up Creation Confirmation", () => {
+    cy.get("#action-button").should("be.enabled");
+    cy.get("#action-button").click();
+  });
+});
+
+describe("Top-up Position Confirmation", () => {
+  it("Should be visible", () => {
+    cy.get("#popup-header").contains("Confirm top-up position");
+  });
+  it("Should close", () => {
+    cy.get("#popup-exit").click();
+  });
+  it("Should not be visible", () => {
+    cy.get("#popup-header").should("not.be.visible");
+  });
+  it("Should open", () => {
+    cy.get("#action-button").should("be.enabled");
+    cy.get("#action-button").click();
+    cy.get("#popup-header").contains("Confirm top-up position");
+  });
+  it("Should cancel", () => {
+    cy.get("#popup-cancel").click();
+  });
+  it("Should not be visible", () => {
+    cy.get("#popup-header").should("not.be.visible");
+  });
+  it("Should open", () => {
+    cy.get("#action-button").should("be.enabled");
+    cy.get("#action-button").click();
+    cy.get("#popup-header").contains("Confirm top-up position");
+  });
+  it("Should have position data", () => {
+    cy.get("#topup-information-protocol").contains("Aave");
+    cy.get("#topup-information-threshold").contains("2");
+    cy.get("#topup-information-single-topup").contains("2");
+    cy.get("#topup-information-max-topup").contains("4");
+  });
+  it("Should Confirm", () => {
+    cy.get("#popup-button").should("be.enabled");
+    cy.get("#popup-button").click();
+  });
+  it("Should show loading button", () => {
+    cy.get("#button-loading-indicator", { timeout: 30_000 }).should("be.visible");
+  });
+  it("Should redirect to actions on completion", () => {
+    cy.get("#register-action-button", { timeout: 30_000 }).should("exist");
+    cy.location().should((loc) => {
+      expect(loc.pathname).to.eq("/actions");
+    });
+  });
+});
+
+describe("Existing Topup View", () => {
+  it("Should not show registered actions empty text", () => {
+    cy.get("#register-positions-empty").should("not.exist");
+  });
+  it("Should show registered action", () => {
+    cy.get("#registered-action-aave", { timeout: 30_000 }).should("exist");
+  });
+});
