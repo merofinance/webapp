@@ -19,7 +19,6 @@ describe("Default state", () => {
   });
   it("Should have Register an Action Button", () => {
     cy.get("#register-action-button").contains("Register an Action");
-    cy.get("#register-action-button").should("have.css", "background-clip", "none");
   });
   it("Should have Your Deposits Info Card", () => {
     cy.get("#your-deposits-header").contains("Your Deposits");
@@ -28,7 +27,7 @@ describe("Default state", () => {
     cy.get("#your-deposits-empty").contains("You do not have any existing Deposits...");
   });
   it("Should have Overview Info Card", () => {
-    cy.get("#overview-empty").contains("Overview");
+    cy.get("#overview-header").contains("Overview");
   });
   it("Should have Overview Description", () => {
     cy.get("#overview-description").contains(
@@ -52,7 +51,7 @@ describe("Default state", () => {
     cy.get("#aave-protectable-loan-button").click();
     cy.location().should((loc) => {
       expect(loc.pathname).to.eq(
-        "/actions/register/topup/0x8B78D3EeFf975C668FcbDd2b559b852c8f6d93fb/Aave"
+        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
       );
     });
     cy.get("#back-button").click();
@@ -179,7 +178,7 @@ describe("Loan Selection", () => {
     cy.get("#register-topup-loan-button").click();
     cy.location().should((loc) => {
       expect(loc.pathname).to.eq(
-        "/actions/register/topup/0x8B78D3EeFf975C668FcbDd2b559b852c8f6d93fb/Aave"
+        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
       );
     });
   });
@@ -208,7 +207,7 @@ describe("Pool Selection", () => {
     cy.get("#register-topup-loan-button").click();
     cy.location().should((loc) => {
       expect(loc.pathname).to.eq(
-        "/actions/register/topup/0x8B78D3EeFf975C668FcbDd2b559b852c8f6d93fb/Aave"
+        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
       );
     });
   });
@@ -239,7 +238,7 @@ describe("Pool Selection", () => {
     cy.get("#register-topup-pool-button").click();
     cy.location().should((loc) => {
       expect(loc.pathname).to.eq(
-        "/actions/register/topup/0x8B78D3EeFf975C668FcbDd2b559b852c8f6d93fb/Aave"
+        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
       );
     });
   });
@@ -297,7 +296,7 @@ describe("Pool Deposit", () => {
     cy.get("#register-topup-pool-deposit-button").click();
     cy.location().should((loc) => {
       expect(loc.pathname).to.eq(
-        "/actions/register/topup/0x8B78D3EeFf975C668FcbDd2b559b852c8f6d93fb/Aave/bDAI"
+        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/bDAI"
       );
     });
   });
@@ -325,14 +324,14 @@ describe("Conditions Page", () => {
     cy.get("#action-summary-change-pool").click();
     cy.location().should((loc) => {
       expect(loc.pathname).to.eq(
-        "/actions/register/topup/0x8B78D3EeFf975C668FcbDd2b559b852c8f6d93fb/Aave"
+        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
       );
     });
     cy.get("#dai-pool-option").click();
     cy.get("#register-topup-pool-button").click();
     cy.location().should((loc) => {
       expect(loc.pathname).to.eq(
-        "/actions/register/topup/0x8B78D3EeFf975C668FcbDd2b559b852c8f6d93fb/Aave"
+        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
       );
     });
   });
@@ -478,7 +477,6 @@ describe("Existing Topup View", () => {
   });
   it("Should have Register an Action Button", () => {
     cy.get("#register-action-button").contains("Register an Action");
-    cy.get("#register-action-button").should("have.css", "background-clip", "text");
   });
   it("Should navigate to register page", () => {
     cy.get("#register-action-button").click();
