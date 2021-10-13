@@ -91,6 +91,7 @@ const ProtectableLoan = ({ loan }: Props) => {
       </Column>
       <Column>
         <Button
+          id={`${loan.protocol.toLowerCase()}-protectable-loan-button`}
           medium
           text={t("actions.suggestions.topup.register")}
           background="#3A3550"

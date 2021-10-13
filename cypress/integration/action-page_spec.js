@@ -1,7 +1,5 @@
 import { initWeb3, percySnapshot } from "../support";
 
-// Add snapshots
-// Test Navigation from Protectable Loans
 // TEst search address
 // Add back buttons for all pages
 
@@ -50,6 +48,18 @@ describe("Default state", () => {
   });
   it("Should show Aave loan", () => {
     cy.get("#aave-protectable-loan", { timeout: 30_000 }).should("exist");
+  });
+  it("Should navigate to protectable loan path", () => {
+    cy.get("#aave-protectable-loan-button").click();
+    cy.location().should((loc) => {
+      expect(loc.pathname).to.eq(
+        "/actions/register/topup/0x8B78D3EeFf975C668FcbDd2b559b852c8f6d93fb/Aave"
+      );
+    });
+    cy.get("#back-button").click();
+    cy.location().should((loc) => {
+      expect(loc.pathname).to.eq("/actions");
+    });
   });
   it("Should take snapshot", () => {
     percySnapshot();
