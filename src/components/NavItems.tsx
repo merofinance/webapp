@@ -28,16 +28,16 @@ const preLaunchItems: NavItemType[] = [
 
 const navItems: NavItemType[] = [
   {
-    label: "header.tabs.claim",
-    link: "/claim",
-  },
-  {
     label: "header.tabs.pools",
     link: "/pools",
   },
   {
     label: "header.tabs.stake",
     link: "/stake",
+  },
+  {
+    label: "header.tabs.claim",
+    link: "/claim",
   },
 ];
 
