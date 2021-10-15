@@ -39,6 +39,10 @@ const navItems: NavItemType[] = [
     label: "header.tabs.claim",
     link: "/claim",
   },
+  {
+    label: "header.tabs.actions",
+    link: "/actions",
+  },
 ];
 
 const StyledNavItems = styled.ul`
