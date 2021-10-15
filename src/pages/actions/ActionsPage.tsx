@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router";
+import { Switch, useRouteMatch, Route, useLocation } from "react-router";
 
 import { useBackd } from "../../app/hooks/use-backd";
 import { fetchState } from "../../state/poolsListSlice";
@@ -15,10 +15,6 @@ import RegisterAction from "./RegisterAction";
 import YourDeposits from "./YourDeposits";
 import { GradientLink } from "../../styles/GradientText";
 import ExistingActions from "./ExistingActions";
-
-interface ActionParams {
-  stage: string;
-}
 
 const StyledActionsPage = styled.div`
   width: 100%;
@@ -74,7 +70,8 @@ const ActionsPage = (): JSX.Element => {
   const backd = useBackd();
   const dispatch = useDispatch();
   const updated = useWeb3Updated();
-  const { stage } = useParams<ActionParams>();
+  const match = useRouteMatch();
+  const location = useLocation();
 
   useEffect(() => {
     if (!backd) return;
@@ -89,18 +86,26 @@ const ActionsPage = (): JSX.Element => {
       />
       <ContentContainer>
         <Content>
-          {!stage && (
-            <>
-              <ProtectableLoans />
-              <RegisteredActions />
-            </>
-          )}
-          {stage && <RegisterAction />}
+          <Switch>
+            <Route path={`${match.path}/register`}>
+              <RegisterAction />
+            </Route>
+            <Route path={match.path}>
+              <>
+                <ProtectableLoans />
+                <RegisteredActions />
+              </>
+            </Route>
+          </Switch>
         </Content>
       </ContentContainer>
-      <InfoCards hideMobile={!!stage}>
+      <InfoCards hideMobile={location.pathname !== "/actions"}>
         <Overview
-          description={stage ? t("actions.register.overview") : t("actions.overview")}
+          description={
+            location.pathname === "/actions"
+              ? t("actions.overview")
+              : t("actions.register.overview")
+          }
           link="https://docs.backd.fund/protocol-architecture/top-ups"
         />
         <YourDeposits />
