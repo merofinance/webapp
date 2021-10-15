@@ -445,7 +445,7 @@
         },
         "conditions": {
           "header": "Enter top-up conditions",
-          "subHeader": "TODO!!!"
+          "subHeader": "Define the specific market triggers that determine when a top-up position will activate."
         },
         "confirmation": {
           "header": "Confirm top-up position",
