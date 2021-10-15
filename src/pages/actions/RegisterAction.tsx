@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { useHistory, useParams } from "react-router";
+import { useHistory, Switch, useRouteMatch, Route } from "react-router";
 
 import ContentSection from "../../components/ContentSection";
 import Radio, { RadioOptionType } from "../../components/Radio";
@@ -10,10 +10,6 @@ import Button from "../../components/Button";
 import BackButton from "../../components/BackButton";
 import RegisterTopup from "./lending/RegisterTopup";
 import { useDevice } from "../../app/hooks/use-device";
-
-interface RegisterParams {
-  action: string;
-}
 
 const Container = styled.div`
   position: relative;
@@ -83,7 +79,7 @@ const RegisterAction = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const { isMobile } = useDevice();
-  const { action } = useParams<RegisterParams>();
+  const match = useRouteMatch();
   const [actionOption, setActionOption] = useState("topup");
 
   const actions: RadioOptionType[] = [
@@ -101,38 +97,43 @@ const RegisterAction = () => {
   return (
     <Container>
       <BackButton />
-      {action && <RegisterTopup />}
-      {!action && (
-        <ContentSection
-          header={t("actions.register.header")}
-          nav="1/4"
-          content={
-            <Content>
-              <Header>{t("actions.register.choose")}</Header>
-              <Radio
-                gradient
-                options={actions}
-                active={actionOption}
-                setOption={(value: string) => setActionOption(value)}
-              />
-              <NoteContainer>
-                <BackdIcon src={icon} />
-                <Note id="top-up-note">{t("actions.topup.description")}</Note>
-              </NoteContainer>
-              <ButtonContainer>
-                <Button
-                  id="register-action-button"
-                  primary
-                  medium
-                  width={isMobile ? "100%" : "44%"}
-                  text={t("components.continue")}
-                  click={() => history.push(`/actions/register/${actionOption}`)}
+
+      <Switch>
+        <Route path={`${match.path}/topup`}>
+          <RegisterTopup />
+        </Route>
+        <Route path={match.path}>
+          <ContentSection
+            header={t("actions.register.header")}
+            nav="1/4"
+            content={
+              <Content>
+                <Header>{t("actions.register.choose")}</Header>
+                <Radio
+                  gradient
+                  options={actions}
+                  active={actionOption}
+                  setOption={(value: string) => setActionOption(value)}
                 />
-              </ButtonContainer>
-            </Content>
-          }
-        />
-      )}
+                <NoteContainer>
+                  <BackdIcon src={icon} />
+                  <Note id="top-up-note">{t("actions.topup.description")}</Note>
+                </NoteContainer>
+                <ButtonContainer>
+                  <Button
+                    id="register-action-button"
+                    primary
+                    medium
+                    width={isMobile ? "100%" : "44%"}
+                    text={t("components.continue")}
+                    click={() => history.push(`/actions/register/${actionOption}`)}
+                  />
+                </ButtonContainer>
+              </Content>
+            }
+          />
+        </Route>
+      </Switch>
     </Container>
   );
 };
