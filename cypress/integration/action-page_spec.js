@@ -550,10 +550,12 @@ describe("Existing Topup View", () => {
     cy.get("#button-loading-indicator", { timeout: 30_000 }).should("be.visible");
   });
   it("Should not show popups", () => {
-    cy.get("#delete-topup-confirmation-popup-header").should("not.be.visible");
+    cy.get("#delete-topup-confirmation-popup-header", { timeout: 30_000 }).should("not.be.visible");
   });
   it("Should have no Actions", () => {
-    cy.get("#register-positions-empty").contains("You have not registered any Actions yet..");
+    cy.get("#register-positions-empty", { timeout: 30_000 }).contains(
+      "You have not registered any Actions yet.."
+    );
   });
   it("Should have Register an Action Button", () => {
     cy.get("#register-action-button").contains("Register an Action");
