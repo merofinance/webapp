@@ -252,6 +252,9 @@ describe("Pool Deposit", () => {
   it("Should have deposit header", () => {
     cy.get("#register-topup-pool-deposit").contains("Enter an amount of DAI to deposit");
   });
+  it("Should take snapshot", () => {
+    percySnapshot();
+  });
   it("Should input value", () => {
     cy.get("#amount-input").focus();
     cy.get("#amount-input").type("200");
@@ -289,9 +292,6 @@ describe("Pool Deposit", () => {
   });
   it("Should show your deposits total", () => {
     cy.get("#your-deposits-total", { timeout: 30_000 }).should("exist");
-  });
-  it("Should take snapshot", () => {
-    percySnapshot();
   });
   it("Should navigate to conditions page", () => {
     cy.get("#register-topup-pool-deposit-button", { timeout: 30_000 }).click();
