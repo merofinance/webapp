@@ -294,7 +294,7 @@ describe("Pool Deposit", () => {
     percySnapshot();
   });
   it("Should navigate to conditions page", () => {
-    cy.get("#register-topup-pool-deposit-button").click();
+    cy.get("#register-topup-pool-deposit-button", { timeout: 30_000 }).click();
     cy.location().should((loc) => {
       expect(loc.pathname).to.eq(
         "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/bDAI"
@@ -495,6 +495,7 @@ describe("Existing Topup View", () => {
     cy.get("#existing-action-aave-view").click();
   });
   it("Should show existing action view popup", () => {
+    cy.get("#topup-action-popup-header").should("be.visible");
     cy.get("#topup-action-popup-header").contains("Top-up Position");
   });
   it("Should close popup", () => {
@@ -531,19 +532,19 @@ describe("Existing Topup View", () => {
     );
   });
   it("Should have cancel button", () => {
-    cy.get("#delete-topup-confirmation-popup-cancel").contains("Do not delete");
+    cy.get("#delete-topup-confirmation-cancel").contains("Do not delete");
   });
   it("Should have delete button", () => {
-    cy.get("#delete-topup-confirmation-popup-button").contains("Delete Top-up Position");
+    cy.get("#delete-topup-confirmation-button").contains("Delete Top-up Position");
     cy.get("#register-action-button").should(
       "have.css",
       "background-image",
-      "linear-gradient(var(--error),var(--error))"
+      "linear-gradient(rgb(15, 8, 48), rgb(15, 8, 48)), linear-gradient(to right, rgb(209, 39, 250) 0%, rgb(36, 189, 227) 50%, rgb(209, 39, 250) 100%)"
     );
   });
   it("Should Confirm", () => {
-    cy.get("#delete-topup-confirmation-popup-button").should("be.enabled");
-    cy.get("#delete-topup-confirmation-popup-button").click();
+    cy.get("#delete-topup-confirmation-button").should("be.enabled");
+    cy.get("#delete-topup-confirmation-button").click();
   });
   it("Should show loading button", () => {
     cy.get("#button-loading-indicator", { timeout: 30_000 }).should("be.visible");
@@ -556,7 +557,6 @@ describe("Existing Topup View", () => {
   });
   it("Should have Register an Action Button", () => {
     cy.get("#register-action-button").contains("Register an Action");
-    cy.get("#register-action-button").should("have.css", "background-clip", "none");
   });
   it("Should have Protectable Loans", () => {
     cy.get("#protectable-loans-header", { timeout: 30_000 }).contains(
