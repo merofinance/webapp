@@ -126,7 +126,7 @@ describe("Account Details", () => {
 
 describe("Withdraw Tab", () => {
   it("Should support navigation", () => {
-    cy.get("#radio-option-withdraw").click();
+    cy.get('[id="pool.tabs.withdraw.tab"]').click();
   });
   it("Should have DAI Header", () => {
     cy.get("#content-header").contains("DAI Pool");
