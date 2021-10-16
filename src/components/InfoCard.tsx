@@ -108,13 +108,13 @@ interface Props {
 
 const InfoCard = ({ header, content, collapsible, defaultOpen, id }: Props): JSX.Element => {
   const { i18n } = useTranslation();
-  const { isDesktop } = useDevice();
+  const { isMobile } = useDevice();
   const [open, setOpen] = useState(false);
   const isWide = i18n.language === "ja";
 
   useEffect(() => {
-    setOpen(!!defaultOpen || isDesktop);
-  }, [isDesktop]);
+    setOpen(!!defaultOpen || !isMobile);
+  }, [!isMobile]);
 
   return (
     <StyledInfoCard id={id} open={open} collapsible={collapsible} wide={isWide}>
