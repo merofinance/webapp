@@ -114,7 +114,7 @@ const InfoCard = ({ header, content, collapsible, defaultOpen, id }: Props): JSX
 
   useEffect(() => {
     setOpen(!!defaultOpen || isDesktop);
-  }, []);
+  }, [isDesktop]);
 
   return (
     <StyledInfoCard id={id} open={open} collapsible={collapsible} wide={isWide}>
