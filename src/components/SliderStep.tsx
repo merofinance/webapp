@@ -8,7 +8,6 @@ interface StepProps {
 
 const Step = styled.button`
   position: absolute;
-  bottom: 1.4rem;
   left: ${(props: StepProps) => props.percent};
   transform: translateX(-50%);
   width: 15px;
@@ -21,10 +20,18 @@ const Step = styled.button`
 
   transition: all 0.2s;
 
+  bottom: 1.4rem;
+  @media (max-width: 600px) {
+    bottom: 2.1rem;
+  }
+
   :hover {
     width: 20px;
     height: 20px;
     bottom: 1.1rem;
+    @media (max-width: 600px) {
+      bottom: 1.8rem;
+    }
 
     > div {
       transform: scale(1) translateY(-10px);
