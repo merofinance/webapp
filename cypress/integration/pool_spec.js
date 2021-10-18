@@ -1,11 +1,11 @@
-import { initWeb3, percySnapshot } from "../support";
+import { initWeb3, percySnapshot, WEB3_TIMEOUT } from "../support";
 
 describe("Page Load", () => {
   it("Should Innitialise Web3", () => {
     initWeb3();
     cy.visit("/pools");
     cy.get('[id="walletConnect.wallets.metaMask"]').click();
-    cy.get("#pool-row-bdai", { timeout: 30_000 }).click();
+    cy.get("#pool-row-bdai", { timeout: WEB3_TIMEOUT }).click();
   });
 });
 
@@ -24,7 +24,7 @@ describe("Default state", () => {
 
 describe("Innitial Data", () => {
   it("Should load balance", () => {
-    cy.get("#available-amount", { timeout: 30_000 }).contains(".", { timeout: 30_000 });
+    cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains(".", { timeout: WEB3_TIMEOUT });
   });
 });
 
@@ -89,13 +89,13 @@ describe("Depositing", () => {
     cy.get("#action-button").click();
   });
   it("Should show loading button", () => {
-    cy.get("#button-loading-indicator", { timeout: 30_000 }).should("be.visible");
+    cy.get("#button-loading-indicator", { timeout: WEB3_TIMEOUT }).should("be.visible");
   });
 });
 
 describe("Account Details", () => {
   it("Should show loading indicator on connector", () => {
-    cy.get("#connector-loading-indicator", { timeout: 30_000 }).should("be.visible");
+    cy.get("#connector-loading-indicator", { timeout: WEB3_TIMEOUT }).should("be.visible");
   });
   it("Should open Account Details", () => {
     cy.get("#desktop-connector").click();
@@ -113,7 +113,11 @@ describe("Account Details", () => {
     cy.get("#account-details-network").contains("Ethereum Kovan Testnet");
   });
   it("Should finish loading", () => {
-    cy.get("#connector-loading-indicator", { timeout: 30_000 }).should("have.css", "opacity", "0");
+    cy.get("#connector-loading-indicator", { timeout: WEB3_TIMEOUT }).should(
+      "have.css",
+      "opacity",
+      "0"
+    );
   });
   it("Should clear transactions", () => {
     cy.get("#account-details-clear").click();
@@ -139,7 +143,7 @@ describe("Withdraw Tab", () => {
     cy.get("#input-button").contains("max");
   });
   it("Should load balance", () => {
-    cy.get("#available-amount", { timeout: 30_000 }).contains(".", { timeout: 30_000 });
+    cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains(".", { timeout: WEB3_TIMEOUT });
   });
 });
 
@@ -194,10 +198,10 @@ describe("Withdraw", () => {
     cy.get("#withdraw-button").click();
   });
   it("Should show loading button", () => {
-    cy.get("#button-loading-indicator", { timeout: 30_000 }).should("be.visible");
+    cy.get("#button-loading-indicator", { timeout: WEB3_TIMEOUT }).should("be.visible");
   });
   it("Should show loading indicator on connector", () => {
-    cy.get("#connector-loading-indicator", { timeout: 30_000 }).should("be.visible");
+    cy.get("#connector-loading-indicator", { timeout: WEB3_TIMEOUT }).should("be.visible");
   });
   it("Should open Account Details", () => {
     cy.get("#desktop-connector").click();
@@ -206,7 +210,11 @@ describe("Withdraw", () => {
     cy.get("#account-details-transactions div").first().contains("Withdraw");
   });
   it("Should finish loading", () => {
-    cy.get("#connector-loading-indicator", { timeout: 30_000 }).should("have.css", "opacity", "0");
+    cy.get("#connector-loading-indicator", { timeout: WEB3_TIMEOUT }).should(
+      "have.css",
+      "opacity",
+      "0"
+    );
   });
   it("Should close", () => {
     cy.get("#connection-details-popup-exit").click();

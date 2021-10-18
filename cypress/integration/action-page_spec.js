@@ -40,12 +40,12 @@ describe("Default state", () => {
       .should("have.attr", "href", "https://docs.backd.fund/protocol-architecture/top-ups");
   });
   it("Should have Protectable Loans", () => {
-    cy.get("#protectable-loans-header", { timeout: 30_000 }).contains(
+    cy.get("#protectable-loans-header", { timeout: WEB3_TIMEOUT }).contains(
       "We have found a protectable loan!"
     );
   });
   it("Should show Aave loan", () => {
-    cy.get("#aave-protectable-loan", { timeout: 30_000 }).should("exist");
+    cy.get("#aave-protectable-loan", { timeout: WEB3_TIMEOUT }).should("exist");
   });
   it("Should navigate to protectable loan path", () => {
     cy.get("#aave-protectable-loan-button").click();
@@ -157,13 +157,13 @@ describe("Loan Selection", () => {
     cy.get("#loan-search-error").should("not.exist");
   });
   it("Should show loading spinner", () => {
-    cy.get("#loan-search-spinner", { timeout: 30_000 }).should("be.visible");
+    cy.get("#loan-search-spinner", { timeout: WEB3_TIMEOUT }).should("be.visible");
   });
   it("Should show loading spinner", () => {
-    cy.get("#loan-search-spinner", { timeout: 30_000 }).should("not.be.visible");
+    cy.get("#loan-search-spinner", { timeout: WEB3_TIMEOUT }).should("not.be.visible");
   });
   it("Should show aave from search", () => {
-    cy.get("#loan-search-row-aave", { timeout: 30_000 }).should("exist");
+    cy.get("#loan-search-row-aave", { timeout: WEB3_TIMEOUT }).should("exist");
   });
   it("Should have disabled button", () => {
     cy.get("#register-topup-loan-button").should("be.disabled");
@@ -285,16 +285,16 @@ describe("Pool Deposit", () => {
     cy.get("#action-button").click();
   });
   it("Should show loading button", () => {
-    cy.get("#button-loading-indicator", { timeout: 30_000 }).should("be.visible");
+    cy.get("#button-loading-indicator", { timeout: WEB3_TIMEOUT }).should("be.visible");
   });
   it("Should show deposit in info card", () => {
-    cy.get("#your-deposits-dai", { timeout: 30_000 }).should("exist");
+    cy.get("#your-deposits-dai", { timeout: WEB3_TIMEOUT }).should("exist");
   });
   it("Should show your deposits total", () => {
-    cy.get("#your-deposits-total", { timeout: 30_000 }).should("exist");
+    cy.get("#your-deposits-total", { timeout: WEB3_TIMEOUT }).should("exist");
   });
   it("Should navigate to conditions page", () => {
-    cy.get("#register-topup-pool-deposit-button", { timeout: 30_000 }).click();
+    cy.get("#register-topup-pool-deposit-button", { timeout: WEB3_TIMEOUT }).click();
     cy.location().should((loc) => {
       expect(loc.pathname).to.eq(
         "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/bDAI"
@@ -318,7 +318,7 @@ describe("Conditions Page", () => {
   });
 
   it("Should have Action Summary", () => {
-    cy.get("#action-summary", { timeout: 30_000 }).should("exist");
+    cy.get("#action-summary", { timeout: WEB3_TIMEOUT }).should("exist");
   });
   it("Should Change Pools", () => {
     cy.get("#action-summary-change-pool").should("exist");
@@ -487,10 +487,10 @@ describe("Top-up Position Confirmation", () => {
     cy.get("#register-topup-confirmation-popup-button").click();
   });
   it("Should show loading button", () => {
-    cy.get("#button-loading-indicator", { timeout: 30_000 }).should("be.visible");
+    cy.get("#button-loading-indicator", { timeout: WEB3_TIMEOUT }).should("be.visible");
   });
   it("Should redirect to actions on completion", () => {
-    cy.get("#register-action-button", { timeout: 30_000 }).should("exist");
+    cy.get("#register-action-button", { timeout: WEB3_TIMEOUT }).should("exist");
     cy.location().should((loc) => {
       expect(loc.pathname).to.eq("/actions");
     });
@@ -502,10 +502,10 @@ describe("Existing Topup View", () => {
     cy.get("#register-positions-empty").should("not.exist");
   });
   it("Should show registered action", () => {
-    cy.get("#registered-action-aave", { timeout: 30_000 }).should("exist");
+    cy.get("#registered-action-aave", { timeout: WEB3_TIMEOUT }).should("exist");
   });
   it("Should not show protectable loans", () => {
-    cy.get("#aave-protectable-loan", { timeout: 30_000 }).should("not.exist");
+    cy.get("#aave-protectable-loan", { timeout: WEB3_TIMEOUT }).should("not.exist");
   });
   it("Should have Register an Action Button", () => {
     cy.get("#register-action-button").contains("Register an Action");
@@ -579,13 +579,15 @@ describe("Existing Topup View", () => {
     cy.get("#delete-topup-confirmation-button").click();
   });
   it("Should show loading button", () => {
-    cy.get("#button-loading-indicator", { timeout: 30_000 }).should("be.visible");
+    cy.get("#button-loading-indicator", { timeout: WEB3_TIMEOUT }).should("be.visible");
   });
   it("Should not show popups", () => {
-    cy.get("#delete-topup-confirmation-popup-header", { timeout: 30_000 }).should("not.be.visible");
+    cy.get("#delete-topup-confirmation-popup-header", { timeout: WEB3_TIMEOUT }).should(
+      "not.be.visible"
+    );
   });
   it("Should have no Actions", () => {
-    cy.get("#register-positions-empty", { timeout: 30_000 }).contains(
+    cy.get("#register-positions-empty", { timeout: WEB3_TIMEOUT }).contains(
       "You have not registered any Actions yet.."
     );
   });
@@ -593,11 +595,11 @@ describe("Existing Topup View", () => {
     cy.get("#register-action-button").contains("Register an Action");
   });
   it("Should have Protectable Loans", () => {
-    cy.get("#protectable-loans-header", { timeout: 30_000 }).contains(
+    cy.get("#protectable-loans-header", { timeout: WEB3_TIMEOUT }).contains(
       "We have found a protectable loan!"
     );
   });
   it("Should show Aave loan", () => {
-    cy.get("#aave-protectable-loan", { timeout: 30_000 }).should("exist");
+    cy.get("#aave-protectable-loan", { timeout: WEB3_TIMEOUT }).should("exist");
   });
 });

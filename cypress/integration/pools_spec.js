@@ -52,13 +52,13 @@ describe("Overview", () => {
 
 describe("Pools", () => {
   it("Should load Pools", () => {
-    cy.get("#pool-row-bdai", { timeout: 30_000 }).should("be.visible");
+    cy.get("#pool-row-bdai", { timeout: WEB3_TIMEOUT }).should("be.visible");
   });
   it("Should snapshot page", () => {
     percySnapshot();
   });
   it("Should navigate to Pool", () => {
-    cy.get("#pool-row-bdai", { timeout: 30_000 }).click();
+    cy.get("#pool-row-bdai", { timeout: WEB3_TIMEOUT }).click();
     cy.location().should((loc) => {
       expect(loc.pathname).to.eq("/pool/bDAI");
     });
