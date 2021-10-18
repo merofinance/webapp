@@ -284,8 +284,8 @@ describe("Pool Deposit", () => {
     cy.get("#action-button").should("be.enabled");
     cy.get("#action-button").click();
   });
-  it("Should show loading button", () => {
-    cy.get("#button-loading-indicator", { timeout: WEB3_TIMEOUT }).should("be.visible");
+  it("Should disable button", () => {
+    cy.get("#action-button", { timeout: WEB3_TIMEOUT }).should("be.disabled");
   });
   it("Should show deposit in info card", () => {
     cy.get("#your-deposits-dai", { timeout: WEB3_TIMEOUT }).should("exist");
@@ -486,8 +486,10 @@ describe("Top-up Position Confirmation", () => {
     cy.get("#register-topup-confirmation-popup-button").should("be.enabled");
     cy.get("#register-topup-confirmation-popup-button").click();
   });
-  it("Should show loading button", () => {
-    cy.get("#button-loading-indicator", { timeout: WEB3_TIMEOUT }).should("be.visible");
+  it("Should disable button", () => {
+    cy.get("#register-topup-confirmation-popup-button", { timeout: WEB3_TIMEOUT }).should(
+      "be.disabled"
+    );
   });
   it("Should redirect to actions on completion", () => {
     cy.get("#register-action-button", { timeout: WEB3_TIMEOUT }).should("exist");
@@ -578,8 +580,8 @@ describe("Existing Topup View", () => {
     cy.get("#delete-topup-confirmation-button").should("be.enabled");
     cy.get("#delete-topup-confirmation-button").click();
   });
-  it("Should show loading button", () => {
-    cy.get("#button-loading-indicator", { timeout: WEB3_TIMEOUT }).should("be.visible");
+  it("Should disable button", () => {
+    cy.get("#delete-topup-confirmation-button", { timeout: WEB3_TIMEOUT }).should("be.disabled");
   });
   it("Should not show popups", () => {
     cy.get("#delete-topup-confirmation-popup-header", { timeout: WEB3_TIMEOUT }).should(
