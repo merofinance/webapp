@@ -257,10 +257,10 @@ describe("Pool Deposit", () => {
   });
   it("Should input value", () => {
     cy.get("#amount-input").focus();
-    cy.get("#amount-input").type("200");
+    cy.get("#amount-input").type("1000");
   });
   it("Should have input value", () => {
-    cy.get("#amount-input").should("have.value", "200");
+    cy.get("#amount-input").should("have.value", "1000");
   });
   it("Should have no errors", () => {
     cy.get("#input-note").should("not.exist");
@@ -377,7 +377,7 @@ describe("Conditions Page", () => {
   });
   it("Should enter single", () => {
     cy.get("#register-topup-singletopup-input").clear();
-    cy.get("#register-topup-singletopup-input").type("2");
+    cy.get("#register-topup-singletopup-input").type("100");
     cy.get("#register-topup-singletopup-error").should("not.exist");
   });
 
@@ -404,9 +404,39 @@ describe("Conditions Page", () => {
   });
   it("Should enter total", () => {
     cy.get("#register-topup-maxtopup-input").clear();
-    cy.get("#register-topup-maxtopup-input").type("4");
+    cy.get("#register-topup-maxtopup-input").type("400");
+    cy.get("#register-topup-maxtopup-error").should("not.exist");
+    cy.get("#register-topup-singletopup-error").should("not.exist");
+  });
+
+  it("Should have nothing in gas input", () => {
+    cy.get("#register-topup-maxgasprice-input").should("have.value", "");
+  });
+  it("Should not have gas error", () => {
+    cy.get("#register-topup-maxgasprice-error").should("not.exist");
+  });
+  it("Should show gas error on no entry", () => {
+    cy.get("#register-topup-maxgasprice-input").focus();
+    cy.get("#register-topup-maxgasprice-input").blur();
+    cy.get("#register-topup-maxgasprice-error").contains("Max Gas Price required");
+  });
+  it("Should show gas error on 0", () => {
+    cy.get("#register-topup-maxgasprice-input").focus();
+    cy.get("#register-topup-maxgasprice-input").type("0");
+    cy.get("#register-topup-maxgasprice-error").contains("Must be positive number");
+  });
+  it("Should show gas error less than single", () => {
+    cy.get("#register-topup-maxgasprice-input").clear();
+    cy.get("#register-topup-maxgasprice-input").type("100000");
+    cy.get("#register-topup-maxtopup-error").contains("Not enough to cover gas cost of top-up");
+  });
+  it("Should enter gas", () => {
+    cy.get("#register-topup-maxgasprice-input").clear();
+    cy.get("#register-topup-maxgasprice-input").type("50");
+    cy.get("#register-topup-maxgasprice-error").should("not.exist");
     cy.get("#register-topup-maxtopup-error").should("not.exist");
   });
+
   it("Should take snapshot", () => {
     percySnapshot();
   });
@@ -445,8 +475,9 @@ describe("Top-up Position Confirmation", () => {
   it("Should have position data", () => {
     cy.get("#topup-information-protocol").contains("Aave");
     cy.get("#topup-information-threshold").contains("2");
-    cy.get("#topup-information-single-topup").contains("2");
-    cy.get("#topup-information-max-topup").contains("4");
+    cy.get("#topup-information-single-topup").contains("100");
+    cy.get("#topup-information-max-topup").contains("400");
+    cy.get("#topup-information-max-gas").contains("50");
   });
   it("Should take snapshot", () => {
     percySnapshot();
@@ -516,8 +547,9 @@ describe("Existing Topup View", () => {
   it("Should have position data", () => {
     cy.get("#topup-information-protocol").contains("Aave");
     cy.get("#topup-information-threshold").contains("2");
-    cy.get("#topup-information-single-topup").contains("2");
-    cy.get("#topup-information-max-topup").contains("4");
+    cy.get("#topup-information-single-topup").contains("100");
+    cy.get("#topup-information-max-topup").contains("400");
+    cy.get("#topup-information-max-gas").contains("50");
   });
   it("Should have delete button", () => {
     cy.get("#delete-action-button").contains("Delete Top-up Position");
@@ -528,7 +560,7 @@ describe("Existing Topup View", () => {
   });
   it("Should show delete confirmation description", () => {
     cy.get("#delete-topup-confirmation-popup-body").contains(
-      "Deleting this top-up position will remove automated collateral top-ups of DAI on Aave. 4 DAI will be unstaked and can be withdrawn after removing the position."
+      "Deleting this top-up position will remove automated collateral top-ups of DAI on Aave. 400 DAI will be unstaked and can be withdrawn after removing the position."
     );
   });
   it("Should have cancel button", () => {
