@@ -499,6 +499,15 @@
           "invalid": "Invalid number",
           "positive": "Must be positive number",
           "exceedsBalance": "Exceeds deposited balance"
+        },
+        "gas": {
+          "label": "Max Gas Price",
+          "question": "What is the maximum gas price to pay per top-up?",
+          "tooltip": "The maximum gas price used when paying for each top-up. Value is in Gwei units. If value is too low, then your top-up may not execute in time which could result in liquidation. A value of at least 200 Gwei is recommended.",
+          "hover": "Enter Max Gas Price",
+          "required": "Max Gas Price required",
+          "positive": "Must be positive number",
+          "exceedsMax": "Not enough to cover gas cost of top-up"
         }
       }
     },

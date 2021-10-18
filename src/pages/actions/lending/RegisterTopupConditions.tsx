@@ -10,13 +10,15 @@ import ContentSection from "../../../components/ContentSection";
 import { selectBalance } from "../../../state/userSlice";
 import { useBackd } from "../../../app/hooks/use-backd";
 import { ScaledNumber } from "../../../lib/scaled-number";
-import { selectPool } from "../../../state/selectors";
+import { selectPool, selectPrice } from "../../../state/selectors";
 import { Position } from "../../../lib/types";
 import NewPositionConfirmation from "./RegisterTopupConfirmation";
 import ApproveThenAction from "../../../components/ApproveThenAction";
 import RegisterTopupInput from "./RegisterTopupInput";
 import ActionSummary from "./ActionSummary";
 import { useDevice } from "../../../app/hooks/use-device";
+import { selectEthPrice } from "../../../state/poolsListSlice";
+import { GWEI_DECIMALS, GWEI_SCALE, TOPUP_GAS_COST } from "../../../lib/constants";
 
 interface TopupParams {
   address: string;
@@ -28,12 +30,14 @@ export interface FormType {
   threshold: string;
   singleTopUp: string;
   maxTopUp: string;
+  maxGasPrice: string;
 }
 
 const initialValues: FormType = {
   threshold: "",
   singleTopUp: "",
   maxTopUp: "",
+  maxGasPrice: "",
 };
 
 const validationSchema = yup.object().shape({
@@ -63,6 +67,10 @@ const validationSchema = yup.object().shape({
       "actions.topup.fields.max.invalid",
       (s: any) => !ScaledNumber.fromUnscaled(s).isZero()
     ),
+  maxGasPrice: yup
+    .string()
+    .required("actions.topup.fields.gas.required")
+    .test("is-positive-number", "actions.topup.fields.gas.positive", (s: any) => Number(s) > 0),
 });
 
 const wrapperFormik = () =>
@@ -137,6 +145,8 @@ const RegisterTopupConditions = () => {
   const { isMobile } = useDevice();
   const { address, protocol, poolName } = useParams<TopupParams>();
   const pool = useSelector(selectPool(poolName));
+  const underlyingPrice = useSelector(selectPrice(pool));
+  const ethPrice = useSelector(selectEthPrice);
   const balance = useSelector(selectBalance(pool));
   const [loading, setLoading] = useState(false);
   const [confirming, setConfirming] = useState(false);
@@ -146,9 +156,17 @@ const RegisterTopupConditions = () => {
     if (!pool) return errors;
     const single = ScaledNumber.fromUnscaled(values.singleTopUp, pool.underlying.decimals);
     const max = ScaledNumber.fromUnscaled(values.maxTopUp, pool.underlying.decimals);
+    const gas = ScaledNumber.fromUnscaled(values.maxGasPrice, GWEI_DECIMALS);
     if (values.maxTopUp && single.gt(max))
       errors.singleTopUp = "actions.topup.fields.single.lessThanMax";
     if (max.gt(balance)) errors.maxTopUp = "actions.topup.fields.max.exceedsBalance";
+    if (values.maxTopUp && values.maxGasPrice) {
+      const maxTopupUsd = max.mul(underlyingPrice);
+      const gasCostUsd = new ScaledNumber(gas.value.mul(TOPUP_GAS_COST).div(GWEI_SCALE)).mul(
+        ethPrice
+      );
+      if (maxTopupUsd.lte(gasCostUsd)) errors.maxTopUp = "actions.topup.fields.gas.exceedsMax";
+    }
     return errors;
   };
 
@@ -175,7 +193,7 @@ const RegisterTopupConditions = () => {
     threshold: ScaledNumber.fromUnscaled(formik.values.threshold),
     singleTopUp: ScaledNumber.fromUnscaled(formik.values.singleTopUp, pool.underlying.decimals),
     maxTopUp: ScaledNumber.fromUnscaled(formik.values.maxTopUp, pool.underlying.decimals),
-    maxGasPrice: 0,
+    maxGasPrice: Number(formik.values.maxGasPrice),
     actionToken: pool.underlying.address,
     depositToken: pool.lpToken.address,
   };
@@ -184,6 +202,7 @@ const RegisterTopupConditions = () => {
     if (!formik.values.threshold) return t("actions.topup.fields.threshold.hover");
     if (!formik.values.singleTopUp) return t("actions.topup.fields.single.hover");
     if (!formik.values.maxTopUp) return t("actions.topup.fields.max.hover");
+    if (!formik.values.maxGasPrice) return t("actions.topup.fields.gas.hover");
     return "";
   };
 
@@ -236,6 +255,18 @@ const RegisterTopupConditions = () => {
                 name="maxTopUp"
                 formik={formik}
                 placeholder={`10,000 ${pool.underlying.symbol}`}
+              />
+              <RegisterTopupInput
+                label={
+                  isMobile
+                    ? t("actions.topup.fields.gas.label")
+                    : t("actions.topup.fields.gas.question")
+                }
+                tooltip={t("actions.topup.fields.gas.tooltip")}
+                type="number"
+                name="maxGasPrice"
+                formik={formik}
+                placeholder="200 Gwei"
               />
               <ButtonContainer>
                 <ApproveThenAction

@@ -12,7 +12,7 @@ import fromEntries from "fromentries";
 import { UnsupportedNetwork } from "../app/errors";
 import { getPrices as getPricesFromCoingecko } from "./coingecko";
 import { getPrices as getPricesFromBinance } from "./binance";
-import { ETH_DECIMALS, ETH_DUMMY_ADDRESS, INFINITE_APPROVE_AMMOUNT } from "./constants";
+import { ETH_DECIMALS, ETH_DUMMY_ADDRESS, GWEI_SCALE, INFINITE_APPROVE_AMMOUNT } from "./constants";
 import { bigNumberToFloat, scale } from "./numeric";
 import { ScaledNumber } from "./scaled-number";
 import {
@@ -232,9 +232,7 @@ export class Web3Backd implements Backd {
     const rawExchangeRate = await poolContract.exchangeRate();
     const protocol = utils.formatBytes32String(position.protocol);
     const depositAmount = position.maxTopUp.value.mul(rawExchangeRate).div(scale);
-
-    // TODO: allow to customize maxGasPrice, currently 200Gwei
-    const maxGasPrice = BigNumber.from(200).mul(BigNumber.from(10).pow(9));
+    const maxGasPrice = BigNumber.from(position.maxGasPrice).mul(GWEI_SCALE);
 
     return this.topupAction.register(
       position.account,
