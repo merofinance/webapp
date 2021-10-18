@@ -11,8 +11,9 @@ import RowSelector, { RowOptionType } from "../../../components/RowSelector";
 import { selectEthPrice } from "../../../state/poolsListSlice";
 import { selectLoans } from "../../../state/lendingSlice";
 import LoanSearch from "./LoanSearch";
-import { Loan } from "../../../lib/types";
+import { Loan, Position } from "../../../lib/types";
 import { useDevice } from "../../../app/hooks/use-device";
+import { selectPositions } from "../../../state/positionsSlice";
 
 const Container = styled.div`
   position: relative;
@@ -63,9 +64,15 @@ const RegisterTopupLoan = () => {
   const { account } = useWeb3React();
   const { isMobile } = useDevice();
   const loans = useSelector(selectLoans);
+  const positions = useSelector(selectPositions);
   const ethPrice = useSelector(selectEthPrice);
   const [protocol, setProtocol] = useState("");
   const [address, setAddress] = useState<string | null | undefined>("");
+
+  const positionExists = (loan: Loan) =>
+    positions.some(
+      (position: Position) => position.protocol === loan.protocol && position.account === account
+    );
 
   const isAccountsLoan = address === account;
   const hasLoans = loans.length > 0;
@@ -76,6 +83,7 @@ const RegisterTopupLoan = () => {
       return {
         id: `${loan.protocol.toLowerCase()}-option`,
         value: loan.protocol,
+        disabledText: positionExists(loan) ? t("actions.topup.stages.loan.alreadyExists") : "",
         columns: [
           {
             label: t("actions.suggestions.topup.labels.protocol"),

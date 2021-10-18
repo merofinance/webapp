@@ -430,7 +430,8 @@
           "subHeader": "Backd has detected the following loans on supported platforms associated with your current connected wallet:",
           "search": "Or, enter wallet address with a loan:",
           "enterAddress": "Enter the wallet address that the loan is associated with:",
-          "notFound": "No loans associated with this address."
+          "notFound": "No loans associated with this address.",
+          "alreadyExists": "A top-up action already exists for this loan"
         },
         "pool": {
           "header": "Which pool do you want the top-up to come from?",
