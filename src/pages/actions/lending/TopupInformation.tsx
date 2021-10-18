@@ -169,6 +169,13 @@ const TopupInformation = ({ position, pool }: Props): JSX.Element => {
             pool.underlying.symbol
           }`}</Label>
         </SummaryRow>
+        <SummaryRow>
+          <Label>
+            {t("actions.topup.fields.gas.label")}
+            <Tooltip content={t("actions.topup.fields.gas.tooltip")} />
+          </Label>
+          <Label id="topup-information-gas-topup">{`${position.maxGasPrice} Gwei`}</Label>
+        </SummaryRow>
       </PositionSummary>
     </StyledTopupInformation>
   );
