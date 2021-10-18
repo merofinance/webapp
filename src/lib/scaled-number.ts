@@ -97,16 +97,19 @@ export class ScaledNumber {
     return this.value.lte(other.value);
   }
 
-  mul(value: number | string): ScaledNumber {
+  mul(value: number | string | ScaledNumber): ScaledNumber {
     const scale = BigNumber.from(10).pow(this.decimals);
-    const scaledValue = stringToBigNumber(value.toString(), this.decimals);
+    const scaledValue =
+      typeof value === "object" ? value.value : stringToBigNumber(value.toString(), this.decimals);
     return new ScaledNumber(this.value.mul(scaledValue).div(scale), this.decimals);
   }
 
-  div(value: ScaledNumber): ScaledNumber {
-    if (value.isZero()) return new ScaledNumber();
+  div(value: number | string | ScaledNumber): ScaledNumber {
     const scale = BigNumber.from(10).pow(this.decimals);
-    return new ScaledNumber(this.value.mul(scale).div(value.value), this.decimals);
+    const scaledValue =
+      typeof value === "object" ? value.value : stringToBigNumber(value.toString(), this.decimals);
+    if (scaledValue.isZero()) return new ScaledNumber();
+    return new ScaledNumber(this.value.mul(scale).div(scaledValue), this.decimals);
   }
 
   toString = (): string => bigNumberToString(this._value, this._decimals);
