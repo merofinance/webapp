@@ -6,6 +6,7 @@ export interface RowOptionType {
   value: string;
   columns: ColumnType[];
   id?: string;
+  disabledText?: string;
 }
 
 const StyledRowSelector = styled.div`
@@ -35,6 +36,7 @@ const RowSelector = ({ options, value, setValue }: Props) => {
           columns={option.columns}
           active={option.value === value}
           select={() => setValue(option.value)}
+          disabledText={option.disabledText}
         />
       ))}
     </StyledRowSelector>

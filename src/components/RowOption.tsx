@@ -6,8 +6,20 @@ export interface ColumnType {
   value: string | JSX.Element;
 }
 
+const Container = styled.div`
+  position: relative;
+  width: 100%;
+
+  :hover {
+    > div {
+      transform: scale(1);
+    }
+  }
+`;
+
 interface RowOptionProps {
   active: boolean;
+  disabled: boolean;
 }
 
 const StyledRowOption = styled.button`
@@ -15,24 +27,24 @@ const StyledRowOption = styled.button`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  border: ${(props: RowOptionProps) => (props.active ? "2px" : "1px")} solid transparent;
+  margin-top: 1rem;
+  border-radius: 1.4rem;
   background-origin: border-box;
   background-clip: padding-box, border-box;
+
+  border: ${(props: RowOptionProps) => (props.active ? "2px" : "1px")} solid transparent;
   background-image: ${(props: RowOptionProps) =>
     props.active
       ? "linear-gradient(to right, #1D0B38, #101839), var(--gradient)"
       : "linear-gradient(rgba(20, 17, 40, 1), rgba(20, 17, 40, 1)), linear-gradient(#2B293D, #2B293D)"};
-
-  border-radius: 1.4rem;
   padding: ${(props: RowOptionProps) => (props.active ? "1.2rem 1.3rem" : "1.3rem 1.4rem")};
-  margin-top: 1rem;
-  cursor: pointer;
+  cursor: ${(props: RowOptionProps) => (props.disabled ? "auto" : "pointer")};
+  opacity: ${(props: RowOptionProps) => (props.disabled ? "0.4" : "1")};
 
   transition: filter 0.3s;
   filter: brightness(1);
   :hover {
-    filter: brightness(1.25);
+    filter: ${(props: RowOptionProps) => (props.disabled ? "brightness(1)" : "brightness(1.25)")};
   }
 
   @media (max-width: 600px) {
@@ -80,23 +92,55 @@ const Value = styled.div`
   }
 `;
 
+const HoverTextContainer = styled.div`
+  position: absolute;
+  left: 0;
+  top: calc(100% + 0.6rem);
+  width: 100%;
+  transition: transform 0.2s;
+  transform: scale(0) translateY(-1rem);
+  z-index: 1;
+`;
+
+const HoverText = styled.div`
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  transform: translateX(-50%);
+  background-color: #433b6b;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-weight: 500;
+  font-size: 1rem;
+  white-space: nowrap;
+`;
+
 interface Props {
   columns: ColumnType[];
   active: boolean;
   select: () => void;
   id?: string;
+  disabledText?: string;
 }
 
-const RowOption = ({ columns, active, select, id }: Props) => {
+const RowOption = ({ columns, active, select, id, disabledText }: Props) => {
   return (
-    <StyledRowOption id={id} active={active} onClick={() => select()}>
-      {columns.map((column: ColumnType) => (
-        <Column key={column.label}>
-          <Header>{column.label}</Header>
-          {typeof column.value === "string" ? <Value>{column.value}</Value> : column.value}
-        </Column>
-      ))}
-    </StyledRowOption>
+    <Container>
+      <StyledRowOption id={id} active={active} onClick={() => select()} disabled={!!disabledText}>
+        {columns.map((column: ColumnType) => (
+          <Column key={column.label}>
+            <Header>{column.label}</Header>
+            {typeof column.value === "string" ? <Value>{column.value}</Value> : column.value}
+          </Column>
+        ))}
+      </StyledRowOption>
+      {disabledText && (
+        <HoverTextContainer>
+          <HoverText>{disabledText}</HoverText>
+        </HoverTextContainer>
+      )}
+    </Container>
   );
 };
 
