@@ -1,4 +1,4 @@
-import { initWeb3, percySnapshot } from "../support";
+import { initWeb3, percySnapshot, WEB3_TIMEOUT } from "../support";
 
 // TEst search address
 
