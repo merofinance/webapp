@@ -62,6 +62,9 @@ const StyledRowOption = styled.a`
     div:nth-child(4) {
       display: none;
     }
+    button {
+      display: none;
+    }
   }
 `;
 
