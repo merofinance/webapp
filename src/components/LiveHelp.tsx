@@ -18,7 +18,7 @@ const StyledLiveHelp = styled.div`
   border-radius: 1.4rem;
   box-shadow: 0px 0px 12px rgba(23, 18, 22, 0.05);
   overflow: hidden;
-  transition: max-height 0.3s ease-out, background-color 0.3s;
+  transition: max-height 0.3s ease-out, background-color 0.3s, filter 0.3s;
   margin-bottom: 2.4rem;
 
   max-height: ${(props: LiveHelpProps) => (props.open ? "24rem" : "5.4rem")};
@@ -40,7 +40,6 @@ const StyledLiveHelp = styled.div`
     max-height: ${(props: LiveHelpProps) => (props.open ? "19rem" : "4.8rem")};
   }
 
-  transition: filter 0.3s;
   filter: brightness(1);
   :hover {
     filter: brightness(1.15);
