@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 import AccordionChevron from "./AccordionChevron";
 import gradientInfo from "../assets/ui/gradient-info.svg";
+import { selectSuggestions, SuggestionType } from "../state/helpSlice";
 
 interface LiveHelpProps {
   open?: boolean;
@@ -119,6 +121,7 @@ const Suggestion = styled.div`
 
 const LiveHelp = (): JSX.Element => {
   const { t, i18n } = useTranslation();
+  const suggestions = useSelector(selectSuggestions);
   const [open, setOpen] = useState(true);
   const isWide = i18n.language === "ja";
 
@@ -132,10 +135,9 @@ const LiveHelp = (): JSX.Element => {
         <HeaderText>{t("liveHelp.header")}</HeaderText>
       </Header>
       <Content>
-        <Suggestion>
-          We notice you have entered a threshold top-up of 1.1. This is very close to liquidation
-          and in times of market volatility we suggest at least 1.2 or more.
-        </Suggestion>
+        {suggestions.map((suggestion: SuggestionType) => (
+          <Suggestion>{suggestion.label}</Suggestion>
+        ))}
       </Content>
     </StyledLiveHelp>
   );
