@@ -33,7 +33,7 @@ interface RowOptionProps {
   disabled: boolean;
 }
 
-const StyledRowOption = styled.button`
+const StyledRowOption = styled.a`
   width: 100%;
   display: flex;
   justify-content: space-between;
