@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
 import AccordionChevron from "./AccordionChevron";
-import gradientInfo from "../assets/ui/gradient-info.svg";
+import logo from "../assets/logo/logo.svg";
 import {
   ignoreSuggestion,
   implementSuggestion,
@@ -13,10 +13,25 @@ import {
 } from "../state/helpSlice";
 import Button from "./Button";
 
+interface ContainerProps {
+  visible: boolean;
+}
+
+const Container = styled.div`
+  position: relative;
+  margin-bottom: 2.4rem;
+
+  opacity: ${(props: ContainerProps) => (props.visible ? "1" : "0")};
+
+  margin-left: 1.6rem;
+  @media (max-width: 1439px) {
+    margin-left: 0;
+  }
+`;
+
 interface LiveHelpProps {
   open?: boolean;
   wide?: boolean;
-  visible: boolean;
 }
 
 const StyledLiveHelp = styled.div`
@@ -28,10 +43,8 @@ const StyledLiveHelp = styled.div`
   box-shadow: 0px 0px 12px rgba(23, 18, 22, 0.05);
   overflow: hidden;
   transition: max-height 0.3s ease-out, background-color 0.3s, filter 0.3s;
-  margin-bottom: 2.4rem;
 
   max-height: ${(props: LiveHelpProps) => (props.open ? "35rem" : "5.4rem")};
-  opacity: ${(props: LiveHelpProps) => (props.visible ? "1" : "0")};
 
   // Background
   border: 1px solid transparent;
@@ -40,11 +53,9 @@ const StyledLiveHelp = styled.div`
   background-image: linear-gradient(#252140, #252140),
     linear-gradient(to right, var(--primary-gradient), var(--secondary-gradient));
 
-  margin-left: 1.6rem;
   width: ${(props: LiveHelpProps) => (props.wide ? "40rem" : "36rem")};
   padding: 2rem 1.8rem;
   @media (max-width: 1439px) {
-    margin-left: 0;
     width: 100%;
     padding: 1.6rem;
     max-height: ${(props: LiveHelpProps) => (props.open ? "19rem" : "4.8rem")};
@@ -64,31 +75,20 @@ const Header = styled.button`
   cursor: pointer;
   display: flex;
   align-items: center;
+  font-weight: 700;
+  letter-spacing: 0.25px;
 
   margin-bottom: 0.6rem;
   height: 5.4rem;
-  padding-left: 1.6rem;
+  padding-left: 5rem;
+  font-size: 2.4rem;
+  padding-bottom: 0.5rem;
   @media (max-width: 1439px) {
     margin-bottom: 0;
     height: 4.8rem;
     width: 100%;
     background: none;
-  }
-`;
-
-const HeaderIcon = styled.img`
-  width: 2.6rem;
-  margin-right: 1rem;
-`;
-
-const HeaderText = styled.div`
-  font-weight: 700;
-  letter-spacing: 0.25px;
-
-  font-size: 2.4rem;
-  @media (max-width: 1439px) {
     font-size: 1.8rem;
-    line-height: 42px;
   }
 `;
 
@@ -103,6 +103,7 @@ const ChevronContainer = styled.div`
 
   height: 5.4rem;
   margin-right: 0.2rem;
+  padding-bottom: 0.2rem;
   @media (max-width: 1439px) {
     height: 4.8rem;
     margin-right: 0;
@@ -148,6 +149,14 @@ const ButtonContainer = styled.div`
   }
 `;
 
+const BackdHelper = styled.img`
+  left: -1rem;
+  top: -1rem;
+  position: absolute;
+  width: 4.8rem;
+  margin-right: 1rem;
+`;
+
 const LiveHelp = (): JSX.Element => {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
@@ -162,38 +171,38 @@ const LiveHelp = (): JSX.Element => {
   }, [hasSuggestions]);
 
   return (
-    <StyledLiveHelp visible={hasSuggestions} open={open} wide={isWide}>
-      <ChevronContainer>
-        <AccordionChevron open={open} />
-      </ChevronContainer>
-      <Header onClick={() => setOpen(!open)}>
-        <HeaderIcon src={gradientInfo} />
-        <HeaderText>{t("liveHelp.header")}</HeaderText>
-      </Header>
-      <Content>
-        {suggestions.map((suggestion: SuggestionType) => (
-          <Suggestion>
-            <SuggestionText>{suggestion.label}</SuggestionText>
-            <ButtonContainer>
-              <Button
-                primary
-                small
-                text="implement"
-                click={() => dispatch(implementSuggestion(suggestion.value))}
-                width="10rem"
-              />
-              <Button
-                small
-                text="ignore"
-                background="#252140"
-                width="10rem"
-                click={() => dispatch(ignoreSuggestion(suggestion.value))}
-              />
-            </ButtonContainer>
-          </Suggestion>
-        ))}
-      </Content>
-    </StyledLiveHelp>
+    <Container visible={hasSuggestions}>
+      <StyledLiveHelp open={open} wide={isWide}>
+        <ChevronContainer>
+          <AccordionChevron open={open} />
+        </ChevronContainer>
+        <Header onClick={() => setOpen(!open)}>{t("liveHelp.header")}</Header>
+        <Content>
+          {suggestions.map((suggestion: SuggestionType) => (
+            <Suggestion>
+              <SuggestionText>{suggestion.label}</SuggestionText>
+              <ButtonContainer>
+                <Button
+                  primary
+                  small
+                  text="implement"
+                  click={() => dispatch(implementSuggestion(suggestion.value))}
+                  width="10rem"
+                />
+                <Button
+                  small
+                  text="ignore"
+                  background="#252140"
+                  width="10rem"
+                  click={() => dispatch(ignoreSuggestion(suggestion.value))}
+                />
+              </ButtonContainer>
+            </Suggestion>
+          ))}
+        </Content>
+      </StyledLiveHelp>
+      <BackdHelper src={logo} />
+    </Container>
   );
 };
 
