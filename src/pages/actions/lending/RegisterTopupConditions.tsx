@@ -246,7 +246,9 @@ const RegisterTopupConditions = () => {
                     dispatch(
                       addSuggestion({
                         value: "threshold",
-                        label: t("liveHelp.suggestions.treshold"),
+                        label: t("liveHelp.suggestions.treshold", {
+                          threshold: formik.values.threshold,
+                        }),
                       })
                     );
                   } else {
