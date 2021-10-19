@@ -30,6 +30,7 @@ export const helpSlice = createSlice({
       state.suggestions.push(action.payload);
     },
     removeSuggestion: (state, action: PayloadAction<string>) => {
+      state.implement = "";
       const newSuggestions = [...state.suggestions];
       state.suggestions = newSuggestions.filter(
         (suggestion: SuggestionType) => suggestion.value !== action.payload
