@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { useHistory, useParams } from "react-router";
 import * as yup from "yup";
 import { FormikErrors, useFormik } from "formik";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import ContentSection from "../../../components/ContentSection";
 import { selectBalance } from "../../../state/userSlice";
@@ -19,6 +19,7 @@ import ActionSummary from "./ActionSummary";
 import { useDevice } from "../../../app/hooks/use-device";
 import { selectEthPrice } from "../../../state/poolsListSlice";
 import { GWEI_DECIMALS, GWEI_SCALE, TOPUP_GAS_COST } from "../../../lib/constants";
+import { addSuggestion, removeSuggestion, selectImplement } from "../../../state/helpSlice";
 
 interface TopupParams {
   address: string;
@@ -139,6 +140,7 @@ const ButtonContainer = styled.div`
 `;
 
 const RegisterTopupConditions = () => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const backd = useBackd();
   const history = useHistory();
@@ -148,8 +150,16 @@ const RegisterTopupConditions = () => {
   const underlyingPrice = useSelector(selectPrice(pool));
   const ethPrice = useSelector(selectEthPrice);
   const balance = useSelector(selectBalance(pool));
+  const implement = useSelector(selectImplement);
   const [loading, setLoading] = useState(false);
   const [confirming, setConfirming] = useState(false);
+
+  useEffect(() => {
+    if (implement === "threshold") {
+      formik.setFieldValue("threshold", "1.2", true);
+      dispatch(removeSuggestion("threshold"));
+    }
+  }, [implement]);
 
   const validate = (values: FormType): FormikErrors<FormType> => {
     const errors: FormikErrors<FormType> = {};
@@ -231,6 +241,18 @@ const RegisterTopupConditions = () => {
                 name="threshold"
                 formik={formik}
                 placeholder="1.4"
+                onBlur={() => {
+                  if (Number(formik.values.threshold) < 1.2) {
+                    dispatch(
+                      addSuggestion({
+                        value: "threshold",
+                        label: t("liveHelp.suggestions.treshold"),
+                      })
+                    );
+                  } else {
+                    dispatch(removeSuggestion("threshold"));
+                  }
+                }}
               />
               <RegisterTopupInput
                 label={
