@@ -159,6 +159,9 @@ const RegisterTopupConditions = () => {
       formik.setFieldValue("threshold", "1.2", true);
       dispatch(removeSuggestion("threshold"));
     }
+    return () => {
+      dispatch(removeSuggestion("threshold"));
+    };
   }, [implement]);
 
   const validate = (values: FormType): FormikErrors<FormType> => {
