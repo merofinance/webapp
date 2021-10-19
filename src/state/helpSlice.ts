@@ -9,11 +9,13 @@ export interface SuggestionType {
 interface HelpState {
   suggestions: SuggestionType[];
   implement: string;
+  ignore: string[];
 }
 
 const initialState: HelpState = {
   suggestions: [],
   implement: "",
+  ignore: [],
 };
 
 export const helpSlice = createSlice({
@@ -40,11 +42,16 @@ export const helpSlice = createSlice({
         (suggestion: SuggestionType) => suggestion.value !== action.payload
       );
     },
+    ignoreSuggestion: (state, action: PayloadAction<string>) => {
+      state.ignore.push(action.payload);
+    },
   },
 });
 
 export const selectSuggestions: Selector<SuggestionType[]> = (state: RootState) =>
-  state.help.suggestions;
+  state.help.suggestions.filter(
+    (suggestion: SuggestionType) => !state.help.ignore.includes(suggestion.value)
+  );
 
 export const selectImplement: Selector<string> = (state: RootState) => state.help.implement;
 
