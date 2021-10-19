@@ -55,6 +55,7 @@ export const selectSuggestions: Selector<SuggestionType[]> = (state: RootState) 
 
 export const selectImplement: Selector<string> = (state: RootState) => state.help.implement;
 
-export const { addSuggestion, removeSuggestion, implementSuggestion } = helpSlice.actions;
+export const { addSuggestion, removeSuggestion, implementSuggestion, ignoreSuggestion } =
+  helpSlice.actions;
 
 export default helpSlice.reducer;
