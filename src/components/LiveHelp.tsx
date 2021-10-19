@@ -125,6 +125,8 @@ const LiveHelp = (): JSX.Element => {
   const [open, setOpen] = useState(true);
   const isWide = i18n.language === "ja";
 
+  if (suggestions.length === 0) return <></>;
+
   return (
     <StyledLiveHelp open={open} wide={isWide}>
       <ChevronContainer>
