@@ -1,15 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import AccordionChevron from "./AccordionChevron";
 import gradientInfo from "../assets/ui/gradient-info.svg";
-import { selectSuggestions, SuggestionType } from "../state/helpSlice";
+import {
+  ignoreSuggestion,
+  implementSuggestion,
+  selectSuggestions,
+  SuggestionType,
+} from "../state/helpSlice";
+import Button from "./Button";
 
 interface LiveHelpProps {
   open?: boolean;
   wide?: boolean;
+  visible: boolean;
 }
 
 const StyledLiveHelp = styled.div`
@@ -23,7 +30,8 @@ const StyledLiveHelp = styled.div`
   transition: max-height 0.3s ease-out, background-color 0.3s, filter 0.3s;
   margin-bottom: 2.4rem;
 
-  max-height: ${(props: LiveHelpProps) => (props.open ? "24rem" : "5.4rem")};
+  max-height: ${(props: LiveHelpProps) => (props.open ? "35rem" : "5.4rem")};
+  opacity: ${(props: LiveHelpProps) => (props.visible ? "1" : "0")};
 
   // Background
   border: 1px solid transparent;
@@ -110,25 +118,51 @@ const Content = styled.div`
   @media (max-width: 1439px) {
     margin-top: 3.2rem;
   }
+
+  > div:first-child {
+    margin-top: 0;
+  }
 `;
 
 const Suggestion = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+`;
+
+const SuggestionText = styled.div`
   font-weight: 400;
   font-size: 1.5rem;
   line-height: 2.1rem;
   letter-spacing: 0.42px;
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+
+  button {
+    margin-right: 1rem;
+  }
+`;
+
 const LiveHelp = (): JSX.Element => {
   const { t, i18n } = useTranslation();
+  const dispatch = useDispatch();
   const suggestions = useSelector(selectSuggestions);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const isWide = i18n.language === "ja";
+  const hasSuggestions = suggestions.length > 0;
 
-  if (suggestions.length === 0) return <></>;
+  useEffect(() => {
+    if (hasSuggestions) setOpen(true);
+    else setOpen(false);
+  }, [hasSuggestions]);
 
   return (
-    <StyledLiveHelp open={open} wide={isWide}>
+    <StyledLiveHelp visible={hasSuggestions} open={open} wide={isWide}>
       <ChevronContainer>
         <AccordionChevron open={open} />
       </ChevronContainer>
@@ -138,7 +172,25 @@ const LiveHelp = (): JSX.Element => {
       </Header>
       <Content>
         {suggestions.map((suggestion: SuggestionType) => (
-          <Suggestion>{suggestion.label}</Suggestion>
+          <Suggestion>
+            <SuggestionText>{suggestion.label}</SuggestionText>
+            <ButtonContainer>
+              <Button
+                primary
+                small
+                text="implement"
+                click={() => dispatch(implementSuggestion(suggestion.value))}
+                width="10rem"
+              />
+              <Button
+                small
+                text="ignore"
+                background="#252140"
+                width="10rem"
+                click={() => dispatch(ignoreSuggestion(suggestion.value))}
+              />
+            </ButtonContainer>
+          </Suggestion>
         ))}
       </Content>
     </StyledLiveHelp>
