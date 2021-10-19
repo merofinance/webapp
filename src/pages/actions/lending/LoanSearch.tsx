@@ -8,10 +8,11 @@ import { useBackd } from "../../../app/hooks/use-backd";
 import BasicInput from "../../../components/BasicInput";
 import { spinAnimation } from "../../../styles/animations/SpinAnimation";
 import pending from "../../../assets/ui/status/pending.svg";
-import RowSelector, { RowOptionType } from "../../../components/RowSelector";
+import RowSelector from "../../../components/RowSelector";
 import { selectEthPrice } from "../../../state/poolsListSlice";
 import { Loan } from "../../../lib/types";
 import { fromPlainLoan } from "../../../state/lendingSlice";
+import { RowOptionType } from "../../../components/RowOption";
 
 const StyledLoanSearch = styled.div`
   width: 100%;

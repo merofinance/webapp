@@ -1,13 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import RowOption, { ColumnType } from "./RowOption";
-
-export interface RowOptionType {
-  value: string;
-  columns: ColumnType[];
-  id?: string;
-  disabledText?: string;
-}
+import RowOption, { RowOptionType } from "./RowOption";
 
 const StyledRowSelector = styled.div`
   width: 100%;
@@ -31,12 +24,9 @@ const RowSelector = ({ options, value, setValue }: Props) => {
     <StyledRowSelector>
       {options.map((option: RowOptionType) => (
         <RowOption
-          id={option.id}
-          key={option.value}
-          columns={option.columns}
           active={option.value === value}
           select={() => setValue(option.value)}
-          disabledText={option.disabledText}
+          option={option}
         />
       ))}
     </StyledRowSelector>

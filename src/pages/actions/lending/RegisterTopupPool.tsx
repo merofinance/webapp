@@ -6,8 +6,7 @@ import { useSelector } from "react-redux";
 
 import ContentSection from "../../../components/ContentSection";
 import Button from "../../../components/Button";
-import BackButton from "../../../components/BackButton";
-import RowSelector, { RowOptionType } from "../../../components/RowSelector";
+import RowSelector from "../../../components/RowSelector";
 import { selectPools, selectPrices } from "../../../state/poolsListSlice";
 import { Pool } from "../../../lib";
 import { formatPercent, numberToCompactCurrency } from "../../../lib/numeric";
@@ -18,6 +17,7 @@ import { Position } from "../../../lib/types";
 import RegisterTopupPoolDeposit from "./RegisterTopupPoolDeposit";
 import Asset from "../../../components/Asset";
 import { useDevice } from "../../../app/hooks/use-device";
+import { RowOptionType } from "../../../components/RowOption";
 
 interface TopupParams {
   address: string;
@@ -84,9 +84,15 @@ const RegisterTopupPool = () => {
   const selected = pools.filter((p: Pool) => p.lpToken.symbol.toLocaleLowerCase() === pool)[0];
 
   const options: RowOptionType[] = pools.map((pool: Pool) => {
+    const value = pool.lpToken.symbol.toLowerCase();
     return {
-      value: pool.lpToken.symbol.toLowerCase(),
+      value,
       id: `${pool.underlying.symbol.toLowerCase()}-pool-option`,
+      buttonText: "Deposit more",
+      buttonAction: () => {
+        setPool(value);
+        setDepositing(true);
+      },
       columns: [
         {
           label: t("headers.asset"),

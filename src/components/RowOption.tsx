@@ -1,9 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 
+import Button from "./Button";
+
 export interface ColumnType {
   label: string;
   value: string | JSX.Element;
+}
+
+export interface RowOptionType {
+  value: string;
+  columns: ColumnType[];
+  id?: string;
+  disabledText?: string;
+  buttonText?: string;
+  buttonAction?: () => void;
 }
 
 const Container = styled.div`
@@ -117,27 +128,33 @@ const HoverText = styled.div`
 `;
 
 interface Props {
-  columns: ColumnType[];
   active: boolean;
   select: () => void;
-  id?: string;
-  disabledText?: string;
+  option: RowOptionType;
 }
 
-const RowOption = ({ columns, active, select, id, disabledText }: Props) => {
+const RowOption = ({ active, select, option }: Props) => {
   return (
     <Container>
-      <StyledRowOption id={id} active={active} onClick={() => select()} disabled={!!disabledText}>
-        {columns.map((column: ColumnType) => (
+      <StyledRowOption
+        id={option.id}
+        active={active}
+        onClick={() => select()}
+        disabled={!!option.disabledText}
+      >
+        {option.columns.map((column: ColumnType) => (
           <Column key={column.label}>
-            <Header>{column.label}</Header>
+            {column.label && <Header>{column.label}</Header>}
             {typeof column.value === "string" ? <Value>{column.value}</Value> : column.value}
           </Column>
         ))}
+        {option.buttonText && option.buttonAction && (
+          <Button text={option.buttonText} click={option.buttonAction} background="#141127" />
+        )}
       </StyledRowOption>
-      {disabledText && (
+      {option.disabledText && (
         <HoverTextContainer>
-          <HoverText>{disabledText}</HoverText>
+          <HoverText>{option.disabledText}</HoverText>
         </HoverTextContainer>
       )}
     </Container>
