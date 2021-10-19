@@ -24,6 +24,7 @@ const RowSelector = ({ options, value, setValue }: Props) => {
     <StyledRowSelector>
       {options.map((option: RowOptionType) => (
         <RowOption
+          key={option.value}
           active={option.value === value}
           select={() => setValue(option.value)}
           option={option}
