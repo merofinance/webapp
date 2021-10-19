@@ -116,6 +116,7 @@ interface Props {
   name: keyof FormType;
   formik: FormikFormType;
   placeholder: string;
+  onBlur?: () => void;
 }
 
 const RegisterTopupInput = ({
@@ -125,6 +126,7 @@ const RegisterTopupInput = ({
   name,
   formik,
   placeholder,
+  onBlur,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
   const valid = !formik.touched[name] || !formik.errors[name];
@@ -145,7 +147,10 @@ const RegisterTopupInput = ({
             value={formik.values[name]}
             placeholder={placeholder}
             onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
+            onBlur={(e) => {
+              if (onBlur) onBlur();
+              formik.handleBlur(e);
+            }}
           />
         </InputBorder>
         {!valid && (
