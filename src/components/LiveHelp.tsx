@@ -21,6 +21,13 @@ const StyledLiveHelp = styled.div`
 
   max-height: ${(props: LiveHelpProps) => (props.open ? "24rem" : "5.4rem")};
 
+  // Background
+  border: 1px solid transparent;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  background-image: linear-gradient(#252140, #252140),
+    linear-gradient(to right, var(--primary-gradient), var(--secondary-gradient));
+
   margin-left: 1.6rem;
   width: ${(props: LiveHelpProps) => (props.wide ? "40rem" : "36rem")};
   padding: 2rem 1.8rem;
@@ -31,8 +38,10 @@ const StyledLiveHelp = styled.div`
     max-height: ${(props: LiveHelpProps) => (props.open ? "19rem" : "4.8rem")};
   }
 
+  transition: filter 0.3s;
+  filter: brightness(1);
   :hover {
-    background-color: #181532;
+    filter: brightness(1.15);
   }
 `;
 
