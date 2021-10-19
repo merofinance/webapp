@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import Button from "./Button";
 
-export interface ColumnType {
+interface ColumnType {
   label: string;
   value: string | JSX.Element;
 }
