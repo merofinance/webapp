@@ -97,6 +97,11 @@ export class ScaledNumber {
     return this.value.lte(other.value);
   }
 
+  max(other: ScaledNumber): ScaledNumber {
+    this.assertSameDecimals(other);
+    return this.value.gt(other.value) ? this : other;
+  }
+
   mul(value: number | string | ScaledNumber): ScaledNumber {
     const scale = BigNumber.from(10).pow(this.decimals);
     const scaledValue =
