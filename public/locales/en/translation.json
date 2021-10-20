@@ -603,7 +603,7 @@
   "liveHelp": {
     "header": "Live Help",
     "suggestions": {
-      "treshold": "We notice you have entered a threshold top-up of {{threshold}}. This is very close to liquidation and in times of market volatility we suggest at least 1.2 or more."
+      "treshold": "I noticed you have entered a threshold top-up of {{threshold}}. This is very close to liquidation and in times of market volatility we suggest at least 1.2 or more."
     }
   }
 }
