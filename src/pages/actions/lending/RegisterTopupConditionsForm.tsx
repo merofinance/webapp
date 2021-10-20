@@ -145,13 +145,6 @@ const RegisterTopupConditionsForm = ({ loan }: Props) => {
     if (values.maxTopUp && single.gt(max))
       errors.singleTopUp = "actions.topup.fields.single.lessThanMax";
     if (max.gt(balance)) errors.maxTopUp = "actions.topup.fields.max.exceedsBalance";
-    if (values.maxTopUp && values.maxGasPrice) {
-      const maxTopupUsd = max.mul(underlyingPrice);
-      const gasCostUsd = new ScaledNumber(gas.value.mul(TOPUP_GAS_COST).div(GWEI_SCALE)).mul(
-        ethPrice
-      );
-      if (maxTopupUsd.lte(gasCostUsd)) errors.maxTopUp = "actions.topup.fields.gas.exceedsMax";
-    }
     return errors;
   };
 
@@ -191,6 +184,37 @@ const RegisterTopupConditionsForm = ({ loan }: Props) => {
     depositToken: pool.lpToken.address,
   };
 
+  const singleMinimumSuggestion = () => {
+    if (loan && formik.values.singleTopUp && ScaledNumber.isValid(formik.values.singleTopUp)) {
+      const single = ScaledNumber.fromUnscaled(formik.values.singleTopUp, pool.underlying.decimals);
+      const singleTopupUsd = single.mul(underlyingPrice);
+      const gas = ScaledNumber.fromUnscaled(formik.values.maxGasPrice, GWEI_DECIMALS);
+      const gasCost = new ScaledNumber(gas.value.mul(TOPUP_GAS_COST).div(GWEI_SCALE));
+      const gasCostUsd = gasCost.mul(ethPrice);
+      if (singleTopupUsd.mul(0.25).lte(gasCostUsd)) {
+        dispatch(
+          addSuggestion({
+            value: "single-low",
+            label: t("liveHelp.suggestions.singleLow", {
+              maxGas: gasCost.toUsdValue(ethPrice),
+              ethAmount: gasCost,
+              single: single.toUsdValue(underlyingPrice),
+              underlyingAmount: single.toCryptoString(),
+              underlyingSymbol: pool.underlying.symbol,
+              suggestion: gasCostUsd
+                .mul(5)
+                .max(loan.totalCollateralETH.mul(ethPrice).mul(0.02))
+                .div(underlyingPrice)
+                .toCryptoString(),
+            }),
+          })
+        );
+        return;
+      }
+    }
+    dispatch(removeSuggestion("single-low"));
+  };
+
   return (
     <>
       <Form noValidate onSubmit={formik.handleSubmit}>
@@ -221,7 +245,8 @@ const RegisterTopupConditionsForm = ({ loan }: Props) => {
             if (
               formik.values.threshold &&
               loan &&
-              Number(formik.values.threshold) >= Number(loan.healthFactor.toCryptoString())
+              Number(formik.values.threshold) >=
+                Number(loan.healthFactor.toCryptoString({ useGrouping: false }))
             ) {
               dispatch(
                 addSuggestion({
@@ -247,6 +272,9 @@ const RegisterTopupConditionsForm = ({ loan }: Props) => {
           name="singleTopUp"
           formik={formik}
           placeholder={`2,000 ${pool.underlying.symbol}`}
+          onBlur={() => {
+            singleMinimumSuggestion();
+          }}
         />
         <RegisterTopupInput
           label={
@@ -267,6 +295,9 @@ const RegisterTopupConditionsForm = ({ loan }: Props) => {
           name="maxGasPrice"
           formik={formik}
           placeholder="200 Gwei"
+          onBlur={() => {
+            singleMinimumSuggestion();
+          }}
         />
         <ButtonContainer>
           <ApproveThenAction
