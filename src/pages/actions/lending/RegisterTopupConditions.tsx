@@ -89,7 +89,7 @@ const RegisterTopupConditions = () => {
               {t("actions.topup.stages.conditions.header")}
             </Header>
             <SubHeader>{t("actions.topup.stages.conditions.subHeader")}</SubHeader>
-            <RegisterTopupConditionsForm />
+            <RegisterTopupConditionsForm loan={loan} />
           </Content>
         }
       />

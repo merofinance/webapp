@@ -17,7 +17,7 @@ import { selectEthPrice } from "../../../state/poolsListSlice";
 import { GWEI_DECIMALS, GWEI_SCALE, TOPUP_GAS_COST } from "../../../lib/constants";
 import { addSuggestion, removeSuggestion, selectImplement } from "../../../state/helpSlice";
 import NewPositionConfirmation from "./RegisterTopupConfirmation";
-import { Position } from "../../../lib/types";
+import { Loan, Position } from "../../../lib/types";
 
 interface TopupParams {
   address: string;
@@ -102,7 +102,11 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const RegisterTopupConditionsForm = () => {
+interface Props {
+  loan: Loan | null;
+}
+
+const RegisterTopupConditionsForm = ({ loan }: Props) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const backd = useBackd();
@@ -121,9 +125,13 @@ const RegisterTopupConditionsForm = () => {
     if (implement === "threshold") {
       formik.setFieldValue("threshold", "1.2", true);
       dispatch(removeSuggestion("threshold"));
+    } else if (implement === "threshold-high") {
+      formik.setFieldValue("threshold", "1.2", true);
+      dispatch(removeSuggestion("threshold-high"));
     }
     return () => {
       dispatch(removeSuggestion("threshold"));
+      dispatch(removeSuggestion("threshold-high"));
     };
   }, [implement]);
 
@@ -208,6 +216,22 @@ const RegisterTopupConditionsForm = () => {
               );
             } else {
               dispatch(removeSuggestion("threshold"));
+            }
+            if (
+              formik.values.threshold &&
+              loan &&
+              Number(formik.values.threshold) >= Number(loan.healthFactor.toCryptoString())
+            ) {
+              dispatch(
+                addSuggestion({
+                  value: "threshold-high",
+                  label: t("liveHelp.suggestions.tresholdHigh", {
+                    threshold: formik.values.threshold,
+                  }),
+                })
+              );
+            } else {
+              dispatch(removeSuggestion("threshold-high"));
             }
           }}
         />
