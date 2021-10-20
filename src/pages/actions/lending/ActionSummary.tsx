@@ -1,22 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { useWeb3React } from "@web3-react/core";
 import { useHistory, useParams } from "react-router";
 
-import { fromPlainLoan } from "../../../state/lendingSlice";
 import { selectEthPrice } from "../../../state/poolsListSlice";
 import Asset from "../../../components/Asset";
 import { selectPool } from "../../../state/selectors";
 import { GradientText } from "../../../styles/GradientText";
-import { Loan, PlainLoan } from "../../../lib/types";
-import { useWeb3Updated } from "../../../app/hooks/use-web3-updated";
-import { useBackd } from "../../../app/hooks/use-backd";
+import { Loan } from "../../../lib/types";
 
 interface TopupParams {
-  address: string;
-  protocol: string;
   poolName: string;
 }
 
@@ -84,56 +78,39 @@ const ChangePoolText = styled(GradientText)`
   font-size: 1rem;
 `;
 
-const ActionSummary = () => {
+interface Props {
+  loan: Loan | null;
+}
+
+const ActionSummary = ({ loan }: Props) => {
   const { t } = useTranslation();
-  const { address, protocol, poolName } = useParams<TopupParams>();
+  const { poolName } = useParams<TopupParams>();
   const history = useHistory();
-  const backd = useBackd();
-  const update = useWeb3Updated();
-  const { account } = useWeb3React();
   const ethPrice = useSelector(selectEthPrice);
   const pool = useSelector(selectPool(poolName));
-  const [loan, setLoan] = useState<Loan | null>(null);
-
-  const redirectToRegister = () => history.push("/actions/register/topup");
-
-  const getLoan = async () => {
-    if (!account || !backd) return;
-    let plainLoan: PlainLoan | null = null;
-    if (protocol === "Aave") plainLoan = await backd.getAave(address);
-    else if (protocol === "Compound") plainLoan = await backd.getCompound(address);
-    if (!plainLoan) redirectToRegister();
-    else setLoan(fromPlainLoan(plainLoan));
-  };
-
-  useEffect(() => {
-    getLoan();
-  }, [update, backd]);
-
-  if (!loan || !pool) return <></>;
 
   return (
     <StyledActionSummary id="action-summary">
       <Column>
         <Header>{t("actions.suggestions.topup.labels.protocol")}</Header>
-        <Value>{loan.protocol}</Value>
+        <Value>{loan ? loan.protocol : "----"}</Value>
       </Column>
       <Column>
         <Header>{t("actions.suggestions.topup.labels.healthFactor")}</Header>
-        <Value>{loan.healthFactor.toCryptoString()}</Value>
+        <Value>{loan ? loan.healthFactor.toCryptoString() : "----"}</Value>
       </Column>
       <Column hideMobile>
         <Header>{t("actions.suggestions.topup.labels.totalCollateral")}</Header>
-        <Value>{loan.totalCollateralETH.toUsdValue(ethPrice)}</Value>
+        <Value>{loan ? loan.totalCollateralETH.toUsdValue(ethPrice) : "$----"}</Value>
       </Column>
       <Column hideMobile>
         <Header>{t("actions.suggestions.topup.labels.totalLoan")}</Header>
-        <Value>{loan.totalDebtETH.toUsdValue(ethPrice)}</Value>
+        <Value>{loan ? loan.totalDebtETH.toUsdValue(ethPrice) : "$----"}</Value>
       </Column>
       <Column>
         <Header>{t("actions.suggestions.topup.labels.pool")}</Header>
         <Value>
-          <Asset tiny token={pool.underlying} />
+          {pool ? <Asset tiny token={pool.underlying} /> : <Header>----</Header>}
           <ChangePoolButton id="action-summary-change-pool" onClick={() => history.goBack()}>
             <ChangePoolText>{t("components.change")}</ChangePoolText>
           </ChangePoolButton>
