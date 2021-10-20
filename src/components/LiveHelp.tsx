@@ -179,7 +179,7 @@ const LiveHelp = (): JSX.Element => {
         <Header onClick={() => setOpen(!open)}>{t("liveHelp.header")}</Header>
         <Content>
           {suggestions.map((suggestion: SuggestionType) => (
-            <Suggestion>
+            <Suggestion key={suggestion.value}>
               <SuggestionText>{suggestion.label}</SuggestionText>
               <ButtonContainer>
                 <Button
