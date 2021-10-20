@@ -122,15 +122,16 @@ const RegisterTopupConditionsForm = ({ loan }: Props) => {
   const [confirming, setConfirming] = useState(false);
 
   useEffect(() => {
-    if (implement === "threshold") {
+    if (implement === "threshold-min") {
+      console.log("meow");
       formik.setFieldValue("threshold", "1.2", true);
-      dispatch(removeSuggestion("threshold"));
+      dispatch(removeSuggestion("threshold-min"));
     } else if (implement === "threshold-high") {
       formik.setFieldValue("threshold", "1.2", true);
       dispatch(removeSuggestion("threshold-high"));
     }
     return () => {
-      dispatch(removeSuggestion("threshold"));
+      dispatch(removeSuggestion("threshold-min"));
       dispatch(removeSuggestion("threshold-high"));
     };
   }, [implement]);
@@ -208,14 +209,14 @@ const RegisterTopupConditionsForm = ({ loan }: Props) => {
             if (formik.values.threshold && Number(formik.values.threshold) < 1.2) {
               dispatch(
                 addSuggestion({
-                  value: "threshold",
-                  label: t("liveHelp.suggestions.treshold", {
+                  value: "threshold-min",
+                  label: t("liveHelp.suggestions.tresholdMin", {
                     threshold: formik.values.threshold,
                   }),
                 })
               );
             } else {
-              dispatch(removeSuggestion("threshold"));
+              dispatch(removeSuggestion("threshold-min"));
             }
             if (
               formik.values.threshold &&
