@@ -2,16 +2,21 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router";
 
 import AccordionChevron from "./AccordionChevron";
 import logo from "../assets/logo/logo.svg";
 import {
+  addSuggestion,
   ignoreSuggestion,
   implementSuggestion,
+  selectImplement,
   selectSuggestions,
   SuggestionType,
 } from "../state/helpSlice";
 import Button from "./Button";
+import { selectPositions } from "../state/positionsSlice";
+import { Position } from "../lib/types";
 
 interface ContainerProps {
   visible: boolean;
@@ -160,15 +165,45 @@ const BackdHelper = styled.img`
 const LiveHelp = (): JSX.Element => {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
   const suggestions = useSelector(selectSuggestions);
+  const implement = useSelector(selectImplement);
+  const positions = useSelector(selectPositions);
   const [open, setOpen] = useState(false);
   const isWide = i18n.language === "ja";
   const hasSuggestions = suggestions.length > 0;
+
+  const lowPositions = positions.filter((position: Position) =>
+    position.singleTopUp.gt(position.maxTopUp)
+  );
+  const hasLowPositions = lowPositions.length > 0;
 
   useEffect(() => {
     if (hasSuggestions) setOpen(true);
     else setOpen(false);
   }, [hasSuggestions]);
+
+  useEffect(() => {
+    if (!hasLowPositions) return;
+    lowPositions.forEach((position: Position) =>
+      dispatch(
+        addSuggestion({
+          value: `${position.protocol.toLowerCase()}-low`,
+          label: t("liveHelp.suggestions.topupPositionLow", { protocol: position.protocol }),
+        })
+      )
+    );
+  }, [hasLowPositions]);
+
+  useEffect(() => {
+    if (
+      (implement === "aave-low" || implement === "compound-low") &&
+      location.pathname !== "/actions"
+    ) {
+      history.push("/actions");
+    }
+  }, [implement, location]);
 
   return (
     <Container visible={hasSuggestions}>
