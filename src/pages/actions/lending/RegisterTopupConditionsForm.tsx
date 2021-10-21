@@ -129,10 +129,14 @@ const RegisterTopupConditionsForm = ({ loan }: Props) => {
     } else if (implement === "threshold-high") {
       formik.setFieldValue("threshold", "1.2", true);
       dispatch(removeSuggestion("threshold-high"));
+    } else if (implement === "single-low") {
+      formik.setFieldValue("singleTopUp", suggestedSingleTopup(), true);
+      dispatch(removeSuggestion("single-low"));
     }
     return () => {
       dispatch(removeSuggestion("threshold-min"));
       dispatch(removeSuggestion("threshold-high"));
+      dispatch(removeSuggestion("single-low"));
     };
   }, [implement]);
 
@@ -141,7 +145,6 @@ const RegisterTopupConditionsForm = ({ loan }: Props) => {
     if (!pool) return errors;
     const single = ScaledNumber.fromUnscaled(values.singleTopUp, pool.underlying.decimals);
     const max = ScaledNumber.fromUnscaled(values.maxTopUp, pool.underlying.decimals);
-    const gas = ScaledNumber.fromUnscaled(values.maxGasPrice, GWEI_DECIMALS);
     if (values.maxTopUp && single.gt(max))
       errors.singleTopUp = "actions.topup.fields.single.lessThanMax";
     if (max.gt(balance)) errors.maxTopUp = "actions.topup.fields.max.exceedsBalance";
@@ -184,6 +187,19 @@ const RegisterTopupConditionsForm = ({ loan }: Props) => {
     depositToken: pool.lpToken.address,
   };
 
+  const suggestedSingleTopup = () => {
+    if (!loan || !formik.values.singleTopUp || !ScaledNumber.isValid(formik.values.singleTopUp))
+      return "";
+    const gas = ScaledNumber.fromUnscaled(formik.values.maxGasPrice, GWEI_DECIMALS);
+    const gasCost = new ScaledNumber(gas.value.mul(TOPUP_GAS_COST).div(GWEI_SCALE));
+    const gasCostUsd = gasCost.mul(ethPrice);
+    return gasCostUsd
+      .mul(5)
+      .max(loan.totalCollateralETH.mul(ethPrice).mul(0.02))
+      .div(underlyingPrice)
+      .toCryptoString({ useGrouping: false });
+  };
+
   const singleMinimumSuggestion = () => {
     if (loan && formik.values.singleTopUp && ScaledNumber.isValid(formik.values.singleTopUp)) {
       const single = ScaledNumber.fromUnscaled(formik.values.singleTopUp, pool.underlying.decimals);
@@ -201,11 +217,7 @@ const RegisterTopupConditionsForm = ({ loan }: Props) => {
               single: single.toUsdValue(underlyingPrice),
               underlyingAmount: single.toCryptoString(),
               underlyingSymbol: pool.underlying.symbol,
-              suggestion: gasCostUsd
-                .mul(5)
-                .max(loan.totalCollateralETH.mul(ethPrice).mul(0.02))
-                .div(underlyingPrice)
-                .toCryptoString(),
+              suggestion: suggestedSingleTopup(),
             }),
           })
         );
