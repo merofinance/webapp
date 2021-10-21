@@ -10,12 +10,6 @@
       "positive": "El importe debe ser un número positivo"
     }
   },
-  "auditedBy": {
-    "description": "Dirigido por expertos en seguridad de ETH Zurich y con la confianza de más de 85 compañias y corporaciones blockchain.",
-    "header": "auditado por",
-    "preLaunchHeader": "auditoría en curso",
-    "viewReport": "Ver Reporte"
-  },
   "banner": {
     "testnet": {
       "blogPost": "el blog post",

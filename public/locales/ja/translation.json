@@ -10,12 +10,6 @@
       "positive": "金額は正の数でご入力ください。"
     }
   },
-  "auditedBy": {
-    "description": "85以上のブロックチェーン企業や法人企業からの信頼されている、チューリッヒ工科大学のセキュリティ専門家が主導しております。",
-    "header": "監査元",
-    "preLaunchHeader": "進行中の監査",
-    "viewReport": "報告を見る"
-  },
   "banner": {
     "testnet": {
       "blogPost": "ブログ記事",

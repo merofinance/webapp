@@ -10,12 +10,6 @@
       "positive": "Amount must be a positive number"
     }
   },
-  "auditedBy": {
-    "description": "由苏黎世联邦理工学院安全专家领导，逾85家区块链公司和组织信任",
-    "header": "审计机构",
-    "preLaunchHeader": "正在审计",
-    "viewReport": "查看报告"
-  },
   "banner": {
     "testnet": {
       "blogPost": "the blog post",

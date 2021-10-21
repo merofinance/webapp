@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { useIsLive } from "../../app/hooks/use-is-live";
-import AuditedBy from "./AuditedBy";
 import Background from "./Background";
 import Benefits from "./Benefits";
 import FutureActions from "./FutureActions";
@@ -37,7 +36,6 @@ const LandingPage = (): JSX.Element => {
         <HowItWorks />
         <FutureActions />
         <SupportedBy />
-        {/* <AuditedBy /> */}
         <JoinCommunity />
         <GetStarted />
       </Content>

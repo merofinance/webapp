@@ -10,12 +10,6 @@
       "positive": "Le montant doit être positif"
     }
   },
-  "auditedBy": {
-    "description": "dirigé par des experts en sécurité de l'École polytechnique fédérale de Zurich et ayant reçu la confiance de plus de 85 enteprises de blockchain",
-    "header": "Audité par",
-    "preLaunchHeader": "En cours d’audit",
-    "viewReport": "Voir le rapport"
-  },
   "banner": {
     "testnet": {
       "blogPost": "l'article de blog",
