@@ -323,20 +323,20 @@ const RegisterTopupConditionsForm = ({ loan }: Props) => {
             hoverText={buttonHoverText()}
           />
         </ButtonContainer>
-        <NewPositionConfirmation
-          show={confirming}
-          close={() => {
-            setConfirming(false);
-            setLoading(false);
-          }}
-          position={position}
-          pool={pool}
-          complete={() => {
-            formik.resetForm({ values: initialValues });
-            history.push("/actions");
-          }}
-        />
       </Form>
+      <NewPositionConfirmation
+        show={confirming}
+        close={() => {
+          setConfirming(false);
+          setLoading(false);
+        }}
+        position={position}
+        pool={pool}
+        complete={() => {
+          formik.resetForm({ values: initialValues });
+          history.push("/actions");
+        }}
+      />
     </>
   );
 };
