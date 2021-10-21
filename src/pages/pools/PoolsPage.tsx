@@ -24,6 +24,10 @@ const StyledPoolsPage = styled.div`
   }
 `;
 
+const ContentContainer = styled.div`
+  flex: 1;
+`;
+
 const Table = styled.table`
   width: 100%;
 `;
@@ -93,26 +97,28 @@ const PoolsPage = (): JSX.Element => {
         title="Backd Pools"
         description="Earn yield and governance tokens while executing other acitons such as collateral top ups (Aave & Compound) "
       />
-      <ContentSection
-        header={t("pools.header")}
-        statistics={<PoolsStatistics />}
-        content={
-          <Table>
-            <thead>
-              <HeaderRow>
-                <Header>{t("headers.asset")}</Header>
-                <Header>{t("headers.apy")}</Header>
-                <Header>{t("headers.tvl")}</Header>
-                <Header hideOnMobile>{t("headers.deposits")}</Header>
-                <ChevronHeader />
-              </HeaderRow>
-            </thead>
-            {pools.map((pool: Pool) => (
-              <PoolsRow key={pool.address} pool={pool} />
-            ))}
-          </Table>
-        }
-      />
+      <ContentContainer>
+        <ContentSection
+          header={t("pools.header")}
+          statistics={<PoolsStatistics />}
+          content={
+            <Table>
+              <thead>
+                <HeaderRow>
+                  <Header>{t("headers.asset")}</Header>
+                  <Header>{t("headers.apy")}</Header>
+                  <Header>{t("headers.tvl")}</Header>
+                  <Header hideOnMobile>{t("headers.deposits")}</Header>
+                  <ChevronHeader />
+                </HeaderRow>
+              </thead>
+              {pools.map((pool: Pool) => (
+                <PoolsRow key={pool.address} pool={pool} />
+              ))}
+            </Table>
+          }
+        />
+      </ContentContainer>
       <InfoCards>
         <Overview description={t("pools.overview")} link="https://docs.backd.fund/" />
         <PoolsInformation />
