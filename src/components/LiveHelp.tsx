@@ -10,6 +10,7 @@ import {
   addSuggestion,
   ignoreSuggestion,
   implementSuggestion,
+  removeSuggestion,
   selectImplement,
   selectSuggestions,
   SuggestionType,
@@ -18,15 +19,9 @@ import Button from "./Button";
 import { selectPositions } from "../state/positionsSlice";
 import { Position } from "../lib/types";
 
-interface ContainerProps {
-  visible: boolean;
-}
-
 const Container = styled.div`
   position: relative;
   margin-bottom: 2.4rem;
-
-  opacity: ${(props: ContainerProps) => (props.visible ? "1" : "0")};
 
   margin-left: 1.6rem;
   @media (max-width: 1439px) {
@@ -192,15 +187,19 @@ const LiveHelp = (): JSX.Element => {
   }, [hasSuggestions]);
 
   useEffect(() => {
-    if (!hasLowPositions) return;
-    lowPositions.forEach((position: Position) =>
-      dispatch(
-        addSuggestion({
-          value: `${position.protocol.toLowerCase()}-low`,
-          label: t("liveHelp.suggestions.topupPositionLow", { protocol: position.protocol }),
-        })
-      )
-    );
+    if (hasLowPositions) {
+      lowPositions.forEach((position: Position) =>
+        dispatch(
+          addSuggestion({
+            value: `${position.protocol.toLowerCase()}-low`,
+            label: t("liveHelp.suggestions.topupPositionLow", { protocol: position.protocol }),
+          })
+        )
+      );
+    } else {
+      dispatch(removeSuggestion(`aave-low`));
+      dispatch(removeSuggestion(`compound-low`));
+    }
   }, [hasLowPositions]);
 
   useEffect(() => {
@@ -212,8 +211,10 @@ const LiveHelp = (): JSX.Element => {
     }
   }, [implement, location]);
 
+  if (!hasSuggestions) return <></>;
+
   return (
-    <Container visible={hasSuggestions}>
+    <Container>
       <StyledLiveHelp open={open} wide={isWide} suggestions={suggestions.length}>
         <ChevronContainer>
           <AccordionChevron open={open} />
