@@ -24,6 +24,10 @@
     }
   },
   "benefits": {
+    "avoidLiquidation": {
+      "description": "当需要补充保证金时，存放在Backd的备用资产将自动转到贷款协议以作保证金",
+      "header": "避免清算"
+    },
     "earnYield": {
       "description": "透过建基于Convex和Curve的流动资产挖矿策略赚取最大回报",
       "header": "赚取收益"
@@ -31,6 +35,10 @@
     "feeShare": {
       "description": "流动性提供者能分享从补充保证金服务所获得的手续费",
       "header": "手续费分润"
+    },
+    "reactiveLiquidity": {
+      "description": "Create Actions to automate your liquidity to where it is needed most.",
+      "header": "Reactive Liquidity"
     },
     "readMore": "了解更多"
   },
@@ -55,7 +63,8 @@
     "close": "Close",
     "confirm": "Confirm",
     "dropdownChoose": "choose",
-    "moreInDocs": "Find out more in the docs"
+    "moreInDocs": "Find out more in the docs",
+    "overview": "Overview"
   },
   "errors": {
     "fetchPrices": "failed to fetch prices: {{error}}",
@@ -95,6 +104,32 @@
         "telegram": "电报频道"
       }
     }
+  },
+  "futureActions": {
+    "actions": {
+      "curveImbalance": {
+        "description": "Keepers can detect when LP pools become imbalanaced and remove liquidity for you on your behalf - saving you from substantial losses.",
+        "header": "Curve Imbalance Protection"
+      },
+      "limitOrders": {
+        "description": "Once a limit order can be filled, a Keeper can withdraw the required funds from yield pools and execute the trade on the AMM.",
+        "header": "AMM Limit Orders"
+      },
+      "nfts": {
+        "description": "Create a limit order for an NFT with a specific set of rarity traits. Once the price drops within your desired amount, a purchase Action is executed and liquidity is removed from Backd’s yield pools.",
+        "header": "Limit Orders for NFTs"
+      },
+      "propose": {
+        "description": "Actions can be added through the Backd DAO. Join the Backd community and propose a new action!",
+        "header": "Propose your own"
+      },
+      "uniswap": {
+        "description": "Backd Keepers detect when the price has moved outside of your defined range and move the liquidity into Backd’s yield pools. Once the price is back within range, Keepers move your liquidity back into Uniswap.",
+        "header": "Uniswap V3 LP Management"
+      }
+    },
+    "header": "future actions",
+    "subHeader": "Building out essential DeFi infrastructure"
   },
   "getStarted": {
     "description": "存入流动资产以赚取收益",
@@ -172,7 +207,9 @@
         "tabName": "赚取收益"
       }
     },
-    "header": "机制介绍"
+    "deposit": "Deposit now",
+    "header": "机制介绍",
+    "subHeader": "Protect your loans from liquidation"
   },
   "joinCommunity": {
     "header": "加入社区",
@@ -282,11 +319,7 @@
       "pools": "view all pools"
     },
     "number": "404",
-    "subHeader": {
-      "end": "if you believe there is an issue.",
-      "getInTouch": "get in touch",
-      "start": "Try one of the handy links below - or"
-    }
+    "subHeader": "Try one of the handy links below - or <0>get in touch</0> if you believe there is an issue."
   },
   "pool": {
     "information": {
@@ -344,6 +377,10 @@
           "summaryEnd": "drops below {{threshold}}, it will be topped up with {{single}} {{asset}} ({{singleUsd}}). This will be repeated each time the collateralization ratio drops below {{threshold}}, until a total of {{max}} {{asset}} ({{maxUsd}}) is topped up.",
           "summaryStart": "When the collateralization of"
         },
+        "delete": {
+          "body": "Deleting this top-up position will remove automated collateral top-ups of {{asset}} on {{protocol}}. {{max}} {{asset}} will be unstaked and can be withdrawn after removing the position.",
+          "header": "Delete top-up position"
+        },
         "fields": {
           "address": {
             "hover": "Enter Address",
@@ -400,6 +437,7 @@
     }
   },
   "pools": {
+    "deposit": "deposit",
     "header": "All pools",
     "information": {
       "apy": {
@@ -417,6 +455,10 @@
       }
     },
     "overview": "Backd’s single-asset pools aggregate yield across strategies. After depositing an asset, register a top-up position to protect from liquidation on supported collateralized lending protocols.",
+    "preview": {
+      "header": "yield farming",
+      "subHeader": "Begin earning yield immediately"
+    },
     "statistics": {
       "deposits": {
         "header": "Your deposits",

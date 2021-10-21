@@ -1,29 +1,33 @@
 {
   "amountInput": {
-    "approve": "Approve {{asset}}",
-    "available": "Available: {{amount}}",
-    "enter": "Enter Amount",
+    "approve": "Aprobar {{asset}}",
+    "available": "Disponible: {{amount}}",
+    "enter": "Introducir Importe",
     "max": "max",
     "validation": {
-      "exceedsBalance": "Amount exceeds available balance",
-      "invalid": "Invalid number",
-      "positive": "Amount must be a positive number"
+      "exceedsBalance": "El importe supera el saldo disponible",
+      "invalid": "Número inválido",
+      "positive": "El importe debe ser un número positivo"
     }
   },
   "auditedBy": {
-    "description": "Dirigido por expertos en seguridad de ETH Zurich y con la confianza de 85+ compañias y corporaciones blockchain",
-    "header": "Auditado por",
-    "preLaunchHeader": "Auditoria en progreso",
-    "viewReport": "Ver reporte"
+    "description": "Dirigido por expertos en seguridad de ETH Zurich y con la confianza de más de 85 compañias y corporaciones blockchain.",
+    "header": "auditado por",
+    "preLaunchHeader": "auditoría en curso",
+    "viewReport": "Ver Reporte"
   },
   "banner": {
     "testnet": {
-      "blogPost": "the blog post",
-      "connect": "Connect your wallet to begin or read",
-      "live": "🎉 Backd is now live on Kovan Testnet."
+      "blogPost": "el blog post",
+      "connect": "Conecta tu cartera para empezar o lea",
+      "live": "🎉 Backd está disponible en Kovan Testnet."
     }
   },
   "benefits": {
+    "avoidLiquidation": {
+      "description": "La liquidez depositada y marcada como colateral de back-up en Backd será transformada automaticamente cuando sea necesario realizar top-ups de colateral",
+      "header": "Evitar Liquidación"
+    },
     "earnYield": {
       "description": "Consigue intereses sobre tu liqudiez mediante estrategias de yield-farming basadas en Curve y Convex.",
       "header": "Consigue rendimiento"
@@ -31,6 +35,10 @@
     "feeShare": {
       "description": "Una pequeña comisión sobre el colateral de top-up que se repartirá entre los proveedores de liquidez (LPs)",
       "header": "Distribución de Comisiones"
+    },
+    "reactiveLiquidity": {
+      "description": "Create Actions to automate your liquidity to where it is needed most.",
+      "header": "Liquidez reactiva"
     },
     "readMore": "Leer Más"
   },
@@ -55,7 +63,8 @@
     "close": "Close",
     "confirm": "Confirm",
     "dropdownChoose": "choose",
-    "moreInDocs": "Find out more in the docs"
+    "moreInDocs": "Find out more in the docs",
+    "overview": "Overview"
   },
   "errors": {
     "fetchPrices": "failed to fetch prices: {{error}}",
@@ -95,6 +104,32 @@
         "telegram": "Telegram Ann."
       }
     }
+  },
+  "futureActions": {
+    "actions": {
+      "curveImbalance": {
+        "description": "Keepers can detect when LP pools become imbalanaced and remove liquidity for you on your behalf - saving you from substantial losses.",
+        "header": "Curve Imbalance Protection"
+      },
+      "limitOrders": {
+        "description": "Once a limit order can be filled, a Keeper can withdraw the required funds from yield pools and execute the trade on the AMM.",
+        "header": "AMM Limit Orders"
+      },
+      "nfts": {
+        "description": "Create a limit order for an NFT with a specific set of rarity traits. Once the price drops within your desired amount, a purchase Action is executed and liquidity is removed from Backd’s yield pools.",
+        "header": "Limit Orders for NFTs"
+      },
+      "propose": {
+        "description": "Actions can be added through the Backd DAO. Join the Backd community and propose a new action!",
+        "header": "Propose your own"
+      },
+      "uniswap": {
+        "description": "Backd Keepers detect when the price has moved outside of your defined range and move the liquidity into Backd’s yield pools. Once the price is back within range, Keepers move your liquidity back into Uniswap.",
+        "header": "Uniswap V3 LP Management"
+      }
+    },
+    "header": "future actions",
+    "subHeader": "Building out essential DeFi infrastructure"
   },
   "getStarted": {
     "description": "Deposita liquidez y empieza a obtener rendimiento",
@@ -172,7 +207,9 @@
         "tabName": "Obten rendimiento"
       }
     },
-    "header": "Como funciona?"
+    "deposit": "Deposit now",
+    "header": "Como funciona?",
+    "subHeader": "Protect your loans from liquidation"
   },
   "joinCommunity": {
     "header": "Únete a la comunidad",
@@ -184,7 +221,7 @@
   },
   "landingPage": {
     "changeNetwork": "Try on Testnet",
-    "connectWallet": "Connect Wallet",
+    "connectWallet": "Conectar cartera",
     "header": "Liquidez reactiva",
     "subHeader": "Un protocolo trustless y generador de intereses diseñado para prevenir que préstamos colaterizados se conviertan en liquidables.",
     "unsupportedNetwork": "Unsupported Network",
@@ -282,11 +319,7 @@
       "pools": "view all pools"
     },
     "number": "404",
-    "subHeader": {
-      "end": "if you believe there is an issue.",
-      "getInTouch": "get in touch",
-      "start": "Try one of the handy links below - or"
-    }
+    "subHeader": "Try one of the handy links below - or <0>get in touch</0> if you believe there is an issue."
   },
   "pool": {
     "information": {
@@ -344,6 +377,10 @@
           "summaryEnd": "drops below {{threshold}}, it will be topped up with {{single}} {{asset}} ({{singleUsd}}). This will be repeated each time the collateralization ratio drops below {{threshold}}, until a total of {{max}} {{asset}} ({{maxUsd}}) is topped up.",
           "summaryStart": "When the collateralization of"
         },
+        "delete": {
+          "body": "Deleting this top-up position will remove automated collateral top-ups of {{asset}} on {{protocol}}. {{max}} {{asset}} will be unstaked and can be withdrawn after removing the position.",
+          "header": "Delete top-up position"
+        },
         "fields": {
           "address": {
             "hover": "Enter Address",
@@ -356,7 +393,7 @@
           "max": {
             "exceedsBalance": "Exceeds deposited balance",
             "hover": "Enter Max Top Up",
-            "invalid": "Invalid number",
+            "invalid": "Número inválido",
             "label": "Max Top Up",
             "positive": "Must be positive number",
             "required": "Max Top Up required",
@@ -369,7 +406,7 @@
           },
           "single": {
             "hover": "Enter Single Top Up",
-            "invalid": "Invalid number",
+            "invalid": "Número inválido",
             "label": "Single Top Up",
             "lessThanMax": "Must be less than max top up",
             "positive": "Must be positive number",
@@ -400,6 +437,7 @@
     }
   },
   "pools": {
+    "deposit": "deposit",
     "header": "All pools",
     "information": {
       "apy": {
@@ -417,6 +455,10 @@
       }
     },
     "overview": "Backd’s single-asset pools aggregate yield across strategies. After depositing an asset, register a top-up position to protect from liquidation on supported collateralized lending protocols.",
+    "preview": {
+      "header": "yield farming",
+      "subHeader": "Begin earning yield immediately"
+    },
     "statistics": {
       "deposits": {
         "header": "Your deposits",
