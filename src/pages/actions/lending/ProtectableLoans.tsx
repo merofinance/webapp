@@ -8,6 +8,7 @@ import { selectLoans } from "../../../state/lendingSlice";
 import { selectPositions } from "../../../state/positionsSlice";
 import ProtectableLoan from "./ProtectableLoan";
 import logo from "../../../assets/logo/logo.svg";
+import { useDevice } from "../../../app/hooks/use-device";
 
 const StyledProtectableLoans = styled.div`
   position: relative;
@@ -36,7 +37,7 @@ const Header = styled.div`
   margin-bottom: 1rem;
   @media (max-width: 600px) {
     font-size: 1.8rem;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.7rem;
   }
 `;
 
@@ -66,6 +67,7 @@ const ProtectableLoans = () => {
   const { t } = useTranslation();
   const loans = useSelector(selectLoans);
   const positions = useSelector(selectPositions);
+  const { isMobile } = useDevice();
 
   const protectableLoans = loans.filter(
     (loan: Loan) =>
@@ -78,7 +80,11 @@ const ProtectableLoans = () => {
 
   return (
     <StyledProtectableLoans>
-      <Header id="protectable-loans-header">{t("actions.suggestions.topup.header")}</Header>
+      <Header id="protectable-loans-header">
+        {isMobile
+          ? t("actions.suggestions.topup.headerMobile")
+          : t("actions.suggestions.topup.header")}
+      </Header>
       <SubHeader>{t("actions.suggestions.topup.subHeader")}</SubHeader>
       {protectableLoans.map((loan: Loan) => (
         <ProtectableLoan key={loan.protocol} loan={loan} />
