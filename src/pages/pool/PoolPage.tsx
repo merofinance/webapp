@@ -19,6 +19,7 @@ import BackButton from "../../components/BackButton";
 import Tabs from "../../components/Tabs";
 import PoolStatistics from "./PoolStatistics";
 import ContentSection from "../../components/ContentSection";
+import LiveHelp from "../../components/LiveHelp";
 
 interface PoolParams {
   poolName: string;
@@ -115,6 +116,7 @@ const PoolPage = (): JSX.Element => {
           link="https://docs.backd.fund/"
         />
         <PoolInformation pool={pool} />
+        <LiveHelp />
         {!balance.isZero() && (
           <ButtonContainer>
             <Button
