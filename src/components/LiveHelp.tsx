@@ -37,6 +37,7 @@ const Container = styled.div`
 interface LiveHelpProps {
   open?: boolean;
   wide?: boolean;
+  suggestions: number;
 }
 
 const StyledLiveHelp = styled.div`
@@ -49,7 +50,8 @@ const StyledLiveHelp = styled.div`
   overflow: hidden;
   transition: max-height 0.3s ease-out, background-color 0.3s, filter 0.3s;
 
-  max-height: ${(props: LiveHelpProps) => (props.open ? "35rem" : "5.4rem")};
+  max-height: ${(props: LiveHelpProps) =>
+    props.open ? `calc(25rem * ${props.suggestions})` : "5.4rem"};
 
   // Background
   border: 1px solid transparent;
@@ -212,7 +214,7 @@ const LiveHelp = (): JSX.Element => {
 
   return (
     <Container visible={hasSuggestions}>
-      <StyledLiveHelp open={open} wide={isWide}>
+      <StyledLiveHelp open={open} wide={isWide} suggestions={suggestions.length}>
         <ChevronContainer>
           <AccordionChevron open={open} />
         </ChevronContainer>
