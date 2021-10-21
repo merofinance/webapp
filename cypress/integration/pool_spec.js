@@ -196,9 +196,6 @@ describe("Withdraw", () => {
   it("Should disable button", () => {
     cy.get("#withdraw-button", { timeout: 30_000 }).should("be.disabled");
   });
-  it("Should show loading indicator on connector", () => {
-    cy.get("#connector-loading-indicator", { timeout: 30_000 }).should("be.visible");
-  });
   it("Should open Account Details", () => {
     cy.get("#desktop-connector").click();
   });
