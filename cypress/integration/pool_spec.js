@@ -88,8 +88,8 @@ describe("Depositing", () => {
     cy.get("#action-button").should("be.enabled");
     cy.get("#action-button").click();
   });
-  it("Should show loading button", () => {
-    cy.get("#button-loading-indicator", { timeout: 30_000 }).should("be.visible");
+  it("Should disable button", () => {
+    cy.get("#action-button", { timeout: 30_000 }).should("be.disabled");
   });
 });
 
@@ -193,8 +193,8 @@ describe("Withdraw", () => {
   it("Should Deposit", () => {
     cy.get("#withdraw-button").click();
   });
-  it("Should show loading button", () => {
-    cy.get("#button-loading-indicator", { timeout: 30_000 }).should("be.visible");
+  it("Should disable button", () => {
+    cy.get("#withdraw-button", { timeout: 30_000 }).should("be.disabled");
   });
   it("Should show loading indicator on connector", () => {
     cy.get("#connector-loading-indicator", { timeout: 30_000 }).should("be.visible");
