@@ -37,7 +37,7 @@ const LandingPage = (): JSX.Element => {
         <HowItWorks />
         <FutureActions />
         <SupportedBy />
-        <AuditedBy />
+        {/* <AuditedBy /> */}
         <JoinCommunity />
         <GetStarted />
       </Content>
