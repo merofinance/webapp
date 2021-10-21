@@ -139,9 +139,14 @@ const Suggestion = styled.div`
 
 const SuggestionText = styled.div`
   font-weight: 400;
+  letter-spacing: 0.42px;
+
   font-size: 1.5rem;
   line-height: 2.1rem;
-  letter-spacing: 0.42px;
+  @media (max-width: 1439px) {
+    font-size: 1.2rem;
+    line-height: 1.7rem;
+  }
 `;
 
 const ButtonContainer = styled.div`
