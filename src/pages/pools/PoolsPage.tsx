@@ -13,6 +13,7 @@ import PoolsInformation from "./PoolsInformation";
 import PoolsStatistics from "./PoolsStatistics";
 import Overview from "../../components/Overview";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
+import LiveHelp from "../../components/LiveHelp";
 
 const StyledPoolsPage = styled.div`
   width: 100%;
@@ -115,6 +116,7 @@ const PoolsPage = (): JSX.Element => {
       <InfoCards>
         <Overview description={t("pools.overview")} link="https://docs.backd.fund/" />
         <PoolsInformation />
+        <LiveHelp />
       </InfoCards>
     </StyledPoolsPage>
   );
