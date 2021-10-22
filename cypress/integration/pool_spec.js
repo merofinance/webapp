@@ -200,7 +200,7 @@ describe("Withdraw", () => {
     cy.get("#desktop-connector").click();
   });
   it("Should show pending transaction", () => {
-    cy.get("#account-details-transactions div").first().contains("Withdraw");
+    cy.get("#account-details-transactions div", { timeout: 30_000 }).first().contains("Withdraw");
   });
   it("Should finish loading", () => {
     cy.get("#connector-loading-indicator", { timeout: 30_000 }).should("have.css", "opacity", "0");
