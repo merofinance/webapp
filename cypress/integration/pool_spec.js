@@ -200,14 +200,13 @@ describe("Withdraw", () => {
   it("Should disable button", () => {
     cy.get("#withdraw-button", { timeout: WEB3_TIMEOUT }).should("be.disabled");
   });
-  it("Should show loading indicator on connector", () => {
-    cy.get("#connector-loading-indicator", { timeout: WEB3_TIMEOUT }).should("be.visible");
-  });
   it("Should open Account Details", () => {
     cy.get("#desktop-connector").click();
   });
   it("Should show pending transaction", () => {
-    cy.get("#account-details-transactions div").first().contains("Withdraw");
+    cy.get("#account-details-transactions div", { timeout: WEB3_TIMEOUT })
+      .first()
+      .contains("Withdraw");
   });
   it("Should finish loading", () => {
     cy.get("#connector-loading-indicator", { timeout: WEB3_TIMEOUT }).should(

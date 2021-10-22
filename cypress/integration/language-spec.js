@@ -17,7 +17,7 @@ const isChinese = () => {
 const isJapanese = () => {
   cy.get("h1").contains("リアクティブ流動資産");
   cy.get("h3").contains(
-    "担保付ローンを清算から防ぐために設計された、管理者不在の利子生成プロトコルです。"
+    "お客様の資産を最大限活用し、Backdの流動性プールで利回りを稼ぎ始めましょう。"
   );
   cy.get("#how-it-works-2").contains("安全に稼ぐ");
 };
