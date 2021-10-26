@@ -142,7 +142,9 @@ const RowOption = ({ active, select, option }: Props) => {
       <StyledRowOption
         id={option.id}
         active={active}
-        onClick={() => select()}
+        onClick={() => {
+          if (!option.disabledText) select();
+        }}
         disabled={!!option.disabledText}
       >
         {option.columns.map((column: ColumnType) => (
