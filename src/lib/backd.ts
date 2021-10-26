@@ -157,8 +157,7 @@ export class Web3Backd implements Backd {
     return transformPool(rawPool, bigNumberToFloat);
   }
 
-  async getLoanPosition(protocol: LendingProtocol, address?: Address): Promise<PlainLoan | null> {
-    address = address || (await this.currentAccount());
+  async getLoanPosition(protocol: LendingProtocol, address: Address): Promise<PlainLoan | null> {
     return lendingProviders[protocol].getPosition(address, this._provider);
   }
 

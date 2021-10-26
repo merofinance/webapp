@@ -56,6 +56,7 @@ interface GenericLoan<T> {
 }
 export type Loan = GenericLoan<ScaledNumber>;
 export type PlainLoan = GenericLoan<PlainScaledNumber>;
+export type PlainLoans = Record<Address, PlainLoan[]>;
 
 export const toPlainPosition = (position: Position): PlainPosition => {
   return {

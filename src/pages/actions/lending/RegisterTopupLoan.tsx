@@ -65,7 +65,7 @@ const RegisterTopupLoan = () => {
   const history = useHistory();
   const { account } = useWeb3React();
   const { isMobile } = useDevice();
-  const loans = useSelector(selectLoans);
+  const loans = useSelector(selectLoans(account));
   const positions = useSelector(selectPositions);
   const ethPrice = useSelector(selectEthPrice);
   const [protocol, setProtocol] = useState("");
