@@ -13,6 +13,7 @@ import { GradientText } from "../../../styles/GradientText";
 import { Loan, PlainLoan } from "../../../lib/types";
 import { useWeb3Updated } from "../../../app/hooks/use-web3-updated";
 import { useBackd } from "../../../app/hooks/use-backd";
+import { TOPUP_ACTION_ROUTE } from "../../../lib/constants";
 
 interface TopupParams {
   address: string;
@@ -95,7 +96,7 @@ const ActionSummary = () => {
   const pool = useSelector(selectPool(poolName));
   const [loan, setLoan] = useState<Loan | null>(null);
 
-  const redirectToRegister = () => history.push("/actions/register/topup");
+  const redirectToRegister = () => history.push(TOPUP_ACTION_ROUTE);
 
   const getLoan = async () => {
     if (!account || !backd) return;

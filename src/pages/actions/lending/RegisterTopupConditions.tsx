@@ -18,7 +18,12 @@ import RegisterTopupInput from "./RegisterTopupInput";
 import ActionSummary from "./ActionSummary";
 import { useDevice } from "../../../app/hooks/use-device";
 import { selectEthPrice } from "../../../state/poolsListSlice";
-import { GWEI_DECIMALS, GWEI_SCALE, TOPUP_GAS_COST } from "../../../lib/constants";
+import {
+  GWEI_DECIMALS,
+  GWEI_SCALE,
+  TOPUP_ACTION_ROUTE,
+  TOPUP_GAS_COST,
+} from "../../../lib/constants";
 
 interface TopupParams {
   address: string;
@@ -181,7 +186,7 @@ const RegisterTopupConditions = () => {
   });
 
   if (!pool) {
-    history.push(`/actions/register/topup/${address}/${protocol}`);
+    history.push(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`);
     return <></>;
   }
 

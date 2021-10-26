@@ -13,6 +13,7 @@ import { selectPool, selectPrice } from "../../../state/selectors";
 import AmountInput from "../../../components/AmountInput";
 import { useDevice } from "../../../app/hooks/use-device";
 import DepositButtons from "../../pool/DepositButtons";
+import { TOPUP_ACTION_ROUTE } from "../../../lib/constants";
 
 interface TopupParams {
   address: string;
@@ -148,7 +149,7 @@ const RegisterTopupPoolDeposit = ({ poolName }: Props) => {
                 text={t("components.continue")}
                 click={() =>
                   history.push(
-                    `/actions/register/topup/${address}/${protocol}/${pool.lpToken.symbol}`
+                    `${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${pool.lpToken.symbol}`
                   )
                 }
                 disabled={!pool || Number(depositedBalance.toString()) * price < 50}

@@ -35,7 +35,7 @@ const ExitEvent = styled.div`
 
 interface PopupContainerProps {
   small?: boolean;
-  centreHeader?: boolean;
+  centerHeader?: boolean;
 }
 
 const PopupContainer = styled.div`
@@ -63,7 +63,7 @@ const Exit = styled.img`
 const Header = styled.div`
   font-weight: 700;
 
-  text-align: ${(props: PopupContainerProps) => (props.centreHeader ? "center" : "left")};
+  text-align: ${(props: PopupContainerProps) => (props.centerHeader ? "center" : "left")};
   margin-bottom: ${(props: PopupContainerProps) => (props.small ? "1.8rem" : "2.5rem")};
   font-size: ${(props: PopupContainerProps) => (props.small ? "1.6rem" : "3.6rem")};
   line-height: ${(props: PopupContainerProps) => (props.small ? "1.7rem" : "4.2rem")};
@@ -111,7 +111,7 @@ interface Props {
   submit?: () => void;
   loading?: boolean;
   small?: boolean;
-  centreHeader?: boolean;
+  centerHeader?: boolean;
   id?: string;
 }
 
@@ -125,7 +125,7 @@ const Popup = ({
   submit,
   loading,
   small,
-  centreHeader,
+  centerHeader,
   id,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
@@ -143,7 +143,7 @@ const Popup = ({
           small={small}
         />
         {header && (
-          <Header id={`${id}-popup-header`} small={small} centreHeader={centreHeader}>
+          <Header id={`${id}-popup-header`} small={small} centerHeader={centerHeader}>
             {header}
           </Header>
         )}

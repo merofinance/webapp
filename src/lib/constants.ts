@@ -11,6 +11,8 @@ export const STAKING_LIVE = false;
 export const INFURA_ID = "f42c3f37e40b4ab1bc5a0d7bf5612d0f";
 export const TOPUP_GAS_COST = BigNumber.from(1_000_000).mul(GWEI_SCALE);
 
+export const TOPUP_ACTION_ROUTE = "/actions/register/topup";
+
 export const chainIds: Record<string, string> = {
   "1": "Mainnet",
   "3": "Ropsten",

@@ -116,7 +116,7 @@ const ActionsPage = (): JSX.Element => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            + Propose a new Action on Discord
+            {t("actions.propose")}
           </ProposeLink>
         </ProposeContainer>
       </InfoCards>

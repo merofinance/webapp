@@ -18,6 +18,7 @@ import RegisterTopupPoolDeposit from "./RegisterTopupPoolDeposit";
 import Asset from "../../../components/Asset";
 import { useDevice } from "../../../app/hooks/use-device";
 import { RowOptionType } from "../../../components/RowOption";
+import { TOPUP_ACTION_ROUTE } from "../../../lib/constants";
 
 interface TopupParams {
   address: string;
@@ -150,7 +151,7 @@ const RegisterTopupPool = () => {
                 text={t("components.continue")}
                 click={() => {
                   if (!hasSufficientBalance(selected)) setDepositing(true);
-                  else history.push(`/actions/register/topup/${address}/${protocol}/${pool}`);
+                  else history.push(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${pool}`);
                 }}
                 disabled={!pool}
                 hoverText={t("actions.topup.stages.pool.incomplete")}

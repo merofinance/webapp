@@ -129,7 +129,7 @@ const ApproveThenAction = ({
   const [persistApprove, setPersistApprove] = useState(false);
 
   const approved = value.isZero() ? !approvedAmount.isZero() : approvedAmount.gte(value);
-  const hover = hoverText || t("amountInput.enter");
+  hoverText = hoverText || t("amountInput.enter");
 
   const executeApprove = () => {
     if (!backd || approved || approveLoading) return;
@@ -157,7 +157,7 @@ const ApproveThenAction = ({
             complete={approved}
             loading={approveLoading}
             disabled={disabled}
-            hoverText={hover}
+            hoverText={hoverText}
           />
         )}
         <Button
@@ -169,7 +169,7 @@ const ApproveThenAction = ({
           click={action}
           disabled={!approved || disabled}
           loading={loading}
-          hoverText={disabled ? hover : t("amountInput.approve", { asset: token.symbol })}
+          hoverText={disabled ? hoverText : t("amountInput.approve", { asset: token.symbol })}
         />
       </Buttons>
       {(!approved || persistApprove) && (

@@ -47,7 +47,7 @@ const StyledRowOption = styled.a`
   background-image: ${(props: RowOptionProps) =>
     props.active
       ? "linear-gradient(to right, #1D0B38, #101839), var(--gradient)"
-      : "linear-gradient(rgba(20, 17, 40, 1), rgba(20, 17, 40, 1)), linear-gradient(#2B293D, #2B293D)"};
+      : "linear-gradient(var(--row-bg), var(--row-bg)), linear-gradient(#2B293D, #2B293D)"};
   padding: ${(props: RowOptionProps) => (props.active ? "1.2rem 1.3rem" : "1.3rem 1.4rem")};
   cursor: ${(props: RowOptionProps) => (props.disabled ? "auto" : "pointer")};
   opacity: ${(props: RowOptionProps) => (props.disabled ? "0.4" : "1")};
@@ -152,7 +152,7 @@ const RowOption = ({ active, select, option }: Props) => {
           </Column>
         ))}
         {option.buttonText && option.buttonAction && (
-          <Button text={option.buttonText} click={option.buttonAction} background="#141127" />
+          <Button text={option.buttonText} click={option.buttonAction} background="var(--row-bg)" />
         )}
       </StyledRowOption>
       {option.disabledText && (

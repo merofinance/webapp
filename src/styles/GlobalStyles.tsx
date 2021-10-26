@@ -17,6 +17,8 @@ const GlobalStyle = createGlobalStyle`
         --neutral: #8966F6;
         --gradient: linear-gradient(to right, var(--primary), var(--secondary));
 
+        --row-bg: #141128;
+
         --section-margin: 8.5rem 0;
         --mobile-section-margin: 3.6rem 0;
     }

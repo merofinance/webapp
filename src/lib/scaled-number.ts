@@ -48,6 +48,10 @@ export class ScaledNumber {
     return this._decimals;
   }
 
+  get scale(): BigNumber {
+    return BigNumber.from(10).pow(this.decimals);
+  }
+
   toPlain = (): PlainScaledNumber => {
     return {
       value: this._value.toString(),
@@ -98,18 +102,20 @@ export class ScaledNumber {
   }
 
   mul(value: number | string | ScaledNumber): ScaledNumber {
-    const scale = BigNumber.from(10).pow(this.decimals);
     const scaledValue =
-      typeof value === "object" ? value.value : stringToBigNumber(value.toString(), this.decimals);
-    return new ScaledNumber(this.value.mul(scaledValue).div(scale), this.decimals);
+      value instanceof ScaledNumber
+        ? value.value
+        : stringToBigNumber(value.toString(), this.decimals);
+    return new ScaledNumber(this.value.mul(scaledValue).div(this.scale), this.decimals);
   }
 
   div(value: number | string | ScaledNumber): ScaledNumber {
-    const scale = BigNumber.from(10).pow(this.decimals);
     const scaledValue =
-      typeof value === "object" ? value.value : stringToBigNumber(value.toString(), this.decimals);
+      value instanceof ScaledNumber
+        ? value.value
+        : stringToBigNumber(value.toString(), this.decimals);
     if (scaledValue.isZero()) return new ScaledNumber();
-    return new ScaledNumber(this.value.mul(scale).div(scaledValue), this.decimals);
+    return new ScaledNumber(this.value.mul(this.scale).div(scaledValue), this.decimals);
   }
 
   toString = (): string => bigNumberToString(this._value, this._decimals);

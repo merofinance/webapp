@@ -113,7 +113,7 @@ const InfoCard = ({ header, content, collapsible, defaultOpen, id }: Props): JSX
   const isWide = i18n.language === "ja";
 
   useEffect(() => {
-    setOpen(!!defaultOpen || !isMobile);
+    setOpen(defaultOpen || !isMobile);
   }, [!isMobile]);
 
   return (

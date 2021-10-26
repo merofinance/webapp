@@ -88,7 +88,14 @@ interface Props {
   id?: string;
 }
 
-const BasicInput = ({ value, setValue, placeholder, type, error, id }: Props): JSX.Element => {
+const BasicInput = ({
+  value,
+  setValue,
+  placeholder,
+  type = "text",
+  error,
+  id,
+}: Props): JSX.Element => {
   const valid = !error;
 
   return (
@@ -97,7 +104,7 @@ const BasicInput = ({ value, setValue, placeholder, type, error, id }: Props): J
         <Input
           id={`${id}-input`}
           valid={valid}
-          type={type || "text"}
+          type={type}
           value={value}
           placeholder={placeholder}
           onChange={(e) => setValue(e.target.value)}

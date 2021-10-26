@@ -23,45 +23,29 @@ export interface Pool<Num = number> {
   exchangeRate: Num;
 }
 
-export interface Position {
+interface GenericPosition<T> {
   protocol: string;
   account: Address;
-  threshold: ScaledNumber;
-  singleTopUp: ScaledNumber;
-  maxTopUp: ScaledNumber;
+  threshold: T;
+  singleTopUp: T;
+  maxTopUp: T;
   maxGasPrice: number;
   actionToken: Address;
   depositToken: Address;
 }
+export type Position = GenericPosition<ScaledNumber>;
+export type PlainPosition = GenericPosition<PlainScaledNumber>;
 
-export interface PlainPosition {
+interface GenericLoan<T> {
   protocol: string;
-  account: Address;
-  threshold: PlainScaledNumber;
-  singleTopUp: PlainScaledNumber;
-  maxTopUp: PlainScaledNumber;
-  maxGasPrice: number;
-  actionToken: Address;
-  depositToken: Address;
+  totalCollateralETH: T;
+  totalDebtETH: T;
+  availableBorrowsETH: T;
+  currentLiquidationThreshold: T;
+  healthFactor: T;
 }
-
-export interface Loan {
-  protocol: string;
-  totalCollateralETH: ScaledNumber;
-  totalDebtETH: ScaledNumber;
-  availableBorrowsETH: ScaledNumber;
-  currentLiquidationThreshold: ScaledNumber;
-  healthFactor: ScaledNumber;
-}
-
-export interface PlainLoan {
-  protocol: string;
-  totalCollateralETH: PlainScaledNumber;
-  totalDebtETH: PlainScaledNumber;
-  availableBorrowsETH: PlainScaledNumber;
-  currentLiquidationThreshold: PlainScaledNumber;
-  healthFactor: PlainScaledNumber;
-}
+export type Loan = GenericLoan<ScaledNumber>;
+export type PlainLoan = GenericLoan<PlainScaledNumber>;
 
 export const toPlainPosition = (position: Position): PlainPosition => {
   return {

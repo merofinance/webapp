@@ -8,6 +8,7 @@ import { useHistory } from "react-router";
 import { selectEthPrice } from "../../../state/poolsListSlice";
 import Button from "../../../components/Button";
 import { Loan } from "../../../lib/types";
+import { TOPUP_ACTION_ROUTE } from "../../../lib/constants";
 
 const StyledProtectableLoan = styled.div`
   width: 100%;
@@ -95,7 +96,7 @@ const ProtectableLoan = ({ loan }: Props) => {
           medium
           text={t("actions.suggestions.topup.register")}
           background="#3A3550"
-          click={() => history.push(`/actions/register/topup/${account}/${loan.protocol}`)}
+          click={() => history.push(`${TOPUP_ACTION_ROUTE}/${account}/${loan.protocol}`)}
         />
       </Column>
     </StyledProtectableLoan>

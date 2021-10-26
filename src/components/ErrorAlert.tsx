@@ -53,7 +53,7 @@ export function ErrorAlert(): JSX.Element {
 
   return (
     <Popup
-      centreHeader
+      centerHeader
       show={error.message.length > 0}
       close={handleClose}
       header={error.title ? t(error.title) : t("errors.header")}
