@@ -28,5 +28,4 @@ export const walletConnectConnector = new WalletConnectConnector({
     1337: ``,
   },
   qrcode: true,
-  pollingInterval: 12000,
 });
