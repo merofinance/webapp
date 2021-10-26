@@ -6,9 +6,7 @@ import { useSelector } from "react-redux";
 
 import ContentSection from "../../../components/ContentSection";
 import Button from "../../../components/Button";
-import BackButton from "../../../components/BackButton";
-import { selectBalance } from "../../../state/userSlice";
-import { selectPool, selectPrice } from "../../../state/selectors";
+import { selectPool } from "../../../state/selectors";
 import { TOPUP_ACTION_ROUTE } from "../../../lib/constants";
 import PoolDeposit from "../../pool/PoolDeposit";
 import { useDevice } from "../../../app/hooks/use-device";
@@ -50,16 +48,15 @@ const ButtonContainer = styled.div`
 `;
 interface Props {
   poolName: string;
+  hasSufficientBalance: boolean;
 }
 
-const RegisterTopupPoolDeposit = ({ poolName }: Props) => {
+const RegisterTopupPoolDeposit = ({ poolName, hasSufficientBalance }: Props) => {
   const { t } = useTranslation();
   const history = useHistory();
   const { isMobile } = useDevice();
   const { address, protocol } = useParams<TopupParams>();
   const pool = useSelector(selectPool(poolName));
-  const depositedBalance = useSelector(selectBalance(pool));
-  const price = useSelector(selectPrice(pool));
 
   if (!pool) {
     history.push("/");
@@ -93,7 +90,7 @@ const RegisterTopupPoolDeposit = ({ poolName }: Props) => {
                     `${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${pool.lpToken.symbol}`
                   )
                 }
-                disabled={!pool || Number(depositedBalance.toString()) * price < 50}
+                disabled={!pool || !hasSufficientBalance}
                 hoverText={t("actions.topup.stages.pool.deposit.incomplete", {
                   asset: pool?.underlying.symbol,
                 })}

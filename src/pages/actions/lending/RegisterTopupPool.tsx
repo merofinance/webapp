@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import ContentSection from "../../../components/ContentSection";
 import Button from "../../../components/Button";
 import RowSelector from "../../../components/RowSelector";
-import { selectPools, selectPrices } from "../../../state/poolsListSlice";
+import { selectEthPrice, selectPools, selectPrices } from "../../../state/poolsListSlice";
 import { Pool } from "../../../lib";
 import { formatPercent, numberToCompactCurrency } from "../../../lib/numeric";
 import { selectBalances } from "../../../state/userSlice";
@@ -18,7 +18,12 @@ import RegisterTopupPoolDeposit from "./RegisterTopupPoolDeposit";
 import Asset from "../../../components/Asset";
 import { useDevice } from "../../../app/hooks/use-device";
 import { RowOptionType } from "../../../components/RowOption";
-import { TOPUP_ACTION_ROUTE } from "../../../lib/constants";
+import {
+  GWEI_DECIMALS,
+  GWEI_SCALE,
+  TOPUP_ACTION_ROUTE,
+  TOPUP_GAS_COST,
+} from "../../../lib/constants";
 
 interface TopupParams {
   address: string;
@@ -72,13 +77,17 @@ const RegisterTopupPool = () => {
   const balances = useSelector(selectBalances);
   const positions = useSelector(selectPositions);
   const prices = useSelector(selectPrices);
+  const ethPrice = useSelector(selectEthPrice);
   const [pool, setPool] = useState("");
   const [depositing, setDepositing] = useState(false);
 
   const hasSufficientBalance = (pool: Pool) => {
-    const lpBalance = Number(balances[pool.lpToken.address]);
-    const usdBalance = lpBalance * prices[pool.underlying.symbol];
-    return usdBalance >= 50;
+    const lpBalance = balances[pool.lpToken.address];
+    const usdBalance = lpBalance.mul(prices[pool.underlying.symbol]);
+    const gasCostUsd = new ScaledNumber(
+      ScaledNumber.fromUnscaled(50, GWEI_DECIMALS).value.mul(TOPUP_GAS_COST).div(GWEI_SCALE)
+    ).mul(ethPrice);
+    return usdBalance.gte(gasCostUsd);
   };
 
   const hasDeposits = pools.some((pool: Pool) => hasSufficientBalance(pool));
@@ -121,7 +130,13 @@ const RegisterTopupPool = () => {
     };
   });
 
-  if (depositing) return <RegisterTopupPoolDeposit poolName={selected.lpToken.symbol} />;
+  if (depositing)
+    return (
+      <RegisterTopupPoolDeposit
+        poolName={selected.lpToken.symbol}
+        hasSufficientBalance={hasSufficientBalance(selected)}
+      />
+    );
 
   return (
     <Container>
