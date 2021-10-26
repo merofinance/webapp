@@ -80,10 +80,7 @@ const ActionsPage = (): JSX.Element => {
 
   return (
     <StyledActionsPage>
-      <Seo
-        title="Backd Actions"
-        description="Create Actions to automate your liquidity to where it is needed most"
-      />
+      <Seo title={t("metadata.actions.title")} description={t("metadata.actions.description")} />
       <ContentContainer>
         <Content>
           <Switch>

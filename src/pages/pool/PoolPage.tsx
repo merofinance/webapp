@@ -81,11 +81,11 @@ const PoolPage = (): JSX.Element => {
 
   return (
     <StyledPoolPage>
-      <BackButton />
       <Seo
-        title={`${pool.underlying.symbol} Pool`}
-        description={`Deposit ${pool.underlying.symbol} to farm yield and register LP tokens for actions such as liquidation protection (Aave & Compound)`}
+        title={t("metadata.pool.title", { asset: pool.underlying.symbol })}
+        description={t("metadata.pool.description", { asset: pool.underlying.symbol })}
       />
+      <BackButton />
       <ContentContainer>
         <Content>
           <ContentSection

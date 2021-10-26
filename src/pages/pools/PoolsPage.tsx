@@ -88,10 +88,7 @@ const PoolsPage = (): JSX.Element => {
 
   return (
     <StyledPoolsPage>
-      <Seo
-        title="Backd Pools"
-        description="Earn yield and governance tokens while executing other acitons such as collateral top ups (Aave & Compound) "
-      />
+      <Seo title={t("metadata.pools.title")} description={t("metadata.pools.description")} />
       <ContentSection
         header={t("pools.header")}
         statistics={<PoolsStatistics />}

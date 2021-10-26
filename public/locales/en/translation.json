@@ -593,5 +593,35 @@
     "transactionType": "Transaction type not supported",
     "unsupportedNetwork": "Network not supported",
     "tryTestnet": "Backd is not yet live on mainnet. You can test it now on Kovan by switching networks."
+  },
+  "metadata": {
+    "landing": {
+      "title": "Backd - Liquidity Made Reactive",
+      "description": "The DeFi protocol for increasing the yield and utility of your crypto assets with reactive liquidity"
+    },
+    "actions": {
+      "title": "Backd Actions",
+      "description": "Create Actions to automate your liquidity to where it is needed most"
+    },
+    "claim": {
+      "title": "Claim Rewards & Yield",
+      "description": "Claim rewards from Backd yield farming strategies and collateral top up fees"
+    },
+    "litepaper": {
+      "title": "Backd Litepaper",
+      "description": "How Backd combines actions (e.g. Aave & Compound liquidation protection) with yield-farming (Curve & Convex)"
+    },
+    "pool": {
+      "title": "{{asset}} Pool",
+      "description": "Deposit {{asset}} to farm yield and register LP tokens for actions such as liquidation protection (Aave & Compound)"
+    },
+    "pools": {
+      "title": "Backd Pools",
+      "description": "Earn yield and governance tokens while executing other acitons such as collateral top ups (Aave & Compound)"
+    },
+    "stake": {
+      "title": "Stake BKD & Earn Rewards",
+      "description": "Earn rewards and protocol profits in addition to aggregated yield from yield farming strategies"
+    }
   }
 }

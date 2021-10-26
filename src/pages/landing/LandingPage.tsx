@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { useIsLive } from "../../app/hooks/use-is-live";
 import Seo from "../../components/Seo";
@@ -25,14 +26,12 @@ const Content = styled.div`
 `;
 
 const LandingPage = (): JSX.Element => {
+  const { t } = useTranslation();
   const { protocolLive } = useIsLive();
 
   return (
     <StyledLanding>
-      <Seo
-        title="Backd - Liquidity Made Reactive"
-        description="The DeFi protocol for increasing the yield and utility of your crypto assets with reactive liquidity."
-      />
+      <Seo title={t("metadata.landing.title")} description={t("metadata.landing.description")} />
       <Background />
       <Content>
         <Hero />
