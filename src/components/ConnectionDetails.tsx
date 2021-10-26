@@ -102,7 +102,9 @@ const ConnectionDetails = ({ show, close, changeWallet, wallet }: Props) => {
       content={
         <Content>
           <WalletContainer>
-            <Wallet>{t("walletConnect.details.connected", { wallet: t(wallet) })}</Wallet>
+            <Wallet id="account-details-wallet">
+              {t("walletConnect.details.connected", { wallet: t(wallet) })}
+            </Wallet>
             <Button
               tiny
               text={t("walletConnect.details.change")}
@@ -115,7 +117,7 @@ const ConnectionDetails = ({ show, close, changeWallet, wallet }: Props) => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Address>{shortenAddress(account || "", 24)}</Address>
+            <Address id="account-details-address">{shortenAddress(account || "", 24)}</Address>
             <LaunchIcon
               fontSize="medium"
               style={{ fill: "var(--secondary)", transform: "translateY(0px)" }}
@@ -123,7 +125,7 @@ const ConnectionDetails = ({ show, close, changeWallet, wallet }: Props) => {
           </AddressContainer>
           <NetworkContainer>
             <PulsingDot success={chainId === 1} />
-            <Network>{networkName()}</Network>
+            <Network id="account-details-network">{networkName()}</Network>
           </NetworkContainer>
           <RecentTransactions />
         </Content>

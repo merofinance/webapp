@@ -32,6 +32,7 @@ jobs:
         run: yarn run percy
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+          CYPRESS_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
   preview_deploy:
     runs-on: ubuntu-latest
     steps:

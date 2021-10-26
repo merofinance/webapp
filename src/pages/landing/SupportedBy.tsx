@@ -15,11 +15,6 @@ type ProtocolType = {
 
 const protocols: ProtocolType[] = [
   {
-    name: "Divergence",
-    image: divergence,
-    link: "https://www.div.vc/",
-  },
-  {
     name: "Curve",
     image: curve,
     link: "https://curve.fi/",

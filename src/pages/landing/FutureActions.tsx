@@ -206,6 +206,7 @@ const FutureActions = (): JSX.Element => {
         <Actions slide={slide}>
           {actions.map((action: ActionType, index: number) => (
             <Grow
+              key={action.header}
               in={zoomIn}
               style={{ transformOrigin: "0 0 0" }}
               {...(zoomIn ? { timeout: ((index % rows) + 1) * 300 } : {})}

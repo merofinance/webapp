@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
@@ -9,12 +9,12 @@ import { GradientLink } from "../../styles/GradientText";
 import { Header5, Header6 } from "../../styles/Headers";
 import useWindowPosition from "../../app/hooks/use-window-position";
 
-type BenfitsType = {
+interface BenfitsType {
   icon: string;
   header: string;
   description: string;
   url: string;
-};
+}
 
 const benefits: BenfitsType[] = [
   {
@@ -89,10 +89,10 @@ const Icon = styled.img`
   }
 `;
 
-type IconGlassProps = {
+interface IconGlassProps {
   right: boolean;
   top: boolean;
-};
+}
 
 const IconGlass = styled.div`
   position: absolute;
@@ -116,9 +116,9 @@ const IconGlass = styled.div`
   }
 `;
 
-type IconGlassGradientProps = {
+interface IconGlassGradientProps {
   rotate: number;
-};
+}
 
 const IconGlassGradient = styled.div`
   width: 100%;
@@ -145,11 +145,10 @@ const ReadMore = styled(GradientLink)`
 
 const Benefits = (): JSX.Element => {
   const { t } = useTranslation();
-  const benefitsRef = useRef<HTMLDivElement>(null);
   const windowPosition = useWindowPosition();
 
   return (
-    <StyledBenefits ref={benefitsRef}>
+    <StyledBenefits>
       {benefits.map((benefit: BenfitsType, index: number) => (
         <Benefit key={benefit.header} id={benefit.header}>
           <IconContainer>

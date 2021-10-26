@@ -10,12 +10,6 @@
       "positive": "金額は正の数でご入力ください。"
     }
   },
-  "auditedBy": {
-    "description": "85以上のブロックチェーン企業や法人企業からの信頼されている、チューリッヒ工科大学のセキュリティ専門家が主導しております。",
-    "header": "監査元",
-    "preLaunchHeader": "進行中の監査",
-    "viewReport": "報告を見る"
-  },
   "banner": {
     "testnet": {
       "blogPost": "ブログ記事",
@@ -24,13 +18,21 @@
     }
   },
   "benefits": {
+    "avoidLiquidation": {
+      "description": "Backdに預け入れられ、予備の担保とされた流動性資産は担保の補充が必要とされた際に自動的に移動されます。",
+      "header": "清算を回避する"
+    },
     "earnYield": {
-      "description": "CurveとConvexに基づくイールドファーミング戦略を通じて流動資産の利回りを稼ぎます。",
+      "description": "CurveとConvexに基づくイールドファーミング戦略を通じて、流動資産の利回りを稼ぎます。",
       "header": "利回りを稼ぐ"
     },
     "feeShare": {
-      "description": "担保額に課せられる少額の手数料が、流動資産提供者間で分配されます。",
+      "description": "アクションに課される手数料の一部を受け取ります。",
       "header": "手数料の分担"
+    },
+    "reactiveLiquidity": {
+      "description": "お客様の流動資産を、自動で最適な場所に移動するアクションを作成します。",
+      "header": "リアクティブ流動資産"
     },
     "readMore": "続きを読む"
   },
@@ -55,7 +57,8 @@
     "close": "閉じる",
     "confirm": "確認",
     "dropdownChoose": "選択",
-    "moreInDocs": "ドキュメントで詳細を確認"
+    "moreInDocs": "ドキュメントで詳細を確認",
+    "overview": "概要"
   },
   "errors": {
     "fetchPrices": "価格の読み込みに失敗しました。:{{error}}",
@@ -95,6 +98,32 @@
         "telegram": "Telegramのお知らせ"
       }
     }
+  },
+  "futureActions": {
+    "actions": {
+      "curveImbalance": {
+        "description": "キーパーがお客様の代わりにLPプールの不均衡を検出し、流動資産を除去するため、お客様は実質的な損失からの回避が可能です。",
+        "header": "Curve での不均衡からの保護"
+      },
+      "limitOrders": {
+        "description": "指値が決まると、キーパーは必要な資金をイールドプールから引き出して、AMMで取引をすることができます。",
+        "header": "AMMでの指値注文"
+      },
+      "nfts": {
+        "description": "特異な要件を持つNFTの指値を定めると、価格が希望額内に下がると購入アクションが実行され、流動資産がBackdのイールドプールから削除されるようになります。",
+        "header": "NFTの指値"
+      },
+      "propose": {
+        "description": "アクションは、BackdのDAO(データアクセスオブジェクト)を介して追加することができます。Backdのコミュニティに参加して、新しいアクションをご提案ください！",
+        "header": "お客様のご提案をお待ちしております"
+      },
+      "uniswap": {
+        "description": "Backdキーパーは、価格が定義された範囲外になったことを検出して流動資産をBackdのイールドプールに移し、価格が範囲内に戻ると流動資産をUniswapに戻します。",
+        "header": "Uniswap V3  - LP管理 -"
+      }
+    },
+    "header": "今後のアクション",
+    "subHeader": "重要な DeFiインフラの構築"
   },
   "getStarted": {
     "description": "流動資産を預金し、利回りを獲得",
@@ -172,7 +201,9 @@
         "tabName": "利回りを稼ぐ"
       }
     },
-    "header": "Backdの使い方"
+    "deposit": "今すぐご入金",
+    "header": "アクション 01: 清算保護",
+    "subHeader": "ローンの清算を回避"
   },
   "joinCommunity": {
     "header": "コミュニティへのご参加",
@@ -186,7 +217,7 @@
     "changeNetwork": "テストネットで試す",
     "connectWallet": "ウォレットと接続",
     "header": "リアクティブ流動資産",
-    "subHeader": "担保付ローンを清算から防ぐために設計された、管理者不在の利子生成プロトコルです。",
+    "subHeader": "お客様の資産を最大限活用し、Backdの流動性プールで利回りを稼ぎ始めましょう。",
     "unsupportedNetwork": "対応していないネットワークです。",
     "viewPools": "プールを見る"
   },
@@ -202,15 +233,15 @@
           "header": "キーパー:"
         },
         "pools": {
-          "decription": "When LPs deposit funds on Backd, they have to chose a single-asset pool to deposit into. If an LP wants some (or all) of their deposits to be used as backup collateral on some other protocol, they can register their top up positions via the pool’s registry. A liquidity pool maintains a running total of the deposits which are registered as backup collateral. A pool allocates deposits that are not registered as backup collateral, plus a proportion of the registered backup collateral to a pool-specific vault.",
+          "decription": "LPがBackdに資金を入金する際には、どの単一資産プールに入金するかを選択する必要があります。LPが預金の一部（または全部）を他のプロトコルでバックアップ担保として使用したい場合は、プールのレジストリーを介して補充ポジションを登録することができます。また、流動性プールはバックアップ担保として登録されている預金の累計を維持します。プールは、バックアップ担保として登録されていない預金と登録されたバックアップ担保の割合を、プール固有のボールトに割り当てます。",
           "header": "流動性プール:"
         },
         "strategies": {
-          "decription": "A strategy contains logic for yield-farming using the funds allocated from the vault. The performance of a strategy is tracked by the depositing vault and allocations are rebalanced according to the vault parameters (e.g. debt limits). Profits can be harvested and any unrealized profits are compounded by the strategy. The protocol charges a performance fee on strategy profits. Part of this fee is paid to a strategy’s strategist in LP tokens. The remainder of the performance fee is directed to the Backd treasury.",
+          "decription": "戦略には、ボールトから割り当てられた資金を使用したイールドファーミングのロジックも使われています。戦略の実行は預入金ボールトによって追跡され、割り当てはボールトパラメータ（債務限度など）により再調整されます。このとき、利益は獲得可能で、未実現利益は戦略によって複合化されます。また、プロトコルは戦略利益に対しての報酬を請求します。この報酬の一部は、戦略のストラテジストにLPトークンで支払われ、報酬の残額はBackdの資金になります。",
           "header": "戦略:"
         },
         "vaults": {
-          "decription": "Each liquidity pool has a vault, which handles all deposit and withdrawal interaction with a strategy. For backd v1, single strategy vaults are supported.  Vaults contain a target allocation factor, which specifies the ratio of Vault deposits that should be allocated to the associated strategy. Hence, a vault typically holds an amount of idle funds for reduced gas costs.",
+          "decription": "各流動性プールにはボールトがあり、それが戦略との入出金のやり取り全てを処理しています。backd v1 では、単一戦略ボールトが使用されています。ボールトには、関連するストラテジーに割り当てるボールト預金の比率を指定する、対象割当ファクターが含まれます。よってボールトは取引手数料を削減するために、常に一定量の余資を保持しています。",
           "header": "ボールト:"
         }
       },
@@ -219,12 +250,12 @@
     },
     "farming": {
       "header": "イールドファーミング",
-      "paragraph": "Each Backd pool employs a yield farming strategy using external protocols. As yield is generated through a pool’s strategy and top up fees, the pool’s LP token appreciates, distributing the earnings to the pool’s liquidity providers. Similar to collateral top ups, yield farming strategies are subject to a performance fee, which is split between their creator (i.e. the strategist) and a reserve fund."
+      "paragraph": "Backdの各プールは、外部プロトコルを使用したイールドファーミングを採用しています。また、利回りは、プールのストラテジーと補充手数料によって生成されるので、プールのLPトークンの価値が上がり、プールの流動資金提供者に収益を分配します。担保補充と同様に、イールドファーミングはパフォーマンス手数料の対象となり、その作成者（ストラテジスト）と予備資金に分割されます。"
     },
     "governance": {
       "disclaimer": "免責事項：現在においては、Backd ガバナンストークンは存在しておりません。詐欺にご注意ください。",
       "header": "ガバナンス",
-      "paragraph": "Backd will rely on a decentralized governance scheme, which will be introduced after the protocol launch. The protocol offers a lot of room for parameterization, such as required reserve ratios for pools, strategy allocation weights, reserve requirement weights for vaults or LP and keeper fees. Furthermore, new pools, strategies and supported protocols can be added via governance."
+      "paragraph": "Backdは、プロトコル開始後に導入される分散型ガバナンススキームを利用していく予定です。このプロトコルは、プールに必要な準備率、戦略割り当て率、ボールトの準備預金率、LPおよびキーパー料金などにおいて、パラメータ化への余地が多くあります。さらに、新しいプールや戦略、サポートを受けるプロトコルなどにおいては、ガバナンスを介しての追加が可能となっています。"
     },
     "header": "BackdのLitepaper",
     "introduction": {
@@ -235,7 +266,7 @@
     },
     "keepers": {
       "header": "Backdの キーパー",
-      "paragraph": "Keepers are an integral part of Backd’s collateral top up mechanism. A keeper is an off-chain bot that monitors Backd top up registrations and reports eligible collateral top ups to the Backd smart contract. The Backd smart contract handles users’ funds and executes top ups by injecting capital into registered collateral. Keepers collect a percentage of the generated top up fee every time they report an eligible top up. In addition to this, keepers are also distributed Backd rewards in proportion to the top up value they have executed.  Anyone can operate an off-chain keeper bot for Backd."
+      "paragraph": "キーパーは Backd の担保補充機能において不可欠な部分といえる、Backd の補充登録を監視して適切な担保補充を Backd スマートコントラクトに報告するオフチェーンボットです。Backdスマートコントラクトはお客様の資金を処理し、登録された担保に資本を移すことで補充を実行します。キーパーは、対象となる補充を報告するたびに、補充金額の一部を獲得します。これに加えてキーパーは実行した補充金額に比例してBackd報酬も配布されます。Backdのオフチェーンキーパーボットはどなた様でもご利用いただけます。"
     },
     "pools": {
       "differences": {
@@ -244,7 +275,7 @@
           "header": "資産:"
         },
         "parameterization": {
-          "description": "Pools are very customizable. For instance, each pool has a required reserve ratio, which specifies the percentage of the backing funds that need to remain idle in the pool, i.e., funds which cannot be allocated to strategies but are reserved solely for the purpose of top ups. Intuitively, a lower reserve ratio comes with higher expected earnings (as more funds are allocated to a strategy), at the cost of increased insolvency risk, i.e., insufficient funds available for top up.  Furthermore, pools can differ in terms of fees charged on top ups and strategy performance.",
+          "description": "プールは、広くカスタマイズ可能となっております。たとえば、各プールには必須の準備資金割合がありますが、プール内で恒常的に維持されるべき資金の割合、つまり戦略に割り当てることなく、補充のためだけに保持されている資金の割合を指定することが可能となっています。しかし準備資金割合が低いほど（つまり戦略に割り当てられる資金が増えるほど）予想収益は高くなりますが、清算リスクが増大する、つまり補充に利用できる資金が不足します。さらにプールは、補充と戦略のパフォーマンスに課される手数料の点で異なる場合があります。",
           "header": "パラメータ化:"
         },
         "strategy": {
@@ -253,14 +284,14 @@
         }
       },
       "header": "流動性プール",
-      "paragraph1": "Through the combination of collateral top ups and yield-farming strategies, Backd enables novel multi-utility liquidity pools. This empowers borrowers to increase the capital efficiency of their positions while better managing liquidation risk. Backd achieves this through the administration of single-asset liquidity pools. Users who deposit funds into a pool (liquidity providers) receive Backd LP tokens which can be registered for collateral top ups (liquidation protection) and staked to earn further rewards. Furthermore, as collateral top ups occur, LPs receive a share of the collateral top up fees, in addition to any net profits harvested from a pool’s strategy.",
-      "paragraph2": "Liquidity pools function in isolation from one another with each asset having its own pool.  Backd will launch with liquidity pools for DAI, USDC, and ETH. In order to ensure that a sufficient amount of the underlying asset is available for collateral top ups, each pool maintains a required reserve ratio. This ratio defines the percentage of total pool assets which cannot be utilized by yield farming strategies and remain idle at all times. This allows the protocol to invariably execute collateral top ups, while reducing the transaction cost of withdrawals (including top ups).",
+      "paragraph1": "担保トップアップと利回り農業戦略の組み合わせにより、Backdは新たなマルチユーティリティ流動性プールを可能にします。これにより、借り手は、清算リスクをより適切に管理しながら、ポジションの資本効率を向上させることができます。Backd は、単一資産流動性プールの管理を通じてこれを実現しています。プールに資金を入金するユーザー（流動性プロバイダー）は、担保トップアップ（清算保護）に登録できるBackd LPトークンを受け取り、さらなる報酬を得るためにステークすることができます。さらに、担保トップアップが発生すると、LPは、プールの戦略から収穫された純利益に加えて、担保トップアップ手数料のシェアを受け取ることが可能です。",
+      "paragraph2": "各資産には独自の流動性プールがあり、プールは互いに孤立して機能します。BackdはDAI、USDC、ETHの流動性プールでローンチします。各プールは、担保補充に十分な原資産を確保するために必要な予備資金額を維持しています。この比率は、イールドファーミングでは利用できず常に非使用状態の総プール資産の割合を定義しますが、これによってプロトコルは担保補充を常に実行し、引き出し（補充を含む）の取引コストを削減することができます。",
       "paragraph3": "Backd の流動性プールは、いくつかのポイントで他とは一線を画しております。"
     },
     "topUps": {
       "header": "担保補充",
-      "paragraph1": "All Backd LPs have the option to register their LP tokens as backup collateral. Top up registration is personalized to the user by allowing individuals to select the parameters that best serve their borrow positions and risk tolerance. The parameters required to register a top up position are:",
-      "paragraph2": "Once registered, the user will continue to earn yield on the registered funds until a collateral top up is triggered. A collateral top up refers to using funds to increase the collateral for a particular borrow position. When this occurs, liquidity is shifted from Backd to the respective protocol, the collateralization ratio of the topped up position increases, and in turn mitigates liquidation risk. Collateral top up eligibility is determined by the health factor of registered positions and is reported by Backd keepers.",
+      "paragraph1": "Backd LPの皆様は、その LP トークンをバックアップ資金として登録するることも可能となっております。補充の登録は、個人が借入ポジションとリスク許容度においての最良のパラメータを選択できるようにすることで、お客様にパーソナライズすることができます。補充ポジションを登録するために必要なパラメータは次のとおりです。",
+      "paragraph2": "1度ご登録されると、担保の補充が行われるまで、お客様は登録された資金から利回りを獲得し続けます。担保補充とは、特定の借入ポジションの担保を増やすために資金を使用することを指します。これが発生すると流動資産がBackdからそれぞれのプロトコルに移行し、補充されたポジションの担保比率が上昇することで清算リスクが軽減されます。担保補充基準は、登録されたポジションのヘルスファクターによって決定され、Backdキーパーによって報告されます。",
       "parameters": {
         "address": "補充が必要なイーサリアムアドレスです。",
         "max": "最大割当(補充される可能性のある合計金額)",
@@ -282,11 +313,7 @@
       "pools": "すべてのプールを表示"
     },
     "number": "404",
-    "subHeader": {
-      "end": "ー",
-      "getInTouch": "ご連絡",
-      "start": "以下の便利なリンクのいずれかをお試しください。または"
-    }
+    "subHeader": "以下のリンクの中のいずれかをお試しください。問題があると思われる場合は<0>ご連絡</0>ください。"
   },
   "pool": {
     "information": {
@@ -308,15 +335,15 @@
         "tooltip": "プールに保有されている資産の時価総額(預かり資産)"
       }
     },
-    "overview": "Deposit {{asset}} to begin earning yield via the {{strategy}} strategy. Once you have deposited, you can make your liquidity reactive by opening a top-up position.",
+    "overview": "{{asset}} を入金して、{{strategy}} 戦略を通じて利回りを獲得しましょう。ご入金後、補充ポジションを開設することで流動資産をリアクティブ化できます。",
     "statistics": {
       "deposits": {
         "header": "お客様の預金",
         "tooltip": "プールに保有されている資産の時価"
       },
       "locked": {
-        "header": "ロックされたポジション",
-        "tooltip": "補充用に登録された資産の時価（清算保護）"
+        "header": "アクションでロックされた資産",
+        "tooltip": "アクションでロックされたお客様の資産の時価。アクションでロックされた資産も利回りを稼ぎます。"
       },
       "rewards": {
         "header": "報酬が計上されました。",
@@ -342,16 +369,20 @@
         "confirmation": {
           "header": "補充ポジションの確認",
           "summaryEnd": "{{threshold}} を下回ると、{{single}} {{asset}} ({{singleUSD}}) で補充されます。これは、担保比率が {{threshold}} を下回るたびに、合計 {{max}} {{asset}}（{{maxUSD}}）が補充されるまで繰り返されます。",
-          "summaryStart": "When the collateralization of"
+          "summaryStart": "担保の際の"
+        },
+        "delete": {
+          "body": "このトップアップポジションを削除すると、{{protocol}} の {{asset}} の自動担保補充も削除されます。{{max}} {{asset}} はステークの解除とポジションの削除の後に引き出すことができます。",
+          "header": "トップアップポジションを削除"
         },
         "fields": {
           "address": {
-            "hover": "住所を入力",
+            "hover": "アドレスを入力",
             "invalid": "無効なアドレスです",
-            "label": "住所",
+            "label": "アドレス",
             "required": "アドレスをご入力ください。",
-            "tooltip": "補充するポジションの所有者の住所 (例 : AさんがAaveの借り手であり、そこに対して補充が必要である場合、Aさんの住所になります。)",
-            "unique": "プロトコルと住所ごとに、最大1つのポジション"
+            "tooltip": "補充するポジションの所有者のアドレス (例 : AさんがAaveの借り手であり、そこに対して補充が必要である場合、Aさんのアドレスになります。)",
+            "unique": "プロトコルとアドレスごとに、最大1つのポジション"
           },
           "max": {
             "exceedsBalance": "預金残高を超えています。",
@@ -374,7 +405,7 @@
             "lessThanMax": "1回の補充可能最大額よりも少ない金額をご入力ください。",
             "positive": "正の数でご入力ください。",
             "required": "単一補充の必要があります。",
-            "tooltip": "単一補充増額の量 (例 : 2,500 DAIの補充増加)"
+            "tooltip": "1回の補充額 (例 : 2,500 DAIの補充ずつ補充)"
           },
           "threshold": {
             "greaterThanOne": "1 より大きい値でご入力ください。",
@@ -400,6 +431,7 @@
     }
   },
   "pools": {
+    "deposit": "預かり金",
     "header": "すべてのプール",
     "information": {
       "apy": {
@@ -416,15 +448,19 @@
         "tooltip": "Backdの流動性プールに保有されている総資産の時価総額(預かり資産)"
       }
     },
-    "overview": "Backd’s single-asset pools aggregate yield across strategies. After depositing an asset, register a top-up position to protect from liquidation on supported collateralized lending protocols.",
+    "overview": "Backd の単一資産プールは、戦略全体で利回りを集約します。資産を預け入れたのち、保証されている担保融資プロトコルの清算から保護するために、補充ポジションを登録します。",
+    "preview": {
+      "header": "イールドファーミング",
+      "subHeader": "今すぐ利回りを稼ぎ始める"
+    },
     "statistics": {
       "deposits": {
         "header": "お客様の預金",
         "tooltip": "Backdの流動性プールに保有されている資産の時価"
       },
       "locked": {
-        "header": "ポジションにロックされた預金",
-        "tooltip": "補充用に登録された資産の時価（清算保護）"
+        "header": "アクションでロックされた資産\n",
+        "tooltip": "アクションでロックされたお客様の資産の時価。アクションでロックされた資産も利回りを稼ぎます。"
       },
       "rewards": {
         "header": "獲得された報酬",

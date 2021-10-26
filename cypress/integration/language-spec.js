@@ -17,7 +17,7 @@ const isChinese = () => {
 const isJapanese = () => {
   cy.get("h1").contains("リアクティブ流動資産");
   cy.get("h3").contains(
-    "担保付ローンを清算から防ぐために設計された、管理者不在の利子生成プロトコルです。"
+    "お客様の資産を最大限活用し、Backdの流動性プールで利回りを稼ぎ始めましょう。"
   );
   cy.get("#how-it-works-2").contains("安全に稼ぐ");
 };
@@ -88,10 +88,6 @@ describe("Language Switching", () => {
     isChinese();
   });
 
-  it("Percy Should Screenshot Chinese Landing Page", () => {
-    percySnapshot();
-  });
-
   it("Should Change Language to Japanese", () => {
     cy.get('[id="language-selector"]').click();
     cy.get('[id="ja"]').click();
@@ -99,10 +95,6 @@ describe("Language Switching", () => {
 
   it("Should Show Japanese", () => {
     isJapanese();
-  });
-
-  it("Percy Should Screenshot Japanese Landing Page", () => {
-    percySnapshot();
   });
 
   it("Should Change Language to Spanish", () => {
@@ -114,10 +106,6 @@ describe("Language Switching", () => {
     isSpanish();
   });
 
-  it("Percy Should Screenshot Spanish Landing Page", () => {
-    percySnapshot();
-  });
-
   it("Should Change Language to French", () => {
     cy.get('[id="language-selector"]').click();
     cy.get('[id="fr"]').click();
@@ -125,10 +113,6 @@ describe("Language Switching", () => {
 
   it("Should Show French", () => {
     isFrench();
-  });
-
-  it("Percy Should Screenshot French Landing Page", () => {
-    percySnapshot();
   });
 
   it("Should Change Language back to English", () => {

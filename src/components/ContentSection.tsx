@@ -53,7 +53,7 @@ type Props = {
 const ContentSection = ({ header, statistics, content }: Props): JSX.Element => {
   return (
     <StyledContentSection>
-      <Header>{header}</Header>
+      <Header id="content-header">{header}</Header>
       <Line large />
       {statistics}
       <Line />

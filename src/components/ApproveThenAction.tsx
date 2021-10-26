@@ -156,6 +156,7 @@ const ApproveThenAction = ({
           />
         )}
         <Button
+          id="action-button"
           primary
           medium
           wide

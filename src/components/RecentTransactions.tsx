@@ -53,6 +53,12 @@ const Clear = styled(GradientText)`
   letter-spacing: 0.46px;
 `;
 
+const Transactions = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
 const Transaction = styled.div`
   width: 100%;
   display: flex;
@@ -136,29 +142,31 @@ const RecentTransactions = (): JSX.Element => {
       <HeaderContainer>
         <Header>{t("walletConnect.details.recentTransactions")}</Header>
         {transactions.length > 0 && (
-          <ClearButton onClick={() => dispatch(clearTransactions())}>
+          <ClearButton id="account-details-clear" onClick={() => dispatch(clearTransactions())}>
             <Clear>{t("walletConnect.details.clear")}</Clear>
           </ClearButton>
         )}
       </HeaderContainer>
       {transactions.length === 0 && <Empty>{t("walletConnect.details.empty")}</Empty>}
-      {transactions.slice(0, 4).map((tx: TransactionInfo) => (
-        <Transaction key={tx.hash}>
-          <Status
-            src={tx.confirmations === 0 ? pending : tx.status === 1 ? success : failure}
-            pending={tx.confirmations === 0}
-          />
-          <Type>{tx.description.action}</Type>
-          <Details>{getDetails(tx)}</Details>
-          <Link
-            href={getEtherscanTransactionLink(chainId, tx.hash)}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <ExternalLink src={externalLink} />
-          </Link>
-        </Transaction>
-      ))}
+      <Transactions id="account-details-transactions">
+        {transactions.slice(0, 4).map((tx: TransactionInfo) => (
+          <Transaction key={tx.hash}>
+            <Status
+              src={tx.confirmations === 0 ? pending : tx.status === 1 ? success : failure}
+              pending={tx.confirmations === 0}
+            />
+            <Type>{tx.description.action}</Type>
+            <Details>{getDetails(tx)}</Details>
+            <Link
+              href={getEtherscanTransactionLink(chainId, tx.hash)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <ExternalLink src={externalLink} />
+            </Link>
+          </Transaction>
+        ))}
+      </Transactions>
     </StyledRecentTransactions>
   );
 };
