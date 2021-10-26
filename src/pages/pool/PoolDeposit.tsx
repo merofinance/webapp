@@ -10,17 +10,36 @@ import { Pool } from "../../lib";
 import { ScaledNumber } from "../../lib/scaled-number";
 import DepositButtons from "./DepositButtons";
 
-const Content = styled.div`
+interface PoolDepositProps {
+  error: boolean;
+  compact?: boolean;
+}
+
+const StyledPoolDeposit = styled.div`
   width: 100%;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  align-items: flex-end;
+  grid-gap: ${(props: PoolDepositProps) => (props.compact ? "1.8rem" : "0")};
+
+  > div:last-child {
+    display: flex;
+    margin-bottom: ${(props: PoolDepositProps) =>
+      props.compact ? (props.error ? "2.4rem" : "0.3rem") : "0"};
+  }
+
+  grid-template-columns: ${(props: PoolDepositProps) =>
+    props.compact ? "repeat(2, 1fr)" : "repeat(1, 1fr)"};
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
 interface Props {
   pool: Pool;
+  compact?: boolean;
 }
 
-const PoolDeposit = ({ pool }: Props): JSX.Element => {
+const PoolDeposit = ({ pool, compact }: Props): JSX.Element => {
   const { t } = useTranslation();
   const availableToDeposit = useSelector(selectBalance(pool.underlying.address));
   const { isMobile } = useDevice();
@@ -43,8 +62,9 @@ const PoolDeposit = ({ pool }: Props): JSX.Element => {
   };
 
   return (
-    <Content>
+    <StyledPoolDeposit compact={compact} error={!!error()}>
       <AmountInput
+        noSlider={compact}
         value={depositAmount}
         setValue={(v: string) => setDepositAmount(v)}
         label={inputLabel}
@@ -52,12 +72,13 @@ const PoolDeposit = ({ pool }: Props): JSX.Element => {
         error={error()}
       />
       <DepositButtons
+        stepsOnTop={compact}
         pool={pool}
         value={value}
         complete={() => setDepositAmount("")}
         valid={!error() && !value.isZero()}
       />
-    </Content>
+    </StyledPoolDeposit>
   );
 };
 
