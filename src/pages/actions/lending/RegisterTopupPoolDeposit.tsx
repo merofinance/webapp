@@ -11,6 +11,7 @@ import { selectBalance } from "../../../state/userSlice";
 import { selectPool, selectPrice } from "../../../state/selectors";
 import { TOPUP_ACTION_ROUTE } from "../../../lib/constants";
 import PoolDeposit from "../../pool/PoolDeposit";
+import { useDevice } from "../../../app/hooks/use-device";
 
 interface TopupParams {
   address: string;
@@ -54,6 +55,7 @@ interface Props {
 const RegisterTopupPoolDeposit = ({ poolName }: Props) => {
   const { t } = useTranslation();
   const history = useHistory();
+  const { isMobile } = useDevice();
   const { address, protocol } = useParams<TopupParams>();
   const pool = useSelector(selectPool(poolName));
   const depositedBalance = useSelector(selectBalance(pool));
@@ -84,7 +86,7 @@ const RegisterTopupPoolDeposit = ({ poolName }: Props) => {
                 id="register-topup-pool-deposit-button"
                 primary
                 medium
-                width="44%"
+                width={isMobile ? "100%" : "44%"}
                 text={t("components.continue")}
                 click={() =>
                   history.push(
