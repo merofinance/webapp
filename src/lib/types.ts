@@ -1,5 +1,6 @@
 import { TransactionReceipt } from "@ethersproject/providers";
 import fromEntries from "fromentries";
+import { providers, Signer } from "ethers";
 
 import { PlainScaledNumber, ScaledNumber } from "./scaled-number";
 
@@ -36,8 +37,17 @@ interface GenericPosition<T> {
 export type Position = GenericPosition<ScaledNumber>;
 export type PlainPosition = GenericPosition<PlainScaledNumber>;
 
+export enum LendingProtocol {
+  Aave = "Aave",
+  Compound = "Compound",
+}
+
+export interface LendingProtocolProvider {
+  getPosition(address: Address, provider: Signer | providers.Provider): Promise<PlainLoan | null>;
+}
+
 interface GenericLoan<T> {
-  protocol: string;
+  protocol: LendingProtocol;
   totalCollateralETH: T;
   totalDebtETH: T;
   availableBorrowsETH: T;

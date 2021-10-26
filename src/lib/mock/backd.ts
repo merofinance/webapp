@@ -15,6 +15,7 @@ import {
   Token,
   transformPool,
   PlainLoan,
+  LendingProtocol,
 } from "../types";
 import { balances, makeContractTransaction, masterAccount, pools, positions, prices } from "./data";
 
@@ -39,20 +40,9 @@ export default class MockBackd implements Backd {
     return Promise.resolve(transformPool(pool, bigNumberToFloat));
   }
 
-  getAave(): Promise<PlainLoan> {
+  getLoanPosition(protocol: LendingProtocol, address?: Address): Promise<PlainLoan | null> {
     return Promise.resolve({
-      protocol: "Aave",
-      totalCollateralETH: new ScaledNumber().toPlain(),
-      totalDebtETH: new ScaledNumber().toPlain(),
-      availableBorrowsETH: new ScaledNumber().toPlain(),
-      currentLiquidationThreshold: new ScaledNumber().toPlain(),
-      healthFactor: new ScaledNumber().toPlain(),
-    });
-  }
-
-  getCompound(): Promise<PlainLoan> {
-    return Promise.resolve({
-      protocol: "Compound",
+      protocol: LendingProtocol.Aave,
       totalCollateralETH: new ScaledNumber().toPlain(),
       totalDebtETH: new ScaledNumber().toPlain(),
       availableBorrowsETH: new ScaledNumber().toPlain(),

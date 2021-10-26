@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 import { Backd } from "../lib/backd";
 import { ScaledNumber } from "../lib/scaled-number";
-import { Loan, PlainLoan } from "../lib/types";
+import { LendingProtocol, Loan, PlainLoan } from "../lib/types";
 
 interface LendingState {
   loans: PlainLoan[];
@@ -16,7 +16,10 @@ export const fetchLoans = createAsyncThunk(
   "lending/fetch-loans",
   async ({ backd }: { backd: Backd }) => {
     const loans: PlainLoan[] = [];
-    const [aave, compound] = await Promise.all([backd.getAave(), backd.getCompound()]);
+    const [aave, compound] = await Promise.all([
+      backd.getLoanPosition(LendingProtocol.Aave),
+      backd.getLoanPosition(LendingProtocol.Compound),
+    ]);
     if (aave) loans.push(aave);
     if (compound) loans.push(compound);
     return loans;

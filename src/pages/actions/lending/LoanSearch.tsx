@@ -10,7 +10,7 @@ import { spinAnimation } from "../../../styles/animations/SpinAnimation";
 import pending from "../../../assets/ui/status/pending.svg";
 import RowSelector from "../../../components/RowSelector";
 import { selectEthPrice } from "../../../state/poolsListSlice";
-import { Loan } from "../../../lib/types";
+import { LendingProtocol, Loan } from "../../../lib/types";
 import { fromPlainLoan } from "../../../state/lendingSlice";
 import { RowOptionType } from "../../../components/RowOption";
 
@@ -88,8 +88,8 @@ const LoanSearch = ({ value, setValue, hasExistingLoans }: Props) => {
     setLoading(true);
     const loans: Loan[] = [];
     const [aave, compound] = await Promise.all([
-      backd.getAave(newaddress),
-      backd.getCompound(newaddress),
+      backd.getLoanPosition(LendingProtocol.Aave, newaddress),
+      backd.getLoanPosition(LendingProtocol.Compound, newaddress),
     ]);
     if (aave) loans.push(fromPlainLoan(aave));
     if (compound) loans.push(fromPlainLoan(compound));

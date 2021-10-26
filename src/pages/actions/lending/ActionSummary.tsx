@@ -10,14 +10,14 @@ import { selectEthPrice } from "../../../state/poolsListSlice";
 import Asset from "../../../components/Asset";
 import { selectPool } from "../../../state/selectors";
 import { GradientText } from "../../../styles/GradientText";
-import { Loan, PlainLoan } from "../../../lib/types";
+import { LendingProtocol, Loan } from "../../../lib/types";
 import { useWeb3Updated } from "../../../app/hooks/use-web3-updated";
 import { useBackd } from "../../../app/hooks/use-backd";
 import { TOPUP_ACTION_ROUTE } from "../../../lib/constants";
 
 interface TopupParams {
   address: string;
-  protocol: string;
+  protocol: LendingProtocol;
   poolName: string;
 }
 
@@ -100,9 +100,7 @@ const ActionSummary = () => {
 
   const getLoan = async () => {
     if (!account || !backd) return;
-    let plainLoan: PlainLoan | null = null;
-    if (protocol === "Aave") plainLoan = await backd.getAave(address);
-    else if (protocol === "Compound") plainLoan = await backd.getCompound(address);
+    const plainLoan = await backd.getLoanPosition(LendingProtocol.Aave, address);
     if (!plainLoan) redirectToRegister();
     else setLoan(fromPlainLoan(plainLoan));
   };
