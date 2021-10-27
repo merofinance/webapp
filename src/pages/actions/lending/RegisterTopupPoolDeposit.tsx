@@ -73,6 +73,7 @@ const RegisterTopupPoolDeposit = () => {
 
   const hasSufficientBalance = () => {
     const lpBalance = balances[pool.lpToken.address];
+    if (!lpBalance) return false;
     const usdBalance = lpBalance.mul(prices[pool.underlying.symbol]);
     const gasCostUsd = new ScaledNumber(
       ScaledNumber.fromUnscaled(50, GWEI_DECIMALS).value.mul(TOPUP_GAS_COST).div(GWEI_SCALE)
