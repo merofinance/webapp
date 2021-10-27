@@ -10,6 +10,7 @@ import Asset from "../../../components/Asset";
 import { selectPool } from "../../../state/selectors";
 import { GradientText } from "../../../styles/GradientText";
 import { LendingProtocol, Loan } from "../../../lib/types";
+import { TOPUP_ACTION_ROUTE } from "../../../lib/constants";
 
 interface TopupParams {
   address: string;
@@ -115,7 +116,10 @@ const ActionSummary = () => {
         <Header>{t("actions.suggestions.topup.labels.pool")}</Header>
         <Value>
           <Asset tiny token={pool.underlying} />
-          <ChangePoolButton id="action-summary-change-pool" onClick={() => history.goBack()}>
+          <ChangePoolButton
+            id="action-summary-change-pool"
+            onClick={() => history.push(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`)}
+          >
             <ChangePoolText>{t("components.change")}</ChangePoolText>
           </ChangePoolButton>
         </Value>

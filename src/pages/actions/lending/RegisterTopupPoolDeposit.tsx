@@ -105,7 +105,9 @@ const RegisterTopupPoolDeposit = () => {
                 text={t("components.continue")}
                 click={() => {
                   if (address && protocol)
-                    history.push(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${poolName}`);
+                    history.push(
+                      `${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${poolName.toLowerCase()}`
+                    );
                   else history.goBack();
                 }}
                 disabled={!pool || !hasSufficientBalance()}
