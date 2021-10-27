@@ -20,7 +20,7 @@ const StyledActionsPage = styled.div`
   width: 100%;
   display: flex;
 
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     flex-direction: column-reverse;
   }
 `;
@@ -43,7 +43,7 @@ const InfoCards = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     display: ${(props: InfoCardsProps) => (props.hideMobile ? "none" : "flex")};
   }
 `;
@@ -54,7 +54,7 @@ const ProposeContainer = styled.div`
   display: flex;
   justify-content: center;
 
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     display: none;
   }
 `;

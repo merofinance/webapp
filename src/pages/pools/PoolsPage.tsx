@@ -18,7 +18,7 @@ const StyledPoolsPage = styled.div`
   width: 100%;
   display: flex;
 
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     flex-direction: column-reverse;
   }
 `;

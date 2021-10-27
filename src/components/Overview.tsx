@@ -19,7 +19,7 @@ const Description = styled.div`
 
   font-size: 1.5rem;
   line-height: 2rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     font-size: 1.2rem;
     line-height: 1.7rem;
   }
@@ -27,7 +27,7 @@ const Description = styled.div`
 
 const LinkContainer = styled.div`
   margin-top: 0.3rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     margin-top: 0.4rem;
   }
 `;
@@ -38,7 +38,7 @@ const Link = styled(GradientLink)`
 
   font-size: 1.5rem;
   line-height: 2rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     font-size: 1.2rem;
     line-height: 1.7rem;
   }

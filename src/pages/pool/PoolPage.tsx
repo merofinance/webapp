@@ -29,7 +29,7 @@ const StyledPoolPage = styled.div`
   width: 100%;
   display: flex;
 
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     flex-direction: column;
 
     > div:nth-child(2) {
@@ -57,7 +57,7 @@ const InfoCards = styled.div`
 const ButtonContainer = styled.div`
   width: 100%;
   padding-left: 2rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     display: none;
   }
 `;
