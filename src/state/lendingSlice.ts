@@ -15,14 +15,11 @@ const initialState: LendingState = {
 export const fetchLoans = createAsyncThunk(
   "lending/fetch-loans",
   async ({ backd, address }: { backd: Backd; address: Address }) => {
-    const loans: PlainLoan[] = [];
-    const [aave, compound] = await Promise.all([
+    const loans: (PlainLoan | null)[] = await Promise.all([
       backd.getLoanPosition(LendingProtocol.Aave, address),
       backd.getLoanPosition(LendingProtocol.Compound, address),
     ]);
-    if (aave) loans.push(aave);
-    if (compound) loans.push(compound);
-    return { address, loans };
+    return { address, loans: loans.filter((loan: PlainLoan | null) => loan) as PlainLoan[] };
   }
 );
 
