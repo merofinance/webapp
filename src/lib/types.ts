@@ -30,7 +30,7 @@ interface GenericPosition<T> {
   threshold: T;
   singleTopUp: T;
   maxTopUp: T;
-  maxGasPrice: number;
+  maxGasPrice: T;
   actionToken: Address;
   depositToken: Address;
 }
@@ -64,6 +64,7 @@ export const toPlainPosition = (position: Position): PlainPosition => {
     threshold: position.threshold.toPlain(),
     singleTopUp: position.singleTopUp.toPlain(),
     maxTopUp: position.maxTopUp.toPlain(),
+    maxGasPrice: position.maxGasPrice.toPlain(),
   };
 };
 
@@ -73,6 +74,7 @@ export const fromPlainPosition = (position: PlainPosition): Position => {
     threshold: ScaledNumber.fromPlain(position.threshold),
     singleTopUp: ScaledNumber.fromPlain(position.singleTopUp),
     maxTopUp: ScaledNumber.fromPlain(position.maxTopUp),
+    maxGasPrice: ScaledNumber.fromPlain(position.maxGasPrice),
   };
 };
 
@@ -82,13 +84,14 @@ export function positionFromPartial<T>(pool: Pool<T>, position: Partial<Position
   if (!position.threshold) throw Error("Missing threshold when creating position");
   if (!position.singleTopUp) throw Error("Missing single top-up when creating position");
   if (!position.maxTopUp) throw Error("Missing max top-up when creating position");
+  if (!position.maxGasPrice) throw Error("Missing max top-up when creating position");
   return {
     protocol: position.protocol,
     account: position.account,
     threshold: position.threshold,
     singleTopUp: position.singleTopUp,
     maxTopUp: position.maxTopUp,
-    maxGasPrice: 0,
+    maxGasPrice: position.maxGasPrice,
     actionToken: pool.underlying.address,
     depositToken: pool.lpToken.address,
   };

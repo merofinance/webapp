@@ -198,7 +198,7 @@ const RegisterTopupConditions = () => {
     threshold: ScaledNumber.fromUnscaled(formik.values.threshold),
     singleTopUp: ScaledNumber.fromUnscaled(formik.values.singleTopUp, pool.underlying.decimals),
     maxTopUp: ScaledNumber.fromUnscaled(formik.values.maxTopUp, pool.underlying.decimals),
-    maxGasPrice: Number(formik.values.maxGasPrice),
+    maxGasPrice: ScaledNumber.fromUnscaled(formik.values.maxGasPrice, 9),
     actionToken: pool.underlying.address,
     depositToken: pool.lpToken.address,
   };

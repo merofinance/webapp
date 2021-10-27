@@ -179,7 +179,7 @@ export class Web3Backd implements Backd {
       threshold: new ScaledNumber(rawPosition.record.threshold, decimals).toPlain(),
       singleTopUp: new ScaledNumber(rawPosition.record.singleTopUpAmount, decimals).toPlain(),
       maxTopUp: new ScaledNumber(rawPosition.record.totalTopUpAmount, decimals).toPlain(),
-      maxGasPrice: rawPosition.record.maxGasPrice.toNumber(),
+      maxGasPrice: new ScaledNumber(rawPosition.record.maxGasPrice, 9).toPlain(),
     };
     return position;
   }
@@ -191,7 +191,6 @@ export class Web3Backd implements Backd {
     const rawExchangeRate = await poolContract.exchangeRate();
     const protocol = utils.formatBytes32String(position.protocol);
     const depositAmount = position.maxTopUp.value.mul(rawExchangeRate).div(scale);
-    const maxGasPrice = BigNumber.from(position.maxGasPrice).mul(GWEI_SCALE);
 
     return this.topupAction.register(
       position.account,
@@ -202,7 +201,7 @@ export class Web3Backd implements Backd {
       pool.underlying.address,
       position.singleTopUp.value,
       position.maxTopUp.value,
-      maxGasPrice
+      position.maxGasPrice.value
     );
   }
 

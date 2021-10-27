@@ -86,7 +86,7 @@ const LoanSearch = ({ value, setValue, hasExistingLoans }: Props) => {
   const hasLoans = loans.length > 0;
 
   const getLoans = async (newaddress: string) => {
-    if (!backd) return;
+    if (!backd || !ethers.utils.isAddress(newaddress)) return;
     setLoading(true);
     await dispatch(fetchLoans({ backd, address: newaddress }));
     setRetrieved(true);
@@ -130,7 +130,7 @@ const LoanSearch = ({ value, setValue, hasExistingLoans }: Props) => {
           id="loan-search"
           value={address}
           setValue={(value: string) => {
-            if (ethers.utils.isAddress(value)) getLoans(value);
+            getLoans(value);
             setAddress(value);
           }}
           placeholder="e.g. 0x09...A98E"
