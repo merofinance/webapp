@@ -79,10 +79,10 @@ const RegisterTopupPool = () => {
   const prices = useSelector(selectPrices);
   const ethPrice = useSelector(selectEthPrice);
   const [pool, setPool] = useState("");
-  const [depositing, setDepositing] = useState(false);
 
   const hasSufficientBalance = (pool: Pool) => {
     const lpBalance = balances[pool.lpToken.address];
+    if (!lpBalance) return false;
     const usdBalance = lpBalance.mul(prices[pool.underlying.symbol]);
     const gasCostUsd = new ScaledNumber(
       ScaledNumber.fromUnscaled(50, GWEI_DECIMALS).value.mul(TOPUP_GAS_COST).div(GWEI_SCALE)
@@ -91,7 +91,7 @@ const RegisterTopupPool = () => {
   };
 
   const hasDeposits = pools.some((pool: Pool) => hasSufficientBalance(pool));
-  const selected = pools.filter((p: Pool) => p.lpToken.symbol.toLocaleLowerCase() === pool)[0];
+  const selected = pools.filter((p: Pool) => p.lpToken.symbol.toLowerCase() === pool)[0];
 
   const options: RowOptionType[] = pools.map((pool: Pool) => {
     const value = pool.lpToken.symbol.toLowerCase();
@@ -125,14 +125,6 @@ const RegisterTopupPool = () => {
     };
   });
 
-  if (depositing)
-    return (
-      <RegisterTopupPoolDeposit
-        poolName={selected.lpToken.symbol}
-        hasSufficientBalance={hasSufficientBalance(selected)}
-      />
-    );
-
   return (
     <Container>
       <ContentSection
@@ -160,7 +152,8 @@ const RegisterTopupPool = () => {
                 width={isMobile ? "100%" : "44%"}
                 text={t("components.continue")}
                 click={() => {
-                  if (!hasSufficientBalance(selected)) setDepositing(true);
+                  if (!hasSufficientBalance(selected))
+                    history.push(`${TOPUP_ACTION_ROUTE}/deposit/${pool}/${address}/${protocol}`);
                   else history.push(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${pool}`);
                 }}
                 disabled={!pool}
