@@ -13,8 +13,6 @@ export interface RowOptionType {
   columns: ColumnType[];
   id?: string;
   disabledText?: string;
-  buttonText?: string;
-  buttonAction?: () => void;
 }
 
 const Container = styled.div`
@@ -33,7 +31,7 @@ interface RowOptionProps {
   disabled: boolean;
 }
 
-const StyledRowOption = styled.a`
+const StyledRowOption = styled.button`
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -60,9 +58,6 @@ const StyledRowOption = styled.a`
 
   @media (max-width: 600px) {
     div:nth-child(4) {
-      display: none;
-    }
-    button {
       display: none;
     }
   }
@@ -153,9 +148,6 @@ const RowOption = ({ active, select, option }: Props) => {
             {typeof column.value === "string" ? <Value>{column.value}</Value> : column.value}
           </Column>
         ))}
-        {option.buttonText && option.buttonAction && (
-          <Button text={option.buttonText} click={option.buttonAction} background="var(--row-bg)" />
-        )}
       </StyledRowOption>
       {option.disabledText && (
         <HoverTextContainer>

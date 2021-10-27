@@ -98,11 +98,6 @@ const RegisterTopupPool = () => {
     return {
       value,
       id: `${pool.underlying.symbol.toLowerCase()}-pool-option`,
-      buttonText: "Deposit more",
-      buttonAction: () => {
-        setPool(value);
-        setDepositing(true);
-      },
       columns: [
         {
           label: t("headers.asset"),
