@@ -15,10 +15,10 @@ const languageOptions: SelectorOptionType[] = [
     value: "zh-Hant",
     label: "中文",
   },
-  {
-    value: "es",
-    label: "Español",
-  },
+  // {
+  //   value: "es",
+  //   label: "Español",
+  // },
   {
     value: "pt_PT",
     label: "Português",
@@ -27,10 +27,10 @@ const languageOptions: SelectorOptionType[] = [
     value: "ja",
     label: "日本語",
   },
-  {
-    value: "fr",
-    label: "Français",
-  },
+  // {
+  //   value: "fr",
+  //   label: "Français",
+  // },
 ];
 
 const StyledLanguageSelector = styled.button`

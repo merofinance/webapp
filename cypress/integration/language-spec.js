@@ -119,23 +119,23 @@ describe("Language Switching", () => {
     isPortuguese();
   });
 
-  it("Should Change Language to Spanish", () => {
-    cy.get('[id="language-selector"]').click();
-    cy.get('[id="es"]').click();
-  });
+  // it("Should Change Language to Spanish", () => {
+  //   cy.get('[id="language-selector"]').click();
+  //   cy.get('[id="es"]').click();
+  // });
 
-  it("Should Show Spanish", () => {
-    isSpanish();
-  });
+  // it("Should Show Spanish", () => {
+  //   isSpanish();
+  // });
 
-  it("Should Change Language to French", () => {
-    cy.get('[id="language-selector"]').click();
-    cy.get('[id="fr"]').click();
-  });
+  // it("Should Change Language to French", () => {
+  //   cy.get('[id="language-selector"]').click();
+  //   cy.get('[id="fr"]').click();
+  // });
 
-  it("Should Show French", () => {
-    isFrench();
-  });
+  // it("Should Show French", () => {
+  //   isFrench();
+  // });
 
   it("Should Change Language back to English", () => {
     cy.get("#language-selector").click();
