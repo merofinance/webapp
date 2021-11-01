@@ -16,12 +16,16 @@ const languageOptions: SelectorOptionType[] = [
     label: "中文",
   },
   {
-    value: "ja",
-    label: "日本語",
-  },
-  {
     value: "es",
     label: "Español",
+  },
+  {
+    value: "pt_PT",
+    label: "Português",
+  },
+  {
+    value: "ja",
+    label: "日本語",
   },
   {
     value: "fr",
