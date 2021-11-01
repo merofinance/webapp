@@ -98,7 +98,7 @@ describe("Account Details", () => {
     cy.get("#desktop-connector").click();
   });
   it("Should show pending transaction", () => {
-    cy.get("#account-details-transactions div").first().contains("Deposit", { timeout: 30_000 });
+    cy.get("#account-details-transactions div", { timeout: 30_000 }).first().contains("Deposit");
   });
   it("Should show wallet type", () => {
     cy.get("#account-details-wallet").contains("MetaMask");
