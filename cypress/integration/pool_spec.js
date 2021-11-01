@@ -94,14 +94,11 @@ describe("Depositing", () => {
 });
 
 describe("Account Details", () => {
-  it("Should show loading indicator on connector", () => {
-    cy.get("#connector-loading-indicator", { timeout: 30_000 }).should("be.visible");
-  });
   it("Should open Account Details", () => {
     cy.get("#desktop-connector").click();
   });
   it("Should show pending transaction", () => {
-    cy.get("#account-details-transactions div").first().contains("Deposit");
+    cy.get("#account-details-transactions div").first().contains("Deposit", { timeout: 30_000 });
   });
   it("Should show wallet type", () => {
     cy.get("#account-details-wallet").contains("MetaMask");
