@@ -38,6 +38,14 @@ const isFrench = () => {
   cy.get("#how-it-works-2").contains("Protéger et gagner");
 };
 
+const isPortuguese = () => {
+  cy.get("h1").contains("Liquidez reativa");
+  cy.get("h3").contains(
+    "Maximize o poder de seus ativos e comece a ganhar rendimento com as pools de liquidez do Backd."
+  );
+  cy.get("#how-it-works-2").contains("Proteja e ganhe");
+};
+
 describe("Setting Language with Query Parameter", () => {
   it("Should Show English with no Parameter", () => {
     cy.visit("/");
@@ -62,6 +70,11 @@ describe("Setting Language with Query Parameter", () => {
   it("Should Show French with FR Parameter", () => {
     cy.visit("/?lng=fr");
     isFrench();
+  });
+
+  it("Should Show Portuguese with pt_PT Parameter", () => {
+    cy.visit("/?lng=pt_PT");
+    isPortuguese();
   });
 
   it("Should Show English with EN Parameter", () => {
@@ -97,23 +110,32 @@ describe("Language Switching", () => {
     isJapanese();
   });
 
-  it("Should Change Language to Spanish", () => {
+  it("Should Change Language to Portuguese", () => {
     cy.get('[id="language-selector"]').click();
-    cy.get('[id="es"]').click();
+    cy.get('[id="pt_PT"]').click();
   });
 
-  it("Should Show Spanish", () => {
-    isSpanish();
+  it("Should Show Portuguese", () => {
+    isPortuguese();
   });
 
-  it("Should Change Language to French", () => {
-    cy.get('[id="language-selector"]').click();
-    cy.get('[id="fr"]').click();
-  });
+  // it("Should Change Language to Spanish", () => {
+  //   cy.get('[id="language-selector"]').click();
+  //   cy.get('[id="es"]').click();
+  // });
 
-  it("Should Show French", () => {
-    isFrench();
-  });
+  // it("Should Show Spanish", () => {
+  //   isSpanish();
+  // });
+
+  // it("Should Change Language to French", () => {
+  //   cy.get('[id="language-selector"]').click();
+  //   cy.get('[id="fr"]').click();
+  // });
+
+  // it("Should Show French", () => {
+  //   isFrench();
+  // });
 
   it("Should Change Language back to English", () => {
     cy.get("#language-selector").click();
