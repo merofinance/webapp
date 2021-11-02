@@ -360,65 +360,6 @@
         },
         "tab": "Deposite "
       },
-      "positions": {
-        "buttons": {
-          "approve": "aprovar 1/2",
-          "create": "criar 2/2",
-          "nav": "Criar uma posição de Top-up"
-        },
-        "confirmation": {
-          "header": "Confirmar posição de top-up",
-          "summaryEnd": "cai abaixo de {{threshold}}, ele será completado com {{single}} {{asset}} ({{singleUsd}}). Isto será repetido cada vez que a taxa colateralização cair abaixo de {{threshold}}, até um total de {{max}} {{asset}} ({{maxUsd}}) seja completado.",
-          "summaryStart": "Quando a colateralização de\n"
-        },
-        "delete": {
-          "body": "Apagar esta posição de top-up removerá os top-ups colaterais automáticos de {{asset}} em {{protocol}}. {{max}} {{asset}} será unstaked e poderá ser retirado após a saida da posição.",
-          "header": "Apagar posição de top-up"
-        },
-        "fields": {
-          "address": {
-            "hover": "Inserir endereço",
-            "invalid": "Endereço inválido",
-            "label": "Endereço",
-            "required": "O endereço é necessário",
-            "tooltip": "O endereço do proprietário da posição para top-up (por exemplo, se a Alice é o mutuário no Aave que deve ser preenchido, então este seria o endereço da Alice)",
-            "unique": "Máximo de uma posição por protocolo e endereço"
-          },
-          "max": {
-            "exceedsBalance": "Excede o saldo depositado",
-            "hover": "Insira o Top-up máximo",
-            "invalid": "Número inválido",
-            "label": "Top-up máximo",
-            "positive": "Deve ser um número positivo",
-            "required": "Top-ups máximos necessários",
-            "tooltip": "Valor máximo de Top-up (valor de sua liquidez alocada para top-ups)"
-          },
-          "protocol": {
-            "hover": "Selecionar protocolo",
-            "label": "Protocolo",
-            "tooltip": "O protocolo de empréstimo no qual o usuário está a emprestantar fundos (atualmente compatível com Aave e Compound)"
-          },
-          "single": {
-            "hover": "Inserir Top-up único",
-            "invalid": "Número inválido",
-            "label": "Top-up único",
-            "lessThanMax": "Deve ser menor que o máximo de top-up",
-            "positive": "tem que ser um número positivo",
-            "required": "É necessária um único Top-up ",
-            "tooltip": "Quantidade de um único incremento de top-up (por exemplo, incrementos de top-up de 2.500 DAI)"
-          },
-          "threshold": {
-            "greaterThanOne": "Deve ser maior que 1",
-            "hover": "Inserir o limite",
-            "label": "Limite",
-            "required": "O limite é obrigatório",
-            "tooltip": "O limite do fator de saúde em que um top-up colateral deve ocorrer em"
-          }
-        },
-        "header": "Posições de top-up {{asset}}",
-        "tabDesktop": "Posições de top-up",
-        "tabMobile": "posições"
-      },
       "withdraw": {
         "action": "Retirar {{asset}}",
         "header": "Retirar {{asset}}",
@@ -427,6 +368,50 @@
           "labelMobile": "Insira o valor a ser retirado"
         },
         "tab": "Retirar"
+      }
+    }
+  },
+  "actions": {
+    "topup": {
+      "fields": {
+        "address": {
+          "hover": "Inserir endereço",
+          "invalid": "Endereço inválido",
+          "label": "Endereço",
+          "required": "O endereço é necessário",
+          "tooltip": "O endereço do proprietário da posição para top-up (por exemplo, se a Alice é o mutuário no Aave que deve ser preenchido, então este seria o endereço da Alice)",
+          "unique": "Máximo de uma posição por protocolo e endereço"
+        },
+        "max": {
+          "exceedsBalance": "Excede o saldo depositado",
+          "hover": "Insira o Top-up máximo",
+          "invalid": "Número inválido",
+          "label": "Top-up máximo",
+          "positive": "Deve ser um número positivo",
+          "required": "Top-ups máximos necessários",
+          "tooltip": "Valor máximo de Top-up (valor de sua liquidez alocada para top-ups)"
+        },
+        "protocol": {
+          "hover": "Selecionar protocolo",
+          "label": "Protocolo",
+          "tooltip": "O protocolo de empréstimo no qual o usuário está a emprestantar fundos (atualmente compatível com Aave e Compound)"
+        },
+        "single": {
+          "hover": "Inserir Top-up único",
+          "invalid": "Número inválido",
+          "label": "Top-up único",
+          "lessThanMax": "Deve ser menor que o máximo de top-up",
+          "positive": "tem que ser um número positivo",
+          "required": "É necessária um único Top-up ",
+          "tooltip": "Quantidade de um único incremento de top-up (por exemplo, incrementos de top-up de 2.500 DAI)"
+        },
+        "threshold": {
+          "greaterThanOne": "Deve ser maior que 1",
+          "hover": "Inserir o limite",
+          "label": "Limite",
+          "required": "O limite é obrigatório",
+          "tooltip": "O limite do fator de saúde em que um top-up colateral deve ocorrer em"
+        }
       }
     }
   },
