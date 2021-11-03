@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 import {
   Header1,
@@ -75,6 +75,20 @@ const Bold = styled.span`
   }
 `;
 
+const Link = styled.a`
+  font-weight: 400;
+  letter-spacing: 0.15px;
+  margin-bottom: 1rem;
+  text-decoration: underline;
+
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+  }
+`;
+
 const Image = styled.img`
   width: 100%;
   margin-top: 1rem;
@@ -111,7 +125,13 @@ const LitepaperPage = (): JSX.Element => {
       />
       <Header1>{t("litepaper.header")}</Header1>
       <Header>{t("litepaper.introduction.header")}</Header>
-      <Paragraph>{t("litepaper.introduction.paragraph1")}</Paragraph>
+      <Paragraph>
+        <Trans i18nKey="litepaper.introduction.paragraph1">
+          <Link href="https://docs.backd.fund/" target="_blank" rel="noopener noreferrer">
+            Backd
+          </Link>
+        </Trans>
+      </Paragraph>
 
       <Header>{t("litepaper.capitalEfficiency.header")}</Header>
       <Paragraph>{t("litepaper.capitalEfficiency.paragraph1")}</Paragraph>
@@ -149,7 +169,13 @@ const LitepaperPage = (): JSX.Element => {
       <Paragraph>{t("litepaper.fees.strategies.paragraph1")}</Paragraph>
 
       <Header>{t("litepaper.token.header")}</Header>
-      <Paragraph>{t("litepaper.token.paragraph1")}</Paragraph>
+      <Paragraph>
+        <Trans i18nKey="litepaper.token.paragraph1">
+          <Link href="https://docs.backd.fund/" target="_blank" rel="noopener noreferrer">
+            docs
+          </Link>
+        </Trans>
+      </Paragraph>
       <Paragraph>{t("litepaper.token.paragraph2")}</Paragraph>
       <Paragraph>
         <Bold>{t("litepaper.token.paragraph3")}</Bold>
@@ -184,13 +210,43 @@ const LitepaperPage = (): JSX.Element => {
           <Paragraph>{t("litepaper.token.community.contributions.keeper")}</Paragraph>
         </Item>
         <Item>
-          <Paragraph>{t("litepaper.token.community.contributions.general")}</Paragraph>
+          <Paragraph>
+            <Trans i18nKey="litepaper.token.community.contributions.general">
+              <Link
+                href="https://docs.backd.fund/resources/contributions"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                contributions
+              </Link>
+            </Trans>
+          </Paragraph>
         </Item>
         <Item>
-          <Paragraph>{t("litepaper.token.community.contributions.investment")}</Paragraph>
+          <Paragraph>
+            <Trans i18nKey="litepaper.token.community.contributions.investment">
+              <Link
+                href="https://docs.backd.fund/resources/cookbook"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                strategies
+              </Link>
+            </Trans>
+          </Paragraph>
         </Item>
       </List>
-      <Paragraph>{t("litepaper.token.community.paragraph3")}</Paragraph>
+      <Paragraph>
+        <Trans i18nKey="litepaper.token.community.paragraph3">
+          <Link
+            href="https://discord.com/invite/jpGvaFV3Rv"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            discord channel
+          </Link>
+        </Trans>
+      </Paragraph>
     </StyledLitepaperPage>
   );
 };
