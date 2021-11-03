@@ -19,7 +19,7 @@ const StyledLitepaperPage = styled.div`
   }
 `;
 
-const Header = styled(Header2)`
+const Header = styled(Header5)`
   text-align: left;
   margin-top: 8rem;
 
@@ -28,7 +28,7 @@ const Header = styled(Header2)`
   }
 `;
 
-const SubHeader = styled(Header5)`
+const SubHeader = styled(Header2)`
   text-align: left;
   margin-top: 3rem;
 `;
