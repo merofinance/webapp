@@ -2,15 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Trans, useTranslation } from "react-i18next";
 
-import {
-  Header1,
-  Header2,
-  Header3,
-  Header4,
-  Header5,
-  Header6,
-  Paragraph,
-} from "../../styles/Headers";
+import { Header1, Header2, Header5, Paragraph } from "../../styles/Headers";
 import Seo from "../../components/Seo";
 import capitalEfficiency from "../../assets/litepaper/capital-efficiency.png";
 import topUp from "../../assets/litepaper/top-up.gif";
