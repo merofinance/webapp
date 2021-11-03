@@ -12,6 +12,9 @@ import {
   Paragraph,
 } from "../../styles/Headers";
 import Seo from "../../components/Seo";
+import capitalEfficiency from "../../assets/litepaper/capital-efficiency.png";
+import topUp from "../../assets/litepaper/top-up.gif";
+import backdFlow from "../../assets/litepaper/backd-flow.png";
 
 const StyledLitepaperPage = styled.div`
   display: flex;
@@ -72,6 +75,31 @@ const Bold = styled.span`
   }
 `;
 
+const Image = styled.img`
+  width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+`;
+
+const SectionContainer = styled.div`
+  width: 100%;
+  align-items: center;
+  display: flex;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
+`;
+
+const SmallImage = styled.img`
+  width: 50%;
+  margin-bottom: 1rem;
+
+  @media (max-width: 600px) {
+    width: 100%;
+  }
+`;
+
 const LitepaperPage = (): JSX.Element => {
   const { t } = useTranslation();
 
@@ -90,7 +118,10 @@ const LitepaperPage = (): JSX.Element => {
       <Paragraph>{t("litepaper.capitalEfficiency.paragraph2")}</Paragraph>
       <SubHeader>{t("litepaper.capitalEfficiency.notEfficient.header")}</SubHeader>
       <Paragraph>{t("litepaper.capitalEfficiency.notEfficient.paragraph1")}</Paragraph>
-      <Paragraph>{t("litepaper.capitalEfficiency.notEfficient.paragraph2")}</Paragraph>
+      <SectionContainer>
+        <SmallImage src={capitalEfficiency} alt="Capital Efficiency Diagram" />
+        <Paragraph>{t("litepaper.capitalEfficiency.notEfficient.paragraph2")}</Paragraph>
+      </SectionContainer>
       <Paragraph>{t("litepaper.capitalEfficiency.notEfficient.paragraph3")}</Paragraph>
       <SubHeader>{t("litepaper.capitalEfficiency.earnYield.header")}</SubHeader>
       <Paragraph>{t("litepaper.capitalEfficiency.earnYield.paragraph1")}</Paragraph>
@@ -105,8 +136,10 @@ const LitepaperPage = (): JSX.Element => {
       <Paragraph>{t("litepaper.action.paragraph1")}</Paragraph>
       <SubHeader>{t("litepaper.action.what.header")}</SubHeader>
       <Paragraph>{t("litepaper.action.what.paragraph1")}</Paragraph>
+      <Image src={topUp} alt="Top-up Action Diagram" />
       <Paragraph>{t("litepaper.action.what.paragraph2")}</Paragraph>
       <Paragraph>{t("litepaper.action.what.paragraph3")}</Paragraph>
+      <Image src={backdFlow} alt="Backd Flow Diagram" />
 
       <Header>{t("litepaper.fees.header")}</Header>
       <Paragraph>{t("litepaper.fees.paragraph1")}</Paragraph>
