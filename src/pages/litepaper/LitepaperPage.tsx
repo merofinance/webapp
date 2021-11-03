@@ -5,7 +5,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { Header1, Header2, Header5, Paragraph } from "../../styles/Headers";
 import Seo from "../../components/Seo";
 import capitalEfficiency from "../../assets/litepaper/capital-efficiency.png";
-import topUp from "../../assets/litepaper/top-up.gif";
+import topUp from "../../assets/litepaper/top-up.png";
 import backdFlow from "../../assets/litepaper/backd-flow.png";
 
 const StyledLitepaperPage = styled.div`
