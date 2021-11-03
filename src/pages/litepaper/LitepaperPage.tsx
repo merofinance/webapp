@@ -2,7 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
-import { Header1, Header2, Paragraph } from "../../styles/Headers";
+import {
+  Header1,
+  Header2,
+  Header3,
+  Header4,
+  Header5,
+  Header6,
+  Paragraph,
+} from "../../styles/Headers";
 import Seo from "../../components/Seo";
 
 const StyledLitepaperPage = styled.div`
@@ -23,6 +31,11 @@ const Header = styled(Header2)`
   @media (max-width: 600px) {
     margin-top: 4rem;
   }
+`;
+
+const SubHeader = styled(Header5)`
+  text-align: left;
+  margin-top: 3rem;
 `;
 
 const List = styled.ul`
@@ -71,89 +84,80 @@ const LitepaperPage = (): JSX.Element => {
       <Header1>{t("litepaper.header")}</Header1>
       <Header>{t("litepaper.introduction.header")}</Header>
       <Paragraph>{t("litepaper.introduction.paragraph1")}</Paragraph>
-      <Paragraph>{t("litepaper.introduction.paragraph2")}</Paragraph>
-      <Paragraph>{t("litepaper.introduction.paragraph3")}</Paragraph>
 
-      <Header>{t("litepaper.pools.header")}</Header>
-      <Paragraph>{t("litepaper.pools.paragraph1")}</Paragraph>
-      <Paragraph>{t("litepaper.pools.paragraph2")}</Paragraph>
-      <Paragraph>{t("litepaper.pools.paragraph3")}</Paragraph>
+      <Header>{t("litepaper.capitalEfficiency.header")}</Header>
+      <Paragraph>{t("litepaper.capitalEfficiency.paragraph1")}</Paragraph>
+      <Paragraph>{t("litepaper.capitalEfficiency.paragraph2")}</Paragraph>
+      <SubHeader>{t("litepaper.capitalEfficiency.notEfficient.header")}</SubHeader>
+      <Paragraph>{t("litepaper.capitalEfficiency.notEfficient.paragraph1")}</Paragraph>
+      <Paragraph>{t("litepaper.capitalEfficiency.notEfficient.paragraph2")}</Paragraph>
+      <Paragraph>{t("litepaper.capitalEfficiency.notEfficient.paragraph3")}</Paragraph>
+      <SubHeader>{t("litepaper.capitalEfficiency.earnYield.header")}</SubHeader>
+      <Paragraph>{t("litepaper.capitalEfficiency.earnYield.paragraph1")}</Paragraph>
+      <Paragraph>{t("litepaper.capitalEfficiency.earnYield.paragraph2")}</Paragraph>
+
+      <Header>{t("litepaper.reactiveLiquidity.header")}</Header>
+      <Paragraph>{t("litepaper.reactiveLiquidity.paragraph1")}</Paragraph>
+      <Paragraph>{t("litepaper.reactiveLiquidity.paragraph2")}</Paragraph>
+      <Paragraph>{t("litepaper.reactiveLiquidity.paragraph3")}</Paragraph>
+
+      <Header>{t("litepaper.action.header")}</Header>
+      <Paragraph>{t("litepaper.action.paragraph1")}</Paragraph>
+      <SubHeader>{t("litepaper.action.what.header")}</SubHeader>
+      <Paragraph>{t("litepaper.action.what.paragraph1")}</Paragraph>
+      <Paragraph>{t("litepaper.action.what.paragraph2")}</Paragraph>
+      <Paragraph>{t("litepaper.action.what.paragraph3")}</Paragraph>
+
+      <Header>{t("litepaper.fees.header")}</Header>
+      <Paragraph>{t("litepaper.fees.paragraph1")}</Paragraph>
+      <SubHeader>{t("litepaper.fees.action.header")}</SubHeader>
+      <Paragraph>{t("litepaper.fees.action.paragraph1")}</Paragraph>
+      <SubHeader>{t("litepaper.fees.strategies.header")}</SubHeader>
+      <Paragraph>{t("litepaper.fees.strategies.paragraph1")}</Paragraph>
+
+      <Header>{t("litepaper.token.header")}</Header>
+      <Paragraph>{t("litepaper.token.paragraph1")}</Paragraph>
+      <Paragraph>{t("litepaper.token.paragraph2")}</Paragraph>
+      <Paragraph>
+        <Bold>{t("litepaper.token.paragraph3")}</Bold>
+      </Paragraph>
       <List>
         <Item>
-          <Paragraph>
-            <Bold>{t("litepaper.pools.differences.assets.header")}</Bold>{" "}
-            {t("litepaper.pools.differences.assets.description")}
-          </Paragraph>
+          <Paragraph>{t("litepaper.token.governance.actions")}</Paragraph>
         </Item>
         <Item>
-          <Paragraph>
-            <Bold>{t("litepaper.pools.differences.parameterization.header")}</Bold>{" "}
-            {t("litepaper.pools.differences.parameterization.description")}
-          </Paragraph>
+          <Paragraph>{t("litepaper.token.governance.protocols")}</Paragraph>
         </Item>
         <Item>
-          <Paragraph>
-            <Bold>{t("litepaper.pools.differences.strategy.header")}</Bold>{" "}
-            {t("litepaper.pools.differences.strategy.description")}
-          </Paragraph>
+          <Paragraph>{t("litepaper.token.governance.strategies")}</Paragraph>
+        </Item>
+        <Item>
+          <Paragraph>{t("litepaper.token.governance.parameters")}</Paragraph>
+        </Item>
+        <Item>
+          <Paragraph>{t("litepaper.token.governance.reserve")}</Paragraph>
         </Item>
       </List>
-
-      <Header>{t("litepaper.topUps.header")}</Header>
-      <Paragraph>{t("litepaper.topUps.paragraph1")}</Paragraph>
+      <SubHeader>{t("litepaper.token.community.header")}</SubHeader>
+      <Paragraph>{t("litepaper.token.community.paragraph1")}</Paragraph>
+      <Paragraph>
+        <Bold>{t("litepaper.token.community.paragraph2")}</Bold>
+      </Paragraph>
       <List>
         <Item>
-          <Paragraph>{t("litepaper.topUps.parameters.protocol")}</Paragraph>
+          <Paragraph>{t("litepaper.token.community.contributions.strategy")}</Paragraph>
         </Item>
         <Item>
-          <Paragraph>{t("litepaper.topUps.parameters.address")}</Paragraph>
+          <Paragraph>{t("litepaper.token.community.contributions.keeper")}</Paragraph>
         </Item>
         <Item>
-          <Paragraph>{t("litepaper.topUps.parameters.threshold")}</Paragraph>
+          <Paragraph>{t("litepaper.token.community.contributions.general")}</Paragraph>
         </Item>
         <Item>
-          <Paragraph>{t("litepaper.topUps.parameters.single")}</Paragraph>
-        </Item>
-        <Item>
-          <Paragraph>{t("litepaper.topUps.parameters.max")}</Paragraph>
+          <Paragraph>{t("litepaper.token.community.contributions.investment")}</Paragraph>
         </Item>
       </List>
-      <Paragraph>{t("litepaper.topUps.paragraph2")}</Paragraph>
-
-      <Header>{t("litepaper.keepers.header")}</Header>
-      <Paragraph>{t("litepaper.keepers.paragraph")}</Paragraph>
-
-      <Header>{t("litepaper.farming.header")}</Header>
-      <Paragraph>{t("litepaper.farming.paragraph")}</Paragraph>
-
-      <Header>{t("litepaper.components.header")}</Header>
-      <Paragraph>{t("litepaper.components.paragraph")}</Paragraph>
-      <Paragraph>
-        <Bold>{t("litepaper.components.components.pools.header")}</Bold>{" "}
-        {t("litepaper.components.components.pools.decription")}
-      </Paragraph>
-      <Paragraph>
-        <Bold>{t("litepaper.components.components.vaults.header")}</Bold>{" "}
-        {t("litepaper.components.components.vaults.decription")}
-      </Paragraph>
-      <Paragraph>
-        <Bold>{t("litepaper.components.components.strategies.header")}</Bold>{" "}
-        {t("litepaper.components.components.strategies.decription")}
-      </Paragraph>
-      <Paragraph>
-        <Bold>{t("litepaper.components.components.handlers.header")}</Bold>{" "}
-        {t("litepaper.components.components.handlers.decription")}
-      </Paragraph>
-      <Paragraph>
-        <Bold>{t("litepaper.components.components.keepers.header")}</Bold>{" "}
-        {t("litepaper.components.components.keepers.decription")}
-      </Paragraph>
-
-      <Header>{t("litepaper.governance.header")}</Header>
-      <Paragraph>{t("litepaper.governance.paragraph")}</Paragraph>
-      <Paragraph>
-        <Bold>{t("litepaper.governance.disclaimer")}</Bold>
-      </Paragraph>
+      <Paragraph>{t("litepaper.token.community.paragraph3")}</Paragraph>
     </StyledLitepaperPage>
   );
 };
