@@ -56,6 +56,7 @@ const PoolDeposit = ({ pool }: Props): JSX.Element => {
             label={inputLabel}
             max={availableToDeposit}
             error={error()}
+            symbol={pool.underlying.symbol}
           />
           <DepositButtons
             pool={pool}
