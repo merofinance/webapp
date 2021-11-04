@@ -18,6 +18,7 @@ import { GWEI_DECIMALS, GWEI_SCALE, TOPUP_GAS_COST } from "../../../lib/constant
 import { addSuggestion, removeSuggestion, selectImplement } from "../../../state/helpSlice";
 import NewPositionConfirmation from "./RegisterTopupConfirmation";
 import { Loan, Position } from "../../../lib/types";
+import { selectLoans } from "../../../state/lendingSlice";
 
 interface TopupParams {
   address: string;
@@ -102,11 +103,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-interface Props {
-  loan: Loan | null;
-}
-
-const RegisterTopupConditionsForm = ({ loan }: Props) => {
+const RegisterTopupConditionsForm = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const backd = useBackd();
@@ -120,6 +117,8 @@ const RegisterTopupConditionsForm = ({ loan }: Props) => {
   const implement = useSelector(selectImplement);
   const [loading, setLoading] = useState(false);
   const [confirming, setConfirming] = useState(false);
+  const loans = useSelector(selectLoans(address));
+  const loan = loans.filter((loan: Loan) => loan.protocol === protocol)[0];
 
   useEffect(() => {
     if (implement === "threshold-min") {
@@ -182,7 +181,7 @@ const RegisterTopupConditionsForm = ({ loan }: Props) => {
     threshold: ScaledNumber.fromUnscaled(formik.values.threshold),
     singleTopUp: ScaledNumber.fromUnscaled(formik.values.singleTopUp, pool.underlying.decimals),
     maxTopUp: ScaledNumber.fromUnscaled(formik.values.maxTopUp, pool.underlying.decimals),
-    maxGasPrice: Number(formik.values.maxGasPrice),
+    maxGasPrice: ScaledNumber.fromUnscaled(formik.values.maxGasPrice, 9),
     actionToken: pool.underlying.address,
     depositToken: pool.lpToken.address,
   };
