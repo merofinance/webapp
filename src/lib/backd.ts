@@ -26,8 +26,9 @@ import {
   Token,
   transformPool,
   PlainLoan,
+  LendingProtocol,
 } from "./types";
-import { LendingPoolFactory } from "./contracts/aave/LendingPool";
+import { lendingProviders } from "./lending-protocols";
 
 export type BackdOptions = {
   chainId: number;
@@ -37,8 +38,7 @@ export interface Backd {
   currentAccount(): Promise<Address>;
   listPools(): Promise<Pool[]>;
   getPoolInfo(address: Address): Promise<Pool>;
-  getAave(address?: Address): Promise<PlainLoan | null>;
-  getCompound(address?: Address): Promise<PlainLoan | null>;
+  getLoanPosition(protocol: LendingProtocol, address?: Address): Promise<PlainLoan | null>;
   getPositions(): Promise<PlainPosition[]>;
   registerPosition(pool: Pool, position: Position): Promise<ContractTransaction>;
   removePosition(
@@ -157,49 +157,8 @@ export class Web3Backd implements Backd {
     return transformPool(rawPool, bigNumberToFloat);
   }
 
-  async getAave(address?: Address): Promise<PlainLoan | null> {
-    const account = address || (await this.currentAccount());
-    const lendingPoolContract = LendingPoolFactory.connect(this._provider);
-    const userAccountData = await lendingPoolContract.getUserAccountData(account);
-    if (new ScaledNumber(userAccountData.totalCollateralETH).isZero()) return null;
-    return {
-      protocol: "Aave",
-      totalCollateralETH: new ScaledNumber(userAccountData.totalCollateralETH).toPlain(),
-      totalDebtETH: new ScaledNumber(userAccountData.totalDebtETH).toPlain(),
-      availableBorrowsETH: new ScaledNumber(userAccountData.availableBorrowsETH).toPlain(),
-      currentLiquidationThreshold: ScaledNumber.fromUnscaled("1", 4)
-        .div(new ScaledNumber(userAccountData.currentLiquidationThreshold, 4))
-        .toPlain(),
-      healthFactor: new ScaledNumber(userAccountData.healthFactor).toPlain(),
-    };
-  }
-
-  // We are calling the Compound API here instead of their contracts to get the data
-  // Innitially I looked into using the contracts and started implementing that
-  // But they don't have a clean API in their contracts for this data
-  // And it ended up being a lot of different calls to get it and became quite messy and slow
-  // I suppose that's why they created the API for this
-  async getCompound(address?: Address): Promise<PlainLoan | null> {
-    const COMPOUND_API = "https://api.compound.finance/api/v2/account";
-    const account = address || (await this.currentAccount());
-
-    // Only Mainnet is supported by the API, so we can't get Kovan data from this unfortunately
-    const response = await fetch(`${COMPOUND_API}?addresses[]=${account}`);
-
-    const data = await response.json();
-    if (!data.accounts || data.accounts.length === 0) return null;
-
-    const accountData = data.accounts[0];
-    const collateral = ScaledNumber.fromUnscaled(accountData.total_collateral_value_in_eth.value);
-    const debt = ScaledNumber.fromUnscaled(accountData.total_borrow_value_in_eth.value);
-    return Promise.resolve({
-      protocol: "Compound",
-      totalCollateralETH: collateral.toPlain(),
-      totalDebtETH: debt.toPlain(),
-      availableBorrowsETH: new ScaledNumber().toPlain(), // Not returned by API, leaving as 0 as not needed in UI at the moment
-      currentLiquidationThreshold: new ScaledNumber().toPlain(), // Not returned by API, leaving as 0 as not needed in UI at the moment
-      healthFactor: debt.isZero() ? new ScaledNumber().toPlain() : collateral.div(debt).toPlain(),
-    });
+  async getLoanPosition(protocol: LendingProtocol, address: Address): Promise<PlainLoan | null> {
+    return lendingProviders[protocol].getPosition(address, this._provider);
   }
 
   async getPositions(): Promise<PlainPosition[]> {
@@ -220,7 +179,7 @@ export class Web3Backd implements Backd {
       threshold: new ScaledNumber(rawPosition.record.threshold, decimals).toPlain(),
       singleTopUp: new ScaledNumber(rawPosition.record.singleTopUpAmount, decimals).toPlain(),
       maxTopUp: new ScaledNumber(rawPosition.record.totalTopUpAmount, decimals).toPlain(),
-      maxGasPrice: rawPosition.record.maxGasPrice.toNumber(),
+      maxGasPrice: new ScaledNumber(rawPosition.record.maxGasPrice, 9).toPlain(),
     };
     return position;
   }
@@ -232,7 +191,6 @@ export class Web3Backd implements Backd {
     const rawExchangeRate = await poolContract.exchangeRate();
     const protocol = utils.formatBytes32String(position.protocol);
     const depositAmount = position.maxTopUp.value.mul(rawExchangeRate).div(scale);
-    const maxGasPrice = BigNumber.from(position.maxGasPrice).mul(GWEI_SCALE);
 
     return this.topupAction.register(
       position.account,
@@ -243,7 +201,7 @@ export class Web3Backd implements Backd {
       pool.underlying.address,
       position.singleTopUp.value,
       position.maxTopUp.value,
-      maxGasPrice
+      position.maxGasPrice.value
     );
   }
 

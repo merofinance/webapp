@@ -108,7 +108,7 @@ const ContentSection = ({
         {nav && <Key id="content-key">{nav}</Key>}
       </HeaderContainer>
       <Line large />
-      {statistics && statistics}
+      {statistics}
       {statistics && <Line />}
       <Content noContentPadding={noContentPadding}>{content}</Content>
     </StyledContentSection>

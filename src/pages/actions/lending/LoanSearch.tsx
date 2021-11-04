@@ -2,7 +2,7 @@ import { ethers } from "ethers";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useBackd } from "../../../app/hooks/use-backd";
 import BasicInput from "../../../components/BasicInput";
@@ -11,8 +11,9 @@ import pending from "../../../assets/ui/status/pending.svg";
 import RowSelector from "../../../components/RowSelector";
 import { selectEthPrice } from "../../../state/poolsListSlice";
 import { Loan } from "../../../lib/types";
-import { fromPlainLoan } from "../../../state/lendingSlice";
+import { fetchLoans, selectLoans } from "../../../state/lendingSlice";
 import { RowOptionType } from "../../../components/RowOption";
+import { AppDispatch } from "../../../app/store";
 
 const StyledLoanSearch = styled.div`
   width: 100%;
@@ -74,26 +75,20 @@ interface Props {
 
 const LoanSearch = ({ value, setValue, hasExistingLoans }: Props) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();
   const ethPrice = useSelector(selectEthPrice);
   const [address, setAddress] = useState("");
   const [loading, setLoading] = useState(false);
-  const [loans, setLoans] = useState<Loan[]>([]);
+  const loans = useSelector(selectLoans(address));
   const [retrieved, setRetrieved] = useState(false);
 
   const hasLoans = loans.length > 0;
 
   const getLoans = async (newaddress: string) => {
-    if (!backd) return;
+    if (!backd || !ethers.utils.isAddress(newaddress)) return;
     setLoading(true);
-    const loans: Loan[] = [];
-    const [aave, compound] = await Promise.all([
-      backd.getAave(newaddress),
-      backd.getCompound(newaddress),
-    ]);
-    if (aave) loans.push(fromPlainLoan(aave));
-    if (compound) loans.push(fromPlainLoan(compound));
-    setLoans(loans);
+    await dispatch(fetchLoans({ backd, address: newaddress }));
     setRetrieved(true);
     setLoading(false);
   };
@@ -135,7 +130,7 @@ const LoanSearch = ({ value, setValue, hasExistingLoans }: Props) => {
           id="loan-search"
           value={address}
           setValue={(value: string) => {
-            if (ethers.utils.isAddress(value)) getLoans(value);
+            getLoans(value);
             setAddress(value);
           }}
           placeholder="e.g. 0x09...A98E"

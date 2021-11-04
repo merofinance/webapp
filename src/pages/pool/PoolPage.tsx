@@ -30,7 +30,7 @@ const StyledPoolPage = styled.div`
   width: 100%;
   display: flex;
 
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     flex-direction: column;
 
     > div:nth-child(2) {
@@ -58,7 +58,7 @@ const InfoCards = styled.div`
 const ButtonContainer = styled.div`
   width: 100%;
   padding-left: 2rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     display: none;
   }
 `;
@@ -82,11 +82,11 @@ const PoolPage = (): JSX.Element => {
 
   return (
     <StyledPoolPage>
-      <BackButton />
       <Seo
-        title={`${pool.underlying.symbol} Pool`}
-        description={`Deposit ${pool.underlying.symbol} to farm yield and register LP tokens for actions such as liquidation protection (Aave & Compound)`}
+        title={t("metadata.pool.title", { asset: pool.underlying.symbol })}
+        description={t("metadata.pool.description", { asset: pool.underlying.symbol })}
       />
+      <BackButton />
       <ContentContainer>
         <Content>
           <ContentSection

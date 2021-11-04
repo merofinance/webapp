@@ -122,7 +122,7 @@ const Tabs = ({ tabs }: Props): JSX.Element => {
     <StyledTabs>
       <Options>
         {tabs.map((tab: TabType, index: number) => (
-          <Option id={tab.label} onClick={() => setActiveIndex(index)}>
+          <Option key={tab.label} id={tab.label} onClick={() => setActiveIndex(index)}>
             <OptionText>{t(tab.label)}</OptionText>
             <GradientOptionText active={activeIndex === index}>{t(tab.label)}</GradientOptionText>
           </Option>

@@ -239,7 +239,7 @@ describe("Pool Selection", () => {
     cy.get("#register-topup-pool-button").click();
     cy.location().should((loc) => {
       expect(loc.pathname).to.eq(
-        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
+        "/actions/register/topup/deposit/bdai/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
       );
     });
   });
@@ -297,7 +297,7 @@ describe("Pool Deposit", () => {
     cy.get("#register-topup-pool-deposit-button", { timeout: WEB3_TIMEOUT }).click();
     cy.location().should((loc) => {
       expect(loc.pathname).to.eq(
-        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/bDAI"
+        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/bdai"
       );
     });
   });

@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../app/store";
 import { Pool } from "../lib";
 import { Backd } from "../lib/backd";
-import { Prices } from "../lib/types";
+import { Address, Prices } from "../lib/types";
 import { fetchLoans } from "./lendingSlice";
 import { fetchPositions } from "./positionsSlice";
 import { fetchAllowances, fetchBalances } from "./userSlice";
@@ -62,7 +62,7 @@ export const poolsSlice = createSlice({
 export const fetchState =
   (backd: Backd): AppThunk =>
   (dispatch) => {
-    dispatch(fetchLoans({ backd }));
+    backd.currentAccount().then((address: Address) => dispatch(fetchLoans({ backd, address })));
     dispatch(fetchPools({ backd })).then((v) => {
       if (v.meta.requestStatus !== "fulfilled") return;
       const pools = v.payload as Pool[];

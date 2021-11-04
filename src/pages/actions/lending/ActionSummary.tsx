@@ -4,13 +4,17 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useHistory, useParams } from "react-router";
 
+import { selectLoans } from "../../../state/lendingSlice";
 import { selectEthPrice } from "../../../state/poolsListSlice";
 import Asset from "../../../components/Asset";
 import { selectPool } from "../../../state/selectors";
 import { GradientText } from "../../../styles/GradientText";
-import { Loan } from "../../../lib/types";
+import { LendingProtocol, Loan } from "../../../lib/types";
+import { TOPUP_ACTION_ROUTE } from "../../../lib/constants";
 
 interface TopupParams {
+  address: string;
+  protocol: LendingProtocol;
   poolName: string;
 }
 
@@ -78,16 +82,17 @@ const ChangePoolText = styled(GradientText)`
   font-size: 1rem;
 `;
 
-interface Props {
-  loan: Loan | null;
-}
-
-const ActionSummary = ({ loan }: Props) => {
+const ActionSummary = () => {
   const { t } = useTranslation();
-  const { poolName } = useParams<TopupParams>();
+  const { poolName, address, protocol } = useParams<TopupParams>();
   const history = useHistory();
   const ethPrice = useSelector(selectEthPrice);
   const pool = useSelector(selectPool(poolName));
+  const loans = useSelector(selectLoans(address));
+
+  const loan = loans.filter((loan: Loan) => loan.protocol === protocol)[0];
+
+  if (!loan || !pool) return <></>;
 
   return (
     <StyledActionSummary id="action-summary">
@@ -111,7 +116,10 @@ const ActionSummary = ({ loan }: Props) => {
         <Header>{t("actions.suggestions.topup.labels.pool")}</Header>
         <Value>
           {pool ? <Asset tiny token={pool.underlying} /> : <Header>----</Header>}
-          <ChangePoolButton id="action-summary-change-pool" onClick={() => history.goBack()}>
+          <ChangePoolButton
+            id="action-summary-change-pool"
+            onClick={() => history.push(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`)}
+          >
             <ChangePoolText>{t("components.change")}</ChangePoolText>
           </ChangePoolButton>
         </Value>

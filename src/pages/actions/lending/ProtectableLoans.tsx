@@ -1,3 +1,4 @@
+import { useWeb3React } from "@web3-react/core";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -65,7 +66,8 @@ const BackdHelper = styled.img`
 
 const ProtectableLoans = () => {
   const { t } = useTranslation();
-  const loans = useSelector(selectLoans);
+  const { account } = useWeb3React();
+  const loans = useSelector(selectLoans(account));
   const positions = useSelector(selectPositions);
   const { isMobile } = useDevice();
 

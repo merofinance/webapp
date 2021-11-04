@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { useHistory, useParams } from "react-router";
@@ -6,17 +6,23 @@ import { useSelector } from "react-redux";
 
 import ContentSection from "../../../components/ContentSection";
 import Button from "../../../components/Button";
-import BackButton from "../../../components/BackButton";
-import { selectBalance } from "../../../state/userSlice";
-import { ScaledNumber } from "../../../lib/scaled-number";
-import { selectPool, selectPrice } from "../../../state/selectors";
-import AmountInput from "../../../components/AmountInput";
+import { selectPool } from "../../../state/selectors";
+import {
+  GWEI_DECIMALS,
+  GWEI_SCALE,
+  TOPUP_ACTION_ROUTE,
+  TOPUP_GAS_COST,
+} from "../../../lib/constants";
+import PoolDeposit from "../../pool/PoolDeposit";
 import { useDevice } from "../../../app/hooks/use-device";
-import DepositButtons from "../../pool/DepositButtons";
+import { selectBalances } from "../../../state/userSlice";
+import { ScaledNumber } from "../../../lib/scaled-number";
+import { selectEthPrice, selectPrices } from "../../../state/poolsListSlice";
 
 interface TopupParams {
   address: string;
   protocol: string;
+  poolName: string;
 }
 
 const Container = styled.div`
@@ -40,28 +46,7 @@ const SubHeader = styled.div`
   font-weight: 500;
   opacity: 0.8;
   margin-top: 1.6rem;
-`;
-
-interface DepositSectionProps {
-  error: boolean;
-}
-
-const DepositSection = styled.div`
-  width: 100%;
-  display: grid;
-  align-items: flex-end;
-  grid-gap: 1.8rem;
-  margin-top: 6rem;
-
-  > div:last-child {
-    display: flex;
-    margin-bottom: ${(props: DepositSectionProps) => (props.error ? "2.4rem" : "0.3rem")};
-  }
-
-  grid-template-columns: repeat(2, 1fr);
-  @media (max-width: 600px) {
-    grid-template-columns: repeat(1, 1fr);
-  }
+  margin-bottom: 6rem;
 `;
 
 const ButtonContainer = styled.div`
@@ -70,46 +55,34 @@ const ButtonContainer = styled.div`
   justify-content: center;
   margin-top: 6rem;
 `;
-interface Props {
-  poolName: string;
-}
 
-const RegisterTopupPoolDeposit = ({ poolName }: Props) => {
+const RegisterTopupPoolDeposit = () => {
   const { t } = useTranslation();
+  const { address, protocol, poolName } = useParams<TopupParams>();
   const history = useHistory();
   const { isMobile } = useDevice();
-  const { address, protocol } = useParams<TopupParams>();
   const pool = useSelector(selectPool(poolName));
-  const underlyingBalance = useSelector(selectBalance(pool?.underlying.address || ""));
-  const depositedBalance = useSelector(selectBalance(pool));
-  const price = useSelector(selectPrice(pool));
-  const [depositAmount, setDepositAmount] = useState("");
+  const balances = useSelector(selectBalances);
+  const prices = useSelector(selectPrices);
+  const ethPrice = useSelector(selectEthPrice);
 
   if (!pool) {
     history.push("/");
     throw Error("Pool not found");
   }
 
-  const value = ScaledNumber.fromUnscaled(depositAmount, pool.underlying.decimals);
-
-  const inputLabel = isMobile
-    ? t("pool.tabs.deposit.input.labelMobile")
-    : t("pool.tabs.deposit.input.labelDesktop", { asset: pool.underlying.symbol });
-
-  const error = () => {
-    if (depositAmount && Number(depositAmount) <= 0) return t("amountInput.validation.positive");
-    try {
-      const amount = ScaledNumber.fromUnscaled(depositAmount, pool.underlying.decimals);
-      if (amount.gt(underlyingBalance)) return t("amountInput.validation.exceedsBalance");
-      return "";
-    } catch {
-      return t("amountInput.validation.invalid");
-    }
+  const hasSufficientBalance = () => {
+    const lpBalance = balances[pool.lpToken.address];
+    if (!lpBalance) return false;
+    const usdBalance = lpBalance.mul(prices[pool.underlying.symbol]);
+    const gasCostUsd = new ScaledNumber(
+      ScaledNumber.fromUnscaled(50, GWEI_DECIMALS).value.mul(TOPUP_GAS_COST).div(GWEI_SCALE)
+    ).mul(ethPrice);
+    return usdBalance.gte(gasCostUsd);
   };
 
   return (
     <Container>
-      <BackButton />
       <ContentSection
         header={t("actions.register.header")}
         subHeader={t("actions.topup.label")}
@@ -122,36 +95,22 @@ const RegisterTopupPoolDeposit = ({ poolName }: Props) => {
             <SubHeader>
               {t("actions.topup.stages.pool.deposit.subHeader", { asset: pool.underlying.symbol })}
             </SubHeader>
-            <DepositSection error={!!error()}>
-              <AmountInput
-                noSlider
-                value={depositAmount}
-                setValue={(v: string) => setDepositAmount(v)}
-                label={inputLabel}
-                max={underlyingBalance}
-                error={error()}
-              />
-              <DepositButtons
-                stepsOnTop
-                pool={pool}
-                value={value}
-                complete={() => setDepositAmount("")}
-                valid={!error() && !value.isZero()}
-              />
-            </DepositSection>
+            <PoolDeposit compact pool={pool} />
             <ButtonContainer>
               <Button
                 id="register-topup-pool-deposit-button"
                 primary
                 medium
-                width="44%"
+                width={isMobile ? "100%" : "44%"}
                 text={t("components.continue")}
-                click={() =>
-                  history.push(
-                    `/actions/register/topup/${address}/${protocol}/${pool.lpToken.symbol}`
-                  )
-                }
-                disabled={!pool || Number(depositedBalance.toString()) * price < 50}
+                click={() => {
+                  if (address && protocol)
+                    history.push(
+                      `${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${poolName.toLowerCase()}`
+                    );
+                  else history.goBack();
+                }}
+                disabled={!pool || !hasSufficientBalance()}
                 hoverText={t("actions.topup.stages.pool.deposit.incomplete", {
                   asset: pool?.underlying.symbol,
                 })}

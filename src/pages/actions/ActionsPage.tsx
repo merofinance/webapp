@@ -21,7 +21,7 @@ const StyledActionsPage = styled.div`
   width: 100%;
   display: flex;
 
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     flex-direction: column-reverse;
   }
 `;
@@ -44,7 +44,7 @@ const InfoCards = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     display: ${(props: InfoCardsProps) => (props.hideMobile ? "none" : "flex")};
   }
 `;
@@ -55,7 +55,7 @@ const ProposeContainer = styled.div`
   display: flex;
   justify-content: center;
 
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     display: none;
   }
 `;
@@ -81,10 +81,7 @@ const ActionsPage = (): JSX.Element => {
 
   return (
     <StyledActionsPage>
-      <Seo
-        title="Backd Actions"
-        description="Create Actions to automate your liquidity to where it is needed most"
-      />
+      <Seo title={t("metadata.actions.title")} description={t("metadata.actions.description")} />
       <ContentContainer>
         <Content>
           <Switch>
@@ -119,7 +116,7 @@ const ActionsPage = (): JSX.Element => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              + Propose a new Action on Discord
+              {t("actions.propose")}
             </ProposeLink>
           </ProposeContainer>
         )}

@@ -1,5 +1,6 @@
 import { TransactionReceipt } from "@ethersproject/providers";
 import fromEntries from "fromentries";
+import { providers, Signer } from "ethers";
 
 import { PlainScaledNumber, ScaledNumber } from "./scaled-number";
 
@@ -23,45 +24,39 @@ export interface Pool<Num = number> {
   exchangeRate: Num;
 }
 
-export interface Position {
+interface GenericPosition<T> {
   protocol: string;
   account: Address;
-  threshold: ScaledNumber;
-  singleTopUp: ScaledNumber;
-  maxTopUp: ScaledNumber;
-  maxGasPrice: number;
+  threshold: T;
+  singleTopUp: T;
+  maxTopUp: T;
+  maxGasPrice: T;
   actionToken: Address;
   depositToken: Address;
 }
+export type Position = GenericPosition<ScaledNumber>;
+export type PlainPosition = GenericPosition<PlainScaledNumber>;
 
-export interface PlainPosition {
-  protocol: string;
-  account: Address;
-  threshold: PlainScaledNumber;
-  singleTopUp: PlainScaledNumber;
-  maxTopUp: PlainScaledNumber;
-  maxGasPrice: number;
-  actionToken: Address;
-  depositToken: Address;
+export enum LendingProtocol {
+  Aave = "Aave",
+  Compound = "Compound",
 }
 
-export interface Loan {
-  protocol: string;
-  totalCollateralETH: ScaledNumber;
-  totalDebtETH: ScaledNumber;
-  availableBorrowsETH: ScaledNumber;
-  currentLiquidationThreshold: ScaledNumber;
-  healthFactor: ScaledNumber;
+export interface LendingProtocolProvider {
+  getPosition(address: Address, provider: Signer | providers.Provider): Promise<PlainLoan | null>;
 }
 
-export interface PlainLoan {
-  protocol: string;
-  totalCollateralETH: PlainScaledNumber;
-  totalDebtETH: PlainScaledNumber;
-  availableBorrowsETH: PlainScaledNumber;
-  currentLiquidationThreshold: PlainScaledNumber;
-  healthFactor: PlainScaledNumber;
+interface GenericLoan<T> {
+  protocol: LendingProtocol;
+  totalCollateralETH: T;
+  totalDebtETH: T;
+  availableBorrowsETH: T;
+  currentLiquidationThreshold: T;
+  healthFactor: T;
 }
+export type Loan = GenericLoan<ScaledNumber>;
+export type PlainLoan = GenericLoan<PlainScaledNumber>;
+export type PlainLoans = Record<Address, PlainLoan[]>;
 
 export const toPlainPosition = (position: Position): PlainPosition => {
   return {
@@ -69,6 +64,7 @@ export const toPlainPosition = (position: Position): PlainPosition => {
     threshold: position.threshold.toPlain(),
     singleTopUp: position.singleTopUp.toPlain(),
     maxTopUp: position.maxTopUp.toPlain(),
+    maxGasPrice: position.maxGasPrice.toPlain(),
   };
 };
 
@@ -78,6 +74,7 @@ export const fromPlainPosition = (position: PlainPosition): Position => {
     threshold: ScaledNumber.fromPlain(position.threshold),
     singleTopUp: ScaledNumber.fromPlain(position.singleTopUp),
     maxTopUp: ScaledNumber.fromPlain(position.maxTopUp),
+    maxGasPrice: ScaledNumber.fromPlain(position.maxGasPrice),
   };
 };
 
@@ -87,13 +84,14 @@ export function positionFromPartial<T>(pool: Pool<T>, position: Partial<Position
   if (!position.threshold) throw Error("Missing threshold when creating position");
   if (!position.singleTopUp) throw Error("Missing single top-up when creating position");
   if (!position.maxTopUp) throw Error("Missing max top-up when creating position");
+  if (!position.maxGasPrice) throw Error("Missing max top-up when creating position");
   return {
     protocol: position.protocol,
     account: position.account,
     threshold: position.threshold,
     singleTopUp: position.singleTopUp,
     maxTopUp: position.maxTopUp,
-    maxGasPrice: 0,
+    maxGasPrice: position.maxGasPrice,
     actionToken: pool.underlying.address,
     depositToken: pool.lpToken.address,
   };

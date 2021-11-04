@@ -1,0 +1,507 @@
+{
+  "amountInput": {
+    "approve": "Aprove {{asset}}",
+    "available": "Disponível: {{amount}}",
+    "enter": "Insira o valor",
+    "max": "máximo",
+    "validation": {
+      "exceedsBalance": "O valor excede o saldo disponível",
+      "invalid": "Número inválido",
+      "positive": "O valor deve ser um número positivo"
+    }
+  },
+  "banner": {
+    "testnet": {
+      "blogPost": "a postagem do blog",
+      "connect": "Conecte a sua carteira para começar ou ler",
+      "live": "🎉 Backd está agora ao vivo na Kovan Testnet."
+    }
+  },
+  "benefits": {
+    "avoidLiquidation": {
+      "description": "A liquidez depositada em Backd e marcada como garantia colateral será automaticamente transferida quando necessário para colateralizar Top-ups.",
+      "header": "Evite a liquidação"
+    },
+    "earnYield": {
+      "description": "Ganhe juros sobre liquidez por meio de estratégias de yield-farming, como Curve e Convex.",
+      "header": "Ganhe rendimento"
+    },
+    "feeShare": {
+      "description": "Receba parte das taxas cobradas nas ações.",
+      "header": "Taxa de compartilhamento"
+    },
+    "reactiveLiquidity": {
+      "description": "Crie ações para automatizar a sua liquidez para onde ela é mais necessária.",
+      "header": "Liquidez reativa"
+    },
+    "readMore": "Leia mais"
+  },
+  "claim": {
+    "breakdown": "Repartição dos ganhos reivindicáveis:",
+    "buttons": {
+      "claim": "Reinvindicar",
+      "claimAll": "Reinvindicar tudo",
+      "claimAllAndStake": "Reinvindicar tudo e Stake",
+      "claimAndStake": "Reinvindicar e Stake"
+    },
+    "helpText": "Onde estão as minhas recompensas da pool?",
+    "overview": {
+      "claimable": "Reinvindicavel",
+      "deposits": "Os seus depósitos totais"
+    },
+    "pool": "{{asset}} pool"
+  },
+  "components": {
+    "back": "Voltar",
+    "cancel": "Cancelar",
+    "close": "Encerrar",
+    "confirm": "confirmar",
+    "dropdownChoose": "Escolher",
+    "moreInDocs": "Saiba mais nos documentos",
+    "overview": "visão-geral"
+  },
+  "errors": {
+    "fetchPrices": "falha ao encontrar os preços: {{error}}",
+    "header": "Ocorreu um erro",
+    "invalidNumber": "Não é um número válido",
+    "negativeNumber": "Números negativos não suportados",
+    "positionCreation": "Erro ao criar posição",
+    "support": "Por favor, tente novamente dentro de momentos. Se o erro persistir, você pode entrar em contato connosco em",
+    "transactionType": "O tipo de transação não é suportada",
+    "tryTestnet": "Backd ainda não está ativo na mainnet. Você pode testá-lo agora no Kovan trocando de rede.",
+    "unsupportedNetwork": "Rede não suportada",
+    "wrongNetwork": "Rede errada selecionada, use uma rede de desenvolvimento"
+  },
+  "footer": {
+    "community": {
+      "header": "Comunidade",
+      "links": {
+        "discord": "Discord",
+        "github": "GitHub",
+        "telegram": "Telegram Chat",
+        "twitter": "Twitter"
+      }
+    },
+    "resources": {
+      "header": "Recursos",
+      "links": {
+        "blog": "Blog",
+        "docs": "Documentos",
+        "factSheet": "Ficha informativa",
+        "litepaper": "Litepaper"
+      }
+    },
+    "updates": {
+      "header": "Atualizações",
+      "links": {
+        "newsletter": "Newsletter",
+        "telegram": "Telegram Ann."
+      }
+    }
+  },
+  "futureActions": {
+    "actions": {
+      "curveImbalance": {
+        "description": "Os Keepers podem detectar quando os pools de LP ficam desequilibrados e removem liquidez para você em seu nome - poupando-o de perdas substanciais.",
+        "header": "Proteção contra Curve Imbalance"
+      },
+      "limitOrders": {
+        "description": "Assim que uma ordem de limite possa ser preenchida, um Keeper pode retirar os fundos necessários das pools de rendimento e executa a negociação no AMM.",
+        "header": "Ordens limite AMM"
+      },
+      "nfts": {
+        "description": "Crie uma ordem de limite para um NFT com um conjunto específico de características de raridade. Uma vez que o preço cai dentro do valor desejado, uma ação de compra é executada e a liquidez é removida dos pools de rendimento do Backd.",
+        "header": "Ordens Limite para NFTs"
+      },
+      "propose": {
+        "description": "As ações podem ser adicionadas por meio do Backd DAO. Junte-se à comunidade Backd e proponha uma nova ação!",
+        "header": "Proponha o seu próprio"
+      },
+      "uniswap": {
+        "description": "Os Keepers de Backd  detectam quando o preço se moveu para fora do seu intervalo definido e movem a liquidez para os pools de rendimento do Backd. Assim que o preço estiver de volta ao intervalo, os Keepers movem sua liquidez de volta para o Uniswap.",
+        "header": "Gerenciamento de LP Uniswap V3"
+      }
+    },
+    "header": "ações futuras",
+    "subHeader": "A Construir uma infraestrutura DeFi essencial"
+  },
+  "getStarted": {
+    "description": "Deposite liquidez e comece a ganhar rendimento.",
+    "header": "Comece"
+  },
+  "header": {
+    "tabs": {
+      "blog": "blog",
+      "claim": "Reivindicar",
+      "docs": "Documentos",
+      "newsletter": "Newsletter",
+      "pools": "pools",
+      "stake": "stake BKD"
+    }
+  },
+  "headers": {
+    "apr": "APR",
+    "apy": "APY",
+    "asset": "Ativos",
+    "claimable": "Reividicar (USD)\n",
+    "deposits": "Seus depósitos",
+    "staked": "Staked",
+    "tvl": "TVL"
+  },
+  "howItWorks": {
+    "categories": {
+      "earnAndProtect": {
+        "cards": {
+          "claim": {
+            "description": "Cancele o registo ou atualize uma posição, retire tokens LP ou reivindique recompensas Backd a qualquer momento.",
+            "header": "Desfaça o stake a qualquer momento",
+            "number": "04"
+          },
+          "deposit": {
+            "description": "Deposite fundos em pools de liquidez Backd e receba pool LP tokens.",
+            "header": "Deposite liquidez",
+            "number": "01"
+          },
+          "protect": {
+            "description": "Ganhe rendimento composto e taxas de protocolo conforme o LP token  valorize, enquanto os Keepers monitorizam o seu empréstimo e transferem o seu capital para evitar a liquidação.",
+            "header": "Proteja e ganhe",
+            "number": "03"
+          },
+          "register": {
+            "description": "Registe empréstimos Compound ou Aave na cadeia para receber top-ups colaterais e stake os seus pool LP tokens para ganhar recompensas em Backd.",
+            "header": "Registar empréstimo na cadeia",
+            "number": "02"
+          }
+        },
+        "tabName": "Ganhe e proteja"
+      },
+      "earnYield": {
+        "cards": {
+          "claim": {
+            "description": "Unstake os seus tokens LP ou reivindique suas recompensas Backd a qualquer momento.",
+            "header": "Desfaça o stake a qualquer momento",
+            "number": "04"
+          },
+          "deposit": {
+            "description": "Deposite fundos em pools de liquidez Backd e receba pool LP tokens.",
+            "header": "Deposite liquidez ",
+            "number": "01"
+          },
+          "earn": {
+            "description": "Ganhe rendimento composto de lucros estratégicos e taxas de protocolo à medida que os tokens LP valorizam sobre os tokens subjacentes.",
+            "header": "Ganhe rendimento",
+            "number": "02"
+          },
+          "stake": {
+            "description": "De stake nos seus tokens LP da pool para receber recompensas do Backd.",
+            "header": "Stake para ganhar recompensas",
+            "number": "03"
+          }
+        },
+        "tabName": "Ganhe rendimento"
+      }
+    },
+    "deposit": "Deposite agora",
+    "header": "ação 01: proteção de liquidação",
+    "subHeader": "Proteja seus empréstimos contra liquidação"
+  },
+  "joinCommunity": {
+    "header": "Junte-se à comunidade",
+    "socials": {
+      "discord": "Discord",
+      "github": "GitHub",
+      "twitter": "Twitter"
+    }
+  },
+  "landingPage": {
+    "changeNetwork": "Experimente no Testnet",
+    "connectWallet": "Conectar carteira",
+    "header": "Liquidez reativa",
+    "subHeader": "Maximize o poder de seus ativos e comece a ganhar rendimento com as pools de liquidez do Backd.",
+    "unsupportedNetwork": "Rede sem suporte",
+    "viewPools": "Ver Pools"
+  },
+  "litepaper": {
+    "components": {
+      "components": {
+        "handlers": {
+          "decription": "Esses são os contratos que contêm a lógica para realizar um top-up colateral para um protocolo específico, como o Aave.",
+          "header": "Top-up Handlers:"
+        },
+        "keepers": {
+          "decription": "Como o monitoramento na cadeia (on-chain) não é viável no Ethereum, a Backd conta com keepers fora da cadeia (off-chain) para relatar posições registadas elegíveis para top-up. Uma implementação de código aberto fora da caixa da parte dos Backd keeper pronta para uso será disponibilizada antes do lançamento. No entanto, é encorajado que os operadores dos Keepers de Backd melhorem ainda mais a versão inicial dos keepers (ou criem a sua própria).",
+          "header": "Keepers:"
+        },
+        "pools": {
+          "decription": "Quando os LPs depositam fundos no Backd, eles precisam escolher uma pool de ativos únicos (single-asset) para depositar. Se um LP quiser que alguns (ou todos) dos seus depósitos sejam usados como  backup colateral em algum outro protocolo, ele poderá registar as suas posições de top-up por meio de registo na pool. Uma pool de liquidez mantém um total operacional dos depósitos que são registados como backup colateral. Uma pool aloca depósitos que não são registados como backup colateral e uma proporção da garantia de backup registada para um cofre numa pool especifica.",
+          "header": "Pools de liquidez:"
+        },
+        "strategies": {
+          "decription": "Uma estratégia contém lógica para o yield-farming usando fundos alocados do cofre. O desempenho de uma estratégia é rastreado pelo cofre de depósito e as alocações são balanceadas de acordo com os parâmetros do cofre (por exemplo, limites de dívida). Os lucros podem ser colhidos e quaisquer lucros não realizados são agravados pela estratégia. O protocolo cobra uma taxa de desempenho sobre os lucros da estratégia. Parte dessa taxa é paga ao estrategista de uma estratégia em tokens LP. O restante da taxa de desempenho é direcionado para o tesouro de Backd.",
+          "header": "Estratégias:"
+        },
+        "vaults": {
+          "decription": "Cada pool de liquidez tem um cofre, que lida com todas as interações de depósito e retirada com uma estratégia. Para backd v1, cofres de estratégia única são suportados. Os cofres contêm um fator de alocação de destino, que especifica a proporção de depósitos do cofre que devem ser alocados para a estratégia associada. Portanto, um cofre normalmente mantém uma quantidade de fundos ociosos para reduzir os custos de gás.",
+          "header": "Cofres:"
+        }
+      },
+      "header": "Componentes",
+      "paragraph": "O protocolo de Backd consiste em vários componentes-chave. Vamos examinar brevemente cada um deles com um pouco mais de detalhes:"
+    },
+    "farming": {
+      "header": "Yield-farming",
+      "paragraph": "Cada pool de Backd emprega uma estratégia de yield farming usando protocolos externos. À medida que o rendimento é gerado por meio da estratégia de uma pool e taxas de top-up, o token LP da pool é apreciado, distribuindo os ganhos aos provedores de liquidez da pool. Semelhante a top-ups colaterais, as estratégias de yield farming estão sujeitas a uma taxa de desempenho, que é dividida entre seu criador (ou seja, o estratega) e um fundo de reserva."
+    },
+    "governance": {
+      "disclaimer": "Isenção de responsabilidade: um token de governança Backd não existe neste momento, então, por favor, não caia em esquemas.",
+      "header": "Governancia",
+      "paragraph": "O Backd contará com um esquema de governança descentralizado, que será introduzido após o lançamento do protocolo. O protocolo oferece muito espaço para parametrização, como taxas de reserva necessárias para as pools, pesos de alocação de estratégia, pesos de requisitos de reserva para cofres ou taxas de LP e keeper. Além disso, novas pools, estratégias e protocolos suportados podem ser adicionados por meio da governança."
+    },
+    "header": "Backd Litepaper",
+    "introduction": {
+      "header": "Introdução",
+      "paragraph1": "Backd é um protocolo baseado em Ethereum desenhado para aumentar a eficiência de capital de ativos em empréstimos dentro da DeFi. Ao contrário de outros protocolos DeFi, as pools de liquidez Backd reagem às condições do mercado e às necessidades dos usuários. Em outras palavras, os usuários podem otimizar as suas posições de dívida depositando ativos em pools da Backd que são usados automaticamente onde são mais eficientes.",
+      "paragraph2": "O protocolo de Backd resolve o problema que os mutuários de empréstimos com colaterização excessiva enfrentam em DeFi: quanto maior o valor do excesso de colaterização lançado, maior o custo de oportunidade de não poder ganhar juros sobre esses fundos em outro lugar. Ao mesmo tempo, baixos índices de colateral/dívida resultam em maior risco de liquidação para o mutuário. Assim, os mutuários ficam com o desafio não trivial e potencialmente muito caro de alocar manualmente depósitos entre protocolos, otimizando para juros altos e baixo risco de liquidação.",
+      "paragraph3": "Uma solução é oferecida pela Backd, que introduz o conceito de liquidez reativa, em que os depósitos são automaticamente transferidos entre protocolos, dependendo do estado dos empréstimos sobre-colaterais e da rentabilidade das oportunidades de geração de rendimento. Mais especificamente, um provedor de liquidez (LP) no Backd é capaz de registar depósitos como “backup colateral”. Assim, os fundos depositados podem ganhar juros por meio de estratégias de yield farming até que seja necessário aumentar a relação colateral/dívida do usuário em diferentes protocolos durante períodos de volatilidade do mercado."
+    },
+    "keepers": {
+      "header": "Backd Keepers",
+      "paragraph": "Os Keepers são parte integrante do mecanismo de top-up colateral de Backd. Um Keeper é um bot fora da cadeia (off-chain) que monitoriza os registros de top-ups de Backd e relata top-ups colaterais qualificados para o contrato inteligente de Backd. O contrato inteligente de Backd lida com os fundos dos usuários e executa recargas injectando capital em top-ups colaterais. Os Keepers colectam uma percentagem da taxa de top-ups gerada todas as vezes que relatam um top-up qualificado. Além disso, os Keepers também recebem recompensas de Backd em proporção ao valor de top-up que executaram. Qualquer pessoa pode operar um bot Keeper fora da cadeia (off-chain) para o Backd."
+    },
+    "pools": {
+      "differences": {
+        "assets": {
+          "description": "As pools são pools de ativos únicos(single-asset). Além disso, para o Backd v1, haverá apenas uma pool por ativo para evitar a fragmentação da liquidez.",
+          "header": "Ativos:"
+        },
+        "parameterization": {
+          "description": "As pools são muito personalizáveis. Por exemplo, cada pool tem uma taxa de reserva necessária, que especifica a percentagem dos fundos de apoio que precisam permanecer ociosos na pool, ou seja, fundos que não podem ser alocados para estratégias, mas são reservados apenas para fins de top-ups. Intuitivamente, um rácio de reserva mais baixo vem com ganhos esperados mais altos (à medida que mais fundos são alocados para uma estratégia), ao custo do aumento do risco de insolvência, ou seja, fundos insuficientes disponíveis para top-ups. Além disso, os pools podem diferir em termos de taxas cobradas nas recargas e no desempenho da estratégia.",
+          "header": "Parametrização:"
+        },
+        "strategy": {
+          "description": "A estratégia de yield farming usada por uma pool pode diferir daquelas usadas por outras pools.",
+          "header": "Estratégia:"
+        }
+      },
+      "header": "Pools de liquidez",
+      "paragraph1": "Através da combinação de top-ups colaterais e estratégias de yield-farming, Backd permite novos pools de liquidez multi-utilidade. Isto permite que os mutuários aumentem a eficiência de capital das suas posições enquanto gerenciam melhor o risco de liquidação. Backd consegue isso por meio da administração de pools de liquidez de ativo único (single-asset). Os usuários que depositam fundos numa pool (provedores de liquidez) recebem tokens LP Backd que podem ser registados para top-ups colaterais (proteção de liquidação) e staked para ganhar mais recompensas. Além disso, à medida que ocorrem top-ups colaterais, os LPs recebem uma parte das taxas dos top-ups colaterais, além de quaisquer lucros líquidos obtidos da estratégia de uma pool.",
+      "paragraph2": "As pools de liquidez funcionam isoladamente umas das outras, com cada ativo a ter a sua própria pool. O Backd será lançado com pools de liquidez para DAI, USDC e ETH. A fim de garantir que uma quantia suficiente de ativos subjacente esteja disponível top-ups colaterais, cada pool mantém um índice de reserva necessário. Essa proporção define a percentagem do total de ativos da pool que não pode ser utilizado por estratégias de yield farming e permanecem ocioso a todo tempo. Isto permite que o protocolo execute invariavelmente top-ups colaterais, enquanto reduz o custo de transaçãos de retirada (incluindo top-ups).",
+      "paragraph3": "Os pools de liquidez em Backd diferem de várias maneiras umas das outras:"
+    },
+    "topUps": {
+      "header": "Top-ups Colaterais",
+      "paragraph1": "Todos os Backd LPs têm a opção de registar seus tokens LP como  backup colateral. O top-up é personalizado para o usuário, permitindo que os indivíduos seleccionem os parâmetros que melhor atendem às suas posições de empréstimo e tolerância de risco. Os parâmetros necessários para registar uma posição de top-up são:",
+      "paragraph2": "Uma vez registado, o usuário continuará a ganhar rendimento sobre os fundos registados até que um top-up colateral seja acionado. Um top-up colateral refere-se ao uso de fundos para aumentar a quantidade de ativos colaterais para uma determinada posição de empréstimo. Quando isso ocorre, a liquidez é deslocada de Backd para o respectivo protocolo, o índice de colateralização da posição de top-up aumenta e, por sua vez, mitiga o risco de liquidação. A elegibilidade de top-up colateral é determinada pelo fator de saúde das posições registadas e é relatada pelos Keepers de Backd.",
+      "parameters": {
+        "address": "Endereço Ethereum que deve ser completado",
+        "max": "Alocação máxima (o valor total que pode ser completado)",
+        "protocol": "Protocolo (que o empréstimo está em, por exemplo, Compound)",
+        "single": "Incrementos de top-up (o valor de um único top-up de garantia)",
+        "threshold": "Limite do fator de saúde no qual um top-up deve ocorrer"
+      }
+    }
+  },
+  "notFound": {
+    "header": {
+      "desktop": "A página não pôde ser encontrada.",
+      "mobile": "Página não encontrada"
+    },
+    "links": {
+      "claim": "reivindique a pagina",
+      "docs": "Documentos",
+      "home": "Página inicial",
+      "pools": "ver todas as pools"
+    },
+    "number": "404",
+    "subHeader": "Experimente um dos links úteis abaixo - ou <0>entre em contato</0> se acredita que há um problema."
+  },
+  "pool": {
+    "information": {
+      "apy": {
+        "header": "APY",
+        "tooltip": "O rendimento percentual anual atual obtido pelos LPs da pool"
+      },
+      "header": "Informações sobre a pool",
+      "strategy": {
+        "details": {
+          "readMore": "Leia mais",
+          "viewContract": "Ver contrato"
+        },
+        "header": "Estratégia",
+        "tooltip": "Os fundos do protocolo atual são alocados para estratégias de yield farming."
+      },
+      "tvl": {
+        "header": "Pool TVL",
+        "tooltip": "A capitalização de mercado dos ativos mantidos na pool (valor total bloqueado)"
+      }
+    },
+    "overview": "Deposite {{asset}} para começar a ganhar rendimento por meio da {{strategy}} estratégia. Depois de depositar, você pode tornar a sua liquidez reativa ao criar uma ação.",
+    "statistics": {
+      "deposits": {
+        "header": "Seus depósitos",
+        "tooltip": "O valor atual de seus ativos mantidos no pool"
+      },
+      "locked": {
+        "header": "Ações bloqueadas",
+        "tooltip": "O valor atual de seus ativos bloqueados em ações. Ativos bloqueados em ações continuam a ganhar rendimentos"
+      },
+      "rewards": {
+        "header": "Recompensas acumuladas",
+        "tooltip": "O valor atual das recompensas ganhas que ainda não foram reivindicadas"
+      }
+    },
+    "tabs": {
+      "deposit": {
+        "action": "Deposite e Stake",
+        "header": "Deposite {{asset}}",
+        "input": {
+          "labelDesktop": "Insira um valor de {{asset}} para depositar",
+          "labelMobile": "Insira o valor para depositar"
+        },
+        "tab": "Deposite "
+      },
+      "withdraw": {
+        "action": "Retirar {{asset}}",
+        "header": "Retirar {{asset}}",
+        "input": {
+          "labelDesktop": "Insira um valor de {{asset}} para retirar",
+          "labelMobile": "Insira o valor a ser retirado"
+        },
+        "tab": "Retirar"
+      }
+    }
+  },
+  "actions": {
+    "topup": {
+      "fields": {
+        "address": {
+          "hover": "Inserir endereço",
+          "invalid": "Endereço inválido",
+          "label": "Endereço",
+          "required": "O endereço é necessário",
+          "tooltip": "O endereço do proprietário da posição para top-up (por exemplo, se a Alice é o mutuário no Aave que deve ser preenchido, então este seria o endereço da Alice)",
+          "unique": "Máximo de uma posição por protocolo e endereço"
+        },
+        "max": {
+          "exceedsBalance": "Excede o saldo depositado",
+          "hover": "Insira o Top-up máximo",
+          "invalid": "Número inválido",
+          "label": "Top-up máximo",
+          "positive": "Deve ser um número positivo",
+          "required": "Top-ups máximos necessários",
+          "tooltip": "Valor máximo de Top-up (valor de sua liquidez alocada para top-ups)"
+        },
+        "protocol": {
+          "hover": "Selecionar protocolo",
+          "label": "Protocolo",
+          "tooltip": "O protocolo de empréstimo no qual o usuário está a emprestantar fundos (atualmente compatível com Aave e Compound)"
+        },
+        "single": {
+          "hover": "Inserir Top-up único",
+          "invalid": "Número inválido",
+          "label": "Top-up único",
+          "lessThanMax": "Deve ser menor que o máximo de top-up",
+          "positive": "tem que ser um número positivo",
+          "required": "É necessária um único Top-up ",
+          "tooltip": "Quantidade de um único incremento de top-up (por exemplo, incrementos de top-up de 2.500 DAI)"
+        },
+        "threshold": {
+          "greaterThanOne": "Deve ser maior que 1",
+          "hover": "Inserir o limite",
+          "label": "Limite",
+          "required": "O limite é obrigatório",
+          "tooltip": "O limite do fator de saúde em que um top-up colateral deve ocorrer em"
+        }
+      }
+    }
+  },
+  "pools": {
+    "deposit": "Depósito",
+    "header": "Todas as pools",
+    "information": {
+      "apy": {
+        "header": "APY médio",
+        "tooltip": "O rendimento percentual médio anual por um período de 30 dias"
+      },
+      "header": "Informações sobre Pools",
+      "revenue": {
+        "header": "Receita",
+        "tooltip": "O valor total das taxas geradas pelo protocolo de Backd"
+      },
+      "tvl": {
+        "header": "Plataforma TVL",
+        "tooltip": "A capitalização de mercado do total de ativos mantidos em pools de liquidez Backd (valor total bloqueado)"
+      }
+    },
+    "overview": "Os pools de ativos únicos (single-asset) da Backd agregam rendimentos em todas as estratégias. Depois de depositar um ativo, registre uma ação para automatizar sua liquidez para onde ela é mais necessária.",
+    "preview": {
+      "header": "yield farming",
+      "subHeader": "Comece a ganhar rendimento imediatamente"
+    },
+    "statistics": {
+      "deposits": {
+        "header": "Seus depósitos",
+        "tooltip": "O valor atual de seus ativos mantidos em pools de liquidez de Backd"
+      },
+      "locked": {
+        "header": "Ações bloqueadas",
+        "tooltip": "O valor atual de seus ativos bloqueados em ações. Ativos bloqueados em ações continuam a ganhar rendimentos"
+      },
+      "rewards": {
+        "header": "Recompensas acumuladas",
+        "tooltip": "O valor atual das recompensas ganhas que ainda não foram reivindicadas"
+      }
+    }
+  },
+  "stake": {
+    "overview": {
+      "claimable": "Reinvindicavel",
+      "deposits": "Os seus depósitos totais"
+    },
+    "tabs": {
+      "stake": {
+        "action": "Deposite e Stake",
+        "description": "Stake no BKD e ganhe uma participação em x% da receita da plataforma, paga em tokens BKDDAi.",
+        "header": "stake",
+        "inputDesktop": "Insira uma quantia de BKD para Stake",
+        "inputMobile": "Quantidade de BKD para stake",
+        "more": "Mais"
+      },
+      "unstake": {
+        "action": "Unstake e retirar",
+        "description": "Dê stake em BKD e ganhe uma participação em x% da receita da plataforma, paga em tokens BKDDAi.",
+        "header": "unstake",
+        "inputDesktop": "Insira uma quantidade de BKD para unstake",
+        "inputMobile": "Quantidade de BKD a ser unstake",
+        "more": "Mais"
+      }
+    }
+  },
+  "supportedBy": {
+    "header": "Suportado por"
+  },
+  "walletConnect": {
+    "aboutWallets": "Saiba mais sobre carteiras",
+    "connectWallet": "Conectar carteira",
+    "details": {
+      "change": "Alterar",
+      "clear": "Limpar",
+      "connected": "Conectado com {{wallet}}",
+      "empty": "Suas transações aparecerão aqui...",
+      "header": "Conta",
+      "network": {
+        "chainId": "ID da cadeia {{id}}",
+        "ethereum": "Ethereum Mainet",
+        "testnet": "Ethereum {{network}} Testnet",
+        "unknown": "Rede desconhecida"
+      },
+      "recentTransactions": "Transações recentes"
+    },
+    "header": "Conecte a sua carteira",
+    "newToEthereum": "Novo em Ethereum?",
+    "wallets": {
+      "metaMask": "MetaMask",
+      "walletConnect": "WalletConnect"
+    }
+  }
+}

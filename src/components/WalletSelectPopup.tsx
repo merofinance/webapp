@@ -160,7 +160,7 @@ const WalletSelectPopup = ({ show, close, setWallet }: Props): JSX.Element => {
 
   return (
     <Popup
-      centreHeader
+      centerHeader
       show={show}
       close={() => close(false)}
       header={t("walletConnect.header")}

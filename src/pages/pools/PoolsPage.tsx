@@ -19,7 +19,7 @@ const StyledPoolsPage = styled.div`
   width: 100%;
   display: flex;
 
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     flex-direction: column-reverse;
   }
 `;
@@ -93,10 +93,7 @@ const PoolsPage = (): JSX.Element => {
 
   return (
     <StyledPoolsPage>
-      <Seo
-        title="Backd Pools"
-        description="Earn yield and governance tokens while executing other acitons such as collateral top ups (Aave & Compound) "
-      />
+      <Seo title={t("metadata.pools.title")} description={t("metadata.pools.description")} />
       <ContentContainer>
         <ContentSection
           header={t("pools.header")}

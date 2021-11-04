@@ -15,6 +15,7 @@ import { Loan, Position } from "../../../lib/types";
 import { useDevice } from "../../../app/hooks/use-device";
 import { selectPositions } from "../../../state/positionsSlice";
 import { RowOptionType } from "../../../components/RowOption";
+import { TOPUP_ACTION_ROUTE } from "../../../lib/constants";
 
 const Container = styled.div`
   position: relative;
@@ -64,7 +65,7 @@ const RegisterTopupLoan = () => {
   const history = useHistory();
   const { account } = useWeb3React();
   const { isMobile } = useDevice();
-  const loans = useSelector(selectLoans);
+  const loans = useSelector(selectLoans(account));
   const positions = useSelector(selectPositions);
   const ethPrice = useSelector(selectEthPrice);
   const [protocol, setProtocol] = useState("");
@@ -146,7 +147,7 @@ const RegisterTopupLoan = () => {
                 disabled={!address}
                 width={isMobile ? "100%" : "44%"}
                 text={t("components.continue")}
-                click={() => history.push(`/actions/register/topup/${address}/${protocol}`)}
+                click={() => history.push(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`)}
                 hoverText={t("actions.topup.stages.loan.header")}
               />
             </ButtonContainer>

@@ -2,6 +2,8 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { useHistory } from "react-router";
+
 import InfoCard from "../../components/InfoCard";
 import { Pool } from "../../lib";
 import { selectPools, selectPrices } from "../../state/poolsListSlice";
@@ -9,6 +11,8 @@ import { selectBalances } from "../../state/userSlice";
 import Asset from "../../components/Asset";
 import { ScaledNumber } from "../../lib/scaled-number";
 import { formatCurrency } from "../../lib/numeric";
+import { GradientText } from "../../styles/GradientText";
+import { TOPUP_ACTION_ROUTE } from "../../lib/constants";
 
 const Content = styled.div`
   width: 100%;
@@ -31,6 +35,20 @@ const Row = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.2rem;
+`;
+
+const AssetContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const ManageButton = styled.button`
+  margin-left: 1rem;
+  cursor: pointer;
+`;
+
+const ManageText = styled(GradientText)`
+  font-size: 1rem;
 `;
 
 const Balances = styled.div`
@@ -74,6 +92,7 @@ const Total = styled.div`
 
 const YourDeposits = () => {
   const { t } = useTranslation();
+  const history = useHistory();
   const pools = useSelector(selectPools);
   const balances = useSelector(selectBalances);
   const prices = useSelector(selectPrices);
@@ -102,7 +121,19 @@ const YourDeposits = () => {
             <>
               {depositedPools.map((pool: Pool) => (
                 <Row id={`your-deposits-${pool.underlying.symbol.toLowerCase()}`} key={pool.name}>
-                  <Asset tiny token={pool.underlying} />
+                  <AssetContainer>
+                    <Asset tiny token={pool.underlying} />
+                    <ManageButton
+                      onClick={() => {
+                        history.push(
+                          `${TOPUP_ACTION_ROUTE}/deposit/${pool.lpToken.symbol.toLowerCase()}`
+                        );
+                      }}
+                    >
+                      <ManageText>{t("actions.deposits.manage")}</ManageText>
+                    </ManageButton>
+                  </AssetContainer>
+
                   <Balances>
                     <Underlying>{`${balances[pool.lpToken.address]?.toCryptoString() || 0} ${
                       pool.underlying.symbol

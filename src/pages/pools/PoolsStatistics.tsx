@@ -19,7 +19,7 @@ const PoolsStatistics = (): JSX.Element => {
   const positions = useSelector(selectPositions);
 
   const getBalance = (pool: Pool) => balances[pool.lpToken.address] || new ScaledNumber();
-  const getPrice = (pool: Pool) => prices[pool.underlying.symbol] || 0;
+  const getPrice = (pool: Pool) => (pool ? prices[pool.underlying.symbol] || 0 : 0);
   const getPool = (tokenAddress: string) =>
     pools.filter((pool: Pool) => pool.underlying.address === tokenAddress)[0];
 

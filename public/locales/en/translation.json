@@ -150,12 +150,6 @@
   "supportedBy": {
     "header": "supported by"
   },
-  "auditedBy": {
-    "preLaunchHeader": "audit in progress",
-    "header": "audited by",
-    "description": "Led by security experts from ETH Zurich and trusted by 85+ blockchain companies and corporations.",
-    "viewReport": "View Report"
-  },
   "joinCommunity": {
     "header": "join the community",
     "socials": {
@@ -386,7 +380,8 @@
     "overview": "Use this screen to monitor your Actions. Actions are a set of predefined market triggers, that when occur, something is done on your behalf.",
     "deposits": {
       "header": "Your Deposits",
-      "empty": "You do not have any existing Deposits..."
+      "empty": "You do not have any existing Deposits...",
+      "manage": "Manage deposits"
     },
     "propose": "+ Propose a new Action on Discord",
     "register": {
@@ -607,6 +602,36 @@
       "tresholdHigh": "This will trigger immediately because the health factor you have entered exceeds the current health factor of the loan. I suggest you decrease the Health Factor of the top-up to 1.2.",
       "singleLow": "Your estimated max gas cost per top-up is {{maxGas}} ({{ethAmount}} ETH), however the amount per top-up is only {{single}} ({{underlyingAmount}} {{underlyingSymbol}}). I recommend increasing the single top-up to {{suggestion}} {{underlyingSymbol}} for more efficient top-ups.",
       "topupPositionLow": "I’ve noticed your {{protocol}} top-up Action is running low on funds. I suggest you delete that top-up Action and register a new one as soon as possible."
+    }
+  },
+  "metadata": {
+    "landing": {
+      "title": "Backd - Liquidity Made Reactive",
+      "description": "The DeFi protocol for increasing the yield and utility of your crypto assets with reactive liquidity"
+    },
+    "actions": {
+      "title": "Backd Actions",
+      "description": "Create Actions to automate your liquidity to where it is needed most"
+    },
+    "claim": {
+      "title": "Claim Rewards & Yield",
+      "description": "Claim rewards from Backd yield farming strategies and collateral top up fees"
+    },
+    "litepaper": {
+      "title": "Backd Litepaper",
+      "description": "How Backd combines actions (e.g. Aave & Compound liquidation protection) with yield-farming (Curve & Convex)"
+    },
+    "pool": {
+      "title": "{{asset}} Pool",
+      "description": "Deposit {{asset}} to farm yield and register LP tokens for actions such as liquidation protection (Aave & Compound)"
+    },
+    "pools": {
+      "title": "Backd Pools",
+      "description": "Earn yield and governance tokens while executing other acitons such as collateral top ups (Aave & Compound)"
+    },
+    "stake": {
+      "title": "Stake BKD & Earn Rewards",
+      "description": "Earn rewards and protocol profits in addition to aggregated yield from yield farming strategies"
     }
   }
 }

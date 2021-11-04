@@ -27,7 +27,7 @@ const StyledInfoCard = styled.div`
   margin-left: 1.6rem;
   width: ${(props: StyleProps) => (props.wide ? "40rem" : "36rem")};
   padding: 2rem 1.8rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     margin-left: 0;
     width: 100%;
     padding: 1.6rem;
@@ -55,7 +55,7 @@ const Header = styled.button`
 
   font-size: 2.4rem;
   margin-bottom: 0.6rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     position: absolute;
     margin-bottom: 0;
     height: 4.8rem;
@@ -79,7 +79,7 @@ const ChevronContainer = styled.div`
   display: ${(props: StyleProps) => (props.collapsible ? "flex" : "none")};
   margin-right: 0.2rem;
 
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     height: 4.8rem;
     display: flex;
     margin-right: 0;
@@ -93,7 +93,7 @@ const Content = styled.div`
 
   margin-top: ${(props: StyleProps) => (props.collapsible ? "3.6rem" : "0")};
 
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     margin-top: 3.2rem;
   }
 `;
@@ -113,7 +113,7 @@ const InfoCard = ({ header, content, collapsible, defaultOpen, id }: Props): JSX
   const isWide = i18n.language === "ja";
 
   useEffect(() => {
-    setOpen(!!defaultOpen || !isMobile);
+    setOpen(defaultOpen || !isMobile);
   }, [!isMobile]);
 
   return (
