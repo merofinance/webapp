@@ -5,7 +5,7 @@ import { CircularProgress } from "@material-ui/core";
 
 import deleteIcon from "../../assets/ui/delete.svg";
 import { Pool } from "../../lib";
-import { Position, TransactionInfo } from "../../lib/types";
+import { fromPlainPosition, Position, TransactionInfo } from "../../lib/types";
 import { shortenAddress } from "../../lib/text";
 import { selectTransactions } from "../../state/transactionsSlice";
 import DeletePositionConfirmation from "./DeletePositionConfirmation";
@@ -69,8 +69,8 @@ const PositionRow = ({ position, pool }: Props): JSX.Element => {
     (tx: TransactionInfo) =>
       tx.confirmations === 0 &&
       tx.description.action === "Remove" &&
-      tx.description.args?.position.account === position.account &&
-      tx.description.args?.position.protocol === position.protocol
+      fromPlainPosition(tx.description.args?.plainPosition).account === position.account &&
+      fromPlainPosition(tx.description.args?.plainPosition).protocol === position.protocol
   );
 
   return (
