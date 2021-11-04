@@ -94,6 +94,7 @@ const UnstakeTokens = ({ token }: Props): JSX.Element => {
           }
           max={balance}
           error=""
+          symbol="DAI"
         />
         <ApproveThenAction
           stepsOnTop

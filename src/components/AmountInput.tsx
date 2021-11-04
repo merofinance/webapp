@@ -22,22 +22,31 @@ const Available = styled.div`
   padding-right: 0.5rem;
 `;
 
-type Props = {
+interface Props {
   value: string;
   setValue: (v: string) => void;
   label: string;
   max: ScaledNumber;
   noSlider?: boolean;
   error: string;
-};
+  symbol: string;
+}
 
-const AmountInput = ({ value, setValue, label, max, noSlider, error }: Props): JSX.Element => {
+const AmountInput = ({
+  value,
+  setValue,
+  label,
+  max,
+  noSlider,
+  error,
+  symbol,
+}: Props): JSX.Element => {
   const { t } = useTranslation();
 
   return (
     <StyledAmountInput>
       <Available id="available-amount">
-        {t("amountInput.available", { amount: max.toCryptoString() })}
+        {`${t("amountInput.available", { amount: max.toCryptoString() })} ${symbol.toUpperCase()}`}
       </Available>
       <Input
         id="amount-input"

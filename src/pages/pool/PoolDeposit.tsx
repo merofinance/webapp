@@ -70,6 +70,7 @@ const PoolDeposit = ({ pool, compact }: Props): JSX.Element => {
         label={inputLabel}
         max={availableToDeposit}
         error={error()}
+        symbol={pool.underlying.symbol}
       />
       <DepositButtons
         stepsOnTop={compact}
