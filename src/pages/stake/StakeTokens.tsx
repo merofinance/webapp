@@ -92,6 +92,7 @@ const StakeTokens = ({ token }: Props): JSX.Element => {
           label={isMobile ? t("stake.tabs.stake.inputMobile") : t("stake.tabs.stake.inputDesktop")}
           max={balance}
           error=""
+          symbol="DAI"
         />
         <ApproveThenAction
           stepsOnTop
