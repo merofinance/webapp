@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useBackd } from "../../../app/hooks/use-backd";
 import { AppDispatch } from "../../../app/store";
 import Popup from "../../../components/Popup";
-import { Position, Pool, TransactionInfo } from "../../../lib/types";
+import { Position, Pool, TransactionInfo, fromPlainPosition } from "../../../lib/types";
 import { removePosition } from "../../../state/positionsSlice";
 import { selectTransactions } from "../../../state/transactionsSlice";
 import Button from "../../../components/Button";
@@ -43,8 +43,8 @@ const DeleteTopupConfirmation = ({ show, close, position, pool, complete }: Prop
     (tx: TransactionInfo) =>
       tx.confirmations === 0 &&
       tx.description.action === "Remove" &&
-      tx.description.args?.position.account === position.account &&
-      tx.description.args?.position.protocol === position.protocol
+      fromPlainPosition(tx.description.args?.plainPosition).account === position.account &&
+      fromPlainPosition(tx.description.args?.plainPosition).protocol === position.protocol
   );
 
   useEffect(() => {

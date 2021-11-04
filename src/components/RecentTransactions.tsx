@@ -11,7 +11,7 @@ import pending from "../assets/ui/status/pending.svg";
 import success from "../assets/ui/status/success.svg";
 import { ScaledNumber } from "../lib/scaled-number";
 import { shortenAddress } from "../lib/text";
-import { TransactionInfo } from "../lib/types";
+import { fromPlainPosition, TransactionInfo } from "../lib/types";
 import { getEtherscanTransactionLink } from "../lib/web3";
 import { clearTransactions, selectTransactions } from "../state/transactionsSlice";
 import { spinAnimation } from "../styles/animations/SpinAnimation";
@@ -131,7 +131,8 @@ const RecentTransactions = (): JSX.Element => {
       return tx.description.args.token.symbol;
     }
     if (tx.description.action === "Register" || tx.description.action === "Remove") {
-      const { position } = tx.description.args;
+      const { plainPosition } = tx.description.args;
+      const position = fromPlainPosition(plainPosition);
       return `${shortenAddress(position.account, 8)} ${position.protocol}`;
     }
     throw Error("errors.transactionType");
