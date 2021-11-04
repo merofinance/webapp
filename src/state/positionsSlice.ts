@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 import { Pool } from "../lib";
 import { Backd } from "../lib/backd";
-import { fromPlainPosition, Position, PlainPosition } from "../lib/types";
+import { fromPlainPosition, Position, PlainPosition, toPlainPosition } from "../lib/types";
 import { handleTransactionConfirmation } from "../lib/transactionsUtils";
 import { fetchAllowances, fetchBalances } from "./userSlice";
 
@@ -32,11 +32,16 @@ export const registerPosition = createAsyncThunk(
   "positions/register",
   async ({ backd, pool, position }: RegisterArgs, { dispatch }) => {
     const tx = await backd.registerPosition(pool, position);
-    handleTransactionConfirmation(tx, { action: "Register", args: { pool, position } }, dispatch, [
-      fetchPositions({ backd }),
-      fetchBalances({ backd, pools: [pool] }),
-      fetchAllowances({ backd, pools: [pool] }),
-    ]);
+    handleTransactionConfirmation(
+      tx,
+      { action: "Register", args: { pool, plainPosition: toPlainPosition(position) } },
+      dispatch,
+      [
+        fetchPositions({ backd }),
+        fetchBalances({ backd, pools: [pool] }),
+        fetchAllowances({ backd, pools: [pool] }),
+      ]
+    );
     return tx.hash;
   }
 );
@@ -45,11 +50,16 @@ export const removePosition = createAsyncThunk(
   "positions/remove",
   async ({ backd, pool, position }: RemoveArgs, { dispatch }) => {
     const tx = await backd.removePosition(position.account, position.protocol);
-    handleTransactionConfirmation(tx, { action: "Remove", args: { position } }, dispatch, [
-      fetchPositions({ backd }),
-      fetchBalances({ backd, pools: [pool] }),
-      fetchAllowances({ backd, pools: [pool] }),
-    ]);
+    handleTransactionConfirmation(
+      tx,
+      { action: "Remove", args: { plainPosition: toPlainPosition(position) } },
+      dispatch,
+      [
+        fetchPositions({ backd }),
+        fetchBalances({ backd, pools: [pool] }),
+        fetchAllowances({ backd, pools: [pool] }),
+      ]
+    );
     return tx.hash;
   }
 );
