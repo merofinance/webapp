@@ -55,6 +55,7 @@ const Row = styled.tr`
 type DataProps = {
   right?: boolean;
   preview?: boolean;
+  hideOnSnapshot?: boolean;
 };
 
 const Data = styled.td`
@@ -74,6 +75,10 @@ const Data = styled.td`
     line-height: 2.1rem;
     display: ${(props: DataProps) => (props.right ? "none" : "flex")};
   }
+
+  @media only percy {
+    opacity: ${(props: DataProps) => (props.hideOnSnapshot ? "0" : "1")};
+  }
 `;
 
 const DepositedData = styled(Data)`
@@ -81,6 +86,10 @@ const DepositedData = styled(Data)`
 
   @media (max-width: 600px) {
     display: none;
+  }
+
+  @media only percy {
+    opacity: 0;
   }
 `;
 
@@ -149,10 +158,10 @@ const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
         <Data>
           <Asset token={pool.underlying} />
         </Data>
-        <Data>
+        <Data hideOnSnapshot>
           <Apy>{formatPercent(pool.apy)}</Apy>
         </Data>
-        <Data>{numberToCompactCurrency(pool.totalAssets * price)}</Data>
+        <Data hideOnSnapshot>{numberToCompactCurrency(pool.totalAssets * price)}</Data>
         <DepositedData preview={preview}>{locked.toCompactUsdValue(price)}</DepositedData>
         <ChevronData preview={preview}>
           <Chevron src={chevron} alt="right arrow" />
