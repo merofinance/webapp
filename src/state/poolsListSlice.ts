@@ -76,8 +76,8 @@ export const fetchState =
   };
 
 export const fetchPreviewState = (): AppThunk => (dispatch) => {
-  const provider = new ethers.providers.InfuraProvider("kovan", INFURA_ID);
-  const backd = createBackd(provider, { chainId: 42 });
+  const provider = new ethers.providers.InfuraProvider(1, INFURA_ID);
+  const backd = createBackd(provider, { chainId: 1 });
   dispatch(fetchPools({ backd })).then((v) => {
     if (v.meta.requestStatus !== "fulfilled") return;
     const pools = v.payload as Pool[];
