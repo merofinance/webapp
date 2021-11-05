@@ -20,6 +20,10 @@ const Available = styled.div`
   letter-spacing: 0.15px;
   margin-bottom: 1rem;
   padding-right: 0.5rem;
+
+  @media only percy {
+    opacity: 0;
+  }
 `;
 
 interface Props {
