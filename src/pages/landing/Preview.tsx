@@ -11,6 +11,7 @@ import { Pool } from "../../lib";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import { Header2, Header4 } from "../../styles/Headers";
 import { AppDispatch } from "../../app/store";
+import { useIsLive } from "../../app/hooks/use-is-live";
 
 const StyledPreview = styled.div`
   position: relative;
@@ -91,17 +92,20 @@ const Swirls = styled.img`
 const Preview = (): JSX.Element => {
   const { t } = useTranslation();
   const backd = useBackd();
+  const { protocolLive } = useIsLive();
   const dispatch = useDispatch<AppDispatch>();
   const pools = useSelector(selectPools);
   const updated = useWeb3Updated();
 
   useEffect(() => {
     if (!backd) {
-      dispatch(fetchPreviewState());
+      if (protocolLive) dispatch(fetchPreviewState());
       return;
     }
     dispatch(fetchState(backd));
   }, [updated]);
+
+  if (!protocolLive) return <></>;
 
   return (
     <StyledPreview>
