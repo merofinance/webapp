@@ -50,6 +50,10 @@ const Header = styled.div`
   }
 `;
 
+interface ValueProps {
+  hideOnSnapshot?: boolean;
+}
+
 const Value = styled.div`
   font-weight: 700;
   letter-spacing: 0.2px;
@@ -57,6 +61,10 @@ const Value = styled.div`
   font-size: 1.8rem;
   @media (max-width: 600px) {
     font-size: 1.6rem;
+  }
+
+  @media only percy {
+    opacity: ${(props: ValueProps) => (props.hideOnSnapshot ? "0" : "1")};
   }
 `;
 
@@ -80,15 +88,15 @@ const ProtectableLoan = ({ loan }: Props) => {
       </Column>
       <Column hideMobile>
         <Header>{t("actions.suggestions.topup.labels.healthFactor")}</Header>
-        <Value>{loan.healthFactor.toCryptoString()}</Value>
+        <Value hideOnSnapshot>{loan.healthFactor.toCryptoString()}</Value>
       </Column>
       <Column hideMobile>
         <Header>{t("actions.suggestions.topup.labels.totalCollateral")}</Header>
-        <Value>{loan.totalCollateralETH.toUsdValue(ethPrice)}</Value>
+        <Value hideOnSnapshot>{loan.totalCollateralETH.toUsdValue(ethPrice)}</Value>
       </Column>
       <Column hideMobile>
         <Header>{t("actions.suggestions.topup.labels.totalLoan")}</Header>
-        <Value>{loan.totalDebtETH.toUsdValue(ethPrice)}</Value>
+        <Value hideOnSnapshot>{loan.totalDebtETH.toUsdValue(ethPrice)}</Value>
       </Column>
       <Column>
         <Button

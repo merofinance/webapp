@@ -79,6 +79,10 @@ const Value = styled.div`
   @media (max-width: 1220px) {
     font-size: 1.4rem;
   }
+
+  @media only percy {
+    opacity: 0;
+  }
 `;
 
 const Chevron = styled.img`

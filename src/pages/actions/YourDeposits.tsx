@@ -66,6 +66,10 @@ const Underlying = styled.div`
   @media (max-width: 600px) {
     font-size: 1.3rem;
   }
+
+  @media only percy {
+    opacity: 0;
+  }
 `;
 
 const Usd = styled.div`
@@ -77,6 +81,10 @@ const Usd = styled.div`
   @media (max-width: 600px) {
     font-size: 1.1rem;
   }
+
+  @media only percy {
+    opacity: 0;
+  }
 `;
 
 const Total = styled.div`
@@ -87,6 +95,10 @@ const Total = styled.div`
   font-size: 1.8rem;
   @media (max-width: 600px) {
     font-size: 1.4rem;
+  }
+
+  @media only percy {
+    opacity: 0;
   }
 `;
 

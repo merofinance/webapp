@@ -60,6 +60,10 @@ const Header = styled.div`
   }
 `;
 
+interface ValueProps {
+  hideOnSnapshot?: boolean;
+}
+
 const Value = styled.div`
   font-weight: 700;
   letter-spacing: 0.2px;
@@ -67,6 +71,10 @@ const Value = styled.div`
   font-size: 1.8rem;
   @media (max-width: 600px) {
     font-size: 1.4rem;
+  }
+
+  @media only percy {
+    opacity: ${(props: ValueProps) => (props.hideOnSnapshot ? "0" : "1")};
   }
 `;
 
@@ -109,7 +117,7 @@ const RegisteredAction = ({ position }: Props) => {
         </Column>
         <Column>
           <Header>{t("actions.registered.columns.locked")}</Header>
-          <Value>{position.maxTopUp.toCompactUsdValue(price)}</Value>
+          <Value hideOnSnapshot>{position.maxTopUp.toCompactUsdValue(price)}</Value>
         </Column>
         <Column hideMobile>
           <Header>{t("actions.suggestions.topup.labels.protocol")}</Header>

@@ -16,9 +16,9 @@ import { Position } from "../../lib/types";
 import { selectPrice } from "../../state/selectors";
 import { ScaledNumber } from "../../lib/scaled-number";
 
-type RowProps = {
+interface RowProps {
   preview?: boolean;
-};
+}
 
 const Row = styled.tr`
   position: relative;
@@ -52,11 +52,11 @@ const Row = styled.tr`
   }
 `;
 
-type DataProps = {
+interface DataProps {
   right?: boolean;
   preview?: boolean;
   hideOnSnapshot?: boolean;
-};
+}
 
 const Data = styled.td`
   display: flex;
@@ -130,10 +130,10 @@ const Chevron = styled.img`
   width: 2.4rem;
 `;
 
-type Props = {
+interface Props {
   pool: Pool;
   preview?: boolean;
-};
+}
 
 const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
   const { t } = useTranslation();
