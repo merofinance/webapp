@@ -246,6 +246,7 @@ type Props = {
   background?: string;
   hoverText?: string;
   width?: string;
+  id?: string;
 };
 
 const Button = (props: Props): JSX.Element => {
@@ -258,6 +259,7 @@ const Button = (props: Props): JSX.Element => {
 
   return (
     <StyledButton
+      id={props.id}
       type={props.submit ? "submit" : "button"}
       hero={props.hero}
       primary={props.primary}

@@ -68,6 +68,10 @@ const Value = styled.div`
     font-size: 1.4rem;
     line-height: 1.8rem;
   }
+
+  @media only percy {
+    opacity: 0;
+  }
 `;
 
 const Usd = styled.div`
@@ -81,6 +85,10 @@ const Usd = styled.div`
   @media (max-width: 600px) {
     font-size: 1.2rem;
     line-height: 1.6rem;
+  }
+
+  @media only percy {
+    opacity: 0;
   }
 `;
 

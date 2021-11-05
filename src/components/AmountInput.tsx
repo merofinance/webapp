@@ -20,24 +20,40 @@ const Available = styled.div`
   letter-spacing: 0.15px;
   margin-bottom: 1rem;
   padding-right: 0.5rem;
+
+  @media only percy {
+    opacity: 0;
+  }
 `;
 
-type Props = {
+interface Props {
   value: string;
   setValue: (v: string) => void;
   label: string;
   max: ScaledNumber;
   noSlider?: boolean;
   error: string;
-};
+  symbol: string;
+}
 
-const AmountInput = ({ value, setValue, label, max, noSlider, error }: Props): JSX.Element => {
+const AmountInput = ({
+  value,
+  setValue,
+  label,
+  max,
+  noSlider,
+  error,
+  symbol,
+}: Props): JSX.Element => {
   const { t } = useTranslation();
 
   return (
     <StyledAmountInput>
-      <Available>{t("amountInput.available", { amount: max.toCryptoString() })}</Available>
+      <Available id="available-amount">
+        {`${t("amountInput.available", { amount: max.toCryptoString() })} ${symbol.toUpperCase()}`}
+      </Available>
       <Input
+        id="amount-input"
         valid={!error}
         label={label}
         value={value}

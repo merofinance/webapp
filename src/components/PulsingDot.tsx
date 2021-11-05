@@ -40,7 +40,7 @@ const PulsingDot = ({ success, error }: Props): JSX.Element => {
   return (
     <DotContainer>
       <DotAura success={success} error={error} />
-      <DotCenter success={success} error={error} />
+      <DotCenter id="connector-network-dot" success={success} error={error} />
     </DotContainer>
   );
 };

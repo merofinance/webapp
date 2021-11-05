@@ -26,13 +26,17 @@ const StyledPreview = styled.div`
   }
 `;
 
-const Table = styled.table`
+const TableContainer = styled.div`
   position: relative;
-  width: 79%;
 
+  width: 79%;
   @media (max-width: 600px) {
     width: 100%;
   }
+`;
+
+const Table = styled.table`
+  width: 100%;
 `;
 
 const HeaderRow = styled.tr`
@@ -103,20 +107,22 @@ const Preview = (): JSX.Element => {
     <StyledPreview>
       <Header2>{t("pools.preview.header")}</Header2>
       <Header4>{t("pools.preview.subHeader")}</Header4>
-      <Table>
+      <TableContainer>
         <Swirls src={swirls} alt="decorative swirls" />
-        <thead>
-          <HeaderRow>
-            <Header>{t("headers.asset")}</Header>
-            <Header>{t("headers.apy")}</Header>
-            <Header>{t("headers.tvl")}</Header>
-            <ChevronHeader />
-          </HeaderRow>
-        </thead>
-        {pools.map((pool: Pool) => (
-          <PoolsRow key={pool.name} preview pool={pool} />
-        ))}
-      </Table>
+        <Table>
+          <thead>
+            <HeaderRow>
+              <Header>{t("headers.asset")}</Header>
+              <Header>{t("headers.apy")}</Header>
+              <Header>{t("headers.tvl")}</Header>
+              <ChevronHeader />
+            </HeaderRow>
+          </thead>
+          {pools.map((pool: Pool) => (
+            <PoolsRow key={pool.name} preview pool={pool} />
+          ))}
+        </Table>
+      </TableContainer>
     </StyledPreview>
   );
 };

@@ -54,6 +54,7 @@ const Overview = ({ description, link }: Props) => {
 
   return (
     <InfoCard
+      id="overview"
       defaultOpen
       collapsible
       header={t("components.overview")}
@@ -61,7 +62,7 @@ const Overview = ({ description, link }: Props) => {
         <Content>
           <Description>{description}</Description>
           <LinkContainer>
-            <Link href={link} target="_blank" rel="noopener noreferrer">
+            <Link id="overview-link" href={link} target="_blank" rel="noopener noreferrer">
               {t("components.moreInDocs")}
               <LaunchIcon
                 fontSize="small"

@@ -14,13 +14,13 @@ const StyledAmountSlider = styled.div`
   position: relative;
   width: 100%;
   margin-bottom: 1.7rem;
+  margin-top: 1.8rem;
 `;
 
 const BackdSlider = withStyles({
   root: {
     color: "#52af77",
     height: 8,
-    marginTop: 18,
   },
   thumb: {
     height: 18,
@@ -88,6 +88,7 @@ const AmountSlider = ({ value, max, setValue }: Props): JSX.Element => {
       />
       {steps.map((step: number) => (
         <SliderStep
+          id={`slider-${step}`}
           key={step}
           percent={`${step}%`}
           click={() => updateValue(step)}

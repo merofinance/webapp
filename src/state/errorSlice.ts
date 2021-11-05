@@ -1,4 +1,6 @@
 import { CaseReducer, createSlice, PayloadAction, SerializedError } from "@reduxjs/toolkit";
+import * as Sentry from "@sentry/browser";
+
 import { RootState } from "../app/store";
 import { ErrorState } from "../app/errors";
 import { fetchPool, fetchPools, fetchPrices } from "./poolsListSlice";
@@ -12,6 +14,7 @@ const handleError: CaseReducer<ErrorState, any> = (
   state: ErrorState,
   action: PayloadAction<unknown, any, any, SerializedError>
 ): ErrorState => {
+  Sentry.captureException(action.error);
   if (!action.error.message) throw Error("Missing error message when handing error");
   return { message: action.error.message };
 };

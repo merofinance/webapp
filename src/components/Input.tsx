@@ -128,6 +128,7 @@ type Props = {
   type?: string;
   errorMessage: string;
   note?: string;
+  id?: string;
 };
 
 const Input = (props: Props): JSX.Element => {
@@ -140,6 +141,7 @@ const Input = (props: Props): JSX.Element => {
       <InputContainer onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
         <Glow focused={focused} valid={props.valid} />
         <StyledInput
+          id={props.id}
           ref={inputRef}
           type={props.type ?? "text"}
           value={props.value}
@@ -152,6 +154,7 @@ const Input = (props: Props): JSX.Element => {
           valid={props.valid}
         />
         <Label
+          id="input-label"
           onClick={() => inputRef.current?.focus()}
           focused={focused || !!props.value}
           background={props.background}
@@ -162,6 +165,7 @@ const Input = (props: Props): JSX.Element => {
         {props.buttonText && (
           <ButtonContainer>
             <Button
+              id="input-button"
               primary
               small
               uppercase
@@ -174,7 +178,9 @@ const Input = (props: Props): JSX.Element => {
         )}
       </InputContainer>
       {(props.note || !props.valid) && (
-        <Note valid={props.valid}>{props.valid ? props.note : props.errorMessage}</Note>
+        <Note id="input-note" valid={props.valid}>
+          {props.valid ? props.note : props.errorMessage}
+        </Note>
       )}
     </Container>
   );

@@ -1,6 +1,11 @@
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
+import { PrivateKeyConnector } from "../lib/private-key-connector";
 import { INFURA_ID } from "../lib/constants";
+
+export const privateKeyConnector = new PrivateKeyConnector({
+  supportedChainIds: [42],
+});
 
 export const injectedConnector = new InjectedConnector({
   supportedChainIds: [
@@ -23,5 +28,4 @@ export const walletConnectConnector = new WalletConnectConnector({
     1337: ``,
   },
   qrcode: true,
-  pollingInterval: 12000,
 });
