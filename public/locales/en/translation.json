@@ -206,80 +206,76 @@
     "header": "Backd Litepaper",
     "introduction": {
       "header": "Introduction",
-      "paragraph1": "Backd is an Ethereum based protocol designed to increase the capital efficiency of borrowing assets in DeFi. Unlike other DeFi protocols, Backd liquidity pools react to market conditions and users’ needs. In other words, users can optimize their debt positions by depositing assets into Backd pools which are then automatically deployed to where they are the most efficient.",
-      "paragraph2": "The Backd protocol solves the problem borrowers of over-collateralized loans in DeFi are faced with: the higher the amount of excess collateral posted, the higher the opportunity cost of not being able to earn interest on these funds elsewhere. At the same time, low collateral-to-debt ratios result in higher liquidation risk to the borrower. Hence, borrowers are left with the non-trivial and potentially very costly challenge of manually allocating deposits across protocols, optimizing for high interest and low liquidation risk.",
-      "paragraph3": "A solution is offered by Backd, which introduces the concept of reactive liquidity, whereby deposits are automatically shifted between protocols depending on the state of over-collateralized loans and the profitability of yield generating opportunities. More specifically, a liquidity provider (LP) on Backd is able to register deposits as “backup collateral”. Thereby the deposited funds can earn interest through yield farming strategies until needed to increase the user’s collateral-to-debt ratio on different protocols during times of market volatility."
+      "paragraph1": " <0>Backd</0> is a trustless and interest generating protocol that automates asset efficiency through yield aggregation and customizable liquidity delegation. The Backd protocol’s reactive liquidity pools empower DeFi users through the realization of greater asset utility, efficient aggregation of yield, and mitigation of opportunity cost."
     },
-    "pools": {
-      "header": "Liquidity Pools",
-      "paragraph1": "Through the combination of collateral top-ups and yield-farming strategies, Backd enables novel multi-utility liquidity pools. This empowers borrowers to increase the capital efficiency of their positions while better managing liquidation risk. Backd achieves this through the administration of single-asset liquidity pools. Users who deposit funds into a pool (liquidity providers) receive Backd LP tokens which can be registered for collateral top-ups (liquidation protection) and staked to earn further rewards. Furthermore, as collateral top-ups occur, LPs receive a share of the collateral top-up fees, in addition to any net profits harvested from a pool’s strategy.",
-      "paragraph2": "Liquidity pools function in isolation from one another with each asset having its own pool.  Backd will launch with liquidity pools for DAI, USDC, and ETH. In order to ensure that a sufficient amount of the underlying asset is available for collateral top-ups, each pool maintains a required reserve ratio. This ratio defines the percentage of total pool assets which cannot be utilized by yield farming strategies and remain idle at all times. This allows the protocol to invariably execute collateral top-ups, while reducing the transaction cost of withdrawals (including top-ups).",
-      "paragraph3": "Liquidity pools on Backd differ in several ways from one another:",
-      "differences": {
-        "assets": {
-          "header": "Assets:",
-          "description": "Pools are single-asset pools. Furthermore, for Backd v1, there will be only one pool per asset to prevent liquidity fragmentation."
-        },
-        "parameterization": {
-          "header": "Parameterization:",
-          "description": "Pools are very customizable. For instance, each pool has a required reserve ratio, which specifies the percentage of the backing funds that need to remain idle in the pool, i.e., funds which cannot be allocated to strategies but are reserved solely for the purpose of top-ups. Intuitively, a lower reserve ratio comes with higher expected earnings (as more funds are allocated to a strategy), at the cost of increased insolvency risk, i.e., insufficient funds available for top-up.  Furthermore, pools can differ in terms of fees charged on top-ups and strategy performance."
-        },
-        "strategy": {
-          "header": "Strategy:",
-          "description": "The yield farming strategy used by a pool may differ to the ones used by other pools."
-        }
-      }
-    },
-    "topUps": {
-      "header": "Collateral Top-ups",
-      "paragraph1": "All Backd LPs have the option to register their LP tokens as backup collateral. Top-up registration is personalized to the user by allowing individuals to select the parameters that best serve their borrow positions and risk tolerance. The parameters required to register a top-up position are:",
-      "parameters": {
-        "protocol": "Protocol (that the loan is on, e.g. Compound)",
-        "address": "Ethereum address that should be topped up",
-        "threshold": "Health factor threshold at which a top-up should occur",
-        "single": "Top-up increments (the value of a single collateral top-up)",
-        "max": "Maximum allocation (the total amount that may be topped up)"
+    "capitalEfficiency": {
+      "header": "Capital efficiency in DeFi today",
+      "paragraph1": "In the traditional finance (TradFi) world capital efficiency is the ratio of how much a company is spending on growing revenue and how much they are getting in return. Something that requires low capital but generates high returns is considered to be highly capital efficient.",
+      "paragraph2": "In DeFi capital efficiency has become somewhat of an ironic term. The term is often overused and while DeFi claims to be capital efficient, it often isn’t.",
+      "notEfficient": {
+        "header": "Why isn’t DeFi capital efficient?",
+        "paragraph1": "DeFi protocols today generally focus on fulfilling one specific function. This may include borrowing and lending, market orders, yield aggregation, etc. While many protocols fulfill specific needs in a capital efficient way, the broader DeFi ecosystem is left inefficient.",
+        "paragraph2": "This is because DeFi today is bounded by static or single-utility liquidity pools. Meaning, liquidity must be dedicated to only serving one function at a time. Every time a user deposits assets into a protocol they realize the opportunity cost of not having their assets allocated elsewhere. This is one of the reasons why yield aggregating protocols do not capture more total value locked (TVL). Every dollar increase in provided liquidity results in an increased realized opportunity cost.",
+        "paragraph3": "Individuals often make the argument that if your assets are not earning yield you are losing money. While this statement might be true if the alternative is holding cash in a TradFi savings account, it is a fallacy when applied to DeFi. Deploying your assets to a yield farming protocol might actually result in a loss when compared to market returns. The correct argument is that if your assets are not earning yield at the right time you are losing money."
       },
-      "paragraph2": "Once registered, the user will continue to earn yield on the registered funds until a collateral top-up is triggered. A collateral top-up refers to using funds to increase the collateral for a particular borrow position. When this occurs, liquidity is shifted from Backd to the respective protocol, the collateralization ratio of the topped up position increases, and in turn mitigates liquidation risk. Collateral top-up eligibility is determined by the health factor of registered positions and is reported by Backd keepers."
-    },
-    "keepers": {
-      "header": "Backd Keepers",
-      "paragraph": "Keepers are an integral part of Backd’s collateral top-up mechanism. A keeper is an off-chain bot that monitors Backd top-up registrations and reports eligible collateral top-ups to the Backd smart contract. The Backd smart contract handles users’ funds and executes top-ups by injecting capital into registered collateral. Keepers collect a percentage of the generated top-up fee every time they report an eligible top-up. In addition to this, keepers are also distributed Backd rewards in proportion to the top-up value they have executed.  Anyone can operate an off-chain keeper bot for Backd."
-    },
-    "farming": {
-      "header": "Yield-farming",
-      "paragraph": "Each Backd pool employs a yield farming strategy using external protocols. As yield is generated through a pool’s strategy and top-up fees, the pool’s LP token appreciates, distributing the earnings to the pool’s liquidity providers. Similar to collateral top-ups, yield farming strategies are subject to a performance fee, which is split between their creator (i.e. the strategist) and a reserve fund."
-    },
-    "components": {
-      "header": "Components",
-      "paragraph": "The Backd protocol consists of several key components. Let’s briefly examine each of these in a bit more detail:",
-      "components": {
-        "pools": {
-          "header": "Liquidity pools:",
-          "decription": "When LPs deposit funds on Backd, they have to chose a single-asset pool to deposit into. If an LP wants some (or all) of their deposits to be used as backup collateral on some other protocol, they can register their top-up positions via the pool’s registry. A liquidity pool maintains a running total of the deposits which are registered as backup collateral. A pool allocates deposits that are not registered as backup collateral, plus a proportion of the registered backup collateral to a pool-specific vault."
-        },
-        "vaults": {
-          "header": "Vaults:",
-          "decription": "Each liquidity pool has a vault, which handles all deposit and withdrawal interaction with a strategy. For backd v1, single strategy vaults are supported.  Vaults contain a target allocation factor, which specifies the ratio of Vault deposits that should be allocated to the associated strategy. Hence, a vault typically holds an amount of idle funds for reduced gas costs."
-        },
-        "strategies": {
-          "header": "Strategies:",
-          "decription": "A strategy contains logic for yield-farming using the funds allocated from the vault. The performance of a strategy is tracked by the depositing vault and allocations are rebalanced according to the vault parameters (e.g. debt limits). Profits can be harvested and any unrealized profits are compounded by the strategy. The protocol charges a performance fee on strategy profits. Part of this fee is paid to a strategy’s strategist in LP tokens. The remainder of the performance fee is directed to the Backd treasury."
-        },
-        "handlers": {
-          "header": "Top-up Handlers:",
-          "decription": "These are the contracts that contain the logic for performing a collateral top-up for a particular protocol, such as Aave."
-        },
-        "keepers": {
-          "header": "Keepers:",
-          "decription": "As on-chain monitoring is not feasible on Ethereum, Backd relies on off-chain keepers to report registered positions eligible for top-up. An open source out of the box Backd keeper implementation will made available prior launch. However, it is encouraged that operators of Backd keepers further improve upon the initial keeper version (or create their own)."
-        }
+      "earnYield": {
+        "header": "Earning yield at the right time",
+        "paragraph1": "Generally the correct time to deploy your assets to earn yield is during periods of high volatility (trading fees) or high demand for leverage (lending rates). However, there is no generic or universal formula for when to provide liquidity in a yield farming protocol. This is because every DeFi user has their own unique strategy which comes with specific needs.",
+        "paragraph2": "To this date, DeFi users have had to manually shift their liquidity between earning yield and other positions in order to stay efficient. This has placed somewhat of an efficiency ceiling on DeFi users. The rapidly evolving and highly volatile nature of crypto makes maintaining capital efficiency through manually delegating liquidity virtually impossible."
       }
     },
-    "governance": {
-      "header": "Governance",
-      "paragraph": "Backd will rely on a decentralized governance scheme, which will be introduced after the protocol launch. The protocol offers a lot of room for parameterization, such as required reserve ratios for pools, strategy allocation weights, reserve requirement weights for vaults or LP and keeper fees. Furthermore, new pools, strategies and supported protocols can be added via governance.",
-      "disclaimer": "Disclaimer: a Backd governance token does not exist at this point, so please do not fall for scams."
+    "reactiveLiquidity": {
+      "header": "Reactive liquidity",
+      "paragraph1": "Backd eliminates this aforementioned capital inefficiency through the deployment of novel multi-utility liquidity pools. Until now, yield farming protocols have focused on solving opportunity cost by trying to increase yield. However yield is not a solution to opportunity cost, it is compensation.",
+      "paragraph2": "Backd effectively mitigates opportunity cost and thus increases capital efficiency by changing the nature or utility of provided liquidity itself. Unlike normal yield-farming protocols, where provided liquidity will remain static until the user withdraws it, liquidity deposited into Backd can autonomously react to market conditions or user defined variables. Specifically, users can add customizable actions to their provided liquidity. Adding an action allows users to earn yield until their assets are more efficient elsewhere. At which point, the Backd protocol will automatically delegate your liquidity to where it is needed.",
+      "paragraph3": "Backd generates yield from both yield-farming strategies and actions. Every time an action occurs on Backd, a small action fee is charged and paid out to Backd liquidity providers. It is important to note that registering an action to your Backd liquidity is optional. Actions are solely an additional utility layer, empowering liquidity providers to do more with their deposits. Because Backd is able to capture yield beyond strategy profits, it can be an optimal option for users only looking to farm yield and not to make their liquidity reactive."
+    },
+    "action": {
+      "header": "Action 01: Top-up Positions",
+      "paragraph1": "The first action that Backd will support, which will be available at launch, is collateral top ups. Support for more actions will be added in the future. The core protocol architecture of Backd is designed in a way that makes adding new actions, strategies, or supported protocols (for actions) easy. This allows Backd to perpetually increase yield and utility for LPs as DeFi evolves.",
+      "what": {
+        "header": "What is a Top-up Position?",
+        "paragraph1": "A top-up is the act of depositing additional collateral in order to increase the health factor of your loan or mitigate liquidation risk. Backd liquidity providers can user their Backd LP tokens to register top-up positions. This creates back up collateral or what you could call interest earning liquidation protection. When a user registers a top-up position they must specify how much of their Backd liquidity should be shifted and at what health factor a top-up should occur. After registering a top-up position the Backd user’s liquidity will continue to be allocated to yield-farming strategies until it is needed.",
+        "paragraph2": "Backd’s Top-up positions increase collateral efficiency by enabling any borrower on supported protocols (Backd will support Aave & Compound loans at launch) to earn yield with their collateral. Furthermore this also enables borrowers to increase leverage by depositing less collateral and hedge liquidation risk by automatically posting extra collateral when needed.",
+        "paragraph3": "Backd creates an infrastructure that enables the combination of on-chain actions, off-chain keepers that react to market events, and yield-farming. This unique combination lends itself to a multitude of actions and integration with many protocols. Backd not only makes liquidity more efficient, but also makes other protocols safer and smarter."
+      }
+    },
+    "fees": {
+      "header": "Platform fees",
+      "paragraph1": "The protocol architecture that facilitates Backd’s reactive liquidity creates the framework for a fee generating powerhouse. The Backd protocols platform fees can be broken up into two main categories (actions and strategies).",
+      "action": {
+        "header": "Action fees",
+        "paragraph1": "Every time an action is executed, a fee is collected in the form of LP tokens. Part of that fee is sent directly to liquidity providers which in turn compounds yield, while a portion is paid to the keeper that executes an action. Action fees create yield diversified from traditional strategies. For example, Backd collateral top up fees will generate higher returns during periods of market volatility (because more loans will need to be topped up)."
+      },
+      "strategies": {
+        "header": "Strategies",
+        "paragraph1": "A performance fee is charged on profits harvested by strategies. A share of this performance fee is paid to the strategist of the yield-farming strategy employed, while a small part of the fee is kept in a pool’s reserve fund."
+      }
+    },
+    "token": {
+      "header": "The Backd governance token",
+      "paragraph1": "The Backd governance token distribution is designed to incentive participation among three core protocol stakeholders (liquidity providers, AMM liquidity providers, and Keepers). The majority of the token supply will be distributed to these stakeholders. More information regarding Backd tokenecomics can be found in the <0>docs</0>.",
+      "paragraph2": "The Backd governance token is the native ERC-20 token of the Backd protocol. Token holders can lock their tokens to participate in protocol governance. Additionally, locked Backd governance tokens receive a share of the protocol fees or revenue. This share of protocol fees or revenue will be determined by the locking period that the Backd governance token holder selects.",
+      "paragraph3": "Protocol governance will be executed on-chain and can include (but is not limited to):",
+      "governance": {
+        "actions": "Add new actions",
+        "protocols": "Add support for new protocols",
+        "strategies": "Update yield-farming strategies",
+        "parameters": "Update system parameters",
+        "reserve": "Control the community reserve fund"
+      },
+      "community": {
+        "header": "The Backd community",
+        "paragraph1": "The Backd protocol will ultimately (through the launch of the Backd DAO) be controlled by the community. Backd’s reactive liquidity creates unique opportunities for community contributions that do not involve on-chain governance.",
+        "paragraph2": "Contributions can include (but are not limited to):",
+        "contributions": {
+          "strategy": "Strategy submissions",
+          "keeper": "Keeper operation",
+          "general": "General <0>contributions</0>",
+          "investment": "Investment <0>strategies</0>"
+        },
+        "paragraph3": "If you are interested in becoming a Backd contributor, chat with us in our contributions <0>discord channel</0>! Individuals who contribute to Backd can be granted special server roles and may be subject to future rewards 👀"
+      }
     }
   },
   "pools": {
