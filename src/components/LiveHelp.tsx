@@ -174,9 +174,9 @@ const LiveHelp = (): JSX.Element => {
   const [open, setOpen] = useState(false);
   const hasSuggestions = suggestions.length > 0;
 
-  const lowPositions = positions.filter((position: Position) =>
-    position.singleTopUp.gt(position.maxTopUp)
-  );
+  const lowPositions = positions
+    ? positions.filter((position: Position) => position.singleTopUp.gt(position.maxTopUp))
+    : [];
   const hasLowPositions = lowPositions.length > 0;
 
   useEffect(() => {

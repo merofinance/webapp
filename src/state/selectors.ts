@@ -28,6 +28,7 @@ export function selectLocked(pool: Optional<Pool>): Selector<RootState, ScaledNu
   return (state: RootState) => {
     if (!pool) return undefined;
     const positions = useSelector(selectPoolPositions(pool));
+    if (!positions) return undefined;
     return positions.reduce(
       (a: ScaledNumber, b: Position) => a.add(b.maxTopUp),
       new ScaledNumber()

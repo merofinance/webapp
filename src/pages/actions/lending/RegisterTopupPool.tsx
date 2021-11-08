@@ -107,15 +107,19 @@ const RegisterTopupPool = () => {
         },
         {
           label: t("headers.deposits"),
-          value: price
-            ? (balances[pool.lpToken.address] || new ScaledNumber())
-                .add(
-                  positions
-                    .filter((position: Position) => position.depositToken === pool.lpToken.symbol)
-                    .reduce((a: ScaledNumber, b: Position) => a.add(b.maxTopUp), new ScaledNumber())
-                )
-                .toCompactUsdValue(price)
-            : undefined,
+          value:
+            price && positions
+              ? (balances[pool.lpToken.address] || new ScaledNumber())
+                  .add(
+                    positions
+                      .filter((position: Position) => position.depositToken === pool.lpToken.symbol)
+                      .reduce(
+                        (a: ScaledNumber, b: Position) => a.add(b.maxTopUp),
+                        new ScaledNumber()
+                      )
+                  )
+                  .toCompactUsdValue(price)
+              : undefined,
         },
         {
           label: t("headers.apy"),

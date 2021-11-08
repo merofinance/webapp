@@ -44,7 +44,7 @@ const RegisteredActions = () => {
   const history = useHistory();
   const { isMobile } = useDevice();
 
-  const hasPosition = positions.length > 0;
+  const hasPosition = positions && positions.length > 0;
 
   return (
     <ContentSection
@@ -55,6 +55,7 @@ const RegisteredActions = () => {
             <Empty id="register-positions-empty">{t("actions.registered.empty")}</Empty>
           )}
           {hasPosition &&
+            positions &&
             positions.map((position: Position) => <RegisteredAction position={position} />)}
           <ButtonContainer>
             <Button

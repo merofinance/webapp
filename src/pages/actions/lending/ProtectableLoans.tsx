@@ -75,6 +75,7 @@ const ProtectableLoans = () => {
     (loan: Loan) =>
       loan.totalCollateralETH?.isZero &&
       !loan.totalCollateralETH.isZero() &&
+      positions &&
       !positions.some((position: Position) => position.protocol === loan.protocol)
   );
 

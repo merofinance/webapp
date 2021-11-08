@@ -108,7 +108,7 @@ const Statistics = ({ statistics }: Props): JSX.Element => {
             <Tooltip content={statistic.tooltip} />
           </HeaderContaner>
           <ValueContainer>
-            <Value>{statistic.value}</Value>
+            <Value>{statistic.value ? statistic.value : <Loader />}</Value>
             {statistic.usd !== undefined && <Usd>{statistic.usd || <Loader />}</Usd>}
           </ValueContainer>
         </Statistic>

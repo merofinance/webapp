@@ -72,6 +72,7 @@ const RegisterTopupLoan = () => {
   const [address, setAddress] = useState<string | null | undefined>("");
 
   const positionExists = (loan: Loan) =>
+    positions &&
     positions.some(
       (position: Position) => position.protocol === loan.protocol && position.account === account
     );
