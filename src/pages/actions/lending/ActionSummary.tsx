@@ -114,12 +114,14 @@ const ActionSummary = () => {
       <Column hideMobile>
         <Header>{t("actions.suggestions.topup.labels.totalCollateral")}</Header>
         <Value hideOnSnapshot>
-          {loan ? loan.totalCollateralETH.toUsdValue(ethPrice) : <Loader />}
+          {loan && ethPrice ? loan.totalCollateralETH.toUsdValue(ethPrice) : <Loader />}
         </Value>
       </Column>
       <Column hideMobile>
         <Header>{t("actions.suggestions.topup.labels.totalLoan")}</Header>
-        <Value hideOnSnapshot>{loan ? loan.totalDebtETH.toUsdValue(ethPrice) : <Loader />}</Value>
+        <Value hideOnSnapshot>
+          {loan && ethPrice ? loan.totalDebtETH.toUsdValue(ethPrice) : <Loader />}
+        </Value>
       </Column>
       <Column>
         <Header>{t("actions.suggestions.topup.labels.pool")}</Header>
