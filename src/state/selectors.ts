@@ -35,6 +35,26 @@ export function selectLocked(pool: Optional<Pool>): Selector<RootState, ScaledNu
   };
 }
 
+export function selectPoolTotalLocked(
+  pool: Pool | null
+): Selector<RootState, ScaledNumber | undefined> {
+  return (state: RootState) => {
+    const prices = useSelector(selectPrices);
+    const balances = useSelector(selectBalances);
+    const positions = useSelector(selectPositions);
+
+    if (!pool || !prices || !balances || !positions) return undefined;
+
+    let total = new ScaledNumber();
+    positions.forEach((position: Position) => {
+      const price = prices[pool.underlying.symbol];
+      if (!price) return undefined;
+      total = total.add(position.maxTopUp.mul(price));
+    });
+    return total;
+  };
+}
+
 export function selectTotalLocked(): Selector<RootState, ScaledNumber | undefined> {
   return (state: RootState) => {
     const pools = useSelector(selectPools);
