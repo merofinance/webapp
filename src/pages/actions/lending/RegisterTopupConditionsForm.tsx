@@ -122,7 +122,6 @@ const RegisterTopupConditionsForm = () => {
 
   useEffect(() => {
     if (implement === "threshold-min") {
-      console.log("meow");
       formik.setFieldValue("threshold", "1.2", true);
       dispatch(removeSuggestion("threshold-min"));
     } else if (implement === "threshold-high") {
