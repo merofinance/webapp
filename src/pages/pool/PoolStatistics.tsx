@@ -3,28 +3,18 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import Statistics from "../../components/Statistics";
-import { Pool, Position } from "../../lib/types";
-import { selectPrice } from "../../state/selectors";
-import { selectBalance } from "../../state/userSlice";
-import { selectPoolPositions } from "../../state/positionsSlice";
-import { ScaledNumber } from "../../lib/scaled-number";
+import { Pool } from "../../lib/types";
+import { selectDeposits, selectLocked, selectPrice } from "../../state/selectors";
 
-type Props = {
+interface Props {
   pool: Pool;
-};
+}
 
 const PoolStatistics = ({ pool }: Props): JSX.Element => {
   const { t } = useTranslation();
   const price = useSelector(selectPrice(pool));
-  const balance = useSelector(selectBalance(pool));
-  const positions = useSelector(selectPoolPositions(pool));
-
-  const locked = positions.reduce(
-    (a: ScaledNumber, b: Position) => a.add(b.maxTopUp),
-    new ScaledNumber()
-  );
-
-  const deposits = locked.add(balance);
+  const locked = useSelector(selectLocked(pool));
+  const deposits = useSelector(selectDeposits(pool));
 
   return (
     <Statistics
@@ -32,14 +22,14 @@ const PoolStatistics = ({ pool }: Props): JSX.Element => {
         {
           header: t("pool.statistics.deposits.header"),
           tooltip: t("pool.statistics.deposits.tooltip"),
-          value: `${deposits.toCryptoString()} ${pool.underlying.symbol}`,
-          usd: price ? deposits.toUsdValue(price) : null,
+          value: deposits ? `${deposits.toCryptoString()} ${pool.underlying.symbol}` : null,
+          usd: price && deposits ? deposits.toUsdValue(price) : null,
         },
         {
           header: t("pool.statistics.locked.header"),
           tooltip: t("pool.statistics.locked.tooltip"),
-          value: `${locked.toCryptoString()} ${pool.underlying.symbol}`,
-          usd: price ? locked.toUsdValue(price) : null,
+          value: locked ? `${locked.toCryptoString()} ${pool.underlying.symbol}` : null,
+          usd: price && locked ? locked.toUsdValue(price) : null,
         },
         // {
         //   header: t("pool.statistics.rewards.header"),
