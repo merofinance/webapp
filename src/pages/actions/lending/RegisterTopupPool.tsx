@@ -96,6 +96,7 @@ const RegisterTopupPool = () => {
 
   const options: RowOptionType[] = pools.map((pool: Pool) => {
     const value = pool.lpToken.symbol.toLowerCase();
+    const price = prices[pool.underlying.symbol];
     return {
       value,
       id: `${pool.underlying.symbol.toLowerCase()}-pool-option`,
@@ -106,14 +107,14 @@ const RegisterTopupPool = () => {
         },
         {
           label: t("headers.deposits"),
-          value: prices[pool.underlying.symbol]
+          value: price
             ? (balances[pool.lpToken.address] || new ScaledNumber())
                 .add(
                   positions
                     .filter((position: Position) => position.depositToken === pool.lpToken.symbol)
                     .reduce((a: ScaledNumber, b: Position) => a.add(b.maxTopUp), new ScaledNumber())
                 )
-                .toCompactUsdValue(prices[pool.underlying.symbol])
+                .toCompactUsdValue(price)
             : undefined,
         },
         {
@@ -122,9 +123,7 @@ const RegisterTopupPool = () => {
         },
         {
           label: t("headers.tvl"),
-          value: prices[pool.underlying.symbol]
-            ? numberToCompactCurrency(pool.totalAssets * prices[pool.underlying.symbol])
-            : undefined,
+          value: price ? numberToCompactCurrency(pool.totalAssets * price) : undefined,
         },
       ],
     };
