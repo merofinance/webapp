@@ -15,6 +15,6 @@ export function getAddress(addressOrPool: string | Optional<Pool>): Optional<str
   return addressOrPool?.lpToken.address || null;
 }
 
-export function selectPrice(pool: Optional<Pool>): Selector<RootState, number> {
-  return (state: RootState) => (pool && state.pools.prices[pool.underlying.symbol]) || 0;
+export function selectPrice(pool: Optional<Pool>): Selector<RootState, number | undefined> {
+  return (state: RootState) => (pool ? state.pools.prices[pool.underlying.symbol] : undefined);
 }
