@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import Button from "../../components/Button";
 import { Pool } from "../../lib";
-import { selectBalance, unstake, withdraw } from "../../state/userSlice";
+import { selectAvailableToWithdraw, selectBalance, unstake, withdraw } from "../../state/userSlice";
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
 import { ScaledNumber } from "../../lib/scaled-number";
@@ -28,10 +28,9 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
   const { t } = useTranslation();
   const dispatch: AppDispatch = useDispatch();
   const backd = useBackd();
-  const totalBalance = useSelector(selectBalance(pool));
   const staked = useSelector(selectBalance(pool.stakerVaultAddress));
   const loading = useSelector(hasPendingTransaction("Withdraw"));
-  const availableToWithdraw = totalBalance.sub(staked);
+  const availableToWithdraw = useSelector(selectAvailableToWithdraw(pool));
 
   useEffect(() => {
     if (!loading) complete();
@@ -43,7 +42,7 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
   };
 
   const executeUnstake = () => {
-    if (!backd || loading) return;
+    if (!backd || loading || !staked) return;
     dispatch(unstake({ backd, pool, amount: staked }));
   };
 
@@ -56,7 +55,7 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
         wide
         text={t("pool.tabs.withdraw.action", { asset: pool.underlying.symbol.toUpperCase() })}
         click={() => {
-          if (!valid) return;
+          if (!valid || !availableToWithdraw) return;
           if (value.lte(availableToWithdraw)) executeWithdraw(value);
           else executeUnstake();
         }}

@@ -108,16 +108,21 @@ export function transformPool<T, U>(pool: Pool<T>, f: (v: T) => U): Pool<U> {
 
 export type Address = string;
 
-export type Balances = Record<string, ScaledNumber>;
-export type PlainBalances = Record<string, PlainScaledNumber>;
+export type Balances = Record<string, ScaledNumber | null>;
+export type PlainBalances = Record<string, PlainScaledNumber | null>;
 
 export const toPlainBalances = (balances: Balances): PlainBalances => {
-  return fromEntries(Object.entries(balances).map(([key, value]) => [key, value.toPlain()]));
+  return fromEntries(
+    Object.entries(balances).map(([key, value]) => [key, value ? value.toPlain() : null])
+  );
 };
 
 export const fromPlainBalances = (balances: PlainBalances): Balances => {
   return fromEntries(
-    Object.entries(balances).map(([key, value]) => [key, ScaledNumber.fromPlain(value)])
+    Object.entries(balances).map(([key, value]) => [
+      key,
+      value ? ScaledNumber.fromPlain(value) : null,
+    ])
   );
 };
 

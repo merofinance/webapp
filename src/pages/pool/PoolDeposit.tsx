@@ -51,6 +51,7 @@ const PoolDeposit = ({ pool, compact }: Props): JSX.Element => {
     : t("pool.tabs.deposit.input.labelDesktop", { asset: pool.underlying.symbol });
 
   const error = () => {
+    if (!availableToDeposit) return "";
     if (depositAmount && Number(depositAmount) <= 0) return t("amountInput.validation.positive");
     try {
       const amount = ScaledNumber.fromUnscaled(depositAmount, pool.underlying.decimals);

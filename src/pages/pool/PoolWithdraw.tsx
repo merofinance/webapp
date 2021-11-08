@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import { useDevice } from "../../app/hooks/use-device";
 import AmountInput from "../../components/AmountInput";
-import { selectBalance } from "../../state/userSlice";
+import { selectAvailableToWithdraw, selectBalance } from "../../state/userSlice";
 import { Pool } from "../../lib";
 import { ScaledNumber } from "../../lib/scaled-number";
 import WithdrawalButton from "./WithdrawButton";
@@ -22,15 +22,15 @@ interface Props {
 
 const PoolWithdraw = ({ pool }: Props): JSX.Element => {
   const { t } = useTranslation();
-  const totalBalance = useSelector(selectBalance(pool));
   const staked = useSelector(selectBalance(pool.stakerVaultAddress));
-  const availableToWithdraw = totalBalance.sub(staked);
+  const availableToWithdraw = useSelector(selectAvailableToWithdraw(pool));
   const { isMobile } = useDevice();
 
   const [withdrawAmount, setWithdrawAmount] = useState("");
-  const value = ScaledNumber.fromUnscaled(withdrawAmount, staked.decimals);
+  const value = ScaledNumber.fromUnscaled(withdrawAmount, staked?.decimals || 18);
 
   const error = () => {
+    if (!availableToWithdraw) return "";
     if (withdrawAmount && Number(withdrawAmount) <= 0) return t("amountInput.validation.positive");
     try {
       const amount = ScaledNumber.fromUnscaled(withdrawAmount, pool.underlying.decimals);

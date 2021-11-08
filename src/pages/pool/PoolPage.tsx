@@ -117,7 +117,7 @@ const PoolPage = (): JSX.Element => {
         />
         <PoolInformation pool={pool} />
         <LiveHelp />
-        {!balance.isZero() && (
+        {balance && !balance.isZero() && (
           <ButtonContainer>
             <Button
               id="create-topup-button"

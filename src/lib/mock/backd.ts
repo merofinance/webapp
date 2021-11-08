@@ -52,7 +52,7 @@ export default class MockBackd implements Backd {
   }
 
   getAllowance(token: Token, spender: Address, account?: string): Promise<ScaledNumber> {
-    return Promise.resolve(this.allowances[token.address][spender] || 0);
+    return Promise.resolve(this.allowances[token.address][spender] || new ScaledNumber());
   }
 
   getAllowances(queries: AllowanceQuery[]): Promise<Record<string, Balances>> {

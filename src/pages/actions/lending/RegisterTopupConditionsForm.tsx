@@ -140,7 +140,7 @@ const RegisterTopupConditionsForm = () => {
 
   const validate = (values: FormType): FormikErrors<FormType> => {
     const errors: FormikErrors<FormType> = {};
-    if (!pool) return errors;
+    if (!pool || !balance) return errors;
     const single = ScaledNumber.fromUnscaled(values.singleTopUp, pool.underlying.decimals);
     const max = ScaledNumber.fromUnscaled(values.maxTopUp, pool.underlying.decimals);
     if (values.maxTopUp && single.gt(max))
