@@ -31,7 +31,6 @@ const Container = styled.div`
 
 interface LiveHelpProps {
   open?: boolean;
-  wide?: boolean;
   suggestions: number;
 }
 
@@ -44,6 +43,7 @@ const StyledLiveHelp = styled.div`
   box-shadow: 0px 0px 12px rgba(23, 18, 22, 0.05);
   overflow: hidden;
   transition: max-height 0.3s ease-out, background-color 0.3s, filter 0.3s;
+  width: 36rem;
 
   max-height: ${(props: LiveHelpProps) =>
     props.open ? `calc(25rem * ${props.suggestions})` : "5.4rem"};
@@ -55,7 +55,6 @@ const StyledLiveHelp = styled.div`
   background-image: linear-gradient(#252140, #252140),
     linear-gradient(to right, var(--primary-gradient), var(--secondary-gradient));
 
-  width: ${(props: LiveHelpProps) => (props.wide ? "40rem" : "36rem")};
   padding: 2rem 1.8rem;
   @media (max-width: 1439px) {
     width: 100%;
@@ -165,7 +164,7 @@ const BackdHelper = styled.img`
 `;
 
 const LiveHelp = (): JSX.Element => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
@@ -173,7 +172,6 @@ const LiveHelp = (): JSX.Element => {
   const implement = useSelector(selectImplement);
   const positions = useSelector(selectPositions);
   const [open, setOpen] = useState(false);
-  const isWide = i18n.language === "ja";
   const hasSuggestions = suggestions.length > 0;
 
   const lowPositions = positions.filter((position: Position) =>
@@ -214,7 +212,7 @@ const LiveHelp = (): JSX.Element => {
 
   return (
     <Container>
-      <StyledLiveHelp open={open} wide={isWide} suggestions={suggestions.length}>
+      <StyledLiveHelp open={open} suggestions={suggestions.length}>
         <ChevronContainer>
           <AccordionChevron open={open} />
         </ChevronContainer>
