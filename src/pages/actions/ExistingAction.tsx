@@ -8,6 +8,7 @@ import { selectPools } from "../../state/poolsListSlice";
 import { selectPrice } from "../../state/selectors";
 import TopupAction from "./lending/TopupAction";
 import { GradientText } from "../../styles/GradientText";
+import Loader from "../../components/Loader";
 
 const StyledRegisteredAction = styled.button`
   width: 100%;
@@ -55,7 +56,7 @@ const ExistingAction = ({ position }: Props) => {
     <>
       <StyledRegisteredAction id={`existing-action-${position.protocol.toLowerCase()}`}>
         <Value flex={5}>{t("actions.topup.label")}</Value>
-        <Value flex={3}>{position.maxTopUp.toCompactUsdValue(price)}</Value>
+        <Value flex={3}>{price ? position.maxTopUp.toCompactUsdValue(price) : <Loader />}</Value>
         <ViewButton
           id={`existing-action-${position.protocol.toLowerCase()}-view`}
           onClick={() => setOpen(true)}
