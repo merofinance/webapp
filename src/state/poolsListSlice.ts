@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../app/store";
 import { Pool } from "../lib";
 import { Backd } from "../lib/backd";
-import { Address, Prices } from "../lib/types";
+import { Address, fromPlainBalances, Prices } from "../lib/types";
 import { fetchLoans } from "./lendingSlice";
 import { fetchPositions } from "./positionsSlice";
 import { fetchAllowances, fetchBalances } from "./userSlice";
@@ -75,8 +75,16 @@ export const fetchState =
 
 export const selectPools = (state: RootState): Pool[] => state.pools.pools;
 
+export const selectDepositedPools = (state: RootState): Pool[] =>
+  state.pools.pools.filter(
+    (pool: Pool) => !fromPlainBalances(state.user.balances)[pool.lpToken.address]?.isZero()
+  );
+
 export const selectPrices = (state: RootState): Prices => state.pools.prices;
 
 export const selectEthPrice = (state: RootState): number | undefined => state.pools.prices.ETH;
+
+export const selectAverageApy = (state: RootState): number | undefined =>
+  state.pools.pools.reduce((a: number, b: Pool) => a + b.apy, 0) / state.pools.pools.length;
 
 export default poolsSlice.reducer;
