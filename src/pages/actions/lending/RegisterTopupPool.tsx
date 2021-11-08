@@ -83,7 +83,7 @@ const RegisterTopupPool = () => {
   const hasSufficientBalance = (pool: Pool) => {
     const lpBalance = balances[pool.lpToken.address];
     const price = prices[pool.underlying.symbol];
-    if (!lpBalance || !price) return false;
+    if (!lpBalance || !price || !ethPrice) return false;
     const usdBalance = lpBalance.mul(price);
     const gasCostUsd = new ScaledNumber(
       ScaledNumber.fromUnscaled(50, GWEI_DECIMALS).value.mul(TOPUP_GAS_COST).div(GWEI_SCALE)
@@ -106,13 +106,15 @@ const RegisterTopupPool = () => {
         },
         {
           label: t("headers.deposits"),
-          value: (balances[pool.lpToken.address] || new ScaledNumber())
-            .add(
-              positions
-                .filter((position: Position) => position.depositToken === pool.lpToken.symbol)
-                .reduce((a: ScaledNumber, b: Position) => a.add(b.maxTopUp), new ScaledNumber())
-            )
-            .toCompactUsdValue(prices[pool.underlying.symbol]),
+          value: prices[pool.underlying.symbol]
+            ? (balances[pool.lpToken.address] || new ScaledNumber())
+                .add(
+                  positions
+                    .filter((position: Position) => position.depositToken === pool.lpToken.symbol)
+                    .reduce((a: ScaledNumber, b: Position) => a.add(b.maxTopUp), new ScaledNumber())
+                )
+                .toCompactUsdValue(prices[pool.underlying.symbol])
+            : undefined,
         },
         {
           label: t("headers.apy"),
@@ -120,7 +122,9 @@ const RegisterTopupPool = () => {
         },
         {
           label: t("headers.tvl"),
-          value: numberToCompactCurrency(pool.totalAssets * prices[pool.underlying.symbol]),
+          value: prices[pool.underlying.symbol]
+            ? numberToCompactCurrency(pool.totalAssets * prices[pool.underlying.symbol])
+            : undefined,
         },
       ],
     };
