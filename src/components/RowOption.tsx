@@ -99,6 +99,10 @@ const Value = styled.div`
   @media (max-width: 600px) {
     font-size: 1.4rem;
   }
+
+  @media only percy {
+    opacity: 0;
+  }
 `;
 
 const HoverTextContainer = styled.div`

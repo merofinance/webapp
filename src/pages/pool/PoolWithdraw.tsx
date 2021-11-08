@@ -53,6 +53,7 @@ const PoolWithdraw = ({ pool }: Props): JSX.Element => {
         label={inputLabel}
         max={availableToWithdraw}
         error={error()}
+        symbol={pool.underlying.symbol}
       />
       <WithdrawalButton
         pool={pool}
