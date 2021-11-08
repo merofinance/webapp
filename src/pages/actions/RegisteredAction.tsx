@@ -9,6 +9,7 @@ import chevron from "../../assets/ui/chevron.svg";
 import { selectPrice } from "../../state/selectors";
 import TopupAction from "./lending/TopupAction";
 import { selectImplement } from "../../state/helpSlice";
+import Loader from "../../components/Loader";
 
 const StyledRegisteredAction = styled.button`
   position: relative;
@@ -125,7 +126,9 @@ const RegisteredAction = ({ position }: Props) => {
         </Column>
         <Column>
           <Header>{t("actions.registered.columns.locked")}</Header>
-          <Value hideOnSnapshot>{position.maxTopUp.toCompactUsdValue(price)}</Value>
+          <Value hideOnSnapshot>
+            {price ? position.maxTopUp.toCompactUsdValue(price) : <Loader />}
+          </Value>
         </Column>
         <Column hideMobile>
           <Header>{t("actions.suggestions.topup.labels.protocol")}</Header>
