@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import Loader from "./Loader";
 import Tooltip from "./Tooltip";
 
 interface StatisticType {
   header: string;
   tooltip: string;
-  value: string;
-  usd?: string;
+  value: string | null;
+  usd?: string | null;
 }
 
 const StyledStatistics = styled.div`
@@ -108,7 +109,7 @@ const Statistics = ({ statistics }: Props): JSX.Element => {
           </HeaderContaner>
           <ValueContainer>
             <Value>{statistic.value}</Value>
-            {statistic.usd && <Usd>{statistic.usd}</Usd>}
+            {statistic.usd !== undefined && <Usd>{statistic.usd || <Loader />}</Usd>}
           </ValueContainer>
         </Statistic>
       ))}
