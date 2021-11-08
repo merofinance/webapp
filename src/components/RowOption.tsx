@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-import Button from "./Button";
+import Loader from "./Loader";
 
 interface ColumnType {
   label: string;
-  value: string | JSX.Element;
+  value: string | JSX.Element | undefined;
 }
 
 export interface RowOptionType {
@@ -149,7 +149,13 @@ const RowOption = ({ active, select, option }: Props) => {
         {option.columns.map((column: ColumnType) => (
           <Column key={column.label}>
             {column.label && <Header>{column.label}</Header>}
-            {typeof column.value === "string" ? <Value>{column.value}</Value> : column.value}
+            {typeof column.value === "string" ? (
+              <Value>{column.value}</Value>
+            ) : column.value ? (
+              column.value
+            ) : (
+              <Loader />
+            )}
           </Column>
         ))}
       </StyledRowOption>
