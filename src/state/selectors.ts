@@ -3,8 +3,9 @@ import { Selector } from "reselect";
 import { RootState } from "../app/store";
 import { ScaledNumber } from "../lib/scaled-number";
 import { Optional, Pool, Position } from "../lib/types";
-import { selectPoolPositions } from "./positionsSlice";
-import { selectBalance } from "./userSlice";
+import { selectPools, selectPrices } from "./poolsListSlice";
+import { selectPoolPositions, selectPositions } from "./positionsSlice";
+import { selectBalance, selectBalances } from "./userSlice";
 
 export function selectPool(poolName: string): (state: RootState) => Optional<Pool> {
   return (state: RootState) =>
@@ -34,6 +35,29 @@ export function selectLocked(pool: Optional<Pool>): Selector<RootState, ScaledNu
   };
 }
 
+export function selectTotalLocked(): Selector<RootState, ScaledNumber | undefined> {
+  return (state: RootState) => {
+    const pools = useSelector(selectPools);
+    const prices = useSelector(selectPrices);
+    const balances = useSelector(selectBalances);
+    const positions = useSelector(selectPositions);
+
+    if (!pools || !prices || !balances || !positions) return undefined;
+
+    let total = new ScaledNumber();
+    positions.forEach((position: Position) => {
+      const pool = pools.filter(
+        (pool: Pool) => pool.underlying.address === position.actionToken
+      )[0];
+      if (!pool) return undefined;
+      const price = prices[pool.underlying.symbol];
+      if (!price) return undefined;
+      total = total.add(position.maxTopUp.mul(price));
+    });
+    return total;
+  };
+}
+
 export function selectDeposits(
   pool: Optional<Pool>
 ): Selector<RootState, ScaledNumber | undefined> {
@@ -43,5 +67,34 @@ export function selectDeposits(
     const balance = useSelector(selectBalance(pool));
     if (!locked || !balance) return undefined;
     return locked.add(balance);
+  };
+}
+
+export function selectTotalBalance(): Selector<RootState, ScaledNumber | undefined> {
+  return (state: RootState) => {
+    const pools = useSelector(selectPools);
+    const prices = useSelector(selectPrices);
+    const balances = useSelector(selectBalances);
+    const positions = useSelector(selectPositions);
+
+    if (!pools || !prices || !balances || !positions) return undefined;
+
+    let total = new ScaledNumber();
+    pools.forEach((pool: Pool) => {
+      const balance = balances[pool.lpToken.address];
+      const price = prices[pool.underlying.symbol];
+      if (!price || !balance) return undefined;
+      total = total.add(balance.mul(price));
+    });
+    return total;
+  };
+}
+
+export function selectTotalDeposits(): Selector<RootState, ScaledNumber | undefined> {
+  return (state: RootState) => {
+    const totalLocked = useSelector(selectTotalLocked());
+    const totalBalance = useSelector(selectTotalBalance());
+    if (!totalLocked || !totalBalance) return undefined;
+    return totalLocked?.add(totalBalance);
   };
 }
