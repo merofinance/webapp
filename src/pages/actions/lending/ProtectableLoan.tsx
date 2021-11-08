@@ -9,6 +9,7 @@ import { selectEthPrice } from "../../../state/poolsListSlice";
 import Button from "../../../components/Button";
 import { Loan } from "../../../lib/types";
 import { TOPUP_ACTION_ROUTE } from "../../../lib/constants";
+import Loader from "../../../components/Loader";
 
 const StyledProtectableLoan = styled.div`
   width: 100%;
@@ -77,8 +78,6 @@ const ProtectableLoan = ({ loan }: Props) => {
   const history = useHistory();
   const ethPrice = useSelector(selectEthPrice);
 
-  if (!loan) return <></>;
-
   return (
     <StyledProtectableLoan id={`${loan.protocol.toLowerCase()}-protectable-loan`}>
       <Column>
@@ -91,11 +90,15 @@ const ProtectableLoan = ({ loan }: Props) => {
       </Column>
       <Column hideMobile>
         <Header>{t("actions.suggestions.topup.labels.totalCollateral")}</Header>
-        <Value hideOnSnapshot>{loan.totalCollateralETH.toUsdValue(ethPrice)}</Value>
+        <Value hideOnSnapshot>
+          {ethPrice ? loan.totalCollateralETH.toUsdValue(ethPrice) : <Loader />}
+        </Value>
       </Column>
       <Column hideMobile>
         <Header>{t("actions.suggestions.topup.labels.totalLoan")}</Header>
-        <Value hideOnSnapshot>{loan.totalDebtETH.toUsdValue(ethPrice)}</Value>
+        <Value hideOnSnapshot>
+          {ethPrice ? loan.totalDebtETH.toUsdValue(ethPrice) : <Loader />}
+        </Value>
       </Column>
       <Column>
         <Button
