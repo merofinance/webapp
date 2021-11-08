@@ -11,6 +11,7 @@ import { selectPool } from "../../../state/selectors";
 import { GradientText } from "../../../styles/GradientText";
 import { LendingProtocol, Loan } from "../../../lib/types";
 import { TOPUP_ACTION_ROUTE } from "../../../lib/constants";
+import Loader from "../../../components/Loader";
 
 interface TopupParams {
   address: string;
@@ -100,32 +101,30 @@ const ActionSummary = () => {
 
   const loan = loans.filter((loan: Loan) => loan.protocol === protocol)[0];
 
-  if (!loan || !pool) return <></>;
-
   return (
     <StyledActionSummary id="action-summary">
       <Column>
         <Header>{t("actions.suggestions.topup.labels.protocol")}</Header>
-        <Value>{loan ? loan.protocol : "----"}</Value>
+        <Value>{loan ? loan.protocol : <Loader />}</Value>
       </Column>
       <Column>
         <Header>{t("actions.suggestions.topup.labels.healthFactor")}</Header>
-        <Value>{loan ? loan.healthFactor.toCryptoString() : "----"}</Value>
+        <Value>{loan ? loan.healthFactor.toCryptoString() : <Loader />}</Value>
       </Column>
       <Column hideMobile>
         <Header>{t("actions.suggestions.topup.labels.totalCollateral")}</Header>
         <Value hideOnSnapshot>
-          {loan ? loan.totalCollateralETH.toUsdValue(ethPrice) : "$----"}
+          {loan ? loan.totalCollateralETH.toUsdValue(ethPrice) : <Loader />}
         </Value>
       </Column>
       <Column hideMobile>
         <Header>{t("actions.suggestions.topup.labels.totalLoan")}</Header>
-        <Value hideOnSnapshot>{loan ? loan.totalDebtETH.toUsdValue(ethPrice) : "$----"}</Value>
+        <Value hideOnSnapshot>{loan ? loan.totalDebtETH.toUsdValue(ethPrice) : <Loader />}</Value>
       </Column>
       <Column>
         <Header>{t("actions.suggestions.topup.labels.pool")}</Header>
         <Value hideOnSnapshot>
-          {pool ? <Asset tiny token={pool.underlying} /> : <Header>----</Header>}
+          {pool ? <Asset tiny token={pool.underlying} /> : <Loader />}
           <ChangePoolButton
             id="action-summary-change-pool"
             onClick={() => history.push(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`)}
