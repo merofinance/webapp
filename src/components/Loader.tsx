@@ -12,7 +12,7 @@ const animation = keyframes`
 
 const StyledLoader = styled.div`
   width: 9rem;
-  height: 2rem;
+  height: 2.1rem;
   border-radius: 3px;
   background-size: 400% auto;
   background-position: right center;
