@@ -186,7 +186,12 @@ const RegisterTopupConditionsForm = () => {
   };
 
   const suggestedSingleTopup = () => {
-    if (!loan || !formik.values.singleTopUp || !ScaledNumber.isValid(formik.values.singleTopUp))
+    if (
+      !loan ||
+      !formik.values.singleTopUp ||
+      !ScaledNumber.isValid(formik.values.singleTopUp) ||
+      !ethPrice
+    )
       return "";
     const gas = ScaledNumber.fromUnscaled(formik.values.maxGasPrice, GWEI_DECIMALS);
     const gasCost = new ScaledNumber(gas.value.mul(TOPUP_GAS_COST).div(GWEI_SCALE));
@@ -199,7 +204,12 @@ const RegisterTopupConditionsForm = () => {
   };
 
   const singleMinimumSuggestion = () => {
-    if (loan && formik.values.singleTopUp && ScaledNumber.isValid(formik.values.singleTopUp)) {
+    if (
+      loan &&
+      formik.values.singleTopUp &&
+      ScaledNumber.isValid(formik.values.singleTopUp) &&
+      ethPrice
+    ) {
       const single = ScaledNumber.fromUnscaled(formik.values.singleTopUp, pool.underlying.decimals);
       const singleTopupUsd = single.mul(underlyingPrice);
       const gas = ScaledNumber.fromUnscaled(formik.values.maxGasPrice, GWEI_DECIMALS);
