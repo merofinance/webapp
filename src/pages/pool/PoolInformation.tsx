@@ -14,7 +14,6 @@ interface Props {
 const PoolInformation = ({ pool }: Props): JSX.Element => {
   const { t } = useTranslation();
   const price = useSelector(selectPrice(pool));
-  const locked = pool.totalAssets * price;
 
   return (
     <Information
@@ -23,7 +22,7 @@ const PoolInformation = ({ pool }: Props): JSX.Element => {
         {
           label: t("pool.information.tvl.header"),
           tooltip: t("pool.information.tvl.tooltip"),
-          value: numberToCompactCurrency(locked),
+          value: price ? numberToCompactCurrency(pool.totalAssets * price) : null,
         },
         {
           label: t("pool.information.apy.header"),
