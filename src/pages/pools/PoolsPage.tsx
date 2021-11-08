@@ -14,6 +14,7 @@ import PoolsStatistics from "./PoolsStatistics";
 import Overview from "../../components/Overview";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import LiveHelp from "../../components/LiveHelp";
+import Loader from "../../components/Loader";
 
 const StyledPoolsPage = styled.div`
   width: 100%;
@@ -109,9 +110,14 @@ const PoolsPage = (): JSX.Element => {
                   <ChevronHeader />
                 </HeaderRow>
               </thead>
-              {pools.map((pool: Pool) => (
-                <PoolsRow key={pool.address} pool={pool} />
-              ))}
+              {!pools && (
+                <>
+                  <Loader row />
+                  <Loader row />
+                  <Loader row />
+                </>
+              )}
+              {pools && pools.map((pool: Pool) => <PoolsRow key={pool.address} pool={pool} />)}
             </Table>
           }
         />

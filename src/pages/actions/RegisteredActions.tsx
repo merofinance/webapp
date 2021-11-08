@@ -56,7 +56,9 @@ const RegisteredActions = () => {
           )}
           {hasPosition &&
             positions &&
-            positions.map((position: Position) => <RegisteredAction position={position} />)}
+            positions.map((position: Position) => (
+              <RegisteredAction key={position.protocol} position={position} />
+            ))}
           <ButtonContainer>
             <Button
               id="register-action-button"

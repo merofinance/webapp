@@ -80,7 +80,8 @@ const RegisterTopupPool = () => {
   const ethPrice = useSelector(selectEthPrice);
   const [pool, setPool] = useState("");
 
-  const hasSufficientBalance = (pool: Pool) => {
+  const hasSufficientBalance = (pool: Pool | null) => {
+    if (!pool) return false;
     const lpBalance = balances[pool.lpToken.address];
     const price = prices[pool.underlying.symbol];
     if (!lpBalance || !price || !ethPrice) return false;
@@ -91,47 +92,53 @@ const RegisterTopupPool = () => {
     return usdBalance.gte(gasCostUsd);
   };
 
-  const hasDeposits = pools.some((pool: Pool) => hasSufficientBalance(pool));
-  const selected = pools.filter((p: Pool) => p.lpToken.symbol.toLowerCase() === pool)[0];
+  const hasDeposits = pools ? pools.some((pool: Pool) => hasSufficientBalance(pool)) : false;
+  const selected = pools
+    ? pools.filter((p: Pool) => p.lpToken.symbol.toLowerCase() === pool)[0]
+    : null;
 
-  const options: RowOptionType[] = pools.map((pool: Pool) => {
-    const value = pool.lpToken.symbol.toLowerCase();
-    const price = prices[pool.underlying.symbol];
-    return {
-      value,
-      id: `${pool.underlying.symbol.toLowerCase()}-pool-option`,
-      columns: [
-        {
-          label: t("headers.asset"),
-          value: <Asset tiny token={pool.underlying} />,
-        },
-        {
-          label: t("headers.deposits"),
-          value:
-            price && positions
-              ? (balances[pool.lpToken.address] || new ScaledNumber())
-                  .add(
-                    positions
-                      .filter((position: Position) => position.depositToken === pool.lpToken.symbol)
-                      .reduce(
-                        (a: ScaledNumber, b: Position) => a.add(b.maxTopUp),
-                        new ScaledNumber()
+  const options: RowOptionType[] = pools
+    ? pools.map((pool: Pool) => {
+        const value = pool.lpToken.symbol.toLowerCase();
+        const price = prices[pool.underlying.symbol];
+        return {
+          value,
+          id: `${pool.underlying.symbol.toLowerCase()}-pool-option`,
+          columns: [
+            {
+              label: t("headers.asset"),
+              value: <Asset tiny token={pool.underlying} />,
+            },
+            {
+              label: t("headers.deposits"),
+              value:
+                price && positions
+                  ? (balances[pool.lpToken.address] || new ScaledNumber())
+                      .add(
+                        positions
+                          .filter(
+                            (position: Position) => position.depositToken === pool.lpToken.symbol
+                          )
+                          .reduce(
+                            (a: ScaledNumber, b: Position) => a.add(b.maxTopUp),
+                            new ScaledNumber()
+                          )
                       )
-                  )
-                  .toCompactUsdValue(price)
-              : undefined,
-        },
-        {
-          label: t("headers.apy"),
-          value: formatPercent(pool.apy),
-        },
-        {
-          label: t("headers.tvl"),
-          value: price ? numberToCompactCurrency(pool.totalAssets * price) : undefined,
-        },
-      ],
-    };
-  });
+                      .toCompactUsdValue(price)
+                  : undefined,
+            },
+            {
+              label: t("headers.apy"),
+              value: formatPercent(pool.apy),
+            },
+            {
+              label: t("headers.tvl"),
+              value: price ? numberToCompactCurrency(pool.totalAssets * price) : undefined,
+            },
+          ],
+        };
+      })
+    : [];
 
   return (
     <Container>

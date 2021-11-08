@@ -111,7 +111,7 @@ const YourDeposits = () => {
   const totalBalance = useSelector(selectTotalBalance());
   const depositedPools = useSelector(selectDepositedPools);
 
-  const hasDeposits = depositedPools.length > 0;
+  const hasDeposits = depositedPools && depositedPools.length > 0;
 
   return (
     <InfoCard
@@ -123,7 +123,7 @@ const YourDeposits = () => {
           {!hasDeposits && (
             <EmptyText id="your-deposits-empty">{t("actions.deposits.empty")}</EmptyText>
           )}
-          {hasDeposits && (
+          {hasDeposits && depositedPools && (
             <>
               {depositedPools.map((pool: Pool) => {
                 const price = prices[pool.underlying.symbol];

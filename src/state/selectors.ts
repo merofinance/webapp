@@ -20,8 +20,8 @@ export function getAddress(addressOrPool: string | Optional<Pool>): Optional<str
   return addressOrPool?.lpToken.address || null;
 }
 
-export function selectPrice(pool: Optional<Pool>): Selector<RootState, number | undefined> {
-  return (state: RootState) => (pool ? state.pools.prices[pool.underlying.symbol] : undefined);
+export function selectPrice(pool: Optional<Pool>): Selector<RootState, number | null> {
+  return (state: RootState) => (pool ? state.pools.prices[pool.underlying.symbol] : null);
 }
 
 export function selectLocked(pool: Optional<Pool>): Selector<RootState, ScaledNumber | undefined> {

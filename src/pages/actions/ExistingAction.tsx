@@ -3,9 +3,8 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
-import { Position, Pool } from "../../lib/types";
-import { selectPools } from "../../state/poolsListSlice";
-import { selectPrice } from "../../state/selectors";
+import { Position } from "../../lib/types";
+import { selectPool, selectPrice } from "../../state/selectors";
 import TopupAction from "./lending/TopupAction";
 import { GradientText } from "../../styles/GradientText";
 import Loader from "../../components/Loader";
@@ -47,8 +46,7 @@ interface Props {
 
 const ExistingAction = ({ position }: Props) => {
   const { t } = useTranslation();
-  const pools = useSelector(selectPools);
-  const pool = pools.filter((pool: Pool) => pool.lpToken.address === position.depositToken)[0];
+  const pool = useSelector(selectPool(position.depositToken));
   const price = useSelector(selectPrice(pool));
   const [open, setOpen] = useState(false);
 
@@ -64,7 +62,9 @@ const ExistingAction = ({ position }: Props) => {
           <ViewText>{t("components.view")}</ViewText>
         </ViewButton>
       </StyledRegisteredAction>
-      <TopupAction show={open} close={() => setOpen(false)} position={position} pool={pool} />
+      {pool && (
+        <TopupAction show={open} close={() => setOpen(false)} position={position} pool={pool} />
+      )}
     </>
   );
 };

@@ -141,7 +141,7 @@ export const fromPlainAllowances = (allowances: PlainAllowances): Allowances => 
   );
 };
 
-export type Prices<Num = number> = Record<string, Num | undefined>;
+export type Prices<Num = number> = Record<string, Num | null>;
 export type AllowanceQuery = {
   spender: Address;
   token: Pick<Token, "address" | "decimals">;

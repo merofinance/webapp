@@ -104,7 +104,9 @@ const RegisteredAction = ({ position }: Props) => {
   const { t } = useTranslation();
   const pools = useSelector(selectPools);
   const implement = useSelector(selectImplement);
-  const pool = pools.filter((pool: Pool) => pool.lpToken.address === position.depositToken)[0];
+  const pool = pools
+    ? pools.filter((pool: Pool) => pool.lpToken.address === position.depositToken)[0]
+    : null;
   const price = useSelector(selectPrice(pool));
   const [open, setOpen] = useState(false);
 
@@ -142,7 +144,9 @@ const RegisteredAction = ({ position }: Props) => {
           <Chevron src={chevron} alt="right arrow" />
         </ChevronData>
       </StyledRegisteredAction>
-      <TopupAction show={open} close={() => setOpen(false)} position={position} pool={pool} />
+      {pool && (
+        <TopupAction show={open} close={() => setOpen(false)} position={position} pool={pool} />
+      )}
     </>
   );
 };
