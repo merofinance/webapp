@@ -4,6 +4,7 @@ import { GradientLink } from "../styles/GradientText";
 import InfoCard from "./InfoCard";
 import Tooltip from "./Tooltip";
 import arrow from "../assets/ui/arrow.svg";
+import Loader from "./Loader";
 
 interface RowDetailType {
   icon: string;
@@ -14,7 +15,7 @@ interface RowDetailType {
 interface InformationRowType {
   label: string;
   tooltip: string;
-  value: string;
+  value: string | null;
   details?: RowDetailType[];
 }
 
@@ -156,7 +157,7 @@ const Information = ({ header, rows }: Props): JSX.Element => {
                   <Tooltip content={row.tooltip} />
                 </LabelContainer>
                 <ValueContainer>
-                  <Value>{row.value}</Value>
+                  <Value>{row.value || <Loader />}</Value>
                   <Chevron src={arrow} isAccordion={!!row.details} open={open} />
                 </ValueContainer>
               </InformationHeader>
