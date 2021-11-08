@@ -190,7 +190,8 @@ const RegisterTopupConditionsForm = () => {
       !loan ||
       !formik.values.singleTopUp ||
       !ScaledNumber.isValid(formik.values.singleTopUp) ||
-      !ethPrice
+      !ethPrice ||
+      !underlyingPrice
     )
       return "";
     const gas = ScaledNumber.fromUnscaled(formik.values.maxGasPrice, GWEI_DECIMALS);
@@ -208,7 +209,8 @@ const RegisterTopupConditionsForm = () => {
       loan &&
       formik.values.singleTopUp &&
       ScaledNumber.isValid(formik.values.singleTopUp) &&
-      ethPrice
+      ethPrice &&
+      underlyingPrice
     ) {
       const single = ScaledNumber.fromUnscaled(formik.values.singleTopUp, pool.underlying.decimals);
       const singleTopupUsd = single.mul(underlyingPrice);
