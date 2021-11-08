@@ -13,6 +13,7 @@ import { ScaledNumber } from "../../lib/scaled-number";
 import { formatCurrency } from "../../lib/numeric";
 import { GradientText } from "../../styles/GradientText";
 import { TOPUP_ACTION_ROUTE } from "../../lib/constants";
+import Loader from "../../components/Loader";
 
 const Content = styled.div`
   width: 100%;
@@ -131,32 +132,37 @@ const YourDeposits = () => {
           )}
           {hasDeposits && (
             <>
-              {depositedPools.map((pool: Pool) => (
-                <Row id={`your-deposits-${pool.underlying.symbol.toLowerCase()}`} key={pool.name}>
-                  <AssetContainer>
-                    <Asset tiny token={pool.underlying} />
-                    <ManageButton
-                      onClick={() => {
-                        history.push(
-                          `${TOPUP_ACTION_ROUTE}/deposit/${pool.lpToken.symbol.toLowerCase()}`
-                        );
-                      }}
-                    >
-                      <ManageText>{t("actions.deposits.manage")}</ManageText>
-                    </ManageButton>
-                  </AssetContainer>
+              {depositedPools.map((pool: Pool) => {
+                const price = prices[pool.underlying.symbol];
+                const balance = balances[pool.lpToken.address];
+                return (
+                  <Row id={`your-deposits-${pool.underlying.symbol.toLowerCase()}`} key={pool.name}>
+                    <AssetContainer>
+                      <Asset tiny token={pool.underlying} />
+                      <ManageButton
+                        onClick={() => {
+                          history.push(
+                            `${TOPUP_ACTION_ROUTE}/deposit/${pool.lpToken.symbol.toLowerCase()}`
+                          );
+                        }}
+                      >
+                        <ManageText>{t("actions.deposits.manage")}</ManageText>
+                      </ManageButton>
+                    </AssetContainer>
 
-                  <Balances>
-                    <Underlying>{`${balances[pool.lpToken.address]?.toCryptoString() || 0} ${
-                      pool.underlying.symbol
-                    }`}</Underlying>
-                    <Usd>
-                      {balances[pool.lpToken.address]?.toUsdValue(prices[pool.underlying.symbol]) ||
-                        "$0"}
-                    </Usd>
-                  </Balances>
-                </Row>
-              ))}
+                    <Balances>
+                      <Underlying>
+                        {balance ? (
+                          `${balance.toCryptoString()} ${pool.underlying.symbol}`
+                        ) : (
+                          <Loader />
+                        )}
+                      </Underlying>
+                      <Usd>{balance && price ? balance.toUsdValue(price) : <Loader />}</Usd>
+                    </Balances>
+                  </Row>
+                );
+              })}
               <Total id="your-deposits-total">{`= ${formatCurrency(
                 Number(totalUsd.toString())
               )}`}</Total>
