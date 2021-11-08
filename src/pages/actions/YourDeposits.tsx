@@ -6,14 +6,14 @@ import { useHistory } from "react-router";
 
 import InfoCard from "../../components/InfoCard";
 import { Pool } from "../../lib";
-import { selectPools, selectPrices } from "../../state/poolsListSlice";
+import { selectDepositedPools, selectPrices } from "../../state/poolsListSlice";
 import { selectBalances } from "../../state/userSlice";
 import Asset from "../../components/Asset";
-import { ScaledNumber } from "../../lib/scaled-number";
 import { formatCurrency } from "../../lib/numeric";
 import { GradientText } from "../../styles/GradientText";
 import { TOPUP_ACTION_ROUTE } from "../../lib/constants";
 import Loader from "../../components/Loader";
+import { selectTotalBalance } from "../../state/selectors";
 
 const Content = styled.div`
   width: 100%;
@@ -106,19 +106,12 @@ const Total = styled.div`
 const YourDeposits = () => {
   const { t } = useTranslation();
   const history = useHistory();
-  const pools = useSelector(selectPools);
   const balances = useSelector(selectBalances);
   const prices = useSelector(selectPrices);
+  const totalBalance = useSelector(selectTotalBalance());
+  const depositedPools = useSelector(selectDepositedPools);
 
-  const depositedPools = pools.filter((pool: Pool) => !balances[pool.lpToken.address]?.isZero());
   const hasDeposits = depositedPools.length > 0;
-
-  const getBalance = (pool: Pool) => balances[pool.lpToken.address] || new ScaledNumber();
-  const getPrice = (pool: Pool) => prices[pool.underlying.symbol] || 0;
-  const totalUsd = depositedPools.reduce(
-    (a: ScaledNumber, b: Pool) => a.add(getBalance(b).mul(getPrice(b))),
-    new ScaledNumber()
-  );
 
   return (
     <InfoCard
@@ -163,9 +156,9 @@ const YourDeposits = () => {
                   </Row>
                 );
               })}
-              <Total id="your-deposits-total">{`= ${formatCurrency(
-                Number(totalUsd.toString())
-              )}`}</Total>
+              <Total id="your-deposits-total">
+                {totalBalance ? `= ${formatCurrency(Number(totalBalance.toString()))}` : <Loader />}
+              </Total>
             </>
           )}
         </Content>
