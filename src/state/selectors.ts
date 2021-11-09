@@ -5,7 +5,7 @@ import { ScaledNumber } from "../lib/scaled-number";
 import { Optional, Pool, Position } from "../lib/types";
 import { selectPools, selectPrices } from "./poolsListSlice";
 import { selectPoolPositions, selectPositions } from "./positionsSlice";
-import { selectBalance, selectBalances } from "./userSlice";
+import { selectPoolBalance, selectBalances } from "./userSlice";
 
 export function selectPool(poolName: string): (state: RootState) => Optional<Pool> {
   return (state: RootState) =>
@@ -36,7 +36,7 @@ export function selectPoolLocked(pool: Optional<Pool>): Selector<RootState, Scal
   };
 }
 
-export function selectTotalLocked(): Selector<RootState, ScaledNumber | null> {
+export function selectLocked(): Selector<RootState, ScaledNumber | null> {
   return (state: RootState) => {
     const pools = useSelector(selectPools);
     const prices = useSelector(selectPrices);
@@ -59,17 +59,7 @@ export function selectTotalLocked(): Selector<RootState, ScaledNumber | null> {
   };
 }
 
-export function selectPoolDeposits(pool: Optional<Pool>): Selector<RootState, ScaledNumber | null> {
-  return (state: RootState) => {
-    if (!pool) return null;
-    const locked = useSelector(selectPoolLocked(pool));
-    const balance = useSelector(selectBalance(pool));
-    if (!locked || !balance) return null;
-    return locked.add(balance);
-  };
-}
-
-export function selectTotalBalance(): Selector<RootState, ScaledNumber | null> {
+export function selectBalance(): Selector<RootState, ScaledNumber | null> {
   return (state: RootState) => {
     const pools = useSelector(selectPools);
     const prices = useSelector(selectPrices);
@@ -89,11 +79,49 @@ export function selectTotalBalance(): Selector<RootState, ScaledNumber | null> {
   };
 }
 
+export function selectPoolDeposits(pool: Optional<Pool>): Selector<RootState, ScaledNumber | null> {
+  return (state: RootState) => {
+    if (!pool) return null;
+    const locked = useSelector(selectPoolLocked(pool));
+    const balance = useSelector(selectPoolBalance(pool));
+    if (!locked || !balance) return null;
+    return locked.add(balance);
+  };
+}
+
+export function selectPoolTotalDeposits(
+  pool: Optional<Pool>
+): Selector<RootState, ScaledNumber | null> {
+  return (state: RootState) => {
+    if (!pool) return null;
+    return ScaledNumber.fromUnscaled(pool.totalAssets, pool.underlying.decimals);
+  };
+}
+
+export function selectDeposits(): Selector<RootState, ScaledNumber | null> {
+  return (state: RootState) => {
+    const locked = useSelector(selectLocked());
+    const balance = useSelector(selectBalance());
+    if (!locked || !balance) return null;
+    return locked.add(balance);
+  };
+}
+
 export function selectTotalDeposits(): Selector<RootState, ScaledNumber | null> {
   return (state: RootState) => {
-    const totalLocked = useSelector(selectTotalLocked());
-    const totalBalance = useSelector(selectTotalBalance());
-    if (!totalLocked || !totalBalance) return null;
-    return totalLocked?.add(totalBalance);
+    const pools = useSelector(selectPools);
+    const prices = useSelector(selectPrices);
+    const balances = useSelector(selectBalances);
+    const positions = useSelector(selectPositions);
+
+    if (!pools || !prices || !balances || !positions) return null;
+
+    let total = new ScaledNumber();
+    for (let i = 0; i < pools.length; i++) {
+      const price = prices[pools[i].underlying.symbol];
+      if (!price) return null;
+      total = total.add(ScaledNumber.fromUnscaled(pools[i].totalAssets).mul(price));
+    }
+    return total;
   };
 }

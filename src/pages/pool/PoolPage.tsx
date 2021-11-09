@@ -10,7 +10,7 @@ import Seo from "../../components/Seo";
 import PoolDeposit from "./PoolDeposit";
 import PoolWithdraw from "./PoolWithdraw";
 import PoolInformation from "./PoolInformation";
-import { selectBalance } from "../../state/userSlice";
+import { selectPoolBalance } from "../../state/userSlice";
 import Overview from "../../components/Overview";
 import { useBackd } from "../../app/hooks/use-backd";
 import { fetchState } from "../../state/poolsListSlice";
@@ -71,7 +71,7 @@ const PoolPage = (): JSX.Element => {
   const dispatch = useDispatch();
   const updated = useWeb3Updated();
   const pool = useSelector(selectPool(poolName));
-  const balance = useSelector(selectBalance(pool));
+  const balance = useSelector(selectPoolBalance(pool));
 
   useEffect(() => {
     if (!backd) return;

@@ -9,11 +9,10 @@ import { Pool } from "../../lib";
 import { selectDepositedPools, selectPrices } from "../../state/poolsListSlice";
 import { selectBalances } from "../../state/userSlice";
 import Asset from "../../components/Asset";
-import { formatCurrency } from "../../lib/numeric";
 import { GradientText } from "../../styles/GradientText";
 import { TOPUP_ACTION_ROUTE } from "../../lib/constants";
 import Loader from "../../components/Loader";
-import { selectTotalBalance } from "../../state/selectors";
+import { selectBalance } from "../../state/selectors";
 
 const Content = styled.div`
   width: 100%;
@@ -108,7 +107,7 @@ const YourDeposits = () => {
   const history = useHistory();
   const balances = useSelector(selectBalances);
   const prices = useSelector(selectPrices);
-  const totalBalance = useSelector(selectTotalBalance());
+  const balance = useSelector(selectBalance());
   const depositedPools = useSelector(selectDepositedPools);
 
   const hasDeposits = depositedPools && depositedPools.length > 0;
@@ -157,7 +156,7 @@ const YourDeposits = () => {
                 );
               })}
               <Total id="your-deposits-total">
-                {totalBalance ? `= ${formatCurrency(Number(totalBalance.toString()))}` : <Loader />}
+                {balance ? `= ${balance.toUsdValue(1)}` : <Loader />}
               </Total>
             </>
           )}

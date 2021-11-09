@@ -5,11 +5,11 @@ import { useTranslation } from "react-i18next";
 import { selectAverageApy } from "../../state/poolsListSlice";
 import Information from "../../components/Information";
 import { formatPercent } from "../../lib/numeric";
-import { selectTotalLocked } from "../../state/selectors";
+import { selectTotalDeposits } from "../../state/selectors";
 
 const PoolsInformation = (): JSX.Element => {
   const { t } = useTranslation();
-  const locked = useSelector(selectTotalLocked());
+  const totalDeposits = useSelector(selectTotalDeposits());
   const averageApy = useSelector(selectAverageApy);
 
   return (
@@ -19,7 +19,7 @@ const PoolsInformation = (): JSX.Element => {
         {
           label: t("pools.information.tvl.header"),
           tooltip: t("pools.information.tvl.tooltip"),
-          value: locked ? locked.toCompactUsdValue(1) : null,
+          value: totalDeposits ? totalDeposits.toCompactUsdValue(1) : null,
         },
         {
           label: t("pools.information.apy.header"),

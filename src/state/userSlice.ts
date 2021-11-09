@@ -207,9 +207,9 @@ export const unstake = createAsyncThunk(
 export const selectBalances = (state: RootState): Balances =>
   fromPlainBalances(state.user.balances);
 
-export function selectBalance(pool: Optional<Pool>): Selector<ScaledNumber | null>;
-export function selectBalance(address: string): Selector<ScaledNumber | null>;
-export function selectBalance(
+export function selectPoolBalance(pool: Optional<Pool>): Selector<ScaledNumber | null>;
+export function selectPoolBalance(address: string): Selector<ScaledNumber | null>;
+export function selectPoolBalance(
   addressOrPool: string | Optional<Pool>
 ): Selector<ScaledNumber | null> {
   return (state: RootState) => {
@@ -234,8 +234,8 @@ export function selectAvailableToWithdraw(pool: Pool | null): Selector<ScaledNum
   return (state: RootState) => {
     if (!pool) return null;
 
-    const balance = useSelector(selectBalance(pool));
-    const staked = useSelector(selectBalance(pool.stakerVaultAddress));
+    const balance = useSelector(selectPoolBalance(pool));
+    const staked = useSelector(selectPoolBalance(pool.stakerVaultAddress));
     if (!balance || !staked) return null;
 
     return balance.sub(staked);

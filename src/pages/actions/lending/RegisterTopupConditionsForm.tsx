@@ -6,7 +6,7 @@ import * as yup from "yup";
 import { FormikErrors, useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 
-import { selectBalance } from "../../../state/userSlice";
+import { selectPoolBalance } from "../../../state/userSlice";
 import { useBackd } from "../../../app/hooks/use-backd";
 import { ScaledNumber } from "../../../lib/scaled-number";
 import { selectPool, selectPrice } from "../../../state/selectors";
@@ -113,7 +113,7 @@ const RegisterTopupConditionsForm = () => {
   const pool = useSelector(selectPool(poolName));
   const underlyingPrice = useSelector(selectPrice(pool));
   const ethPrice = useSelector(selectEthPrice);
-  const balance = useSelector(selectBalance(pool));
+  const balance = useSelector(selectPoolBalance(pool));
   const implement = useSelector(selectImplement);
   const [loading, setLoading] = useState(false);
   const [confirming, setConfirming] = useState(false);

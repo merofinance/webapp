@@ -4,12 +4,12 @@ import { useTranslation } from "react-i18next";
 
 import Statistics from "../../components/Statistics";
 import { formatCurrency } from "../../lib/numeric";
-import { selectTotalDeposits, selectTotalLocked } from "../../state/selectors";
+import { selectDeposits, selectLocked } from "../../state/selectors";
 
 const PoolsStatistics = (): JSX.Element => {
   const { t } = useTranslation();
-  const locked = useSelector(selectTotalLocked());
-  const deposits = useSelector(selectTotalDeposits());
+  const locked = useSelector(selectLocked());
+  const deposits = useSelector(selectDeposits());
 
   return (
     <Statistics

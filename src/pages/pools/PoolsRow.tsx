@@ -9,8 +9,8 @@ import Asset from "../../components/Asset";
 import Button from "../../components/Button";
 import { GradientText } from "../../styles/GradientText";
 import { Pool } from "../../lib";
-import { formatPercent, numberToCompactCurrency } from "../../lib/numeric";
-import { selectPoolDeposits, selectPrice } from "../../state/selectors";
+import { formatPercent } from "../../lib/numeric";
+import { selectPoolDeposits, selectPoolTotalDeposits, selectPrice } from "../../state/selectors";
 import Loader from "../../components/Loader";
 
 interface RowProps {
@@ -137,6 +137,7 @@ const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
   const history = useHistory();
 
   const price = useSelector(selectPrice(pool));
+  const totalDeposits = useSelector(selectPoolTotalDeposits(pool));
   const deposits = useSelector(selectPoolDeposits(pool));
 
   return (
@@ -153,7 +154,7 @@ const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
           <Apy>{formatPercent(pool.apy)}</Apy>
         </Data>
         <Data hideOnSnapshot>
-          {price ? numberToCompactCurrency(pool.totalAssets * price) : <Loader />}
+          {price && totalDeposits ? totalDeposits.toCompactUsdValue(price) : <Loader />}
         </Data>
         <DepositedData preview={preview}>
           {price && deposits ? deposits.toCompactUsdValue(price) : <Loader />}
