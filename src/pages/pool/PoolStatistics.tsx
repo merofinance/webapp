@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import Statistics from "../../components/Statistics";
 import { Pool } from "../../lib/types";
-import { selectDeposits, selectLocked, selectPrice } from "../../state/selectors";
+import { selectPoolDeposits, selectPoolLocked, selectPrice } from "../../state/selectors";
 
 interface Props {
   pool: Pool;
@@ -13,8 +13,8 @@ interface Props {
 const PoolStatistics = ({ pool }: Props): JSX.Element => {
   const { t } = useTranslation();
   const price = useSelector(selectPrice(pool));
-  const locked = useSelector(selectLocked(pool));
-  const deposits = useSelector(selectDeposits(pool));
+  const locked = useSelector(selectPoolLocked(pool));
+  const deposits = useSelector(selectPoolDeposits(pool));
 
   return (
     <Statistics

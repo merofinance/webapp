@@ -10,7 +10,7 @@ import Button from "../../components/Button";
 import { GradientText } from "../../styles/GradientText";
 import { Pool } from "../../lib";
 import { formatPercent, numberToCompactCurrency } from "../../lib/numeric";
-import { selectPoolTotalLocked, selectPrice } from "../../state/selectors";
+import { selectPoolDeposits, selectPrice } from "../../state/selectors";
 import Loader from "../../components/Loader";
 
 interface RowProps {
@@ -137,7 +137,7 @@ const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
   const history = useHistory();
 
   const price = useSelector(selectPrice(pool));
-  const locked = useSelector(selectPoolTotalLocked(pool));
+  const deposits = useSelector(selectPoolDeposits(pool));
 
   return (
     <tbody>
@@ -156,7 +156,7 @@ const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
           {price ? numberToCompactCurrency(pool.totalAssets * price) : <Loader />}
         </Data>
         <DepositedData preview={preview}>
-          {price && locked ? locked.toCompactUsdValue(price) : <Loader />}
+          {price && deposits ? deposits.toCompactUsdValue(price) : <Loader />}
         </DepositedData>
         <ChevronData preview={preview}>
           <Chevron src={chevron} alt="right arrow" />

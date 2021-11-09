@@ -24,35 +24,15 @@ export function selectPrice(pool: Optional<Pool>): Selector<RootState, number | 
   return (state: RootState) => (pool ? state.pools.prices[pool.underlying.symbol] : null);
 }
 
-export function selectLocked(pool: Optional<Pool>): Selector<RootState, ScaledNumber | undefined> {
+export function selectPoolLocked(pool: Optional<Pool>): Selector<RootState, ScaledNumber | null> {
   return (state: RootState) => {
-    if (!pool) return undefined;
+    if (!pool) return null;
     const positions = useSelector(selectPoolPositions(pool));
-    if (!positions) return undefined;
+    if (!positions) return null;
     return positions.reduce(
       (a: ScaledNumber, b: Position) => a.add(b.maxTopUp),
       new ScaledNumber()
     );
-  };
-}
-
-export function selectPoolTotalLocked(
-  pool: Pool | null
-): Selector<RootState, ScaledNumber | undefined> {
-  return (state: RootState) => {
-    const prices = useSelector(selectPrices);
-    const balances = useSelector(selectBalances);
-    const positions = useSelector(selectPositions);
-
-    if (!pool || !prices || !balances || !positions) return undefined;
-
-    let total = new ScaledNumber();
-    for (let i = 0; i < positions.length; i++) {
-      const price = prices[pool.underlying.symbol];
-      if (!price) return undefined;
-      total = total.add(positions[i].maxTopUp.mul(price));
-    }
-    return total;
   };
 }
 
@@ -79,10 +59,10 @@ export function selectTotalLocked(): Selector<RootState, ScaledNumber | null> {
   };
 }
 
-export function selectDeposits(pool: Optional<Pool>): Selector<RootState, ScaledNumber | null> {
+export function selectPoolDeposits(pool: Optional<Pool>): Selector<RootState, ScaledNumber | null> {
   return (state: RootState) => {
     if (!pool) return null;
-    const locked = useSelector(selectLocked(pool));
+    const locked = useSelector(selectPoolLocked(pool));
     const balance = useSelector(selectBalance(pool));
     if (!locked || !balance) return null;
     return locked.add(balance);
