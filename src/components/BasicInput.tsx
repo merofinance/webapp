@@ -35,7 +35,7 @@ const InputBorder = styled.div`
 
 const Input = styled.input`
   width: 100%;
-  background-color: #252140;
+  background-color: var(--bg-light);
   height: 100%;
   padding: 0 1rem;
   display: flex;

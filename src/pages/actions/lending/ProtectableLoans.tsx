@@ -25,7 +25,7 @@ const StyledProtectableLoans = styled.div`
   border: 1px solid transparent;
   background-origin: border-box;
   background-clip: padding-box, border-box;
-  background-image: linear-gradient(#252140, #252140),
+  background-image: linear-gradient(var(--bg-light), var(--bg-light)),
     linear-gradient(to right, var(--primary-gradient), var(--secondary-gradient));
 `;
 
