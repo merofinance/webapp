@@ -52,7 +52,7 @@ const StyledLiveHelp = styled.div`
   border: 1px solid transparent;
   background-origin: border-box;
   background-clip: padding-box, border-box;
-  background-image: linear-gradient(#252140, #252140),
+  background-image: linear-gradient(var(--bg-light), var(--bg-light)),
     linear-gradient(to right, var(--primary-gradient), var(--secondary-gradient));
 
   padding: 2rem 1.8rem;
@@ -225,14 +225,14 @@ const LiveHelp = (): JSX.Element => {
                 <Button
                   primary
                   small
-                  text="implement"
+                  text={t("liveHelp.buttons.implement")}
                   click={() => dispatch(implementSuggestion(suggestion.value))}
                   width="10rem"
                 />
                 <Button
                   small
-                  text="ignore"
-                  background="#252140"
+                  text={t("liveHelp.buttons.ignore")}
+                  background="var(--bg-light)"
                   width="10rem"
                   click={() => dispatch(ignoreSuggestion(suggestion.value))}
                 />
