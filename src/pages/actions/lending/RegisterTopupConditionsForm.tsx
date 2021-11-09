@@ -14,7 +14,12 @@ import ApproveThenAction from "../../../components/ApproveThenAction";
 import RegisterTopupInput from "./RegisterTopupInput";
 import { useDevice } from "../../../app/hooks/use-device";
 import { selectEthPrice } from "../../../state/poolsListSlice";
-import { GWEI_DECIMALS, GWEI_SCALE, TOPUP_GAS_COST } from "../../../lib/constants";
+import {
+  GWEI_DECIMALS,
+  GWEI_SCALE,
+  RECOMMENDED_THRESHOLD,
+  TOPUP_GAS_COST,
+} from "../../../lib/constants";
 import {
   addSuggestion,
   removeSuggestion,
@@ -128,10 +133,10 @@ const RegisterTopupConditionsForm = () => {
   useEffect(() => {
     if (implement) {
       if (implement.type === Suggestion.THRESHOLD_LOW) {
-        formik.setFieldValue("threshold", "1.2", true);
+        formik.setFieldValue("threshold", RECOMMENDED_THRESHOLD, true);
         dispatch(removeSuggestion(Suggestion.THRESHOLD_LOW));
       } else if (implement.type === Suggestion.THRESHOLD_HIGH) {
-        formik.setFieldValue("threshold", "1.2", true);
+        formik.setFieldValue("threshold", RECOMMENDED_THRESHOLD, true);
         dispatch(removeSuggestion(Suggestion.THRESHOLD_HIGH));
       } else if (implement.type === Suggestion.SINGLE_LOW) {
         formik.setFieldValue("singleTopUp", suggestedSingleTopup(), true);
@@ -265,6 +270,7 @@ const RegisterTopupConditionsForm = () => {
                   type: Suggestion.THRESHOLD_LOW,
                   label: t("liveHelp.suggestions.tresholdLow", {
                     threshold: formik.values.threshold,
+                    recommendedThreshold: RECOMMENDED_THRESHOLD,
                   }),
                 })
               );
@@ -282,6 +288,7 @@ const RegisterTopupConditionsForm = () => {
                   type: Suggestion.THRESHOLD_HIGH,
                   label: t("liveHelp.suggestions.tresholdHigh", {
                     threshold: formik.values.threshold,
+                    recommendedThreshold: RECOMMENDED_THRESHOLD,
                   }),
                 })
               );
