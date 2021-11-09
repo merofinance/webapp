@@ -268,7 +268,7 @@ const RegisterTopupConditionsForm = () => {
               dispatch(
                 addSuggestion({
                   type: Suggestion.THRESHOLD_LOW,
-                  label: t("liveHelp.suggestions.tresholdLow", {
+                  label: t("liveHelp.suggestions.thresholdLow", {
                     threshold: formik.values.threshold,
                     recommendedThreshold: RECOMMENDED_THRESHOLD,
                   }),
@@ -286,7 +286,7 @@ const RegisterTopupConditionsForm = () => {
               dispatch(
                 addSuggestion({
                   type: Suggestion.THRESHOLD_HIGH,
-                  label: t("liveHelp.suggestions.tresholdHigh", {
+                  label: t("liveHelp.suggestions.thresholdHigh", {
                     threshold: formik.values.threshold,
                     recommendedThreshold: RECOMMENDED_THRESHOLD,
                   }),

@@ -602,8 +602,8 @@
     },
     "header": "Live Help",
     "suggestions": {
-      "tresholdLow": "I noticed you have entered a threshold top-up of {{threshold}}. This is very close to liquidation and in times of market volatility we suggest at least {{recommendedThreshold}} or more.",
-      "tresholdHigh": "This will trigger immediately because the health factor you have entered exceeds the current health factor of the loan. I suggest you decrease the Health Factor of the top-up to {{recommendedThreshold}}.",
+      "thresholdLow": "I noticed you have entered a threshold top-up of {{threshold}}. This is very close to liquidation and in times of market volatility we suggest at least {{recommendedThreshold}} or more.",
+      "thresholdHigh": "This will trigger immediately because the health factor you have entered exceeds the current health factor of the loan. I suggest you decrease the Health Factor of the top-up to {{recommendedThreshold}}.",
       "singleLow": "Your estimated max gas cost per top-up is {{maxGas}} ({{ethAmount}} ETH), however the amount per top-up is only {{single}} ({{underlyingAmount}} {{underlyingSymbol}}). I recommend increasing the single top-up to {{suggestion}} {{underlyingSymbol}} for more efficient top-ups.",
       "topupPositionLow": "I’ve noticed your {{protocol}} top-up Action is running low on funds. I suggest you delete that top-up Action and register a new one as soon as possible."
     }
