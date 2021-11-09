@@ -352,9 +352,9 @@
         "header": "Locked in actions",
         "tooltip": "The current value of your assets locked in actions. Assets locked in actions still earn yield"
       },
-      "rewards": {
-        "header": "Rewards accrued",
-        "tooltip": "The current value of earned rewards that have yet to be claimed"
+      "tvl": {
+        "header": "Pool TVL",
+        "tooltip": "The market capitalization of assets held in the pool (total value locked)"
       }
     },
     "tabs": {

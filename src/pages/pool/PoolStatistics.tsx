@@ -4,7 +4,12 @@ import { useTranslation } from "react-i18next";
 
 import Statistics from "../../components/Statistics";
 import { Pool } from "../../lib/types";
-import { selectPoolDeposits, selectPoolLocked, selectPrice } from "../../state/selectors";
+import {
+  selectPoolDeposits,
+  selectPoolLocked,
+  selectPoolTotalDeposits,
+  selectPrice,
+} from "../../state/selectors";
 
 interface Props {
   pool: Pool;
@@ -15,6 +20,7 @@ const PoolStatistics = ({ pool }: Props): JSX.Element => {
   const price = useSelector(selectPrice(pool));
   const locked = useSelector(selectPoolLocked(pool));
   const deposits = useSelector(selectPoolDeposits(pool));
+  const totalDeposits = useSelector(selectPoolTotalDeposits(pool));
 
   return (
     <Statistics
@@ -31,11 +37,14 @@ const PoolStatistics = ({ pool }: Props): JSX.Element => {
           value: locked ? `${locked.toCryptoString()} ${pool.underlying.symbol}` : null,
           usd: price && locked ? locked.toUsdValue(price) : null,
         },
-        // {
-        //   header: t("pool.statistics.rewards.header"),
-        //   tooltip: t("pool.statistics.rewards.tooltip"),
-        //   value: formatCurrency(0),
-        // },
+        {
+          header: t("pool.statistics.tvl.header"),
+          tooltip: t("pool.statistics.tvl.tooltip"),
+          value: totalDeposits
+            ? `${totalDeposits.toCryptoString()} ${pool.underlying.symbol}`
+            : null,
+          usd: price && totalDeposits ? totalDeposits.toUsdValue(price) : null,
+        },
       ]}
     />
   );

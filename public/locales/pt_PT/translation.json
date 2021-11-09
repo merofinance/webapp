@@ -344,10 +344,6 @@
       "locked": {
         "header": "Ações bloqueadas",
         "tooltip": "O valor atual de seus ativos bloqueados em ações. Ativos bloqueados em ações continuam a ganhar rendimentos"
-      },
-      "rewards": {
-        "header": "Recompensas acumuladas",
-        "tooltip": "O valor atual das recompensas ganhas que ainda não foram reivindicadas"
       }
     },
     "tabs": {

@@ -344,10 +344,6 @@
       "locked": {
         "header": "Locked in position",
         "tooltip": "The current value of your assets registered for top-ups (liquidation protection)"
-      },
-      "rewards": {
-        "header": "Rewards accrued",
-        "tooltip": "The current value of earned rewards that have yet to be claimed"
       }
     },
     "tabs": {
