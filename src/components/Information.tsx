@@ -5,6 +5,7 @@ import InfoCard from "./InfoCard";
 import Tooltip from "./Tooltip";
 import arrow from "../assets/ui/arrow.svg";
 import Loader from "./Loader";
+import { Optional } from "../lib/types";
 
 interface RowDetailType {
   icon: string;
@@ -15,7 +16,7 @@ interface RowDetailType {
 interface InformationRowType {
   label: string;
   tooltip: string;
-  value: string | null;
+  value: Optional<string>;
   details?: RowDetailType[];
 }
 

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import Statistics from "../../components/Statistics";
-import { Pool } from "../../lib/types";
+import { Optional, Pool } from "../../lib/types";
 import {
   selectPoolDeposits,
   selectPoolLocked,
@@ -12,7 +12,7 @@ import {
 } from "../../state/selectors";
 
 interface Props {
-  pool: Pool | null;
+  pool: Optional<Pool>;
 }
 
 const PoolStatistics = ({ pool }: Props): JSX.Element => {

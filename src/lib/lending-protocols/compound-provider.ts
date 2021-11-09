@@ -1,6 +1,6 @@
 import { providers, Signer } from "ethers";
 
-import { Address, LendingProtocol, LendingProtocolProvider, PlainLoan } from "../types";
+import { Address, LendingProtocol, LendingProtocolProvider, PlainLoan, Optional } from "../types";
 import { ScaledNumber } from "../scaled-number";
 
 // The Compound Web API is used here instead of their contracts to get the data
@@ -9,7 +9,7 @@ export class CompoundProvider implements LendingProtocolProvider {
   async getPosition(
     address: Address,
     provider: Signer | providers.Provider
-  ): Promise<PlainLoan | null> {
+  ): Promise<Optional<PlainLoan>> {
     const COMPOUND_API = "https://api.compound.finance/api/v2/account";
     const account = address;
 

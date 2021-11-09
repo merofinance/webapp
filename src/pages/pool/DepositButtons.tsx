@@ -10,10 +10,11 @@ import ApproveThenAction from "../../components/ApproveThenAction";
 import { ScaledNumber } from "../../lib/scaled-number";
 import { hasPendingTransaction } from "../../state/transactionsSlice";
 import Loader from "../../components/Loader";
+import { Optional } from "../../lib/types";
 
 interface Props {
   value: ScaledNumber;
-  pool: Pool | null;
+  pool: Optional<Pool>;
   complete: () => void;
   valid: boolean;
   stepsOnTop?: boolean;

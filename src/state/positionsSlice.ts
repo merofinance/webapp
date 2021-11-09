@@ -2,7 +2,13 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 import { Pool } from "../lib";
 import { Backd } from "../lib/backd";
-import { fromPlainPosition, Position, PlainPosition, toPlainPosition } from "../lib/types";
+import {
+  fromPlainPosition,
+  Position,
+  PlainPosition,
+  toPlainPosition,
+  Optional,
+} from "../lib/types";
 import { handleTransactionConfirmation } from "../lib/transactionsUtils";
 import { fetchAllowances, fetchBalances } from "./userSlice";
 
@@ -71,12 +77,14 @@ export const removePosition = createAsyncThunk(
   }
 );
 
-export const selectPositions = (state: RootState): Position[] | null =>
+export const selectPositions = (state: RootState): Optional<Position[]> =>
   state.positions.loaded
     ? state.positions.positions.map((position: PlainPosition) => fromPlainPosition(position))
     : null;
 
-export function selectPoolPositions(pool: Pool | null): (state: RootState) => Position[] | null {
+export function selectPoolPositions(
+  pool: Optional<Pool>
+): (state: RootState) => Optional<Position[]> {
   return (state: RootState) =>
     pool && state.positions.loaded
       ? state.positions.positions

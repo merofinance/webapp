@@ -16,6 +16,7 @@ import { AppDispatch } from "../../app/store";
 import { ScaledNumber } from "../../lib/scaled-number";
 import { hasPendingTransaction } from "../../state/transactionsSlice";
 import Loader from "../../components/Loader";
+import { Optional } from "../../lib/types";
 
 const StyledProgressButtons = styled.div`
   width: 100%;
@@ -25,7 +26,7 @@ const StyledProgressButtons = styled.div`
 
 interface Props {
   value: ScaledNumber;
-  pool: Pool | null;
+  pool: Optional<Pool>;
   complete: () => void;
   valid: boolean;
 }

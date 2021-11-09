@@ -6,9 +6,10 @@ import Information from "../../components/Information";
 import { Pool } from "../../lib";
 import { selectPrice } from "../../state/selectors";
 import { formatPercent, numberToCompactCurrency } from "../../lib/numeric";
+import { Optional } from "../../lib/types";
 
 interface Props {
-  pool: Pool | null;
+  pool: Optional<Pool>;
 }
 
 const PoolInformation = ({ pool }: Props): JSX.Element => {

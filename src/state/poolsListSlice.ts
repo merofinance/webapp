@@ -3,7 +3,7 @@ import { boolean } from "yup/lib/locale";
 import { AppThunk, RootState } from "../app/store";
 import { Pool } from "../lib";
 import { Backd } from "../lib/backd";
-import { Address, fromPlainBalances, Prices } from "../lib/types";
+import { Address, fromPlainBalances, Optional, Prices } from "../lib/types";
 import { fetchLoans } from "./lendingSlice";
 import { fetchPositions } from "./positionsSlice";
 import { fetchAllowances, fetchBalances } from "./userSlice";
@@ -79,10 +79,10 @@ export const fetchState =
 
 export const selectPoolsLoaded = (state: RootState): boolean => state.pools.loaded;
 
-export const selectPools = (state: RootState): Pool[] | null =>
+export const selectPools = (state: RootState): Optional<Pool[]> =>
   state.pools.loaded ? state.pools.pools : null;
 
-export const selectDepositedPools = (state: RootState): Pool[] | null =>
+export const selectDepositedPools = (state: RootState): Optional<Pool[]> =>
   state.pools.loaded
     ? state.pools.pools.filter(
         (pool: Pool) => !fromPlainBalances(state.user.balances)[pool.lpToken.address]?.isZero()
@@ -91,9 +91,9 @@ export const selectDepositedPools = (state: RootState): Pool[] | null =>
 
 export const selectPrices = (state: RootState): Prices => state.pools.prices;
 
-export const selectEthPrice = (state: RootState): number | null => state.pools.prices.ETH;
+export const selectEthPrice = (state: RootState): Optional<number> => state.pools.prices.ETH;
 
-export const selectAverageApy = (state: RootState): number | null =>
+export const selectAverageApy = (state: RootState): Optional<number> =>
   state.pools.pools.reduce((a: number, b: Pool) => a + b.apy, 0) / state.pools.pools.length;
 
 export default poolsSlice.reducer;

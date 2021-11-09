@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import Seo from "../../components/Seo";
 import StakeSummary from "./StakeSummary";
 import StakeAccordion from "./StakeAccodion";
+import { Optional } from "../../lib/types";
 
 const pools: string[] = ["meow", "woof"];
 
@@ -56,7 +57,7 @@ const ArrowHeader = styled.div`
 
 const StakePage = (): JSX.Element => {
   const { t } = useTranslation();
-  const [activePool, setActivePool] = useState<number | null>(0);
+  const [activePool, setActivePool] = useState<Optional<number>>(0);
 
   const isOpen = (index: number): boolean => activePool !== null && activePool === index;
 

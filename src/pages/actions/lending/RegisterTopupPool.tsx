@@ -13,7 +13,7 @@ import { formatPercent, numberToCompactCurrency } from "../../../lib/numeric";
 import { selectBalances } from "../../../state/userSlice";
 import { selectPositions } from "../../../state/positionsSlice";
 import { ScaledNumber } from "../../../lib/scaled-number";
-import { Position } from "../../../lib/types";
+import { Optional, Position } from "../../../lib/types";
 import RegisterTopupPoolDeposit from "./RegisterTopupPoolDeposit";
 import Asset from "../../../components/Asset";
 import { useDevice } from "../../../app/hooks/use-device";
@@ -80,7 +80,7 @@ const RegisterTopupPool = () => {
   const ethPrice = useSelector(selectEthPrice);
   const [pool, setPool] = useState("");
 
-  const hasSufficientBalance = (pool: Pool | null) => {
+  const hasSufficientBalance = (pool: Optional<Pool>) => {
     if (!pool) return false;
     const lpBalance = balances[pool.lpToken.address];
     const price = prices[pool.underlying.symbol];

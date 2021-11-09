@@ -27,6 +27,7 @@ import {
   transformPool,
   PlainLoan,
   LendingProtocol,
+  Optional,
 } from "./types";
 import { lendingProviders } from "./lending-protocols";
 
@@ -38,7 +39,7 @@ export interface Backd {
   currentAccount(): Promise<Address>;
   listPools(): Promise<Pool[]>;
   getPoolInfo(address: Address): Promise<Pool>;
-  getLoanPosition(protocol: LendingProtocol, address?: Address): Promise<PlainLoan | null>;
+  getLoanPosition(protocol: LendingProtocol, address?: Address): Promise<Optional<PlainLoan>>;
   getPositions(): Promise<PlainPosition[]>;
   registerPosition(pool: Pool, position: Position): Promise<ContractTransaction>;
   removePosition(
@@ -157,7 +158,7 @@ export class Web3Backd implements Backd {
     return transformPool(rawPool, bigNumberToFloat);
   }
 
-  async getLoanPosition(protocol: LendingProtocol, address: Address): Promise<PlainLoan | null> {
+  async getLoanPosition(protocol: LendingProtocol, address: Address): Promise<Optional<PlainLoan>> {
     return lendingProviders[protocol].getPosition(address, this._provider);
   }
 

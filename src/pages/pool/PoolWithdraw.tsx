@@ -9,6 +9,7 @@ import { selectAvailableToWithdraw, selectPoolBalance } from "../../state/userSl
 import { Pool } from "../../lib";
 import { ScaledNumber } from "../../lib/scaled-number";
 import WithdrawalButton from "./WithdrawButton";
+import { Optional } from "../../lib/types";
 
 const Content = styled.div`
   width: 100%;
@@ -17,7 +18,7 @@ const Content = styled.div`
 `;
 
 interface Props {
-  pool: Pool | null;
+  pool: Optional<Pool>;
 }
 
 const PoolWithdraw = ({ pool }: Props): JSX.Element => {

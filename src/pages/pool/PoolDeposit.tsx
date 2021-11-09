@@ -9,6 +9,7 @@ import { selectPoolBalance } from "../../state/userSlice";
 import { Pool } from "../../lib";
 import { ScaledNumber } from "../../lib/scaled-number";
 import DepositButtons from "./DepositButtons";
+import { Optional } from "../../lib/types";
 
 interface PoolDepositProps {
   error: boolean;
@@ -35,7 +36,7 @@ const StyledPoolDeposit = styled.div`
 `;
 
 interface Props {
-  pool: Pool | null;
+  pool: Optional<Pool>;
   compact?: boolean;
 }
 

@@ -43,7 +43,10 @@ export enum LendingProtocol {
 }
 
 export interface LendingProtocolProvider {
-  getPosition(address: Address, provider: Signer | providers.Provider): Promise<PlainLoan | null>;
+  getPosition(
+    address: Address,
+    provider: Signer | providers.Provider
+  ): Promise<Optional<PlainLoan>>;
 }
 
 interface GenericLoan<T> {
@@ -108,8 +111,8 @@ export function transformPool<T, U>(pool: Pool<T>, f: (v: T) => U): Pool<U> {
 
 export type Address = string;
 
-export type Balances = Record<string, ScaledNumber | null>;
-export type PlainBalances = Record<string, PlainScaledNumber | null>;
+export type Balances = Record<string, Optional<ScaledNumber>>;
+export type PlainBalances = Record<string, Optional<PlainScaledNumber>>;
 
 export const toPlainBalances = (balances: Balances): PlainBalances => {
   return fromEntries(
@@ -141,7 +144,7 @@ export const fromPlainAllowances = (allowances: PlainAllowances): Allowances => 
   );
 };
 
-export type Prices<Num = number> = Record<string, Num | null>;
+export type Prices<Num = number> = Record<string, Optional<Num>>;
 export type AllowanceQuery = {
   spender: Address;
   token: Pick<Token, "address" | "decimals">;

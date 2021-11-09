@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
+import { Optional } from "../lib/types";
 import Loader from "./Loader";
 import Tooltip from "./Tooltip";
 
 interface StatisticType {
   header: string;
   tooltip: string;
-  value: string | null;
-  usd?: string | null;
+  value: Optional<string>;
+  usd?: Optional<string>;
 }
 
 const StyledStatistics = styled.div`

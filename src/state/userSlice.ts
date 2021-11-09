@@ -207,11 +207,11 @@ export const unstake = createAsyncThunk(
 export const selectBalances = (state: RootState): Balances =>
   fromPlainBalances(state.user.balances);
 
-export function selectPoolBalance(pool: Optional<Pool>): Selector<ScaledNumber | null>;
-export function selectPoolBalance(address: string | undefined): Selector<ScaledNumber | null>;
+export function selectPoolBalance(pool: Optional<Pool>): Selector<Optional<ScaledNumber>>;
+export function selectPoolBalance(address: string | undefined): Selector<Optional<ScaledNumber>>;
 export function selectPoolBalance(
   addressOrPool: string | undefined | Optional<Pool>
-): Selector<ScaledNumber | null> {
+): Selector<Optional<ScaledNumber>> {
   return (state: RootState) => {
     if (!addressOrPool) return null;
 
@@ -230,7 +230,7 @@ export function selectPoolBalance(
   };
 }
 
-export function selectAvailableToWithdraw(pool: Pool | null): Selector<ScaledNumber | null> {
+export function selectAvailableToWithdraw(pool: Optional<Pool>): Selector<Optional<ScaledNumber>> {
   return (state: RootState) => {
     if (!pool) return null;
 
@@ -246,7 +246,7 @@ export function isConnecting(state: RootState): boolean {
   return state.user.connecting;
 }
 
-export function selectDepositAllowance(pool: Pool): Selector<ScaledNumber | null> {
+export function selectDepositAllowance(pool: Pool): Selector<Optional<ScaledNumber>> {
   return (state: RootState) => {
     const plainDepositAllowance = state.user.allowances[pool.underlying.address]?.[pool.address];
     if (!plainDepositAllowance) return null;
@@ -254,7 +254,7 @@ export function selectDepositAllowance(pool: Pool): Selector<ScaledNumber | null
   };
 }
 
-export function selectAllowance(token: string, contract: string): Selector<ScaledNumber | null> {
+export function selectAllowance(token: string, contract: string): Selector<Optional<ScaledNumber>> {
   return (state: RootState) => {
     const plainAllowance = state.user.allowances[token]?.[contract];
     if (!plainAllowance) return null;
@@ -265,7 +265,7 @@ export function selectAllowance(token: string, contract: string): Selector<Scale
 export function selectToupAllowance(
   backd: Backd | undefined,
   pool: Pool
-): Selector<ScaledNumber | null> {
+): Selector<Optional<ScaledNumber>> {
   return (state: RootState) => {
     if (!backd) return null;
 

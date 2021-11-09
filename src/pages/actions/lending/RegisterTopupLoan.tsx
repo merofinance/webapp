@@ -11,7 +11,7 @@ import RowSelector from "../../../components/RowSelector";
 import { selectEthPrice } from "../../../state/poolsListSlice";
 import { selectLoans } from "../../../state/lendingSlice";
 import LoanSearch from "./LoanSearch";
-import { Loan, Position } from "../../../lib/types";
+import { Loan, Optional, Position } from "../../../lib/types";
 import { useDevice } from "../../../app/hooks/use-device";
 import { selectPositions } from "../../../state/positionsSlice";
 import { RowOptionType } from "../../../components/RowOption";
@@ -69,7 +69,7 @@ const RegisterTopupLoan = () => {
   const positions = useSelector(selectPositions);
   const ethPrice = useSelector(selectEthPrice);
   const [protocol, setProtocol] = useState("");
-  const [address, setAddress] = useState<string | null | undefined>("");
+  const [address, setAddress] = useState<Optional<string> | undefined>("");
 
   const positionExists = (loan: Loan) =>
     positions &&

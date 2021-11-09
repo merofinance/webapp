@@ -17,14 +17,17 @@ export function getAddress(addressOrPool: string | Optional<Pool>): Optional<str
   if (typeof addressOrPool === "string") {
     return addressOrPool;
   }
-  return addressOrPool?.lpToken.address || null;
+  if (!addressOrPool) return null;
+  return addressOrPool.lpToken.address;
 }
 
-export function selectPrice(pool: Optional<Pool>): Selector<RootState, number | null> {
+export function selectPrice(pool: Optional<Pool>): Selector<RootState, Optional<number>> {
   return (state: RootState) => (pool ? state.pools.prices[pool.underlying.symbol] : null);
 }
 
-export function selectPoolLocked(pool: Optional<Pool>): Selector<RootState, ScaledNumber | null> {
+export function selectPoolLocked(
+  pool: Optional<Pool>
+): Selector<RootState, Optional<ScaledNumber>> {
   return (state: RootState) => {
     const positions = useSelector(selectPoolPositions(pool));
     if (!pool || !positions) return null;
@@ -35,7 +38,7 @@ export function selectPoolLocked(pool: Optional<Pool>): Selector<RootState, Scal
   };
 }
 
-export function selectLocked(): Selector<RootState, ScaledNumber | null> {
+export function selectLocked(): Selector<RootState, Optional<ScaledNumber>> {
   return (state: RootState) => {
     const pools = useSelector(selectPools);
     const prices = useSelector(selectPrices);
@@ -58,7 +61,7 @@ export function selectLocked(): Selector<RootState, ScaledNumber | null> {
   };
 }
 
-export function selectBalance(): Selector<RootState, ScaledNumber | null> {
+export function selectBalance(): Selector<RootState, Optional<ScaledNumber>> {
   return (state: RootState) => {
     const pools = useSelector(selectPools);
     const prices = useSelector(selectPrices);
@@ -78,7 +81,9 @@ export function selectBalance(): Selector<RootState, ScaledNumber | null> {
   };
 }
 
-export function selectPoolDeposits(pool: Optional<Pool>): Selector<RootState, ScaledNumber | null> {
+export function selectPoolDeposits(
+  pool: Optional<Pool>
+): Selector<RootState, Optional<ScaledNumber>> {
   return (state: RootState) => {
     const locked = useSelector(selectPoolLocked(pool));
     const balance = useSelector(selectPoolBalance(pool));
@@ -89,14 +94,14 @@ export function selectPoolDeposits(pool: Optional<Pool>): Selector<RootState, Sc
 
 export function selectPoolTotalDeposits(
   pool: Optional<Pool>
-): Selector<RootState, ScaledNumber | null> {
+): Selector<RootState, Optional<ScaledNumber>> {
   return (state: RootState) => {
     if (!pool) return null;
     return ScaledNumber.fromUnscaled(pool.totalAssets, pool.underlying.decimals);
   };
 }
 
-export function selectDeposits(): Selector<RootState, ScaledNumber | null> {
+export function selectDeposits(): Selector<RootState, Optional<ScaledNumber>> {
   return (state: RootState) => {
     const locked = useSelector(selectLocked());
     const balance = useSelector(selectBalance());
@@ -105,7 +110,7 @@ export function selectDeposits(): Selector<RootState, ScaledNumber | null> {
   };
 }
 
-export function selectTotalDeposits(): Selector<RootState, ScaledNumber | null> {
+export function selectTotalDeposits(): Selector<RootState, Optional<ScaledNumber>> {
   return (state: RootState) => {
     const pools = useSelector(selectPools);
     const prices = useSelector(selectPrices);

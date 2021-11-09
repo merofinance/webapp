@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { ScaledNumber } from "../lib/scaled-number";
+import { Optional } from "../lib/types";
 import AmountSlider from "./AmountSlider";
 import Input from "./Input";
 import Loader from "./Loader";
@@ -33,7 +34,7 @@ interface Props {
   value: string;
   setValue: (v: string) => void;
   label: string;
-  max: ScaledNumber | null;
+  max: Optional<ScaledNumber>;
   noSlider?: boolean;
   error: string;
   symbol: string;
