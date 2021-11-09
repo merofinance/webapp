@@ -15,7 +15,12 @@ import RegisterTopupInput from "./RegisterTopupInput";
 import { useDevice } from "../../../app/hooks/use-device";
 import { selectEthPrice } from "../../../state/poolsListSlice";
 import { GWEI_DECIMALS, GWEI_SCALE, TOPUP_GAS_COST } from "../../../lib/constants";
-import { addSuggestion, removeSuggestion, selectImplement } from "../../../state/helpSlice";
+import {
+  addSuggestion,
+  removeSuggestion,
+  selectImplement,
+  Suggestion,
+} from "../../../state/helpSlice";
 import NewPositionConfirmation from "./RegisterTopupConfirmation";
 import { Loan, Position } from "../../../lib/types";
 import { selectLoans } from "../../../state/lendingSlice";
@@ -121,20 +126,20 @@ const RegisterTopupConditionsForm = () => {
   const loan = loans.filter((loan: Loan) => loan.protocol === protocol)[0];
 
   useEffect(() => {
-    if (implement === "threshold-min") {
+    if (implement === Suggestion.THRESHOLD_LOW) {
       formik.setFieldValue("threshold", "1.2", true);
-      dispatch(removeSuggestion("threshold-min"));
-    } else if (implement === "threshold-high") {
+      dispatch(removeSuggestion(Suggestion.THRESHOLD_LOW));
+    } else if (implement === Suggestion.THRESHOLD_HIGH) {
       formik.setFieldValue("threshold", "1.2", true);
-      dispatch(removeSuggestion("threshold-high"));
-    } else if (implement === "single-low") {
+      dispatch(removeSuggestion(Suggestion.THRESHOLD_HIGH));
+    } else if (implement === Suggestion.SINGLE_LOW) {
       formik.setFieldValue("singleTopUp", suggestedSingleTopup(), true);
-      dispatch(removeSuggestion("single-low"));
+      dispatch(removeSuggestion(Suggestion.SINGLE_LOW));
     }
     return () => {
-      dispatch(removeSuggestion("threshold-min"));
-      dispatch(removeSuggestion("threshold-high"));
-      dispatch(removeSuggestion("single-low"));
+      dispatch(removeSuggestion(Suggestion.THRESHOLD_LOW));
+      dispatch(removeSuggestion(Suggestion.THRESHOLD_HIGH));
+      dispatch(removeSuggestion(Suggestion.SINGLE_LOW));
     };
   }, [implement]);
 
@@ -220,7 +225,7 @@ const RegisterTopupConditionsForm = () => {
       if (singleTopupUsd.mul(0.25).lte(gasCostUsd)) {
         dispatch(
           addSuggestion({
-            value: "single-low",
+            type: Suggestion.SINGLE_LOW,
             label: t("liveHelp.suggestions.singleLow", {
               maxGas: gasCost.toUsdValue(ethPrice),
               ethAmount: gasCost,
@@ -234,7 +239,7 @@ const RegisterTopupConditionsForm = () => {
         return;
       }
     }
-    dispatch(removeSuggestion("single-low"));
+    dispatch(removeSuggestion(Suggestion.SINGLE_LOW));
   };
 
   return (
@@ -255,14 +260,14 @@ const RegisterTopupConditionsForm = () => {
             if (formik.values.threshold && Number(formik.values.threshold) < 1.2) {
               dispatch(
                 addSuggestion({
-                  value: "threshold-min",
-                  label: t("liveHelp.suggestions.tresholdMin", {
+                  type: Suggestion.THRESHOLD_LOW,
+                  label: t("liveHelp.suggestions.tresholdLow", {
                     threshold: formik.values.threshold,
                   }),
                 })
               );
             } else {
-              dispatch(removeSuggestion("threshold-min"));
+              dispatch(removeSuggestion(Suggestion.THRESHOLD_LOW));
             }
             if (
               formik.values.threshold &&
@@ -272,14 +277,14 @@ const RegisterTopupConditionsForm = () => {
             ) {
               dispatch(
                 addSuggestion({
-                  value: "threshold-high",
+                  type: Suggestion.THRESHOLD_HIGH,
                   label: t("liveHelp.suggestions.tresholdHigh", {
                     threshold: formik.values.threshold,
                   }),
                 })
               );
             } else {
-              dispatch(removeSuggestion("threshold-high"));
+              dispatch(removeSuggestion(Suggestion.THRESHOLD_HIGH));
             }
           }}
         />

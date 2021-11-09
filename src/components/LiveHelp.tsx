@@ -14,6 +14,7 @@ import {
   selectImplement,
   selectSuggestions,
   SuggestionType,
+  Suggestion,
 } from "../state/helpSlice";
 import Button from "./Button";
 import { selectPositions } from "../state/positionsSlice";
@@ -126,7 +127,7 @@ const Content = styled.div`
   }
 `;
 
-const Suggestion = styled.div`
+const StyledSuggestion = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -188,20 +189,23 @@ const LiveHelp = (): JSX.Element => {
       lowPositions.forEach((position: Position) =>
         dispatch(
           addSuggestion({
-            value: `${position.protocol.toLowerCase()}-low`,
+            type:
+              position.protocol.toLowerCase() === "aave"
+                ? Suggestion.AAVE_LOW
+                : Suggestion.COMPOUND_LOW,
             label: t("liveHelp.suggestions.topupPositionLow", { protocol: position.protocol }),
           })
         )
       );
     } else {
-      dispatch(removeSuggestion(`aave-low`));
-      dispatch(removeSuggestion(`compound-low`));
+      dispatch(removeSuggestion(Suggestion.AAVE_LOW));
+      dispatch(removeSuggestion(Suggestion.COMPOUND_LOW));
     }
   }, [hasLowPositions]);
 
   useEffect(() => {
     if (
-      (implement === "aave-low" || implement === "compound-low") &&
+      (implement === Suggestion.AAVE_LOW || implement === Suggestion.COMPOUND_LOW) &&
       location.pathname !== "/actions"
     ) {
       history.push("/actions");
@@ -219,14 +223,14 @@ const LiveHelp = (): JSX.Element => {
         <Header onClick={() => setOpen(!open)}>{t("liveHelp.header")}</Header>
         <Content>
           {suggestions.map((suggestion: SuggestionType) => (
-            <Suggestion key={suggestion.value}>
+            <StyledSuggestion key={suggestion.type}>
               <SuggestionText>{suggestion.label}</SuggestionText>
               <ButtonContainer>
                 <Button
                   primary
                   small
                   text={t("liveHelp.buttons.implement")}
-                  click={() => dispatch(implementSuggestion(suggestion.value))}
+                  click={() => dispatch(implementSuggestion(suggestion.type))}
                   width="10rem"
                 />
                 <Button
@@ -234,10 +238,10 @@ const LiveHelp = (): JSX.Element => {
                   text={t("liveHelp.buttons.ignore")}
                   background="var(--bg-light)"
                   width="10rem"
-                  click={() => dispatch(ignoreSuggestion(suggestion.value))}
+                  click={() => dispatch(ignoreSuggestion(suggestion.type))}
                 />
               </ButtonContainer>
-            </Suggestion>
+            </StyledSuggestion>
           ))}
         </Content>
       </StyledLiveHelp>

@@ -34,6 +34,7 @@ interface GenericPosition<T> {
   actionToken: Address;
   depositToken: Address;
 }
+
 export type Position = GenericPosition<ScaledNumber>;
 export type PlainPosition = GenericPosition<PlainScaledNumber>;
 

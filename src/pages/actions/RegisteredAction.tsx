@@ -8,7 +8,7 @@ import { selectPools } from "../../state/poolsListSlice";
 import chevron from "../../assets/ui/chevron.svg";
 import { selectPrice } from "../../state/selectors";
 import TopupAction from "./lending/TopupAction";
-import { selectImplement } from "../../state/helpSlice";
+import { selectImplement, Suggestion } from "../../state/helpSlice";
 import Loader from "../../components/Loader";
 
 const StyledRegisteredAction = styled.button`
@@ -111,9 +111,11 @@ const RegisteredAction = ({ position }: Props) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (implement === `${position.protocol.toLowerCase()}-low`) {
+    if (
+      (position.protocol.toLowerCase() === "aave" && implement === Suggestion.AAVE_LOW) ||
+      (position.protocol.toLowerCase() === "compound" && implement === Suggestion.COMPOUND_LOW)
+    )
       setOpen(true);
-    }
   }, [implement]);
 
   return (
