@@ -126,15 +126,17 @@ const RegisterTopupConditionsForm = () => {
   const loan = loans.filter((loan: Loan) => loan.protocol === protocol)[0];
 
   useEffect(() => {
-    if (implement === Suggestion.THRESHOLD_LOW) {
-      formik.setFieldValue("threshold", "1.2", true);
-      dispatch(removeSuggestion(Suggestion.THRESHOLD_LOW));
-    } else if (implement === Suggestion.THRESHOLD_HIGH) {
-      formik.setFieldValue("threshold", "1.2", true);
-      dispatch(removeSuggestion(Suggestion.THRESHOLD_HIGH));
-    } else if (implement === Suggestion.SINGLE_LOW) {
-      formik.setFieldValue("singleTopUp", suggestedSingleTopup(), true);
-      dispatch(removeSuggestion(Suggestion.SINGLE_LOW));
+    if (implement) {
+      if (implement.type === Suggestion.THRESHOLD_LOW) {
+        formik.setFieldValue("threshold", "1.2", true);
+        dispatch(removeSuggestion(Suggestion.THRESHOLD_LOW));
+      } else if (implement.type === Suggestion.THRESHOLD_HIGH) {
+        formik.setFieldValue("threshold", "1.2", true);
+        dispatch(removeSuggestion(Suggestion.THRESHOLD_HIGH));
+      } else if (implement.type === Suggestion.SINGLE_LOW) {
+        formik.setFieldValue("singleTopUp", suggestedSingleTopup(), true);
+        dispatch(removeSuggestion(Suggestion.SINGLE_LOW));
+      }
     }
     return () => {
       dispatch(removeSuggestion(Suggestion.THRESHOLD_LOW));

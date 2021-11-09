@@ -55,11 +55,12 @@ const TopupAction = ({ show, close, position, pool }: Props): JSX.Element => {
 
   useEffect(() => {
     if (
-      (position.protocol.toLowerCase() === "aave" && implement === Suggestion.AAVE_LOW) ||
-      (position.protocol.toLowerCase() === "compound" && implement === Suggestion.COMPOUND_LOW)
+      implement &&
+      implement.type === Suggestion.POSITION_LOW &&
+      implement.data === position.protocol.toLowerCase()
     ) {
       setDeleting(true);
-      dispatch(removeSuggestion(implement));
+      dispatch(removeSuggestion(implement.type));
     }
   }, [implement]);
 

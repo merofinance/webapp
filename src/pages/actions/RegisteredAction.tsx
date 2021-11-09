@@ -112,8 +112,9 @@ const RegisteredAction = ({ position }: Props) => {
 
   useEffect(() => {
     if (
-      (position.protocol.toLowerCase() === "aave" && implement === Suggestion.AAVE_LOW) ||
-      (position.protocol.toLowerCase() === "compound" && implement === Suggestion.COMPOUND_LOW)
+      implement &&
+      implement.type === Suggestion.POSITION_LOW &&
+      implement.data === position.protocol.toLowerCase()
     )
       setOpen(true);
   }, [implement]);

@@ -25,7 +25,7 @@ const Container = styled.div`
   margin-bottom: 2.4rem;
 
   margin-left: 1.6rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     margin-left: 0;
   }
 `;
@@ -57,7 +57,8 @@ const StyledLiveHelp = styled.div`
     linear-gradient(to right, var(--primary-gradient), var(--secondary-gradient));
 
   padding: 2rem 1.8rem;
-  @media (max-width: 1439px) {
+
+  @media (max-width: 1220px) {
     width: 100%;
     padding: 1.6rem;
     max-height: ${(props: LiveHelpProps) => (props.open ? "19rem" : "4.8rem")};
@@ -85,7 +86,7 @@ const Header = styled.button`
   padding-left: 5rem;
   font-size: 2.4rem;
   padding-bottom: 0.5rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     margin-bottom: 0;
     height: 4.8rem;
     width: 100%;
@@ -106,7 +107,7 @@ const ChevronContainer = styled.div`
   height: 5.4rem;
   margin-right: 0.2rem;
   padding-bottom: 0.2rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     height: 4.8rem;
     margin-right: 0;
   }
@@ -118,7 +119,7 @@ const Content = styled.div`
   width: 100%;
 
   margin-top: 3.6rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     margin-top: 3.2rem;
   }
 
@@ -140,7 +141,7 @@ const SuggestionText = styled.div`
 
   font-size: 1.5rem;
   line-height: 2.1rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     font-size: 1.2rem;
     line-height: 1.7rem;
   }
@@ -189,23 +190,21 @@ const LiveHelp = (): JSX.Element => {
       lowPositions.forEach((position: Position) =>
         dispatch(
           addSuggestion({
-            type:
-              position.protocol.toLowerCase() === "aave"
-                ? Suggestion.AAVE_LOW
-                : Suggestion.COMPOUND_LOW,
+            type: Suggestion.POSITION_LOW,
+            data: position.protocol.toLowerCase(),
             label: t("liveHelp.suggestions.topupPositionLow", { protocol: position.protocol }),
           })
         )
       );
     } else {
-      dispatch(removeSuggestion(Suggestion.AAVE_LOW));
-      dispatch(removeSuggestion(Suggestion.COMPOUND_LOW));
+      dispatch(removeSuggestion(Suggestion.POSITION_LOW));
     }
   }, [hasLowPositions]);
 
   useEffect(() => {
     if (
-      (implement === Suggestion.AAVE_LOW || implement === Suggestion.COMPOUND_LOW) &&
+      implement &&
+      implement.type === Suggestion.POSITION_LOW &&
       location.pathname !== "/actions"
     ) {
       history.push("/actions");
@@ -230,7 +229,7 @@ const LiveHelp = (): JSX.Element => {
                   primary
                   small
                   text={t("liveHelp.buttons.implement")}
-                  click={() => dispatch(implementSuggestion(suggestion.type))}
+                  click={() => dispatch(implementSuggestion(suggestion))}
                   width="10rem"
                 />
                 <Button

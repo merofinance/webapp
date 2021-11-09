@@ -3,8 +3,7 @@ import { RootState, Selector } from "../app/store";
 import { Optional } from "../lib/types";
 
 export enum Suggestion {
-  AAVE_LOW,
-  COMPOUND_LOW,
+  POSITION_LOW,
   THRESHOLD_LOW,
   THRESHOLD_HIGH,
   SINGLE_LOW,
@@ -13,11 +12,12 @@ export enum Suggestion {
 export interface SuggestionType {
   type: Suggestion;
   label: string;
+  data?: any;
 }
 
 interface HelpState {
   suggestions: SuggestionType[];
-  implement: Optional<Suggestion>;
+  implement: Optional<SuggestionType>;
   ignore: Suggestion[];
 }
 
@@ -45,11 +45,11 @@ export const helpSlice = createSlice({
         (suggestion: SuggestionType) => suggestion.type !== action.payload
       );
     },
-    implementSuggestion: (state, action: PayloadAction<Suggestion>) => {
+    implementSuggestion: (state, action: PayloadAction<SuggestionType>) => {
       state.implement = action.payload;
       const newSuggestions = [...state.suggestions];
       state.suggestions = newSuggestions.filter(
-        (suggestion: SuggestionType) => suggestion.type !== action.payload
+        (suggestion: SuggestionType) => suggestion.type !== action.payload.type
       );
     },
     ignoreSuggestion: (state, action: PayloadAction<Suggestion>) => {
@@ -63,7 +63,7 @@ export const selectSuggestions: Selector<SuggestionType[]> = (state: RootState) 
     (suggestion: SuggestionType) => !state.help.ignore.includes(suggestion.type)
   );
 
-export const selectImplement: Selector<Optional<Suggestion>> = (state: RootState) =>
+export const selectImplement: Selector<Optional<SuggestionType>> = (state: RootState) =>
   state.help.implement;
 
 export const { addSuggestion, removeSuggestion, implementSuggestion, ignoreSuggestion } =
