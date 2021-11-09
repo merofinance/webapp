@@ -41,7 +41,7 @@ describe("Default state", () => {
   });
   it("Should have Protectable Loans", () => {
     cy.get("#protectable-loans-header", { timeout: WEB3_TIMEOUT }).contains(
-      "We have found a protectable loan!"
+      "I have found a protectable loan!"
     );
   });
   it("Should show Aave loan", () => {
@@ -425,11 +425,6 @@ describe("Conditions Page", () => {
     cy.get("#register-topup-maxgasprice-input").type("0");
     cy.get("#register-topup-maxgasprice-error").contains("Must be positive number");
   });
-  it("Should show gas error less than single", () => {
-    cy.get("#register-topup-maxgasprice-input").clear();
-    cy.get("#register-topup-maxgasprice-input").type("100000");
-    cy.get("#register-topup-maxtopup-error").contains("Not enough to cover gas cost of top-up");
-  });
   it("Should enter gas", () => {
     cy.get("#register-topup-maxgasprice-input").clear();
     cy.get("#register-topup-maxgasprice-input").type("50");
@@ -598,7 +593,7 @@ describe("Existing Topup View", () => {
   });
   it("Should have Protectable Loans", () => {
     cy.get("#protectable-loans-header", { timeout: WEB3_TIMEOUT }).contains(
-      "We have found a protectable loan!"
+      "I have found a protectable loan!"
     );
   });
   it("Should show Aave loan", () => {
