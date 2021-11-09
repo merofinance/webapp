@@ -208,9 +208,9 @@ export const selectBalances = (state: RootState): Balances =>
   fromPlainBalances(state.user.balances);
 
 export function selectPoolBalance(pool: Optional<Pool>): Selector<ScaledNumber | null>;
-export function selectPoolBalance(address: string): Selector<ScaledNumber | null>;
+export function selectPoolBalance(address: string | undefined): Selector<ScaledNumber | null>;
 export function selectPoolBalance(
-  addressOrPool: string | Optional<Pool>
+  addressOrPool: string | undefined | Optional<Pool>
 ): Selector<ScaledNumber | null> {
   return (state: RootState) => {
     if (!addressOrPool) return null;

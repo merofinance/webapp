@@ -26,9 +26,8 @@ export function selectPrice(pool: Optional<Pool>): Selector<RootState, number | 
 
 export function selectPoolLocked(pool: Optional<Pool>): Selector<RootState, ScaledNumber | null> {
   return (state: RootState) => {
-    if (!pool) return null;
     const positions = useSelector(selectPoolPositions(pool));
-    if (!positions) return null;
+    if (!pool || !positions) return null;
     return positions.reduce(
       (a: ScaledNumber, b: Position) => a.add(b.maxTopUp),
       new ScaledNumber()
@@ -81,10 +80,9 @@ export function selectBalance(): Selector<RootState, ScaledNumber | null> {
 
 export function selectPoolDeposits(pool: Optional<Pool>): Selector<RootState, ScaledNumber | null> {
   return (state: RootState) => {
-    if (!pool) return null;
     const locked = useSelector(selectPoolLocked(pool));
     const balance = useSelector(selectPoolBalance(pool));
-    if (!locked || !balance) return null;
+    if (!pool || !locked || !balance) return null;
     return locked.add(balance);
   };
 }

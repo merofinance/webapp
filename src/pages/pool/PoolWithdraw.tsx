@@ -17,12 +17,12 @@ const Content = styled.div`
 `;
 
 interface Props {
-  pool: Pool;
+  pool: Pool | null;
 }
 
 const PoolWithdraw = ({ pool }: Props): JSX.Element => {
   const { t } = useTranslation();
-  const staked = useSelector(selectPoolBalance(pool.stakerVaultAddress));
+  const staked = useSelector(selectPoolBalance(pool?.stakerVaultAddress));
   const availableToWithdraw = useSelector(selectAvailableToWithdraw(pool));
   const { isMobile } = useDevice();
 
@@ -33,7 +33,7 @@ const PoolWithdraw = ({ pool }: Props): JSX.Element => {
     if (!availableToWithdraw) return "";
     if (withdrawAmount && Number(withdrawAmount) <= 0) return t("amountInput.validation.positive");
     try {
-      const amount = ScaledNumber.fromUnscaled(withdrawAmount, pool.underlying.decimals);
+      const amount = ScaledNumber.fromUnscaled(withdrawAmount, pool?.underlying.decimals);
       if (amount.gt(availableToWithdraw)) return t("amountInput.validation.exceedsBalance");
       return "";
     } catch {
@@ -43,7 +43,7 @@ const PoolWithdraw = ({ pool }: Props): JSX.Element => {
 
   const inputLabel = isMobile
     ? t("pool.tabs.withdraw.input.labelMobile")
-    : t("pool.tabs.withdraw.input.labelDesktop", { asset: pool.underlying.symbol });
+    : t("pool.tabs.withdraw.input.labelDesktop", { asset: pool?.underlying.symbol || "---" });
 
   return (
     <Content>
@@ -53,7 +53,7 @@ const PoolWithdraw = ({ pool }: Props): JSX.Element => {
         label={inputLabel}
         max={availableToWithdraw}
         error={error()}
-        symbol={pool.underlying.symbol}
+        symbol={pool?.underlying.symbol || "---"}
       />
       <WithdrawalButton
         pool={pool}

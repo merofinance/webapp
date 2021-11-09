@@ -77,6 +77,8 @@ export const fetchState =
     dispatch(fetchPositions({ backd }));
   };
 
+export const selectPoolsLoaded = (state: RootState): boolean => state.pools.loaded;
+
 export const selectPools = (state: RootState): Pool[] | null =>
   state.pools.loaded ? state.pools.pools : null;
 

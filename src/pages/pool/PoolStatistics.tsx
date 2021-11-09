@@ -12,7 +12,7 @@ import {
 } from "../../state/selectors";
 
 interface Props {
-  pool: Pool;
+  pool: Pool | null;
 }
 
 const PoolStatistics = ({ pool }: Props): JSX.Element => {
@@ -28,21 +28,22 @@ const PoolStatistics = ({ pool }: Props): JSX.Element => {
         {
           header: t("pool.statistics.deposits.header"),
           tooltip: t("pool.statistics.deposits.tooltip"),
-          value: deposits ? `${deposits.toCryptoString()} ${pool.underlying.symbol}` : null,
-          usd: price && deposits ? deposits.toUsdValue(price) : null,
+          value: pool && deposits ? `${deposits.toCryptoString()} ${pool.underlying.symbol}` : null,
+          usd: pool && price && deposits ? deposits.toUsdValue(price) : null,
         },
         {
           header: t("pool.statistics.locked.header"),
           tooltip: t("pool.statistics.locked.tooltip"),
-          value: locked ? `${locked.toCryptoString()} ${pool.underlying.symbol}` : null,
+          value: pool && locked ? `${locked.toCryptoString()} ${pool.underlying.symbol}` : null,
           usd: price && locked ? locked.toUsdValue(price) : null,
         },
         {
           header: t("pool.statistics.tvl.header"),
           tooltip: t("pool.statistics.tvl.tooltip"),
-          value: totalDeposits
-            ? `${totalDeposits.toCryptoString()} ${pool.underlying.symbol}`
-            : null,
+          value:
+            pool && totalDeposits
+              ? `${totalDeposits.toCryptoString()} ${pool.underlying.symbol}`
+              : null,
           usd: price && totalDeposits ? totalDeposits.toUsdValue(price) : null,
         },
       ]}

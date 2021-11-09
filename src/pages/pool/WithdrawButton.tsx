@@ -15,6 +15,7 @@ import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
 import { ScaledNumber } from "../../lib/scaled-number";
 import { hasPendingTransaction } from "../../state/transactionsSlice";
+import Loader from "../../components/Loader";
 
 const StyledProgressButtons = styled.div`
   width: 100%;
@@ -22,18 +23,18 @@ const StyledProgressButtons = styled.div`
   flex-direction: column;
 `;
 
-type Props = {
+interface Props {
   value: ScaledNumber;
-  pool: Pool;
+  pool: Pool | null;
   complete: () => void;
   valid: boolean;
-};
+}
 
 const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element => {
   const { t } = useTranslation();
   const dispatch: AppDispatch = useDispatch();
   const backd = useBackd();
-  const staked = useSelector(selectPoolBalance(pool.stakerVaultAddress));
+  const staked = useSelector(selectPoolBalance(pool?.stakerVaultAddress));
   const loading = useSelector(hasPendingTransaction("Withdraw"));
   const availableToWithdraw = useSelector(selectAvailableToWithdraw(pool));
 
@@ -42,16 +43,16 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
   }, [loading]);
 
   const executeWithdraw = (amount: ScaledNumber) => {
-    if (!backd || loading) return;
+    if (!backd || loading || !pool) return;
     dispatch(withdraw({ backd, pool, amount }));
   };
 
   const executeUnstake = () => {
-    if (!backd || loading || !staked) return;
+    if (!backd || loading || !staked || !pool) return;
     dispatch(unstake({ backd, pool, amount: staked }));
   };
 
-  return (
+  return pool ? (
     <StyledProgressButtons>
       <Button
         id="withdraw-button"
@@ -69,6 +70,8 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
         hoverText={t("amountInput.enter")}
       />
     </StyledProgressButtons>
+  ) : (
+    <Loader button />
   );
 };
 

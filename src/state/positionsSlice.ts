@@ -76,9 +76,9 @@ export const selectPositions = (state: RootState): Position[] | null =>
     ? state.positions.positions.map((position: PlainPosition) => fromPlainPosition(position))
     : null;
 
-export function selectPoolPositions(pool: Pool): (state: RootState) => Position[] | null {
+export function selectPoolPositions(pool: Pool | null): (state: RootState) => Position[] | null {
   return (state: RootState) =>
-    state.positions.loaded
+    pool && state.positions.loaded
       ? state.positions.positions
           .filter((p) => p.actionToken === pool.underlying.address)
           .map((position: PlainPosition) => fromPlainPosition(position))

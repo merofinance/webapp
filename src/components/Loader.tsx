@@ -23,19 +23,21 @@ const StyledLoader = styled.div`
   );
   animation: ${animation} 2s infinite;
 
-  width: ${(props: Props) => (props.row ? "100%" : "9rem")};
-  height: ${(props: Props) => (props.row ? (props.preview ? "5.6rem" : "7.2rem") : "2.1rem")};
-  border-radius: ${(props: Props) => (props.row ? "14px" : "3px")};
+  width: ${(props: Props) => (props.row || props.button ? "100%" : "9rem")};
+  height: ${(props: Props) =>
+    props.row ? (props.preview ? "5.6rem" : "7.2rem") : props.button ? "4.6rem" : "2.1rem"};
+  border-radius: ${(props: Props) => (props.row ? "14px" : props.button ? "15px" : "3px")};
   margin-top: ${(props: Props) => (props.row ? "0.8rem" : "0")};
 `;
 
 interface Props {
   row?: boolean;
   preview?: boolean;
+  button?: boolean;
 }
 
-const Loader = ({ row, preview }: Props) => {
-  return <StyledLoader row={row} preview={preview} />;
+const Loader = ({ row, preview, button }: Props) => {
+  return <StyledLoader row={row} preview={preview} button={button} />;
 };
 
 export default Loader;

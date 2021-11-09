@@ -9,14 +9,15 @@ import { AppDispatch } from "../../app/store";
 import ApproveThenAction from "../../components/ApproveThenAction";
 import { ScaledNumber } from "../../lib/scaled-number";
 import { hasPendingTransaction } from "../../state/transactionsSlice";
+import Loader from "../../components/Loader";
 
-type Props = {
+interface Props {
   value: ScaledNumber;
-  pool: Pool;
+  pool: Pool | null;
   complete: () => void;
   valid: boolean;
   stepsOnTop?: boolean;
-};
+}
 
 const DepositButtons = ({ value, pool, complete, valid, stepsOnTop }: Props): JSX.Element => {
   const { t } = useTranslation();
@@ -29,11 +30,11 @@ const DepositButtons = ({ value, pool, complete, valid, stepsOnTop }: Props): JS
   }, [depositLoading]);
 
   const executeDeposit = () => {
-    if (!backd || depositLoading) return;
+    if (!backd || depositLoading || !pool) return;
     dispatch(deposit({ backd, pool, amount: value }));
   };
 
-  return (
+  return pool ? (
     <ApproveThenAction
       label={t("pool.tabs.deposit.action")}
       action={executeDeposit}
@@ -44,6 +45,8 @@ const DepositButtons = ({ value, pool, complete, valid, stepsOnTop }: Props): JS
       contract={pool.address}
       stepsOnTop={stepsOnTop}
     />
+  ) : (
+    <Loader button />
   );
 };
 

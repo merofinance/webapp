@@ -8,7 +8,7 @@ import { selectPrice } from "../../state/selectors";
 import { formatPercent, numberToCompactCurrency } from "../../lib/numeric";
 
 interface Props {
-  pool: Pool;
+  pool: Pool | null;
 }
 
 const PoolInformation = ({ pool }: Props): JSX.Element => {
@@ -22,12 +22,12 @@ const PoolInformation = ({ pool }: Props): JSX.Element => {
         {
           label: t("pool.information.tvl.header"),
           tooltip: t("pool.information.tvl.tooltip"),
-          value: price ? numberToCompactCurrency(pool.totalAssets * price) : null,
+          value: pool && price ? numberToCompactCurrency(pool.totalAssets * price) : null,
         },
         {
           label: t("pool.information.apy.header"),
           tooltip: t("pool.information.apy.tooltip"),
-          value: formatPercent(pool.apy),
+          value: pool ? formatPercent(pool.apy) : null,
         },
         // {
         //   label: t("pool.information.strategy.header"),
