@@ -21,6 +21,8 @@ const Available = styled.div`
   letter-spacing: 0.15px;
   margin-bottom: 1rem;
   padding-right: 0.5rem;
+  display: flex;
+  justify-content: flex-end;
 
   @media only percy {
     opacity: 0;
