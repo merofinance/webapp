@@ -214,7 +214,7 @@ const LiveHelp = (): JSX.Element => {
   if (!hasSuggestions) return <></>;
 
   return (
-    <Container>
+    <Container id="live-help">
       <StyledLiveHelp open={open} suggestions={suggestions.length}>
         <ChevronContainer>
           <AccordionChevron open={open} />
@@ -226,6 +226,7 @@ const LiveHelp = (): JSX.Element => {
               <SuggestionText>{suggestion.label}</SuggestionText>
               <ButtonContainer>
                 <Button
+                  id="live-help-implement"
                   primary
                   small
                   text={t("liveHelp.buttons.implement")}
