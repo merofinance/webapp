@@ -9,9 +9,8 @@ import externalLink from "../assets/ui/gradient-external-link.svg";
 import failure from "../assets/ui/status/failure.svg";
 import pending from "../assets/ui/status/pending.svg";
 import success from "../assets/ui/status/success.svg";
-import { ScaledNumber } from "../lib/scaled-number";
-import { shortenAddress } from "../lib/text";
-import { fromPlainPosition, TransactionInfo } from "../lib/types";
+import { formatTransactionInfo } from "../lib/transactionsUtils";
+import { TransactionInfo } from "../lib/types";
 import { getEtherscanTransactionLink } from "../lib/web3";
 import { clearTransactions, selectTransactions } from "../state/transactionsSlice";
 import { spinAnimation } from "../styles/animations/SpinAnimation";
@@ -119,25 +118,6 @@ const RecentTransactions = (): JSX.Element => {
     dispatch(clearTransactions());
   }, [update]);
 
-  const getDetails = (tx: TransactionInfo) => {
-    if (!tx.description.args) return "";
-    if (tx.description.action === "Deposit" || tx.description.action === "Withdraw") {
-      const { args } = tx.description;
-      const token = args.pool.underlying.symbol;
-      const tokenValue = ScaledNumber.fromPlain(args.amount);
-      return `${tokenValue.toCryptoString()} ${token}`;
-    }
-    if (tx.description.action === "Approve") {
-      return tx.description.args.token.symbol;
-    }
-    if (tx.description.action === "Register" || tx.description.action === "Remove") {
-      const { plainPosition } = tx.description.args;
-      const position = fromPlainPosition(plainPosition);
-      return `${shortenAddress(position.account, 8)} ${position.protocol}`;
-    }
-    throw Error("errors.transactionType");
-  };
-
   return (
     <StyledRecentTransactions>
       <HeaderContainer>
@@ -157,7 +137,7 @@ const RecentTransactions = (): JSX.Element => {
               pending={tx.confirmations === 0}
             />
             <Type>{tx.description.action}</Type>
-            <Details>{getDetails(tx)}</Details>
+            <Details>{formatTransactionInfo(tx.description)}</Details>
             <Link
               href={getEtherscanTransactionLink(chainId, tx.hash)}
               target="_blank"
