@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { useIsLive } from "../../app/hooks/use-is-live";
+
 import Seo from "../../components/Seo";
 import Background from "./Background";
 import Benefits from "./Benefits";
@@ -27,7 +27,6 @@ const Content = styled.div`
 
 const LandingPage = (): JSX.Element => {
   const { t } = useTranslation();
-  const { protocolLive } = useIsLive();
 
   return (
     <StyledLanding>
@@ -36,7 +35,7 @@ const LandingPage = (): JSX.Element => {
       <Content>
         <Hero />
         <Benefits />
-        {protocolLive && <Preview />}
+        <Preview />
         <HowItWorks />
         <FutureActions />
         <SupportedBy />

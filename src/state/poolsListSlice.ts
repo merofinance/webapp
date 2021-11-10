@@ -1,9 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { ethers } from "ethers";
+
 import { AppThunk, RootState } from "../app/store";
 import { Pool } from "../lib";
 import { Backd } from "../lib/backd";
 import { Address, Prices } from "../lib/types";
 import { fetchLoans } from "./lendingSlice";
+import { INFURA_ID } from "../lib/constants";
+import { createBackd } from "../lib/factory";
 import { fetchPositions } from "./positionsSlice";
 import { fetchAllowances, fetchBalances } from "./userSlice";
 
@@ -72,6 +76,16 @@ export const fetchState =
     });
     dispatch(fetchPositions({ backd }));
   };
+
+export const fetchPreviewState = (): AppThunk => (dispatch) => {
+  const provider = new ethers.providers.InfuraProvider(1, INFURA_ID);
+  const backd = createBackd(provider, { chainId: 1 });
+  dispatch(fetchPools({ backd })).then((v) => {
+    if (v.meta.requestStatus !== "fulfilled") return;
+    const pools = v.payload as Pool[];
+    dispatch(fetchPrices({ backd, pools }));
+  });
+};
 
 export const selectPools = (state: RootState): Pool[] => state.pools.pools;
 
