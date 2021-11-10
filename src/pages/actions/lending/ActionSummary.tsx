@@ -109,7 +109,7 @@ const ActionSummary = () => {
       </Column>
       <Column>
         <Header>{t("actions.suggestions.topup.labels.healthFactor")}</Header>
-        <Value>{loan ? loan.healthFactor.toCryptoString() : <Loader />}</Value>
+        <Value hideOnSnapshot>{loan ? loan.healthFactor.toCryptoString() : <Loader />}</Value>
       </Column>
       <Column hideMobile>
         <Header>{t("actions.suggestions.topup.labels.totalCollateral")}</Header>
@@ -125,7 +125,7 @@ const ActionSummary = () => {
       </Column>
       <Column>
         <Header>{t("actions.suggestions.topup.labels.pool")}</Header>
-        <Value hideOnSnapshot>
+        <Value>
           {pool ? <Asset tiny token={pool.underlying} /> : <Loader />}
           <ChangePoolButton
             id="action-summary-change-pool"
