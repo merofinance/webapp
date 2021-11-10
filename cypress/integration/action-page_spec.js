@@ -462,6 +462,9 @@ describe("Conditions Page", () => {
     cy.get("#register-topup-maxgasprice-input").blur();
     cy.get("#live-help").should("exist");
   });
+  it("Should take snapshot", () => {
+    percySnapshot();
+  });
   it("Should implement Live Help", () => {
     cy.get("#live-help-implement").should("be.enabled");
     cy.get("#live-help-implement").click();
@@ -480,9 +483,6 @@ describe("Conditions Page", () => {
     cy.get("#register-topup-maxtopup-error").should("not.exist");
   });
 
-  it("Should take snapshot", () => {
-    percySnapshot();
-  });
   it("Should Show Top-up Creation Confirmation", () => {
     cy.get("#action-button").should("be.enabled");
     cy.get("#action-button").click();
