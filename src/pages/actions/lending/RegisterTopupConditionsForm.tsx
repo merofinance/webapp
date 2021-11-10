@@ -233,7 +233,7 @@ const RegisterTopupConditionsForm = () => {
         dispatch(
           addSuggestion({
             type: Suggestion.SINGLE_LOW,
-            label: t("liveHelp.suggestions.singleLow", {
+            text: t("liveHelp.suggestions.singleLow.text", {
               maxGas: gasCost.toUsdValue(ethPrice),
               ethAmount: gasCost,
               single: single.toUsdValue(underlyingPrice),
@@ -241,6 +241,7 @@ const RegisterTopupConditionsForm = () => {
               underlyingSymbol: pool.underlying.symbol,
               suggestion: suggestedSingleTopup(),
             }),
+            button: t("liveHelp.suggestions.singleLow.button"),
           })
         );
         return;
@@ -271,10 +272,11 @@ const RegisterTopupConditionsForm = () => {
               dispatch(
                 addSuggestion({
                   type: Suggestion.THRESHOLD_LOW,
-                  label: t("liveHelp.suggestions.thresholdLow", {
+                  text: t("liveHelp.suggestions.thresholdLow.text", {
                     threshold: formik.values.threshold,
                     recommendedThreshold: RECOMMENDED_THRESHOLD,
                   }),
+                  button: t("liveHelp.suggestions.thresholdLow.button"),
                 })
               );
             } else {
@@ -289,10 +291,11 @@ const RegisterTopupConditionsForm = () => {
               dispatch(
                 addSuggestion({
                   type: Suggestion.THRESHOLD_HIGH,
-                  label: t("liveHelp.suggestions.thresholdHigh", {
+                  text: t("liveHelp.suggestions.thresholdHigh.text", {
                     threshold: formik.values.threshold,
                     recommendedThreshold: RECOMMENDED_THRESHOLD,
                   }),
+                  button: t("liveHelp.suggestions.thresholdHigh.button"),
                 })
               );
             } else {

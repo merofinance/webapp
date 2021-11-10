@@ -192,7 +192,8 @@ const LiveHelp = (): JSX.Element => {
           addSuggestion({
             type: Suggestion.POSITION_LOW,
             data: position.protocol.toLowerCase(),
-            label: t("liveHelp.suggestions.topupPositionLow", { protocol: position.protocol }),
+            text: t("liveHelp.suggestions.topupPositionLow.text", { protocol: position.protocol }),
+            button: t("liveHelp.suggestions.topupPositionLow.button"),
           })
         )
       );
@@ -223,15 +224,14 @@ const LiveHelp = (): JSX.Element => {
         <Content>
           {suggestions.map((suggestion: SuggestionType) => (
             <StyledSuggestion key={suggestion.type}>
-              <SuggestionText>{suggestion.label}</SuggestionText>
+              <SuggestionText>{suggestion.text}</SuggestionText>
               <ButtonContainer>
                 <Button
                   id="live-help-implement"
                   primary
                   small
-                  text={t("liveHelp.buttons.implement")}
+                  text={suggestion.button}
                   click={() => dispatch(implementSuggestion(suggestion))}
-                  width="10rem"
                 />
                 <Button
                   small

@@ -11,7 +11,8 @@ export enum Suggestion {
 
 export interface SuggestionType {
   type: Suggestion;
-  label: string;
+  text: string;
+  button: string;
   data?: any;
 }
 

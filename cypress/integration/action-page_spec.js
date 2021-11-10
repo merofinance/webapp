@@ -368,7 +368,7 @@ describe("Conditions Page", () => {
     cy.get("#live-help-implement").should("be.enabled");
     cy.get("#live-help-implement").click();
     cy.get("#register-topup-threshold-input").should("have.value", "1.2");
-    cy.get('[id="liveHelp.suggestions.thresholdLow"]').should("not.exist");
+    cy.get("#live-help").should("not.exist");
   });
   it("Should show Live Help on 10000", () => {
     cy.get("#register-topup-threshold-input").clear();
@@ -381,7 +381,7 @@ describe("Conditions Page", () => {
     cy.get("#live-help-implement").should("be.enabled");
     cy.get("#live-help-implement").click();
     cy.get("#register-topup-threshold-input").should("have.value", "1.2");
-    cy.get('[id="liveHelp.suggestions.thresholdHigh"]').should("not.exist");
+    cy.get("#live-help").should("not.exist");
   });
   it("Should enter threshold", () => {
     cy.get("#register-topup-threshold-input").clear();
