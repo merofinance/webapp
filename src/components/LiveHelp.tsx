@@ -61,7 +61,8 @@ const StyledLiveHelp = styled.div`
   @media (max-width: 1220px) {
     width: 100%;
     padding: 1.6rem;
-    max-height: ${(props: LiveHelpProps) => (props.open ? "19rem" : "4.8rem")};
+    max-height: ${(props: LiveHelpProps) =>
+      props.open ? `calc(19rem * ${props.suggestions})` : "4.8rem"};
   }
 
   filter: brightness(1);
@@ -176,9 +177,8 @@ const LiveHelp = (): JSX.Element => {
   const [open, setOpen] = useState(false);
   const hasSuggestions = suggestions.length > 0;
 
-  const lowPositions = positions
-    ? positions.filter((position: Position) => position.singleTopUp.gt(position.maxTopUp))
-    : [];
+  const lowPositions =
+    positions?.filter((position: Position) => position.singleTopUp.gt(position.maxTopUp)) || [];
   const hasLowPositions = lowPositions.length > 0;
 
   useEffect(() => {
@@ -196,9 +196,9 @@ const LiveHelp = (): JSX.Element => {
           })
         )
       );
-    } else {
-      dispatch(removeSuggestion(Suggestion.POSITION_LOW));
+      return;
     }
+    dispatch(removeSuggestion(Suggestion.POSITION_LOW));
   }, [hasLowPositions]);
 
   useEffect(() => {

@@ -264,7 +264,10 @@ const RegisterTopupConditionsForm = () => {
           formik={formik}
           placeholder="1.4"
           onBlur={() => {
-            if (formik.values.threshold && Number(formik.values.threshold) < 1.2) {
+            if (
+              formik.values.threshold &&
+              Number(formik.values.threshold) < RECOMMENDED_THRESHOLD
+            ) {
               dispatch(
                 addSuggestion({
                   type: Suggestion.THRESHOLD_LOW,

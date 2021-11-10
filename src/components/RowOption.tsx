@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import { Optional } from "../lib/types";
 
 import Loader from "./Loader";
 
 interface ColumnType {
   label: string;
-  value: string | JSX.Element | undefined;
+  value: Optional<string | JSX.Element>;
 }
 
 export interface RowOptionType {

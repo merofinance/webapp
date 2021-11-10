@@ -125,7 +125,7 @@ const RegisterTopupPool = () => {
                           )
                       )
                       .toCompactUsdValue(price)
-                  : undefined,
+                  : null,
             },
             {
               label: t("headers.apy"),
@@ -133,7 +133,7 @@ const RegisterTopupPool = () => {
             },
             {
               label: t("headers.tvl"),
-              value: price ? numberToCompactCurrency(pool.totalAssets * price) : undefined,
+              value: price ? numberToCompactCurrency(pool.totalAssets * price) : null,
             },
           ],
         };

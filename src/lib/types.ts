@@ -117,7 +117,7 @@ export type PlainBalances = Record<string, Optional<PlainScaledNumber>>;
 
 export const toPlainBalances = (balances: Balances): PlainBalances => {
   return fromEntries(
-    Object.entries(balances).map(([key, value]) => [key, value ? value.toPlain() : null])
+    Object.entries(balances).map(([key, value]) => [key, value?.toPlain() || null])
   );
 };
 

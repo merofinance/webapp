@@ -28,7 +28,7 @@ const PoolWithdraw = ({ pool }: Props): JSX.Element => {
   const { isMobile } = useDevice();
 
   const [withdrawAmount, setWithdrawAmount] = useState("");
-  const value = ScaledNumber.fromUnscaled(withdrawAmount, staked?.decimals || 18);
+  const value = ScaledNumber.fromUnscaled(withdrawAmount, staked?.decimals);
 
   const error = () => {
     if (!availableToWithdraw) return "";

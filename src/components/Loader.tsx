@@ -3,10 +3,10 @@ import styled, { keyframes } from "styled-components";
 
 const animation = keyframes`
 	from {
-  	background-position: right center;
+  		background-position: right center;
 	}
 	to {
-  	background-position: left center;
+  		background-position: left center;
 	}
 `;
 
