@@ -30,6 +30,15 @@ const PoolInformation = ({ pool }: Props): JSX.Element => {
           tooltip: t("pool.information.apy.tooltip"),
           value: formatPercent(pool.apy),
         },
+        {
+          label: t("pool.information.lp.header"),
+          tooltip: t("pool.information.lp.tooltip", {
+            lpToken: pool.lpToken.symbol,
+            underlying: pool.underlying.symbol,
+            exchangeRate: pool.exchangeRate.toString(),
+          }),
+          value: pool.exchangeRate.toString(),
+        },
         // {
         //   label: t("pool.information.strategy.header"),
         //   tooltip: t("pool.information.strategy.tooltip"),
