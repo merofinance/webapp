@@ -110,6 +110,7 @@ interface Props {
   submit?: () => void;
   loading?: boolean;
   small?: boolean;
+  confirmationText?: string;
 }
 
 const Popup = ({
@@ -122,6 +123,7 @@ const Popup = ({
   submit,
   loading,
   small,
+  confirmationText,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
   const { isMobile } = useDevice();
@@ -145,7 +147,7 @@ const Popup = ({
             <Button
               primary
               medium
-              text={t("components.confirm")}
+              text={confirmationText || t("components.confirm")}
               click={() => {
                 if (submit) submit();
               }}
