@@ -376,7 +376,26 @@
           "labelMobile": "Enter amount to withdraw",
           "labelDesktop": "Enter an amount of {{asset}} to withdraw"
         },
-        "action": "Withdraw {{asset}}"
+        "action": "Withdraw {{asset}}",
+        "confirmation": {
+          "header": "Confirm withdrawal",
+          "subHeader": "You are about to withdraw {{amount}} {{asset}} from the {{asset}} pool",
+          "button": "Withdraw {{amount}} {{asset}}",
+          "details": {
+            "amount": {
+              "label": "Withdrawal amount",
+              "labelMobile": "Withdrawing",
+              "tooltip": "Amount of {{asset}} to withdraw from the pool"
+            },
+            "fee": {
+              "label": "Current fee"
+            },
+            "receive": {
+              "label": "You will receive",
+              "tooltip": "Amount of {{asset}} you will receive after fees"
+            }
+          }
+        }
       },
       "positions": {
         "tabDesktop": "Top-up Positions",
