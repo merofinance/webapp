@@ -126,6 +126,7 @@ const NewPositionConfirmation = ({ show, close, position, pool, complete }: Prop
 
   return (
     <Popup
+      id="new-position-confirmation"
       show={show}
       close={close}
       header={t("pool.tabs.positions.confirmation.header")}

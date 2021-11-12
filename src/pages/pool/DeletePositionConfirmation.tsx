@@ -27,6 +27,7 @@ const DeletePositionConfirmation = ({ show, close, position, pool, loading }: Pr
 
   return (
     <Popup
+      id="delete-topup-confirmation"
       show={show}
       close={close}
       header={t("pool.tabs.positions.delete.header")}
