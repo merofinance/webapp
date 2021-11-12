@@ -117,7 +117,7 @@ describe("Account Details", () => {
     cy.get("#account-details-transactions").children().should("have.length", 0);
   });
   it("Should close", () => {
-    cy.get("#popup-exit").click();
+    cy.get("#connection-details-popup-exit").click();
   });
 });
 
@@ -151,7 +151,6 @@ describe("Withdraw Validation", () => {
     cy.get("#amount-input").type("1000000000000");
     cy.get("#input-label").should("have.css", "color", "rgb(244, 67, 54)");
     cy.get("#input-note").contains("Amount exceeds available balance");
-    percySnapshot();
     cy.get("#amount-input").clear();
   });
 });
@@ -187,11 +186,24 @@ describe("Withdraw", () => {
   it("Should input value", () => {
     cy.get("#input-button").click();
   });
-  it("Should Deposit", () => {
+  it("Should open confirmation", () => {
     cy.get("#withdraw-button").click();
   });
+  it("Should show sonfirmation", () => {
+    cy.get("#withdrawal-confirmation-popup-header").contains("Confirm withdrawal");
+    percySnapshot();
+  });
+  it("Should confirm withdrawal", () => {
+    cy.get("#withdrawal-confirmation-popup-button").click();
+  });
   it("Should disable button", () => {
-    cy.get("#withdraw-button", { timeout: 30_000 }).should("be.disabled");
+    cy.get("#withdrawal-confirmation-popup-button", { timeout: 30_000 }).should("be.disabled");
+  });
+  it("Should exit confirmation", () => {
+    cy.get("#withdrawal-confirmation-popup-exit").click();
+  });
+  it("Should not show confirmation", () => {
+    cy.get("#withdrawal-confirmation-popup-header").should("not.be.visible");
   });
   it("Should open Account Details", () => {
     cy.get("#desktop-connector").click();
@@ -203,6 +215,6 @@ describe("Withdraw", () => {
     cy.get("#connector-loading-indicator", { timeout: 30_000 }).should("have.css", "opacity", "0");
   });
   it("Should close", () => {
-    cy.get("#popup-exit").click();
+    cy.get("#connection-details-popup-exit").click();
   });
 });
