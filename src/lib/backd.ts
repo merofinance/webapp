@@ -25,6 +25,7 @@ import {
   PlainPosition,
   Token,
   transformPool,
+  PlainWithdrawalFees,
 } from "./types";
 
 export type BackdOptions = {
@@ -46,6 +47,7 @@ export interface Backd {
   getBalances(addresses: Address[], account?: Address): Promise<Balances>;
   getAllowance(token: Token, spender: Address, account?: string): Promise<ScaledNumber>;
   getAllowances(queries: AllowanceQuery[]): Promise<Record<string, Balances>>;
+  getWithdrawalFees(pools: Pool[]): Promise<PlainWithdrawalFees>;
   getPrices(symbol: string[]): Promise<Prices>;
   approve(token: Token, spender: Address, amount: ScaledNumber): Promise<ContractTransaction>;
   deposit(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction>;
@@ -151,6 +153,26 @@ export class Web3Backd implements Backd {
       stakerVaultAddress,
     };
     return transformPool(rawPool, bigNumberToFloat);
+  }
+
+  async getWithdrawalFees(pools: Pool[]): Promise<PlainWithdrawalFees> {
+    const account = await this.currentAccount();
+    const promises = pools.map((pool: Pool) => {
+      const poolFactory = LiquidityPoolFactory.connect(pool.address, this._provider);
+      const ONE = ScaledNumber.fromUnscaled(1, pool.underlying.decimals).value;
+      return poolFactory.getWithdrawalFee(account, ONE);
+    });
+
+    const withdrawalFees = await Promise.all(promises);
+
+    return fromEntries(
+      pools.map((pool: Pool, index: number) => {
+        const ONE = ScaledNumber.fromUnscaled(1, pool.underlying.decimals);
+        const withdrawalFee = new ScaledNumber(withdrawalFees[index], pool.underlying.decimals);
+        const percent = withdrawalFee.div(ONE);
+        return [pool.address, percent.toPlain()];
+      })
+    );
   }
 
   async getPositions(): Promise<PlainPosition[]> {
