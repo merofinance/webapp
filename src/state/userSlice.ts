@@ -180,6 +180,7 @@ export const deposit = createAsyncThunk(
       [
         fetchBalances({ backd, pools: [pool] }),
         fetchPool({ backd, poolAddress: pool.address }),
+        fetchWithdrawalFees({ backd, pools: [pool] }),
         decreaseAllowance({
           token: pool.underlying,
           spender: pool.address,
