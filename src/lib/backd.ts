@@ -126,15 +126,27 @@ export class Web3Backd implements Backd {
 
   async getPoolInfo(address: Address): Promise<Pool> {
     const pool = LiquidityPoolFactory.connect(address, this._provider);
-    const [name, lpTokenAddress, underlyingAddress, totalAssets, rawApy, exchangeRate] =
-      await Promise.all([
-        pool.name(),
-        pool.getLpToken(),
-        pool.getUnderlying(),
-        pool.totalUnderlying(),
-        pool.computeAPY(),
-        pool.exchangeRate(),
-      ]);
+    const [
+      name,
+      lpTokenAddress,
+      underlyingAddress,
+      totalAssets,
+      rawApy,
+      exchangeRate,
+      maxWithdrawalFee,
+      minWithdrawalFee,
+      feeDecreasePeriod,
+    ] = await Promise.all([
+      pool.name(),
+      pool.getLpToken(),
+      pool.getUnderlying(),
+      pool.totalUnderlying(),
+      pool.computeAPY(),
+      pool.exchangeRate(),
+      pool.getMaxWithdrawalFee(),
+      pool.getMinWithdrawalFee(),
+      pool.getWithdrawalFeeDecreasePeriod(),
+    ]);
     const [lpToken, underlying, stakerVaultAddress] = await Promise.all([
       this.getTokenInfo(lpTokenAddress),
       this.getTokenInfo(underlyingAddress),
@@ -151,6 +163,9 @@ export class Web3Backd implements Backd {
       totalAssets,
       exchangeRate,
       stakerVaultAddress,
+      maxWithdrawalFee,
+      minWithdrawalFee,
+      feeDecreasePeriod,
     };
     return transformPool(rawPool, bigNumberToFloat);
   }

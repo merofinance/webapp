@@ -21,6 +21,9 @@ export interface Pool<Num = number> {
   apy: Num;
   totalAssets: Num;
   exchangeRate: Num;
+  maxWithdrawalFee: Num;
+  minWithdrawalFee: Num;
+  feeDecreasePeriod: Num;
 }
 
 export interface Position {
@@ -87,6 +90,9 @@ export function transformPool<T, U>(pool: Pool<T>, f: (v: T) => U): Pool<U> {
     apy: f(pool.apy),
     totalAssets: f(pool.totalAssets),
     exchangeRate: f(pool.exchangeRate),
+    maxWithdrawalFee: f(pool.maxWithdrawalFee),
+    minWithdrawalFee: f(pool.minWithdrawalFee),
+    feeDecreasePeriod: f(pool.feeDecreasePeriod),
   };
 }
 

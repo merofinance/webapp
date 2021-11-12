@@ -26,6 +26,9 @@ export const pools: Pool<BigNumber>[] = [
       symbol: "bDAI",
       decimals: 18,
     },
+    maxWithdrawalFee: scale(1, 18),
+    minWithdrawalFee: scale(0, 18),
+    feeDecreasePeriod: scale(10, 18),
   },
   {
     name: "bUSDC3CRV",
@@ -46,6 +49,9 @@ export const pools: Pool<BigNumber>[] = [
       symbol: "bUSDC",
       decimals: 18,
     },
+    maxWithdrawalFee: scale(1, 18),
+    minWithdrawalFee: scale(0, 18),
+    feeDecreasePeriod: scale(10, 18),
   },
   {
     name: "bETHCRV",
@@ -66,6 +72,9 @@ export const pools: Pool<BigNumber>[] = [
       decimals: 18,
       address: "0xa09021117e4f31B83140Ae16b44F634c8624b625",
     },
+    maxWithdrawalFee: scale(1, 18),
+    minWithdrawalFee: scale(0, 18),
+    feeDecreasePeriod: scale(10, 18),
   },
 ];
 
