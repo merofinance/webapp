@@ -186,10 +186,10 @@ describe("Withdraw", () => {
   it("Should input value", () => {
     cy.get("#input-button").click();
   });
-  it("Should open confirmation", () => {
+  it("Should open withdrawal confirmation", () => {
     cy.get("#withdraw-button").click();
   });
-  it("Should show sonfirmation", () => {
+  it("Should show withdrawal confirmation", () => {
     cy.get("#withdrawal-confirmation-popup-header").contains("Confirm withdrawal");
     percySnapshot();
   });
