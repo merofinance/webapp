@@ -26,6 +26,10 @@ const Row = styled.div`
   margin: 0.6rem 0;
 `;
 
+interface LabelProps {
+  hideOnSnapshot?: boolean;
+}
+
 const Label = styled.div`
   display: flex;
   align-items: center;
@@ -36,6 +40,10 @@ const Label = styled.div`
   font-size: 1.8rem;
   @media (max-width: 600px) {
     font-size: 1.6rem;
+  }
+
+  @media only percy {
+    opacity: ${(props: LabelProps) => (props.hideOnSnapshot ? "0" : "1")};
   }
 `;
 
@@ -62,6 +70,7 @@ const WithdrawalConfirmation = ({ pool, show, close, value, submit, loading }: P
 
   return (
     <Popup
+      id="withdrawal-confirmation"
       confirm
       header={t("pool.tabs.withdraw.confirmation.header")}
       body={t("pool.tabs.withdraw.confirmation.subHeader", {
@@ -81,7 +90,7 @@ const WithdrawalConfirmation = ({ pool, show, close, value, submit, loading }: P
                 })}
               />
             </Label>
-            <Label>{`${value.toCryptoString()} ${asset}`}</Label>
+            <Label hideOnSnapshot>{`${value.toCryptoString()} ${asset}`}</Label>
           </Row>
           <Row>
             <Label>
@@ -94,7 +103,7 @@ const WithdrawalConfirmation = ({ pool, show, close, value, submit, loading }: P
                 })}
               />
             </Label>
-            <Label>{`${feePercent}${isMobile ? "" : ` (${fee} ${asset})`}`}</Label>
+            <Label hideOnSnapshot>{`${feePercent}${isMobile ? "" : ` (${fee} ${asset})`}`}</Label>
           </Row>
           <Row>
             <Label>
@@ -105,7 +114,7 @@ const WithdrawalConfirmation = ({ pool, show, close, value, submit, loading }: P
                 })}
               />
             </Label>
-            <Label>{`${withdrawnAmount.toCryptoString()} ${asset}`}</Label>
+            <Label hideOnSnapshot>{`${withdrawnAmount.toCryptoString()} ${asset}`}</Label>
           </Row>
         </Summary>
       }
