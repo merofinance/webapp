@@ -332,6 +332,10 @@
         "header": "LP Price",
         "tooltip": "The current exchange rate of {{lpToken}} to {{underlying}}. {{underlying}}={{lpToken}}*{{exchangeRate}}"
       },
+      "withdrawalFees": {
+        "header": "Withdrawal Fee",
+        "tooltip": "Withdrawal fees start at {{max}} and decrease linearly over time until they reach {{min}}. This takes {{days}} days"
+      },
       "strategy": {
         "header": "Strategy",
         "tooltip": "The current protocol funds are allocated to for yield farming strategies",
