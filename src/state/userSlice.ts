@@ -15,6 +15,9 @@ import {
   PlainAllowances,
   PlainBalances,
   Token,
+  PlainWithdrawalFees,
+  WithdrawalFees,
+  fromPlainWithdrawalFees,
 } from "../lib/types";
 import { fetchPool } from "./poolsListSlice";
 import { handleTransactionConfirmation } from "../lib/transactionsUtils";
@@ -22,12 +25,14 @@ import { handleTransactionConfirmation } from "../lib/transactionsUtils";
 interface UserState {
   balances: PlainBalances;
   allowances: PlainAllowances;
+  withdrawalFees: PlainWithdrawalFees;
   connecting: boolean;
 }
 
 const initialState: UserState = {
   balances: {},
   allowances: {},
+  withdrawalFees: {},
   connecting: false,
 };
 
@@ -63,6 +68,13 @@ export const fetchAllowances = createAsyncThunk(
     ]);
     const allowances = await backd.getAllowances(queries);
     return toPlainAllowances(allowances);
+  }
+);
+
+export const fetchWithdrawalFees = createAsyncThunk(
+  "user/fetchWithdrawalFees",
+  async ({ backd, pools }: { backd: Backd; pools: Pool[] }) => {
+    return backd.getWithdrawalFees(pools);
   }
 );
 
@@ -129,6 +141,13 @@ export const userSlice = createSlice({
           // eslint-disable-next-line prefer-destructuring
           state.allowances[tokenAddress[0]][spender[0]] = spender[1];
         });
+      });
+    });
+
+    builder.addCase(fetchWithdrawalFees.fulfilled, (state, action) => {
+      Object.entries(action.payload).forEach((withdrawalFee) => {
+        // eslint-disable-next-line prefer-destructuring
+        state.withdrawalFees[withdrawalFee[0]] = withdrawalFee[1];
       });
     });
   },
@@ -218,6 +237,17 @@ export function selectBalance(addressOrPool: string | Optional<Pool>): Selector<
       state.user.balances[addressOrPool.stakerVaultAddress]
     );
     return lpTokenBalance.add(stakedBalance);
+  };
+}
+
+export const selectWithdrawalFees = (state: RootState): WithdrawalFees =>
+  fromPlainWithdrawalFees(state.user.withdrawalFees);
+
+export function selectWithdrawalFee(pool: Optional<Pool>): Selector<Optional<ScaledNumber>> {
+  return (state: RootState) => {
+    if (!pool) return null;
+    const withdrawalFees = fromPlainWithdrawalFees(state.user.withdrawalFees);
+    return withdrawalFees[pool.address];
   };
 }
 
