@@ -105,6 +105,19 @@ export const fromPlainBalances = (balances: PlainBalances): Balances => {
   );
 };
 
+export type WithdrawalFees = Record<string, ScaledNumber>;
+export type PlainWithdrawalFees = Record<string, PlainScaledNumber>;
+
+export const toPlainWithdrawalFees = (withdrawalFees: WithdrawalFees): PlainWithdrawalFees => {
+  return fromEntries(Object.entries(withdrawalFees).map(([key, value]) => [key, value.toPlain()]));
+};
+
+export const fromPlainWithdrawalFees = (withdrawalFees: PlainWithdrawalFees): WithdrawalFees => {
+  return fromEntries(
+    Object.entries(withdrawalFees).map(([key, value]) => [key, ScaledNumber.fromPlain(value)])
+  );
+};
+
 export type Allowances = Record<string, Balances>;
 export type PlainAllowances = Record<string, PlainBalances>;
 
