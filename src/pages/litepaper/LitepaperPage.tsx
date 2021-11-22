@@ -112,8 +112,8 @@ const LitepaperPage = (): JSX.Element => {
   return (
     <StyledLitepaperPage>
       <Seo
-        title="Backd Litepaper"
-        description="How Backd combines actions (e.g. Aave & Compound liquidation protection) with yield-farming (Curve & Convex)"
+        title={t("metadata.litepaper.title")}
+        description={t("metadata.litepaper.description")}
       />
       <Header1>{t("litepaper.header")}</Header1>
       <Header>{t("litepaper.introduction.header")}</Header>

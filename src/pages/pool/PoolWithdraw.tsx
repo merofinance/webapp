@@ -5,11 +5,9 @@ import { useTranslation } from "react-i18next";
 
 import { useDevice } from "../../app/hooks/use-device";
 import AmountInput from "../../components/AmountInput";
-import ContentSection from "../../components/ContentSection";
 import { selectBalance } from "../../state/userSlice";
 import { Pool } from "../../lib";
 import { ScaledNumber } from "../../lib/scaled-number";
-import PoolStatistics from "./PoolStatistics";
 import WithdrawalButton from "./WithdrawButton";
 
 const Content = styled.div`
@@ -18,9 +16,9 @@ const Content = styled.div`
   flex-direction: column;
 `;
 
-type Props = {
+interface Props {
   pool: Pool;
-};
+}
 
 const PoolWithdraw = ({ pool }: Props): JSX.Element => {
   const { t } = useTranslation();
@@ -48,28 +46,22 @@ const PoolWithdraw = ({ pool }: Props): JSX.Element => {
     : t("pool.tabs.withdraw.input.labelDesktop", { asset: pool.underlying.symbol });
 
   return (
-    <ContentSection
-      header={t("pool.tabs.withdraw.header", { asset: pool.underlying.symbol })}
-      statistics={<PoolStatistics pool={pool} />}
-      content={
-        <Content>
-          <AmountInput
-            value={withdrawAmount}
-            setValue={(v: string) => setWithdrawAmount(v)}
-            label={inputLabel}
-            max={availableToWithdraw}
-            error={error()}
-            symbol={pool.underlying.symbol}
-          />
-          <WithdrawalButton
-            pool={pool}
-            value={value}
-            complete={() => setWithdrawAmount("")}
-            valid={!error() && !value.isZero()}
-          />
-        </Content>
-      }
-    />
+    <Content>
+      <AmountInput
+        value={withdrawAmount}
+        setValue={(v: string) => setWithdrawAmount(v)}
+        label={inputLabel}
+        max={availableToWithdraw}
+        error={error()}
+        symbol={pool.underlying.symbol}
+      />
+      <WithdrawalButton
+        pool={pool}
+        value={value}
+        complete={() => setWithdrawAmount("")}
+        valid={!error() && !value.isZero()}
+      />
+    </Content>
   );
 };
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import AccordionChevron from "./AccordionChevron";
+import { useDevice } from "../app/hooks/use-device";
 
 interface StyleProps {
   collapsible?: boolean;
@@ -21,12 +22,12 @@ const StyledInfoCard = styled.div`
   margin-bottom: 2.4rem;
 
   max-height: ${(props: StyleProps) =>
-    !props.collapsible ? "auto" : props.open ? "22rem" : "5.4rem"};
+    !props.collapsible ? "auto" : props.open ? "24rem" : "5.4rem"};
 
   margin-left: 1.6rem;
-  width: ${(props: StyleProps) => (props.wide ? "40rem" : "34rem")};
+  width: ${(props: StyleProps) => (props.wide ? "40rem" : "36rem")};
   padding: 2rem 1.8rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     margin-left: 0;
     width: 100%;
     padding: 1.6rem;
@@ -54,7 +55,7 @@ const Header = styled.button`
 
   font-size: 2.4rem;
   margin-bottom: 0.6rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     position: absolute;
     margin-bottom: 0;
     height: 4.8rem;
@@ -78,7 +79,7 @@ const ChevronContainer = styled.div`
   display: ${(props: StyleProps) => (props.collapsible ? "flex" : "none")};
   margin-right: 0.2rem;
 
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     height: 4.8rem;
     display: flex;
     margin-right: 0;
@@ -92,27 +93,28 @@ const Content = styled.div`
 
   margin-top: ${(props: StyleProps) => (props.collapsible ? "3.6rem" : "0")};
 
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     margin-top: 3.2rem;
   }
 `;
 
-type Props = {
+interface Props {
   header: string;
   content: JSX.Element;
   collapsible?: boolean;
   defaultOpen?: boolean;
   id?: string;
-};
+}
 
 const InfoCard = ({ header, content, collapsible, defaultOpen, id }: Props): JSX.Element => {
   const { i18n } = useTranslation();
+  const { isMobile } = useDevice();
   const [open, setOpen] = useState(false);
   const isWide = i18n.language === "ja";
 
   useEffect(() => {
-    setOpen(!!defaultOpen);
-  }, []);
+    setOpen(defaultOpen || !isMobile);
+  }, [!isMobile]);
 
   return (
     <StyledInfoCard id={id} open={open} collapsible={collapsible} wide={isWide}>

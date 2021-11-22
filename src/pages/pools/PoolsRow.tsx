@@ -16,9 +16,9 @@ import { Position } from "../../lib/types";
 import { selectPrice } from "../../state/selectors";
 import { ScaledNumber } from "../../lib/scaled-number";
 
-type RowProps = {
+interface RowProps {
   preview?: boolean;
-};
+}
 
 const Row = styled.tr`
   position: relative;
@@ -27,7 +27,7 @@ const Row = styled.tr`
   justify-content: space-between;
   align-items: center;
   margin-top: 0.8rem;
-  background-color: #141128;
+  background-color: var(--row-bg);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
   border-radius: 14px;
@@ -52,11 +52,11 @@ const Row = styled.tr`
   }
 `;
 
-type DataProps = {
+interface DataProps {
   right?: boolean;
   preview?: boolean;
   hideOnSnapshot?: boolean;
-};
+}
 
 const Data = styled.td`
   display: flex;
@@ -130,10 +130,10 @@ const Chevron = styled.img`
   width: 2.4rem;
 `;
 
-type Props = {
+interface Props {
   pool: Pool;
   preview?: boolean;
-};
+}
 
 const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
   const { t } = useTranslation();
@@ -167,7 +167,7 @@ const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
           <Chevron src={chevron} alt="right arrow" />
         </ChevronData>
         <Data right preview={preview}>
-          <Button text={t("pools.deposit")} background="#141128" />
+          <Button text={t("pools.deposit")} background="var(--row-bg)" />
         </Data>
       </Row>
     </tbody>

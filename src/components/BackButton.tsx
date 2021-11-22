@@ -15,6 +15,12 @@ const StyledBackButton = styled.button`
   left: 0;
   transform: translateY(calc(-100% - 1.9rem));
 
+  opacity: 1;
+  transition: opacity 0.3s;
+  :hover {
+    opacity: 0.8;
+  }
+
   @media (max-width: 600px) {
     position: relative;
     margin-bottom: 1.9rem;

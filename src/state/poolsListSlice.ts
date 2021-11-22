@@ -4,9 +4,10 @@ import { ethers } from "ethers";
 import { AppThunk, RootState } from "../app/store";
 import { Pool } from "../lib";
 import { Backd } from "../lib/backd";
+import { Address, Prices } from "../lib/types";
+import { fetchLoans } from "./lendingSlice";
 import { INFURA_ID } from "../lib/constants";
 import { createBackd } from "../lib/factory";
-import { Prices } from "../lib/types";
 import { fetchPositions } from "./positionsSlice";
 import { fetchAllowances, fetchBalances } from "./userSlice";
 
@@ -65,6 +66,7 @@ export const poolsSlice = createSlice({
 export const fetchState =
   (backd: Backd): AppThunk =>
   (dispatch) => {
+    backd.currentAccount().then((address: Address) => dispatch(fetchLoans({ backd, address })));
     dispatch(fetchPools({ backd })).then((v) => {
       if (v.meta.requestStatus !== "fulfilled") return;
       const pools = v.payload as Pool[];
@@ -88,5 +90,7 @@ export const fetchPreviewState = (): AppThunk => (dispatch) => {
 export const selectPools = (state: RootState): Pool[] => state.pools.pools;
 
 export const selectPrices = (state: RootState): Prices => state.pools.prices;
+
+export const selectEthPrice = (state: RootState): number => state.pools.prices.ETH;
 
 export default poolsSlice.reducer;

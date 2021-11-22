@@ -9,25 +9,54 @@ const StyledContentSection = styled.div`
   background-color: rgba(21, 14, 59, 0.5);
 `;
 
-const Header = styled.h2`
+const HeaderContainer = styled.h2`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: rgba(252, 40, 211, 0.05);
   box-shadow: 0px 0px 12px rgba(23, 18, 22, 0.05);
-  font-weight: 700;
-  letter-spacing: 0.25px;
   border-top-right-radius: 1.4rem;
   border-top-left-radius: 1.4rem;
 
-  font-size: 2.4rem;
-  padding: 2rem 1.6rem;
+  padding: 2rem 2.4rem;
   @media (max-width: 600px) {
-    font-size: 1.8rem;
     padding: 1.6rem;
   }
 `;
 
-type LineProps = {
+const HeaderTextContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Header = styled.h2`
+  font-weight: 600;
+  letter-spacing: 0.25px;
+
+  font-size: 2.4rem;
+  @media (max-width: 600px) {
+    font-size: 1.8rem;
+  }
+`;
+
+const SubHeader = styled(Header)`
+  margin-left: 1.3rem;
+  opacity: 0.6;
+
+  @media (max-width: 600px) {
+    display: none;
+  }
+`;
+
+const Key = styled.div`
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: 0.25px;
+`;
+
+interface LineProps {
   large?: boolean;
-};
+}
 
 const Line = styled.div`
   width: 100%;
@@ -36,28 +65,52 @@ const Line = styled.div`
   opacity: 0.2;
 `;
 
+interface ContentProps {
+  noContentPadding?: boolean;
+}
+
 const Content = styled.div`
   position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 2.4rem 1.6rem;
+  padding: ${(props: ContentProps) => (props.noContentPadding ? "0" : "2.4rem 2.4rem")};
+
+  @media (max-width: 600px) {
+    padding: ${(props: ContentProps) => (props.noContentPadding ? "0" : "1.6rem")};
+  }
 `;
 
-type Props = {
+interface Props {
   header: string;
-  statistics: JSX.Element;
+  subHeader?: string;
+  statistics?: JSX.Element;
   content: JSX.Element;
-};
+  nav?: string;
+  noContentPadding?: boolean;
+}
 
-const ContentSection = ({ header, statistics, content }: Props): JSX.Element => {
+const ContentSection = ({
+  header,
+  subHeader,
+  statistics,
+  content,
+  nav,
+  noContentPadding,
+}: Props): JSX.Element => {
   return (
     <StyledContentSection>
-      <Header id="content-header">{header}</Header>
+      <HeaderContainer>
+        <HeaderTextContainer>
+          <Header id="content-header">{header}</Header>
+          {subHeader && <SubHeader id="content-sub-header">{subHeader}</SubHeader>}
+        </HeaderTextContainer>
+        {nav && <Key id="content-key">{nav}</Key>}
+      </HeaderContainer>
       <Line large />
       {statistics}
-      <Line />
-      <Content>{content}</Content>
+      {statistics && <Line />}
+      <Content noContentPadding={noContentPadding}>{content}</Content>
     </StyledContentSection>
   );
 };

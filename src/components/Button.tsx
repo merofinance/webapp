@@ -20,6 +20,7 @@ type ButtonProps = {
   complete?: boolean;
   background?: string;
   width?: string;
+  destructive?: boolean;
 };
 
 const StyledButton = styled.button`
@@ -39,7 +40,7 @@ const StyledButton = styled.button`
   }};
   height: ${(props: ButtonProps) => {
     if (props.large) return props.primary ? "6.2rem" : "6.4rem";
-    if (props.medium) return props.primary ? "4.8rem" : "5rem";
+    if (props.medium) return props.primary ? "4.6rem" : "4.8rem";
     if (props.small) return props.primary ? "2.8rem" : "3rem";
     if (props.tiny) return props.primary ? "2.3rem" : "2.5rem";
     if (props.square) return props.primary ? "5.6rem" : "5.8rem";
@@ -64,13 +65,14 @@ const StyledButton = styled.button`
     }};
 
   /* Background and animations  */
-  transition: all 0.5s;
+  transition: background-position 0.5s;
   background-size: 200% auto;
   border: ${(props: ButtonProps) => (props.primary ? "0" : "1px")} solid transparent;
   background-origin: border-box;
   background-clip: padding-box, border-box;
   background-image: ${(props: ButtonProps) => {
     if (props.disabled) return "linear-gradient(#535068, #535068)";
+    if (props.destructive) return "linear-gradient(var(--error), var(--error))";
     if (props.complete) return "linear-gradient(#16C784, #16C784)";
     if (props.primary)
       return "linear-gradient(to right, var(--primary-gradient) 0%, var(--secondary-gradient) 50%, var(--primary-gradient) 100%)";
@@ -246,6 +248,7 @@ type Props = {
   background?: string;
   hoverText?: string;
   width?: string;
+  destructive?: boolean;
   id?: string;
 };
 
@@ -274,6 +277,7 @@ const Button = (props: Props): JSX.Element => {
       inactive={props.inactive}
       background={props.background}
       width={props.width}
+      destructive={props.destructive}
       onClick={() => {
         if (props.loading || pending || props.disabled || !props.click) return;
         if (props.loading !== undefined) setPending(true);
