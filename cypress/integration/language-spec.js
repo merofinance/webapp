@@ -1,5 +1,3 @@
-import { percySnapshot } from "../support";
-
 const isEnglish = () => {
   cy.get("h1").contains("Reactive Liquidity");
   cy.get("h3").contains(
