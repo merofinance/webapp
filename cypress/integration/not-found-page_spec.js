@@ -21,7 +21,7 @@ describe("Internal Links", () => {
     cy.get("#not-found-home").click();
     cy.location().should(
       (loc) => {
-        expect(loc.pathname).to.eq("/");
+        if (loc.pathname) expect(loc.pathname).to.eq("/");
       },
 
       { timeout: WEB3_TIMEOUT }

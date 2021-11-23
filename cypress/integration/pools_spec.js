@@ -61,7 +61,7 @@ describe("Pools", () => {
     cy.get("#pool-row-bdai", { timeout: WEB3_TIMEOUT }).click();
     cy.location().should(
       (loc) => {
-        expect(loc.pathname).to.eq("/pool/bDAI");
+        if (loc.pathname) expect(loc.pathname).to.eq("/pool/bDAI");
       },
       { timeout: WEB3_TIMEOUT }
     );
@@ -70,7 +70,7 @@ describe("Pools", () => {
     cy.get("#back-button").click();
     cy.location().should(
       (loc) => {
-        expect(loc.pathname).to.eq("/pools");
+        if (loc.pathname) expect(loc.pathname).to.eq("/pools");
       },
 
       { timeout: WEB3_TIMEOUT }

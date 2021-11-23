@@ -49,16 +49,17 @@ describe("Default state", () => {
     cy.get("#aave-protectable-loan-button").click();
     cy.location().should(
       (loc) => {
-        expect(loc.pathname).to.eq(
-          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
-        );
+        if (loc.pathname)
+          expect(loc.pathname).to.eq(
+            "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
+          );
       },
       { timeout: WEB3_TIMEOUT }
     );
     cy.get("#back-button").click();
     cy.location().should(
       (loc) => {
-        expect(loc.pathname).to.eq("/actions");
+        if (loc.pathname) expect(loc.pathname).to.eq("/actions");
       },
 
       { timeout: WEB3_TIMEOUT }
@@ -71,7 +72,7 @@ describe("Default state", () => {
     cy.get("#register-action-button").click();
     cy.location().should(
       (loc) => {
-        expect(loc.pathname).to.eq("/actions/register");
+        if (loc.pathname) expect(loc.pathname).to.eq("/actions/register");
       },
       { timeout: WEB3_TIMEOUT }
     );
@@ -119,7 +120,7 @@ describe("Register Page", () => {
     cy.get("#register-action-button").click();
     cy.location().should(
       (loc) => {
-        expect(loc.pathname).to.eq("/actions/register/topup");
+        if (loc.pathname) expect(loc.pathname).to.eq("/actions/register/topup");
       },
       { timeout: WEB3_TIMEOUT }
     );
@@ -145,14 +146,14 @@ describe("Loan Selection", () => {
     cy.get("#back-button").click();
     cy.location().should(
       (loc) => {
-        expect(loc.pathname).to.eq("/actions/register");
+        if (loc.pathname) expect(loc.pathname).to.eq("/actions/register");
       },
       { timeout: WEB3_TIMEOUT }
     );
     cy.get("#register-action-button").click();
     cy.location().should(
       (loc) => {
-        expect(loc.pathname).to.eq("/actions/register/topup");
+        if (loc.pathname) expect(loc.pathname).to.eq("/actions/register/topup");
       },
 
       { timeout: WEB3_TIMEOUT }
@@ -196,9 +197,16 @@ describe("Loan Selection", () => {
     cy.get("#register-topup-loan-button").click();
     cy.location().should(
       (loc) => {
-        expect(loc.pathname).to.eq(
-          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
-        );
+        if (loc.pathname) expect(loc.pathname).to.not.be.undefined;
+      },
+      { timeout: WEB3_TIMEOUT }
+    );
+    cy.location().should(
+      (loc) => {
+        if (loc.pathname)
+          expect(loc.pathname).to.eq(
+            "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
+          );
       },
       { timeout: WEB3_TIMEOUT }
     );
@@ -229,9 +237,10 @@ describe("Pool Selection", () => {
     cy.get("#register-topup-loan-button").click();
     cy.location().should(
       (loc) => {
-        expect(loc.pathname).to.eq(
-          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
-        );
+        if (loc.pathname)
+          expect(loc.pathname).to.eq(
+            "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
+          );
       },
       { timeout: WEB3_TIMEOUT }
     );
@@ -263,9 +272,10 @@ describe("Pool Selection", () => {
     cy.get("#register-topup-pool-button").click();
     cy.location().should(
       (loc) => {
-        expect(loc.pathname).to.eq(
-          "/actions/register/topup/deposit/bdai/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
-        );
+        if (loc.pathname)
+          expect(loc.pathname).to.eq(
+            "/actions/register/topup/deposit/bdai/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
+          );
       },
       { timeout: WEB3_TIMEOUT }
     );
@@ -324,9 +334,10 @@ describe("Pool Deposit", () => {
     cy.get("#register-topup-pool-deposit-button", { timeout: WEB3_TIMEOUT }).click();
     cy.location().should(
       (loc) => {
-        expect(loc.pathname).to.eq(
-          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/bdai"
-        );
+        if (loc.pathname)
+          expect(loc.pathname).to.eq(
+            "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/bdai"
+          );
       },
       { timeout: WEB3_TIMEOUT }
     );
@@ -355,9 +366,10 @@ describe("Conditions Page", () => {
     cy.get("#action-summary-change-pool").click();
     cy.location().should(
       (loc) => {
-        expect(loc.pathname).to.eq(
-          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
-        );
+        if (loc.pathname)
+          expect(loc.pathname).to.eq(
+            "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
+          );
       },
       { timeout: WEB3_TIMEOUT }
     );
@@ -365,9 +377,10 @@ describe("Conditions Page", () => {
     cy.get("#register-topup-pool-button").click();
     cy.location().should(
       (loc) => {
-        expect(loc.pathname).to.eq(
-          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/bdai"
-        );
+        if (loc.pathname)
+          expect(loc.pathname).to.eq(
+            "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/bdai"
+          );
       },
       { timeout: WEB3_TIMEOUT }
     );
@@ -531,7 +544,7 @@ describe("Top-up Position Confirmation", () => {
     cy.get("#register-action-button", { timeout: WEB3_TIMEOUT }).should("exist");
     cy.location().should(
       (loc) => {
-        expect(loc.pathname).to.eq("/actions");
+        if (loc.pathname) expect(loc.pathname).to.eq("/actions");
       },
       { timeout: WEB3_TIMEOUT }
     );
@@ -555,7 +568,7 @@ describe("Existing Topup View", () => {
     cy.get("#register-action-button").click();
     cy.location().should(
       (loc) => {
-        expect(loc.pathname).to.eq("/actions/register");
+        if (loc.pathname) expect(loc.pathname).to.eq("/actions/register");
       },
       { timeout: WEB3_TIMEOUT }
     );
@@ -580,7 +593,7 @@ describe("Existing Topup View", () => {
     cy.get("#back-button").click();
     cy.location().should(
       (loc) => {
-        expect(loc.pathname).to.eq("/actions");
+        if (loc.pathname) expect(loc.pathname).to.eq("/actions");
       },
 
       { timeout: WEB3_TIMEOUT }

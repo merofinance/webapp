@@ -130,7 +130,7 @@ describe("Footer", () => {
     cy.get('[id="footer.resources.links.litepaper"]').click();
     cy.location().should(
       (loc) => {
-        expect(loc.pathname).to.eq("/litepaper");
+        if (loc.pathname) expect(loc.pathname).to.eq("/litepaper");
       },
 
       { timeout: WEB3_TIMEOUT }
