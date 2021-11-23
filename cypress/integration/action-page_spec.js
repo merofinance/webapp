@@ -1,7 +1,5 @@
 import { initWeb3, percySnapshot, WEB3_TIMEOUT } from "../support";
 
-// TEst search address
-
 describe("Page Load", () => {
   it("Should Innitialise Web3", () => {
     initWeb3();
@@ -49,24 +47,34 @@ describe("Default state", () => {
   });
   it("Should navigate to protectable loan path", () => {
     cy.get("#aave-protectable-loan-button").click();
-    cy.location().should((loc) => {
-      expect(loc.pathname).to.eq(
-        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
-      );
-    });
+    cy.location().should(
+      (loc) => {
+        expect(loc.pathname).to.eq(
+          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
+        );
+      },
+      { timeout: WEB3_TIMEOUT }
+    );
     cy.get("#back-button").click();
-    cy.location().should((loc) => {
-      expect(loc.pathname).to.eq("/actions");
-    });
+    cy.location().should(
+      (loc) => {
+        expect(loc.pathname).to.eq("/actions");
+      },
+
+      { timeout: WEB3_TIMEOUT }
+    );
   });
   it("Should take snapshot", () => {
     percySnapshot();
   });
   it("Should navigate to register page", () => {
     cy.get("#register-action-button").click();
-    cy.location().should((loc) => {
-      expect(loc.pathname).to.eq("/actions/register");
-    });
+    cy.location().should(
+      (loc) => {
+        expect(loc.pathname).to.eq("/actions/register");
+      },
+      { timeout: WEB3_TIMEOUT }
+    );
   });
 });
 
@@ -109,9 +117,12 @@ describe("Register Page", () => {
   });
   it("Should navigate to Loan Selection", () => {
     cy.get("#register-action-button").click();
-    cy.location().should((loc) => {
-      expect(loc.pathname).to.eq("/actions/register/topup");
-    });
+    cy.location().should(
+      (loc) => {
+        expect(loc.pathname).to.eq("/actions/register/topup");
+      },
+      { timeout: WEB3_TIMEOUT }
+    );
   });
 });
 
@@ -132,13 +143,20 @@ describe("Loan Selection", () => {
   });
   it("Should navigate back", () => {
     cy.get("#back-button").click();
-    cy.location().should((loc) => {
-      expect(loc.pathname).to.eq("/actions/register");
-    });
+    cy.location().should(
+      (loc) => {
+        expect(loc.pathname).to.eq("/actions/register");
+      },
+      { timeout: WEB3_TIMEOUT }
+    );
     cy.get("#register-action-button").click();
-    cy.location().should((loc) => {
-      expect(loc.pathname).to.eq("/actions/register/topup");
-    });
+    cy.location().should(
+      (loc) => {
+        expect(loc.pathname).to.eq("/actions/register/topup");
+      },
+
+      { timeout: WEB3_TIMEOUT }
+    );
   });
   it("Should have header", () => {
     cy.get("#register-topup-loan-header").contains("Select a loan to protect");
@@ -176,11 +194,14 @@ describe("Loan Selection", () => {
   });
   it("Should navigate to pool selection", () => {
     cy.get("#register-topup-loan-button").click();
-    cy.location().should((loc) => {
-      expect(loc.pathname).to.eq(
-        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
-      );
-    });
+    cy.location().should(
+      (loc) => {
+        expect(loc.pathname).to.eq(
+          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
+        );
+      },
+      { timeout: WEB3_TIMEOUT }
+    );
   });
 });
 
@@ -206,11 +227,14 @@ describe("Pool Selection", () => {
     });
     cy.get("#aave-option").click();
     cy.get("#register-topup-loan-button").click();
-    cy.location().should((loc) => {
-      expect(loc.pathname).to.eq(
-        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
-      );
-    });
+    cy.location().should(
+      (loc) => {
+        expect(loc.pathname).to.eq(
+          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
+        );
+      },
+      { timeout: WEB3_TIMEOUT }
+    );
   });
   it("Should have header", () => {
     cy.get("#register-topup-pool-header").contains(
@@ -237,11 +261,14 @@ describe("Pool Selection", () => {
   });
   it("Should navigate to deposit stage", () => {
     cy.get("#register-topup-pool-button").click();
-    cy.location().should((loc) => {
-      expect(loc.pathname).to.eq(
-        "/actions/register/topup/deposit/bdai/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
-      );
-    });
+    cy.location().should(
+      (loc) => {
+        expect(loc.pathname).to.eq(
+          "/actions/register/topup/deposit/bdai/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
+        );
+      },
+      { timeout: WEB3_TIMEOUT }
+    );
   });
 });
 
@@ -295,11 +322,14 @@ describe("Pool Deposit", () => {
   });
   it("Should navigate to conditions page", () => {
     cy.get("#register-topup-pool-deposit-button", { timeout: WEB3_TIMEOUT }).click();
-    cy.location().should((loc) => {
-      expect(loc.pathname).to.eq(
-        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/bdai"
-      );
-    });
+    cy.location().should(
+      (loc) => {
+        expect(loc.pathname).to.eq(
+          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/bdai"
+        );
+      },
+      { timeout: WEB3_TIMEOUT }
+    );
   });
 });
 
@@ -323,18 +353,24 @@ describe("Conditions Page", () => {
   it("Should Change Pools", () => {
     cy.get("#action-summary-change-pool").should("exist");
     cy.get("#action-summary-change-pool").click();
-    cy.location().should((loc) => {
-      expect(loc.pathname).to.eq(
-        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
-      );
-    });
+    cy.location().should(
+      (loc) => {
+        expect(loc.pathname).to.eq(
+          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
+        );
+      },
+      { timeout: WEB3_TIMEOUT }
+    );
     cy.get("#dai-pool-option").click();
     cy.get("#register-topup-pool-button").click();
-    cy.location().should((loc) => {
-      expect(loc.pathname).to.eq(
-        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/bdai"
-      );
-    });
+    cy.location().should(
+      (loc) => {
+        expect(loc.pathname).to.eq(
+          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/bdai"
+        );
+      },
+      { timeout: WEB3_TIMEOUT }
+    );
   });
 
   it("Should have nothing in threshold input", () => {
@@ -517,9 +553,12 @@ describe("Existing Topup View", () => {
   });
   it("Should navigate to register page", () => {
     cy.get("#register-action-button").click();
-    cy.location().should((loc) => {
-      expect(loc.pathname).to.eq("/actions/register");
-    });
+    cy.location().should(
+      (loc) => {
+        expect(loc.pathname).to.eq("/actions/register");
+      },
+      { timeout: WEB3_TIMEOUT }
+    );
   });
   it("Should have Existing Actions Info Card", () => {
     cy.get("#existing-actions-header").contains("Existing Actions");
@@ -539,9 +578,13 @@ describe("Existing Topup View", () => {
   });
   it("Should go back to actions page", () => {
     cy.get("#back-button").click();
-    cy.location().should((loc) => {
-      expect(loc.pathname).to.eq("/actions");
-    });
+    cy.location().should(
+      (loc) => {
+        expect(loc.pathname).to.eq("/actions");
+      },
+
+      { timeout: WEB3_TIMEOUT }
+    );
   });
   it("Should take snapshot", () => {
     percySnapshot();
