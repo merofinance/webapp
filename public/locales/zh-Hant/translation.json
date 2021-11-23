@@ -261,10 +261,6 @@
         "header": "Your deposits",
         "tooltip": "The current value of your assets held in the pools"
       },
-      "locked": {
-        "header": "Locked in position",
-        "tooltip": "The current value of your assets registered for top-ups (liquidation protection)"
-      },
       "rewards": {
         "header": "Rewards accrued",
         "tooltip": "The current value of earned rewards that have yet to be claimed"
@@ -318,10 +314,6 @@
       "deposits": {
         "header": "Your deposits",
         "tooltip": "The current value of your assets held in Backd liquidity pools"
-      },
-      "locked": {
-        "header": "Locked in position",
-        "tooltip": "The current value of your assets registered for top-ups (liquidation protection)"
       },
       "rewards": {
         "header": "Rewards accrued",
