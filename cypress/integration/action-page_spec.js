@@ -493,9 +493,12 @@ describe("Top-up Position Confirmation", () => {
   });
   it("Should redirect to actions on completion", () => {
     cy.get("#register-action-button", { timeout: WEB3_TIMEOUT }).should("exist");
-    cy.location().should((loc) => {
-      expect(loc.pathname).to.eq("/actions");
-    });
+    cy.location().should(
+      (loc) => {
+        expect(loc.pathname).to.eq("/actions");
+      },
+      { timeout: WEB3_TIMEOUT }
+    );
   });
 });
 
