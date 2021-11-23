@@ -308,8 +308,8 @@
         "tooltip": "The current value of your assets held in Backd liquidity pools"
       },
       "locked": {
-        "header": "Locked in actions",
-        "tooltip": "The current value of your assets locked in actions. Assets locked in actions still earn yield"
+        "header": "Allocated to Actions",
+        "tooltip": "The current value of your assets that are allocated to Actions. Assets allocated to Actions still earn yield"
       },
       "rewards": {
         "header": "Rewards accrued",
@@ -349,8 +349,8 @@
         "tooltip": "The current value of your assets held in the pool"
       },
       "locked": {
-        "header": "Locked in actions",
-        "tooltip": "The current value of your assets locked in actions. Assets locked in actions still earn yield"
+        "header": "Allocated to Actions",
+        "tooltip": "The current value of your assets that are allocated to Actions. Assets allocated to Actions still earn yield"
       },
       "rewards": {
         "header": "Rewards accrued",
