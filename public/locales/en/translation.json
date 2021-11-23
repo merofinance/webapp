@@ -288,7 +288,7 @@
     "overview": "Backd’s single-asset pools aggregate yield across strategies. After depositing an asset, register an action to automate your liquidity to where it is needed most.",
     "deposit": "deposit",
     "information": {
-      "header": "Pools Information",
+      "header": "Pools information",
       "tvl": {
         "header": "Platform TVL",
         "tooltip": "The market capitalization of total assets held in Backd liquidity pools (total value locked)"
