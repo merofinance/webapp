@@ -7,17 +7,11 @@ import { useSelector } from "react-redux";
 import ContentSection from "../../../components/ContentSection";
 import Button from "../../../components/Button";
 import { selectPool } from "../../../state/selectors";
-import {
-  GWEI_DECIMALS,
-  GWEI_SCALE,
-  TOPUP_ACTION_ROUTE,
-  TOPUP_GAS_COST,
-} from "../../../lib/constants";
+import { TOPUP_ACTION_ROUTE } from "../../../lib/constants";
 import PoolDeposit from "../../pool/PoolDeposit";
 import { useDevice } from "../../../app/hooks/use-device";
 import { selectBalances } from "../../../state/userSlice";
 import { ScaledNumber } from "../../../lib/scaled-number";
-import { selectEthPrice, selectPrices } from "../../../state/poolsListSlice";
 
 interface TopupParams {
   address: string;
@@ -63,8 +57,6 @@ const RegisterTopupPoolDeposit = () => {
   const { isMobile } = useDevice();
   const pool = useSelector(selectPool(poolName));
   const balances = useSelector(selectBalances);
-  const prices = useSelector(selectPrices);
-  const ethPrice = useSelector(selectEthPrice);
 
   if (!pool) {
     history.push("/");
@@ -74,11 +66,7 @@ const RegisterTopupPoolDeposit = () => {
   const hasSufficientBalance = () => {
     const lpBalance = balances[pool.lpToken.address];
     if (!lpBalance) return false;
-    const usdBalance = lpBalance.mul(prices[pool.underlying.symbol]);
-    const gasCostUsd = new ScaledNumber(
-      ScaledNumber.fromUnscaled(50, GWEI_DECIMALS).value.mul(TOPUP_GAS_COST).div(GWEI_SCALE)
-    ).mul(ethPrice);
-    return usdBalance.gte(gasCostUsd);
+    return lpBalance.gt(new ScaledNumber());
   };
 
   return (
