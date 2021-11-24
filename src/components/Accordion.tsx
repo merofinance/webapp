@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import styled from "styled-components";
 
 const StyledAccordion = styled.div`
@@ -79,7 +80,7 @@ const Content = styled.div`
 
 interface Props {
   header: JSX.Element;
-  children: React.ReactNode;
+  children: ReactNode;
   open: boolean;
 }
 
