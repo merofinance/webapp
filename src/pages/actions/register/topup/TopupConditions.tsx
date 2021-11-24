@@ -1,35 +1,29 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { useHistory, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
 import { FormikErrors, useFormik } from "formik";
 import { useSelector } from "react-redux";
 
-import ContentSection from "../../../components/ContentSection";
-import { selectBalance } from "../../../state/userSlice";
-import { useBackd } from "../../../app/hooks/use-backd";
-import { ScaledNumber } from "../../../lib/scaled-number";
-import { selectPool, selectPrice } from "../../../state/selectors";
-import { Position } from "../../../lib/types";
-import NewPositionConfirmation from "./RegisterTopupConfirmation";
-import ApproveThenAction from "../../../components/ApproveThenAction";
-import RegisterTopupInput from "./RegisterTopupInput";
+import ContentSection from "../../../../components/ContentSection";
+import { selectBalance } from "../../../../state/userSlice";
+import { useBackd } from "../../../../app/hooks/use-backd";
+import { ScaledNumber } from "../../../../lib/scaled-number";
+import { selectPool, selectPrice } from "../../../../state/selectors";
+import { Position } from "../../../../lib/types";
+import NewPositionConfirmation from "./TopupConfirmation";
+import ApproveThenAction from "../../../../components/ApproveThenAction";
+import TopupInput from "./TopupInput";
 import ActionSummary from "./ActionSummary";
-import { useDevice } from "../../../app/hooks/use-device";
-import { selectEthPrice } from "../../../state/poolsListSlice";
+import { useDevice } from "../../../../app/hooks/use-device";
+import { selectEthPrice } from "../../../../state/poolsListSlice";
 import {
   GWEI_DECIMALS,
   GWEI_SCALE,
   TOPUP_ACTION_ROUTE,
   TOPUP_GAS_COST,
-} from "../../../lib/constants";
-
-interface TopupParams {
-  address: string;
-  protocol: string;
-  poolName: string;
-}
+} from "../../../../lib/constants";
 
 export interface FormType {
   threshold: string;
@@ -143,12 +137,12 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const RegisterTopupConditions = () => {
+const TopupConditions = (): JSX.Element => {
   const { t } = useTranslation();
   const backd = useBackd();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { isMobile } = useDevice();
-  const { address, protocol, poolName } = useParams<TopupParams>();
+  const { address, protocol, poolName } = useParams<"address" | "protocol" | "poolName">();
   const pool = useSelector(selectPool(poolName));
   const underlyingPrice = useSelector(selectPrice(pool));
   const ethPrice = useSelector(selectEthPrice);
@@ -185,12 +179,12 @@ const RegisterTopupConditions = () => {
     validate,
   });
 
-  if (!pool) {
-    history.push(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`);
-    return <></>;
+  if (!pool || !protocol || !address) {
+    navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`);
+    return <div />;
   }
 
-  if (!backd) return <></>;
+  if (!backd) return <div />;
 
   const position: Position = {
     protocol,
@@ -225,7 +219,7 @@ const RegisterTopupConditions = () => {
             </Header>
             <SubHeader>{t("actions.topup.stages.conditions.subHeader")}</SubHeader>
             <Form noValidate onSubmit={formik.handleSubmit}>
-              <RegisterTopupInput
+              <TopupInput
                 label={
                   isMobile
                     ? t("actions.topup.fields.threshold.label")
@@ -237,7 +231,7 @@ const RegisterTopupConditions = () => {
                 formik={formik}
                 placeholder="1.4"
               />
-              <RegisterTopupInput
+              <TopupInput
                 label={
                   isMobile
                     ? t("actions.topup.fields.single.label")
@@ -249,7 +243,7 @@ const RegisterTopupConditions = () => {
                 formik={formik}
                 placeholder={`2,000 ${pool.underlying.symbol}`}
               />
-              <RegisterTopupInput
+              <TopupInput
                 label={
                   isMobile
                     ? t("actions.topup.fields.max.label")
@@ -261,7 +255,7 @@ const RegisterTopupConditions = () => {
                 formik={formik}
                 placeholder={`10,000 ${pool.underlying.symbol}`}
               />
-              <RegisterTopupInput
+              <TopupInput
                 label={
                   isMobile
                     ? t("actions.topup.fields.gas.label")
@@ -302,11 +296,11 @@ const RegisterTopupConditions = () => {
         pool={pool}
         complete={() => {
           formik.resetForm({ values: initialValues });
-          history.push("/actions");
+          navigate("/actions");
         }}
       />
     </Container>
   );
 };
 
-export default RegisterTopupConditions;
+export default TopupConditions;

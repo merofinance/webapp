@@ -1,8 +1,7 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { useLocation } from "react-router";
+import { useLocation } from "react-router-dom";
 
 import InfoCard from "../../components/InfoCard";
 import { selectPositions } from "../../state/positionsSlice";
@@ -41,14 +40,14 @@ const Header = styled.div`
   flex: ${(props: HeaderProps) => props.flex};
 `;
 
-const ExistingActions = () => {
+const ExistingActions = (): JSX.Element => {
   const { t } = useTranslation();
   const positions = useSelector(selectPositions);
   const location = useLocation();
 
   const hasPosition = positions.length > 0;
 
-  if (location.pathname === "/actions") return <></>;
+  if (location.pathname === "/actions") return <div />;
 
   return (
     <InfoCard

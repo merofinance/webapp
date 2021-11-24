@@ -1,7 +1,7 @@
 import { FormControl, makeStyles, MenuItem, Select } from "@material-ui/core";
-import React from "react";
+
 import { useTranslation } from "react-i18next";
-import { FormikFormType, FormType } from "../pages/actions/lending/RegisterTopupConditions";
+import { FormikFormType, FormType } from "../pages/actions/register/topup/TopupConditions";
 
 const useStyles = makeStyles(() => ({
   formControl: {

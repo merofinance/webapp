@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
-import Popup from "../../../components/Popup";
-import { Pool, Position } from "../../../lib/types";
+import Popup from "../../../../components/Popup";
+import { Pool, Position } from "../../../../lib/types";
 import TopupInformation from "./TopupInformation";
-import deleteIcon from "../../../assets/ui/delete.svg";
+import deleteIcon from "../../../../assets/ui/delete.svg";
 import DeletePositionConfirmation from "./DeleteTopupConfirmation";
 
 const Content = styled.div`

@@ -1,6 +1,5 @@
-import React from "react";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
@@ -137,7 +136,7 @@ interface Props {
 
 const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const price = useSelector(selectPrice(pool));
   const balances = useSelector(selectBalances);
@@ -152,7 +151,7 @@ const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
     <tbody>
       <Row
         id={`pool-row-${pool.lpToken.symbol.toLowerCase()}`}
-        onClick={() => history.push(`/pool/${pool.lpToken.symbol}`)}
+        onClick={() => navigate(`/pool/${pool.lpToken.symbol}`)}
         preview={preview}
       >
         <Data>

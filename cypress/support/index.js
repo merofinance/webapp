@@ -3,7 +3,7 @@ import { INFURA_ID } from "../../src/lib/constants";
 import PrivateKeyProvider from "truffle-privatekey-provider";
 import Web3 from "web3";
 
-export const WEB3_TIMEOUT = 30_000;
+export const WEB3_TIMEOUT = 50_000;
 
 export const percySnapshot = () => {
   // This delay is to give time for animations to finish before taking screenshots

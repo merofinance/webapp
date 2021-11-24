@@ -1,8 +1,7 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 import InfoCard from "../../components/InfoCard";
 import { Pool } from "../../lib";
@@ -102,9 +101,9 @@ const Total = styled.div`
   }
 `;
 
-const YourDeposits = () => {
+const YourDeposits = (): JSX.Element => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const pools = useSelector(selectPools);
   const balances = useSelector(selectBalances);
   const prices = useSelector(selectPrices);
@@ -137,7 +136,7 @@ const YourDeposits = () => {
                     <Asset tiny token={pool.underlying} />
                     <ManageButton
                       onClick={() => {
-                        history.push(
+                        navigate(
                           `${TOPUP_ACTION_ROUTE}/deposit/${pool.lpToken.symbol.toLowerCase()}`
                         );
                       }}

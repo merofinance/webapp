@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import ovals from "../../assets/background/ovals.svg";
 import icons from "../../assets/background/icons.svg";

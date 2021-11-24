@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-import { useBackd } from "../../../app/hooks/use-backd";
-import { AppDispatch } from "../../../app/store";
-import Popup from "../../../components/Popup";
-import { registerPosition } from "../../../state/positionsSlice";
-import { Pool, Position } from "../../../lib/types";
-import { hasPendingTransaction } from "../../../state/transactionsSlice";
+import { useBackd } from "../../../../app/hooks/use-backd";
+import { AppDispatch } from "../../../../app/store";
+import Popup from "../../../../components/Popup";
+import { registerPosition } from "../../../../state/positionsSlice";
+import { Pool, Position } from "../../../../lib/types";
+import { hasPendingTransaction } from "../../../../state/transactionsSlice";
 import TopupInformation from "./TopupInformation";
 
 interface Props {
@@ -18,13 +18,7 @@ interface Props {
   complete: () => void;
 }
 
-const RegisterTopupConfirmation = ({
-  show,
-  close,
-  position,
-  pool,
-  complete,
-}: Props): JSX.Element => {
+const TopupConfirmation = ({ show, close, position, pool, complete }: Props): JSX.Element => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();
@@ -58,4 +52,4 @@ const RegisterTopupConfirmation = ({
   );
 };
 
-export default RegisterTopupConfirmation;
+export default TopupConfirmation;

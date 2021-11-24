@@ -1,34 +1,29 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { useHistory, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import ContentSection from "../../../components/ContentSection";
-import Button from "../../../components/Button";
-import RowSelector from "../../../components/RowSelector";
-import { selectEthPrice, selectPools, selectPrices } from "../../../state/poolsListSlice";
-import { Pool } from "../../../lib";
-import { formatPercent, numberToCompactCurrency } from "../../../lib/numeric";
-import { selectBalances } from "../../../state/userSlice";
-import { selectPositions } from "../../../state/positionsSlice";
-import { ScaledNumber } from "../../../lib/scaled-number";
-import { Position } from "../../../lib/types";
-import RegisterTopupPoolDeposit from "./RegisterTopupPoolDeposit";
-import Asset from "../../../components/Asset";
-import { useDevice } from "../../../app/hooks/use-device";
-import { RowOptionType } from "../../../components/RowOption";
+import ContentSection from "../../../../components/ContentSection";
+import Button from "../../../../components/Button";
+import RowSelector from "../../../../components/RowSelector";
+import { selectEthPrice, selectPools, selectPrices } from "../../../../state/poolsListSlice";
+import { Pool } from "../../../../lib";
+import { formatPercent, numberToCompactCurrency } from "../../../../lib/numeric";
+import { selectBalances } from "../../../../state/userSlice";
+import { selectPositions } from "../../../../state/positionsSlice";
+import { ScaledNumber } from "../../../../lib/scaled-number";
+import { Position } from "../../../../lib/types";
+import TopupPoolDeposit from "./TopupPoolDeposit";
+import Asset from "../../../../components/Asset";
+import { useDevice } from "../../../../app/hooks/use-device";
+import { RowOptionType } from "../../../../components/RowOption";
 import {
   GWEI_DECIMALS,
   GWEI_SCALE,
   TOPUP_ACTION_ROUTE,
   TOPUP_GAS_COST,
-} from "../../../lib/constants";
-
-interface TopupParams {
-  address: string;
-  protocol: string;
-}
+} from "../../../../lib/constants";
 
 const Container = styled.div`
   position: relative;
@@ -68,10 +63,10 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const RegisterTopupPool = () => {
+const TopupPool = (): JSX.Element => {
   const { t } = useTranslation();
-  const { address, protocol } = useParams<TopupParams>();
-  const history = useHistory();
+  const { address, protocol } = useParams<"address" | "protocol">();
+  const navigate = useNavigate();
   const { isMobile } = useDevice();
   const pools = useSelector(selectPools);
   const balances = useSelector(selectBalances);
@@ -153,8 +148,8 @@ const RegisterTopupPool = () => {
                 text={t("components.continue")}
                 click={() => {
                   if (!hasSufficientBalance(selected))
-                    history.push(`${TOPUP_ACTION_ROUTE}/deposit/${pool}/${address}/${protocol}`);
-                  else history.push(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${pool}`);
+                    navigate(`${TOPUP_ACTION_ROUTE}/deposit/${pool}/${address}/${protocol}`);
+                  else navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${pool}`);
                 }}
                 disabled={!pool}
                 hoverText={t("actions.topup.stages.pool.incomplete")}
@@ -167,4 +162,4 @@ const RegisterTopupPool = () => {
   );
 };
 
-export default RegisterTopupPool;
+export default TopupPool;

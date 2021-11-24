@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
-import { useBackd } from "../../../app/hooks/use-backd";
-import { AppDispatch } from "../../../app/store";
-import Popup from "../../../components/Popup";
-import { Position, Pool, TransactionInfo, fromPlainPosition } from "../../../lib/types";
-import { removePosition } from "../../../state/positionsSlice";
-import { selectTransactions } from "../../../state/transactionsSlice";
-import Button from "../../../components/Button";
+import { useBackd } from "../../../../app/hooks/use-backd";
+import { AppDispatch } from "../../../../app/store";
+import Popup from "../../../../components/Popup";
+import { Position, Pool, TransactionInfo, fromPlainPosition } from "../../../../lib/types";
+import { removePosition } from "../../../../state/positionsSlice";
+import { selectTransactions } from "../../../../state/transactionsSlice";
+import Button from "../../../../components/Button";
 
 const ButtonContainer = styled.div`
   width: 100%;
@@ -32,7 +32,7 @@ interface Props {
   complete: () => void;
 }
 
-const DeleteTopupConfirmation = ({ show, close, position, pool, complete }: Props) => {
+const DeleteTopupConfirmation = ({ show, close, position, pool, complete }: Props): JSX.Element => {
   const { t } = useTranslation();
   const backd = useBackd();
   const dispatch = useDispatch<AppDispatch>();
