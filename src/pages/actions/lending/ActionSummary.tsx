@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { selectLoans } from "../../../state/lendingSlice";
 import { selectEthPrice } from "../../../state/poolsListSlice";

@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useWeb3React } from "@web3-react/core";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 import { selectEthPrice } from "../../../state/poolsListSlice";
 import Button from "../../../components/Button";

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 import { Header2, Header4, Header5 } from "../../styles/Headers";
 import Radio, { RadioOptionType } from "../../components/Radio";

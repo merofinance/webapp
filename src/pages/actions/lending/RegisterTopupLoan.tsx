@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
 import { useSelector } from "react-redux";
 

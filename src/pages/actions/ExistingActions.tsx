@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { useLocation } from "react-router";
+import { useLocation } from "react-router-dom";
 
 import InfoCard from "../../components/InfoCard";
 import { selectPositions } from "../../state/positionsSlice";

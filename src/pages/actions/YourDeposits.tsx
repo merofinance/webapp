@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 import InfoCard from "../../components/InfoCard";
 import { Pool } from "../../lib";
