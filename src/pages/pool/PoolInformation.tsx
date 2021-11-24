@@ -32,11 +32,11 @@ const PoolInformation = ({ pool }: Props): JSX.Element => {
         {
           label: t("pool.information.lp.header"),
           tooltip: t("pool.information.lp.tooltip", {
-            lpToken: pool.lpToken.symbol,
-            underlying: pool.underlying.symbol,
-            exchangeRate: pool.exchangeRate.toString(),
+            lpToken: pool ? pool.lpToken.symbol : "---",
+            underlying: pool ? pool.underlying.symbol : "---",
+            exchangeRate: pool ? pool.exchangeRate.toString() : "---",
           }),
-          value: pool.exchangeRate.toString(),
+          value: pool ? pool.exchangeRate.toString() : null,
         },
         // {
         //   label: t("pool.information.strategy.header"),
