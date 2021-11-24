@@ -112,41 +112,14 @@ const App = (): JSX.Element => {
                 <StyledApp>
                   <Content>
                     <Routes>
-                      <Route path="/pool/:poolName">
-                        <PoolPage />
-                      </Route>
-
-                      <Route path="/pools">
-                        <PoolsPage />
-                      </Route>
-
-                      <Route path="/actions">
-                        <ActionsPage />
-                      </Route>
-
-                      {stakingLive && (
-                        <Route path="/claim">
-                          <ClaimPage />
-                        </Route>
-                      )}
-
-                      {stakingLive && (
-                        <Route path="/stake">
-                          <StakePage />
-                        </Route>
-                      )}
-
-                      <Route path="/litepaper">
-                        <LitepaperPage />
-                      </Route>
-
-                      <Route path="/">
-                        <LandingPage />
-                      </Route>
-
-                      <Route>
-                        <NotFoundPage />
-                      </Route>
+                      <Route path="/pool/:poolName" element={<PoolPage />} />
+                      <Route path="/pools" element={<PoolsPage />} />
+                      <Route path="/actions" element={<ActionsPage />} />
+                      {stakingLive && <Route path="/claim" element={<ClaimPage />} />}
+                      {stakingLive && <Route path="/stake" element={<StakePage />} />}
+                      <Route path="/litepaper" element={<LitepaperPage />} />
+                      <Route path="/" element={<LandingPage />} />
+                      <Route element={<NotFoundPage />} />
                     </Routes>
                   </Content>
                   <Footer />
