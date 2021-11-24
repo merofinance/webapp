@@ -14,7 +14,7 @@ import { selectBalances } from "../../../../state/userSlice";
 import { selectPositions } from "../../../../state/positionsSlice";
 import { ScaledNumber } from "../../../../lib/scaled-number";
 import { Position } from "../../../../lib/types";
-import RegisterTopupPoolDeposit from "./RegisterTopupPoolDeposit";
+import TopupPoolDeposit from "./TopupPoolDeposit";
 import Asset from "../../../../components/Asset";
 import { useDevice } from "../../../../app/hooks/use-device";
 import { RowOptionType } from "../../../../components/RowOption";
@@ -63,7 +63,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const RegisterTopupPool = (): JSX.Element => {
+const TopupPool = (): JSX.Element => {
   const { t } = useTranslation();
   const { address, protocol } = useParams<"address" | "protocol">();
   const navigate = useNavigate();
@@ -162,4 +162,4 @@ const RegisterTopupPool = (): JSX.Element => {
   );
 };
 
-export default RegisterTopupPool;
+export default TopupPool;

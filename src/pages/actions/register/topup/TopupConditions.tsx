@@ -12,9 +12,9 @@ import { useBackd } from "../../../../app/hooks/use-backd";
 import { ScaledNumber } from "../../../../lib/scaled-number";
 import { selectPool, selectPrice } from "../../../../state/selectors";
 import { Position } from "../../../../lib/types";
-import NewPositionConfirmation from "./RegisterTopupConfirmation";
+import NewPositionConfirmation from "./TopupConfirmation";
 import ApproveThenAction from "../../../../components/ApproveThenAction";
-import RegisterTopupInput from "./RegisterTopupInput";
+import TopupInput from "./TopupInput";
 import ActionSummary from "./ActionSummary";
 import { useDevice } from "../../../../app/hooks/use-device";
 import { selectEthPrice } from "../../../../state/poolsListSlice";
@@ -137,7 +137,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const RegisterTopupConditions = (): JSX.Element => {
+const TopupConditions = (): JSX.Element => {
   const { t } = useTranslation();
   const backd = useBackd();
   const navigate = useNavigate();
@@ -219,7 +219,7 @@ const RegisterTopupConditions = (): JSX.Element => {
             </Header>
             <SubHeader>{t("actions.topup.stages.conditions.subHeader")}</SubHeader>
             <Form noValidate onSubmit={formik.handleSubmit}>
-              <RegisterTopupInput
+              <TopupInput
                 label={
                   isMobile
                     ? t("actions.topup.fields.threshold.label")
@@ -231,7 +231,7 @@ const RegisterTopupConditions = (): JSX.Element => {
                 formik={formik}
                 placeholder="1.4"
               />
-              <RegisterTopupInput
+              <TopupInput
                 label={
                   isMobile
                     ? t("actions.topup.fields.single.label")
@@ -243,7 +243,7 @@ const RegisterTopupConditions = (): JSX.Element => {
                 formik={formik}
                 placeholder={`2,000 ${pool.underlying.symbol}`}
               />
-              <RegisterTopupInput
+              <TopupInput
                 label={
                   isMobile
                     ? t("actions.topup.fields.max.label")
@@ -255,7 +255,7 @@ const RegisterTopupConditions = (): JSX.Element => {
                 formik={formik}
                 placeholder={`10,000 ${pool.underlying.symbol}`}
               />
-              <RegisterTopupInput
+              <TopupInput
                 label={
                   isMobile
                     ? t("actions.topup.fields.gas.label")
@@ -303,4 +303,4 @@ const RegisterTopupConditions = (): JSX.Element => {
   );
 };
 
-export default RegisterTopupConditions;
+export default TopupConditions;

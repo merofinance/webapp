@@ -60,7 +60,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const RegisterTopupLoan = (): JSX.Element => {
+const TopupLoan = (): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { account } = useWeb3React();
@@ -158,4 +158,4 @@ const RegisterTopupLoan = (): JSX.Element => {
   );
 };
 
-export default RegisterTopupLoan;
+export default TopupLoan;

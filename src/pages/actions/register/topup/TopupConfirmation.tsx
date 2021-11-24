@@ -18,13 +18,7 @@ interface Props {
   complete: () => void;
 }
 
-const RegisterTopupConfirmation = ({
-  show,
-  close,
-  position,
-  pool,
-  complete,
-}: Props): JSX.Element => {
+const TopupConfirmation = ({ show, close, position, pool, complete }: Props): JSX.Element => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();
@@ -58,4 +52,4 @@ const RegisterTopupConfirmation = ({
   );
 };
 
-export default RegisterTopupConfirmation;
+export default TopupConfirmation;

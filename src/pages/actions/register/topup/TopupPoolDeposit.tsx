@@ -43,7 +43,7 @@ const ButtonContainer = styled.div`
   margin-top: 6rem;
 `;
 
-const RegisterTopupPoolDeposit = (): JSX.Element => {
+const TopupPoolDeposit = (): JSX.Element => {
   const { t } = useTranslation();
   const { address, protocol, poolName } = useParams<"address" | "protocol" | "poolName">();
   const navigate = useNavigate();
@@ -104,4 +104,4 @@ const RegisterTopupPoolDeposit = (): JSX.Element => {
   );
 };
 
-export default RegisterTopupPoolDeposit;
+export default TopupPoolDeposit;
