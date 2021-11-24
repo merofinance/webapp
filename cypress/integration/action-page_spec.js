@@ -644,7 +644,7 @@ describe("Existing Topup View", () => {
   });
   it("Should not show popups", () => {
     cy.get("#delete-topup-confirmation-popup-header", { timeout: WEB3_TIMEOUT }).should(
-      "not.be.visible"
+      "not.exist"
     );
   });
   it("Should have no Actions", () => {
