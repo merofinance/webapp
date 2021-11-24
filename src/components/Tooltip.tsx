@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { makeStyles, Tooltip } from "@material-ui/core";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";

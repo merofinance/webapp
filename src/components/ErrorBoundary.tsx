@@ -1,4 +1,4 @@
-import React, { ErrorInfo, ReactNode } from "react";
+import { ErrorInfo, ReactNode } from "react";
 import * as Sentry from "@sentry/browser";
 
 import { AppDispatch } from "../app/store";

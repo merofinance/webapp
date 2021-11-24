@@ -10,7 +10,7 @@ import {
 
 import { Web3ReactProvider } from "@web3-react/core";
 import { ethers } from "ethers";
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 import { useDispatch } from "react-redux";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import styled from "styled-components";

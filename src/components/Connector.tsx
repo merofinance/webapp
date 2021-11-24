@@ -1,5 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useWeb3Updated } from "../app/hooks/use-web3-updated";

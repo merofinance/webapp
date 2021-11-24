@@ -1,4 +1,3 @@
-import React from "react";
 import { useMatch } from "react-router-dom";
 import RegisterTopupConditions from "./RegisterTopupConditions";
 import RegisterTopupLoan from "./RegisterTopupLoan";

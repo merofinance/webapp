@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";

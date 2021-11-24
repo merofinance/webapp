@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import Accordion from "../../components/Accordion";
 import Asset from "../../components/Asset";

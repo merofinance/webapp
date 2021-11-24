@@ -1,5 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
-import React from "react";
+
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useIsLive } from "../../app/hooks/use-is-live";
