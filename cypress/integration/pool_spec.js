@@ -123,8 +123,6 @@ describe("Account Details", () => {
     cy.get("#account-details-transactions").children().should("have.length", 0);
   });
   it("Should close", () => {
-    cy.get("#connection-details-popup-exit").should("exist", { timeout: WEB3_TIMEOUT });
-    cy.get("#connection-details-popup-exit").should("be.visible", { timeout: WEB3_TIMEOUT });
     cy.get("#connection-details-popup-exit").click();
   });
 });
@@ -229,8 +227,6 @@ describe("Withdraw", () => {
     );
   });
   it("Should close", () => {
-    cy.get("#connection-details-popup-exit").should("exist", { timeout: WEB3_TIMEOUT });
-    cy.get("#connection-details-popup-exit").should("be.visible", { timeout: WEB3_TIMEOUT });
     cy.get("#connection-details-popup-exit").click();
   });
 });
