@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { Loan, Position } from "../../lib/types";
 import { selectLoans } from "../../state/lendingSlice";
 import { selectPositions } from "../../state/positionsSlice";
-import ProtectableLoan from "./lending/ProtectableLoan";
+import ProtectableLoan from "./topup/ProtectableLoan";
 
 const StyledProtectableLoans = styled.div`
   width: 100%;

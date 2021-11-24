@@ -39,11 +39,11 @@ import ActionsPage from "./pages/actions/ActionsPage";
 import ActionRegister from "./pages/actions/register/ActionRegister";
 import ActionsIndex from "./pages/actions/ActionsIndex";
 import ActionRegisterIndex from "./pages/actions/register/ActionRegisterIndex";
-import RegisterTopup from "./pages/actions/lending/RegisterTopup";
-import RegisterTopupPoolDeposit from "./pages/actions/lending/RegisterTopupPoolDeposit";
-import RegisterTopupConditions from "./pages/actions/lending/RegisterTopupConditions";
-import RegisterTopupPool from "./pages/actions/lending/RegisterTopupPool";
-import RegisterTopupLoan from "./pages/actions/lending/RegisterTopupLoan";
+import RegisterTopup from "./pages/actions/topup/RegisterTopup";
+import RegisterTopupPoolDeposit from "./pages/actions/topup/RegisterTopupPoolDeposit";
+import RegisterTopupConditions from "./pages/actions/topup/RegisterTopupConditions";
+import RegisterTopupPool from "./pages/actions/topup/RegisterTopupPool";
+import RegisterTopupLoan from "./pages/actions/topup/RegisterTopupLoan";
 
 const Background = styled.div`
   background: radial-gradient(rgba(11, 3, 60, 0.2), rgba(10, 5, 38, 0.3));

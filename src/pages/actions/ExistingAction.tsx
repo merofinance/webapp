@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Position, Pool } from "../../lib/types";
 import { selectPools } from "../../state/poolsListSlice";
 import { selectPrice } from "../../state/selectors";
-import TopupAction from "./lending/TopupAction";
+import TopupAction from "./topup/TopupAction";
 import { GradientText } from "../../styles/GradientText";
 
 const StyledRegisteredAction = styled.button`
