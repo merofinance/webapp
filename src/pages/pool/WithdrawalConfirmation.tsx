@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
@@ -56,7 +55,14 @@ interface Props {
   loading: boolean;
 }
 
-const WithdrawalConfirmation = ({ pool, show, close, value, submit, loading }: Props) => {
+const WithdrawalConfirmation = ({
+  pool,
+  show,
+  close,
+  value,
+  submit,
+  loading,
+}: Props): JSX.Element => {
   const { t } = useTranslation();
   const { isMobile } = useDevice();
   const withdrawalFee = useSelector(selectWithdrawalFee(pool));
