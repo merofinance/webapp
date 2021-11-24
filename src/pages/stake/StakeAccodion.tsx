@@ -169,24 +169,23 @@ const StakeAccordion = ({ open, toggle }: Props): JSX.Element => {
           </EndContainer>
         </Header>
       }
-      content={
-        <ContentContainer>
-          <Tabs
-            tabs={[
-              {
-                label: "stake.tabs.stake.header",
-                content: <StakeTokens token={token} />,
-              },
-              {
-                label: "stake.tabs.unstake.header",
-                content: <UnstakeTokens token={token} />,
-              },
-            ]}
-          />
-        </ContentContainer>
-      }
       open={open}
-    />
+    >
+      <ContentContainer>
+        <Tabs
+          tabs={[
+            {
+              label: "stake.tabs.stake.header",
+              content: <StakeTokens token={token} />,
+            },
+            {
+              label: "stake.tabs.unstake.header",
+              content: <UnstakeTokens token={token} />,
+            },
+          ]}
+        />
+      </ContentContainer>
+    </Accordion>
   );
 };
 

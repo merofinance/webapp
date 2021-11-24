@@ -79,18 +79,18 @@ const Content = styled.div`
 
 interface Props {
   header: JSX.Element;
-  content: JSX.Element;
+  children: React.ReactNode;
   open: boolean;
 }
 
-const Accordion = ({ header, content, open }: Props): JSX.Element => {
+const Accordion = ({ header, children, open }: Props): JSX.Element => {
   return (
     <StyledAccordion>
       <Header open={open}>{header}</Header>
       <Body open={open}>
         <BodyContent>
           <Line />
-          <Content>{content}</Content>
+          <Content>{children}</Content>
         </BodyContent>
       </Body>
     </StyledAccordion>
