@@ -14,6 +14,9 @@ const PoolInformation = ({ pool }: Props): JSX.Element => {
   const { t } = useTranslation();
   const price = useSelector(selectPrice(pool));
   const locked = pool.totalAssets * price;
+  const maxWithdrawalFee = `${(pool.maxWithdrawalFee * 100).toString()}%`;
+  const minWithdrawalFee = `${(pool.minWithdrawalFee * 100).toString()}%`;
+  const days = (pool.feeDecreasePeriod * 10 ** 18) / 86400;
 
   return (
     <Information
@@ -37,6 +40,15 @@ const PoolInformation = ({ pool }: Props): JSX.Element => {
             exchangeRate: pool.exchangeRate.toString(),
           }),
           value: pool.exchangeRate.toString(),
+        },
+        {
+          label: t("pool.information.withdrawalFees.header"),
+          tooltip: t("pool.information.withdrawalFees.tooltip", {
+            max: maxWithdrawalFee,
+            min: minWithdrawalFee,
+            days,
+          }),
+          value: pool ? `${maxWithdrawalFee} → ${minWithdrawalFee}` : "---",
         },
         // {
         //   label: t("pool.information.strategy.header"),
