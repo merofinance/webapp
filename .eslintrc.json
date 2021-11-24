@@ -104,6 +104,7 @@
         "namedComponents": "arrow-function",
         "unnamedComponents": "arrow-function"
       }
-    ]
+    ],
+    "react/react-in-jsx-scope": "off"
   }
 }
