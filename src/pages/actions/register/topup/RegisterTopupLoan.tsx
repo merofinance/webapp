@@ -5,17 +5,17 @@ import { useNavigate } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
 import { useSelector } from "react-redux";
 
-import ContentSection from "../../../components/ContentSection";
-import Button from "../../../components/Button";
-import RowSelector from "../../../components/RowSelector";
-import { selectEthPrice } from "../../../state/poolsListSlice";
-import { selectLoans } from "../../../state/lendingSlice";
+import ContentSection from "../../../../components/ContentSection";
+import Button from "../../../../components/Button";
+import RowSelector from "../../../../components/RowSelector";
+import { selectEthPrice } from "../../../../state/poolsListSlice";
+import { selectLoans } from "../../../../state/lendingSlice";
 import LoanSearch from "./LoanSearch";
-import { Loan, Position } from "../../../lib/types";
-import { useDevice } from "../../../app/hooks/use-device";
-import { selectPositions } from "../../../state/positionsSlice";
-import { RowOptionType } from "../../../components/RowOption";
-import { TOPUP_ACTION_ROUTE } from "../../../lib/constants";
+import { Loan, Position } from "../../../../lib/types";
+import { useDevice } from "../../../../app/hooks/use-device";
+import { selectPositions } from "../../../../state/positionsSlice";
+import { RowOptionType } from "../../../../components/RowOption";
+import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
 
 const Container = styled.div`
   position: relative;

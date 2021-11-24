@@ -1,24 +1,29 @@
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { useWeb3React } from "@web3-react/core";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-import { selectEthPrice } from "../../../state/poolsListSlice";
-import Button from "../../../components/Button";
-import { Loan } from "../../../lib/types";
-import { TOPUP_ACTION_ROUTE } from "../../../lib/constants";
+import { selectLoans } from "../../../../state/lendingSlice";
+import { selectEthPrice } from "../../../../state/poolsListSlice";
+import Asset from "../../../../components/Asset";
+import { selectPool } from "../../../../state/selectors";
+import { GradientText } from "../../../../styles/GradientText";
+import { LendingProtocol, Loan } from "../../../../lib/types";
+import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
 
-const StyledProtectableLoan = styled.div`
+const StyledActionSummary = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 1.4rem;
   padding: 1.3rem 1.4rem;
+
   margin-top: 1rem;
+  @media (max-width: 600px) {
+    margin-top: 0.6rem;
+  }
 `;
 
 interface ColumnProps {
@@ -31,7 +36,6 @@ const Column = styled.div`
   flex-direction: column;
 
   @media (max-width: 600px) {
-    flex: auto;
     display: ${(props: ColumnProps) => (props.hideMobile ? "none" : "flex")};
   }
 `;
@@ -56,10 +60,12 @@ interface ValueProps {
 const Value = styled.div`
   font-weight: 700;
   letter-spacing: 0.2px;
+  display: flex;
+  align-items: center;
 
   font-size: 1.8rem;
   @media (max-width: 600px) {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
 
   @media only percy {
@@ -67,25 +73,35 @@ const Value = styled.div`
   }
 `;
 
-interface Props {
-  loan: Loan;
-}
+const ChangePoolButton = styled.button`
+  margin-left: 0.5rem;
+  cursor: pointer;
+`;
 
-const ProtectableLoan = ({ loan }: Props): JSX.Element => {
+const ChangePoolText = styled(GradientText)`
+  font-weight: 500;
+  font-size: 1rem;
+`;
+
+const ActionSummary = (): JSX.Element => {
   const { t } = useTranslation();
-  const { account } = useWeb3React();
+  const { address, protocol, poolName } = useParams<"address" | "protocol" | "poolName">();
   const navigate = useNavigate();
   const ethPrice = useSelector(selectEthPrice);
+  const pool = useSelector(selectPool(poolName));
+  const loans = useSelector(selectLoans(address));
 
-  if (!loan) return <div />;
+  const loan = loans.filter((loan: Loan) => loan.protocol === protocol)[0];
+
+  if (!loan || !pool) return <div />;
 
   return (
-    <StyledProtectableLoan id={`${loan.protocol.toLowerCase()}-protectable-loan`}>
+    <StyledActionSummary id="action-summary">
       <Column>
         <Header>{t("actions.suggestions.topup.labels.protocol")}</Header>
         <Value>{loan.protocol}</Value>
       </Column>
-      <Column hideMobile>
+      <Column>
         <Header>{t("actions.suggestions.topup.labels.healthFactor")}</Header>
         <Value hideOnSnapshot>{loan.healthFactor.toCryptoString()}</Value>
       </Column>
@@ -98,16 +114,19 @@ const ProtectableLoan = ({ loan }: Props): JSX.Element => {
         <Value hideOnSnapshot>{loan.totalDebtETH.toUsdValue(ethPrice)}</Value>
       </Column>
       <Column>
-        <Button
-          id={`${loan.protocol.toLowerCase()}-protectable-loan-button`}
-          medium
-          text={t("actions.suggestions.topup.register")}
-          background="#3A3550"
-          click={() => navigate(`${TOPUP_ACTION_ROUTE}/${account}/${loan.protocol}`)}
-        />
+        <Header>{t("actions.suggestions.topup.labels.pool")}</Header>
+        <Value>
+          <Asset tiny token={pool.underlying} />
+          <ChangePoolButton
+            id="action-summary-change-pool"
+            onClick={() => navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`)}
+          >
+            <ChangePoolText>{t("components.change")}</ChangePoolText>
+          </ChangePoolButton>
+        </Value>
       </Column>
-    </StyledProtectableLoan>
+    </StyledActionSummary>
   );
 };
 
-export default ProtectableLoan;
+export default ActionSummary;

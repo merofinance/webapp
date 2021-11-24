@@ -6,24 +6,24 @@ import * as yup from "yup";
 import { FormikErrors, useFormik } from "formik";
 import { useSelector } from "react-redux";
 
-import ContentSection from "../../../components/ContentSection";
-import { selectBalance } from "../../../state/userSlice";
-import { useBackd } from "../../../app/hooks/use-backd";
-import { ScaledNumber } from "../../../lib/scaled-number";
-import { selectPool, selectPrice } from "../../../state/selectors";
-import { Position } from "../../../lib/types";
+import ContentSection from "../../../../components/ContentSection";
+import { selectBalance } from "../../../../state/userSlice";
+import { useBackd } from "../../../../app/hooks/use-backd";
+import { ScaledNumber } from "../../../../lib/scaled-number";
+import { selectPool, selectPrice } from "../../../../state/selectors";
+import { Position } from "../../../../lib/types";
 import NewPositionConfirmation from "./RegisterTopupConfirmation";
-import ApproveThenAction from "../../../components/ApproveThenAction";
+import ApproveThenAction from "../../../../components/ApproveThenAction";
 import RegisterTopupInput from "./RegisterTopupInput";
 import ActionSummary from "./ActionSummary";
-import { useDevice } from "../../../app/hooks/use-device";
-import { selectEthPrice } from "../../../state/poolsListSlice";
+import { useDevice } from "../../../../app/hooks/use-device";
+import { selectEthPrice } from "../../../../state/poolsListSlice";
 import {
   GWEI_DECIMALS,
   GWEI_SCALE,
   TOPUP_ACTION_ROUTE,
   TOPUP_GAS_COST,
-} from "../../../lib/constants";
+} from "../../../../lib/constants";
 
 export interface FormType {
   threshold: string;

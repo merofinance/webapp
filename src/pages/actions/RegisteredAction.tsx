@@ -7,7 +7,7 @@ import { Position, Pool } from "../../lib/types";
 import { selectPools } from "../../state/poolsListSlice";
 import chevron from "../../assets/ui/chevron.svg";
 import { selectPrice } from "../../state/selectors";
-import TopupAction from "./topup/TopupAction";
+import TopupAction from "./register/topup/TopupAction";
 
 const StyledRegisteredAction = styled.button`
   position: relative;

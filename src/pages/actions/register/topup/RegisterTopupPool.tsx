@@ -4,26 +4,26 @@ import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import ContentSection from "../../../components/ContentSection";
-import Button from "../../../components/Button";
-import RowSelector from "../../../components/RowSelector";
-import { selectEthPrice, selectPools, selectPrices } from "../../../state/poolsListSlice";
-import { Pool } from "../../../lib";
-import { formatPercent, numberToCompactCurrency } from "../../../lib/numeric";
-import { selectBalances } from "../../../state/userSlice";
-import { selectPositions } from "../../../state/positionsSlice";
-import { ScaledNumber } from "../../../lib/scaled-number";
-import { Position } from "../../../lib/types";
+import ContentSection from "../../../../components/ContentSection";
+import Button from "../../../../components/Button";
+import RowSelector from "../../../../components/RowSelector";
+import { selectEthPrice, selectPools, selectPrices } from "../../../../state/poolsListSlice";
+import { Pool } from "../../../../lib";
+import { formatPercent, numberToCompactCurrency } from "../../../../lib/numeric";
+import { selectBalances } from "../../../../state/userSlice";
+import { selectPositions } from "../../../../state/positionsSlice";
+import { ScaledNumber } from "../../../../lib/scaled-number";
+import { Position } from "../../../../lib/types";
 import RegisterTopupPoolDeposit from "./RegisterTopupPoolDeposit";
-import Asset from "../../../components/Asset";
-import { useDevice } from "../../../app/hooks/use-device";
-import { RowOptionType } from "../../../components/RowOption";
+import Asset from "../../../../components/Asset";
+import { useDevice } from "../../../../app/hooks/use-device";
+import { RowOptionType } from "../../../../components/RowOption";
 import {
   GWEI_DECIMALS,
   GWEI_SCALE,
   TOPUP_ACTION_ROUTE,
   TOPUP_GAS_COST,
-} from "../../../lib/constants";
+} from "../../../../lib/constants";
 
 const Container = styled.div`
   position: relative;

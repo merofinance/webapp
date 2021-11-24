@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { FormikFormType, FormType } from "./RegisterTopupConditions";
-import Tooltip from "../../../components/Tooltip";
+import Tooltip from "../../../../components/Tooltip";
 
 const StyledRegisterTopupInput = styled.div`
   width: 100%;

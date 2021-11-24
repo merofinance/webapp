@@ -4,13 +4,13 @@ import LaunchIcon from "@material-ui/icons/Launch";
 import { useTranslation } from "react-i18next";
 import { useWeb3React } from "@web3-react/core";
 
-import { GradientLink } from "../../../styles/GradientText";
-import Tooltip from "../../../components/Tooltip";
-import { shortenAddress } from "../../../lib/text";
-import { Pool, Position } from "../../../lib/types";
-import { selectPrice } from "../../../state/selectors";
-import { useDevice } from "../../../app/hooks/use-device";
-import { getEtherscanAddressLink } from "../../../lib/web3";
+import { GradientLink } from "../../../../styles/GradientText";
+import Tooltip from "../../../../components/Tooltip";
+import { shortenAddress } from "../../../../lib/text";
+import { Pool, Position } from "../../../../lib/types";
+import { selectPrice } from "../../../../state/selectors";
+import { useDevice } from "../../../../app/hooks/use-device";
+import { getEtherscanAddressLink } from "../../../../lib/web3";
 
 const StyledTopupInformation = styled.div`
   width: 100%;

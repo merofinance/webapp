@@ -3,14 +3,14 @@ import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import ContentSection from "../../../components/ContentSection";
-import Button from "../../../components/Button";
-import { selectPool } from "../../../state/selectors";
-import { TOPUP_ACTION_ROUTE } from "../../../lib/constants";
-import PoolDeposit from "../../pool/PoolDeposit";
-import { useDevice } from "../../../app/hooks/use-device";
-import { selectBalances } from "../../../state/userSlice";
-import { ScaledNumber } from "../../../lib/scaled-number";
+import ContentSection from "../../../../components/ContentSection";
+import Button from "../../../../components/Button";
+import { selectPool } from "../../../../state/selectors";
+import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
+import PoolDeposit from "../../../pool/PoolDeposit";
+import { useDevice } from "../../../../app/hooks/use-device";
+import { selectBalances } from "../../../../state/userSlice";
+import { ScaledNumber } from "../../../../lib/scaled-number";
 
 const Container = styled.div`
   position: relative;
