@@ -46,29 +46,31 @@ const RegisteredActions = (): JSX.Element => {
   const hasPosition = positions.length > 0;
 
   return (
-    <ContentSection
-      header={t("actions.registered.header")}
-      content={
-        <Content>
-          {!hasPosition && (
-            <Empty id="register-positions-empty">{t("actions.registered.empty")}</Empty>
-          )}
-          {hasPosition &&
-            positions.map((position: Position) => <RegisteredAction position={position} />)}
-          <ButtonContainer>
-            <Button
-              id="register-action-button"
-              primary={!hasPosition}
-              medium
-              width={isMobile ? "100%" : "44%"}
-              background="#0F0830"
-              text={t("actions.register.button")}
-              click={() => navigate("/actions/register")}
-            />
-          </ButtonContainer>
-        </Content>
-      }
-    />
+    <div>
+      <ContentSection
+        header={t("actions.registered.header")}
+        content={
+          <Content>
+            {!hasPosition && (
+              <Empty id="register-positions-empty">{t("actions.registered.empty")}</Empty>
+            )}
+            {hasPosition &&
+              positions.map((position: Position) => <RegisteredAction position={position} />)}
+            <ButtonContainer>
+              <Button
+                id="register-action-button"
+                primary={!hasPosition}
+                medium
+                width={isMobile ? "100%" : "44%"}
+                background="#0F0830"
+                text={t("actions.register.button")}
+                click={() => navigate("/actions/register")}
+              />
+            </ButtonContainer>
+          </Content>
+        }
+      />
+    </div>
   );
 };
 
