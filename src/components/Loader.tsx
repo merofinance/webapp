@@ -1,4 +1,3 @@
-import React from "react";
 import styled, { keyframes } from "styled-components";
 
 const animation = keyframes`
@@ -36,7 +35,7 @@ interface Props {
   button?: boolean;
 }
 
-const Loader = ({ row, preview, button }: Props) => {
+const Loader = ({ row, preview, button }: Props): JSX.Element => {
   return <StyledLoader row={row} preview={preview} button={button} />;
 };
 

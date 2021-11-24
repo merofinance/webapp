@@ -107,7 +107,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const RegisterTopupConditionsForm = () => {
+const RegisterTopupConditionsForm = (): JSX.Element => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const backd = useBackd();

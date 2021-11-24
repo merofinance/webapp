@@ -40,7 +40,7 @@ const SubHeader = styled.div`
   }
 `;
 
-const TopupConditions = () => {
+const TopupConditions = (): JSX.Element => {
   const { t } = useTranslation();
 
   return (
