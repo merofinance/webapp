@@ -334,10 +334,6 @@
         "header": "LP Price",
         "tooltip": "The current exchange rate of {{lpToken}} to {{underlying}}. {{underlying}}={{lpToken}}*{{exchangeRate}}"
       },
-      "withdrawalFees": {
-        "header": "Withdrawal Fee",
-        "tooltip": "Withdrawal fees start at {{max}} and decrease linearly over time until they reach {{min}}. This takes {{days}} days"
-      },
       "strategy": {
         "header": "Strategy",
         "tooltip": "The current protocol funds are allocated to for yield farming strategies",
@@ -345,6 +341,10 @@
           "viewContract": "View Contract",
           "readMore": "Read More"
         }
+      },
+      "withdrawalFees": {
+        "header": "Withdrawal Fee",
+        "tooltip": "Withdrawal fees start at {{max}} and decrease linearly over time until they reach {{min}}. This takes {{days}} days"
       }
     },
     "statistics": {
@@ -396,15 +396,45 @@
             }
           }
         }
-      },
-      "positions": {
-        "tabDesktop": "Top-up Positions",
-        "tabMobile": "Positions",
-        "header": "Top-up {{asset}} positions",
-        "buttons": {
-          "nav": "Create a Top-up Position",
-          "approve": "approve 1/2",
-          "create": "create 2/2"
+      }
+    }
+  },
+  "actions": {
+    "overview": "Use this screen to monitor your Actions. Actions are a set of predefined market triggers, that when occur, something is done on your behalf.",
+    "deposits": {
+      "header": "Your Deposits",
+      "empty": "You do not have any existing Deposits...",
+      "manage": "Manage deposits"
+    },
+    "propose": "+ Propose a new Action on Discord",
+    "register": {
+      "button": "Register an Action",
+      "header": "Register an Action",
+      "nav": "Register an Action",
+      "create": "Confirm Top-up Position",
+      "choose": "Choose the type of Action",
+      "overview": "Define the market triggers that will enable your action using this interface."
+    },
+    "registered": {
+      "header": "Registered Actions",
+      "existing": "Existing Actions",
+      "empty": "You have not registered any Actions yet...",
+      "columns": {
+        "type": "Type",
+        "locked": "Amount Locked",
+        "lockedShort": "Locked"
+      }
+    },
+    "suggestions": {
+      "topup": {
+        "header": "We have found a protectable loan!",
+        "subHeader": "The wallet you have connected has a loan that you can create a top-up position for.",
+        "labels": {
+          "protocol": "Protocol",
+          "healthFactor": "Health Factor",
+          "totalCollateral": "Collateral Value",
+          "totalLoan": "Loan Amount",
+          "pool": "Protecting with"
         },
         "register": "Register top-up position"
       }
