@@ -84,7 +84,7 @@ const ChangePoolText = styled(GradientText)`
   font-size: 1rem;
 `;
 
-const ActionSummary = () => {
+const ActionSummary = (): JSX.Element => {
   const { t } = useTranslation();
   const { address, protocol, poolName } = useParams<"address" | "protocol" | "poolName">();
   const navigate = useNavigate();

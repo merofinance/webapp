@@ -5,7 +5,7 @@ import RegisterTopupLoan from "./RegisterTopupLoan";
 import RegisterTopupPool from "./RegisterTopupPool";
 import RegisterTopupPoolDeposit from "./RegisterTopupPoolDeposit";
 
-const RegisterTopup = () => {
+const RegisterTopup = (): JSX.Element => {
   const poolDepositFull = useMatch("/deposit/:poolName/:address/:protocol");
   const poolDeposit = useMatch("/deposit/:poolName");
   const conditions = useMatch("/:address/:protocol/:poolName");

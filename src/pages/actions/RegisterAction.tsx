@@ -75,7 +75,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const RegisterAction = () => {
+const RegisterAction = (): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { isMobile } = useDevice();

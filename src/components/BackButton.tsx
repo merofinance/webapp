@@ -41,7 +41,7 @@ const Text = styled.div`
   margin-left: 0.9rem;
 `;
 
-const BackButton = () => {
+const BackButton = (): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 

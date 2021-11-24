@@ -44,7 +44,7 @@ interface Props {
   position: Position;
 }
 
-const ExistingAction = ({ position }: Props) => {
+const ExistingAction = ({ position }: Props): JSX.Element => {
   const { t } = useTranslation();
   const pools = useSelector(selectPools);
   const pool = pools.filter((pool: Pool) => pool.lpToken.address === position.depositToken)[0];

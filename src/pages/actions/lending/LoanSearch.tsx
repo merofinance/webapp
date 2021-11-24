@@ -73,7 +73,7 @@ interface Props {
   hasExistingLoans: boolean;
 }
 
-const LoanSearch = ({ value, setValue, hasExistingLoans }: Props) => {
+const LoanSearch = ({ value, setValue, hasExistingLoans }: Props): JSX.Element => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();

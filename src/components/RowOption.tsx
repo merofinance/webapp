@@ -135,7 +135,7 @@ interface Props {
   option: RowOptionType;
 }
 
-const RowOption = ({ active, select, option }: Props) => {
+const RowOption = ({ active, select, option }: Props): JSX.Element => {
   return (
     <Container>
       <StyledRowOption

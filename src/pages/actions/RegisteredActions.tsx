@@ -38,7 +38,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const RegisteredActions = () => {
+const RegisteredActions = (): JSX.Element => {
   const { t } = useTranslation();
   const positions = useSelector(selectPositions);
   const navigate = useNavigate();

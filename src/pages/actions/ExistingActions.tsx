@@ -41,7 +41,7 @@ const Header = styled.div`
   flex: ${(props: HeaderProps) => props.flex};
 `;
 
-const ExistingActions = () => {
+const ExistingActions = (): JSX.Element => {
   const { t } = useTranslation();
   const positions = useSelector(selectPositions);
   const location = useLocation();

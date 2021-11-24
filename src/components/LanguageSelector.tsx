@@ -77,7 +77,7 @@ const Arrow = styled.div`
   }
 `;
 
-const LanguageSelector = () => {
+const LanguageSelector = (): JSX.Element => {
   const { i18n } = useTranslation();
   const anchorRef = useRef<HTMLButtonElement>(null);
 

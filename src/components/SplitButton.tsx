@@ -30,7 +30,7 @@ interface Props {
   buttons: ButtonType[];
 }
 
-const SplitButton = ({ buttons }: Props) => {
+const SplitButton = ({ buttons }: Props): JSX.Element => {
   const options: SelectorOptionType[] = buttons.map((button: ButtonType) => {
     return { value: button.value, label: button.label };
   });

@@ -32,7 +32,7 @@ interface Props {
   complete: () => void;
 }
 
-const DeleteTopupConfirmation = ({ show, close, position, pool, complete }: Props) => {
+const DeleteTopupConfirmation = ({ show, close, position, pool, complete }: Props): JSX.Element => {
   const { t } = useTranslation();
   const backd = useBackd();
   const dispatch = useDispatch<AppDispatch>();

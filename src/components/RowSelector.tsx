@@ -19,7 +19,7 @@ interface Props {
   setValue: (value: string) => void;
 }
 
-const RowSelector = ({ options, value, setValue }: Props) => {
+const RowSelector = ({ options, value, setValue }: Props): JSX.Element => {
   return (
     <StyledRowSelector>
       {options.map((option: RowOptionType) => (

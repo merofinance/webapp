@@ -49,7 +49,7 @@ interface Props {
   link: string;
 }
 
-const Overview = ({ description, link }: Props) => {
+const Overview = ({ description, link }: Props): JSX.Element => {
   const { t } = useTranslation();
 
   return (

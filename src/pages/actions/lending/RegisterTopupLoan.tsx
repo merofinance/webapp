@@ -60,7 +60,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const RegisterTopupLoan = () => {
+const RegisterTopupLoan = (): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { account } = useWeb3React();

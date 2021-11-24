@@ -72,7 +72,7 @@ interface Props {
   loan: Loan;
 }
 
-const ProtectableLoan = ({ loan }: Props) => {
+const ProtectableLoan = ({ loan }: Props): JSX.Element => {
   const { t } = useTranslation();
   const { account } = useWeb3React();
   const navigate = useNavigate();

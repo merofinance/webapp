@@ -63,7 +63,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const RegisterTopupPool = () => {
+const RegisterTopupPool = (): JSX.Element => {
   const { t } = useTranslation();
   const { address, protocol } = useParams<"address" | "protocol">();
   const navigate = useNavigate();

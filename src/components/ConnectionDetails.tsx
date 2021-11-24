@@ -81,7 +81,7 @@ interface Props {
   wallet: string;
 }
 
-const ConnectionDetails = ({ show, close, changeWallet, wallet }: Props) => {
+const ConnectionDetails = ({ show, close, changeWallet, wallet }: Props): JSX.Element => {
   const { t } = useTranslation();
   const { account, chainId } = useWeb3React();
 

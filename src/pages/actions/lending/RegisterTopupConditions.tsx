@@ -137,7 +137,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const RegisterTopupConditions = () => {
+const RegisterTopupConditions = (): JSX.Element => {
   const { t } = useTranslation();
   const backd = useBackd();
   const navigate = useNavigate();

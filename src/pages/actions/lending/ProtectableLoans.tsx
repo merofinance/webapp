@@ -46,7 +46,7 @@ const SubHeader = styled.div`
   }
 `;
 
-const ProtectableLoans = () => {
+const ProtectableLoans = (): JSX.Element => {
   const { t } = useTranslation();
   const { account } = useWeb3React();
   const loans = useSelector(selectLoans(account));

@@ -102,7 +102,7 @@ const Total = styled.div`
   }
 `;
 
-const YourDeposits = () => {
+const YourDeposits = (): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const pools = useSelector(selectPools);

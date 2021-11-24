@@ -199,7 +199,7 @@ export class PrivateKeyConnector extends AbstractConnector {
     return account;
   }
 
-  public deactivate() {
+  public deactivate(): void {
     if (window.ethereum && window.ethereum.removeListener) {
       window.ethereum.removeListener("chainChanged", this.handleChainChanged);
       window.ethereum.removeListener("accountsChanged", this.handleAccountsChanged);

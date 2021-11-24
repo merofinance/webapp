@@ -37,7 +37,7 @@ const Link = styled(GradientLink)`
   }
 `;
 
-const ErrorAlert = () => {
+const ErrorAlert = (): JSX.Element => {
   const { t } = useTranslation();
   const error = useSelector(selectError);
   const dispatch: AppDispatch = useDispatch();
