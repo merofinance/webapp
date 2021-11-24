@@ -10,7 +10,6 @@ import {
 
 import { Web3ReactProvider } from "@web3-react/core";
 import { ethers } from "ethers";
-import { Suspense } from "react";
 import { useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
@@ -91,24 +90,22 @@ const Layout = (): JSX.Element => {
   };
 
   return (
-    <Suspense fallback={<div />}>
-      <HelmetProvider>
-        <ErrorBoundary dispatch={dispatch}>
-          <Web3ReactProvider getLibrary={getLibrary}>
-            <Background>
-              <Header />
-              <StyledApp>
-                <Content>
-                  <Outlet />
-                </Content>
-                <Footer />
-                <ErrorAlert />
-              </StyledApp>
-            </Background>
-          </Web3ReactProvider>
-        </ErrorBoundary>
-      </HelmetProvider>
-    </Suspense>
+    <HelmetProvider>
+      <ErrorBoundary dispatch={dispatch}>
+        <Web3ReactProvider getLibrary={getLibrary}>
+          <Background>
+            <Header />
+            <StyledApp>
+              <Content>
+                <Outlet />
+              </Content>
+              <Footer />
+              <ErrorAlert />
+            </StyledApp>
+          </Background>
+        </Web3ReactProvider>
+      </ErrorBoundary>
+    </HelmetProvider>
   );
 };
 

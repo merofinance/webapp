@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import LandingPage from "./pages/landing/LandingPage";
@@ -23,31 +24,36 @@ const App = (): JSX.Element => {
   const { stakingLive } = useIsLive();
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<LandingPage />} />
-          <Route path="pool/:poolName" element={<PoolPage />} />
-          <Route path="pools" element={<PoolsPage />} />
-          <Route path="actions" element={<ActionsPage />}>
-            <Route path="register" element={<ActionRegister />}>
-              <Route index element={<ActionRegisterIndex />} />
-              <Route path="topup" element={<RegisterTopup />}>
-                <Route index element={<TopupLoan />} />
-                <Route path="deposit/:poolName/:address/:protocol" element={<TopupPoolDeposit />} />
-                <Route path=":address/:protocol/:poolName" element={<TopupConditions />} />
-                <Route path=":address/:protocol" element={<TopupPool />} />
+    <Suspense fallback={<div />}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<LandingPage />} />
+            <Route path="pool/:poolName" element={<PoolPage />} />
+            <Route path="pools" element={<PoolsPage />} />
+            <Route path="actions" element={<ActionsPage />}>
+              <Route path="register" element={<ActionRegister />}>
+                <Route index element={<ActionRegisterIndex />} />
+                <Route path="topup" element={<RegisterTopup />}>
+                  <Route index element={<TopupLoan />} />
+                  <Route
+                    path="deposit/:poolName/:address/:protocol"
+                    element={<TopupPoolDeposit />}
+                  />
+                  <Route path=":address/:protocol/:poolName" element={<TopupConditions />} />
+                  <Route path=":address/:protocol" element={<TopupPool />} />
+                </Route>
               </Route>
+              <Route index element={<ActionsIndex />} />
             </Route>
-            <Route index element={<ActionsIndex />} />
+            {stakingLive && <Route path="claim" element={<ClaimPage />} />}
+            {stakingLive && <Route path="stake" element={<StakePage />} />}
+            <Route path="litepaper" element={<LitepaperPage />} />
           </Route>
-          {stakingLive && <Route path="claim" element={<ClaimPage />} />}
-          {stakingLive && <Route path="stake" element={<StakePage />} />}
-          <Route path="litepaper" element={<LitepaperPage />} />
-        </Route>
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </Router>
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Router>
+    </Suspense>
   );
 };
 
