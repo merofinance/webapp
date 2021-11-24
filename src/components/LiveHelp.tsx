@@ -212,7 +212,7 @@ const LiveHelp = (): JSX.Element => {
     }
   }, [implement, location]);
 
-  if (!hasSuggestions) return <></>;
+  if (!hasSuggestions) return <div />;
 
   return (
     <Container id="live-help">
