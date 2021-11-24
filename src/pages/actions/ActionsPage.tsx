@@ -2,16 +2,13 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
-import { useLocation, useMatch } from "react-router-dom";
+import { useLocation, Outlet } from "react-router-dom";
 
 import { useBackd } from "../../app/hooks/use-backd";
 import { fetchState } from "../../state/poolsListSlice";
 import Seo from "../../components/Seo";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
-import RegisteredActions from "./RegisteredActions";
 import Overview from "../../components/Overview";
-import ProtectableLoans from "./lending/ProtectableLoans";
-import RegisterAction from "./RegisterAction";
 import YourDeposits from "./YourDeposits";
 import { GradientLink } from "../../styles/GradientText";
 import ExistingActions from "./ExistingActions";
@@ -27,9 +24,6 @@ const StyledActionsPage = styled.div`
 
 const ContentContainer = styled.div`
   flex: 1;
-`;
-
-const Content = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -70,8 +64,6 @@ const ActionsPage = (): JSX.Element => {
   const backd = useBackd();
   const dispatch = useDispatch();
   const updated = useWeb3Updated();
-  const isRegister = useMatch("/register");
-  const isActions = useMatch("/");
   const location = useLocation();
 
   useEffect(() => {
@@ -83,15 +75,7 @@ const ActionsPage = (): JSX.Element => {
     <StyledActionsPage>
       <Seo title={t("metadata.actions.title")} description={t("metadata.actions.description")} />
       <ContentContainer>
-        <Content>
-          {isRegister && <RegisterAction />}
-          {isActions && (
-            <>
-              <ProtectableLoans />
-              <RegisteredActions />
-            </>
-          )}
-        </Content>
+        <Outlet />
       </ContentContainer>
       <InfoCards hideMobile={location.pathname !== "/actions"}>
         <Overview

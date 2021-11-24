@@ -36,6 +36,8 @@ import NotFoundPage from "./pages/not-found/NotFoundPage";
 import { BackdError } from "./app/errors";
 import { useIsLive } from "./app/hooks/use-is-live";
 import ActionsPage from "./pages/actions/ActionsPage";
+import RegisterAction from "./pages/actions/RegisterAction";
+import ActionsIndex from "./pages/actions/ActionsIndex";
 
 const Background = styled.div`
   background: radial-gradient(rgba(11, 3, 60, 0.2), rgba(10, 5, 38, 0.3));
@@ -114,7 +116,10 @@ const App = (): JSX.Element => {
                     <Routes>
                       <Route path="/pool/:poolName" element={<PoolPage />} />
                       <Route path="/pools" element={<PoolsPage />} />
-                      <Route path="/actions" element={<ActionsPage />} />
+                      <Route path="/actions" element={<ActionsPage />}>
+                        <Route path="register" element={<RegisterAction />} />
+                        <Route index element={<ActionsIndex />} />
+                      </Route>
                       {stakingLive && <Route path="/claim" element={<ClaimPage />} />}
                       {stakingLive && <Route path="/stake" element={<StakePage />} />}
                       <Route path="/litepaper" element={<LitepaperPage />} />
