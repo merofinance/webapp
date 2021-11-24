@@ -12,7 +12,7 @@ import fromEntries from "fromentries";
 import { UnsupportedNetwork } from "../app/errors";
 import { getPrices as getPricesFromCoingecko } from "./coingecko";
 import { getPrices as getPricesFromBinance } from "./binance";
-import { ETH_DECIMALS, ETH_DUMMY_ADDRESS, GWEI_SCALE, INFINITE_APPROVE_AMMOUNT } from "./constants";
+import { ETH_DECIMALS, ETH_DUMMY_ADDRESS, INFINITE_APPROVE_AMMOUNT } from "./constants";
 import { bigNumberToFloat, scale } from "./numeric";
 import { ScaledNumber } from "./scaled-number";
 import {
@@ -25,6 +25,7 @@ import {
   PlainPosition,
   Token,
   transformPool,
+  PlainWithdrawalFees,
   PlainLoan,
   LendingProtocol,
   Optional,
@@ -51,6 +52,7 @@ export interface Backd {
   getBalances(addresses: Address[], account?: Address): Promise<Balances>;
   getAllowance(token: Token, spender: Address, account?: string): Promise<ScaledNumber>;
   getAllowances(queries: AllowanceQuery[]): Promise<Record<string, Balances>>;
+  getWithdrawalFees(pools: Pool[]): Promise<PlainWithdrawalFees>;
   getPrices(symbol: string[]): Promise<Prices>;
   approve(token: Token, spender: Address, amount: ScaledNumber): Promise<ContractTransaction>;
   deposit(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction>;
@@ -129,15 +131,27 @@ export class Web3Backd implements Backd {
 
   async getPoolInfo(address: Address): Promise<Pool> {
     const pool = LiquidityPoolFactory.connect(address, this._provider);
-    const [name, lpTokenAddress, underlyingAddress, totalAssets, rawApy, exchangeRate] =
-      await Promise.all([
-        pool.name(),
-        pool.getLpToken(),
-        pool.getUnderlying(),
-        pool.totalUnderlying(),
-        pool.computeAPY(),
-        pool.exchangeRate(),
-      ]);
+    const [
+      name,
+      lpTokenAddress,
+      underlyingAddress,
+      totalAssets,
+      rawApy,
+      exchangeRate,
+      maxWithdrawalFee,
+      minWithdrawalFee,
+      feeDecreasePeriod,
+    ] = await Promise.all([
+      pool.name(),
+      pool.getLpToken(),
+      pool.getUnderlying(),
+      pool.totalUnderlying(),
+      pool.computeAPY(),
+      pool.exchangeRate(),
+      pool.getMaxWithdrawalFee(),
+      pool.getMinWithdrawalFee(),
+      pool.getWithdrawalFeeDecreasePeriod(),
+    ]);
     const [lpToken, underlying, stakerVaultAddress] = await Promise.all([
       this.getTokenInfo(lpTokenAddress),
       this.getTokenInfo(underlyingAddress),
@@ -154,8 +168,31 @@ export class Web3Backd implements Backd {
       totalAssets,
       exchangeRate,
       stakerVaultAddress,
+      maxWithdrawalFee,
+      minWithdrawalFee,
+      feeDecreasePeriod,
     };
     return transformPool(rawPool, bigNumberToFloat);
+  }
+
+  async getWithdrawalFees(pools: Pool[]): Promise<PlainWithdrawalFees> {
+    const account = await this.currentAccount();
+    const promises = pools.map((pool: Pool) => {
+      const poolFactory = LiquidityPoolFactory.connect(pool.address, this._provider);
+      const ONE = ScaledNumber.fromUnscaled(1, pool.underlying.decimals).value;
+      return poolFactory.getWithdrawalFee(account, ONE);
+    });
+
+    const withdrawalFees = await Promise.all(promises);
+
+    return fromEntries(
+      pools.map((pool: Pool, index: number) => {
+        const ONE = ScaledNumber.fromUnscaled(1, pool.underlying.decimals);
+        const withdrawalFee = new ScaledNumber(withdrawalFees[index], pool.underlying.decimals);
+        const percent = withdrawalFee.div(ONE);
+        return [pool.address, percent.toPlain()];
+      })
+    );
   }
 
   async getLoanPosition(protocol: LendingProtocol, address: Address): Promise<Optional<PlainLoan>> {

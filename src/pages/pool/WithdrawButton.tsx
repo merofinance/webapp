@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -17,6 +17,7 @@ import { ScaledNumber } from "../../lib/scaled-number";
 import { hasPendingTransaction } from "../../state/transactionsSlice";
 import Loader from "../../components/Loader";
 import { Optional } from "../../lib/types";
+import WithdrawalConfirmation from "./WithdrawalConfirmation";
 
 const StyledProgressButtons = styled.div`
   width: 100%;
@@ -39,8 +40,13 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
   const loading = useSelector(hasPendingTransaction("Withdraw"));
   const availableToWithdraw = useSelector(selectAvailableToWithdraw(pool));
 
+  const [confirming, setConfirming] = useState(false);
+
   useEffect(() => {
-    if (!loading) complete();
+    if (!loading) {
+      setConfirming(false);
+      complete();
+    }
   }, [loading]);
 
   const executeWithdraw = (amount: ScaledNumber) => {
@@ -53,7 +59,15 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
     dispatch(unstake({ backd, pool, amount: staked }));
   };
 
-  return pool ? (
+  const submit = () => {
+    if (!valid || !availableToWithdraw) return;
+    if (value.lte(availableToWithdraw)) executeWithdraw(value);
+    else executeUnstake();
+  };
+
+  if (!pool) return <Loader button />;
+
+  return (
     <StyledProgressButtons>
       <Button
         id="withdraw-button"
@@ -61,18 +75,19 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
         medium
         wide
         text={t("pool.tabs.withdraw.action", { asset: pool.underlying.symbol.toUpperCase() })}
-        click={() => {
-          if (!valid || !availableToWithdraw) return;
-          if (value.lte(availableToWithdraw)) executeWithdraw(value);
-          else executeUnstake();
-        }}
+        click={() => setConfirming(true)}
         disabled={!valid}
-        loading={loading}
         hoverText={t("amountInput.enter")}
       />
+      <WithdrawalConfirmation
+        pool={pool}
+        show={confirming}
+        close={() => setConfirming(false)}
+        submit={submit}
+        value={value}
+        loading={loading}
+      />
     </StyledProgressButtons>
-  ) : (
-    <Loader button />
   );
 };
 

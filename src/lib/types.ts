@@ -22,6 +22,9 @@ export interface Pool<Num = number> {
   apy: Num;
   totalAssets: Num;
   exchangeRate: Num;
+  maxWithdrawalFee: Num;
+  minWithdrawalFee: Num;
+  feeDecreasePeriod: Num;
 }
 
 interface GenericPosition<T> {
@@ -107,6 +110,9 @@ export function transformPool<T, U>(pool: Pool<T>, f: (v: T) => U): Pool<U> {
     apy: f(pool.apy),
     totalAssets: f(pool.totalAssets),
     exchangeRate: f(pool.exchangeRate),
+    maxWithdrawalFee: f(pool.maxWithdrawalFee),
+    minWithdrawalFee: f(pool.minWithdrawalFee),
+    feeDecreasePeriod: f(pool.feeDecreasePeriod),
   };
 }
 
@@ -127,6 +133,19 @@ export const fromPlainBalances = (balances: PlainBalances): Balances => {
       key,
       value ? ScaledNumber.fromPlain(value) : null,
     ])
+  );
+};
+
+export type WithdrawalFees = Record<string, ScaledNumber>;
+export type PlainWithdrawalFees = Record<string, PlainScaledNumber>;
+
+export const toPlainWithdrawalFees = (withdrawalFees: WithdrawalFees): PlainWithdrawalFees => {
+  return fromEntries(Object.entries(withdrawalFees).map(([key, value]) => [key, value.toPlain()]));
+};
+
+export const fromPlainWithdrawalFees = (withdrawalFees: PlainWithdrawalFees): WithdrawalFees => {
+  return fromEntries(
+    Object.entries(withdrawalFees).map(([key, value]) => [key, ScaledNumber.fromPlain(value)])
   );
 };
 

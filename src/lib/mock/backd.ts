@@ -14,6 +14,7 @@ import {
   PlainPosition,
   Token,
   transformPool,
+  PlainWithdrawalFees,
   PlainLoan,
   LendingProtocol,
   Optional,
@@ -63,6 +64,10 @@ export default class MockBackd implements Backd {
   getBalance(pool: Address, account?: Address): Promise<ScaledNumber> {
     const number = pool in balances ? balances[pool] : BigNumber.from(0);
     return Promise.resolve(new ScaledNumber(number));
+  }
+
+  getWithdrawalFees(pools: Pool[]): Promise<PlainWithdrawalFees> {
+    return Promise.resolve({});
   }
 
   async deposit(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction> {

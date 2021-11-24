@@ -9,7 +9,7 @@ import { fetchLoans } from "./lendingSlice";
 import { INFURA_ID } from "../lib/constants";
 import { createBackd } from "../lib/factory";
 import { fetchPositions } from "./positionsSlice";
-import { fetchAllowances, fetchBalances } from "./userSlice";
+import { fetchAllowances, fetchBalances, fetchWithdrawalFees } from "./userSlice";
 
 interface PoolsState {
   pools: Pool[];
@@ -76,6 +76,7 @@ export const fetchState =
       dispatch(fetchBalances({ backd, pools }));
       dispatch(fetchPrices({ backd, pools }));
       dispatch(fetchAllowances({ backd, pools }));
+      dispatch(fetchWithdrawalFees({ backd, pools }));
     });
     dispatch(fetchPositions({ backd }));
   };
