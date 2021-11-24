@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
-import { Switch, useRouteMatch, Route, useLocation } from "react-router";
+import { useLocation, useMatch } from "react-router";
 
 import { useBackd } from "../../app/hooks/use-backd";
 import { fetchState } from "../../state/poolsListSlice";
@@ -70,7 +70,8 @@ const ActionsPage = (): JSX.Element => {
   const backd = useBackd();
   const dispatch = useDispatch();
   const updated = useWeb3Updated();
-  const match = useRouteMatch();
+  const isRegister = useMatch("/register");
+  const isActions = useMatch("/");
   const location = useLocation();
 
   useEffect(() => {
@@ -83,17 +84,13 @@ const ActionsPage = (): JSX.Element => {
       <Seo title={t("metadata.actions.title")} description={t("metadata.actions.description")} />
       <ContentContainer>
         <Content>
-          <Switch>
-            <Route path={`${match.path}/register`}>
-              <RegisterAction />
-            </Route>
-            <Route path={match.path}>
-              <>
-                <ProtectableLoans />
-                <RegisteredActions />
-              </>
-            </Route>
-          </Switch>
+          {isRegister && <RegisterAction />}
+          {isActions && (
+            <>
+              <ProtectableLoans />
+              <RegisteredActions />
+            </>
+          )}
         </Content>
       </ContentContainer>
       <InfoCards hideMobile={location.pathname !== "/actions"}>

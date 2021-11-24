@@ -30,7 +30,7 @@ interface Props {
   buttons: ButtonType[];
 }
 
-export default function SplitButton({ buttons }: Props): JSX.Element {
+const SplitButton = ({ buttons }: Props) => {
   const options: SelectorOptionType[] = buttons.map((button: ButtonType) => {
     return { value: button.value, label: button.label };
   });
@@ -76,4 +76,6 @@ export default function SplitButton({ buttons }: Props): JSX.Element {
       </Grid>
     </Grid>
   );
-}
+};
+
+export default SplitButton;

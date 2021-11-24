@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { useHistory, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 import { selectLoans } from "../../../state/lendingSlice";
 import { selectEthPrice } from "../../../state/poolsListSlice";
@@ -11,12 +11,6 @@ import { selectPool } from "../../../state/selectors";
 import { GradientText } from "../../../styles/GradientText";
 import { LendingProtocol, Loan } from "../../../lib/types";
 import { TOPUP_ACTION_ROUTE } from "../../../lib/constants";
-
-interface TopupParams {
-  address: string;
-  protocol: LendingProtocol;
-  poolName: string;
-}
 
 const StyledActionSummary = styled.div`
   width: 100%;
@@ -92,15 +86,15 @@ const ChangePoolText = styled(GradientText)`
 
 const ActionSummary = () => {
   const { t } = useTranslation();
-  const { address, protocol, poolName } = useParams<TopupParams>();
-  const history = useHistory();
+  const { address, protocol, poolName } = useParams<"address" | "protocol" | "poolName">();
+  const navigate = useNavigate();
   const ethPrice = useSelector(selectEthPrice);
   const pool = useSelector(selectPool(poolName));
   const loans = useSelector(selectLoans(address));
 
   const loan = loans.filter((loan: Loan) => loan.protocol === protocol)[0];
 
-  if (!loan || !pool) return <></>;
+  if (!loan || !pool) return <div />;
 
   return (
     <StyledActionSummary id="action-summary">
@@ -126,7 +120,7 @@ const ActionSummary = () => {
           <Asset tiny token={pool.underlying} />
           <ChangePoolButton
             id="action-summary-change-pool"
-            onClick={() => history.push(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`)}
+            onClick={() => navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`)}
           >
             <ChangePoolText>{t("components.change")}</ChangePoolText>
           </ChangePoolButton>

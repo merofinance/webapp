@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 import { useWeb3React } from "@web3-react/core";
 import { useSelector } from "react-redux";
 
@@ -62,7 +62,7 @@ const ButtonContainer = styled.div`
 
 const RegisterTopupLoan = () => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { account } = useWeb3React();
   const { isMobile } = useDevice();
   const loans = useSelector(selectLoans(account));
@@ -147,7 +147,7 @@ const RegisterTopupLoan = () => {
                 disabled={!address}
                 width={isMobile ? "100%" : "44%"}
                 text={t("components.continue")}
-                click={() => history.push(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`)}
+                click={() => navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`)}
                 hoverText={t("actions.topup.stages.loan.header")}
               />
             </ButtonContainer>

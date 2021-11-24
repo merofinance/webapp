@@ -48,7 +48,7 @@ const ExistingActions = () => {
 
   const hasPosition = positions.length > 0;
 
-  if (location.pathname === "/actions") return <></>;
+  if (location.pathname === "/actions") return <div />;
 
   return (
     <InfoCard

@@ -59,7 +59,7 @@ const ProtectableLoans = () => {
       !positions.some((position: Position) => position.protocol === loan.protocol)
   );
 
-  if (protectableLoans.length === 0) return <></>;
+  if (protectableLoans.length === 0) return <div />;
 
   return (
     <StyledProtectableLoans>

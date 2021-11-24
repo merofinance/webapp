@@ -1,32 +1,20 @@
 import React from "react";
-import { Switch, useRouteMatch, Route } from "react-router";
+import { useMatch } from "react-router-dom";
 import RegisterTopupConditions from "./RegisterTopupConditions";
 import RegisterTopupLoan from "./RegisterTopupLoan";
 import RegisterTopupPool from "./RegisterTopupPool";
 import RegisterTopupPoolDeposit from "./RegisterTopupPoolDeposit";
 
 const RegisterTopup = () => {
-  const match = useRouteMatch();
+  const poolDepositFull = useMatch("/deposit/:poolName/:address/:protocol");
+  const poolDeposit = useMatch("/deposit/:poolName");
+  const conditions = useMatch("/:address/:protocol/:poolName");
+  const pool = useMatch("/:address/:protocol");
 
-  return (
-    <Switch>
-      <Route path={`${match.path}/deposit/:poolName/:address/:protocol`}>
-        <RegisterTopupPoolDeposit />
-      </Route>
-      <Route path={`${match.path}/deposit/:poolName`}>
-        <RegisterTopupPoolDeposit />
-      </Route>
-      <Route path={`${match.path}/:address/:protocol/:poolName`}>
-        <RegisterTopupConditions />
-      </Route>
-      <Route path={`${match.path}/:address/:protocol`}>
-        <RegisterTopupPool />
-      </Route>
-      <Route path={match.path}>
-        <RegisterTopupLoan />
-      </Route>
-    </Switch>
-  );
+  if (poolDepositFull || poolDeposit) return <RegisterTopupPoolDeposit />;
+  if (conditions) return <RegisterTopupConditions />;
+  if (pool) return <RegisterTopupPool />;
+  return <RegisterTopupLoan />;
 };
 
 export default RegisterTopup;

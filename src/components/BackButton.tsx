@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 
 import back from "../assets/ui/back.svg";
@@ -43,10 +43,10 @@ const Text = styled.div`
 
 const BackButton = () => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
-    <StyledBackButton id="back-button" onClick={() => history.goBack()}>
+    <StyledBackButton id="back-button" onClick={() => navigate(-1)}>
       <Arrow src={back} />
       <Text>{t("components.back")}</Text>
     </StyledBackButton>

@@ -12,7 +12,7 @@ import { Web3ReactProvider } from "@web3-react/core";
 import { ethers } from "ethers";
 import React, { Suspense } from "react";
 import { useDispatch } from "react-redux";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import { HelmetProvider } from "react-helmet-async";
 import Web3 from "web3";
@@ -31,7 +31,7 @@ import StakePage from "./pages/stake/StakePage";
 import LitepaperPage from "./pages/litepaper/LitepaperPage";
 import ClaimPage from "./pages/claim/ClaimPage";
 import PoolPage from "./pages/pool/PoolPage";
-import { ErrorAlert } from "./components/ErrorAlert";
+import ErrorAlert from "./components/ErrorAlert";
 import NotFoundPage from "./pages/not-found/NotFoundPage";
 import { BackdError } from "./app/errors";
 import { useIsLive } from "./app/hooks/use-is-live";
@@ -95,7 +95,7 @@ const App = (): JSX.Element => {
     const options = { chainId: parseInt(rawProvider.chainId, 16) };
     try {
       return createBackd(signer, options);
-    } catch (e) {
+    } catch (e: any) {
       const error = e instanceof BackdError ? e.toErrorState() : { message: e.message };
       dispatch(setError(error));
     }
@@ -111,7 +111,7 @@ const App = (): JSX.Element => {
                 <Header />
                 <StyledApp>
                   <Content>
-                    <Switch>
+                    <Routes>
                       <Route path="/pool/:poolName">
                         <PoolPage />
                       </Route>
@@ -140,14 +140,14 @@ const App = (): JSX.Element => {
                         <LitepaperPage />
                       </Route>
 
-                      <Route exact path="/">
+                      <Route path="/">
                         <LandingPage />
                       </Route>
 
                       <Route>
                         <NotFoundPage />
                       </Route>
-                    </Switch>
+                    </Routes>
                   </Content>
                   <Footer />
                   <ErrorAlert />

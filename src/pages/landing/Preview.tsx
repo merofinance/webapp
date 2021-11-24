@@ -105,7 +105,7 @@ const Preview = (): JSX.Element => {
     dispatch(fetchState(backd));
   }, [updated]);
 
-  if (!protocolLive) return <></>;
+  if (!protocolLive) return <div />;
 
   return (
     <StyledPreview>

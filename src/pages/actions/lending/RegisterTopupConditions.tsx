@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { useHistory, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import * as yup from "yup";
 import { FormikErrors, useFormik } from "formik";
 import { useSelector } from "react-redux";
@@ -24,12 +24,6 @@ import {
   TOPUP_ACTION_ROUTE,
   TOPUP_GAS_COST,
 } from "../../../lib/constants";
-
-interface TopupParams {
-  address: string;
-  protocol: string;
-  poolName: string;
-}
 
 export interface FormType {
   threshold: string;
@@ -146,9 +140,9 @@ const ButtonContainer = styled.div`
 const RegisterTopupConditions = () => {
   const { t } = useTranslation();
   const backd = useBackd();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { isMobile } = useDevice();
-  const { address, protocol, poolName } = useParams<TopupParams>();
+  const { address, protocol, poolName } = useParams<"address" | "protocol" | "poolName">();
   const pool = useSelector(selectPool(poolName));
   const underlyingPrice = useSelector(selectPrice(pool));
   const ethPrice = useSelector(selectEthPrice);
@@ -185,12 +179,12 @@ const RegisterTopupConditions = () => {
     validate,
   });
 
-  if (!pool) {
-    history.push(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`);
-    return <></>;
+  if (!pool || !protocol || !address) {
+    navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`);
+    return <div />;
   }
 
-  if (!backd) return <></>;
+  if (!backd) return <div />;
 
   const position: Position = {
     protocol,
@@ -302,7 +296,7 @@ const RegisterTopupConditions = () => {
         pool={pool}
         complete={() => {
           formik.resetForm({ values: initialValues });
-          history.push("/actions");
+          navigate("/actions");
         }}
       />
     </Container>

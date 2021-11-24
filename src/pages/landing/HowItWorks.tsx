@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 
 import { Header2, Header4, Header5 } from "../../styles/Headers";
 import Radio, { RadioOptionType } from "../../components/Radio";
@@ -157,7 +157,7 @@ const ButtonContainer = styled.div`
 
 const HowItWorks = (): JSX.Element => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [category, setCategory] = useState("protect");
 
   const categories: RadioOptionType[] = [
@@ -196,7 +196,7 @@ const HowItWorks = (): JSX.Element => {
                     primary
                     large
                     text={t("howItWorks.deposit")}
-                    click={() => history.push("/pools")}
+                    click={() => navigate("/pools")}
                   />
                 </ButtonContainer>
               )}

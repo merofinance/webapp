@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { useHistory, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useSelector } from "react-redux";
 
 import ContentSection from "../../../components/ContentSection";
@@ -12,12 +12,6 @@ import PoolDeposit from "../../pool/PoolDeposit";
 import { useDevice } from "../../../app/hooks/use-device";
 import { selectBalances } from "../../../state/userSlice";
 import { ScaledNumber } from "../../../lib/scaled-number";
-
-interface TopupParams {
-  address: string;
-  protocol: string;
-  poolName: string;
-}
 
 const Container = styled.div`
   position: relative;
@@ -50,16 +44,16 @@ const ButtonContainer = styled.div`
   margin-top: 6rem;
 `;
 
-const RegisterTopupPoolDeposit = () => {
+const RegisterTopupPoolDeposit = (): JSX.Element => {
   const { t } = useTranslation();
-  const { address, protocol, poolName } = useParams<TopupParams>();
-  const history = useHistory();
+  const { address, protocol, poolName } = useParams<"address" | "protocol" | "poolName">();
+  const navigate = useNavigate();
   const { isMobile } = useDevice();
   const pool = useSelector(selectPool(poolName));
   const balances = useSelector(selectBalances);
 
   if (!pool) {
-    history.push("/");
+    navigate("/");
     throw Error("Pool not found");
   }
 
@@ -92,11 +86,11 @@ const RegisterTopupPoolDeposit = () => {
                 width={isMobile ? "100%" : "44%"}
                 text={t("components.continue")}
                 click={() => {
-                  if (address && protocol)
-                    history.push(
+                  if (address && protocol && poolName)
+                    navigate(
                       `${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${poolName.toLowerCase()}`
                     );
-                  else history.goBack();
+                  else navigate(-1);
                 }}
                 disabled={!pool || !hasSufficientBalance()}
                 hoverText={t("actions.topup.stages.pool.deposit.incomplete", {

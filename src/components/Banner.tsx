@@ -57,7 +57,7 @@ const Banner = (): JSX.Element => {
   const { t } = useTranslation();
   const location = useLocation();
 
-  if (location.pathname !== "/") return <></>;
+  if (location.pathname !== "/") return <div />;
 
   return (
     <StyledBanner>

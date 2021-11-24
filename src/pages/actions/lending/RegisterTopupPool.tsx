@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { useHistory, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useSelector } from "react-redux";
 
 import ContentSection from "../../../components/ContentSection";
@@ -24,11 +24,6 @@ import {
   TOPUP_ACTION_ROUTE,
   TOPUP_GAS_COST,
 } from "../../../lib/constants";
-
-interface TopupParams {
-  address: string;
-  protocol: string;
-}
 
 const Container = styled.div`
   position: relative;
@@ -70,8 +65,8 @@ const ButtonContainer = styled.div`
 
 const RegisterTopupPool = () => {
   const { t } = useTranslation();
-  const { address, protocol } = useParams<TopupParams>();
-  const history = useHistory();
+  const { address, protocol } = useParams<"address" | "protocol">();
+  const navigate = useNavigate();
   const { isMobile } = useDevice();
   const pools = useSelector(selectPools);
   const balances = useSelector(selectBalances);
@@ -153,8 +148,8 @@ const RegisterTopupPool = () => {
                 text={t("components.continue")}
                 click={() => {
                   if (!hasSufficientBalance(selected))
-                    history.push(`${TOPUP_ACTION_ROUTE}/deposit/${pool}/${address}/${protocol}`);
-                  else history.push(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${pool}`);
+                    navigate(`${TOPUP_ACTION_ROUTE}/deposit/${pool}/${address}/${protocol}`);
+                  else navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${pool}`);
                 }}
                 disabled={!pool}
                 hoverText={t("actions.topup.stages.pool.incomplete")}
