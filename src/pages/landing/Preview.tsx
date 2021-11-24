@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -105,7 +105,7 @@ const Preview = (): JSX.Element => {
     dispatch(fetchState(backd));
   }, [updated]);
 
-  if (!protocolLive) return <></>;
+  if (!protocolLive) return <div />;
 
   return (
     <StyledPreview>

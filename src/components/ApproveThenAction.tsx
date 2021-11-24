@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -36,6 +36,8 @@ const Buttons = styled.div`
   @media (max-width: 600px) {
     grid-template-columns: repeat(1, 1fr);
     grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: ${(props: ButtonsProps) =>
+      props.showApprove ? "repeat(2, 1fr)" : "repeat(1, 1fr)"};
     grid-gap: 1.8rem;
   }
 `;
@@ -105,6 +107,7 @@ interface Props {
   token: Token;
   contract: string;
   stepsOnTop?: boolean;
+  hoverText?: string;
 }
 
 const ApproveThenAction = ({
@@ -116,6 +119,7 @@ const ApproveThenAction = ({
   token,
   contract,
   stepsOnTop,
+  hoverText,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -125,6 +129,7 @@ const ApproveThenAction = ({
   const [persistApprove, setPersistApprove] = useState(false);
 
   const approved = value.isZero() ? !approvedAmount.isZero() : approvedAmount.gte(value);
+  hoverText = hoverText || t("amountInput.enter");
 
   const executeApprove = () => {
     if (!backd || approved || approveLoading) return;
@@ -152,7 +157,7 @@ const ApproveThenAction = ({
             complete={approved}
             loading={approveLoading}
             disabled={disabled}
-            hoverText={t("amountInput.enter")}
+            hoverText={hoverText}
           />
         )}
         <Button
@@ -164,9 +169,7 @@ const ApproveThenAction = ({
           click={action}
           disabled={!approved || disabled}
           loading={loading}
-          hoverText={
-            disabled ? t("amountInput.enter") : t("amountInput.approve", { asset: token.symbol })
-          }
+          hoverText={disabled ? hoverText : t("amountInput.approve", { asset: token.symbol })}
         />
       </Buttons>
       {(!approved || persistApprove) && (

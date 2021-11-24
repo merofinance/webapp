@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
@@ -28,16 +27,20 @@ const preLaunchItems: NavItemType[] = [
 
 const navItems: NavItemType[] = [
   {
-    label: "header.tabs.claim",
-    link: "/claim",
-  },
-  {
     label: "header.tabs.pools",
     link: "/pools",
   },
   {
     label: "header.tabs.stake",
     link: "/stake",
+  },
+  {
+    label: "header.tabs.claim",
+    link: "/claim",
+  },
+  {
+    label: "header.tabs.actions",
+    link: "/actions",
   },
 ];
 
@@ -98,9 +101,14 @@ const NavItems = (): JSX.Element => {
   return (
     <StyledNavItems id="nav-items">
       {protocolLive && !stakingLive && (
-        <NavItem>
-          <InternalLink to="/pools">{t("header.tabs.pools")}</InternalLink>
-        </NavItem>
+        <>
+          <NavItem>
+            <InternalLink to="/pools">{t("header.tabs.pools")}</InternalLink>
+          </NavItem>
+          <NavItem>
+            <InternalLink to="/actions">{t("header.tabs.actions")}</InternalLink>
+          </NavItem>
+        </>
       )}
       {protocolLive &&
         stakingLive &&

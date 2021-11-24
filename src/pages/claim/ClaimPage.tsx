@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
@@ -79,10 +79,7 @@ const ClaimPage = (): JSX.Element => {
 
   return (
     <StyledPoolsPage>
-      <Seo
-        title="Claim Rewards & Yield"
-        description="Claim rewards from Backd yield farming strategies and collateral top up fees"
-      />
+      <Seo title={t("metadata.claim.title")} description={t("metadata.claim.description")} />
       <ClaimSummary />
       <Headers>
         <Header>{t("headers.asset")}</Header>

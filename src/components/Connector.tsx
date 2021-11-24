@@ -1,7 +1,7 @@
 import { useWeb3React } from "@web3-react/core";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useWeb3Updated } from "../app/hooks/use-web3-updated";
 import { AppDispatch } from "../app/store";
 import { injectedConnector } from "../app/web3";
@@ -11,7 +11,7 @@ import ConnectorDesktop from "./ConnectorDesktop";
 import ConnectorMobile from "./ConnectorMobile";
 import WalletSelectPopup from "./WalletSelectPopup";
 
-const PROTOCOL_PAGES = ["pools", "pool"];
+const PROTOCOL_PAGES = ["pools", "pool", "actions"];
 
 const Connector = (): JSX.Element => {
   const { active, activate } = useWeb3React();
@@ -20,7 +20,7 @@ const Connector = (): JSX.Element => {
   const connecting = useSelector(isConnecting);
   const [showingDetails, setShowingDetails] = useState(false);
   const [wallet, setWallet] = useState("walletConnect.wallets.metaMask");
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
 
   const inProtocolPage = PROTOCOL_PAGES.includes(location.pathname.split("/")[1]);
@@ -57,7 +57,7 @@ const Connector = (): JSX.Element => {
           setShowingDetails(false);
           dispatch(setConnecting(false));
           if (inProtocolPage && !connected) {
-            history.replace("/");
+            navigate("/");
           }
         }}
         setWallet={(w: string) => setWallet(w)}

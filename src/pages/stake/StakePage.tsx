@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
@@ -62,10 +62,7 @@ const StakePage = (): JSX.Element => {
 
   return (
     <StyledPoolsPage>
-      <Seo
-        title="Stake BKD & Earn Rewards"
-        description="Earn rewards and protocol profits in addition to aggregated yield from yield farming strategies"
-      />
+      <Seo title={t("metadata.stake.title")} description={t("metadata.stake.description")} />
       <StakeSummary />
       <Headers>
         <Header>{t("headers.asset")}</Header>

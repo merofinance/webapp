@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
@@ -61,7 +60,7 @@ const Social = styled.a`
   align-items: flex-end;
   justify-content: space-between;
   cursor: pointer;
-  background-color: #141128;
+  background-color: var(--row-bg);
   transition: background-color 0.3s;
 
   :hover {

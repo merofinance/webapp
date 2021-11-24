@@ -1,5 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
-import React from "react";
+
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import LaunchIcon from "@material-ui/icons/Launch";
@@ -160,6 +160,7 @@ const WalletSelectPopup = ({ show, close, setWallet }: Props): JSX.Element => {
 
   return (
     <Popup
+      centerHeader
       show={show}
       close={() => close(false)}
       header={t("walletConnect.header")}

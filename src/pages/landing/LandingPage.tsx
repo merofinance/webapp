@@ -1,6 +1,7 @@
-import React from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
+import Seo from "../../components/Seo";
 import Background from "./Background";
 import Benefits from "./Benefits";
 import FutureActions from "./FutureActions";
@@ -24,8 +25,11 @@ const Content = styled.div`
 `;
 
 const LandingPage = (): JSX.Element => {
+  const { t } = useTranslation();
+
   return (
     <StyledLanding>
+      <Seo title={t("metadata.landing.title")} description={t("metadata.landing.description")} />
       <Background />
       <Content>
         <Hero />

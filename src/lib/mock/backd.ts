@@ -15,6 +15,8 @@ import {
   Token,
   transformPool,
   PlainWithdrawalFees,
+  PlainLoan,
+  LendingProtocol,
 } from "../types";
 import { balances, makeContractTransaction, masterAccount, pools, positions, prices } from "./data";
 
@@ -37,6 +39,17 @@ export default class MockBackd implements Backd {
     const pool = pools.find((pool) => pool.address === address);
     if (!pool) throw Error("No pool found for address");
     return Promise.resolve(transformPool(pool, bigNumberToFloat));
+  }
+
+  getLoanPosition(protocol: LendingProtocol, address?: Address): Promise<PlainLoan | null> {
+    return Promise.resolve({
+      protocol: LendingProtocol.Aave,
+      totalCollateralETH: new ScaledNumber().toPlain(),
+      totalDebtETH: new ScaledNumber().toPlain(),
+      availableBorrowsETH: new ScaledNumber().toPlain(),
+      currentLiquidationThreshold: new ScaledNumber().toPlain(),
+      healthFactor: new ScaledNumber().toPlain(),
+    });
   }
 
   getAllowance(token: Token, spender: Address, account?: string): Promise<ScaledNumber> {

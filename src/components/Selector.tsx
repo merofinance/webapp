@@ -1,4 +1,4 @@
-import React, { RefObject } from "react";
+import { RefObject } from "react";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Grow from "@material-ui/core/Grow";
 import Paper from "@material-ui/core/Paper";

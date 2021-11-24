@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
@@ -35,6 +34,7 @@ const ExitEvent = styled.div`
 
 interface PopupContainerProps {
   small?: boolean;
+  centerHeader?: boolean;
 }
 
 const PopupContainer = styled.div`
@@ -62,7 +62,7 @@ const Exit = styled.img`
 const Header = styled.div`
   font-weight: 700;
 
-  text-align: ${(props: PopupContainerProps) => (props.small ? "left" : "center")};
+  text-align: ${(props: PopupContainerProps) => (props.centerHeader ? "center" : "left")};
   margin-bottom: ${(props: PopupContainerProps) => (props.small ? "1.8rem" : "2.5rem")};
   font-size: ${(props: PopupContainerProps) => (props.small ? "1.6rem" : "3.6rem")};
   line-height: ${(props: PopupContainerProps) => (props.small ? "1.7rem" : "4.2rem")};
@@ -111,6 +111,7 @@ interface Props {
   loading?: boolean;
   small?: boolean;
   confirmationText?: string;
+  centerHeader?: boolean;
   id?: string;
 }
 
@@ -125,6 +126,7 @@ const Popup = ({
   loading,
   small,
   confirmationText,
+  centerHeader,
   id,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
@@ -142,15 +144,16 @@ const Popup = ({
           small={small}
         />
         {header && (
-          <Header id={`${id}-popup-header`} small={small}>
+          <Header id={`${id}-popup-header`} small={small} centerHeader={centerHeader}>
             {header}
           </Header>
         )}
-        {body && <Body>{body}</Body>}
+        {body && <Body id={`${id}-popup-body`}>{body}</Body>}
         {content && content}
         {confirm && submit && (
           <ButtonContainer>
             <Button
+              id={`${id}-popup-cancel`}
               medium
               background="#252140"
               text={isMobile ? t("components.back") : t("components.cancel")}

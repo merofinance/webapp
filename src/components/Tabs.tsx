@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
@@ -28,6 +28,12 @@ const Option = styled.button`
   align-items: center;
   cursor: pointer;
 
+  :hover {
+    div {
+      color: rgba(255, 255, 255, 0.75);
+    }
+  }
+
   width: 18rem;
   padding: 1.6rem 0;
   @media (max-width: 600px) {
@@ -42,6 +48,7 @@ const OptionText = styled.div`
   letter-spacing: 0.46px;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.54);
+  transition: color 0.3s;
 
   font-size: 1.6rem;
   @media (max-width: 600px) {
@@ -90,13 +97,11 @@ const ActiveLine = styled.div`
   background: var(--gradient);
 
   transition: transform 0.3s;
+  transform: translateX(${(props: ActiveLineProps) => `calc(18rem * ${props.activeIndex})`});
 
   width: 18rem;
   @media (max-width: 600px) {
     width: calc((100vw - 32px) / 2);
-    transform: translateX(
-      ${(props: ActiveLineProps) => `calc(((100vw - 32px) / 2) * ${props.activeIndex})`}
-    );
   }
 `;
 
@@ -117,7 +122,7 @@ const Tabs = ({ tabs }: Props): JSX.Element => {
     <StyledTabs>
       <Options>
         {tabs.map((tab: TabType, index: number) => (
-          <Option onClick={() => setActiveIndex(index)}>
+          <Option key={tab.label} id={tab.label} onClick={() => setActiveIndex(index)}>
             <OptionText>{t(tab.label)}</OptionText>
             <GradientOptionText active={activeIndex === index}>{t(tab.label)}</GradientOptionText>
           </Option>

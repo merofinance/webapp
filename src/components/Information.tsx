@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { GradientLink } from "../styles/GradientText";
 import InfoCard from "./InfoCard";
@@ -30,7 +30,7 @@ const InformationRow = styled.div`
   flex-direction: column;
 
   margin-top: 1.4rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     margin-top: 0.2rem;
   }
 `;
@@ -59,7 +59,7 @@ const Label = styled.div`
   letter-spacing: 0.15px;
 
   font-size: 2rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     font-size: 1.4rem;
   }
 `;
@@ -76,8 +76,12 @@ const Value = styled.div`
   color: var(--sub);
 
   font-size: 2rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     font-size: 1.4rem;
+  }
+
+  @media only percy {
+    opacity: 0;
   }
 `;
 
@@ -89,7 +93,7 @@ const Chevron = styled.img`
   transform: ${(props: RowProps) => (props.open ? "rotate(0deg)" : "rotate(180deg)")};
 
   width: 1.1rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     width: 1rem;
   }
 `;
@@ -126,7 +130,7 @@ const DetailLabel = styled(GradientLink)`
   margin-left: 0.7rem;
 
   font-size: 1.4rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     font-size: 1.3rem;
   }
 `;

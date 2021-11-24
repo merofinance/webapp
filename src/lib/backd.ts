@@ -12,7 +12,7 @@ import fromEntries from "fromentries";
 import { UnsupportedNetwork } from "../app/errors";
 import { getPrices as getPricesFromCoingecko } from "./coingecko";
 import { getPrices as getPricesFromBinance } from "./binance";
-import { ETH_DECIMALS, ETH_DUMMY_ADDRESS, INFINITE_APPROVE_AMMOUNT } from "./constants";
+import { ETH_DECIMALS, ETH_DUMMY_ADDRESS, GWEI_SCALE, INFINITE_APPROVE_AMMOUNT } from "./constants";
 import { bigNumberToFloat, scale } from "./numeric";
 import { ScaledNumber } from "./scaled-number";
 import {
@@ -26,7 +26,10 @@ import {
   Token,
   transformPool,
   PlainWithdrawalFees,
+  PlainLoan,
+  LendingProtocol,
 } from "./types";
+import { lendingProviders } from "./lending-protocols";
 
 export type BackdOptions = {
   chainId: number;
@@ -36,6 +39,7 @@ export interface Backd {
   currentAccount(): Promise<Address>;
   listPools(): Promise<Pool[]>;
   getPoolInfo(address: Address): Promise<Pool>;
+  getLoanPosition(protocol: LendingProtocol, address?: Address): Promise<PlainLoan | null>;
   getPositions(): Promise<PlainPosition[]>;
   registerPosition(pool: Pool, position: Position): Promise<ContractTransaction>;
   removePosition(
@@ -190,6 +194,10 @@ export class Web3Backd implements Backd {
     );
   }
 
+  async getLoanPosition(protocol: LendingProtocol, address: Address): Promise<PlainLoan | null> {
+    return lendingProviders[protocol].getPosition(address, this._provider);
+  }
+
   async getPositions(): Promise<PlainPosition[]> {
     const account = await this.currentAccount();
     const rawPositions = await this.topupAction.listPositions(account);
@@ -208,7 +216,7 @@ export class Web3Backd implements Backd {
       threshold: new ScaledNumber(rawPosition.record.threshold, decimals).toPlain(),
       singleTopUp: new ScaledNumber(rawPosition.record.singleTopUpAmount, decimals).toPlain(),
       maxTopUp: new ScaledNumber(rawPosition.record.totalTopUpAmount, decimals).toPlain(),
-      maxGasPrice: rawPosition.record.maxGasPrice.toNumber(),
+      maxGasPrice: new ScaledNumber(rawPosition.record.maxGasPrice, 9).toPlain(),
     };
     return position;
   }
@@ -221,9 +229,6 @@ export class Web3Backd implements Backd {
     const protocol = utils.formatBytes32String(position.protocol);
     const depositAmount = position.maxTopUp.value.mul(rawExchangeRate).div(scale);
 
-    // TODO: allow to customize maxGasPrice, currently 200Gwei
-    const maxGasPrice = BigNumber.from(200).mul(BigNumber.from(10).pow(9));
-
     return this.topupAction.register(
       position.account,
       protocol,
@@ -233,7 +238,7 @@ export class Web3Backd implements Backd {
       pool.underlying.address,
       position.singleTopUp.value,
       position.maxTopUp.value,
-      maxGasPrice
+      position.maxGasPrice.value
     );
   }
 

@@ -1,28 +1,45 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 import { useDevice } from "../../app/hooks/use-device";
 import AmountInput from "../../components/AmountInput";
-import ContentSection from "../../components/ContentSection";
 import { selectBalance } from "../../state/userSlice";
 import { Pool } from "../../lib";
 import { ScaledNumber } from "../../lib/scaled-number";
 import DepositButtons from "./DepositButtons";
-import PoolStatistics from "./PoolStatistics";
 
-const Content = styled.div`
+interface PoolDepositProps {
+  error: boolean;
+  compact?: boolean;
+}
+
+const StyledPoolDeposit = styled.div`
   width: 100%;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  align-items: flex-end;
+  grid-gap: ${(props: PoolDepositProps) => (props.compact ? "1.8rem" : "0")};
+
+  > div:last-child {
+    display: flex;
+    margin-bottom: ${(props: PoolDepositProps) =>
+      props.compact ? (props.error ? "2.4rem" : "0.3rem") : "0"};
+  }
+
+  grid-template-columns: ${(props: PoolDepositProps) =>
+    props.compact ? "repeat(2, 1fr)" : "repeat(1, 1fr)"};
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
-type Props = {
+interface Props {
   pool: Pool;
-};
+  compact?: boolean;
+}
 
-const PoolDeposit = ({ pool }: Props): JSX.Element => {
+const PoolDeposit = ({ pool, compact }: Props): JSX.Element => {
   const { t } = useTranslation();
   const availableToDeposit = useSelector(selectBalance(pool.underlying.address));
   const { isMobile } = useDevice();
@@ -45,28 +62,24 @@ const PoolDeposit = ({ pool }: Props): JSX.Element => {
   };
 
   return (
-    <ContentSection
-      header={t("pool.tabs.deposit.header", { asset: pool.underlying.symbol })}
-      statistics={<PoolStatistics pool={pool} />}
-      content={
-        <Content>
-          <AmountInput
-            value={depositAmount}
-            setValue={(v: string) => setDepositAmount(v)}
-            label={inputLabel}
-            max={availableToDeposit}
-            error={error()}
-            symbol={pool.underlying.symbol}
-          />
-          <DepositButtons
-            pool={pool}
-            value={value}
-            complete={() => setDepositAmount("")}
-            valid={!error() && !value.isZero()}
-          />
-        </Content>
-      }
-    />
+    <StyledPoolDeposit compact={compact} error={!!error()}>
+      <AmountInput
+        noSlider={compact}
+        value={depositAmount}
+        setValue={(v: string) => setDepositAmount(v)}
+        label={inputLabel}
+        max={availableToDeposit}
+        error={error()}
+        symbol={pool.underlying.symbol}
+      />
+      <DepositButtons
+        stepsOnTop={compact}
+        pool={pool}
+        value={value}
+        complete={() => setDepositAmount("")}
+        valid={!error() && !value.isZero()}
+      />
+    </StyledPoolDeposit>
   );
 };
 

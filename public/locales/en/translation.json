@@ -13,7 +13,8 @@
       "stake": "stake BKD",
       "docs": "docs",
       "blog": "blog",
-      "newsletter": "newsletter"
+      "newsletter": "newsletter",
+      "actions": "actions"
     }
   },
   "walletConnect": {
@@ -307,8 +308,8 @@
         "tooltip": "The current value of your assets held in Backd liquidity pools"
       },
       "locked": {
-        "header": "Locked in actions",
-        "tooltip": "The current value of your assets locked in actions. Assets locked in actions still earn yield"
+        "header": "Allocated to Actions",
+        "tooltip": "The current value of your assets that are allocated to Actions. Assets allocated to Actions still earn yield"
       },
       "rewards": {
         "header": "Rewards accrued",
@@ -317,6 +318,7 @@
     }
   },
   "pool": {
+    "header": "{{asset}} Pool",
     "overview": "Deposit {{asset}} to begin earning yield via the {{strategy}} strategy. Once you have deposited, you can make your liquidity reactive by creating an action.",
     "information": {
       "header": "Pool Information",
@@ -351,8 +353,8 @@
         "tooltip": "The current value of your assets held in the pool"
       },
       "locked": {
-        "header": "Locked in actions",
-        "tooltip": "The current value of your assets locked in actions. Assets locked in actions still earn yield"
+        "header": "Allocated to Actions",
+        "tooltip": "The current value of your assets that are allocated to Actions. Assets allocated to Actions still earn yield"
       },
       "rewards": {
         "header": "Rewards accrued",
@@ -362,7 +364,6 @@
     "tabs": {
       "deposit": {
         "tab": "Deposit",
-        "header": "Deposit {{asset}}",
         "input": {
           "labelMobile": "Enter amount to deposit",
           "labelDesktop": "Enter an amount of {{asset}} to deposit"
@@ -371,7 +372,6 @@
       },
       "withdraw": {
         "tab": "Withdraw",
-        "header": "Withdraw {{asset}}",
         "input": {
           "labelMobile": "Enter amount to withdraw",
           "labelDesktop": "Enter an amount of {{asset}} to withdraw"
@@ -406,56 +406,102 @@
           "approve": "approve 1/2",
           "create": "create 2/2"
         },
-        "fields": {
-          "protocol": {
-            "label": "Protocol",
-            "tooltip": "The lending protocol on which the user is borrowing funds (currently compatible with Aave and Compound)",
-            "hover": "Select Protocol"
-          },
-          "address": {
-            "label": "Address",
-            "tooltip": "The address of the owner of the position to top-up (e.g. if Alice is the borrower on Aave that should be topped up then this would be Alice’s address)",
-            "hover": "Enter Address",
-            "required": "Address is required",
-            "invalid": "Invalid Address",
-            "unique": "Max of one position per protocol and address"
-          },
-          "threshold": {
-            "label": "Threshold",
-            "tooltip": "The health factor threshold a collateral top-up should occur at",
-            "hover": "Enter Threshold",
-            "required": "Threshold is required",
-            "greaterThanOne": "Must be greater than 1"
-          },
-          "single": {
-            "label": "Single Top-up",
-            "tooltip": "Amount of a single top-up increment (e.g. top-up increments of 2,500 DAI)",
-            "hover": "Enter Single Top-up",
-            "required": "Single Top-up is required",
-            "invalid": "Invalid number",
-            "positive": "Must be positive number",
-            "lessThanMax": "Must be less than max top-up"
-          },
-          "max": {
-            "label": "Max Top-up",
-            "tooltip": "Maximum top-up amount (value of your liquidity allocated for top-ups)",
-            "hover": "Enter Max Top-up",
-            "required": "Max Top-up required",
-            "invalid": "Invalid number",
-            "positive": "Must be positive number",
-            "exceedsBalance": "Exceeds deposited balance"
+        "register": "Register top-up position"
+      }
+    },
+    "topup": {
+      "label": "Top-up Position",
+      "description": "Use your Backd deposits as back-up collateral to protect your overcollateralised loans on Aave or Compound from getting liquidated.",
+      "stages": {
+        "loan": {
+          "header": "Select a loan to protect",
+          "subHeader": "Backd has detected the following loans on supported platforms associated with your current connected wallet:",
+          "search": "Or, enter wallet address with a loan:",
+          "enterAddress": "Enter the wallet address that the loan is associated with:",
+          "notFound": "No loans associated with this address.",
+          "alreadyExists": "A top-up action already exists for this loan"
+        },
+        "pool": {
+          "header": "Which pool do you want the top-up to come from?",
+          "noDepositsHeader": "To register an action you must deposit assets into a Backd pool",
+          "subHeader": "Liquidity deposited into a Backd pool can be earmarked for top-up protection. You will earn yield and BKD rewards while your liquidity is in a Backd pool.",
+          "incomplete": "Select a pool",
+          "deposit": {
+            "header": "Enter an amount of {{asset}} to deposit",
+            "subHeader": "This {{asset}} can be transported over to protect your position in one or multiple lots. ",
+            "incomplete": "Deposit {{asset}} to continue"
           }
+        },
+        "conditions": {
+          "header": "Enter top-up conditions",
+          "subHeader": "Define the specific market triggers that determine when a top-up position will activate."
         },
         "confirmation": {
           "header": "Confirm top-up position",
           "summaryStart": "When the collateralization of",
           "summaryEnd": "drops below {{threshold}}, it will be topped up with {{single}} {{asset}} ({{singleUsd}}). This will be repeated each time the collateralization ratio drops below {{threshold}}, until a total of {{max}} {{asset}} ({{maxUsd}}) is topped up."
+        }
+      },
+      "delete": {
+        "header": "Delete Top-up Position",
+        "body": "Deleting this top-up position will remove automated collateral top-ups of {{asset}} on {{protocol}}. {{max}} {{asset}} will be unstaked and can be withdrawn after removing the position.",
+        "cancel": "Do not delete"
+      },
+      "fields": {
+        "protocol": {
+          "label": "Protocol",
+          "tooltip": "The lending protocol on which the user is borrowing funds (currently compatible with Aave and Compound)",
+          "hover": "Select Protocol"
         },
-        "delete": {
-          "header": "Delete top-up position",
-          "body": "Deleting this top-up position will remove automated collateral top-ups of {{asset}} on {{protocol}}. {{max}} {{asset}} will be unstaked and can be withdrawn after removing the position."
+        "address": {
+          "label": "Address",
+          "tooltip": "The address of the owner of the position to top-up (e.g. if Alice is the borrower on Aave that should be topped up then this would be Alice’s address)",
+          "hover": "Enter Address",
+          "required": "Address is required",
+          "invalid": "Invalid Address",
+          "unique": "Max of one position per protocol and address"
+        },
+        "threshold": {
+          "label": "Threshold",
+          "question": "What health factor do you want the top-up Action to trigger at?",
+          "tooltip": "The health factor threshold a collateral top-up should occur at",
+          "hover": "Enter Threshold",
+          "required": "Threshold is required",
+          "greaterThanOne": "Must be greater than 1"
+        },
+        "single": {
+          "label": "Single Top-up",
+          "question": "How much would you like to transfer per single top-up?",
+          "tooltip": "Amount of a single top-up increment (e.g. top-up increments of 2,500 DAI)",
+          "hover": "Enter Single Top-up",
+          "required": "Single Top-up is required",
+          "invalid": "Invalid number",
+          "positive": "Must be positive number",
+          "lessThanMax": "Must be less than max top-up"
+        },
+        "max": {
+          "label": "Max Top-up",
+          "question": "What would you like the total top-up amount to be?",
+          "tooltip": "Maximum top-up amount (value of your liquidity allocated for top-ups)",
+          "hover": "Enter Max Top-up",
+          "required": "Max Top-up required",
+          "invalid": "Invalid number",
+          "positive": "Must be positive number",
+          "exceedsBalance": "Exceeds deposited balance"
+        },
+        "gas": {
+          "label": "Max Gas Price",
+          "question": "What is the maximum gas price to pay per top-up?",
+          "tooltip": "The maximum gas price used when paying for each top-up. Value is in Gwei units. If value is too low, then your top-up may not execute in time which could result in liquidation. A value of at least 200 Gwei is recommended.",
+          "hover": "Enter Max Gas Price",
+          "required": "Max Gas Price required",
+          "positive": "Must be positive number",
+          "exceedsMax": "Not enough to cover gas cost of top-up"
         }
       }
+    },
+    "more": {
+      "label": "More Coming Soon"
     }
   },
   "claim": {
@@ -520,11 +566,15 @@
   "components": {
     "dropdownChoose": "choose",
     "confirm": "Confirm",
+    "continue": "Continue",
     "cancel": "Cancel",
     "back": "Back",
     "close": "Close",
     "moreInDocs": "Find out more in the docs",
-    "overview": "Overview"
+    "comingSoon": "Coming Soon",
+    "overview": "Overview",
+    "change": "Change",
+    "view": "View"
   },
   "errors": {
     "header": "An Error Occured",
@@ -537,5 +587,35 @@
     "transactionType": "Transaction type not supported",
     "unsupportedNetwork": "Network not supported",
     "tryTestnet": "Backd is not yet live on mainnet. You can test it now on Kovan by switching networks."
+  },
+  "metadata": {
+    "landing": {
+      "title": "Backd - Liquidity Made Reactive",
+      "description": "The DeFi protocol for increasing the yield and utility of your crypto assets with reactive liquidity"
+    },
+    "actions": {
+      "title": "Backd Actions",
+      "description": "Create Actions to automate your liquidity to where it is needed most"
+    },
+    "claim": {
+      "title": "Claim Rewards & Yield",
+      "description": "Claim rewards from Backd yield farming strategies and collateral top up fees"
+    },
+    "litepaper": {
+      "title": "Backd Litepaper",
+      "description": "How Backd combines actions (e.g. Aave & Compound liquidation protection) with yield-farming (Curve & Convex)"
+    },
+    "pool": {
+      "title": "{{asset}} Pool",
+      "description": "Deposit {{asset}} to farm yield and register LP tokens for actions such as liquidation protection (Aave & Compound)"
+    },
+    "pools": {
+      "title": "Backd Pools",
+      "description": "Earn yield and governance tokens while executing other acitons such as collateral top ups (Aave & Compound)"
+    },
+    "stake": {
+      "title": "Stake BKD & Earn Rewards",
+      "description": "Earn rewards and protocol profits in addition to aggregated yield from yield farming strategies"
+    }
   }
 }
