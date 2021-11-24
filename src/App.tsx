@@ -40,6 +40,10 @@ import ActionRegister from "./pages/actions/register/ActionRegister";
 import ActionsIndex from "./pages/actions/ActionsIndex";
 import ActionRegisterIndex from "./pages/actions/register/ActionRegisterIndex";
 import RegisterTopup from "./pages/actions/lending/RegisterTopup";
+import RegisterTopupPoolDeposit from "./pages/actions/lending/RegisterTopupPoolDeposit";
+import RegisterTopupConditions from "./pages/actions/lending/RegisterTopupConditions";
+import RegisterTopupPool from "./pages/actions/lending/RegisterTopupPool";
+import RegisterTopupLoan from "./pages/actions/lending/RegisterTopupLoan";
 
 const Background = styled.div`
   background: radial-gradient(rgba(11, 3, 60, 0.2), rgba(10, 5, 38, 0.3));
@@ -116,11 +120,23 @@ const App = (): JSX.Element => {
                 <StyledApp>
                   <Content>
                     <Routes>
+                      <Route path="/" element={<LandingPage />} />
                       <Route path="/pool/:poolName" element={<PoolPage />} />
                       <Route path="/pools" element={<PoolsPage />} />
                       <Route path="/actions" element={<ActionsPage />}>
                         <Route path="register" element={<ActionRegister />}>
-                          <Route path="topup" element={<RegisterTopup />} />
+                          <Route path="topup" element={<RegisterTopup />}>
+                            <Route
+                              path="deposit/:poolName/:address/:protocol"
+                              element={<RegisterTopupPoolDeposit />}
+                            />
+                            <Route
+                              path=":address/:protocol/:poolName"
+                              element={<RegisterTopupConditions />}
+                            />
+                            <Route path=":address/:protocol" element={<RegisterTopupPool />} />
+                            <Route index element={<RegisterTopupLoan />} />
+                          </Route>
                           <Route index element={<ActionRegisterIndex />} />
                         </Route>
                         <Route index element={<ActionsIndex />} />
@@ -128,7 +144,6 @@ const App = (): JSX.Element => {
                       {stakingLive && <Route path="/claim" element={<ClaimPage />} />}
                       {stakingLive && <Route path="/stake" element={<StakePage />} />}
                       <Route path="/litepaper" element={<LitepaperPage />} />
-                      <Route path="/" element={<LandingPage />} />
                       <Route path="*" element={<NotFoundPage />} />
                     </Routes>
                   </Content>
