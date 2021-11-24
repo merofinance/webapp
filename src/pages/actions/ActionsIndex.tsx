@@ -1,5 +1,5 @@
 import RegisteredActions from "./RegisteredActions";
-import ProtectableLoans from "./lending/ProtectableLoans";
+import ProtectableLoans from "./ProtectableLoans";
 
 const ActionsIndex = (): JSX.Element => {
   return (

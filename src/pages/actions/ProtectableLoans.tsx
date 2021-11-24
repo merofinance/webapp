@@ -3,10 +3,10 @@ import { useWeb3React } from "@web3-react/core";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { Loan, Position } from "../../../lib/types";
-import { selectLoans } from "../../../state/lendingSlice";
-import { selectPositions } from "../../../state/positionsSlice";
-import ProtectableLoan from "./ProtectableLoan";
+import { Loan, Position } from "../../lib/types";
+import { selectLoans } from "../../state/lendingSlice";
+import { selectPositions } from "../../state/positionsSlice";
+import ProtectableLoan from "./lending/ProtectableLoan";
 
 const StyledProtectableLoans = styled.div`
   width: 100%;
