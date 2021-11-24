@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-import logo from "../../../assets/logo/logo.svg";
+import logo from "../../assets/logo/logo.svg";
 import { useDevice } from "../../app/hooks/use-device";
 import { Loan, Position } from "../../lib/types";
 import { selectLoans } from "../../state/lendingSlice";
