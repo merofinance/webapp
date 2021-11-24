@@ -685,11 +685,6 @@ describe("Existing Topup View", () => {
   it("Should disable button", () => {
     cy.get("#delete-topup-confirmation-button", { timeout: WEB3_TIMEOUT }).should("be.disabled");
   });
-  it("Should not show popups", () => {
-    cy.get("#delete-topup-confirmation-popup-header", { timeout: WEB3_TIMEOUT }).should(
-      "not.exist"
-    );
-  });
   it("Should have no Actions", () => {
     cy.get("#register-positions-empty", { timeout: WEB3_TIMEOUT }).contains(
       "You have not registered any Actions yet.."
