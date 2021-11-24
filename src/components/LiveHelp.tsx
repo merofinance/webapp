@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import AccordionChevron from "./AccordionChevron";
 import logo from "../assets/logo/logo.svg";
@@ -169,7 +169,7 @@ const BackdHelper = styled.img`
 const LiveHelp = (): JSX.Element => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const suggestions = useSelector(selectSuggestions);
   const implement = useSelector(selectImplement);
@@ -208,7 +208,7 @@ const LiveHelp = (): JSX.Element => {
       implement.type === Suggestion.POSITION_LOW &&
       location.pathname !== "/actions"
     ) {
-      history.push("/actions");
+      navigate("/actions");
     }
   }, [implement, location]);
 
