@@ -167,10 +167,10 @@ const RegisterTopupConditionsForm = () => {
 
   if (!pool || !protocol || !address) {
     navigate(`/actions/register/topup/${address}/${protocol}`);
-    return <></>;
+    return <div />;
   }
 
-  if (!backd) return <></>;
+  if (!backd) return <div />;
 
   const buttonHoverText = () => {
     if (!formik.values.threshold) return t("actions.topup.fields.threshold.hover");
