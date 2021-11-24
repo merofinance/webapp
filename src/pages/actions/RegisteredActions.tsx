@@ -1,8 +1,7 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 import ContentSection from "../../components/ContentSection";
 import { Position } from "../../lib/types";
@@ -38,41 +37,43 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const RegisteredActions = () => {
+const RegisteredActions = (): JSX.Element => {
   const { t } = useTranslation();
   const positions = useSelector(selectPositions);
-  const history = useHistory();
+  const navigate = useNavigate();
   const { isMobile } = useDevice();
 
   const hasPosition = positions && positions.length > 0;
 
   return (
-    <ContentSection
-      header={t("actions.registered.header")}
-      content={
-        <Content>
-          {!hasPosition && (
-            <Empty id="register-positions-empty">{t("actions.registered.empty")}</Empty>
-          )}
-          {hasPosition &&
-            positions &&
-            positions.map((position: Position) => (
-              <RegisteredAction key={position.protocol} position={position} />
-            ))}
-          <ButtonContainer>
-            <Button
-              id="register-action-button"
-              primary={!hasPosition}
-              medium
-              width={isMobile ? "100%" : "44%"}
-              background="#0F0830"
-              text={t("actions.register.button")}
-              click={() => history.push("/actions/register")}
-            />
-          </ButtonContainer>
-        </Content>
-      }
-    />
+    <div>
+      <ContentSection
+        header={t("actions.registered.header")}
+        content={
+          <Content>
+            {!hasPosition && (
+              <Empty id="register-positions-empty">{t("actions.registered.empty")}</Empty>
+            )}
+            {hasPosition &&
+              positions &&
+              positions.map((position: Position) => (
+                <RegisteredAction key={position.protocol} position={position} />
+              ))}
+            <ButtonContainer>
+              <Button
+                id="register-action-button"
+                primary={!hasPosition}
+                medium
+                width={isMobile ? "100%" : "44%"}
+                background="#0F0830"
+                text={t("actions.register.button")}
+                click={() => navigate("/actions/register")}
+              />
+            </ButtonContainer>
+          </Content>
+        }
+      />
+    </div>
   );
 };
 

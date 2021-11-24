@@ -1,21 +1,21 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
 import { useSelector } from "react-redux";
 
-import ContentSection from "../../../components/ContentSection";
-import Button from "../../../components/Button";
-import RowSelector from "../../../components/RowSelector";
-import { selectEthPrice } from "../../../state/poolsListSlice";
-import { selectLoans } from "../../../state/lendingSlice";
+import ContentSection from "../../../../components/ContentSection";
+import Button from "../../../../components/Button";
+import RowSelector from "../../../../components/RowSelector";
+import { selectEthPrice } from "../../../../state/poolsListSlice";
+import { selectLoans } from "../../../../state/lendingSlice";
 import LoanSearch from "./LoanSearch";
-import { Loan, Optional, Position } from "../../../lib/types";
-import { useDevice } from "../../../app/hooks/use-device";
-import { selectPositions } from "../../../state/positionsSlice";
-import { RowOptionType } from "../../../components/RowOption";
-import { TOPUP_ACTION_ROUTE } from "../../../lib/constants";
+import { Loan, Optional, Position } from "../../../../lib/types";
+import { useDevice } from "../../../../app/hooks/use-device";
+import { selectPositions } from "../../../../state/positionsSlice";
+import { RowOptionType } from "../../../../components/RowOption";
+import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
 
 const Container = styled.div`
   position: relative;
@@ -60,9 +60,9 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const RegisterTopupLoan = () => {
+const TopupLoan = (): JSX.Element => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { account } = useWeb3React();
   const { isMobile } = useDevice();
   const loans = useSelector(selectLoans(account));
@@ -148,7 +148,7 @@ const RegisterTopupLoan = () => {
                 disabled={!address}
                 width={isMobile ? "100%" : "44%"}
                 text={t("components.continue")}
-                click={() => history.push(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`)}
+                click={() => navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`)}
                 hoverText={t("actions.topup.stages.loan.header")}
               />
             </ButtonContainer>
@@ -159,4 +159,4 @@ const RegisterTopupLoan = () => {
   );
 };
 
-export default RegisterTopupLoan;
+export default TopupLoan;

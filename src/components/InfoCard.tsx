@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import AccordionChevron from "./AccordionChevron";
 import { useDevice } from "../app/hooks/use-device";

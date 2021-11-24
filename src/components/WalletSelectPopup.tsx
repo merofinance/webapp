@@ -1,5 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
-import React from "react";
+
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import LaunchIcon from "@material-ui/icons/Launch";

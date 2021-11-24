@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import eth from "../assets/tokens/eth.png";
 import usdc from "../assets/tokens/usdc.png";

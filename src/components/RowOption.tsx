@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { Optional } from "../lib/types";
 
@@ -136,7 +135,7 @@ interface Props {
   option: RowOptionType;
 }
 
-const RowOption = ({ active, select, option }: Props) => {
+const RowOption = ({ active, select, option }: Props): JSX.Element => {
   return (
     <Container>
       <StyledRowOption

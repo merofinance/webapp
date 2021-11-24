@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { makeStyles, Tooltip } from "@material-ui/core";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
@@ -34,7 +34,7 @@ interface Props {
 }
 
 const BackdTooltip = ({ content }: Props): JSX.Element => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const { isMobile } = useDevice();
 
   const handleTooltipClose = () => {

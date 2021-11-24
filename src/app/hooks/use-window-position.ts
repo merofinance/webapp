@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState } from "react";
 
-const useWindowPosition = () => {
+const useWindowPosition = (): number => {
   const [scrollPosition, setPosition] = useState(0);
   useLayoutEffect(() => {
     const updatePosition = () => {

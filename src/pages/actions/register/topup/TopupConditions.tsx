@@ -1,8 +1,7 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
-import ContentSection from "../../../components/ContentSection";
+import ContentSection from "../../../../components/ContentSection";
 import ActionSummary from "./ActionSummary";
 import RegisterTopupConditionsForm from "./RegisterTopupConditionsForm";
 
@@ -41,7 +40,7 @@ const SubHeader = styled.div`
   }
 `;
 
-const RegisterTopupConditions = () => {
+const TopupConditions = () => {
   const { t } = useTranslation();
 
   return (
@@ -65,4 +64,4 @@ const RegisterTopupConditions = () => {
   );
 };
 
-export default RegisterTopupConditions;
+export default TopupConditions;

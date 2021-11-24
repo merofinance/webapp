@@ -1,5 +1,5 @@
 import { CircularProgress } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { selectError } from "../state/errorSlice";

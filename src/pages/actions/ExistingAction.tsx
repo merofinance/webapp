@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 import { Position, Pool } from "../../lib/types";
 import { selectPrice } from "../../state/selectors";
-import TopupAction from "./lending/TopupAction";
+import TopupAction from "./register/topup/TopupAction";
 import { GradientText } from "../../styles/GradientText";
 import Loader from "../../components/Loader";
 import { selectPools } from "../../state/poolsListSlice";
@@ -45,7 +45,7 @@ interface Props {
   position: Position;
 }
 
-const ExistingAction = ({ position }: Props) => {
+const ExistingAction = ({ position }: Props): JSX.Element => {
   const { t } = useTranslation();
   const pools = useSelector(selectPools);
   const pool =

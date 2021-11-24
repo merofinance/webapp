@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useHistory, useParams } from "react-router";
+import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
@@ -20,10 +20,6 @@ import Tabs from "../../components/Tabs";
 import PoolStatistics from "./PoolStatistics";
 import ContentSection from "../../components/ContentSection";
 import LiveHelp from "../../components/LiveHelp";
-
-interface PoolParams {
-  poolName: string;
-}
 
 const StyledPoolPage = styled.div`
   position: relative;
@@ -65,8 +61,8 @@ const ButtonContainer = styled.div`
 
 const PoolPage = (): JSX.Element => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const { poolName } = useParams<PoolParams>();
+  const navigate = useNavigate();
+  const { poolName } = useParams<"poolName">();
   const backd = useBackd();
   const dispatch = useDispatch();
   const updated = useWeb3Updated();
@@ -79,7 +75,10 @@ const PoolPage = (): JSX.Element => {
     dispatch(fetchState(backd));
   }, [updated]);
 
-  if (!pool && poolsLoaded) return <Redirect to="/" />;
+  if (!pool && poolsLoaded) {
+    navigate("/");
+    return <div />;
+  }
 
   return (
     <StyledPoolPage>
@@ -128,7 +127,7 @@ const PoolPage = (): JSX.Element => {
               medium
               wide
               text={`+ ${t("actions.register.nav")}`}
-              click={() => history.push("/actions")}
+              click={() => navigate("/actions")}
               background="#0A0525"
             />
           </ButtonContainer>

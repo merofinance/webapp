@@ -7,10 +7,14 @@ import { selectPools, selectPrices } from "./poolsListSlice";
 import { selectPoolPositions, selectPositions } from "./positionsSlice";
 import { selectPoolBalance, selectBalances } from "./userSlice";
 
-export function selectPool(poolName: string): (state: RootState) => Optional<Pool> {
-  return (state: RootState) =>
-    state.pools.pools.find((p) => p.lpToken.symbol.toLowerCase() === poolName.toLowerCase()) ||
-    null;
+export function selectPool(poolName: string | undefined): (state: RootState) => Optional<Pool> {
+  return (state: RootState) => {
+    if (!poolName) return null;
+    return (
+      state.pools.pools.find((p) => p.lpToken.symbol.toLowerCase() === poolName.toLowerCase()) ||
+      null
+    );
+  };
 }
 
 export function getAddress(addressOrPool: string | Optional<Pool>): Optional<string> {

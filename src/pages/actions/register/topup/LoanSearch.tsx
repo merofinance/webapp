@@ -1,19 +1,19 @@
 import { ethers } from "ethers";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
-import { useBackd } from "../../../app/hooks/use-backd";
-import BasicInput from "../../../components/BasicInput";
-import { spinAnimation } from "../../../styles/animations/SpinAnimation";
-import pending from "../../../assets/ui/status/pending.svg";
-import RowSelector from "../../../components/RowSelector";
-import { selectEthPrice } from "../../../state/poolsListSlice";
-import { Loan } from "../../../lib/types";
-import { fetchLoans, selectLoans } from "../../../state/lendingSlice";
-import { RowOptionType } from "../../../components/RowOption";
-import { AppDispatch } from "../../../app/store";
+import { useBackd } from "../../../../app/hooks/use-backd";
+import BasicInput from "../../../../components/BasicInput";
+import { spinAnimation } from "../../../../styles/animations/SpinAnimation";
+import pending from "../../../../assets/ui/status/pending.svg";
+import RowSelector from "../../../../components/RowSelector";
+import { selectEthPrice } from "../../../../state/poolsListSlice";
+import { Loan } from "../../../../lib/types";
+import { fetchLoans, selectLoans } from "../../../../state/lendingSlice";
+import { RowOptionType } from "../../../../components/RowOption";
+import { AppDispatch } from "../../../../app/store";
 
 const StyledLoanSearch = styled.div`
   width: 100%;
@@ -73,7 +73,7 @@ interface Props {
   hasExistingLoans: boolean;
 }
 
-const LoanSearch = ({ value, setValue, hasExistingLoans }: Props) => {
+const LoanSearch = ({ value, setValue, hasExistingLoans }: Props): JSX.Element => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();

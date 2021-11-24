@@ -1,23 +1,16 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { useHistory, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 
-import { selectLoans } from "../../../state/lendingSlice";
-import { selectEthPrice } from "../../../state/poolsListSlice";
-import Asset from "../../../components/Asset";
-import { selectPool } from "../../../state/selectors";
-import { GradientText } from "../../../styles/GradientText";
-import { LendingProtocol, Loan } from "../../../lib/types";
-import { TOPUP_ACTION_ROUTE } from "../../../lib/constants";
-import Loader from "../../../components/Loader";
-
-interface TopupParams {
-  address: string;
-  protocol: LendingProtocol;
-  poolName: string;
-}
+import Loader from "../../../../components/Loader";
+import { selectLoans } from "../../../../state/lendingSlice";
+import { selectEthPrice } from "../../../../state/poolsListSlice";
+import Asset from "../../../../components/Asset";
+import { selectPool } from "../../../../state/selectors";
+import { GradientText } from "../../../../styles/GradientText";
+import { LendingProtocol, Loan } from "../../../../lib/types";
+import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
 
 const StyledActionSummary = styled.div`
   width: 100%;
@@ -91,10 +84,10 @@ const ChangePoolText = styled(GradientText)`
   font-size: 1rem;
 `;
 
-const ActionSummary = () => {
+const ActionSummary = (): JSX.Element => {
   const { t } = useTranslation();
-  const { poolName, address, protocol } = useParams<TopupParams>();
-  const history = useHistory();
+  const { address, protocol, poolName } = useParams<"address" | "protocol" | "poolName">();
+  const navigate = useNavigate();
   const ethPrice = useSelector(selectEthPrice);
   const pool = useSelector(selectPool(poolName));
   const loans = useSelector(selectLoans(address));
@@ -129,7 +122,7 @@ const ActionSummary = () => {
           {pool ? <Asset tiny token={pool.underlying} /> : <Loader />}
           <ChangePoolButton
             id="action-summary-change-pool"
-            onClick={() => history.push(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`)}
+            onClick={() => navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`)}
           >
             <ChangePoolText>{t("components.change")}</ChangePoolText>
           </ChangePoolButton>

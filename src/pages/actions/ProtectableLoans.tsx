@@ -1,15 +1,15 @@
 import { useWeb3React } from "@web3-react/core";
-import React from "react";
+
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { Loan, Position } from "../../../lib/types";
-import { selectLoans } from "../../../state/lendingSlice";
-import { selectPositions } from "../../../state/positionsSlice";
-import ProtectableLoan from "./ProtectableLoan";
 import logo from "../../../assets/logo/logo.svg";
-import { useDevice } from "../../../app/hooks/use-device";
+import { useDevice } from "../../app/hooks/use-device";
+import { Loan, Position } from "../../lib/types";
+import { selectLoans } from "../../state/lendingSlice";
+import { selectPositions } from "../../state/positionsSlice";
+import ProtectableLoan from "./register/topup/ProtectableLoan";
 
 const StyledProtectableLoans = styled.div`
   position: relative;
@@ -64,7 +64,7 @@ const BackdHelper = styled.img`
   margin-right: 1rem;
 `;
 
-const ProtectableLoans = () => {
+const ProtectableLoans = (): JSX.Element => {
   const { t } = useTranslation();
   const { account } = useWeb3React();
   const loans = useSelector(selectLoans(account));
@@ -79,7 +79,7 @@ const ProtectableLoans = () => {
       !positions.some((position: Position) => position.protocol === loan.protocol)
   );
 
-  if (protectableLoans.length === 0) return <></>;
+  if (protectableLoans.length === 0) return <div />;
 
   return (
     <StyledProtectableLoans>

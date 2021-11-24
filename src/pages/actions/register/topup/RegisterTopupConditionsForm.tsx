@@ -1,40 +1,34 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { useHistory, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
 import { FormikErrors, useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 
-import { selectPoolBalance } from "../../../state/userSlice";
-import { useBackd } from "../../../app/hooks/use-backd";
-import { ScaledNumber } from "../../../lib/scaled-number";
-import { selectPool, selectPrice } from "../../../state/selectors";
-import ApproveThenAction from "../../../components/ApproveThenAction";
-import RegisterTopupInput from "./RegisterTopupInput";
-import { useDevice } from "../../../app/hooks/use-device";
-import { selectEthPrice } from "../../../state/poolsListSlice";
+import { selectPoolBalance } from "../../../../state/userSlice";
+import { useBackd } from "../../../../app/hooks/use-backd";
+import { ScaledNumber } from "../../../../lib/scaled-number";
+import { selectPool, selectPrice } from "../../../../state/selectors";
+import ApproveThenAction from "../../../../components/ApproveThenAction";
+import { useDevice } from "../../../../app/hooks/use-device";
+import { selectEthPrice } from "../../../../state/poolsListSlice";
 import {
   GWEI_DECIMALS,
   GWEI_SCALE,
   RECOMMENDED_THRESHOLD,
   TOPUP_GAS_COST,
-} from "../../../lib/constants";
+} from "../../../../lib/constants";
 import {
   addSuggestion,
   removeSuggestion,
   selectImplement,
   Suggestion,
-} from "../../../state/helpSlice";
-import NewPositionConfirmation from "./RegisterTopupConfirmation";
-import { Loan, Position } from "../../../lib/types";
-import { selectLoans } from "../../../state/lendingSlice";
-
-interface TopupParams {
-  address: string;
-  protocol: string;
-  poolName: string;
-}
+} from "../../../../state/helpSlice";
+import { Loan, Position } from "../../../../lib/types";
+import { selectLoans } from "../../../../state/lendingSlice";
+import TopupInput from "./TopupInput";
+import TopupConfirmation from "./TopupConfirmation";
 
 export interface FormType {
   threshold: string;
@@ -117,9 +111,9 @@ const RegisterTopupConditionsForm = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const backd = useBackd();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { isMobile } = useDevice();
-  const { address, protocol, poolName } = useParams<TopupParams>();
+  const { address, protocol, poolName } = useParams<"address" | "protocol" | "poolName">();
   const pool = useSelector(selectPool(poolName));
   const underlyingPrice = useSelector(selectPrice(pool));
   const ethPrice = useSelector(selectEthPrice);
@@ -171,8 +165,8 @@ const RegisterTopupConditionsForm = () => {
     validate,
   });
 
-  if (!pool) {
-    history.push(`/actions/register/topup/${address}/${protocol}`);
+  if (!pool || !protocol || !address) {
+    navigate(`/actions/register/topup/${address}/${protocol}`);
     return <></>;
   }
 
@@ -253,7 +247,7 @@ const RegisterTopupConditionsForm = () => {
   return (
     <>
       <Form noValidate onSubmit={formik.handleSubmit}>
-        <RegisterTopupInput
+        <TopupInput
           label={
             isMobile
               ? t("actions.topup.fields.threshold.label")
@@ -303,7 +297,7 @@ const RegisterTopupConditionsForm = () => {
             }
           }}
         />
-        <RegisterTopupInput
+        <TopupInput
           label={
             isMobile
               ? t("actions.topup.fields.single.label")
@@ -318,7 +312,7 @@ const RegisterTopupConditionsForm = () => {
             singleMinimumSuggestion();
           }}
         />
-        <RegisterTopupInput
+        <TopupInput
           label={
             isMobile ? t("actions.topup.fields.max.label") : t("actions.topup.fields.max.question")
           }
@@ -328,7 +322,7 @@ const RegisterTopupConditionsForm = () => {
           formik={formik}
           placeholder={`10,000 ${pool.underlying.symbol}`}
         />
-        <RegisterTopupInput
+        <TopupInput
           label={
             isMobile ? t("actions.topup.fields.gas.label") : t("actions.topup.fields.gas.question")
           }
@@ -354,7 +348,7 @@ const RegisterTopupConditionsForm = () => {
           />
         </ButtonContainer>
       </Form>
-      <NewPositionConfirmation
+      <TopupConfirmation
         show={confirming}
         close={() => {
           setConfirming(false);
@@ -364,7 +358,7 @@ const RegisterTopupConditionsForm = () => {
         pool={pool}
         complete={() => {
           formik.resetForm({ values: initialValues });
-          history.push("/actions");
+          navigate("/actions");
         }}
       />
     </>

@@ -1,17 +1,14 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
-import { Switch, useRouteMatch, Route, useLocation } from "react-router";
+import { useLocation, Outlet } from "react-router-dom";
 
 import { useBackd } from "../../app/hooks/use-backd";
 import { fetchState } from "../../state/poolsListSlice";
 import Seo from "../../components/Seo";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
-import RegisteredActions from "./RegisteredActions";
 import Overview from "../../components/Overview";
-import ProtectableLoans from "./lending/ProtectableLoans";
-import RegisterAction from "./RegisterAction";
 import YourDeposits from "./YourDeposits";
 import { GradientLink } from "../../styles/GradientText";
 import ExistingActions from "./ExistingActions";
@@ -28,9 +25,6 @@ const StyledActionsPage = styled.div`
 
 const ContentContainer = styled.div`
   flex: 1;
-`;
-
-const Content = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -71,7 +65,6 @@ const ActionsPage = (): JSX.Element => {
   const backd = useBackd();
   const dispatch = useDispatch();
   const updated = useWeb3Updated();
-  const match = useRouteMatch();
   const location = useLocation();
 
   useEffect(() => {
@@ -83,19 +76,7 @@ const ActionsPage = (): JSX.Element => {
     <StyledActionsPage>
       <Seo title={t("metadata.actions.title")} description={t("metadata.actions.description")} />
       <ContentContainer>
-        <Content>
-          <Switch>
-            <Route path={`${match.path}/register`}>
-              <RegisterAction />
-            </Route>
-            <Route path={match.path}>
-              <>
-                <ProtectableLoans />
-                <RegisteredActions />
-              </>
-            </Route>
-          </Switch>
-        </Content>
+        <Outlet />
       </ContentContainer>
       <InfoCards hideMobile={location.pathname !== "/actions"}>
         <Overview

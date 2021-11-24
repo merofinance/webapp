@@ -1,8 +1,7 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { FormikFormType, FormType } from "./RegisterTopupConditionsForm";
-import Tooltip from "../../../components/Tooltip";
+import Tooltip from "../../../../components/Tooltip";
 
 const StyledRegisterTopupInput = styled.div`
   width: 100%;
@@ -119,7 +118,7 @@ interface Props {
   onBlur?: () => void;
 }
 
-const RegisterTopupInput = ({
+const TopupInput = ({
   label,
   tooltip,
   type,
@@ -163,4 +162,4 @@ const RegisterTopupInput = ({
   );
 };
 
-export default RegisterTopupInput;
+export default TopupInput;

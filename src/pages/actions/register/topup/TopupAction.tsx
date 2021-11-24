@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
-import Popup from "../../../components/Popup";
-import { Pool, Position } from "../../../lib/types";
+import Popup from "../../../../components/Popup";
+import { Pool, Position } from "../../../../lib/types";
 import TopupInformation from "./TopupInformation";
-import deleteIcon from "../../../assets/ui/delete.svg";
+import deleteIcon from "../../../../assets/ui/delete.svg";
 import DeletePositionConfirmation from "./DeleteTopupConfirmation";
-import { removeSuggestion, selectImplement, Suggestion } from "../../../state/helpSlice";
+import { removeSuggestion, selectImplement, Suggestion } from "../../../../state/helpSlice";
 
 const Content = styled.div`
   width: 100%;

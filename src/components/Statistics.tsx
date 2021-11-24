@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { Optional } from "../lib/types";
 import Loader from "./Loader";

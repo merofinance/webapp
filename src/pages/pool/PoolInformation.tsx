@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
@@ -29,6 +28,15 @@ const PoolInformation = ({ pool }: Props): JSX.Element => {
           label: t("pool.information.apy.header"),
           tooltip: t("pool.information.apy.tooltip"),
           value: pool ? formatPercent(pool.apy) : null,
+        },
+        {
+          label: t("pool.information.lp.header"),
+          tooltip: t("pool.information.lp.tooltip", {
+            lpToken: pool.lpToken.symbol,
+            underlying: pool.underlying.symbol,
+            exchangeRate: pool.exchangeRate.toString(),
+          }),
+          value: pool.exchangeRate.toString(),
         },
         // {
         //   label: t("pool.information.strategy.header"),

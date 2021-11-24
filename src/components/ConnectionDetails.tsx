@@ -1,5 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
-import React from "react";
+
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import LaunchIcon from "@material-ui/icons/Launch";
@@ -81,7 +81,7 @@ interface Props {
   wallet: string;
 }
 
-const ConnectionDetails = ({ show, close, changeWallet, wallet }: Props) => {
+const ConnectionDetails = ({ show, close, changeWallet, wallet }: Props): JSX.Element => {
   const { t } = useTranslation();
   const { account, chainId } = useWeb3React();
 

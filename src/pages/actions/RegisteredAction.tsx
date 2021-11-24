@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
@@ -7,9 +7,9 @@ import { Position, Pool } from "../../lib/types";
 import { selectPools } from "../../state/poolsListSlice";
 import chevron from "../../assets/ui/chevron.svg";
 import { selectPrice } from "../../state/selectors";
-import TopupAction from "./lending/TopupAction";
 import { selectImplement, Suggestion } from "../../state/helpSlice";
 import Loader from "../../components/Loader";
+import TopupAction from "./register/topup/TopupAction";
 
 const StyledRegisteredAction = styled.button`
   position: relative;
@@ -100,7 +100,7 @@ interface Props {
   position: Position;
 }
 
-const RegisteredAction = ({ position }: Props) => {
+const RegisteredAction = ({ position }: Props): JSX.Element => {
   const { t } = useTranslation();
   const pools = useSelector(selectPools);
   const implement = useSelector(selectImplement);
