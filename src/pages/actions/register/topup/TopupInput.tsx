@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { FormikFormType, FormType } from "./RegisterTopupConditionsForm";
+import { FormikFormType, FormType } from "./TopupConditionsForm";
 import Tooltip from "../../../../components/Tooltip";
 
 const StyledRegisterTopupInput = styled.div`

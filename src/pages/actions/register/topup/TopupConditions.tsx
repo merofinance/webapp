@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import ContentSection from "../../../../components/ContentSection";
 import ActionSummary from "./ActionSummary";
-import RegisterTopupConditionsForm from "./RegisterTopupConditionsForm";
+import TopupConditionsForm from "./TopupConditionsForm";
 
 const Container = styled.div`
   position: relative;
@@ -56,7 +56,7 @@ const TopupConditions = (): JSX.Element => {
               {t("actions.topup.stages.conditions.header")}
             </Header>
             <SubHeader>{t("actions.topup.stages.conditions.subHeader")}</SubHeader>
-            <RegisterTopupConditionsForm />
+            <TopupConditionsForm />
           </Content>
         }
       />
