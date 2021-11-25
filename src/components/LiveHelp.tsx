@@ -45,6 +45,7 @@ const StyledLiveHelp = styled.div`
   overflow: hidden;
   transition: max-height 0.3s ease-out, background-color 0.3s, filter 0.3s;
   width: 36rem;
+  padding: 2rem 1.8rem;
 
   max-height: ${(props: LiveHelpProps) =>
     props.open ? `calc(25rem * ${props.suggestions})` : "5.4rem"};
@@ -55,8 +56,6 @@ const StyledLiveHelp = styled.div`
   background-clip: padding-box, border-box;
   background-image: linear-gradient(var(--bg-light), var(--bg-light)),
     linear-gradient(to right, var(--primary-gradient), var(--secondary-gradient));
-
-  padding: 2rem 1.8rem;
 
   @media (max-width: 1220px) {
     width: 100%;
