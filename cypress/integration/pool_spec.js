@@ -184,6 +184,7 @@ describe("Withdraw Input Methods", () => {
 
 describe("Withdraw", () => {
   it("Should input value", () => {
+    cy.wait(30_000);
     cy.get("#input-button").click();
   });
   it("Should open withdrawal confirmation", () => {
@@ -197,7 +198,7 @@ describe("Withdraw", () => {
     cy.get("#withdrawal-confirmation-popup-button").click();
   });
   it("Should disable button", () => {
-    cy.get("#withdrawal-confirmation-popup-button", { timeout: 30_000 }).should("be.disabled");
+    cy.get("#withdrawal-confirmation-popup-button").should("be.disabled");
   });
   it("Should exit confirmation", () => {
     cy.get("#withdrawal-confirmation-popup-exit").click();
