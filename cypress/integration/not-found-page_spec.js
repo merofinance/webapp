@@ -1,4 +1,4 @@
-import { percySnapshot, WEB3_TIMEOUT } from "../support";
+import { percySnapshot } from "../support";
 
 describe("Innitial Load", () => {
   it("Should Load Not Found Page", () => {
@@ -19,13 +19,9 @@ describe("Page Content", () => {
 describe("Internal Links", () => {
   it("Should Navigate to Home Page", () => {
     cy.get("#not-found-home").click();
-    cy.location().should(
-      (loc) => {
-        if (loc.pathname) expect(loc.pathname).to.eq("/");
-      },
-
-      { timeout: WEB3_TIMEOUT }
-    );
+    cy.location().should((loc) => {
+      if (loc.pathname) expect(loc.pathname).to.eq("/");
+    });
     cy.visit("/askkasklaslkaskjl");
   });
 
