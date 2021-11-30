@@ -1,4 +1,4 @@
-import { percySnapshot, WEB3_TIMEOUT } from "../support";
+import { percySnapshot } from "../support";
 
 describe("Innitial Load", () => {
   it("Should Load Home Page", () => {
@@ -128,13 +128,9 @@ describe("Footer", () => {
 
   it("Should have Litepaper Link", () => {
     cy.get('[id="footer.resources.links.litepaper"]').click();
-    cy.location().should(
-      (loc) => {
-        if (loc.pathname) expect(loc.pathname).to.eq("/litepaper");
-      },
-
-      { timeout: WEB3_TIMEOUT }
-    );
+    cy.location().should((loc) => {
+      if (loc.pathname) expect(loc.pathname).to.eq("/litepaper");
+    });
     cy.visit("/");
   });
 
