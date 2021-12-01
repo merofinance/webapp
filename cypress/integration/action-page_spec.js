@@ -1,6 +1,4 @@
-import { initWeb3, percySnapshot, WEB3_TIMEOUT } from "../support";
-
-// TEst search address
+import { initWeb3, percySnapshot } from "../support";
 
 describe("Page Load", () => {
   it("Should Innitialise Web3", () => {
@@ -40,23 +38,22 @@ describe("Default state", () => {
       .should("have.attr", "href", "https://docs.backd.fund/protocol-architecture/top-ups");
   });
   it("Should have Protectable Loans", () => {
-    cy.get("#protectable-loans-header", { timeout: WEB3_TIMEOUT }).contains(
-      "We have found a protectable loan!"
-    );
+    cy.get("#protectable-loans-header").contains("We have found a protectable loan!");
   });
   it("Should show Aave loan", () => {
-    cy.get("#aave-protectable-loan", { timeout: WEB3_TIMEOUT }).should("exist");
+    cy.get("#aave-protectable-loan").should("exist");
   });
   it("Should navigate to protectable loan path", () => {
     cy.get("#aave-protectable-loan-button").click();
     cy.location().should((loc) => {
-      expect(loc.pathname).to.eq(
-        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
-      );
+      if (loc.pathname)
+        expect(loc.pathname).to.eq(
+          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
+        );
     });
     cy.get("#back-button").click();
     cy.location().should((loc) => {
-      expect(loc.pathname).to.eq("/actions");
+      if (loc.pathname) expect(loc.pathname).to.eq("/actions");
     });
   });
   it("Should take snapshot", () => {
@@ -65,7 +62,7 @@ describe("Default state", () => {
   it("Should navigate to register page", () => {
     cy.get("#register-action-button").click();
     cy.location().should((loc) => {
-      expect(loc.pathname).to.eq("/actions/register");
+      if (loc.pathname) expect(loc.pathname).to.eq("/actions/register");
     });
   });
 });
@@ -110,7 +107,7 @@ describe("Register Page", () => {
   it("Should navigate to Loan Selection", () => {
     cy.get("#register-action-button").click();
     cy.location().should((loc) => {
-      expect(loc.pathname).to.eq("/actions/register/topup");
+      if (loc.pathname) expect(loc.pathname).to.eq("/actions/register/topup");
     });
   });
 });
@@ -133,11 +130,11 @@ describe("Loan Selection", () => {
   it("Should navigate back", () => {
     cy.get("#back-button").click();
     cy.location().should((loc) => {
-      expect(loc.pathname).to.eq("/actions/register");
+      if (loc.pathname) expect(loc.pathname).to.eq("/actions/register");
     });
     cy.get("#register-action-button").click();
     cy.location().should((loc) => {
-      expect(loc.pathname).to.eq("/actions/register/topup");
+      if (loc.pathname) expect(loc.pathname).to.eq("/actions/register/topup");
     });
   });
   it("Should have header", () => {
@@ -157,13 +154,13 @@ describe("Loan Selection", () => {
     cy.get("#loan-search-error").should("not.exist");
   });
   it("Should show loading spinner", () => {
-    cy.get("#loan-search-spinner", { timeout: WEB3_TIMEOUT }).should("be.visible");
+    cy.get("#loan-search-spinner").should("be.visible");
   });
   it("Should show loading spinner", () => {
-    cy.get("#loan-search-spinner", { timeout: WEB3_TIMEOUT }).should("not.be.visible");
+    cy.get("#loan-search-spinner").should("not.be.visible");
   });
   it("Should show aave from search", () => {
-    cy.get("#loan-search-row-aave", { timeout: WEB3_TIMEOUT }).should("exist");
+    cy.get("#loan-search-row-aave").should("exist");
   });
   it("Should have disabled button", () => {
     cy.get("#register-topup-loan-button").should("be.disabled");
@@ -177,9 +174,13 @@ describe("Loan Selection", () => {
   it("Should navigate to pool selection", () => {
     cy.get("#register-topup-loan-button").click();
     cy.location().should((loc) => {
-      expect(loc.pathname).to.eq(
-        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
-      );
+      if (loc.pathname) expect(loc.pathname).to.not.be.undefined;
+    });
+    cy.location().should((loc) => {
+      if (loc.pathname)
+        expect(loc.pathname).to.eq(
+          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
+        );
     });
   });
 });
@@ -207,9 +208,10 @@ describe("Pool Selection", () => {
     cy.get("#aave-option").click();
     cy.get("#register-topup-loan-button").click();
     cy.location().should((loc) => {
-      expect(loc.pathname).to.eq(
-        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
-      );
+      if (loc.pathname)
+        expect(loc.pathname).to.eq(
+          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
+        );
     });
   });
   it("Should have header", () => {
@@ -238,9 +240,10 @@ describe("Pool Selection", () => {
   it("Should navigate to deposit stage", () => {
     cy.get("#register-topup-pool-button").click();
     cy.location().should((loc) => {
-      expect(loc.pathname).to.eq(
-        "/actions/register/topup/deposit/bdai/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
-      );
+      if (loc.pathname)
+        expect(loc.pathname).to.eq(
+          "/actions/register/topup/deposit/bdai/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
+        );
     });
   });
 });
@@ -285,20 +288,21 @@ describe("Pool Deposit", () => {
     cy.get("#action-button").click();
   });
   it("Should disable button", () => {
-    cy.get("#action-button", { timeout: WEB3_TIMEOUT }).should("be.disabled");
+    cy.get("#action-button").should("be.disabled");
   });
   it("Should show deposit in info card", () => {
-    cy.get("#your-deposits-dai", { timeout: WEB3_TIMEOUT }).should("exist");
+    cy.get("#your-deposits-dai").should("exist");
   });
   it("Should show your deposits total", () => {
-    cy.get("#your-deposits-total", { timeout: WEB3_TIMEOUT }).should("exist");
+    cy.get("#your-deposits-total").should("exist");
   });
   it("Should navigate to conditions page", () => {
-    cy.get("#register-topup-pool-deposit-button", { timeout: WEB3_TIMEOUT }).click();
+    cy.get("#register-topup-pool-deposit-button").click();
     cy.location().should((loc) => {
-      expect(loc.pathname).to.eq(
-        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/bdai"
-      );
+      if (loc.pathname)
+        expect(loc.pathname).to.eq(
+          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/bdai"
+        );
     });
   });
 });
@@ -318,22 +322,24 @@ describe("Conditions Page", () => {
   });
 
   it("Should have Action Summary", () => {
-    cy.get("#action-summary", { timeout: WEB3_TIMEOUT }).should("exist");
+    cy.get("#action-summary").should("exist");
   });
   it("Should Change Pools", () => {
     cy.get("#action-summary-change-pool").should("exist");
     cy.get("#action-summary-change-pool").click();
     cy.location().should((loc) => {
-      expect(loc.pathname).to.eq(
-        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
-      );
+      if (loc.pathname)
+        expect(loc.pathname).to.eq(
+          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
+        );
     });
     cy.get("#dai-pool-option").click();
     cy.get("#register-topup-pool-button").click();
     cy.location().should((loc) => {
-      expect(loc.pathname).to.eq(
-        "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/bdai"
-      );
+      if (loc.pathname)
+        expect(loc.pathname).to.eq(
+          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/bdai"
+        );
     });
   });
 
@@ -487,14 +493,12 @@ describe("Top-up Position Confirmation", () => {
     cy.get("#register-topup-confirmation-popup-button").click();
   });
   it("Should disable button", () => {
-    cy.get("#register-topup-confirmation-popup-button", { timeout: WEB3_TIMEOUT }).should(
-      "be.disabled"
-    );
+    cy.get("#register-topup-confirmation-popup-button").should("be.disabled");
   });
   it("Should redirect to actions on completion", () => {
-    cy.get("#register-action-button", { timeout: WEB3_TIMEOUT }).should("exist");
+    cy.get("#register-action-button").should("exist");
     cy.location().should((loc) => {
-      expect(loc.pathname).to.eq("/actions");
+      if (loc.pathname) expect(loc.pathname).to.eq("/actions");
     });
   });
 });
@@ -504,10 +508,10 @@ describe("Existing Topup View", () => {
     cy.get("#register-positions-empty").should("not.exist");
   });
   it("Should show registered action", () => {
-    cy.get("#registered-action-aave", { timeout: WEB3_TIMEOUT }).should("exist");
+    cy.get("#registered-action-aave").should("exist");
   });
   it("Should not show protectable loans", () => {
-    cy.get("#aave-protectable-loan", { timeout: WEB3_TIMEOUT }).should("not.exist");
+    cy.get("#aave-protectable-loan").should("not.exist");
   });
   it("Should have Register an Action Button", () => {
     cy.get("#register-action-button").contains("Register an Action");
@@ -515,7 +519,7 @@ describe("Existing Topup View", () => {
   it("Should navigate to register page", () => {
     cy.get("#register-action-button").click();
     cy.location().should((loc) => {
-      expect(loc.pathname).to.eq("/actions/register");
+      if (loc.pathname) expect(loc.pathname).to.eq("/actions/register");
     });
   });
   it("Should have Existing Actions Info Card", () => {
@@ -537,7 +541,7 @@ describe("Existing Topup View", () => {
   it("Should go back to actions page", () => {
     cy.get("#back-button").click();
     cy.location().should((loc) => {
-      expect(loc.pathname).to.eq("/actions");
+      if (loc.pathname) expect(loc.pathname).to.eq("/actions");
     });
   });
   it("Should take snapshot", () => {
@@ -581,27 +585,21 @@ describe("Existing Topup View", () => {
     cy.get("#delete-topup-confirmation-button").click();
   });
   it("Should disable button", () => {
-    cy.get("#delete-topup-confirmation-button", { timeout: WEB3_TIMEOUT }).should("be.disabled");
+    cy.get("#delete-topup-confirmation-button").should("be.disabled");
   });
   it("Should not show popups", () => {
-    cy.get("#delete-topup-confirmation-popup-header", { timeout: WEB3_TIMEOUT }).should(
-      "not.be.visible"
-    );
+    cy.get("#delete-topup-confirmation-popup-header").should("not.exist");
   });
   it("Should have no Actions", () => {
-    cy.get("#register-positions-empty", { timeout: WEB3_TIMEOUT }).contains(
-      "You have not registered any Actions yet.."
-    );
+    cy.get("#register-positions-empty").contains("You have not registered any Actions yet..");
   });
   it("Should have Register an Action Button", () => {
     cy.get("#register-action-button").contains("Register an Action");
   });
   it("Should have Protectable Loans", () => {
-    cy.get("#protectable-loans-header", { timeout: WEB3_TIMEOUT }).contains(
-      "We have found a protectable loan!"
-    );
+    cy.get("#protectable-loans-header").contains("We have found a protectable loan!");
   });
   it("Should show Aave loan", () => {
-    cy.get("#aave-protectable-loan", { timeout: WEB3_TIMEOUT }).should("exist");
+    cy.get("#aave-protectable-loan").should("exist");
   });
 });

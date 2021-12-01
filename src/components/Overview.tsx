@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import LaunchIcon from "@material-ui/icons/Launch";
 import { useTranslation } from "react-i18next";
@@ -49,7 +48,7 @@ interface Props {
   link: string;
 }
 
-const Overview = ({ description, link }: Props) => {
+const Overview = ({ description, link }: Props): JSX.Element => {
   const { t } = useTranslation();
 
   return (

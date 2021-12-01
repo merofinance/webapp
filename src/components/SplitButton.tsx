@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
@@ -30,7 +30,7 @@ interface Props {
   buttons: ButtonType[];
 }
 
-export default function SplitButton({ buttons }: Props): JSX.Element {
+const SplitButton = ({ buttons }: Props): JSX.Element => {
   const options: SelectorOptionType[] = buttons.map((button: ButtonType) => {
     return { value: button.value, label: button.label };
   });
@@ -76,4 +76,6 @@ export default function SplitButton({ buttons }: Props): JSX.Element {
       </Grid>
     </Grid>
   );
-}
+};
+
+export default SplitButton;

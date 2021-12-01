@@ -1,6 +1,6 @@
 import { Slider, withStyles } from "@material-ui/core";
 import { BigNumber } from "ethers";
-import React from "react";
+
 import styled from "styled-components";
 import { ScaledNumber } from "../lib/scaled-number";
 import SliderStep from "./SliderStep";

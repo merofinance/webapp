@@ -1,14 +1,13 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useWeb3React } from "@web3-react/core";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 
-import { selectEthPrice } from "../../../state/poolsListSlice";
-import Button from "../../../components/Button";
-import { Loan } from "../../../lib/types";
-import { TOPUP_ACTION_ROUTE } from "../../../lib/constants";
+import { selectEthPrice } from "../../../../state/poolsListSlice";
+import Button from "../../../../components/Button";
+import { Loan } from "../../../../lib/types";
+import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
 
 const StyledProtectableLoan = styled.div`
   width: 100%;
@@ -72,13 +71,13 @@ interface Props {
   loan: Loan;
 }
 
-const ProtectableLoan = ({ loan }: Props) => {
+const ProtectableLoan = ({ loan }: Props): JSX.Element => {
   const { t } = useTranslation();
   const { account } = useWeb3React();
-  const history = useHistory();
+  const navigate = useNavigate();
   const ethPrice = useSelector(selectEthPrice);
 
-  if (!loan) return <></>;
+  if (!loan) return <div />;
 
   return (
     <StyledProtectableLoan id={`${loan.protocol.toLowerCase()}-protectable-loan`}>
@@ -104,7 +103,7 @@ const ProtectableLoan = ({ loan }: Props) => {
           medium
           text={t("actions.suggestions.topup.register")}
           background="#3A3550"
-          click={() => history.push(`${TOPUP_ACTION_ROUTE}/${account}/${loan.protocol}`)}
+          click={() => navigate(`${TOPUP_ACTION_ROUTE}/${account}/${loan.protocol}`)}
         />
       </Column>
     </StyledProtectableLoan>

@@ -1,29 +1,16 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { useHistory, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import ContentSection from "../../../components/ContentSection";
-import Button from "../../../components/Button";
-import { selectPool } from "../../../state/selectors";
-import {
-  GWEI_DECIMALS,
-  GWEI_SCALE,
-  TOPUP_ACTION_ROUTE,
-  TOPUP_GAS_COST,
-} from "../../../lib/constants";
-import PoolDeposit from "../../pool/PoolDeposit";
-import { useDevice } from "../../../app/hooks/use-device";
-import { selectBalances } from "../../../state/userSlice";
-import { ScaledNumber } from "../../../lib/scaled-number";
-import { selectEthPrice, selectPrices } from "../../../state/poolsListSlice";
-
-interface TopupParams {
-  address: string;
-  protocol: string;
-  poolName: string;
-}
+import ContentSection from "../../../../components/ContentSection";
+import Button from "../../../../components/Button";
+import { selectPool } from "../../../../state/selectors";
+import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
+import PoolDeposit from "../../../pool/PoolDeposit";
+import { useDevice } from "../../../../app/hooks/use-device";
+import { selectBalances } from "../../../../state/userSlice";
+import { ScaledNumber } from "../../../../lib/scaled-number";
 
 const Container = styled.div`
   position: relative;
@@ -56,29 +43,23 @@ const ButtonContainer = styled.div`
   margin-top: 6rem;
 `;
 
-const RegisterTopupPoolDeposit = () => {
+const TopupPoolDeposit = (): JSX.Element => {
   const { t } = useTranslation();
-  const { address, protocol, poolName } = useParams<TopupParams>();
-  const history = useHistory();
+  const { address, protocol, poolName } = useParams<"address" | "protocol" | "poolName">();
+  const navigate = useNavigate();
   const { isMobile } = useDevice();
   const pool = useSelector(selectPool(poolName));
   const balances = useSelector(selectBalances);
-  const prices = useSelector(selectPrices);
-  const ethPrice = useSelector(selectEthPrice);
 
   if (!pool) {
-    history.push("/");
+    navigate("/");
     throw Error("Pool not found");
   }
 
   const hasSufficientBalance = () => {
     const lpBalance = balances[pool.lpToken.address];
     if (!lpBalance) return false;
-    const usdBalance = lpBalance.mul(prices[pool.underlying.symbol]);
-    const gasCostUsd = new ScaledNumber(
-      ScaledNumber.fromUnscaled(50, GWEI_DECIMALS).value.mul(TOPUP_GAS_COST).div(GWEI_SCALE)
-    ).mul(ethPrice);
-    return usdBalance.gte(gasCostUsd);
+    return lpBalance.gt(new ScaledNumber());
   };
 
   return (
@@ -104,11 +85,11 @@ const RegisterTopupPoolDeposit = () => {
                 width={isMobile ? "100%" : "44%"}
                 text={t("components.continue")}
                 click={() => {
-                  if (address && protocol)
-                    history.push(
+                  if (address && protocol && poolName)
+                    navigate(
                       `${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${poolName.toLowerCase()}`
                     );
-                  else history.goBack();
+                  else navigate(-1);
                 }}
                 disabled={!pool || !hasSufficientBalance()}
                 hoverText={t("actions.topup.stages.pool.deposit.incomplete", {
@@ -123,4 +104,4 @@ const RegisterTopupPoolDeposit = () => {
   );
 };
 
-export default RegisterTopupPoolDeposit;
+export default TopupPoolDeposit;

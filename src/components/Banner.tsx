@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
@@ -57,7 +56,7 @@ const Banner = (): JSX.Element => {
   const { t } = useTranslation();
   const location = useLocation();
 
-  if (location.pathname !== "/") return <></>;
+  if (location.pathname !== "/") return <div />;
 
   return (
     <StyledBanner>

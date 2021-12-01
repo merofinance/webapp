@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Position, Pool } from "../../lib/types";
 import { selectPools } from "../../state/poolsListSlice";
 import { selectPrice } from "../../state/selectors";
-import TopupAction from "./lending/TopupAction";
+import TopupAction from "./register/topup/TopupAction";
 import { GradientText } from "../../styles/GradientText";
 
 const StyledRegisteredAction = styled.button`
@@ -44,7 +44,7 @@ interface Props {
   position: Position;
 }
 
-const ExistingAction = ({ position }: Props) => {
+const ExistingAction = ({ position }: Props): JSX.Element => {
   const { t } = useTranslation();
   const pools = useSelector(selectPools);
   const pool = pools.filter((pool: Pool) => pool.lpToken.address === position.depositToken)[0];

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
@@ -7,7 +7,7 @@ import { Position, Pool } from "../../lib/types";
 import { selectPools } from "../../state/poolsListSlice";
 import chevron from "../../assets/ui/chevron.svg";
 import { selectPrice } from "../../state/selectors";
-import TopupAction from "./lending/TopupAction";
+import TopupAction from "./register/topup/TopupAction";
 
 const StyledRegisteredAction = styled.button`
   position: relative;
@@ -98,7 +98,7 @@ interface Props {
   position: Position;
 }
 
-const RegisteredAction = ({ position }: Props) => {
+const RegisteredAction = ({ position }: Props): JSX.Element => {
   const { t } = useTranslation();
   const pools = useSelector(selectPools);
   const pool = pools.filter((pool: Pool) => pool.lpToken.address === position.depositToken)[0];

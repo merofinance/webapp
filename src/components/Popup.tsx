@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
@@ -111,6 +110,7 @@ interface Props {
   submit?: () => void;
   loading?: boolean;
   small?: boolean;
+  confirmationText?: string;
   centerHeader?: boolean;
   id?: string;
 }
@@ -125,6 +125,7 @@ const Popup = ({
   submit,
   loading,
   small,
+  confirmationText,
   centerHeader,
   id,
 }: Props): JSX.Element => {
@@ -162,7 +163,7 @@ const Popup = ({
               id={`${id}-popup-button`}
               primary
               medium
-              text={t("components.confirm")}
+              text={confirmationText || t("components.confirm")}
               click={() => {
                 if (submit) submit();
               }}

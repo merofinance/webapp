@@ -1,7 +1,6 @@
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import { AppDispatch } from "../app/store";
@@ -37,17 +36,17 @@ const Link = styled(GradientLink)`
   }
 `;
 
-export function ErrorAlert(): JSX.Element {
+const ErrorAlert = (): JSX.Element => {
   const { t } = useTranslation();
   const error = useSelector(selectError);
   const dispatch: AppDispatch = useDispatch();
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleClose = () => {
     dispatch(setError({ message: "" }));
     if (error.redirectOnClose && location.pathname !== "/") {
-      history.replace("/");
+      navigate("/");
     }
   };
 
@@ -81,4 +80,6 @@ export function ErrorAlert(): JSX.Element {
       }
     />
   );
-}
+};
+
+export default ErrorAlert;

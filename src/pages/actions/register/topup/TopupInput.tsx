@@ -1,8 +1,7 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { FormikFormType, FormType } from "./RegisterTopupConditions";
-import Tooltip from "../../../components/Tooltip";
+import { FormikFormType, FormType } from "./TopupConditions";
+import Tooltip from "../../../../components/Tooltip";
 
 const StyledRegisterTopupInput = styled.div`
   width: 100%;
@@ -118,14 +117,7 @@ interface Props {
   placeholder: string;
 }
 
-const RegisterTopupInput = ({
-  label,
-  tooltip,
-  type,
-  name,
-  formik,
-  placeholder,
-}: Props): JSX.Element => {
+const TopupInput = ({ label, tooltip, type, name, formik, placeholder }: Props): JSX.Element => {
   const { t } = useTranslation();
   const valid = !formik.touched[name] || !formik.errors[name];
 
@@ -158,4 +150,4 @@ const RegisterTopupInput = ({
   );
 };
 
-export default RegisterTopupInput;
+export default TopupInput;
