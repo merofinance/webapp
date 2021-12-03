@@ -236,8 +236,8 @@
       "paragraph1": "The first action that Backd will support, which will be available at launch, is collateral top ups. Support for more actions will be added in the future. The core protocol architecture of Backd is designed in a way that makes adding new actions, strategies, or supported protocols (for actions) easy. This allows Backd to perpetually increase yield and utility for LPs as DeFi evolves.",
       "what": {
         "header": "What is a Top-up Position?",
-        "paragraph1": "A top-up is the act of depositing additional collateral in order to increase the health factor of your loan or mitigate liquidation risk. Backd liquidity providers can use their Backd LP tokens to register top-up positions. This creates back up collateral or what you could call interest earning liquidation protection. When a user registers a top-up position they must specify how much of their Backd liquidity should be shifted and at what health factor a top-up should occur. After registering a top-up position the Backd user’s liquidity will continue to be allocated to yield-farming strategies until it is needed.",
-        "paragraph2": "Backd’s Top-up positions increase collateral efficiency by enabling any borrower on supported protocols (Backd will support Aave & Compound loans at launch) to earn yield with their collateral. Furthermore this also enables borrowers to increase leverage by depositing less collateral and hedge liquidation risk by automatically posting extra collateral when needed.",
+        "paragraph1": "A top-up is the act of depositing additional collateral in order to increase the health factor of your loan or mitigate liquidation risk. Backd liquidity providers can use their Backd LP tokens to register Top-up Positions. This creates back up collateral or what you could call interest earning liquidation protection. When a user registers a Top-up Position they must specify how much of their Backd liquidity should be shifted and at what health factor a top-up should occur. After registering a Top-up Position the Backd user’s liquidity will continue to be allocated to yield-farming strategies until it is needed.",
+        "paragraph2": "Backd’s Top-up Positions increase collateral efficiency by enabling any borrower on supported protocols (Backd will support Aave & Compound loans at launch) to earn yield with their collateral. Furthermore this also enables borrowers to increase leverage by depositing less collateral and hedge liquidation risk by automatically posting extra collateral when needed.",
         "paragraph3": "Backd creates an infrastructure that enables the combination of on-chain actions, off-chain keepers that react to market events, and yield-farming. This unique combination lends itself to a multitude of actions and integration with many protocols. Backd not only makes liquidity more efficient, but also makes other protocols safer and smarter."
       }
     },
@@ -408,16 +408,16 @@
     },
     "propose": "+ Propose a new Action on Discord",
     "register": {
-      "button": "Register an action",
-      "header": "Register an action",
-      "nav": "Register an action",
-      "create": "Confirm top-up position",
+      "button": "Register an Action",
+      "header": "Register an Action",
+      "nav": "Register an Action",
+      "create": "Confirm Top-up Position",
       "choose": "Choose the type of Action",
       "overview": "Define the market triggers that will enable your action using this interface."
     },
     "registered": {
-      "header": "Registered actions",
-      "existing": "Existing actions",
+      "header": "Registered Actions",
+      "existing": "Existing Actions",
       "empty": "You have not registered any Actions yet...",
       "columns": {
         "type": "Type",
@@ -428,7 +428,7 @@
     "suggestions": {
       "topup": {
         "header": "We have found a protectable loan!",
-        "subHeader": "The wallet you have connected has a loan that you can create a top-up position for.",
+        "subHeader": "The wallet you have connected has a loan that you can create a Top-up Position for.",
         "labels": {
           "protocol": "Protocol",
           "healthFactor": "Health factor",
@@ -436,11 +436,11 @@
           "totalLoan": "Loan amount",
           "pool": "Protecting with"
         },
-        "register": "Register top-up position"
+        "register": "Register Top-up Position"
       }
     },
     "topup": {
-      "label": "Top-up position",
+      "label": "Top-up Position",
       "description": "Use your Backd deposits as back-up collateral to protect your overcollateralised loans on Aave or Compound from getting liquidated.",
       "stages": {
         "loan": {
@@ -464,17 +464,17 @@
         },
         "conditions": {
           "header": "Enter top-up conditions",
-          "subHeader": "Define the specific market triggers that determine when a top-up position will activate."
+          "subHeader": "Define the specific market triggers that determine when a Top-up Position will activate."
         },
         "confirmation": {
-          "header": "Confirm top-up position",
+          "header": "Confirm Top-up Position",
           "summaryStart": "When the collateralization of",
           "summaryEnd": "drops below {{threshold}}, it will be topped up with {{single}} {{asset}} ({{singleUsd}}). This will be repeated each time the collateralization ratio drops below {{threshold}}, until a total of {{max}} {{asset}} ({{maxUsd}}) is topped up."
         }
       },
       "delete": {
-        "header": "Delete top-up position",
-        "body": "Deleting this top-up position will remove automated collateral top-ups of {{asset}} on {{protocol}}. {{max}} {{asset}} will be unstaked and can be withdrawn after removing the position.",
+        "header": "Delete Top-up Position",
+        "body": "Deleting this Top-up Position will remove automated collateral top-ups of {{asset}} on {{protocol}}. {{max}} {{asset}} will be unstaked and can be withdrawn after removing the position.",
         "cancel": "Do not delete"
       },
       "fields": {
