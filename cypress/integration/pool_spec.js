@@ -11,7 +11,7 @@ describe("Page Load", () => {
 
 describe("Default state", () => {
   it("Should have DAI Header", () => {
-    cy.get("#content-header").contains("DAI Pool");
+    cy.get("#content-header").contains("DAI pool");
   });
   it("Should have disabled button", () => {
     cy.get("#action-button").contains("Deposit and Stake");
@@ -126,7 +126,7 @@ describe("Withdraw Tab", () => {
     cy.get('[id="pool.tabs.withdraw.tab"]').click();
   });
   it("Should have DAI Header", () => {
-    cy.get("#content-header").contains("DAI Pool");
+    cy.get("#content-header").contains("DAI pool");
   });
   it("Should have disabled button", () => {
     cy.get("#withdraw-button").contains("Withdraw DAI");
