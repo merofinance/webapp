@@ -490,6 +490,7 @@ describe("Top-up Position Confirmation", () => {
   });
   it("Should Confirm", () => {
     cy.get("#register-topup-confirmation-popup-button").should("be.enabled");
+    cy.wait(30_000);
     cy.get("#register-topup-confirmation-popup-button").click();
   });
   it("Should disable button", () => {
