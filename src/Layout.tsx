@@ -1,13 +1,3 @@
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faCheck,
-  faClock,
-  faExternalLinkAlt,
-  faInfoCircle,
-  faTimesCircle,
-  faTrashAlt,
-} from "@fortawesome/free-solid-svg-icons";
-
 import { Web3ReactProvider } from "@web3-react/core";
 import { ethers } from "ethers";
 import { useDispatch } from "react-redux";
@@ -59,8 +49,6 @@ const Content = styled.div`
   max-width: 1400px;
   flex: 1;
 `;
-
-library.add(faInfoCircle, faClock, faCheck, faTimesCircle, faExternalLinkAlt, faTrashAlt);
 
 const Layout = (): JSX.Element => {
   const dispatch: AppDispatch = useDispatch();
