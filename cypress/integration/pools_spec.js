@@ -1,4 +1,4 @@
-import { initWeb3, percySnapshot } from "../support";
+import { initWeb3, percySnapshot, WEB3_TIMEOUT } from "../support";
 
 describe("Page Load", () => {
   it("Should Innitialise Web3", () => {
@@ -52,7 +52,7 @@ describe("Overview", () => {
 
 describe("Pools", () => {
   it("Should load Pools", () => {
-    cy.get("#pool-row-bdai").should("be.visible");
+    cy.get("#pool-row-bdai", { timeout: WEB3_TIMEOUT }).should("be.visible");
   });
   it("Should snapshot page", () => {
     percySnapshot();

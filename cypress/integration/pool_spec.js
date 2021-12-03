@@ -1,11 +1,11 @@
-import { initWeb3, percySnapshot } from "../support";
+import { initWeb3, percySnapshot, WEB3_TIMEOUT } from "../support";
 
 describe("Page Load", () => {
   it("Should Innitialise Web3", () => {
     initWeb3();
     cy.visit("/pools");
     cy.get('[id="walletConnect.wallets.metaMask"]').click();
-    cy.get("#pool-row-bdai").click();
+    cy.get("#pool-row-bdai", { timeout: WEB3_TIMEOUT }).click();
   });
 });
 
@@ -24,7 +24,7 @@ describe("Default state", () => {
 
 describe("Innitial Data", () => {
   it("Should load balance", () => {
-    cy.get("#available-amount").contains(".");
+    cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains(".");
   });
 });
 
@@ -89,7 +89,7 @@ describe("Depositing", () => {
     cy.get("#action-button").click();
   });
   it("Should disable button", () => {
-    cy.get("#action-button").should("be.disabled");
+    cy.get("#action-button", { timeout: WEB3_TIMEOUT }).should("be.disabled");
   });
 });
 
@@ -98,7 +98,9 @@ describe("Account Details", () => {
     cy.get("#desktop-connector").click();
   });
   it("Should show pending transaction", () => {
-    cy.get("#account-details-transactions div").first().contains("Deposit");
+    cy.get("#account-details-transactions div", { timeout: WEB3_TIMEOUT })
+      .first()
+      .contains("Deposit");
   });
   it("Should show wallet type", () => {
     cy.get("#account-details-wallet").contains("MetaMask");
@@ -110,7 +112,11 @@ describe("Account Details", () => {
     cy.get("#account-details-network").contains("Ethereum Kovan Testnet");
   });
   it("Should finish loading", () => {
-    cy.get("#connector-loading-indicator").should("have.css", "opacity", "0");
+    cy.get("#connector-loading-indicator", { timeout: WEB3_TIMEOUT }).should(
+      "have.css",
+      "opacity",
+      "0"
+    );
   });
   it("Should clear transactions", () => {
     cy.get("#account-details-clear").click();
@@ -136,7 +142,7 @@ describe("Withdraw Tab", () => {
     cy.get("#input-button").contains("max");
   });
   it("Should load balance", () => {
-    cy.get("#available-amount").contains(".");
+    cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains(".");
   });
 });
 
@@ -210,10 +216,16 @@ describe("Withdraw", () => {
     cy.get("#desktop-connector").click();
   });
   it("Should show pending transaction", () => {
-    cy.get("#account-details-transactions div").first().contains("Withdraw");
+    cy.get("#account-details-transactions div", { timeout: WEB3_TIMEOUT })
+      .first()
+      .contains("Withdraw");
   });
   it("Should finish loading", () => {
-    cy.get("#connector-loading-indicator").should("have.css", "opacity", "0");
+    cy.get("#connector-loading-indicator", { timeout: WEB3_TIMEOUT }).should(
+      "have.css",
+      "opacity",
+      "0"
+    );
   });
   it("Should close", () => {
     cy.get("#connection-details-popup-exit").click();
