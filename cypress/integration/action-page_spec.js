@@ -476,7 +476,7 @@ describe("Top-up Position Confirmation", () => {
   it("Should open", () => {
     cy.get("#action-button").should("be.enabled");
     cy.get("#action-button").click();
-    cy.get("#register-topup-confirmation-popup-header").contains("Confirm top-up position");
+    cy.get("#register-topup-confirmation-popup-header").contains("Confirm Top-up Position");
   });
   it("Should have position data", () => {
     cy.get("#topup-information-protocol").contains("Aave");
@@ -566,7 +566,7 @@ describe("Existing Topup View", () => {
   });
   it("Should show delete confirmation description", () => {
     cy.get("#delete-topup-confirmation-popup-body").contains(
-      "Deleting this top-up position will remove automated collateral top-ups of DAI on Aave. 400 DAI will be unstaked and can be withdrawn after removing the position."
+      "Deleting this Top-up Position will remove automated collateral top-ups of DAI on Aave. 400 DAI will be unstaked and can be withdrawn after removing the position."
     );
   });
   it("Should have cancel button", () => {

@@ -504,7 +504,7 @@
           "question": "How much would you like to transfer per single top-up?",
           "tooltip": "Amount of a single top-up increment (e.g. top-up increments of 2,500 DAI)",
           "hover": "Enter single top-up",
-          "required": "Single Top-up is required",
+          "required": "Single top-up is required",
           "invalid": "Invalid number",
           "positive": "Must be positive number",
           "lessThanMax": "Must be less than max top-up"
