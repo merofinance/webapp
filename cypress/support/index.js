@@ -15,10 +15,18 @@ export const percySnapshot = () => {
 export const initWeb3 = () => {
   cy.on("window:before:load", (win) => {
     win.testing = true;
+
     const provider = new PrivateKeyProvider(
       Cypress.env("PRIVATE_KEY"),
       `https://kovan.infura.io/v3/${INFURA_ID}`
     );
-    win.web3 = new Web3(provider);
+
+    const newAccount = web3.eth.accounts.create();
+    const newPrivateKey = newAccount.privateKey;
+    const newProvider = new PrivateKeyProvider(
+      newPrivateKey,
+      `https://kovan.infura.io/v3/${INFURA_ID}`
+    );
+    win.web3 = new Web3(newProvider);
   });
 };
