@@ -19,7 +19,7 @@ describe("Default state", () => {
     cy.get("#register-action-button").contains("Register an Action");
   });
   it("Should have Your Deposits Info Card", () => {
-    cy.get("#your-deposits-header").contains("Your Deposits");
+    cy.get("#your-deposits-header").contains("Your deposits");
   });
   it("Should have no deposits", () => {
     cy.get("#your-deposits-empty").contains("You do not have any existing Deposits...");
@@ -75,7 +75,7 @@ describe("Register Page", () => {
     cy.get("#content-key").contains("1/4");
   });
   it("Should have Your Deposits Info Card", () => {
-    cy.get("#your-deposits-header").contains("Your Deposits");
+    cy.get("#your-deposits-header").contains("Your deposits");
   });
   it("Should have no deposits", () => {
     cy.get("#your-deposits-empty").contains("You do not have any existing Deposits...");
@@ -146,7 +146,7 @@ describe("Loan Selection", () => {
   it("Should show error on searching invalid address", () => {
     cy.get("#loan-search-input").focus();
     cy.get("#loan-search-input").type("not a valid address");
-    cy.get("#loan-search-error").contains("Invalid Address");
+    cy.get("#loan-search-error").contains("Invalid address");
   });
   it("Should enter valid address", () => {
     cy.get("#loan-search-input").clear();
@@ -272,7 +272,7 @@ describe("Pool Deposit", () => {
     cy.get("#register-topup-pool-deposit-button").should("be.disabled");
   });
   it("Should have Your Deposits Info Card", () => {
-    cy.get("#your-deposits-header").contains("Your Deposits");
+    cy.get("#your-deposits-header").contains("Your deposits");
   });
   it("Should have no deposits", () => {
     cy.get("#your-deposits-empty").contains("You do not have any existing Deposits...");
@@ -374,7 +374,7 @@ describe("Conditions Page", () => {
   it("Should show single error on no entry", () => {
     cy.get("#register-topup-singletopup-input").focus();
     cy.get("#register-topup-singletopup-input").blur();
-    cy.get("#register-topup-singletopup-error").contains("Single Top-up is required");
+    cy.get("#register-topup-singletopup-error").contains("Single top-up is required");
   });
   it("Should show single error on 0", () => {
     cy.get("#register-topup-singletopup-input").focus();
@@ -396,7 +396,7 @@ describe("Conditions Page", () => {
   it("Should show total error on no entry", () => {
     cy.get("#register-topup-maxtopup-input").focus();
     cy.get("#register-topup-maxtopup-input").blur();
-    cy.get("#register-topup-maxtopup-error").contains("Max Top-up required");
+    cy.get("#register-topup-maxtopup-error").contains("Max top-up required");
   });
   it("Should show total error on 0", () => {
     cy.get("#register-topup-maxtopup-input").focus();
@@ -424,7 +424,7 @@ describe("Conditions Page", () => {
   it("Should show gas error on no entry", () => {
     cy.get("#register-topup-maxgasprice-input").focus();
     cy.get("#register-topup-maxgasprice-input").blur();
-    cy.get("#register-topup-maxgasprice-error").contains("Max Gas Price required");
+    cy.get("#register-topup-maxgasprice-error").contains("Max gas price required");
   });
   it("Should show gas error on 0", () => {
     cy.get("#register-topup-maxgasprice-input").focus();
@@ -454,7 +454,7 @@ describe("Conditions Page", () => {
 
 describe("Top-up Position Confirmation", () => {
   it("Should be visible", () => {
-    cy.get("#register-topup-confirmation-popup-header").contains("Confirm top-up position");
+    cy.get("#register-topup-confirmation-popup-header").contains("Confirm Top-up Position");
   });
   it("Should close", () => {
     cy.get("#register-topup-confirmation-popup-exit").click();
@@ -465,7 +465,7 @@ describe("Top-up Position Confirmation", () => {
   it("Should open", () => {
     cy.get("#action-button").should("be.enabled");
     cy.get("#action-button").click();
-    cy.get("#register-topup-confirmation-popup-header").contains("Confirm top-up position");
+    cy.get("#register-topup-confirmation-popup-header").contains("Confirm Top-up Position");
   });
   it("Should cancel", () => {
     cy.get("#register-topup-confirmation-popup-cancel").click();
@@ -476,7 +476,7 @@ describe("Top-up Position Confirmation", () => {
   it("Should open", () => {
     cy.get("#action-button").should("be.enabled");
     cy.get("#action-button").click();
-    cy.get("#register-topup-confirmation-popup-header").contains("Confirm top-up position");
+    cy.get("#register-topup-confirmation-popup-header").contains("Confirm Top-up Position");
   });
   it("Should have position data", () => {
     cy.get("#topup-information-protocol").contains("Aave");
@@ -566,7 +566,7 @@ describe("Existing Topup View", () => {
   });
   it("Should show delete confirmation description", () => {
     cy.get("#delete-topup-confirmation-popup-body").contains(
-      "Deleting this top-up position will remove automated collateral top-ups of DAI on Aave. 400 DAI will be unstaked and can be withdrawn after removing the position."
+      "Deleting this Top-up Position will remove automated collateral top-ups of DAI on Aave. 400 DAI will be unstaked and can be withdrawn after removing the position."
     );
   });
   it("Should have cancel button", () => {

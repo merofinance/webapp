@@ -3,5 +3,5 @@
   "video": false,
   "viewportWidth": 1536,
   "viewportHeight": 864,
-  "defaultCommandTimeout": 50000
+  "defaultCommandTimeout": 40000
 }
