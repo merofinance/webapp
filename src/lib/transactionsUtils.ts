@@ -28,7 +28,7 @@ export async function handleTransactionConfirmation(
   const txInfo = {
     hash: tx.hash,
     chainId: tx.chainId,
-    confirmations: tx.confirmations,
+    confirmations: 0,
     description: txDescription,
     blockNumber: tx.blockNumber,
     timestamp: tx.timestamp || new Date().getTime(),

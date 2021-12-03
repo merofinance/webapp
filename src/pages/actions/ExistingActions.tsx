@@ -68,7 +68,7 @@ const ExistingActions = (): JSX.Element => {
                 <Header flex={2} />
               </Headers>
               {positions.map((position: Position) => (
-                <ExistingAction position={position} />
+                <ExistingAction key={position.depositToken} position={position} />
               ))}
             </>
           )}
