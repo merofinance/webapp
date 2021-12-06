@@ -600,12 +600,4 @@ describe("Existing Topup View", () => {
   it("Should have Register an Action Button", () => {
     cy.get("#register-action-button").contains("Register an Action");
   });
-  it("Should have Protectable Loans", () => {
-    cy.get("#protectable-loans-header", { timeout: WEB3_TIMEOUT }).contains(
-      "We have found a protectable loan!"
-    );
-  });
-  it("Should show Aave loan", () => {
-    cy.get("#aave-protectable-loan", { timeout: WEB3_TIMEOUT }).should("exist");
-  });
 });
