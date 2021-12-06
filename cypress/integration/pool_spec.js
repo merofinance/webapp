@@ -11,7 +11,7 @@ describe("Page Load", () => {
 
 describe("Innitial Data", () => {
   it("Should load ETH balance", () => {
-    cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains("0.01", {
+    cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains("0.02", {
       timeout: WEB3_TIMEOUT,
     });
   });
