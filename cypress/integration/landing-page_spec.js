@@ -1,7 +1,8 @@
-import { percySnapshot } from "../support";
+import { initWeb3, percySnapshot } from "../support";
 
 describe("Innitial Load", () => {
   it("Should Load Home Page", () => {
+    initWeb3();
     cy.visit("/");
   });
 });
