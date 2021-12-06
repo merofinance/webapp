@@ -51,7 +51,7 @@ describe("Deposit Validation", () => {
     cy.get("#amount-input").clear();
   });
   it("Should error on above amount", () => {
-    cy.get("#amount-input").type("1000000000000");
+    cy.get("#amount-input").type("600");
     cy.get("#input-label").should("have.css", "color", "rgb(244, 67, 54)");
     cy.get("#input-note").contains("Amount exceeds available balance");
     cy.get("#amount-input").clear();
@@ -61,26 +61,17 @@ describe("Deposit Validation", () => {
 describe("Deposit Input Methods", () => {
   it("Should input max amount", () => {
     cy.get("#input-button").click();
-    cy.get("#amount-input")
-      .invoke("val")
-      .then((val) => +val)
-      .should("be.gt", 10);
+    cy.get("#amount-input").should("have.value", "500");
     cy.get("#amount-input").clear();
   });
   it("Should input 50%", () => {
     cy.get("#slider-50").click();
-    cy.get("#amount-input")
-      .invoke("val")
-      .then((val) => +val)
-      .should("be.gt", 10);
+    cy.get("#amount-input").should("have.value", "250");
     cy.get("#amount-input").clear();
   });
   it("Should input 100%", () => {
     cy.get("#slider-100").click();
-    cy.get("#amount-input")
-      .invoke("val")
-      .then((val) => +val)
-      .should("be.gt", 20);
+    cy.get("#amount-input").should("have.value", "500");
     cy.get("#amount-input").clear();
   });
 });
@@ -99,8 +90,27 @@ describe("Depositing", () => {
   it("Should snapshot page", () => {
     percySnapshot();
   });
+  it("Should have disabled deposit button", () => {
+    cy.get("#action-button").should("be.disabled");
+  });
+  it("Should Approve", () => {
+    cy.get("#approve-button").should("be.enabled");
+    cy.get("#approve-button").click();
+    cy.get("#desktop-connector").click();
+    cy.get("#account-details-transactions div", { timeout: WEB3_TIMEOUT })
+      .first()
+      .contains("Approve");
+    cy.get("#connector-loading-indicator", { timeout: WEB3_TIMEOUT }).should(
+      "have.css",
+      "opacity",
+      "0"
+    );
+    cy.get("#account-details-clear").click();
+    cy.get("#account-details-transactions").children().should("have.length", 0);
+    cy.get("#connection-details-popup-exit").click();
+  });
   it("Should Deposit", () => {
-    cy.get("#action-button").should("be.enabled");
+    cy.get("#action-button", { timeout: WEB3_TIMEOUT }).should("be.enabled");
     cy.get("#action-button").click();
   });
   it("Should disable button", () => {
@@ -112,7 +122,7 @@ describe("Account Details", () => {
   it("Should open Account Details", () => {
     cy.get("#desktop-connector").click();
   });
-  it("Should show pending transaction", () => {
+  it("Should show approve transaction", () => {
     cy.get("#account-details-transactions div", { timeout: WEB3_TIMEOUT })
       .first()
       .contains("Deposit");
@@ -142,6 +152,17 @@ describe("Account Details", () => {
   });
 });
 
+describe("Approve Button", () => {
+  it("Should show after deposit", () => {
+    cy.get("#approve-button").should("exist");
+  });
+  it("Should hide on revisiting of deposit", () => {
+    cy.get('[id="pool.tabs.withdraw.tab"]').click();
+    cy.get('[id="pool.tabs.deposit.tab"]').click();
+    cy.get("#approve-button", { timeout: WEB3_TIMEOUT }).should("not.exist");
+  });
+});
+
 describe("Withdraw Tab", () => {
   it("Should support navigation", () => {
     cy.get('[id="pool.tabs.withdraw.tab"]').click();
@@ -157,7 +178,7 @@ describe("Withdraw Tab", () => {
     cy.get("#input-button").contains("max");
   });
   it("Should load balance", () => {
-    cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains(".");
+    cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains(".", { timeout: WEB3_TIMEOUT });
   });
 });
 
