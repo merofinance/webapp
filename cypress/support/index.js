@@ -51,18 +51,20 @@ export const initWeb3 = (main = false) => {
     );
 
     // Sending ETH and DAI to test account
-    mainWeb3.eth.sendTransaction({
-      from: address,
-      to: newAccount.address,
-      value: mainWeb3.utils.toWei("0.01", "ether"),
-    });
     mainWeb3.eth.Contract.setProvider(mainProvider);
     const contract = new mainWeb3.eth.Contract(abi, "0xff795577d9ac8bd7d90ee22b6c1703490b6512fd", {
       from: address,
     });
     contract.methods
       .transfer(newAccount.address, mainWeb3.utils.toWei("500", "ether"))
-      .send({ from: address });
+      .send({ from: address })
+      .on("receipt", () => {
+        mainWeb3.eth.sendTransaction({
+          from: address,
+          to: newAccount.address,
+          value: mainWeb3.utils.toWei("0.01", "ether"),
+        });
+      });
 
     win.web3 = new Web3(newProvider);
   });
