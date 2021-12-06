@@ -11,7 +11,9 @@ describe("Page Load", () => {
 
 describe("Innitial Data", () => {
   it("Should load ETH balance", () => {
-    cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains("0.01");
+    cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains("0.01", {
+      timeout: WEB3_TIMEOUT,
+    });
   });
   it("Should navigate back to pools", () => {
     cy.get("#back-button").click();
@@ -26,7 +28,9 @@ describe("Innitial Data", () => {
     });
   });
   it("Should load DAI balance", () => {
-    cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains("500");
+    cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains("500", {
+      timeout: WEB3_TIMEOUT,
+    });
   });
 });
 
