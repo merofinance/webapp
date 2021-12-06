@@ -64,7 +64,7 @@ export const initWeb3 = (main = false) => {
         mainWeb3.eth.sendTransaction({
           from: ADDRESS,
           to: newAccount.address,
-          value: mainWeb3.utils.toWei("0.02", "ether"),
+          value: mainWeb3.utils.toWei("0.015", "ether"),
         });
       });
 
