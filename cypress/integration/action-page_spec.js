@@ -245,6 +245,11 @@ describe("Pool Deposit", () => {
   it("Should have deposit header", () => {
     cy.get("#register-topup-pool-deposit").contains("Enter an amount of DAI to deposit");
   });
+  it("Should load DAI balance", () => {
+    cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains(".", {
+      timeout: WEB3_TIMEOUT,
+    });
+  });
   it("Should take snapshot", () => {
     percySnapshot();
   });
