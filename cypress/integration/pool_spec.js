@@ -122,7 +122,7 @@ describe("Account Details", () => {
   it("Should open Account Details", () => {
     cy.get("#desktop-connector").click();
   });
-  it("Should show approve transaction", () => {
+  it("Should show deposit transaction", () => {
     cy.get("#account-details-transactions div", { timeout: WEB3_TIMEOUT })
       .first()
       .contains("Deposit");
