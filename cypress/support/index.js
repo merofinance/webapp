@@ -13,7 +13,7 @@ export const percySnapshot = () => {
   cy.percySnapshot();
 };
 
-export const initWeb3 = () => {
+export const initWeb3 = (main = false) => {
   cy.on("window:before:load", (win) => {
     win.testing = true;
 
@@ -23,6 +23,13 @@ export const initWeb3 = () => {
       Cypress.env("PRIVATE_KEY"),
       `https://kovan.infura.io/v3/${INFURA_ID}`
     );
+    if (main) {
+      console.log("Setting as main provider");
+      win.web3 = new Web3(mainProvider);
+      return;
+    } else {
+      console.log("Not main provider");
+    }
     const mainWeb3 = new Web3(mainProvider);
 
     // Checking if Account already exists
