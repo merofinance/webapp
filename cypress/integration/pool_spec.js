@@ -5,7 +5,28 @@ describe("Page Load", () => {
     initWeb3();
     cy.visit("/pools");
     cy.get('[id="walletConnect.wallets.metaMask"]').click();
-    cy.get("#pool-row-bdai", { timeout: WEB3_TIMEOUT }).click();
+    cy.get("#pool-row-beth", { timeout: WEB3_TIMEOUT }).click();
+  });
+});
+
+describe("Innitial Data", () => {
+  it("Should load ETH balance", () => {
+    cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains("0.01");
+  });
+  it("Should navigate back to pools", () => {
+    cy.get("#back-button").click();
+    cy.location().should((loc) => {
+      if (loc.pathname) expect(loc.pathname).to.eq("/pools");
+    });
+  });
+  it("Should navigate to DAI Pool", () => {
+    cy.get("#pool-row-bdai").click();
+    cy.location().should((loc) => {
+      if (loc.pathname) expect(loc.pathname).to.eq("/pool/bDAI");
+    });
+  });
+  it("Should load DAI balance", () => {
+    cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains("500");
   });
 });
 
@@ -19,12 +40,6 @@ describe("Default state", () => {
   });
   it("Should have max button", () => {
     cy.get("#input-button").contains("max");
-  });
-});
-
-describe("Innitial Data", () => {
-  it("Should load balance", () => {
-    cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains(".");
   });
 });
 
