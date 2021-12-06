@@ -616,6 +616,7 @@ describe("Post test actions", () => {
   });
   it("Should withdraw DAI", () => {
     cy.get('[id="pool.tabs.withdraw.tab"]').click();
+    cy.wait(30_000);
     cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains(".", {
       timeout: WEB3_TIMEOUT,
     });

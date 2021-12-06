@@ -40,7 +40,10 @@ export const initWeb3 = (main = false) => {
         `https://kovan.infura.io/v3/${INFURA_ID}`
       );
       win.web3 = new Web3(newProvider);
+      console.log("Found the private key");
       return;
+    } else {
+      console.log("Did not find it");
     }
 
     // Creating Account to test with
