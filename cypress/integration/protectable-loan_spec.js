@@ -2,8 +2,7 @@ import { initWeb3, percySnapshot, WEB3_TIMEOUT } from "../support";
 
 describe("Page Load", () => {
   it("Should Innitialise Web3", () => {
-    initWeb3(true);
-    cy.visit("/actions");
+    initWeb3("/actions", true);
     cy.get('[id="walletConnect.wallets.metaMask"]').click();
   });
 });

@@ -2,8 +2,7 @@ import { initWeb3, percySnapshot, returnDai, WEB3_TIMEOUT } from "../support";
 
 describe("Page Load", () => {
   it("Should Innitialise Web3", () => {
-    initWeb3();
-    cy.visit("/actions");
+    initWeb3("/actions");
     cy.get('[id="walletConnect.wallets.metaMask"]').click();
   });
 });
@@ -609,8 +608,7 @@ describe("Existing Topup View", () => {
 
 describe("Post test actions", () => {
   it("Should Innitialise Web3", () => {
-    initWeb3();
-    cy.visit("/pools");
+    initWeb3("/pools");
     cy.get('[id="walletConnect.wallets.metaMask"]').click();
     cy.get("#pool-row-bdai", { timeout: WEB3_TIMEOUT }).click();
   });

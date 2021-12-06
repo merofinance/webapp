@@ -7,6 +7,7 @@ import abi from "./erc20-abi.json";
 export const WEB3_TIMEOUT = 40_000;
 
 const ADDRESS = "0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D";
+const DAI = "0xff795577d9ac8bd7d90ee22b6c1703490b6512fd";
 
 export const percySnapshot = () => {
   // This delay is to give time for animations to finish before taking screenshots
@@ -15,81 +16,59 @@ export const percySnapshot = () => {
   cy.percySnapshot();
 };
 
-export const initWeb3 = (main = false) => {
-  cy.on("window:before:load", (win) => {
-    win.testing = true;
+const getProvider = (privateKey) => {
+  return new Web3(new PrivateKeyProvider(privateKey, `https://kovan.infura.io/v3/${INFURA_ID}`));
+};
 
-    // Getting Main Provider (source of ETH and DAI)
-    const mainProvider = new PrivateKeyProvider(
-      Cypress.env("PRIVATE_KEY"),
-      `https://kovan.infura.io/v3/${INFURA_ID}`
-    );
-    if (main) {
-      console.log("Setting as main provider");
-      win.web3 = new Web3(mainProvider);
-      return;
-    } else {
-      console.log("Not main provider");
-    }
-    const mainWeb3 = new Web3(mainProvider);
-
-    // Checking if Account already exists
-    if (global.privateKey) {
-      const newProvider = new PrivateKeyProvider(
-        global.privateKey,
-        `https://kovan.infura.io/v3/${INFURA_ID}`
-      );
-      win.web3 = new Web3(newProvider);
-      console.log("Found the private key");
-      return;
-    } else {
-      console.log("Did not find it");
-    }
-
-    // Creating Account to test with
-    const newAccount = mainWeb3.eth.accounts.create();
-    global.privateKey = newAccount.privateKey;
-    global.address = newAccount.address;
-    const newProvider = new PrivateKeyProvider(
-      newAccount.privateKey,
-      `https://kovan.infura.io/v3/${INFURA_ID}`
-    );
-
-    // Sending ETH and DAI to test account
-    mainWeb3.eth.Contract.setProvider(mainProvider);
-    const contract = new mainWeb3.eth.Contract(abi, "0xff795577d9ac8bd7d90ee22b6c1703490b6512fd", {
-      from: ADDRESS,
-    });
-    contract.methods
-      .transfer(newAccount.address, mainWeb3.utils.toWei("500", "ether"))
-      .send({ from: ADDRESS })
-      .on("receipt", () => {
-        mainWeb3.eth.sendTransaction({
-          from: ADDRESS,
-          to: newAccount.address,
-          value: mainWeb3.utils.toWei("0.015", "ether"),
-        });
+const sendCrypto = (privateKey) => {
+  const web3 = getProvider(Cypress.env("PRIVATE_KEY"));
+  const address = web3.eth.accounts.privateKeyToAccount(privateKey).address;
+  web3.eth.Contract.setProvider(web3);
+  const contract = new web3.eth.Contract(abi, DAI, { from: ADDRESS });
+  contract.methods
+    .transfer(address, web3.utils.toWei("500", "ether"))
+    .send({ from: ADDRESS })
+    .on("receipt", () => {
+      web3.eth.sendTransaction({
+        from: ADDRESS,
+        to: address,
+        value: web3.utils.toWei("0.015", "ether"),
       });
+    });
+};
 
-    win.web3 = new Web3(newProvider);
+export const initWeb3 = (path, main = false) => {
+  cy.readFile("data.json").then((data) => {
+    let privateKey;
+    if (main) {
+      privateKey = Cypress.env("PRIVATE_KEY");
+    } else if (data.privateKey) {
+      privateKey = data.privateKey;
+    } else {
+      const web3 = new Web3();
+      privateKey = web3.eth.accounts.create().privateKey;
+      sendCrypto(privateKey);
+      cy.writeFile("data.json", { privateKey });
+    }
+    cy.on("window:before:load", (win) => {
+      win.testing = true;
+      win.web3 = getProvider(privateKey);
+    });
+    cy.visit(path);
   });
 };
 
 export const returnDai = () => {
-  const provider = new PrivateKeyProvider(
-    global.privateKey,
-    `https://kovan.infura.io/v3/${INFURA_ID}`
-  );
-  const web3 = new Web3(provider);
-  web3.eth.Contract.setProvider(web3);
-  const contract = new web3.eth.Contract(abi, "0xff795577d9ac8bd7d90ee22b6c1703490b6512fd", {
-    from: global.address,
+  cy.readFile("data.json").then((data) => {
+    const web3 = getProvider(data.privateKey);
+    const address = web3.eth.accounts.privateKeyToAccount(data.privateKey).address;
+    web3.eth.Contract.setProvider(web3);
+    const contract = new web3.eth.Contract(abi, DAI, { from: address });
+    contract.methods
+      .balanceOf(address)
+      .call({ from: address })
+      .then((result) => {
+        contract.methods.transfer(ADDRESS, result).send({ from: address });
+      });
   });
-
-  contract.methods
-    .balanceOf(global.address)
-    .call({ from: global.address })
-    .then((result) => {
-      contract.methods.transfer(ADDRESS, result).send({ from: global.address });
-    });
 };
