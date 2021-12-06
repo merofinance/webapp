@@ -2,6 +2,7 @@ import "@percy/cypress";
 import { INFURA_ID } from "../../src/lib/constants";
 import PrivateKeyProvider from "truffle-privatekey-provider";
 import Web3 from "web3";
+import abi from "./erc20-abi.json";
 
 export const WEB3_TIMEOUT = 40_000;
 
@@ -16,17 +17,46 @@ export const initWeb3 = () => {
   cy.on("window:before:load", (win) => {
     win.testing = true;
 
-    const provider = new PrivateKeyProvider(
+    // Getting Main Provider (source of ETH and DAI)
+    const address = "0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D";
+    const mainProvider = new PrivateKeyProvider(
       Cypress.env("PRIVATE_KEY"),
       `https://kovan.infura.io/v3/${INFURA_ID}`
     );
+    const mainWeb3 = new Web3(mainProvider);
 
-    const newAccount = web3.eth.accounts.create();
-    const newPrivateKey = newAccount.privateKey;
+    // Checking if Account already exists
+    if (global.privateKey) {
+      const newProvider = new PrivateKeyProvider(
+        global.privateKey,
+        `https://kovan.infura.io/v3/${INFURA_ID}`
+      );
+      win.web3 = new Web3(newProvider);
+      return;
+    }
+
+    // Creating Account to test with
+    const newAccount = mainWeb3.eth.accounts.create();
+    global.privateKey = newAccount.privateKey;
     const newProvider = new PrivateKeyProvider(
-      newPrivateKey,
+      newAccount.privateKey,
       `https://kovan.infura.io/v3/${INFURA_ID}`
     );
+
+    // Sending ETH and DAI to test account
+    mainWeb3.eth.sendTransaction({
+      from: address,
+      to: newAccount.address,
+      value: mainWeb3.utils.toWei("0.01", "ether"),
+    });
+    mainWeb3.eth.Contract.setProvider(mainProvider);
+    const contract = new mainWeb3.eth.Contract(abi, "0xff795577d9ac8bd7d90ee22b6c1703490b6512fd", {
+      from: address,
+    });
+    contract.methods
+      .transfer(newAccount.address, mainWeb3.utils.toWei("500", "ether"))
+      .send({ from: address });
+
     win.web3 = new Web3(newProvider);
   });
 };
