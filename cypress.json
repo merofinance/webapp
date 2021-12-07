@@ -2,5 +2,16 @@
   "baseUrl": "http://localhost:3000",
   "video": false,
   "viewportWidth": 1536,
-  "viewportHeight": 864
+  "viewportHeight": 864,
+  "integrationFolder": "cypress/integration",
+  "testFiles": [
+    "landing-page_spec.js",
+    "language-spec.js",
+    "litepaper_spec.js",
+    "not-found-page_spec.js",
+    "pools_spec.js",
+    "pool_spec.js",
+    "action-page_spec.js",
+    "protectable-loan_spec.js"
+  ]
 }

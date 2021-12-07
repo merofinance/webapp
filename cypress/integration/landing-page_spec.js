@@ -1,8 +1,9 @@
-import { percySnapshot } from "../support";
+import { initWeb3, percySnapshot } from "../support";
 
 describe("Innitial Load", () => {
   it("Should Load Home Page", () => {
-    cy.visit("/");
+    cy.writeFile("data.json", { privateKey: null });
+    initWeb3("/");
   });
 });
 

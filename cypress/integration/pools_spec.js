@@ -2,7 +2,7 @@ import { initWeb3, percySnapshot, WEB3_TIMEOUT } from "../support";
 
 describe("Page Load", () => {
   it("Should Innitialise Web3", () => {
-    initWeb3();
+    initWeb3("/pools");
     cy.visit("/pools");
   });
 });
