@@ -236,8 +236,8 @@
       "paragraph1": "The first action that Backd will support, which will be available at launch, is collateral top ups. Support for more actions will be added in the future. The core protocol architecture of Backd is designed in a way that makes adding new actions, strategies, or supported protocols (for actions) easy. This allows Backd to perpetually increase yield and utility for LPs as DeFi evolves.",
       "what": {
         "header": "What is a Top-up Position?",
-        "paragraph1": "A top-up is the act of depositing additional collateral in order to increase the health factor of your loan or mitigate liquidation risk. Backd liquidity providers can use their Backd LP tokens to register top-up positions. This creates back up collateral or what you could call interest earning liquidation protection. When a user registers a top-up position they must specify how much of their Backd liquidity should be shifted and at what health factor a top-up should occur. After registering a top-up position the Backd user’s liquidity will continue to be allocated to yield-farming strategies until it is needed.",
-        "paragraph2": "Backd’s Top-up positions increase collateral efficiency by enabling any borrower on supported protocols (Backd will support Aave & Compound loans at launch) to earn yield with their collateral. Furthermore this also enables borrowers to increase leverage by depositing less collateral and hedge liquidation risk by automatically posting extra collateral when needed.",
+        "paragraph1": "A top-up is the act of depositing additional collateral in order to increase the health factor of your loan or mitigate liquidation risk. Backd liquidity providers can use their Backd LP tokens to register Top-up Positions. This creates back up collateral or what you could call interest earning liquidation protection. When a user registers a Top-up Position they must specify how much of their Backd liquidity should be shifted and at what health factor a top-up should occur. After registering a Top-up Position the Backd user’s liquidity will continue to be allocated to yield-farming strategies until it is needed.",
+        "paragraph2": "Backd’s Top-up Positions increase collateral efficiency by enabling any borrower on supported protocols (Backd will support Aave & Compound loans at launch) to earn yield with their collateral. Furthermore this also enables borrowers to increase leverage by depositing less collateral and hedge liquidation risk by automatically posting extra collateral when needed.",
         "paragraph3": "Backd creates an infrastructure that enables the combination of on-chain actions, off-chain keepers that react to market events, and yield-farming. This unique combination lends itself to a multitude of actions and integration with many protocols. Backd not only makes liquidity more efficient, but also makes other protocols safer and smarter."
       }
     },
@@ -288,7 +288,7 @@
     "overview": "Backd’s single-asset pools aggregate yield across strategies. After depositing an asset, register an action to automate your liquidity to where it is needed most.",
     "deposit": "deposit",
     "information": {
-      "header": "Pools Information",
+      "header": "Pools information",
       "tvl": {
         "header": "Platform TVL",
         "tooltip": "The market capitalization of total assets held in Backd liquidity pools (total value locked)"
@@ -318,10 +318,10 @@
     }
   },
   "pool": {
-    "header": "{{asset}} Pool",
+    "header": "{{asset}} pool",
     "overview": "Deposit {{asset}} to begin earning yield via the {{strategy}} strategy. Once you have deposited, you can make your liquidity reactive by creating an action.",
     "information": {
-      "header": "Pool Information",
+      "header": "Pool information",
       "tvl": {
         "header": "Pool TVL",
         "tooltip": "The market capitalization of assets held in the pool (total value locked)"
@@ -331,15 +331,15 @@
         "tooltip": "The current annual percent yield earned by pool LPs"
       },
       "lp": {
-        "header": "LP Price",
+        "header": "LP price",
         "tooltip": "The current exchange rate of {{lpToken}} to {{underlying}}. {{underlying}}={{lpToken}}*{{exchangeRate}}"
       },
       "strategy": {
         "header": "Strategy",
         "tooltip": "The current protocol funds are allocated to for yield farming strategies",
         "details": {
-          "viewContract": "View Contract",
-          "readMore": "Read More"
+          "viewContract": "View contract",
+          "readMore": "Read more"
         }
       },
       "withdrawalFees": {
@@ -402,7 +402,7 @@
   "actions": {
     "overview": "Use this screen to monitor your Actions. Actions are a set of predefined market triggers, that when occur, something is done on your behalf.",
     "deposits": {
-      "header": "Your Deposits",
+      "header": "Your deposits",
       "empty": "You do not have any existing Deposits...",
       "manage": "Manage deposits"
     },
@@ -421,23 +421,23 @@
       "empty": "You have not registered any Actions yet...",
       "columns": {
         "type": "Type",
-        "locked": "Amount Locked",
-        "lockedShort": "Locked"
+        "locked": "Amount allocated",
+        "lockedShort": "Allocated"
       }
     },
     "suggestions": {
       "topup": {
         "header": "I have found a protectable loan!",
         "headerMobile": "I found a protectable loan!",
-        "subHeader": "The wallet you have connected has a loan that you can create a top-up position for.",
+        "subHeader": "The wallet you have connected has a loan that you can create a Top-up Position for.",
         "labels": {
           "protocol": "Protocol",
-          "healthFactor": "Health Factor",
-          "totalCollateral": "Collateral Value",
-          "totalLoan": "Loan Amount",
+          "healthFactor": "Health factor",
+          "totalCollateral": "Collateral value",
+          "totalLoan": "Loan amount",
           "pool": "Protecting with"
         },
-        "register": "Register top-up position"
+        "register": "Register Top-up Position"
       }
     },
     "topup": {
@@ -465,73 +465,73 @@
         },
         "conditions": {
           "header": "Enter top-up conditions",
-          "subHeader": "Define the specific market triggers that determine when a top-up position will activate."
+          "subHeader": "Define the specific market triggers that determine when a Top-up Position will activate."
         },
         "confirmation": {
-          "header": "Confirm top-up position",
+          "header": "Confirm Top-up Position",
           "summaryStart": "When the collateralization of",
           "summaryEnd": "drops below {{threshold}}, it will be topped up with {{single}} {{asset}} ({{singleUsd}}). This will be repeated each time the collateralization ratio drops below {{threshold}}, until a total of {{max}} {{asset}} ({{maxUsd}}) is topped up."
         }
       },
       "delete": {
         "header": "Delete Top-up Position",
-        "body": "Deleting this top-up position will remove automated collateral top-ups of {{asset}} on {{protocol}}. {{max}} {{asset}} will be unstaked and can be withdrawn after removing the position.",
+        "body": "Deleting this Top-up Position will remove automated collateral top-ups of {{asset}} on {{protocol}}. {{max}} {{asset}} will be unstaked and can be withdrawn after removing the position.",
         "cancel": "Do not delete"
       },
       "fields": {
         "protocol": {
           "label": "Protocol",
           "tooltip": "The lending protocol on which the user is borrowing funds (currently compatible with Aave and Compound)",
-          "hover": "Select Protocol"
+          "hover": "Select protocol"
         },
         "address": {
           "label": "Address",
           "tooltip": "The address of the owner of the position to top-up (e.g. if Alice is the borrower on Aave that should be topped up then this would be Alice’s address)",
-          "hover": "Enter Address",
+          "hover": "Enter address",
           "required": "Address is required",
-          "invalid": "Invalid Address",
+          "invalid": "Invalid address",
           "unique": "Max of one position per protocol and address"
         },
         "threshold": {
           "label": "Threshold",
           "question": "What health factor do you want the top-up Action to trigger at?",
           "tooltip": "The health factor threshold a collateral top-up should occur at",
-          "hover": "Enter Threshold",
+          "hover": "Enter threshold",
           "required": "Threshold is required",
           "greaterThanOne": "Must be greater than 1"
         },
         "single": {
-          "label": "Single Top-up",
+          "label": "Single top-up",
           "question": "How much would you like to transfer per single top-up?",
           "tooltip": "Amount of a single top-up increment (e.g. top-up increments of 2,500 DAI)",
-          "hover": "Enter Single Top-up",
-          "required": "Single Top-up is required",
+          "hover": "Enter single top-up",
+          "required": "Single top-up is required",
           "invalid": "Invalid number",
           "positive": "Must be positive number",
           "lessThanMax": "Must be less than max top-up"
         },
         "max": {
-          "label": "Max Top-up",
+          "label": "Max top-up",
           "question": "What would you like the total top-up amount to be?",
           "tooltip": "Maximum top-up amount (value of your liquidity allocated for top-ups)",
-          "hover": "Enter Max Top-up",
-          "required": "Max Top-up required",
+          "hover": "Enter max top-up",
+          "required": "Max top-up required",
           "invalid": "Invalid number",
           "positive": "Must be positive number",
           "exceedsBalance": "Exceeds deposited balance"
         },
         "gas": {
-          "label": "Max Gas Price",
+          "label": "Max gas price",
           "question": "What is the maximum gas price to pay per top-up?",
           "tooltip": "The maximum gas price used when paying for each top-up. Value is in Gwei units. If value is too low, then your top-up may not execute in time which could result in liquidation. A value of at least 200 Gwei is recommended.",
-          "hover": "Enter Max Gas Price",
-          "required": "Max Gas Price required",
+          "hover": "Enter max gas price",
+          "required": "Max gas price required",
           "positive": "Must be positive number"
         }
       }
     },
     "more": {
-      "label": "More Coming Soon"
+      "label": "More coming soon"
     }
   },
   "claim": {
@@ -591,7 +591,7 @@
       "invalid": "Invalid number"
     },
     "approve": "Approve {{asset}}",
-    "enter": "Enter Amount"
+    "enter": "Enter amount"
   },
   "components": {
     "dropdownChoose": "choose",

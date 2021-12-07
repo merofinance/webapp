@@ -230,7 +230,7 @@ export class Web3Backd implements Backd {
     const protocol = utils.formatBytes32String(position.protocol);
     const depositAmount = position.maxTopUp.value.mul(rawExchangeRate).div(scale);
 
-    return this.topupAction.register(
+    const gasEstimate = await this.topupAction.estimateGas.register(
       position.account,
       protocol,
       position.threshold.value,
@@ -240,6 +240,21 @@ export class Web3Backd implements Backd {
       position.singleTopUp.value,
       position.maxTopUp.value,
       position.maxGasPrice.value
+    );
+    const gasLimit = gasEstimate.mul(12).div(10);
+    return this.topupAction.register(
+      position.account,
+      protocol,
+      position.threshold.value,
+      pool.lpToken.address,
+      depositAmount,
+      pool.underlying.address,
+      position.singleTopUp.value,
+      position.maxTopUp.value,
+      position.maxGasPrice.value,
+      {
+        gasLimit,
+      }
     );
   }
 

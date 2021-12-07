@@ -2,16 +2,41 @@ import { initWeb3, percySnapshot, WEB3_TIMEOUT } from "../support";
 
 describe("Page Load", () => {
   it("Should Innitialise Web3", () => {
-    initWeb3();
-    cy.visit("/pools");
+    cy.wait(60_000);
+    initWeb3("/pools");
     cy.get('[id="walletConnect.wallets.metaMask"]').click();
-    cy.get("#pool-row-bdai", { timeout: WEB3_TIMEOUT }).click();
+    cy.get("#pool-row-beth", { timeout: WEB3_TIMEOUT }).click();
+  });
+});
+
+describe("Innitial Data", () => {
+  it("Should load ETH balance", () => {
+    cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains("0.015", {
+      timeout: WEB3_TIMEOUT * 2,
+    });
+  });
+  it("Should navigate back to pools", () => {
+    cy.get("#back-button").click();
+    cy.location().should((loc) => {
+      if (loc.pathname) expect(loc.pathname).to.eq("/pools");
+    });
+  });
+  it("Should navigate to DAI Pool", () => {
+    cy.get("#pool-row-bdai").click();
+    cy.location().should((loc) => {
+      if (loc.pathname) expect(loc.pathname).to.eq("/pool/bDAI");
+    });
+  });
+  it("Should load DAI balance", () => {
+    cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains("500", {
+      timeout: WEB3_TIMEOUT,
+    });
   });
 });
 
 describe("Default state", () => {
   it("Should have DAI Header", () => {
-    cy.get("#content-header").contains("DAI Pool");
+    cy.get("#content-header").contains("DAI pool");
   });
   it("Should have disabled button", () => {
     cy.get("#action-button").contains("Deposit and Stake");
@@ -19,12 +44,6 @@ describe("Default state", () => {
   });
   it("Should have max button", () => {
     cy.get("#input-button").contains("max");
-  });
-});
-
-describe("Innitial Data", () => {
-  it("Should load balance", () => {
-    cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains(".", { timeout: WEB3_TIMEOUT });
   });
 });
 
@@ -36,7 +55,7 @@ describe("Deposit Validation", () => {
     cy.get("#amount-input").clear();
   });
   it("Should error on above amount", () => {
-    cy.get("#amount-input").type("1000000000000");
+    cy.get("#amount-input").type("600");
     cy.get("#input-label").should("have.css", "color", "rgb(244, 67, 54)");
     cy.get("#input-note").contains("Amount exceeds available balance");
     cy.get("#amount-input").clear();
@@ -46,26 +65,17 @@ describe("Deposit Validation", () => {
 describe("Deposit Input Methods", () => {
   it("Should input max amount", () => {
     cy.get("#input-button").click();
-    cy.get("#amount-input")
-      .invoke("val")
-      .then((val) => +val)
-      .should("be.gt", 10);
+    cy.get("#amount-input").should("have.value", "500");
     cy.get("#amount-input").clear();
   });
   it("Should input 50%", () => {
     cy.get("#slider-50").click();
-    cy.get("#amount-input")
-      .invoke("val")
-      .then((val) => +val)
-      .should("be.gt", 10);
+    cy.get("#amount-input").should("have.value", "250");
     cy.get("#amount-input").clear();
   });
   it("Should input 100%", () => {
     cy.get("#slider-100").click();
-    cy.get("#amount-input")
-      .invoke("val")
-      .then((val) => +val)
-      .should("be.gt", 20);
+    cy.get("#amount-input").should("have.value", "500");
     cy.get("#amount-input").clear();
   });
 });
@@ -84,8 +94,27 @@ describe("Depositing", () => {
   it("Should snapshot page", () => {
     percySnapshot();
   });
+  it("Should have disabled deposit button", () => {
+    cy.get("#action-button").should("be.disabled");
+  });
+  it("Should Approve", () => {
+    cy.get("#approve-button").should("be.enabled");
+    cy.get("#approve-button").click();
+    cy.get("#desktop-connector").click();
+    cy.get("#account-details-transactions div", { timeout: WEB3_TIMEOUT })
+      .first()
+      .contains("Approve");
+    cy.get("#connector-loading-indicator", { timeout: WEB3_TIMEOUT }).should(
+      "have.css",
+      "opacity",
+      "0"
+    );
+    cy.get("#account-details-clear").click();
+    cy.get("#account-details-transactions").children().should("have.length", 0);
+    cy.get("#connection-details-popup-exit").click();
+  });
   it("Should Deposit", () => {
-    cy.get("#action-button").should("be.enabled");
+    cy.get("#action-button", { timeout: WEB3_TIMEOUT }).should("be.enabled");
     cy.get("#action-button").click();
   });
   it("Should disable button", () => {
@@ -97,7 +126,7 @@ describe("Account Details", () => {
   it("Should open Account Details", () => {
     cy.get("#desktop-connector").click();
   });
-  it("Should show pending transaction", () => {
+  it("Should show deposit transaction", () => {
     cy.get("#account-details-transactions div", { timeout: WEB3_TIMEOUT })
       .first()
       .contains("Deposit");
@@ -123,9 +152,18 @@ describe("Account Details", () => {
     cy.get("#account-details-transactions").children().should("have.length", 0);
   });
   it("Should close", () => {
-    cy.get("#connection-details-popup-exit").should("exist", { timeout: WEB3_TIMEOUT });
-    cy.get("#connection-details-popup-exit").should("be.visible", { timeout: WEB3_TIMEOUT });
     cy.get("#connection-details-popup-exit").click();
+  });
+});
+
+describe("Approve Button", () => {
+  it("Should show after deposit", () => {
+    cy.get("#approve-button").should("exist");
+  });
+  it("Should hide on revisiting of deposit", () => {
+    cy.get('[id="pool.tabs.withdraw.tab"]').click();
+    cy.get('[id="pool.tabs.deposit.tab"]').click();
+    cy.get("#approve-button", { timeout: WEB3_TIMEOUT }).should("not.exist");
   });
 });
 
@@ -134,7 +172,7 @@ describe("Withdraw Tab", () => {
     cy.get('[id="pool.tabs.withdraw.tab"]').click();
   });
   it("Should have DAI Header", () => {
-    cy.get("#content-header").contains("DAI Pool");
+    cy.get("#content-header").contains("DAI pool");
   });
   it("Should have disabled button", () => {
     cy.get("#withdraw-button").contains("Withdraw DAI");
@@ -192,6 +230,7 @@ describe("Withdraw Input Methods", () => {
 
 describe("Withdraw", () => {
   it("Should input value", () => {
+    cy.wait(30_000);
     cy.get("#input-button").click();
   });
   it("Should open withdrawal confirmation", () => {
@@ -205,7 +244,7 @@ describe("Withdraw", () => {
     cy.get("#withdrawal-confirmation-popup-button").click();
   });
   it("Should disable button", () => {
-    cy.get("#withdrawal-confirmation-popup-button", { timeout: 30_000 }).should("be.disabled");
+    cy.get("#withdrawal-confirmation-popup-button").should("be.disabled");
   });
   it("Should exit confirmation", () => {
     cy.get("#withdrawal-confirmation-popup-exit").click();
@@ -229,8 +268,6 @@ describe("Withdraw", () => {
     );
   });
   it("Should close", () => {
-    cy.get("#connection-details-popup-exit").should("exist", { timeout: WEB3_TIMEOUT });
-    cy.get("#connection-details-popup-exit").should("be.visible", { timeout: WEB3_TIMEOUT });
     cy.get("#connection-details-popup-exit").click();
   });
 });

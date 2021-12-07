@@ -2,7 +2,7 @@ import { initWeb3, percySnapshot, WEB3_TIMEOUT } from "../support";
 
 describe("Page Load", () => {
   it("Should Innitialise Web3", () => {
-    initWeb3();
+    initWeb3("/pools");
     cy.visit("/pools");
   });
 });
@@ -58,22 +58,15 @@ describe("Pools", () => {
     percySnapshot();
   });
   it("Should navigate to Pool", () => {
-    cy.get("#pool-row-bdai", { timeout: WEB3_TIMEOUT }).click();
-    cy.location().should(
-      (loc) => {
-        if (loc.pathname) expect(loc.pathname).to.eq("/pool/bDAI");
-      },
-      { timeout: WEB3_TIMEOUT }
-    );
+    cy.get("#pool-row-bdai").click();
+    cy.location().should((loc) => {
+      if (loc.pathname) expect(loc.pathname).to.eq("/pool/bDAI");
+    });
   });
   it("Should navigate back to pools", () => {
     cy.get("#back-button").click();
-    cy.location().should(
-      (loc) => {
-        if (loc.pathname) expect(loc.pathname).to.eq("/pools");
-      },
-
-      { timeout: WEB3_TIMEOUT }
-    );
+    cy.location().should((loc) => {
+      if (loc.pathname) expect(loc.pathname).to.eq("/pools");
+    });
   });
 });
