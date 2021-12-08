@@ -509,7 +509,9 @@ describe("Top-up Position Confirmation", () => {
 
 describe("Existing Topup View", () => {
   it("Should not show registered actions empty text", () => {
-    cy.get("#register-positions-empty").should("not.exist");
+    cy.get("#register-positions-empty", { timeout: WEB3_TIMEOUT }).should("not.exist", {
+      timeout: WEB3_TIMEOUT,
+    });
   });
   it("Should show registered action", () => {
     cy.get("#registered-action-aave", { timeout: WEB3_TIMEOUT }).should("exist");
