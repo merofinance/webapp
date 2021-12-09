@@ -28,7 +28,7 @@ const sendCrypto = (privateKey) => {
   contract.methods
     .transfer(address, web3.utils.toWei("500", "ether"))
     .send({ from: ADDRESS })
-    .on("receipt", () => {
+    .on("transactionHash", () => {
       web3.eth.sendTransaction({
         from: ADDRESS,
         to: address,
