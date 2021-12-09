@@ -32,7 +32,7 @@ const sendCrypto = (privateKey) => {
       web3.eth.sendTransaction({
         from: ADDRESS,
         to: address,
-        value: web3.utils.toWei("0.015", "ether"),
+        value: web3.utils.toWei("0.02", "ether"),
       });
     });
 };
