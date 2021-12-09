@@ -336,7 +336,12 @@
       },
       "strategy": {
         "header": "Strategy",
-        "tooltip": "The current protocol funds are allocated to for yield farming strategies",
+        "tooltip": "Deposits into this pool are allocated to the 3CRV yield farming strategy. Strategy profits are subject to a performance fee of 20%. This fee is already deducted from the APR displayed.",
+        "tooltipItemLabels": {
+          "strategist": "Strategist Fee",
+          "treasury": "Treasury Fee",
+          "reserve": "Reserve Fee"
+        },
         "details": {
           "viewContract": "View contract",
           "readMore": "Read more"
