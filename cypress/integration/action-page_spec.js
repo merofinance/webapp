@@ -1,4 +1,4 @@
-import { initWeb3, percySnapshot, returnDai, WEB3_TIMEOUT } from "../support";
+import { initWeb3, percySnapshot, WEB3_TIMEOUT } from "../support";
 
 describe("Page Load", () => {
   it("Should Innitialise Web3", () => {
