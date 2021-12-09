@@ -5,6 +5,7 @@
   "viewportHeight": 864,
   "integrationFolder": "cypress/integration",
   "testFiles": [
+    "pre-test-actions_spec.js",
     "landing-page_spec.js",
     "language-spec.js",
     "litepaper_spec.js",
@@ -12,6 +13,7 @@
     "pools_spec.js",
     "pool_spec.js",
     "action-page_spec.js",
-    "protectable-loan_spec.js"
+    "protectable-loan_spec.js",
+    "post-test-actions_spec.js"
   ]
 }

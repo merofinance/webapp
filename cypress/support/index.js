@@ -28,11 +28,11 @@ const sendCrypto = (privateKey) => {
   contract.methods
     .transfer(address, web3.utils.toWei("500", "ether"))
     .send({ from: ADDRESS })
-    .on("receipt", () => {
+    .on("transactionHash", () => {
       web3.eth.sendTransaction({
         from: ADDRESS,
         to: address,
-        value: web3.utils.toWei("0.02", "ether"),
+        value: web3.utils.toWei("0.05", "ether"),
       });
     });
 };
@@ -58,7 +58,7 @@ export const initWeb3 = (path, main = false) => {
   });
 };
 
-export const returnDai = () => {
+export const returnCrypto = () => {
   cy.readFile("data.json").then((data) => {
     const web3 = getProvider(data.privateKey);
     const address = web3.eth.accounts.privateKeyToAccount(data.privateKey).address;
@@ -68,7 +68,21 @@ export const returnDai = () => {
       .balanceOf(address)
       .call({ from: address })
       .then((result) => {
-        contract.methods.transfer(ADDRESS, result).send({ from: address });
+        contract.methods
+          .transfer(ADDRESS, result)
+          .send({ from: address })
+          .on("receipt", () => {
+            web3.eth.getGasPrice().then((result) => {
+              const gasCost = 21000 * Number(result);
+              web3.eth.getBalance(address).then((result) => {
+                web3.eth.sendTransaction({
+                  from: address,
+                  to: ADDRESS,
+                  value: Number(result) - gasCost,
+                });
+              });
+            });
+          });
       });
   });
 };
