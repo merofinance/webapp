@@ -12,6 +12,7 @@
     "pools_spec.js",
     "pool_spec.js",
     "action-page_spec.js",
-    "protectable-loan_spec.js"
+    "protectable-loan_spec.js",
+    "post-test-actions_spec.js"
   ]
 }
