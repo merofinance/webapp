@@ -2,7 +2,6 @@ import { initWeb3, percySnapshot, WEB3_TIMEOUT } from "../support";
 
 describe("Page Load", () => {
   it("Should Innitialise Web3", () => {
-    cy.wait(60_000);
     initWeb3("/pools");
     cy.get('[id="walletConnect.wallets.metaMask"]').click();
     cy.get("#pool-row-beth", { timeout: WEB3_TIMEOUT }).click();
