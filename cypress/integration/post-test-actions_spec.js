@@ -1,4 +1,4 @@
-import { initWeb3, returnDai, WEB3_TIMEOUT } from "../support";
+import { initWeb3, returnCrypto, WEB3_TIMEOUT } from "../support";
 
 describe("Post test actions", () => {
   it("Should Innitialise Web3", () => {
@@ -29,7 +29,10 @@ describe("Post test actions", () => {
     );
     cy.get("#connection-details-popup-exit").click();
   });
-  it("Should return DAI", () => {
-    returnDai();
+  it("Should return Crypto", () => {
+    returnCrypto();
+  });
+  it("Should wait for crypto to send", () => {
+    cy.wait(120_000);
   });
 });

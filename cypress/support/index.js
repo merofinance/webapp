@@ -58,7 +58,7 @@ export const initWeb3 = (path, main = false) => {
   });
 };
 
-export const returnDai = () => {
+export const returnCrypto = () => {
   cy.readFile("data.json").then((data) => {
     const web3 = getProvider(data.privateKey);
     const address = web3.eth.accounts.privateKeyToAccount(data.privateKey).address;
@@ -68,7 +68,21 @@ export const returnDai = () => {
       .balanceOf(address)
       .call({ from: address })
       .then((result) => {
-        contract.methods.transfer(ADDRESS, result).send({ from: address });
+        contract.methods
+          .transfer(ADDRESS, result)
+          .send({ from: address })
+          .on("receipt", () => {
+            web3.eth.getGasPrice().then((result) => {
+              const gasCost = 21000 * Number(result);
+              web3.eth.getBalance(address).then((result) => {
+                web3.eth.sendTransaction({
+                  from: address,
+                  to: ADDRESS,
+                  value: Number(result) - gasCost,
+                });
+              });
+            });
+          });
       });
   });
 };
