@@ -90,6 +90,7 @@ const LoanSearch = ({ value, setValue, hasExistingLoans }: Props): JSX.Element =
   const hasLoans = loans.length > 0;
 
   const positionExists = (loan: Loan) =>
+    positions &&
     positions.some(
       (position: Position) => position.protocol === loan.protocol && position.account === account
     );
