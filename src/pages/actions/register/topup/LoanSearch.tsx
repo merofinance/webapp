@@ -1,3 +1,4 @@
+import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -10,10 +11,11 @@ import { spinAnimation } from "../../../../styles/animations/SpinAnimation";
 import pending from "../../../../assets/ui/status/pending.svg";
 import RowSelector from "../../../../components/RowSelector";
 import { selectEthPrice } from "../../../../state/poolsListSlice";
-import { Loan } from "../../../../lib/types";
+import { Loan, Position } from "../../../../lib/types";
 import { fetchLoans, selectLoans } from "../../../../state/lendingSlice";
 import { RowOptionType } from "../../../../components/RowOption";
 import { AppDispatch } from "../../../../app/store";
+import { selectPositions } from "../../../../state/positionsSlice";
 
 const StyledLoanSearch = styled.div`
   width: 100%;
@@ -77,13 +79,20 @@ const LoanSearch = ({ value, setValue, hasExistingLoans }: Props): JSX.Element =
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();
+  const { account } = useWeb3React();
   const ethPrice = useSelector(selectEthPrice);
+  const positions = useSelector(selectPositions);
   const [address, setAddress] = useState("");
   const [loading, setLoading] = useState(false);
   const loans = useSelector(selectLoans(address));
   const [retrieved, setRetrieved] = useState(false);
 
   const hasLoans = loans.length > 0;
+
+  const positionExists = (loan: Loan) =>
+    positions.some(
+      (position: Position) => position.protocol === loan.protocol && position.account === account
+    );
 
   const getLoans = async (newaddress: string) => {
     if (!backd || !ethers.utils.isAddress(newaddress)) return;
@@ -95,8 +104,9 @@ const LoanSearch = ({ value, setValue, hasExistingLoans }: Props): JSX.Element =
 
   const options: RowOptionType[] = loans.map((loan: Loan) => {
     return {
-      value: loan.protocol,
       id: `loan-search-row-${loan.protocol.toLowerCase()}`,
+      value: loan.protocol,
+      disabledText: positionExists(loan) ? t("actions.topup.stages.loan.alreadyExists") : "",
       columns: [
         {
           label: t("actions.suggestions.topup.labels.protocol"),

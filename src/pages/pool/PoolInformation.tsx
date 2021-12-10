@@ -1,11 +1,15 @@
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+// import { useWeb3React } from "@web3-react/core";
 
 import Information from "../../components/Information";
 import { Pool } from "../../lib";
 import { selectPrice } from "../../state/selectors";
 import { formatPercent, numberToCompactCurrency } from "../../lib/numeric";
 import { Optional } from "../../lib/types";
+// import etherscan from "../../assets/ui/etherscan.svg";
+// import memo from "../../assets/ui/memo.svg";
+// import { getEtherscanAddressLink } from "../../lib/web3";
 
 interface Props {
   pool: Optional<Pool>;
@@ -14,6 +18,7 @@ interface Props {
 const PoolInformation = ({ pool }: Props): JSX.Element => {
   const { t } = useTranslation();
   const price = useSelector(selectPrice(pool));
+  // const { chainId } = useWeb3React();
   const maxWithdrawalFee = pool ? `${(pool.maxWithdrawalFee * 100).toString()}%` : null;
   const minWithdrawalFee = pool ? `${(pool.minWithdrawalFee * 100).toString()}%` : null;
   const days = pool ? (pool.feeDecreasePeriod * 10 ** 18) / 86400 : null;
@@ -53,6 +58,20 @@ const PoolInformation = ({ pool }: Props): JSX.Element => {
         // {
         //   label: t("pool.information.strategy.header"),
         //   tooltip: t("pool.information.strategy.tooltip"),
+        //   tooltipItems: [
+        //     {
+        //       label: t("pool.information.strategy.tooltipItemLabels.strategist"),
+        //       value: "5%",
+        //     },
+        //     {
+        //       label: t("pool.information.strategy.tooltipItemLabels.treasury"),
+        //       value: "10%",
+        //     },
+        //     {
+        //       label: t("pool.information.strategy.tooltipItemLabels.reserve"),
+        //       value: "5%",
+        //     },
+        //   ],
         //   value: pool.name,
         //   details: [
         //     {
