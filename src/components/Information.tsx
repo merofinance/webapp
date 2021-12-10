@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { GradientLink } from "../styles/GradientText";
 import InfoCard from "./InfoCard";
-import Tooltip from "./Tooltip";
+import Tooltip, { TooltipItemType } from "./Tooltip";
 import arrow from "../assets/ui/arrow.svg";
 
 interface RowDetailType {
@@ -14,6 +14,7 @@ interface RowDetailType {
 interface InformationRowType {
   label: string;
   tooltip: string;
+  tooltipItems?: TooltipItemType[];
   value: string;
   details?: RowDetailType[];
 }
@@ -153,7 +154,7 @@ const Information = ({ header, rows }: Props): JSX.Element => {
               <InformationHeader isAccordion={!!row.details} onClick={() => setOpen(!open)}>
                 <LabelContainer>
                   <Label>{row.label}</Label>
-                  <Tooltip content={row.tooltip} />
+                  <Tooltip content={row.tooltip} items={row.tooltipItems} />
                 </LabelContainer>
                 <ValueContainer>
                   <Value>{row.value}</Value>
