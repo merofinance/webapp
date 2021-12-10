@@ -16,6 +16,7 @@ const Icon = styled.img`
   cursor: pointer;
 
   margin-left: 0.9rem;
+  margin-top: 0.2rem;
   height: 1.2rem;
   @media (max-width: 600px) {
     margin-top: 2.2px;
