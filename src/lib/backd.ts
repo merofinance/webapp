@@ -6,6 +6,7 @@ import { LiquidityPoolFactory } from "@backdfund/protocol/typechain/LiquidityPoo
 import { StakerVaultFactory } from "@backdfund/protocol/typechain/StakerVaultFactory";
 import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
 import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFactory";
+import { TopUpActionFeeHandlerFactory } from "@backdfund/protocol";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
 import fromEntries from "fromentries";
 
@@ -29,6 +30,9 @@ import {
   PlainLoan,
   LendingProtocol,
   Optional,
+  PlainActionFees,
+  ActionFees,
+  toPlainActionFees,
 } from "./types";
 import { lendingProviders } from "./lending-protocols";
 
@@ -42,6 +46,7 @@ export interface Backd {
   getPoolInfo(address: Address): Promise<Pool>;
   getLoanPosition(protocol: LendingProtocol, address?: Address): Promise<Optional<PlainLoan>>;
   getPositions(): Promise<PlainPosition[]>;
+  getActionFees(): Promise<PlainActionFees>;
   registerPosition(pool: Pool, position: Position): Promise<ContractTransaction>;
   removePosition(
     account: Address,
@@ -75,6 +80,8 @@ export class Web3Backd implements Backd {
 
     // eslint-disable-next-line dot-notation
     this.controller = ControllerFactory.connect(contracts["Controller"][0], _provider);
+    // eslint-disable-next-line dot-notation
+    this.topupAction = TopUpActionFactory.connect(contracts["TopUpAction"][0], _provider);
     // eslint-disable-next-line dot-notation
     this.topupAction = TopUpActionFactory.connect(contracts["TopUpAction"][0], _provider);
   }
@@ -203,6 +210,29 @@ export class Web3Backd implements Backd {
     const account = await this.currentAccount();
     const rawPositions = await this.topupAction.listPositions(account);
     return Promise.all(rawPositions.map((v: any) => this.getPositionInfo(v)));
+  }
+
+  async getActionFees(): Promise<PlainActionFees> {
+    const feeHandlerAddress = await this.topupAction.getFeeHandler();
+    const feeHandler = TopUpActionFeeHandlerFactory.connect(feeHandlerAddress, this._provider);
+
+    const [totalBn, keeperFractionBn, treasuryFractionBn] = await Promise.all([
+      this.topupAction.getActionFee(),
+      feeHandler.getKeeperFeeFraction(),
+      feeHandler.getTreasuryFeeFraction(),
+    ]);
+    const total = new ScaledNumber(totalBn);
+    const keeperFraction = new ScaledNumber(keeperFractionBn);
+    const treasuryFraction = new ScaledNumber(treasuryFractionBn);
+
+    const actionfees: ActionFees = {
+      total,
+      keeperFraction,
+      treasuryFraction,
+      lpFraction: total.sub(keeperFraction).sub(treasuryFraction),
+    };
+
+    return toPlainActionFees(actionfees);
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
