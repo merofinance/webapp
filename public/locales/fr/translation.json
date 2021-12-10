@@ -168,7 +168,7 @@
             "number": "03"
           },
           "register": {
-            "description": "Enregistrez vos prêts Compound ou Aave on-chain pour recevoir des remises à niveau de garantie sur vos prêts, et stakez vos tokens LP pour gagnez des primes Backd.",
+            "description": "Enregistrez vos prêts Compound ou Aave v2 on-chain pour recevoir des remises à niveau de garantie sur vos prêts, et stakez vos tokens LP pour gagnez des primes Backd.",
             "header": "Enregistrer votre prêt on-chain",
             "number": "02"
           }

@@ -168,7 +168,7 @@
             "number": "03"
           },
           "register": {
-            "description": "Registe empréstimos Compound ou Aave na cadeia para receber top-ups colaterais e stake os seus pool LP tokens para ganhar recompensas em Backd.",
+            "description": "Registe empréstimos Compound ou Aave v2 na cadeia para receber top-ups colaterais e stake os seus pool LP tokens para ganhar recompensas em Backd.",
             "header": "Registar empréstimo na cadeia",
             "number": "02"
           }
@@ -299,7 +299,7 @@
           "invalid": "Endereço inválido",
           "label": "Endereço",
           "required": "O endereço é necessário",
-          "tooltip": "O endereço do proprietário da posição para top-up (por exemplo, se a Alice é o mutuário no Aave que deve ser preenchido, então este seria o endereço da Alice)",
+          "tooltip": "O endereço do proprietário da posição para top-up (por exemplo, se a Alice é o mutuário no Aave v2 que deve ser preenchido, então este seria o endereço da Alice)",
           "unique": "Máximo de uma posição por protocolo e endereço"
         },
         "max": {
@@ -314,7 +314,7 @@
         "protocol": {
           "hover": "Selecionar protocolo",
           "label": "Protocolo",
-          "tooltip": "O protocolo de empréstimo no qual o usuário está a emprestantar fundos (atualmente compatível com Aave e Compound)"
+          "tooltip": "O protocolo de empréstimo no qual o usuário está a emprestantar fundos (atualmente compatível com Aave v2 e Compound)"
         },
         "single": {
           "hover": "Inserir Top-up único",

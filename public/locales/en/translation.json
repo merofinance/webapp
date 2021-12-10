@@ -105,7 +105,7 @@
           "register": {
             "number": "02",
             "header": "Register Loan on-Chain",
-            "description": "Register Compound or Aave loans on-chain to receive collateral top-ups, and stake your pool LP tokens to earn Backd rewards."
+            "description": "Register Compound or Aave v2 loans on-chain to receive collateral top-ups, and stake your pool LP tokens to earn Backd rewards."
           },
           "protect": {
             "number": "03",
@@ -237,7 +237,7 @@
       "what": {
         "header": "What is a Top-up Position?",
         "paragraph1": "A top-up is the act of depositing additional collateral in order to increase the health factor of your loan or mitigate liquidation risk. Backd liquidity providers can use their Backd LP tokens to register Top-up Positions. This creates back up collateral or what you could call interest earning liquidation protection. When a user registers a Top-up Position they must specify how much of their Backd liquidity should be shifted and at what health factor a top-up should occur. After registering a Top-up Position the Backd user’s liquidity will continue to be allocated to yield-farming strategies until it is needed.",
-        "paragraph2": "Backd’s Top-up Positions increase collateral efficiency by enabling any borrower on supported protocols (Backd will support Aave & Compound loans at launch) to earn yield with their collateral. Furthermore this also enables borrowers to increase leverage by depositing less collateral and hedge liquidation risk by automatically posting extra collateral when needed.",
+        "paragraph2": "Backd’s Top-up Positions increase collateral efficiency by enabling any borrower on supported protocols (Backd will support Aave v2 & Compound loans at launch) to earn yield with their collateral. Furthermore this also enables borrowers to increase leverage by depositing less collateral and hedge liquidation risk by automatically posting extra collateral when needed.",
         "paragraph3": "Backd creates an infrastructure that enables the combination of on-chain actions, off-chain keepers that react to market events, and yield-farming. This unique combination lends itself to a multitude of actions and integration with many protocols. Backd not only makes liquidity more efficient, but also makes other protocols safer and smarter."
       }
     },
@@ -446,7 +446,7 @@
     },
     "topup": {
       "label": "Top-up Position",
-      "description": "Use your Backd deposits as back-up collateral to protect your overcollateralised loans on Aave or Compound from getting liquidated.",
+      "description": "Use your Backd deposits as back-up collateral to protect your overcollateralised loans on Aave v2 or Compound from getting liquidated.",
       "stages": {
         "loan": {
           "header": "Select a loan to protect",
@@ -485,12 +485,12 @@
       "fields": {
         "protocol": {
           "label": "Protocol",
-          "tooltip": "The lending protocol on which the user is borrowing funds (currently compatible with Aave and Compound)",
+          "tooltip": "The lending protocol on which the user is borrowing funds (currently compatible with Aave v2 and Compound)",
           "hover": "Select protocol"
         },
         "address": {
           "label": "Address",
-          "tooltip": "The address of the owner of the position to top-up (e.g. if Alice is the borrower on Aave that should be topped up then this would be Alice’s address)",
+          "tooltip": "The address of the owner of the position to top-up (e.g. if Alice is the borrower on Aave v2 that should be topped up then this would be Alice’s address)",
           "hover": "Enter address",
           "required": "Address is required",
           "invalid": "Invalid address",
@@ -638,15 +638,15 @@
     },
     "litepaper": {
       "title": "Backd Litepaper",
-      "description": "How Backd combines actions (e.g. Aave & Compound liquidation protection) with yield-farming (Curve & Convex)"
+      "description": "How Backd combines actions (e.g. Aave v2 & Compound liquidation protection) with yield-farming (Curve & Convex)"
     },
     "pool": {
       "title": "{{asset}} Pool",
-      "description": "Deposit {{asset}} to farm yield and register LP tokens for actions such as liquidation protection (Aave & Compound)"
+      "description": "Deposit {{asset}} to farm yield and register LP tokens for actions such as liquidation protection (Aave v2 & Compound)"
     },
     "pools": {
       "title": "Backd Pools",
-      "description": "Earn yield and governance tokens while executing other acitons such as collateral top ups (Aave & Compound)"
+      "description": "Earn yield and governance tokens while executing other acitons such as collateral top ups (Aave v2 & Compound)"
     },
     "stake": {
       "title": "Stake BKD & Earn Rewards",
