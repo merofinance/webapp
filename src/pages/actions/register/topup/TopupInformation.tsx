@@ -11,6 +11,8 @@ import { Pool, Position } from "../../../../lib/types";
 import { selectPrice } from "../../../../state/selectors";
 import { useDevice } from "../../../../app/hooks/use-device";
 import { getEtherscanAddressLink } from "../../../../lib/web3";
+import { selectActionFees } from "../../../../state/positionsSlice";
+import Loader from "../../../../components/Loader";
 
 const StyledTopupInformation = styled.div`
   width: 100%;
@@ -128,6 +130,7 @@ interface Props {
 const TopupInformation = ({ position, pool }: Props): JSX.Element => {
   const { t } = useTranslation();
   const price = useSelector(selectPrice(pool));
+  const actionFees = useSelector(selectActionFees);
   const { chainId } = useWeb3React();
   const { isMobile } = useDevice();
 
@@ -217,20 +220,20 @@ const TopupInformation = ({ position, pool }: Props): JSX.Element => {
               items={[
                 {
                   label: t("actions.topup.stages.confirmation.fees.tooltip.itemLabels.lps"),
-                  value: "3%",
+                  value: actionFees ? actionFees.lpFraction.toPercent() : "--%",
                 },
                 {
                   label: t("actions.topup.stages.confirmation.fees.tooltip.itemLabels.keepers"),
-                  value: "3%",
+                  value: actionFees ? actionFees.keeperFraction.toPercent() : "--%",
                 },
                 {
                   label: t("actions.topup.stages.confirmation.fees.tooltip.itemLabels.stakers"),
-                  value: "3%",
+                  value: actionFees ? actionFees.treasuryFraction.toPercent() : "--%",
                 },
               ]}
             />
           </InfoLabel>
-          <InfoLabel>3%</InfoLabel>
+          <InfoLabel>{actionFees ? actionFees.total.toPercent() : <Loader />}</InfoLabel>
         </InfoRow>
       </InfoSection>
     </StyledTopupInformation>
