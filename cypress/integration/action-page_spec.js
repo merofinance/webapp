@@ -81,7 +81,7 @@ describe("Register Page", () => {
   });
   it("Should have Top-up Note", () => {
     cy.get("#top-up-note").contains(
-      "Use your Backd deposits as back-up collateral to protect your overcollateralised loans on Aave or Compound from getting liquidated."
+      "Use your Backd deposits as back-up collateral to protect your overcollateralised loans on Aave v2 or Compound from getting liquidated."
     );
   });
   it("Should take snapshot", () => {

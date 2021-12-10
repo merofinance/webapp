@@ -168,7 +168,7 @@
             "number": "03"
           },
           "register": {
-            "description": "Registra prestamos on-chain de Compound o Aave para recibir top-ups de colateral y depositar tus tokens de LP para obtener recompensas de Backd",
+            "description": "Registra prestamos on-chain de Compound o Aave v2 para recibir top-ups de colateral y depositar tus tokens de LP para obtener recompensas de Backd",
             "header": "Registra prestamos on-chain",
             "number": "02"
           }
