@@ -7,13 +7,10 @@ import chevron from "../../assets/ui/chevron.svg";
 import Asset from "../../components/Asset";
 import Button from "../../components/Button";
 import { GradientText } from "../../styles/GradientText";
-import { selectBalances } from "../../state/userSlice";
 import { Pool } from "../../lib";
-import { formatPercent, numberToCompactCurrency, formatCurrency } from "../../lib/numeric";
-import { selectPoolPositions } from "../../state/positionsSlice";
-import { Position } from "../../lib/types";
-import { selectPrice } from "../../state/selectors";
-import { ScaledNumber } from "../../lib/scaled-number";
+import { formatPercent } from "../../lib/numeric";
+import { selectPoolDeposits, selectPoolTotalDeposits, selectPrice } from "../../state/selectors";
+import Loader from "../../components/Loader";
 
 interface RowProps {
   preview?: boolean;
@@ -139,13 +136,8 @@ const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
   const navigate = useNavigate();
 
   const price = useSelector(selectPrice(pool));
-  const balances = useSelector(selectBalances);
-  const positions = useSelector(selectPoolPositions(pool));
-
-  const balance = balances[pool.lpToken.address] || new ScaledNumber();
-  const locked = positions
-    .reduce((a: ScaledNumber, b: Position) => a.add(b.maxTopUp), new ScaledNumber())
-    .add(balance);
+  const totalDeposits = useSelector(selectPoolTotalDeposits(pool));
+  const deposits = useSelector(selectPoolDeposits(pool));
 
   return (
     <tbody>
@@ -160,8 +152,12 @@ const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
         <Data hideOnSnapshot>
           <Apy>{formatPercent(pool.apy)}</Apy>
         </Data>
-        <Data hideOnSnapshot>{numberToCompactCurrency(pool.totalAssets * price)}</Data>
-        <DepositedData preview={preview}>{locked.toCompactUsdValue(price)}</DepositedData>
+        <Data hideOnSnapshot>
+          {price && totalDeposits ? totalDeposits.toCompactUsdValue(price) : <Loader />}
+        </Data>
+        <DepositedData preview={preview}>
+          {price && deposits ? deposits.toCompactUsdValue(price) : <Loader />}
+        </DepositedData>
         <ChevronData preview={preview}>
           <Chevron src={chevron} alt="right arrow" />
         </ChevronData>

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 
+import Loader from "../../../../components/Loader";
 import { selectLoans } from "../../../../state/lendingSlice";
 import { selectEthPrice } from "../../../../state/poolsListSlice";
 import Asset from "../../../../components/Asset";
@@ -93,30 +94,32 @@ const ActionSummary = (): JSX.Element => {
 
   const loan = loans.filter((loan: Loan) => loan.protocol === protocol)[0];
 
-  if (!loan || !pool) return <div />;
-
   return (
     <StyledActionSummary id="action-summary">
       <Column>
         <Header>{t("actions.suggestions.topup.labels.protocol")}</Header>
-        <Value>{loan.protocol}</Value>
+        <Value>{loan ? loan.protocol : <Loader />}</Value>
       </Column>
       <Column>
         <Header>{t("actions.suggestions.topup.labels.healthFactor")}</Header>
-        <Value hideOnSnapshot>{loan.healthFactor.toCryptoString()}</Value>
+        <Value hideOnSnapshot>{loan ? loan.healthFactor.toCryptoString() : <Loader />}</Value>
       </Column>
       <Column hideMobile>
         <Header>{t("actions.suggestions.topup.labels.totalCollateral")}</Header>
-        <Value hideOnSnapshot>{loan.totalCollateralETH.toUsdValue(ethPrice)}</Value>
+        <Value hideOnSnapshot>
+          {loan && ethPrice ? loan.totalCollateralETH.toUsdValue(ethPrice) : <Loader />}
+        </Value>
       </Column>
       <Column hideMobile>
         <Header>{t("actions.suggestions.topup.labels.totalLoan")}</Header>
-        <Value hideOnSnapshot>{loan.totalDebtETH.toUsdValue(ethPrice)}</Value>
+        <Value hideOnSnapshot>
+          {loan && ethPrice ? loan.totalDebtETH.toUsdValue(ethPrice) : <Loader />}
+        </Value>
       </Column>
       <Column>
         <Header>{t("actions.suggestions.topup.labels.pool")}</Header>
         <Value>
-          <Asset tiny token={pool.underlying} />
+          {pool ? <Asset tiny token={pool.underlying} /> : <Loader />}
           <ChangePoolButton
             id="action-summary-change-pool"
             onClick={() => navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`)}

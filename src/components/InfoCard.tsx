@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import AccordionChevron from "./AccordionChevron";
 import { useDevice } from "../app/hooks/use-device";
@@ -7,7 +6,6 @@ import { useDevice } from "../app/hooks/use-device";
 interface StyleProps {
   collapsible?: boolean;
   open?: boolean;
-  wide?: boolean;
 }
 
 const StyledInfoCard = styled.div`
@@ -20,12 +18,12 @@ const StyledInfoCard = styled.div`
   overflow: hidden;
   transition: max-height 0.3s ease-out, background-color 0.3s;
   margin-bottom: 2.4rem;
+  width: 36rem;
 
   max-height: ${(props: StyleProps) =>
     !props.collapsible ? "auto" : props.open ? "24rem" : "5.4rem"};
 
   margin-left: 1.6rem;
-  width: ${(props: StyleProps) => (props.wide ? "40rem" : "36rem")};
   padding: 2rem 1.8rem;
   @media (max-width: 1220px) {
     margin-left: 0;
@@ -107,26 +105,19 @@ interface Props {
 }
 
 const InfoCard = ({ header, content, collapsible, defaultOpen, id }: Props): JSX.Element => {
-  const { i18n } = useTranslation();
   const { isMobile } = useDevice();
   const [open, setOpen] = useState(false);
-  const isWide = i18n.language === "ja";
 
   useEffect(() => {
     setOpen(defaultOpen || !isMobile);
   }, [!isMobile]);
 
   return (
-    <StyledInfoCard id={id} open={open} collapsible={collapsible} wide={isWide}>
+    <StyledInfoCard id={id} open={open} collapsible={collapsible}>
       <ChevronContainer collapsible={collapsible}>
         <AccordionChevron open={open} />
       </ChevronContainer>
-      <Header
-        id={`${id}-header`}
-        onClick={() => setOpen(!open)}
-        collapsible={collapsible}
-        wide={isWide}
-      >
+      <Header id={`${id}-header`} onClick={() => setOpen(!open)} collapsible={collapsible}>
         {header}
       </Header>
       <Content collapsible={collapsible}>{content}</Content>

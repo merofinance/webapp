@@ -43,7 +43,7 @@ const PopupContainer = styled.div`
   padding: ${(props: PopupContainerProps) =>
     props.small ? "2.1rem 1.6rem 2.1rem 1.6rem" : "3.7rem 1.6rem 2.3rem 1.6rem"};
   border-radius: 1.4rem;
-  background-color: #252140;
+  background-color: var(--bg-light);
   overflow: hidden;
 
   @media (max-width: 600px) {
@@ -155,7 +155,7 @@ const Popup = ({
             <Button
               id={`${id}-popup-cancel`}
               medium
-              background="#252140"
+              background="var(--bg-light)"
               text={isMobile ? t("components.back") : t("components.cancel")}
               click={close}
             />

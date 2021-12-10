@@ -10,15 +10,16 @@ import Seo from "../../components/Seo";
 import PoolDeposit from "./PoolDeposit";
 import PoolWithdraw from "./PoolWithdraw";
 import PoolInformation from "./PoolInformation";
-import { selectBalance } from "../../state/userSlice";
+import { selectPoolBalance } from "../../state/userSlice";
 import Overview from "../../components/Overview";
 import { useBackd } from "../../app/hooks/use-backd";
-import { fetchState } from "../../state/poolsListSlice";
+import { fetchState, selectPoolsLoaded } from "../../state/poolsListSlice";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import BackButton from "../../components/BackButton";
 import Tabs from "../../components/Tabs";
 import PoolStatistics from "./PoolStatistics";
 import ContentSection from "../../components/ContentSection";
+import LiveHelp from "../../components/LiveHelp";
 
 const StyledPoolPage = styled.div`
   position: relative;
@@ -66,14 +67,15 @@ const PoolPage = (): JSX.Element => {
   const dispatch = useDispatch();
   const updated = useWeb3Updated();
   const pool = useSelector(selectPool(poolName));
-  const balance = useSelector(selectBalance(pool));
+  const poolsLoaded = useSelector(selectPoolsLoaded);
+  const balance = useSelector(selectPoolBalance(pool));
 
   useEffect(() => {
     if (!backd) return;
     dispatch(fetchState(backd));
   }, [updated]);
 
-  if (!pool) {
+  if (!pool && poolsLoaded) {
     navigate("/");
     return <div />;
   }
@@ -81,15 +83,15 @@ const PoolPage = (): JSX.Element => {
   return (
     <StyledPoolPage>
       <Seo
-        title={t("metadata.pool.title", { asset: pool.underlying.symbol })}
-        description={t("metadata.pool.description", { asset: pool.underlying.symbol })}
+        title={t("metadata.pool.title", { asset: pool?.underlying.symbol || "---" })}
+        description={t("metadata.pool.description", { asset: pool?.underlying.symbol || "---" })}
       />
       <BackButton />
       <ContentContainer>
         <Content>
           <ContentSection
             noContentPadding
-            header={t("pool.header", { asset: pool.underlying.symbol })}
+            header={t("pool.header", { asset: pool?.underlying.symbol || "---" })}
             statistics={<PoolStatistics pool={pool} />}
             content={
               <Tabs
@@ -110,11 +112,15 @@ const PoolPage = (): JSX.Element => {
       </ContentContainer>
       <InfoCards>
         <Overview
-          description={t("pool.overview", { asset: pool.underlying.symbol, strategy: pool.name })}
+          description={t("pool.overview", {
+            asset: pool?.underlying.symbol || "---",
+            strategy: pool?.name || "---",
+          })}
           link="https://docs.backd.fund/"
         />
         <PoolInformation pool={pool} />
-        {!balance.isZero() && (
+        <LiveHelp />
+        {balance && !balance.isZero() && (
           <ButtonContainer>
             <Button
               id="create-topup-button"

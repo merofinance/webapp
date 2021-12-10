@@ -4,6 +4,8 @@ import { GradientLink } from "../styles/GradientText";
 import InfoCard from "./InfoCard";
 import Tooltip, { TooltipItemType } from "./Tooltip";
 import arrow from "../assets/ui/arrow.svg";
+import Loader from "./Loader";
+import { Optional } from "../lib/types";
 
 interface RowDetailType {
   icon: string;
@@ -15,7 +17,7 @@ interface InformationRowType {
   label: string;
   tooltip: string;
   tooltipItems?: TooltipItemType[];
-  value: string;
+  value: Optional<string>;
   details?: RowDetailType[];
 }
 
@@ -136,10 +138,10 @@ const DetailLabel = styled(GradientLink)`
   }
 `;
 
-type Props = {
+interface Props {
   header: string;
   rows: InformationRowType[];
-};
+}
 
 const Information = ({ header, rows }: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
@@ -157,7 +159,7 @@ const Information = ({ header, rows }: Props): JSX.Element => {
                   <Tooltip content={row.tooltip} items={row.tooltipItems} />
                 </LabelContainer>
                 <ValueContainer>
-                  <Value>{row.value}</Value>
+                  <Value>{row.value || <Loader />}</Value>
                   <Chevron src={arrow} isAccordion={!!row.details} open={open} />
                 </ValueContainer>
               </InformationHeader>

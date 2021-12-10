@@ -10,6 +10,7 @@ import { fetchPreviewState, fetchState, selectPools } from "../../state/poolsLis
 import { Pool } from "../../lib";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import { Header2, Header4 } from "../../styles/Headers";
+import Loader from "../../components/Loader";
 import { AppDispatch } from "../../app/store";
 import { useIsLive } from "../../app/hooks/use-is-live";
 
@@ -122,9 +123,14 @@ const Preview = (): JSX.Element => {
               <ChevronHeader />
             </HeaderRow>
           </thead>
-          {pools.map((pool: Pool) => (
-            <PoolsRow key={pool.name} preview pool={pool} />
-          ))}
+          {!pools && (
+            <>
+              <Loader row preview />
+              <Loader row preview />
+              <Loader row preview />
+            </>
+          )}
+          {pools && pools.map((pool: Pool) => <PoolsRow key={pool.name} preview pool={pool} />)}
         </Table>
       </TableContainer>
     </StyledPreview>

@@ -337,6 +337,10 @@ describe("Conditions Page", () => {
     });
   });
 
+  it("Should not show Live Help", () => {
+    cy.get("#live-help").should("not.exist");
+  });
+
   it("Should have nothing in threshold input", () => {
     cy.get("#register-topup-threshold-input").should("have.value", "");
   });
@@ -352,6 +356,32 @@ describe("Conditions Page", () => {
     cy.get("#register-topup-threshold-input").focus();
     cy.get("#register-topup-threshold-input").type("0");
     cy.get("#register-topup-threshold-error").contains("Must be greater than 1");
+  });
+  it("Should show Live Help on 1.1", () => {
+    cy.get("#register-topup-threshold-input").clear();
+    cy.get("#register-topup-threshold-input").focus();
+    cy.get("#register-topup-threshold-input").type("1.1");
+    cy.get("#register-topup-threshold-input").blur();
+    cy.get("#live-help").should("exist");
+  });
+  it("Should implement Live Help", () => {
+    cy.get("#live-help-implement").should("be.enabled");
+    cy.get("#live-help-implement").click();
+    cy.get("#register-topup-threshold-input").should("have.value", "1.2");
+    cy.get("#live-help").should("not.exist");
+  });
+  it("Should show Live Help on 10000", () => {
+    cy.get("#register-topup-threshold-input").clear();
+    cy.get("#register-topup-threshold-input").focus();
+    cy.get("#register-topup-threshold-input").type("10000");
+    cy.get("#register-topup-threshold-input").blur();
+    cy.get("#live-help").should("exist");
+  });
+  it("Should implement Live Help", () => {
+    cy.get("#live-help-implement").should("be.enabled");
+    cy.get("#live-help-implement").click();
+    cy.get("#register-topup-threshold-input").should("have.value", "1.2");
+    cy.get("#live-help").should("not.exist");
   });
   it("Should enter threshold", () => {
     cy.get("#register-topup-threshold-input").clear();
@@ -425,20 +455,32 @@ describe("Conditions Page", () => {
     cy.get("#register-topup-maxgasprice-input").type("0");
     cy.get("#register-topup-maxgasprice-error").contains("Must be positive number");
   });
-  it("Should show gas error less than single", () => {
+  it("Should show Live Help on high gas", () => {
     cy.get("#register-topup-maxgasprice-input").clear();
-    cy.get("#register-topup-maxgasprice-input").type("100000");
-    cy.get("#register-topup-maxtopup-error").contains("Not enough to cover gas cost of top-up");
+    cy.get("#register-topup-maxgasprice-input").focus();
+    cy.get("#register-topup-maxgasprice-input").type("100");
+    cy.get("#register-topup-maxgasprice-input").blur();
+    cy.get("#live-help").should("exist");
+  });
+  it("Should take snapshot", () => {
+    percySnapshot();
+  });
+  it("Should implement Live Help", () => {
+    cy.get("#live-help-implement").should("be.enabled");
+    cy.get("#live-help-implement").click();
+    cy.get("#register-topup-singletopup-input").should("not.have.value", "100");
+    cy.get("#live-help").should("not.exist");
+  });
+  it("Should enter single", () => {
+    cy.get("#register-topup-singletopup-input").clear();
+    cy.get("#register-topup-singletopup-input").type("100");
+    cy.get("#register-topup-singletopup-error").should("not.exist");
   });
   it("Should enter gas", () => {
     cy.get("#register-topup-maxgasprice-input").clear();
     cy.get("#register-topup-maxgasprice-input").type("50");
     cy.get("#register-topup-maxgasprice-error").should("not.exist");
     cy.get("#register-topup-maxtopup-error").should("not.exist");
-  });
-
-  it("Should take snapshot", () => {
-    percySnapshot();
   });
   it("Should have disabled confirmation button", () => {
     cy.get("#action-button").should("be.disabled");

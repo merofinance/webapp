@@ -3,32 +3,42 @@ import { useWeb3React } from "@web3-react/core";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+
+import logo from "../../assets/logo/logo.svg";
+import { useDevice } from "../../app/hooks/use-device";
 import { Loan, Position } from "../../lib/types";
 import { selectLoans } from "../../state/lendingSlice";
 import { selectPositions } from "../../state/positionsSlice";
 import ProtectableLoan from "./register/topup/ProtectableLoan";
 
 const StyledProtectableLoans = styled.div`
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: rgba(255, 255, 255, 0.1);
   border-radius: 1.4rem;
-  padding: 2.4rem 1.6rem;
+  padding: 1.6rem;
+  padding-bottom: 2.4rem;
   margin-bottom: 2.4rem;
+
+  // Background
+  border: 1px solid transparent;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  background-image: linear-gradient(var(--bg-light), var(--bg-light)),
+    linear-gradient(to right, var(--primary-gradient), var(--secondary-gradient));
 `;
 
 const Header = styled.div`
   font-weight: 700;
   letter-spacing: 0.25px;
+  margin-left: 4rem;
 
   font-size: 2.4rem;
-  line-height: 4.2rem;
-  margin-bottom: 0.2rem;
+  margin-bottom: 1rem;
   @media (max-width: 600px) {
     font-size: 1.8rem;
-    line-height: 2.2rem;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.7rem;
   }
 `;
 
@@ -46,16 +56,26 @@ const SubHeader = styled.div`
   }
 `;
 
+const BackdHelper = styled.img`
+  left: -1rem;
+  top: -1rem;
+  position: absolute;
+  width: 4.8rem;
+  margin-right: 1rem;
+`;
+
 const ProtectableLoans = (): JSX.Element => {
   const { t } = useTranslation();
   const { account } = useWeb3React();
   const loans = useSelector(selectLoans(account));
   const positions = useSelector(selectPositions);
+  const { isMobile } = useDevice();
 
   const protectableLoans = loans.filter(
     (loan: Loan) =>
       loan.totalCollateralETH?.isZero &&
       !loan.totalCollateralETH.isZero() &&
+      positions &&
       !positions.some((position: Position) => position.protocol === loan.protocol)
   );
 
@@ -63,11 +83,16 @@ const ProtectableLoans = (): JSX.Element => {
 
   return (
     <StyledProtectableLoans>
-      <Header id="protectable-loans-header">{t("actions.suggestions.topup.header")}</Header>
+      <Header id="protectable-loans-header">
+        {isMobile
+          ? t("actions.suggestions.topup.headerMobile")
+          : t("actions.suggestions.topup.header")}
+      </Header>
       <SubHeader>{t("actions.suggestions.topup.subHeader")}</SubHeader>
       {protectableLoans.map((loan: Loan) => (
         <ProtectableLoan key={loan.protocol} loan={loan} />
       ))}
+      <BackdHelper src={logo} />
     </StyledProtectableLoans>
   );
 };

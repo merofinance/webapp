@@ -147,9 +147,9 @@ const TopupInformation = ({ position, pool }: Props): JSX.Element => {
           threshold: position.threshold,
           single: position.singleTopUp,
           asset: pool.underlying.symbol,
-          singleUsd: position.singleTopUp.toUsdValue(price),
+          singleUsd: price ? position.singleTopUp.toUsdValue(price) : "$---",
           max: position.maxTopUp,
-          maxUsd: position.maxTopUp.toUsdValue(price),
+          maxUsd: price ? position.maxTopUp.toUsdValue(price) : "$---",
         })}
       </Summary>
       <PositionSummary>

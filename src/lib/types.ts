@@ -37,6 +37,7 @@ interface GenericPosition<T> {
   actionToken: Address;
   depositToken: Address;
 }
+
 export type Position = GenericPosition<ScaledNumber>;
 export type PlainPosition = GenericPosition<PlainScaledNumber>;
 
@@ -46,7 +47,10 @@ export enum LendingProtocol {
 }
 
 export interface LendingProtocolProvider {
-  getPosition(address: Address, provider: Signer | providers.Provider): Promise<PlainLoan | null>;
+  getPosition(
+    address: Address,
+    provider: Signer | providers.Provider
+  ): Promise<Optional<PlainLoan>>;
 }
 
 interface GenericLoan<T> {
@@ -114,16 +118,21 @@ export function transformPool<T, U>(pool: Pool<T>, f: (v: T) => U): Pool<U> {
 
 export type Address = string;
 
-export type Balances = Record<string, ScaledNumber>;
-export type PlainBalances = Record<string, PlainScaledNumber>;
+export type Balances = Record<string, Optional<ScaledNumber>>;
+export type PlainBalances = Record<string, Optional<PlainScaledNumber>>;
 
 export const toPlainBalances = (balances: Balances): PlainBalances => {
-  return fromEntries(Object.entries(balances).map(([key, value]) => [key, value.toPlain()]));
+  return fromEntries(
+    Object.entries(balances).map(([key, value]) => [key, value?.toPlain() || null])
+  );
 };
 
 export const fromPlainBalances = (balances: PlainBalances): Balances => {
   return fromEntries(
-    Object.entries(balances).map(([key, value]) => [key, ScaledNumber.fromPlain(value)])
+    Object.entries(balances).map(([key, value]) => [
+      key,
+      value ? ScaledNumber.fromPlain(value) : null,
+    ])
   );
 };
 
@@ -155,7 +164,7 @@ export const fromPlainAllowances = (allowances: PlainAllowances): Allowances => 
   );
 };
 
-export type Prices<Num = number> = Record<string, Num>;
+export type Prices<Num = number> = Record<string, Optional<Num>>;
 export type AllowanceQuery = {
   spender: Address;
   token: Pick<Token, "address" | "decimals">;

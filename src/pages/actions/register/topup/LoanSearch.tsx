@@ -118,11 +118,11 @@ const LoanSearch = ({ value, setValue, hasExistingLoans }: Props): JSX.Element =
         },
         {
           label: t("actions.suggestions.topup.labels.totalCollateral"),
-          value: loan.totalCollateralETH.toCompactUsdValue(ethPrice),
+          value: ethPrice ? loan.totalCollateralETH.toCompactUsdValue(ethPrice) : null,
         },
         {
           label: t("actions.suggestions.topup.labels.totalLoan"),
-          value: loan.totalDebtETH.toCompactUsdValue(ethPrice),
+          value: ethPrice ? loan.totalDebtETH.toCompactUsdValue(ethPrice) : null,
         },
       ],
     };

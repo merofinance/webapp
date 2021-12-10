@@ -5,13 +5,13 @@ import { useNavigate } from "react-router-dom";
 
 import InfoCard from "../../components/InfoCard";
 import { Pool } from "../../lib";
-import { selectPools, selectPrices } from "../../state/poolsListSlice";
+import { selectDepositedPools, selectPrices } from "../../state/poolsListSlice";
 import { selectBalances } from "../../state/userSlice";
 import Asset from "../../components/Asset";
-import { ScaledNumber } from "../../lib/scaled-number";
-import { formatCurrency } from "../../lib/numeric";
 import { GradientText } from "../../styles/GradientText";
 import { TOPUP_ACTION_ROUTE } from "../../lib/constants";
+import Loader from "../../components/Loader";
+import { selectBalance } from "../../state/selectors";
 
 const Content = styled.div`
   width: 100%;
@@ -104,19 +104,12 @@ const Total = styled.div`
 const YourDeposits = (): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const pools = useSelector(selectPools);
   const balances = useSelector(selectBalances);
   const prices = useSelector(selectPrices);
+  const balance = useSelector(selectBalance());
+  const depositedPools = useSelector(selectDepositedPools);
 
-  const depositedPools = pools.filter((pool: Pool) => !balances[pool.lpToken.address]?.isZero());
-  const hasDeposits = depositedPools.length > 0;
-
-  const getBalance = (pool: Pool) => balances[pool.lpToken.address] || new ScaledNumber();
-  const getPrice = (pool: Pool) => prices[pool.underlying.symbol] || 0;
-  const totalUsd = depositedPools.reduce(
-    (a: ScaledNumber, b: Pool) => a.add(getBalance(b).mul(getPrice(b))),
-    new ScaledNumber()
-  );
+  const hasDeposits = depositedPools && depositedPools.length > 0;
 
   return (
     <InfoCard
@@ -128,37 +121,42 @@ const YourDeposits = (): JSX.Element => {
           {!hasDeposits && (
             <EmptyText id="your-deposits-empty">{t("actions.deposits.empty")}</EmptyText>
           )}
-          {hasDeposits && (
+          {hasDeposits && depositedPools && (
             <>
-              {depositedPools.map((pool: Pool) => (
-                <Row id={`your-deposits-${pool.underlying.symbol.toLowerCase()}`} key={pool.name}>
-                  <AssetContainer>
-                    <Asset tiny token={pool.underlying} />
-                    <ManageButton
-                      onClick={() => {
-                        navigate(
-                          `${TOPUP_ACTION_ROUTE}/deposit/${pool.lpToken.symbol.toLowerCase()}`
-                        );
-                      }}
-                    >
-                      <ManageText>{t("actions.deposits.manage")}</ManageText>
-                    </ManageButton>
-                  </AssetContainer>
+              {depositedPools.map((pool: Pool) => {
+                const price = prices[pool.underlying.symbol];
+                const balance = balances[pool.lpToken.address];
+                return (
+                  <Row id={`your-deposits-${pool.underlying.symbol.toLowerCase()}`} key={pool.name}>
+                    <AssetContainer>
+                      <Asset tiny token={pool.underlying} />
+                      <ManageButton
+                        onClick={() => {
+                          navigate(
+                            `${TOPUP_ACTION_ROUTE}/deposit/${pool.lpToken.symbol.toLowerCase()}`
+                          );
+                        }}
+                      >
+                        <ManageText>{t("actions.deposits.manage")}</ManageText>
+                      </ManageButton>
+                    </AssetContainer>
 
-                  <Balances>
-                    <Underlying>{`${balances[pool.lpToken.address]?.toCryptoString() || 0} ${
-                      pool.underlying.symbol
-                    }`}</Underlying>
-                    <Usd>
-                      {balances[pool.lpToken.address]?.toUsdValue(prices[pool.underlying.symbol]) ||
-                        "$0"}
-                    </Usd>
-                  </Balances>
-                </Row>
-              ))}
-              <Total id="your-deposits-total">{`= ${formatCurrency(
-                Number(totalUsd.toString())
-              )}`}</Total>
+                    <Balances>
+                      <Underlying>
+                        {balance ? (
+                          `${balance.toCryptoString()} ${pool.underlying.symbol}`
+                        ) : (
+                          <Loader />
+                        )}
+                      </Underlying>
+                      <Usd>{balance && price ? balance.toUsdValue(price) : <Loader />}</Usd>
+                    </Balances>
+                  </Row>
+                );
+              })}
+              <Total id="your-deposits-total">
+                {balance ? `= ${balance.toUsdValue(1)}` : <Loader />}
+              </Total>
             </>
           )}
         </Content>

@@ -13,8 +13,7 @@ import { formatPercent, numberToCompactCurrency } from "../../../../lib/numeric"
 import { selectBalances } from "../../../../state/userSlice";
 import { selectPositions } from "../../../../state/positionsSlice";
 import { ScaledNumber } from "../../../../lib/scaled-number";
-import { Position } from "../../../../lib/types";
-import TopupPoolDeposit from "./TopupPoolDeposit";
+import { Optional, Position } from "../../../../lib/types";
 import Asset from "../../../../components/Asset";
 import { useDevice } from "../../../../app/hooks/use-device";
 import { RowOptionType } from "../../../../components/RowOption";
@@ -75,50 +74,65 @@ const TopupPool = (): JSX.Element => {
   const ethPrice = useSelector(selectEthPrice);
   const [pool, setPool] = useState("");
 
-  const hasSufficientBalance = (pool: Pool) => {
+  const hasSufficientBalance = (pool: Optional<Pool>) => {
+    if (!pool) return false;
     const lpBalance = balances[pool.lpToken.address];
-    if (!lpBalance) return false;
-    const usdBalance = lpBalance.mul(prices[pool.underlying.symbol]);
+    const price = prices[pool.underlying.symbol];
+    if (!lpBalance || !price || !ethPrice) return false;
+    const usdBalance = lpBalance.mul(price);
     const gasCostUsd = new ScaledNumber(
       ScaledNumber.fromUnscaled(50, GWEI_DECIMALS).value.mul(TOPUP_GAS_COST).div(GWEI_SCALE)
     ).mul(ethPrice);
     return usdBalance.gte(gasCostUsd);
   };
 
-  const hasDeposits = pools.some((pool: Pool) => hasSufficientBalance(pool));
-  const selected = pools.filter((p: Pool) => p.lpToken.symbol.toLowerCase() === pool)[0];
+  const hasDeposits = pools ? pools.some((pool: Pool) => hasSufficientBalance(pool)) : false;
+  const selected = pools
+    ? pools.filter((p: Pool) => p.lpToken.symbol.toLowerCase() === pool)[0]
+    : null;
 
-  const options: RowOptionType[] = pools.map((pool: Pool) => {
-    const value = pool.lpToken.symbol.toLowerCase();
-    return {
-      value,
-      id: `${pool.underlying.symbol.toLowerCase()}-pool-option`,
-      columns: [
-        {
-          label: t("headers.asset"),
-          value: <Asset tiny token={pool.underlying} />,
-        },
-        {
-          label: t("headers.deposits"),
-          value: (balances[pool.lpToken.address] || new ScaledNumber())
-            .add(
-              positions
-                .filter((position: Position) => position.depositToken === pool.lpToken.symbol)
-                .reduce((a: ScaledNumber, b: Position) => a.add(b.maxTopUp), new ScaledNumber())
-            )
-            .toCompactUsdValue(prices[pool.underlying.symbol]),
-        },
-        {
-          label: t("headers.apy"),
-          value: formatPercent(pool.apy),
-        },
-        {
-          label: t("headers.tvl"),
-          value: numberToCompactCurrency(pool.totalAssets * prices[pool.underlying.symbol]),
-        },
-      ],
-    };
-  });
+  const options: RowOptionType[] = pools
+    ? pools.map((pool: Pool) => {
+        const value = pool.lpToken.symbol.toLowerCase();
+        const price = prices[pool.underlying.symbol];
+        return {
+          value,
+          id: `${pool.underlying.symbol.toLowerCase()}-pool-option`,
+          columns: [
+            {
+              label: t("headers.asset"),
+              value: <Asset tiny token={pool.underlying} />,
+            },
+            {
+              label: t("headers.deposits"),
+              value:
+                price && positions
+                  ? (balances[pool.lpToken.address] || new ScaledNumber())
+                      .add(
+                        positions
+                          .filter(
+                            (position: Position) => position.depositToken === pool.lpToken.symbol
+                          )
+                          .reduce(
+                            (a: ScaledNumber, b: Position) => a.add(b.maxTopUp),
+                            new ScaledNumber()
+                          )
+                      )
+                      .toCompactUsdValue(price)
+                  : null,
+            },
+            {
+              label: t("headers.apy"),
+              value: formatPercent(pool.apy),
+            },
+            {
+              label: t("headers.tvl"),
+              value: price ? numberToCompactCurrency(pool.totalAssets * price) : null,
+            },
+          ],
+        };
+      })
+    : [];
 
   return (
     <Container>

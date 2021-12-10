@@ -43,7 +43,7 @@ const RegisteredActions = (): JSX.Element => {
   const navigate = useNavigate();
   const { isMobile } = useDevice();
 
-  const hasPosition = positions.length > 0;
+  const hasPosition = positions && positions.length > 0;
 
   return (
     <div>
@@ -55,7 +55,10 @@ const RegisteredActions = (): JSX.Element => {
               <Empty id="register-positions-empty">{t("actions.registered.empty")}</Empty>
             )}
             {hasPosition &&
-              positions.map((position: Position) => <RegisteredAction position={position} />)}
+              positions &&
+              positions.map((position: Position) => (
+                <RegisteredAction key={position.protocol} position={position} />
+              ))}
             <ButtonContainer>
               <Button
                 id="register-action-button"

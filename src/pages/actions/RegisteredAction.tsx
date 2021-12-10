@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
@@ -7,6 +7,8 @@ import { Position, Pool } from "../../lib/types";
 import { selectPools } from "../../state/poolsListSlice";
 import chevron from "../../assets/ui/chevron.svg";
 import { selectPrice } from "../../state/selectors";
+import { selectImplement, Suggestion } from "../../state/helpSlice";
+import Loader from "../../components/Loader";
 import TopupAction from "./register/topup/TopupAction";
 
 const StyledRegisteredAction = styled.button`
@@ -101,9 +103,21 @@ interface Props {
 const RegisteredAction = ({ position }: Props): JSX.Element => {
   const { t } = useTranslation();
   const pools = useSelector(selectPools);
-  const pool = pools.filter((pool: Pool) => pool.lpToken.address === position.depositToken)[0];
+  const implement = useSelector(selectImplement);
+  const pool = pools
+    ? pools.filter((pool: Pool) => pool.lpToken.address === position.depositToken)[0]
+    : null;
   const price = useSelector(selectPrice(pool));
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (
+      implement &&
+      implement.type === Suggestion.POSITION_LOW &&
+      implement.data === position.protocol.toLowerCase()
+    )
+      setOpen(true);
+  }, [implement]);
 
   return (
     <>
@@ -117,7 +131,9 @@ const RegisteredAction = ({ position }: Props): JSX.Element => {
         </Column>
         <Column>
           <Header>{t("actions.registered.columns.locked")}</Header>
-          <Value hideOnSnapshot>{position.maxTopUp.toCompactUsdValue(price)}</Value>
+          <Value hideOnSnapshot>
+            {price ? position.maxTopUp.toCompactUsdValue(price) : <Loader />}
+          </Value>
         </Column>
         <Column hideMobile>
           <Header>{t("actions.suggestions.topup.labels.protocol")}</Header>
@@ -131,7 +147,9 @@ const RegisteredAction = ({ position }: Props): JSX.Element => {
           <Chevron src={chevron} alt="right arrow" />
         </ChevronData>
       </StyledRegisteredAction>
-      <TopupAction show={open} close={() => setOpen(false)} position={position} pool={pool} />
+      {pool && (
+        <TopupAction show={open} close={() => setOpen(false)} position={position} pool={pool} />
+      )}
     </>
   );
 };

@@ -1,11 +1,13 @@
 import styled from "styled-components";
+import { Optional } from "../lib/types";
+import Loader from "./Loader";
 import Tooltip from "./Tooltip";
 
 interface StatisticType {
   header: string;
   tooltip: string;
-  value: string;
-  usd?: string;
+  value: Optional<string>;
+  usd?: Optional<string>;
 }
 
 const StyledStatistics = styled.div`
@@ -22,7 +24,7 @@ const StyledStatistics = styled.div`
 `;
 
 const Statistic = styled.div`
-  width: 28rem;
+  width: 33%;
   display: flex;
   flex-direction: column;
 
@@ -106,8 +108,8 @@ const Statistics = ({ statistics }: Props): JSX.Element => {
             <Tooltip content={statistic.tooltip} />
           </HeaderContaner>
           <ValueContainer>
-            <Value>{statistic.value}</Value>
-            {statistic.usd && <Usd>{statistic.usd}</Usd>}
+            <Value>{statistic.value ? statistic.value : <Loader />}</Value>
+            {statistic.usd !== undefined && <Usd>{statistic.usd || <Loader />}</Usd>}
           </ValueContainer>
         </Statistic>
       ))}

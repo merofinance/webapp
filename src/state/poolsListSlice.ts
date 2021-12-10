@@ -4,7 +4,7 @@ import { ethers } from "ethers";
 import { AppThunk, RootState } from "../app/store";
 import { Pool } from "../lib";
 import { Backd } from "../lib/backd";
-import { Address, Prices } from "../lib/types";
+import { Address, fromPlainBalances, Optional, Prices } from "../lib/types";
 import { fetchLoans } from "./lendingSlice";
 import { INFURA_ID } from "../lib/constants";
 import { createBackd } from "../lib/factory";
@@ -14,10 +14,12 @@ import { fetchAllowances, fetchBalances, fetchWithdrawalFees } from "./userSlice
 interface PoolsState {
   pools: Pool[];
   prices: Prices;
+  loaded: boolean;
 }
 
 const initialState: PoolsState = {
   pools: [],
+  loaded: false,
   prices: {},
 };
 
@@ -46,6 +48,7 @@ export const poolsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchPools.fulfilled, (state, action) => {
       state.pools = action.payload;
+      state.loaded = true;
     });
 
     builder.addCase(fetchPool.fulfilled, (state, action) => {
@@ -88,10 +91,23 @@ export const fetchPreviewState = (): AppThunk => (dispatch) => {
   });
 };
 
-export const selectPools = (state: RootState): Pool[] => state.pools.pools;
+export const selectPoolsLoaded = (state: RootState): boolean => state.pools.loaded;
+
+export const selectPools = (state: RootState): Optional<Pool[]> =>
+  state.pools.loaded ? state.pools.pools : null;
+
+export const selectDepositedPools = (state: RootState): Optional<Pool[]> =>
+  state.pools.loaded
+    ? state.pools.pools.filter(
+        (pool: Pool) => !fromPlainBalances(state.user.balances)[pool.lpToken.address]?.isZero()
+      )
+    : null;
 
 export const selectPrices = (state: RootState): Prices => state.pools.prices;
 
-export const selectEthPrice = (state: RootState): number => state.pools.prices.ETH;
+export const selectEthPrice = (state: RootState): Optional<number> => state.pools.prices.ETH;
+
+export const selectAverageApy = (state: RootState): Optional<number> =>
+  state.pools.pools.reduce((a: number, b: Pool) => a + b.apy, 0) / state.pools.pools.length;
 
 export default poolsSlice.reducer;

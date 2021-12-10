@@ -45,7 +45,7 @@ const ExistingActions = (): JSX.Element => {
   const positions = useSelector(selectPositions);
   const location = useLocation();
 
-  const hasPosition = positions.length > 0;
+  const hasPosition = positions && positions.length > 0;
 
   if (location.pathname === "/actions") return <div />;
 
@@ -67,9 +67,10 @@ const ExistingActions = (): JSX.Element => {
                 <Header flex={3}>{t("actions.registered.columns.lockedShort")}</Header>
                 <Header flex={2} />
               </Headers>
-              {positions.map((position: Position) => (
-                <ExistingAction key={position.depositToken} position={position} />
-              ))}
+              {positions &&
+                positions.map((position: Position) => (
+                  <ExistingAction key={position.depositToken} position={position} />
+                ))}
             </>
           )}
         </Content>

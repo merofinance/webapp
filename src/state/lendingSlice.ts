@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 import { Backd } from "../lib/backd";
 import { ScaledNumber } from "../lib/scaled-number";
-import { Address, LendingProtocol, Loan, PlainLoan, PlainLoans } from "../lib/types";
+import { Address, LendingProtocol, Loan, Optional, PlainLoan, PlainLoans } from "../lib/types";
 
 interface LendingState {
   loans: PlainLoans;
@@ -15,11 +15,11 @@ const initialState: LendingState = {
 export const fetchLoans = createAsyncThunk(
   "lending/fetch-loans",
   async ({ backd, address }: { backd: Backd; address: Address }) => {
-    const loans: (PlainLoan | null)[] = await Promise.all([
+    const loans: Optional<PlainLoan>[] = await Promise.all([
       backd.getLoanPosition(LendingProtocol.Aave, address),
       backd.getLoanPosition(LendingProtocol.Compound, address),
     ]);
-    return { address, loans: loans.filter((loan: PlainLoan | null) => loan) as PlainLoan[] };
+    return { address, loans: loans.filter((loan: Optional<PlainLoan>) => loan) as PlainLoan[] };
   }
 );
 
@@ -45,7 +45,7 @@ export const fromPlainLoan = (plainLoan: PlainLoan): Loan => {
   };
 };
 
-export function selectLoans(address: string | null | undefined): (state: RootState) => Loan[] {
+export function selectLoans(address: Optional<string> | undefined): (state: RootState) => Loan[] {
   return (state: RootState) => {
     if (!address || !state.lending.loans[address]) return [];
     return state.lending.loans[address].map((loan: PlainLoan) => fromPlainLoan(loan)) || [];
