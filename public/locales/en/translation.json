@@ -474,7 +474,18 @@
         "confirmation": {
           "header": "Confirm Top-up Position",
           "summaryStart": "When the collateralization of",
-          "summaryEnd": "drops below {{threshold}}, it will be topped up with {{single}} {{asset}} ({{singleUsd}}). This will be repeated each time the collateralization ratio drops below {{threshold}}, until a total of {{max}} {{asset}} ({{maxUsd}}) is topped up."
+          "summaryEnd": "drops below {{threshold}}, it will be topped up with {{single}} {{asset}} ({{singleUsd}}). This will be repeated each time the collateralization ratio drops below {{threshold}}, until a total of {{max}} {{asset}} ({{maxUsd}}) is topped up.",
+          "fees": {
+            "label": "Action fee",
+            "tooltip": {
+              "header": "When an Action is triggered a small fee is paid to Backd LPs, Keepers and BKD stakers.",
+              "itemLabels": {
+                "lps": "Backd LPs",
+                "keepers": "Keepers",
+                "stakers": "BKD stakers"
+              }
+            }
+          }
         }
       },
       "delete": {

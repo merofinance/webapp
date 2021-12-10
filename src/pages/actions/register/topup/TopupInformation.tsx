@@ -70,7 +70,6 @@ const Label = styled.div`
   align-items: center;
   font-weight: 500;
   letter-spacing: 0.15px;
-  text-transform: capitalize;
 
   font-size: 1.8rem;
   @media (max-width: 600px) {
@@ -87,6 +86,38 @@ const AddressLabel = styled(GradientLink)`
   @media (max-width: 600px) {
     font-size: 1.6rem;
   }
+`;
+
+const InfoSection = styled.div`
+  position: relative;
+  width: 100%;
+  border: solid 2px var(--info);
+  border-radius: 8px;
+  padding: 1rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2.4rem;
+
+  :before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: var(--info);
+    opacity: 0.2;
+  }
+`;
+
+const InfoRow = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const InfoLabel = styled(Label)`
+  color: var(--info);
 `;
 
 interface Props {
@@ -176,6 +207,32 @@ const TopupInformation = ({ position, pool }: Props): JSX.Element => {
           <Label id="topup-information-max-gas">{`${position.maxGasPrice.toCryptoString()} Gwei`}</Label>
         </SummaryRow>
       </PositionSummary>
+      <InfoSection>
+        <InfoRow>
+          <InfoLabel>
+            {t("actions.topup.stages.confirmation.fees.label")}
+            <Tooltip
+              info
+              content={t("actions.topup.stages.confirmation.fees.tooltip.header")}
+              items={[
+                {
+                  label: t("actions.topup.stages.confirmation.fees.tooltip.itemLabels.lps"),
+                  value: "3%",
+                },
+                {
+                  label: t("actions.topup.stages.confirmation.fees.tooltip.itemLabels.keepers"),
+                  value: "3%",
+                },
+                {
+                  label: t("actions.topup.stages.confirmation.fees.tooltip.itemLabels.stakers"),
+                  value: "3%",
+                },
+              ]}
+            />
+          </InfoLabel>
+          <InfoLabel>3%</InfoLabel>
+        </InfoRow>
+      </InfoSection>
     </StyledTopupInformation>
   );
 };
