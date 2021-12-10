@@ -13,7 +13,12 @@ import fromEntries from "fromentries";
 import { UnsupportedNetwork } from "../app/errors";
 import { getPrices as getPricesFromCoingecko } from "./coingecko";
 import { getPrices as getPricesFromBinance } from "./binance";
-import { ETH_DECIMALS, ETH_DUMMY_ADDRESS, INFINITE_APPROVE_AMMOUNT } from "./constants";
+import {
+  DEFAULT_SCALE,
+  ETH_DECIMALS,
+  ETH_DUMMY_ADDRESS,
+  INFINITE_APPROVE_AMMOUNT,
+} from "./constants";
 import { bigNumberToFloat, scale } from "./numeric";
 import { ScaledNumber } from "./scaled-number";
 import {
@@ -216,20 +221,26 @@ export class Web3Backd implements Backd {
     const feeHandlerAddress = await this.topupAction.getFeeHandler();
     const feeHandler = TopUpActionFeeHandlerFactory.connect(feeHandlerAddress, this._provider);
 
-    const [totalBn, keeperFractionBn, treasuryFractionBn] = await Promise.all([
+    /* We can change to this when the latest protocol code is deployed to Kovan */
+    // const [totalBn, keeperFractionBn, treasuryFractionBn] = await Promise.all([
+    //   this.topupAction.getActionFee(),
+    //   feeHandler.getKeeperFeeFraction(),
+    //   feeHandler.getTreasuryFeeFraction(),
+    // ]);
+    const [totalBn, keeperFractionBn] = await Promise.all([
       this.topupAction.getActionFee(),
       feeHandler.getKeeperFeeFraction(),
-      feeHandler.getTreasuryFeeFraction(),
     ]);
+    const treasuryFractionBn = BigNumber.from(3).mul(DEFAULT_SCALE).div(10);
     const total = new ScaledNumber(totalBn);
-    const keeperFraction = new ScaledNumber(keeperFractionBn);
-    const treasuryFraction = new ScaledNumber(treasuryFractionBn);
+    const keeperFraction = new ScaledNumber(keeperFractionBn).mul(total);
+    const treasuryFraction = new ScaledNumber(treasuryFractionBn).mul(total);
 
     const actionfees: ActionFees = {
       total,
       keeperFraction,
       treasuryFraction,
-      lpFraction: total.sub(keeperFraction).sub(treasuryFraction),
+      lpFraction: ScaledNumber.fromUnscaled(1).sub(keeperFraction).sub(treasuryFraction).mul(total),
     };
 
     return toPlainActionFees(actionfees);
