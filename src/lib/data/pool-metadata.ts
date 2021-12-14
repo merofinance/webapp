@@ -3,7 +3,7 @@ import usdc from "../../assets/tokens/usdc.png";
 import dai from "../../assets/tokens/dai.png";
 
 interface DeploymentMetadata {
-  block: number;
+  time: Date;
 }
 
 interface PoolMetadata {
@@ -14,13 +14,34 @@ interface PoolMetadata {
 const poolMetadata: Record<string, PoolMetadata> = {
   ETH: {
     icon: eth,
-    deployment: { "1337": { block: 1 }, "42": { block: 26866198 } },
+    deployment: {
+      "1337": {
+        time: new Date(0),
+      },
+      "42": {
+        time: new Date(1629505560000),
+      },
+    },
   },
   DAI: {
     icon: dai,
-    deployment: { "1337": { block: 1 }, "42": { block: 26866188 } },
+    deployment: {
+      "1337": {
+        time: new Date(0),
+      },
+      "42": {
+        time: new Date(1629505560000),
+      },
+    },
   },
-  USDC: { icon: usdc, deployment: { "1337": { block: 1 } } },
+  USDC: {
+    icon: usdc,
+    deployment: {
+      "1337": {
+        time: new Date(0),
+      },
+    },
+  },
 };
 
 export default poolMetadata;

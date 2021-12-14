@@ -13,12 +13,12 @@ import { UnsupportedNetwork } from "../app/errors";
 import { getPrices as getPricesFromCoingecko } from "./coingecko";
 import { getPrices as getPricesFromBinance } from "./binance";
 import {
-  BLOCKS_PER_YEAR,
   ETH_DECIMALS,
   ETH_DUMMY_ADDRESS,
   INFINITE_APPROVE_AMMOUNT,
+  MILLISECONDS_PER_YEAR,
 } from "./constants";
-import { bigNumberToFloat, scale } from "./numeric";
+import { bigNumberToFloat } from "./numeric";
 import { ScaledNumber } from "./scaled-number";
 import {
   Address,
@@ -140,7 +140,6 @@ export class Web3Backd implements Backd {
 
   async getPoolInfo(address: Address): Promise<Pool> {
     const pool = LiquidityPoolFactory.connect(address, this._provider);
-    const blockNumberPromise = this.provider.getBlockNumber();
     const [
       name,
       lpTokenAddress,
@@ -169,11 +168,10 @@ export class Web3Backd implements Backd {
     let apy = null;
     const metadata = poolMetadata[underlying.symbol];
     if (metadata && metadata.deployment[this.chainId.toString()]) {
-      const blockNumber = await blockNumberPromise;
-      const deployedBlockNumber = metadata.deployment[this.chainId.toString()].block;
-      const scaledExchangeRate = new ScaledNumber(exchangeRate);
-      const compoundExponent = BLOCKS_PER_YEAR / (blockNumber - deployedBlockNumber);
-      const unscaledApy = Number(scaledExchangeRate.toString()) ** compoundExponent - 1;
+      const deployedtime = metadata.deployment[this.chainId.toString()].time;
+      const compoundExponent =
+        MILLISECONDS_PER_YEAR / (new Date().getTime() - deployedtime.getTime());
+      const unscaledApy = Number(new ScaledNumber(exchangeRate).toString()) ** compoundExponent - 1;
       apy = ScaledNumber.fromUnscaled(unscaledApy).value;
     }
 
