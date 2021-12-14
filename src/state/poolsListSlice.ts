@@ -10,6 +10,7 @@ import { INFURA_ID } from "../lib/constants";
 import { createBackd } from "../lib/factory";
 import { fetchPositions } from "./positionsSlice";
 import { fetchAllowances, fetchBalances, fetchWithdrawalFees } from "./userSlice";
+import poolMetadata from "../lib/data/pool-metadata";
 
 interface PoolsState {
   pools: Pool[];
@@ -93,21 +94,31 @@ export const fetchPreviewState = (): AppThunk => (dispatch) => {
 
 export const selectPoolsLoaded = (state: RootState): boolean => state.pools.loaded;
 
-export const selectPools = (state: RootState): Optional<Pool[]> =>
-  state.pools.loaded ? state.pools.pools : null;
+export const selectPools = (state: RootState): Optional<Pool[]> => {
+  if (!state.pools.loaded) return null;
+  return state.pools.pools.filter((pool: Pool) => {
+    if (!pool.apy) return false;
+    if (!poolMetadata[pool.underlying.symbol]) return false;
+    return true;
+  });
+};
 
-export const selectDepositedPools = (state: RootState): Optional<Pool[]> =>
-  state.pools.loaded
-    ? state.pools.pools.filter(
-        (pool: Pool) => !fromPlainBalances(state.user.balances)[pool.lpToken.address]?.isZero()
-      )
-    : null;
+export const selectDepositedPools = (state: RootState): Optional<Pool[]> => {
+  const pools = selectPools(state);
+  if (!pools) return null;
+  return pools.filter(
+    (pool: Pool) => !fromPlainBalances(state.user.balances)[pool.lpToken.address]?.isZero()
+  );
+};
 
 export const selectPrices = (state: RootState): Prices => state.pools.prices;
 
 export const selectEthPrice = (state: RootState): Optional<number> => state.pools.prices.ETH;
 
-export const selectAverageApy = (state: RootState): Optional<number> =>
-  state.pools.pools.reduce((a: number, b: Pool) => a + b.apy, 0) / state.pools.pools.length;
+export const selectAverageApy = (state: RootState): Optional<number> => {
+  const pools = selectPools(state);
+  if (!pools) return null;
+  return pools.reduce((a: number, b: Pool) => a + (b.apy || 0), 0) / state.pools.pools.length;
+};
 
 export default poolsSlice.reducer;
