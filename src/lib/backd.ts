@@ -12,7 +12,12 @@ import fromEntries from "fromentries";
 import { UnsupportedNetwork } from "../app/errors";
 import { getPrices as getPricesFromCoingecko } from "./coingecko";
 import { getPrices as getPricesFromBinance } from "./binance";
-import { ETH_DECIMALS, ETH_DUMMY_ADDRESS, INFINITE_APPROVE_AMMOUNT } from "./constants";
+import {
+  BLOCKS_PER_YEAR,
+  ETH_DECIMALS,
+  ETH_DUMMY_ADDRESS,
+  INFINITE_APPROVE_AMMOUNT,
+} from "./constants";
 import { bigNumberToFloat, scale } from "./numeric";
 import { ScaledNumber } from "./scaled-number";
 import {
@@ -31,6 +36,7 @@ import {
   Optional,
 } from "./types";
 import { lendingProviders } from "./lending-protocols";
+import poolMetadata from "./data/pool-metadata";
 
 export type BackdOptions = {
   chainId: number;
@@ -70,8 +76,11 @@ export class Web3Backd implements Backd {
 
   private topupAction: TopUpAction;
 
+  private chainId: number;
+
   constructor(private _provider: Signer | providers.Provider, private options: BackdOptions) {
-    const contracts = this.getContracts(options.chainId);
+    this.chainId = options.chainId;
+    const contracts = this.getContracts();
 
     // eslint-disable-next-line dot-notation
     this.controller = ControllerFactory.connect(contracts["Controller"][0], _provider);
@@ -92,14 +101,14 @@ export class Web3Backd implements Backd {
     return provider;
   }
 
-  private getContracts(chainId: number): Record<string, string[]> {
-    switch (chainId) {
+  private getContracts(): Record<string, string[]> {
+    switch (this.chainId) {
       case 42:
         return contracts["42"];
       case 1337:
         return contracts["1337"];
       default:
-        throw new UnsupportedNetwork(chainId);
+        throw new UnsupportedNetwork(this.chainId);
     }
   }
 
@@ -131,12 +140,12 @@ export class Web3Backd implements Backd {
 
   async getPoolInfo(address: Address): Promise<Pool> {
     const pool = LiquidityPoolFactory.connect(address, this._provider);
+    const blockNumberPromise = this.provider.getBlockNumber();
     const [
       name,
       lpTokenAddress,
       underlyingAddress,
       totalAssets,
-      rawApy,
       exchangeRate,
       maxWithdrawalFee,
       minWithdrawalFee,
@@ -146,7 +155,6 @@ export class Web3Backd implements Backd {
       pool.getLpToken(),
       pool.getUnderlying(),
       pool.totalUnderlying(),
-      pool.computeAPY(),
       pool.exchangeRate(),
       pool.getMaxWithdrawalFee(),
       pool.getMinWithdrawalFee(),
@@ -157,7 +165,17 @@ export class Web3Backd implements Backd {
       this.getTokenInfo(underlyingAddress),
       this.controller.getStakerVault(lpTokenAddress),
     ]);
-    const apy = rawApy.sub(scale(1));
+
+    let apy = null;
+    const metadata = poolMetadata[underlying.symbol];
+    if (metadata && metadata.deployment[this.chainId.toString()]) {
+      const blockNumber = await blockNumberPromise;
+      const deployedBlockNumber = metadata.deployment[this.chainId.toString()].block;
+      const scaledExchangeRate = new ScaledNumber(exchangeRate);
+      const compoundExponent = BLOCKS_PER_YEAR / (blockNumber - deployedBlockNumber);
+      const unscaledApy = Number(scaledExchangeRate.toString()) ** compoundExponent - 1;
+      apy = ScaledNumber.fromUnscaled(unscaledApy).value;
+    }
 
     const rawPool = {
       name,

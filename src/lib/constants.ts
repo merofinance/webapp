@@ -11,6 +11,7 @@ export const STAKING_LIVE = false;
 export const INFURA_ID = "f42c3f37e40b4ab1bc5a0d7bf5612d0f";
 export const TOPUP_GAS_COST = BigNumber.from(1_000_000).mul(GWEI_SCALE);
 export const RECOMMENDED_THRESHOLD = 1.2;
+export const BLOCKS_PER_YEAR = 6486 * 365;
 
 export const TOPUP_ACTION_ROUTE = "/actions/register/topup";
 
