@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
 import { FormikErrors, useFormik } from "formik";
 import { useSelector } from "react-redux";
+import { ethers } from "ethers";
 
 import ContentSection from "../../../../components/ContentSection";
 import { selectBalance } from "../../../../state/userSlice";
@@ -183,7 +184,10 @@ const TopupConditions = (): JSX.Element => {
     navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`);
     return <div />;
   }
-
+  if (!ethers.utils.isAddress(address)) {
+    navigate(TOPUP_ACTION_ROUTE);
+    return <div />;
+  }
   if (!backd) return <div />;
 
   const position: Position = {
