@@ -8,6 +8,10 @@ import { fetchPositions, registerPosition, removePosition } from "./positionsSli
 import { fetchPendingTransactions } from "./transactionsSlice";
 import { deposit, fetchAllowances, fetchBalances, withdraw } from "./userSlice";
 
+const IGNORED_ERRORS: string[] = [
+  "This request is not supported because your node is running with state pruning. Run with --pruning=archive.",
+];
+
 const initialState: ErrorState = { message: "" };
 
 const handleError: CaseReducer<ErrorState, any> = (
@@ -24,6 +28,7 @@ export const errorSlice = createSlice({
   initialState,
   reducers: {
     setError: (state, action: PayloadAction<ErrorState>) => {
+      if (IGNORED_ERRORS.includes(action.payload.message)) return state;
       return action.payload;
     },
   },
