@@ -29,11 +29,14 @@ const ContentContainer = styled.div`
   flex: 1;
 `;
 
-const Table = styled.table`
+const PoolsContent = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
-const HeaderRow = styled.tr`
+const HeaderRow = styled.div`
+  width: 100%;
   display: flex;
   justify-content: space-between;
   padding: 0 1.7rem;
@@ -52,7 +55,7 @@ interface HeaderProps {
   hideOnMobile?: boolean;
 }
 
-const Header = styled.th`
+const Header = styled.div`
   flex: 1;
   text-align: left;
   font-weight: 700;
@@ -67,7 +70,7 @@ const Header = styled.th`
   }
 `;
 
-const ChevronHeader = styled.th`
+const ChevronHeader = styled.div`
   width: 2.4rem;
 
   @media (max-width: 600px) {
@@ -100,16 +103,14 @@ const PoolsPage = (): JSX.Element => {
           header={t("pools.header")}
           statistics={<PoolsStatistics />}
           content={
-            <Table>
-              <thead>
-                <HeaderRow>
-                  <Header>{t("headers.asset")}</Header>
-                  <Header>{t("headers.apy")}</Header>
-                  <Header>{t("headers.tvl")}</Header>
-                  <Header hideOnMobile>{t("headers.deposits")}</Header>
-                  <ChevronHeader />
-                </HeaderRow>
-              </thead>
+            <PoolsContent>
+              <HeaderRow>
+                <Header>{t("headers.asset")}</Header>
+                <Header>{t("headers.apy")}</Header>
+                <Header>{t("headers.tvl")}</Header>
+                <Header hideOnMobile>{t("headers.deposits")}</Header>
+                <ChevronHeader />
+              </HeaderRow>
               {!pools && (
                 <>
                   <Loader row />
@@ -118,7 +119,7 @@ const PoolsPage = (): JSX.Element => {
                 </>
               )}
               {pools && pools.map((pool: Pool) => <PoolsRow key={pool.address} pool={pool} />)}
-            </Table>
+            </PoolsContent>
           }
         />
       </ContentContainer>
