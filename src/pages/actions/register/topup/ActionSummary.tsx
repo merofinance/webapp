@@ -8,7 +8,7 @@ import { selectEthPrice } from "../../../../state/poolsListSlice";
 import Asset from "../../../../components/Asset";
 import { selectPool } from "../../../../state/selectors";
 import { GradientText } from "../../../../styles/GradientText";
-import { LendingProtocol, Loan } from "../../../../lib/types";
+import { Loan } from "../../../../lib/types";
 import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
 
 const StyledActionSummary = styled.div`
