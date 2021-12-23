@@ -2,29 +2,30 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, Selector } from "../app/store";
 import { Optional } from "../lib/types";
 
-export enum Suggestion {
+export enum SuggestionType {
   POSITION_LOW,
   THRESHOLD_LOW,
   THRESHOLD_HIGH,
   SINGLE_LOW,
 }
 
-export interface SuggestionType {
-  type: Suggestion;
+export interface Suggestion {
+  type: SuggestionType;
   text: string;
   button: string;
+  link: string;
   data?: any;
 }
 
 interface HelpState {
-  suggestions: SuggestionType[];
-  implement: Optional<SuggestionType>;
-  ignore: Suggestion[];
+  suggestions: Suggestion[];
+  activeSuggestion: Optional<Suggestion>;
+  ignore: SuggestionType[];
 }
 
 const initialState: HelpState = {
   suggestions: [],
-  implement: null,
+  activeSuggestion: null,
   ignore: [],
 };
 
@@ -32,42 +33,54 @@ export const helpSlice = createSlice({
   name: "help",
   initialState,
   reducers: {
-    addSuggestion: (state, action: PayloadAction<SuggestionType>) => {
-      const newSuggestions = [...state.suggestions];
-      state.suggestions = newSuggestions.filter(
-        (suggestion: SuggestionType) => suggestion.type !== action.payload.type
+    addSuggestions: (state, action: PayloadAction<Suggestion[]>) => {
+      let newSuggestions = [...state.suggestions];
+      action.payload.forEach((sugg: Suggestion) => {
+        newSuggestions = newSuggestions.filter(
+          (suggestion: Suggestion) => suggestion.type !== sugg.type
+        );
+      });
+      state.suggestions = newSuggestions;
+      state.suggestions.push(...action.payload);
+    },
+    addSuggestion: (state, action: PayloadAction<Suggestion>) => {
+      state.suggestions = state.suggestions.filter(
+        (suggestion: Suggestion) => suggestion.type !== action.payload.type
       );
       state.suggestions.push(action.payload);
     },
-    removeSuggestion: (state, action: PayloadAction<Suggestion>) => {
-      state.implement = null;
-      const newSuggestions = [...state.suggestions];
-      state.suggestions = newSuggestions.filter(
-        (suggestion: SuggestionType) => suggestion.type !== action.payload
+    removeSuggestion: (state, action: PayloadAction<SuggestionType>) => {
+      state.activeSuggestion = null;
+      state.suggestions = state.suggestions.filter(
+        (suggestion: Suggestion) => suggestion.type !== action.payload
       );
     },
-    implementSuggestion: (state, action: PayloadAction<SuggestionType>) => {
-      state.implement = action.payload;
-      const newSuggestions = [...state.suggestions];
-      state.suggestions = newSuggestions.filter(
-        (suggestion: SuggestionType) => suggestion.type !== action.payload.type
+    implementSuggestion: (state, action: PayloadAction<Suggestion>) => {
+      state.activeSuggestion = action.payload;
+      state.suggestions = state.suggestions.filter(
+        (suggestion: Suggestion) => suggestion.type !== action.payload.type
       );
     },
-    ignoreSuggestion: (state, action: PayloadAction<Suggestion>) => {
+    ignoreSuggestion: (state, action: PayloadAction<SuggestionType>) => {
       state.ignore.push(action.payload);
     },
   },
 });
 
-export const selectSuggestions: Selector<SuggestionType[]> = (state: RootState) =>
+export const selectSuggestions: Selector<Suggestion[]> = (state: RootState) =>
   state.help.suggestions.filter(
-    (suggestion: SuggestionType) => !state.help.ignore.includes(suggestion.type)
+    (suggestion: Suggestion) => !state.help.ignore.includes(suggestion.type)
   );
 
-export const selectImplement: Selector<Optional<SuggestionType>> = (state: RootState) =>
-  state.help.implement;
+export const selectActiveSuggestion: Selector<Optional<Suggestion>> = (state: RootState) =>
+  state.help.activeSuggestion;
 
-export const { addSuggestion, removeSuggestion, implementSuggestion, ignoreSuggestion } =
-  helpSlice.actions;
+export const {
+  addSuggestion,
+  removeSuggestion,
+  implementSuggestion,
+  ignoreSuggestion,
+  addSuggestions,
+} = helpSlice.actions;
 
 export default helpSlice.reducer;

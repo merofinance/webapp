@@ -3,6 +3,7 @@ import {
   bigNumberToString,
   formatCrypto,
   formatCurrency,
+  formatPercent,
   numberToCompactCurrency,
   stringToBigNumber,
 } from "./numeric";
@@ -132,4 +133,6 @@ export class ScaledNumber {
 
   toCompactUsdValue = (price: number): string =>
     numberToCompactCurrency(Number(this.toString()) * price);
+
+  toPercent = (): string => formatPercent(Number(this.toString()));
 }

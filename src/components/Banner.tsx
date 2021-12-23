@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
+import { Optional } from "../lib/types";
 
 const StyledBanner = styled.div`
   width: 100%;
@@ -52,11 +53,11 @@ const Link = styled.a`
   }
 `;
 
-const Banner = (): JSX.Element => {
+const Banner = (): Optional<JSX.Element> => {
   const { t } = useTranslation();
   const location = useLocation();
 
-  if (location.pathname !== "/") return <div />;
+  if (location.pathname !== "/") return null;
 
   return (
     <StyledBanner>

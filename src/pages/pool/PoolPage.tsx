@@ -20,6 +20,7 @@ import Tabs from "../../components/Tabs";
 import PoolStatistics from "./PoolStatistics";
 import ContentSection from "../../components/ContentSection";
 import LiveHelp from "../../components/LiveHelp";
+import { Optional } from "../../lib/types";
 
 const StyledPoolPage = styled.div`
   position: relative;
@@ -36,7 +37,7 @@ const StyledPoolPage = styled.div`
 `;
 
 const ContentContainer = styled.div`
-  width: 100%;
+  flex: 1;
 `;
 
 const Content = styled.div`
@@ -49,17 +50,22 @@ const InfoCards = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 36rem;
+  margin-left: 1.6rem;
+
+  @media (max-width: 1220px) {
+    margin-left: 0;
+  }
 `;
 
 const ButtonContainer = styled.div`
   width: 100%;
-  padding-left: 2rem;
   @media (max-width: 1220px) {
     display: none;
   }
 `;
 
-const PoolPage = (): JSX.Element => {
+const PoolPage = (): Optional<JSX.Element> => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { poolName } = useParams<"poolName">();
@@ -77,7 +83,7 @@ const PoolPage = (): JSX.Element => {
 
   if (!pool && poolsLoaded) {
     navigate("/");
-    return <div />;
+    return null;
   }
 
   return (

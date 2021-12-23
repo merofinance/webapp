@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 import logo from "../../assets/logo/logo.svg";
 import { useDevice } from "../../app/hooks/use-device";
-import { Loan, Position } from "../../lib/types";
+import { Loan, Optional, Position } from "../../lib/types";
 import { selectLoans } from "../../state/lendingSlice";
 import { selectPositions } from "../../state/positionsSlice";
 import ProtectableLoan from "./register/topup/ProtectableLoan";
@@ -64,7 +64,7 @@ const BackdHelper = styled.img`
   margin-right: 1rem;
 `;
 
-const ProtectableLoans = (): JSX.Element => {
+const ProtectableLoans = (): Optional<JSX.Element> => {
   const { t } = useTranslation();
   const { account } = useWeb3React();
   const loans = useSelector(selectLoans(account));
@@ -79,7 +79,7 @@ const ProtectableLoans = (): JSX.Element => {
       !positions.some((position: Position) => position.protocol === loan.protocol)
   );
 
-  if (protectableLoans.length === 0) return <div />;
+  if (protectableLoans.length === 0) return null;
 
   return (
     <StyledProtectableLoans>
