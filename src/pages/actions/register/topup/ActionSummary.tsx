@@ -104,12 +104,7 @@ const ActionSummary = (): JSX.Element => {
       </Column>
       <Column>
         <Header>{t("actions.suggestions.topup.labels.healthFactor")}</Header>
-        <Value hideOnSnapshot>
-          {(loan.healthFactor.gt(ScaledNumber.fromUnscaled(100))
-            ? ScaledNumber.fromUnscaled(100)
-            : loan.healthFactor
-          ).toCryptoString()}
-        </Value>
+        <Value hideOnSnapshot>{loan.healthFactor.toCryptoString()}</Value>
       </Column>
       <Column hideMobile>
         <Header>{t("actions.suggestions.topup.labels.totalCollateral")}</Header>

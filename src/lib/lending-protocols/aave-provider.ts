@@ -1,4 +1,4 @@
-import { providers, Signer } from "ethers";
+import { BigNumber, providers, Signer } from "ethers";
 
 import { Address, LendingProtocol, LendingProtocolProvider, PlainLoan } from "../types";
 import { LendingPoolFactory } from "../contracts/aave/LendingPool";
@@ -23,7 +23,11 @@ export class AaveProvider implements LendingProtocolProvider {
       currentLiquidationThreshold: ScaledNumber.fromUnscaled("1", 4)
         .div(new ScaledNumber(userAccountData.currentLiquidationThreshold, 4))
         .toPlain(),
-      healthFactor: new ScaledNumber(userAccountData.healthFactor).toPlain(),
+      healthFactor: new ScaledNumber(userAccountData.healthFactor).gt(
+        ScaledNumber.fromUnscaled(100)
+      )
+        ? ScaledNumber.fromUnscaled(100).toPlain()
+        : new ScaledNumber(userAccountData.healthFactor).toPlain(),
     };
   }
 }
