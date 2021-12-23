@@ -80,7 +80,7 @@ const Value = styled.div`
   }
 `;
 
-const ChevronData = styled.td`
+const ChevronData = styled.div`
   width: 2.4rem;
 
   @media (max-width: 600px) {
