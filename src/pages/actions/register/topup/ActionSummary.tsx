@@ -10,7 +10,6 @@ import { selectPool } from "../../../../state/selectors";
 import { GradientText } from "../../../../styles/GradientText";
 import { Loan } from "../../../../lib/types";
 import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
-import { ScaledNumber } from "../../../../lib/scaled-number";
 
 const StyledActionSummary = styled.div`
   width: 100%;
