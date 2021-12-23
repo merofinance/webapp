@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
 import { FormikErrors, useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
+import { ethers } from "ethers";
 
 import { selectPoolBalance } from "../../../../state/userSlice";
 import { useBackd } from "../../../../app/hooks/use-backd";
@@ -17,6 +18,7 @@ import {
   GWEI_DECIMALS,
   GWEI_SCALE,
   RECOMMENDED_THRESHOLD,
+  TOPUP_ACTION_ROUTE,
   TOPUP_GAS_COST,
 } from "../../../../lib/constants";
 import {
@@ -166,7 +168,11 @@ const TopupConditionsForm = (): JSX.Element => {
   });
 
   if (!pool || !protocol || !address) {
-    navigate(`/actions/register/topup/${address}/${protocol}`);
+    navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`);
+    return <div />;
+  }
+  if (!ethers.utils.isAddress(address)) {
+    navigate(TOPUP_ACTION_ROUTE);
     return <div />;
   }
 
