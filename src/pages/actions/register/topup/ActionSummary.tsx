@@ -8,8 +8,9 @@ import { selectEthPrice } from "../../../../state/poolsListSlice";
 import Asset from "../../../../components/Asset";
 import { selectPool } from "../../../../state/selectors";
 import { GradientText } from "../../../../styles/GradientText";
-import { LendingProtocol, Loan } from "../../../../lib/types";
+import { Loan } from "../../../../lib/types";
 import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
+import { ScaledNumber } from "../../../../lib/scaled-number";
 
 const StyledActionSummary = styled.div`
   width: 100%;
@@ -103,7 +104,12 @@ const ActionSummary = (): JSX.Element => {
       </Column>
       <Column>
         <Header>{t("actions.suggestions.topup.labels.healthFactor")}</Header>
-        <Value hideOnSnapshot>{loan.healthFactor.toCryptoString()}</Value>
+        <Value hideOnSnapshot>
+          {(loan.healthFactor.gt(ScaledNumber.fromUnscaled(100))
+            ? ScaledNumber.fromUnscaled(100)
+            : loan.healthFactor
+          ).toCryptoString()}
+        </Value>
       </Column>
       <Column hideMobile>
         <Header>{t("actions.suggestions.topup.labels.totalCollateral")}</Header>
