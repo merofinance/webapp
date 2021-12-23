@@ -1,4 +1,4 @@
-import { BigNumber, providers, Signer } from "ethers";
+import { providers, Signer } from "ethers";
 
 import { Address, LendingProtocol, LendingProtocolProvider, PlainLoan } from "../types";
 import { LendingPoolFactory } from "../contracts/aave/LendingPool";
