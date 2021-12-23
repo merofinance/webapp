@@ -62,6 +62,9 @@ const TopupAction = ({ show, close, position, pool }: Props): JSX.Element => {
       setDeleting(true);
       dispatch(removeSuggestion(implement.type));
     }
+    return () => {
+      setDeleting(false);
+    };
   }, [implement]);
 
   return (

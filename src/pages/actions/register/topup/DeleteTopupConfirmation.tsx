@@ -53,6 +53,9 @@ const DeleteTopupConfirmation = ({ show, close, position, pool, complete }: Prop
       close();
     }
     setInitialised(true);
+    return () => {
+      setInitialised(false);
+    };
   }, [loading]);
 
   const handleRemovePosition = () => {

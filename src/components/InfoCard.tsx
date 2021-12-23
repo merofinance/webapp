@@ -110,6 +110,9 @@ const InfoCard = ({ header, content, collapsible, defaultOpen, id }: Props): JSX
 
   useEffect(() => {
     setOpen(defaultOpen || !isMobile);
+    return () => {
+      setOpen(false);
+    };
   }, [!isMobile]);
 
   return (

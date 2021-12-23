@@ -31,6 +31,9 @@ const TopupConfirmation = ({ show, close, position, pool, complete }: Props): JS
       close();
     }
     setInitialised(true);
+    return () => {
+      setInitialised(false);
+    };
   }, [loading]);
 
   const executeRegister = () => {

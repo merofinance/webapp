@@ -139,6 +139,9 @@ const ConnectorDesktop = ({ connect }: Props): JSX.Element => {
 
   useEffect(() => {
     updateEns();
+    return () => {
+      setEns("");
+    };
   }, [updated]);
 
   return (

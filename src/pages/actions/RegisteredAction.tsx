@@ -117,6 +117,9 @@ const RegisteredAction = ({ position }: Props): JSX.Element => {
       implement.data === position.protocol.toLowerCase()
     )
       setOpen(true);
+    return () => {
+      setOpen(false);
+    };
   }, [implement]);
 
   return (

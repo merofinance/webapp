@@ -182,6 +182,9 @@ const LiveHelp = (): JSX.Element => {
 
   useEffect(() => {
     setOpen(hasSuggestions);
+    return () => {
+      setOpen(false);
+    };
   }, [hasSuggestions]);
 
   useEffect(() => {

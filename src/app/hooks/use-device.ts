@@ -18,7 +18,14 @@ export const useDevice = (): useDeviceType => {
     setWidth(window.innerWidth);
   };
 
-  useEffect(refresh, [refresh]);
+  useEffect(() => {
+    refresh();
+    return () => {
+      setMobile(false);
+      setDesktop(true);
+      setWidth(0);
+    };
+  }, [refresh]);
 
   window.addEventListener("resize", refresh);
 
