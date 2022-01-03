@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -19,6 +19,7 @@ import {
 import Button from "./Button";
 import { selectPositions } from "../state/positionsSlice";
 import { Position } from "../lib/types";
+import { GradientLink } from "../styles/GradientText";
 
 const Container = styled.div`
   position: relative;
@@ -147,11 +148,23 @@ const SuggestionText = styled.div`
   }
 `;
 
+const DocsLink = styled(GradientLink)`
+  font-weight: 400;
+  letter-spacing: 0.42px;
+
+  font-size: 1.5rem;
+  line-height: 2.1rem;
+  @media (max-width: 1220px) {
+    font-size: 1.2rem;
+    line-height: 1.7rem;
+  }
+`;
+
 const NfaText = styled.div`
   font-weight: 400;
   letter-spacing: 0.42px;
   font-style: italic;
-  margin-top: 0.7rem;
+  margin-top: 0.4rem;
 
   font-size: 1rem;
   line-height: 2.1rem;
@@ -164,7 +177,7 @@ const NfaText = styled.div`
 const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 1.1rem;
+  margin-top: 1.3rem;
 
   button {
     margin-right: 1rem;
@@ -207,6 +220,7 @@ const LiveHelp = (): JSX.Element => {
             data: position.protocol.toLowerCase(),
             text: t("liveHelp.suggestions.topupPositionLow.text", { protocol: position.protocol }),
             button: t("liveHelp.suggestions.topupPositionLow.button"),
+            link: "https://docs.backd.fund/protocol-architecture/actions/top-ups",
           })
         )
       );
@@ -237,7 +251,14 @@ const LiveHelp = (): JSX.Element => {
         <Content>
           {suggestions.map((suggestion: SuggestionType) => (
             <StyledSuggestion key={suggestion.type}>
-              <SuggestionText>{suggestion.text}</SuggestionText>
+              <SuggestionText>
+                {suggestion.text}{" "}
+                <Trans i18nKey="liveHelp.readMore">
+                  <DocsLink href={suggestion.link} target="_blank" rel="noopener noreferrer">
+                    link
+                  </DocsLink>
+                </Trans>
+              </SuggestionText>
               <NfaText>{t("liveHelp.disclaimer")}</NfaText>
               <ButtonContainer>
                 <Button

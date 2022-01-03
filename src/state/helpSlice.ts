@@ -13,6 +13,7 @@ export interface SuggestionType {
   type: Suggestion;
   text: string;
   button: string;
+  link: string;
   data?: any;
 }
 

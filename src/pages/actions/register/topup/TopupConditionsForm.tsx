@@ -242,6 +242,7 @@ const TopupConditionsForm = (): JSX.Element => {
               suggestion: suggestedSingleTopup(),
             }),
             button: t("liveHelp.suggestions.singleLow.button"),
+            link: "https://docs.backd.fund/protocol-architecture/actions/top-ups",
           })
         );
         return;
@@ -277,6 +278,7 @@ const TopupConditionsForm = (): JSX.Element => {
                     recommendedThreshold: RECOMMENDED_THRESHOLD,
                   }),
                   button: t("liveHelp.suggestions.thresholdLow.button"),
+                  link: "https://docs.backd.fund/protocol-architecture/actions/top-ups",
                 })
               );
             } else {
@@ -296,6 +298,7 @@ const TopupConditionsForm = (): JSX.Element => {
                     recommendedThreshold: RECOMMENDED_THRESHOLD,
                   }),
                   button: t("liveHelp.suggestions.thresholdHigh.button"),
+                  link: "https://docs.backd.fund/protocol-architecture/actions/top-ups",
                 })
               );
             } else {
