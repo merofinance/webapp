@@ -628,6 +628,7 @@
       "ignore": "Ignore"
     },
     "header": "Live Help",
+    "disclaimer": "Note: this is not financial advice.",
     "suggestions": {
       "thresholdLow": {
         "text": "I noticed you have entered a threshold top-up of {{threshold}}. This is very close to liquidation and in times of market volatility I suggest at least {{recommendedThreshold}} or more.",

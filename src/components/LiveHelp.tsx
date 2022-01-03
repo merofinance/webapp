@@ -147,10 +147,24 @@ const SuggestionText = styled.div`
   }
 `;
 
+const NfaText = styled.div`
+  font-weight: 400;
+  letter-spacing: 0.42px;
+  font-style: italic;
+  margin-top: 0.7rem;
+
+  font-size: 1rem;
+  line-height: 2.1rem;
+  @media (max-width: 1220px) {
+    font-size: 0.8rem;
+    line-height: 1.7rem;
+  }
+`;
+
 const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: 1.1rem;
 
   button {
     margin-right: 1rem;
@@ -224,6 +238,7 @@ const LiveHelp = (): JSX.Element => {
           {suggestions.map((suggestion: SuggestionType) => (
             <StyledSuggestion key={suggestion.type}>
               <SuggestionText>{suggestion.text}</SuggestionText>
+              <NfaText>{t("liveHelp.disclaimer")}</NfaText>
               <ButtonContainer>
                 <Button
                   id="live-help-implement"
