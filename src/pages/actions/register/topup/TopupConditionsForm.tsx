@@ -281,7 +281,9 @@ const TopupConditionsForm = (): JSX.Element => {
           onBlur={() => {
             if (
               formik.values.threshold &&
-              Number(formik.values.threshold) < RECOMMENDED_THRESHOLD
+              Number(formik.values.threshold) < RECOMMENDED_THRESHOLD &&
+              Number(loan.healthFactor.toCryptoString({ useGrouping: false })) >
+                RECOMMENDED_THRESHOLD
             ) {
               dispatch(
                 addSuggestion({
