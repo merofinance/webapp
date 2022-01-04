@@ -132,7 +132,7 @@ const TopupConditionsForm = (): JSX.Element => {
         formik.setFieldValue("threshold", RECOMMENDED_THRESHOLD, true);
         dispatch(removeSuggestion(Suggestion.THRESHOLD_LOW));
       } else if (implement.type === Suggestion.THRESHOLD_HIGH) {
-        formik.setFieldValue("threshold", RECOMMENDED_THRESHOLD, true);
+        formik.setFieldValue("threshold", suggestedMaximumTreshold(), true);
         dispatch(removeSuggestion(Suggestion.THRESHOLD_HIGH));
       } else if (implement.type === Suggestion.SINGLE_LOW) {
         formik.setFieldValue("singleTopUp", suggestedSingleTopup(), true);
@@ -195,6 +195,19 @@ const TopupConditionsForm = (): JSX.Element => {
     maxGasPrice: ScaledNumber.fromUnscaled(formik.values.maxGasPrice, GWEI_DECIMALS),
     actionToken: pool.underlying.address,
     depositToken: pool.lpToken.address,
+  };
+
+  const suggestedMaximumTreshold = () => {
+    if (!formik.values.threshold || !loan) return 0;
+    if (Number(loan.healthFactor.toCryptoString({ useGrouping: false })) >= RECOMMENDED_THRESHOLD) {
+      return RECOMMENDED_THRESHOLD;
+    }
+    return Number(
+      loan.healthFactor
+        .add(ScaledNumber.fromUnscaled(1))
+        .div(2)
+        .toCryptoString({ useGrouping: false })
+    );
   };
 
   const suggestedSingleTopup = () => {
@@ -295,7 +308,7 @@ const TopupConditionsForm = (): JSX.Element => {
                   type: Suggestion.THRESHOLD_HIGH,
                   text: t("liveHelp.suggestions.thresholdHigh.text", {
                     threshold: formik.values.threshold,
-                    recommendedThreshold: RECOMMENDED_THRESHOLD,
+                    recommendedThreshold: suggestedMaximumTreshold(),
                   }),
                   button: t("liveHelp.suggestions.thresholdHigh.button"),
                   link: "https://docs.backd.fund/protocol-architecture/actions/top-ups",
