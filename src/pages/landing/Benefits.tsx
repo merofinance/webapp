@@ -20,7 +20,7 @@ const benefits: BenfitsType[] = [
     icon: shield,
     header: "benefits.reactiveLiquidity.header",
     description: "benefits.reactiveLiquidity.description",
-    url: "https://docs.backd.fund/protocol-architecture/top-ups",
+    url: "https://docs.backd.fund/protocol-architecture/actions",
   },
   {
     icon: plus,
@@ -32,7 +32,7 @@ const benefits: BenfitsType[] = [
     icon: percent,
     header: "benefits.feeShare.header",
     description: "benefits.feeShare.description",
-    url: "https://docs.backd.fund/protocol-architecture/top-ups/backd-keepers",
+    url: "https://docs.backd.fund/protocol-architecture/tokenomics",
   },
 ];
 
