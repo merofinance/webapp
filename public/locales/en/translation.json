@@ -60,7 +60,7 @@
     },
     "feeShare": {
       "header": "Fee Share",
-      "description": "Receive part of the fees that are charged on Actions."
+      "description": "Capture fees from Actions and strategies."
     },
     "keepers": {
       "header": "Keeper Rewards",
