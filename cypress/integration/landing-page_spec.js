@@ -30,7 +30,7 @@ describe("Benefits", () => {
   it("Should have Avoid Liquidation Benefit", () => {
     cy.get('[id="benefits.reactiveLiquidity.header"] > a')
       .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://docs.backd.fund/protocol-architecture/top-ups");
+      .should("have.attr", "href", "https://docs.backd.fund/protocol-architecture/actions");
   });
 
   it("Should have Earn Yield Benefit", () => {
@@ -42,11 +42,7 @@ describe("Benefits", () => {
   it("Should have Fee Share Benefit", () => {
     cy.get('[id="benefits.feeShare.header"] > a')
       .should("have.attr", "target", "_blank")
-      .should(
-        "have.attr",
-        "href",
-        "https://docs.backd.fund/protocol-architecture/top-ups/backd-keepers"
-      );
+      .should("have.attr", "href", "https://docs.backd.fund/protocol-architecture/tokenomics");
   });
 });
 
