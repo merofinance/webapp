@@ -111,7 +111,6 @@ const IconGlass = styled.div`
   border-radius: 13px;
   overflow: hidden;
   transition: transform 0.1s ease-out;
-
   backdrop-filter: blur(5px);
 
   @media (max-width: 600px) {
