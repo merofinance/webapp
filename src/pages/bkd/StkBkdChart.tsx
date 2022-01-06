@@ -29,6 +29,8 @@ ChartJS.register(
 const StyledStkBkdChart = styled.div`
   width: 100%;
   padding: 3.2rem;
+  padding-right: 1.6rem;
+  padding-bottom: 2rem;
   border-radius: 14px;
   background: rgba(21, 14, 59, 0.5);
   box-shadow: 0px 0px 12px rgba(23, 18, 22, 0.05);
@@ -48,6 +50,24 @@ const GradientHeader = styled(GradientText)`
   letter-spacing: 0.25px;
 `;
 
+const ChartContainer = styled.div`
+  width: 100%;
+  height: 21.7rem;
+  background-color: rgba(13, 8, 42, 1);
+  border-radius: 14px;
+`;
+
+const EndDate = styled.div`
+  width: 100%;
+  text-align: right;
+  font-size: 1.2rem;
+  letter-spacing: 0.15px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+  padding-right: 1.6rem;
+  transform: translateY(calc(-100% - 0.7rem));
+`;
+
 const StkBkdChart = (): JSX.Element => {
   const chart = useRef<ChartJS>(null);
   const [gradient, setGradient] = useState<CanvasGradient>();
@@ -61,13 +81,21 @@ const StkBkdChart = (): JSX.Element => {
       setTimeout(() => loadColors(), 50);
       return;
     }
-    const gradient_ = chart.current.ctx.createLinearGradient(0, 0, 0, 400);
+    const { height } = chart.current.canvas.getBoundingClientRect();
+    const { width } = chart.current.canvas.getBoundingClientRect();
+
+    const gradient_ = chart.current.ctx.createLinearGradient(0, 0, 0, height);
     gradient_.addColorStop(1, "#C532F9");
     gradient_.addColorStop(0, "#32B2E5");
     setGradient(gradient_);
 
-    const offset = 75;
-    const fill_ = chart.current.ctx.createLinearGradient(525 - offset, 0, 525 + offset, 450);
+    const offset = 16;
+    const fill_ = chart.current.ctx.createLinearGradient(
+      width / 2 - offset,
+      0,
+      width / 2 + offset,
+      height
+    );
     fill_.addColorStop(0, "rgba(50, 178, 229, 0.15)");
     fill_.addColorStop(1, "rgba(50, 178, 229, 0)");
     // fill_.addColorStop(0, "#C532F9");
@@ -85,6 +113,7 @@ const StkBkdChart = (): JSX.Element => {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         display: false,
@@ -105,6 +134,18 @@ const StkBkdChart = (): JSX.Element => {
     scales: {
       y: {
         beginAtZero: true,
+        grid: {
+          display: true,
+          color: "rgba(22, 42, 85, 1)",
+        },
+        ticks: {
+          font: {
+            size: 12,
+          },
+        },
+      },
+      x: {
+        display: false,
       },
     },
   };
@@ -113,8 +154,9 @@ const StkBkdChart = (): JSX.Element => {
     labels: Array.from(Array(365).keys()).map((key: number) => {
       const today = new Date();
       today.setDate(today.getDate() - 100 + key);
-      return dateFormat(today, "yyyy-MM-dd");
+      return dateFormat(today, "yyyy-m-d");
     }),
+    color: "red",
     datasets: [
       {
         label: "stkBKD balance",
@@ -134,12 +176,18 @@ const StkBkdChart = (): JSX.Element => {
     ],
   };
 
+  const endDate = new Date();
+  endDate.setDate(endDate.getDate() - 100 + 365);
+
   return (
     <StyledStkBkdChart>
       <Header>
         stkBKD balance: <GradientHeader>430</GradientHeader>
       </Header>
-      <Chart ref={chart} type="line" data={data} options={options} />
+      <ChartContainer>
+        <Chart ref={chart} type="line" data={data} options={options} />
+      </ChartContainer>
+      <EndDate>{dateFormat(endDate, "yyyy-m-d")}</EndDate>
     </StyledStkBkdChart>
   );
 };
