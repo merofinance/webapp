@@ -52,15 +52,19 @@
   "benefits": {
     "reactiveLiquidity": {
       "header": "Reactive Liquidity",
-      "description": "Create Actions to automate your liquidity to where it is needed most."
+      "description": "Actions automate your liquidity to where it is needed."
     },
     "earnYield": {
       "header": "Earn Yield",
-      "description": "Earn interest on liquidity via yield-farming strategies such as Curve and Convex."
+      "description": "Earn interest on liquidity via yield-farming strategies."
     },
     "feeShare": {
       "header": "Fee Share",
-      "description": "Receive part of the fees that are charged on actions."
+      "description": "Capture fees from Actions and strategies."
+    },
+    "keepers": {
+      "header": "Keeper Rewards",
+      "description": "Become a Keeper to receive rewards for triggering Actions."
     },
     "readMore": "Read more"
   },
