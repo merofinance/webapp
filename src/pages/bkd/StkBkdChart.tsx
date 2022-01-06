@@ -10,11 +10,21 @@ import {
   Title,
   Tooltip,
   Legend,
+  Filler,
 } from "chart.js";
 import { Chart } from "react-chartjs-2";
 import { GradientText } from "../../styles/GradientText";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+);
 
 const StyledStkBkdChart = styled.div`
   width: 100%;
@@ -41,23 +51,36 @@ const GradientHeader = styled(GradientText)`
 const StkBkdChart = (): JSX.Element => {
   const chart = useRef<ChartJS>(null);
   const [gradient, setGradient] = useState<CanvasGradient>();
+  const [fill, setFill] = useState<CanvasGradient>();
 
   const startDate = new Date();
   startDate.setDate(new Date().getDate() - 100);
 
-  const loadGradient = () => {
+  const loadColors = () => {
     if (!chart.current) {
-      setTimeout(() => loadGradient(), 50);
+      setTimeout(() => loadColors(), 50);
       return;
     }
     const gradient_ = chart.current.ctx.createLinearGradient(0, 0, 0, 400);
     gradient_.addColorStop(1, "#C532F9");
     gradient_.addColorStop(0, "#32B2E5");
     setGradient(gradient_);
+
+    const offset = 95;
+    const fill_ = chart.current.ctx.createLinearGradient(525 - offset, 0, 525 + offset, 450);
+    fill_.addColorStop(0, "rgba(50, 178, 229, 0.15)");
+    fill_.addColorStop(1, "rgba(50, 178, 229, 0)");
+    // fill_.addColorStop(0, "#C532F9");
+    // fill_.addColorStop(0.48, "#C532F9");
+    // fill_.addColorStop(0.49, "green");
+    // fill_.addColorStop(0.5, "green");
+    // fill_.addColorStop(0.51, "#32B2E5");
+    // fill_.addColorStop(1, "#32B2E5");
+    setFill(fill_);
   };
 
   useLayoutEffect(() => {
-    loadGradient();
+    loadColors();
   }, []);
 
   const options = {
@@ -98,6 +121,10 @@ const StkBkdChart = (): JSX.Element => {
         radius: 3,
         borderColor: "transparent",
         borderWidth: 20,
+        fill: {
+          target: "origin",
+          above: fill,
+        },
       },
     ],
   };
