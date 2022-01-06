@@ -578,6 +578,9 @@
       }
     }
   },
+  "bkd": {
+    "overview": "Stake BKD to earn a share of platform fees and gain voting weight - which can be used to vote to determine which pools receive BKD inflation."
+  },
   "headers": {
     "asset": "Asset",
     "apr": "APR",
@@ -649,6 +652,10 @@
       "description": "Earn yield and governance tokens while executing other acitons such as collateral top ups (Aave v2 & Compound)"
     },
     "stake": {
+      "title": "Stake LP Tokens & Earn Rewards",
+      "description": "Earn BKD token rewards for providing liquidity to AMMs for BKD pairs."
+    },
+    "bkd": {
       "title": "Stake BKD & Earn Rewards",
       "description": "Earn rewards and protocol profits in addition to aggregated yield from yield farming strategies"
     }
