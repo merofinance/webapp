@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import {
   Chart as ChartJS,
@@ -9,34 +10,10 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { Line } from "react-chartjs-2";
+import { Chart, Line } from "react-chartjs-2";
 import { GradientText } from "../../styles/GradientText";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
-
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      display: false,
-    },
-    title: {
-      display: false,
-    },
-  },
-};
-
-const data = {
-  labels: ["January", "February", "March", "April", "May", "June", "July"],
-  datasets: [
-    {
-      label: "Dataset 1",
-      data: [1, 2, 3, 4, 5, 6, 7],
-      borderColor: "rgb(255, 99, 132)",
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
-    },
-  ],
-};
 
 const StyledStkBkdChart = styled.div`
   width: 100%;
@@ -51,6 +28,7 @@ const Header = styled.div`
   font-size: 2.1rem;
   font-weight: 700;
   letter-spacing: 0.25px;
+  margin-bottom: 1.6rem;
 `;
 
 const GradientHeader = styled(GradientText)`
@@ -60,12 +38,60 @@ const GradientHeader = styled(GradientText)`
 `;
 
 const StkBkdChart = (): JSX.Element => {
+  const chart = useRef<ChartJS>(null);
+  const [gradient, setGradient] = useState<CanvasGradient>();
+
+  const loadGradient = () => {
+    if (!chart.current) {
+      setTimeout(() => loadGradient(), 50);
+      return;
+    }
+    const gradient_ = chart.current.ctx.createLinearGradient(0, 0, 0, 400);
+    gradient_.addColorStop(1, "#C532F9");
+    gradient_.addColorStop(0, "#32B2E5");
+    setGradient(gradient_);
+  };
+
+  useLayoutEffect(() => {
+    loadGradient();
+  }, []);
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: false,
+      },
+    },
+    elements: {
+      point: {
+        radius: 10,
+        borderWidth: 0,
+        hoverBorderWidth: 0,
+      },
+    },
+  };
+
+  const data = {
+    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    datasets: [
+      {
+        label: "Dataset 1",
+        data: [1, 2, 3, 4, 5, 6, 7],
+        borderColor: gradient,
+      },
+    ],
+  };
+
   return (
     <StyledStkBkdChart>
       <Header>
         stkBKD balance: <GradientHeader>430</GradientHeader>
       </Header>
-      <Line data={data} options={options} />
+      <Chart ref={chart} type="line" data={data} options={options} />
     </StyledStkBkdChart>
   );
 };
