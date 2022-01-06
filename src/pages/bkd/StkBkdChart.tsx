@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import dateFormat from "dateformat";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,7 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { Chart, Line } from "react-chartjs-2";
+import { Chart } from "react-chartjs-2";
 import { GradientText } from "../../styles/GradientText";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -40,6 +41,9 @@ const GradientHeader = styled(GradientText)`
 const StkBkdChart = (): JSX.Element => {
   const chart = useRef<ChartJS>(null);
   const [gradient, setGradient] = useState<CanvasGradient>();
+
+  const startDate = new Date();
+  startDate.setDate(new Date().getDate() - 100);
 
   const loadGradient = () => {
     if (!chart.current) {
@@ -71,17 +75,29 @@ const StkBkdChart = (): JSX.Element => {
         radius: 10,
         borderWidth: 0,
         hoverBorderWidth: 0,
+        borderColor: "transparent",
+        backgroundColor: "transparent",
       },
     },
   };
 
   const data = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    labels: Array.from(Array(365).keys()).map((key: number) => {
+      const today = new Date();
+      today.setDate(today.getDate() - 100 + key);
+      return dateFormat(today, "yyyy-MM-dd");
+    }),
     datasets: [
       {
-        label: "Dataset 1",
-        data: [1, 2, 3, 4, 5, 6, 7],
-        borderColor: gradient,
+        label: "stkBKD balance",
+        data: Array.from(Array(365).keys()).map((key: number) => {
+          const max = 1000;
+          return ((max * 0.8) / 365) * key + max * 0.2;
+        }),
+        backgroundColor: gradient,
+        radius: 3,
+        borderColor: "transparent",
+        borderWidth: 20,
       },
     ],
   };
