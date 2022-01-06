@@ -27,6 +27,7 @@ const StyledApp = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  padding: 0 10rem;
   padding-bottom: 3rem;
   min-height: calc(100vh - 18.2rem);
 
