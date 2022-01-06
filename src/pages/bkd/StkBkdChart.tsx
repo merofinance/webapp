@@ -66,7 +66,7 @@ const StkBkdChart = (): JSX.Element => {
     gradient_.addColorStop(0, "#32B2E5");
     setGradient(gradient_);
 
-    const offset = 95;
+    const offset = 75;
     const fill_ = chart.current.ctx.createLinearGradient(525 - offset, 0, 525 + offset, 450);
     fill_.addColorStop(0, "rgba(50, 178, 229, 0.15)");
     fill_.addColorStop(1, "rgba(50, 178, 229, 0)");
@@ -100,6 +100,11 @@ const StkBkdChart = (): JSX.Element => {
         hoverBorderWidth: 0,
         borderColor: "transparent",
         backgroundColor: "transparent",
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
       },
     },
   };
