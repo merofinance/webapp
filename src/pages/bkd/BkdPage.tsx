@@ -5,6 +5,7 @@ import Seo from "../../components/Seo";
 import BkdSummary from "./BkdSummary";
 import Overview from "../../components/Overview";
 import MultiplierChart from "./MultiplierChart";
+import StakeBkd from "./StakeBkd";
 
 const StyledBkdPage = styled.div`
   width: 100%;
@@ -48,6 +49,7 @@ const BkdPage = (): JSX.Element => {
             description={t("bkd.overview")}
             link="https://docs.backd.fund/protocol-architecture/tokenomics/token-income"
           />
+          <StakeBkd />
         </InfoCards>
         <Content>
           <MultiplierChart />
