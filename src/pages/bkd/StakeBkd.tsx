@@ -14,9 +14,29 @@ const Content = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+`;
 
-  > div:first-child {
-    margin-bottom: 1.6rem;
+const InputContainer = styled.div`
+  width: 100%;
+  display: flex;
+
+  @media (max-width: 1540px) {
+    flex-direction: column;
+  }
+`;
+
+const ButtonContainer = styled.div`
+  width: 16rem;
+  margin-left: 1.3rem;
+  margin-bottom: 0.3rem;
+  display: flex;
+  align-items: flex-end;
+
+  @media (max-width: 1540px) {
+    margin-bottom: 0;
+    width: 100%;
+    margin-left: 0;
+    margin-top: 2rem;
   }
 `;
 
@@ -50,24 +70,29 @@ const StakeBkd = () => {
               label: "bkd.stake.tab",
               content: (
                 <Content>
-                  <AmountInput
-                    noSlider
-                    value={amount}
-                    setValue={(v: string) => setAmount(v)}
-                    label={t("bkd.stake.input")}
-                    max={BKD_BALANCE}
-                    error={error()}
-                    symbol="bkd"
-                  />
-                  <ApproveThenAction
-                    label={t("bkd.stake.header")}
-                    action={() => console.log("todo")}
-                    value={ScaledNumber.fromUnscaled(amount)}
-                    loading={LOADING}
-                    disabled={!!error()}
-                    token={BKD}
-                    contract={STAKING_CONTRACT.address}
-                  />
+                  <InputContainer>
+                    <AmountInput
+                      noSlider
+                      value={amount}
+                      setValue={(v: string) => setAmount(v)}
+                      label={t("bkd.stake.input")}
+                      max={BKD_BALANCE}
+                      error={error()}
+                      symbol="bkd"
+                    />
+                    <ButtonContainer>
+                      <ApproveThenAction
+                        oneButton
+                        label={t("bkd.stake.header")}
+                        action={() => console.log("todo")}
+                        value={ScaledNumber.fromUnscaled(amount)}
+                        loading={LOADING}
+                        disabled={!!error()}
+                        token={BKD}
+                        contract={STAKING_CONTRACT.address}
+                      />
+                    </ButtonContainer>
+                  </InputContainer>
                   <BkdCalculator amount={ScaledNumber.fromUnscaled(amount)} />
                 </Content>
               ),
@@ -76,24 +101,29 @@ const StakeBkd = () => {
               label: "bkd.unstake.tab",
               content: (
                 <Content>
-                  <AmountInput
-                    noSlider
-                    value={amount}
-                    setValue={(v: string) => setAmount(v)}
-                    label={t("bkd.unstake.input")}
-                    max={BKD_BALANCE}
-                    error={error()}
-                    symbol="bkd"
-                  />
-                  <ApproveThenAction
-                    label={t("bkd.unstake.header")}
-                    action={() => console.log("todo")}
-                    value={ScaledNumber.fromUnscaled(amount)}
-                    loading={LOADING}
-                    disabled={!!error()}
-                    token={BKD}
-                    contract={STAKING_CONTRACT.address}
-                  />
+                  <InputContainer>
+                    <AmountInput
+                      noSlider
+                      value={amount}
+                      setValue={(v: string) => setAmount(v)}
+                      label={t("bkd.unstake.input")}
+                      max={BKD_BALANCE}
+                      error={error()}
+                      symbol="bkd"
+                    />
+                    <ButtonContainer>
+                      <ApproveThenAction
+                        oneButton
+                        label={t("bkd.unstake.header")}
+                        action={() => console.log("todo")}
+                        value={ScaledNumber.fromUnscaled(amount)}
+                        loading={LOADING}
+                        disabled={!!error()}
+                        token={BKD}
+                        contract={STAKING_CONTRACT.address}
+                      />
+                    </ButtonContainer>
+                  </InputContainer>
                   todo: list of pending unstakes
                 </Content>
               ),
