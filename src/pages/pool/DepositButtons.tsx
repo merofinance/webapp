@@ -10,13 +10,13 @@ import ApproveThenAction from "../../components/ApproveThenAction";
 import { ScaledNumber } from "../../lib/scaled-number";
 import { hasPendingTransaction } from "../../state/transactionsSlice";
 
-type Props = {
+interface Props {
   value: ScaledNumber;
   pool: Pool;
   complete: () => void;
   valid: boolean;
   stepsOnTop?: boolean;
-};
+}
 
 const DepositButtons = ({ value, pool, complete, valid, stepsOnTop }: Props): JSX.Element => {
   const { t } = useTranslation();

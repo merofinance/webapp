@@ -579,7 +579,17 @@
     }
   },
   "bkd": {
-    "overview": "Stake BKD to earn a share of platform fees and gain voting weight - which can be used to vote to determine which pools receive BKD inflation."
+    "overview": "Stake BKD to earn a share of platform fees and gain voting weight - which can be used to vote to determine which pools receive BKD inflation.",
+    "stake": {
+      "header": "Stake BKD",
+      "tab": "stake",
+      "input": "Enter an amount of BKD to stake"
+    },
+    "unstake": {
+      "header": "Unstake BKD",
+      "tab": "unstake",
+      "input": "Enter an amount of BKD to unstake"
+    }
   },
   "headers": {
     "asset": "Asset",

@@ -30,9 +30,9 @@ interface Props {
   setValue: (v: string) => void;
   label: string;
   max: ScaledNumber;
-  noSlider?: boolean;
   error: string;
   symbol: string;
+  noSlider?: boolean;
 }
 
 const AmountInput = ({
@@ -40,9 +40,9 @@ const AmountInput = ({
   setValue,
   label,
   max,
-  noSlider,
   error,
   symbol,
+  noSlider,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
 
