@@ -11,7 +11,7 @@ const Container = styled.div`
   border-radius: 1.4rem;
   display: flex;
   flex-direction: column;
-  padding: 2.3rem;
+  padding: 1.8rem 2.3rem;
 
   margin-top: 3.5rem;
   @media (max-width: 600px) {
@@ -23,6 +23,7 @@ const Header = styled.div`
   font-size: 2.6rem;
   font-weight: 700;
   margin-bottom: 1.7rem;
+  margin-top: 0.3rem;
 `;
 
 const Row = styled.div`
