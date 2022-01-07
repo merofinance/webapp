@@ -18,14 +18,20 @@ const Container = styled.div`
 `;
 
 const Content = styled.div`
-  flex: 1;
+  flex: 6;
   display: flex;
   flex-direction: column;
 `;
 
 const InfoCards = styled.div`
+  flex: 4;
   display: flex;
   flex-direction: column;
+  margin-right: 1.6rem;
+
+  @media (max-width: 1220px) {
+    margin-right: 0;
+  }
 `;
 
 const BkdPage = (): JSX.Element => {
@@ -36,15 +42,15 @@ const BkdPage = (): JSX.Element => {
       <Seo title={t("metadata.bkd.title")} description={t("metadata.bkd.description")} />
       <BkdSummary />
       <Container>
-        <Content>
-          <StkBkdChart />
-        </Content>
         <InfoCards>
           <Overview
             description={t("bkd.overview")}
             link="https://docs.backd.fund/protocol-architecture/tokenomics/token-income"
           />
         </InfoCards>
+        <Content>
+          <StkBkdChart />
+        </Content>
       </Container>
     </StyledBkdPage>
   );

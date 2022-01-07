@@ -72,6 +72,12 @@ const ChevronHeader = styled.th`
 const InfoCards = styled.div`
   display: flex;
   flex-direction: column;
+  width: 36rem;
+  margin-left: 1.6rem;
+
+  @media (max-width: 1220px) {
+    margin-left: 0;
+  }
 `;
 
 const PoolsPage = (): JSX.Element => {

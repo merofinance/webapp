@@ -11,6 +11,7 @@ interface StyleProps {
 }
 
 const StyledInfoCard = styled.div`
+  width: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -24,12 +25,8 @@ const StyledInfoCard = styled.div`
   max-height: ${(props: StyleProps) =>
     !props.collapsible ? "auto" : props.open ? "24rem" : "5.4rem"};
 
-  margin-left: 1.6rem;
-  width: ${(props: StyleProps) => (props.wide ? "40rem" : "36rem")};
   padding: 2rem 1.8rem;
   @media (max-width: 1220px) {
-    margin-left: 0;
-    width: 100%;
     padding: 1.6rem;
     max-height: ${(props: StyleProps) => (props.open ? "19rem" : "4.8rem")};
   }
