@@ -142,6 +142,11 @@ const MultiplierChart = (): JSX.Element => {
           font: {
             size: 12,
           },
+
+          stepSize: 1,
+          callback: (value: any) => {
+            return `${value}x`;
+          },
         },
       },
       x: {
