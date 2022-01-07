@@ -93,7 +93,9 @@ const StakeBkd = () => {
                       />
                     </ButtonContainer>
                   </InputContainer>
-                  <BkdCalculator amount={ScaledNumber.fromUnscaled(amount)} />
+                  {amount && !error() && (
+                    <BkdCalculator amount={ScaledNumber.fromUnscaled(amount)} />
+                  )}
                 </Content>
               ),
             },
