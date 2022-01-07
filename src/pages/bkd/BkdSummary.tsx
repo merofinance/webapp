@@ -1,16 +1,23 @@
 import SummaryStatistics from "../../components/SummaryStatistics";
+import { ScaledNumber } from "../../lib/scaled-number";
 
 const BkdSummary = (): JSX.Element => {
+  const claimableFees = ScaledNumber.fromUnscaled(1243.34);
+
   return (
     <SummaryStatistics
       statistics={[
         {
-          label: "Header 1",
-          value: "$1,243.34",
+          label: "Claimable platform fees",
+          value: claimableFees.toUsdValue(1),
+          subValue: "= 1243.43 bkdDAI",
+          buttonText: claimableFees.isZero() ? undefined : "Claim",
+          buttonAction: () => console.log("todo"),
         },
         {
-          label: "Header 2",
-          value: "$65,530.34",
+          label: "Staked BKD",
+          value: "312.34 BKD",
+          subValue: "$65,530.34",
         },
       ]}
     />
