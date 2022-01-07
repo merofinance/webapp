@@ -583,7 +583,18 @@
     "stake": {
       "header": "Stake BKD",
       "tab": "stake",
-      "input": "Enter an amount of BKD to stake"
+      "input": "Enter an amount of BKD to stake",
+      "calculator": {
+        "header": "Updated info",
+        "boost": {
+          "label": "Boost",
+          "tooltip": "todo"
+        },
+        "full": {
+          "label": "Date of full boost",
+          "tooltip": "todo"
+        }
+      }
     },
     "unstake": {
       "header": "Unstake BKD",
