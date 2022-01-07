@@ -8,6 +8,7 @@ import ContentSection from "../../components/ContentSection";
 import Tabs from "../../components/Tabs";
 import { ScaledNumber } from "../../lib/scaled-number";
 import { selectPools } from "../../state/poolsListSlice";
+import BkdCalculator from "./BkdCalculator";
 
 const Content = styled.div`
   width: 100%;
@@ -67,6 +68,7 @@ const StakeBkd = () => {
                     token={BKD}
                     contract={STAKING_CONTRACT.address}
                   />
+                  <BkdCalculator amount={ScaledNumber.fromUnscaled(amount)} />
                 </Content>
               ),
             },
