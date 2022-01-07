@@ -74,7 +74,29 @@ const StakeBkd = () => {
             },
             {
               label: "bkd.unstake.tab",
-              content: <p>unstake</p>,
+              content: (
+                <Content>
+                  <AmountInput
+                    noSlider
+                    value={amount}
+                    setValue={(v: string) => setAmount(v)}
+                    label={t("bkd.unstake.input")}
+                    max={BKD_BALANCE}
+                    error={error()}
+                    symbol="bkd"
+                  />
+                  <ApproveThenAction
+                    label={t("bkd.unstake.header")}
+                    action={() => console.log("todo")}
+                    value={ScaledNumber.fromUnscaled(amount)}
+                    loading={LOADING}
+                    disabled={!!error()}
+                    token={BKD}
+                    contract={STAKING_CONTRACT.address}
+                  />
+                  todo: list of pending unstakes
+                </Content>
+              ),
             },
           ]}
         />
