@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import Seo from "../../components/Seo";
 import BkdSummary from "./BkdSummary";
 import Overview from "../../components/Overview";
-import StkBkdChart from "./StkBkdChart";
+import MultiplierChart from "./MultiplierChart";
 
 const StyledBkdPage = styled.div`
   width: 100%;
@@ -49,7 +49,7 @@ const BkdPage = (): JSX.Element => {
           />
         </InfoCards>
         <Content>
-          <StkBkdChart />
+          <MultiplierChart />
         </Content>
       </Container>
     </StyledBkdPage>

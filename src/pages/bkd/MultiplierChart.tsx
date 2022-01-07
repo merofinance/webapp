@@ -13,7 +13,6 @@ import {
   Filler,
 } from "chart.js";
 import { Chart } from "react-chartjs-2";
-import { GradientText } from "../../styles/GradientText";
 
 ChartJS.register(
   CategoryScale,
@@ -26,28 +25,14 @@ ChartJS.register(
   Filler
 );
 
-const StyledStkBkdChart = styled.div`
+const StyledMultiplierChart = styled.div`
   width: 100%;
-  padding: 3.2rem;
-  padding-right: 1.6rem;
-  padding-bottom: 2rem;
+  padding: 2.1rem 1.4rem;
+  padding-bottom: 0.5rem;
   border-radius: 14px;
   background: rgba(21, 14, 59, 0.5);
   box-shadow: 0px 0px 12px rgba(23, 18, 22, 0.05);
   margin-bottom: 3.1rem;
-`;
-
-const Header = styled.div`
-  font-size: 2.1rem;
-  font-weight: 700;
-  letter-spacing: 0.25px;
-  margin-bottom: 1.6rem;
-`;
-
-const GradientHeader = styled(GradientText)`
-  font-size: 2.1rem;
-  font-weight: 700;
-  letter-spacing: 0.25px;
 `;
 
 const ChartContainer = styled.div`
@@ -56,6 +41,7 @@ const ChartContainer = styled.div`
   height: 21.7rem;
   background-color: rgba(13, 8, 42, 1);
   border-radius: 14px;
+  padding-left: 1rem;
 `;
 
 interface IndicatorProps {
@@ -78,10 +64,10 @@ const EndDate = styled.div`
   font-weight: 400;
   color: rgba(255, 255, 255, 0.6);
   padding-right: 1.6rem;
-  transform: translateY(calc(-100% - 0.7rem));
+  transform: translateY(calc(-100% - 0.5rem));
 `;
 
-const StkBkdChart = (): JSX.Element => {
+const MultiplierChart = (): JSX.Element => {
   const chart = useRef<ChartJS>(null);
   const [gradient, setGradient] = useState<CanvasGradient>();
   const [fill, setFill] = useState<CanvasGradient>();
@@ -147,7 +133,7 @@ const StkBkdChart = (): JSX.Element => {
     },
     scales: {
       y: {
-        beginAtZero: true,
+        beginAtZero: false,
         grid: {
           display: true,
           color: "rgba(22, 42, 85, 1)",
@@ -175,8 +161,8 @@ const StkBkdChart = (): JSX.Element => {
       {
         label: "stkBKD balance",
         data: Array.from(Array(365).keys()).map((key: number) => {
-          const max = 1000;
-          return ((max * 0.8) / 365) * key + max * 0.2;
+          const max = 5;
+          return ((max - 1) / 365) * key + 1;
         }),
         backgroundColor: gradient,
         radius: 3,
@@ -194,17 +180,14 @@ const StkBkdChart = (): JSX.Element => {
   endDate.setDate(endDate.getDate() - 100 + 365);
 
   return (
-    <StyledStkBkdChart>
-      <Header>
-        stkBKD balance: <GradientHeader>{stkBkd}</GradientHeader>
-      </Header>
+    <StyledMultiplierChart>
       <ChartContainer>
         <Chart ref={chart} type="line" data={data} options={options} />
         <ProgressIndicator percent={stkBkd / 1000} />
       </ChartContainer>
       <EndDate>{dateFormat(endDate, "yyyy-m-d")}</EndDate>
-    </StyledStkBkdChart>
+    </StyledMultiplierChart>
   );
 };
 
-export default StkBkdChart;
+export default MultiplierChart;
