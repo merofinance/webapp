@@ -12,6 +12,7 @@ import { ScaledNumber } from "../../lib/scaled-number";
 import { formatCurrency } from "../../lib/numeric";
 import { GradientText } from "../../styles/GradientText";
 import { TOPUP_ACTION_ROUTE } from "../../lib/constants";
+import { useDevice } from "../../app/hooks/use-device";
 
 const Content = styled.div`
   width: 100%;
@@ -104,6 +105,7 @@ const Total = styled.div`
 const YourDeposits = (): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { isDesktop } = useDevice();
   const pools = useSelector(selectPools);
   const balances = useSelector(selectBalances);
   const prices = useSelector(selectPrices);
@@ -122,6 +124,7 @@ const YourDeposits = (): JSX.Element => {
     <InfoCard
       id="your-deposits"
       collapsible
+      defaultOpen={isDesktop}
       header={t("actions.deposits.header")}
       content={
         <Content>

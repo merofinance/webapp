@@ -46,15 +46,16 @@ const Link = styled(GradientLink)`
 interface Props {
   description: string;
   link: string;
+  defaultClosed?: boolean;
 }
 
-const Overview = ({ description, link }: Props): JSX.Element => {
+const Overview = ({ description, link, defaultClosed }: Props): JSX.Element => {
   const { t } = useTranslation();
 
   return (
     <InfoCard
       id="overview"
-      defaultOpen
+      defaultOpen={!defaultClosed}
       collapsible
       header={t("components.overview")}
       content={

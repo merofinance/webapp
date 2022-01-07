@@ -44,6 +44,7 @@ const BkdPage = (): JSX.Element => {
       <Container>
         <InfoCards>
           <Overview
+            defaultClosed
             description={t("bkd.overview")}
             link="https://docs.backd.fund/protocol-architecture/tokenomics/token-income"
           />
