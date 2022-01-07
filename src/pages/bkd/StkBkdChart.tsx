@@ -51,10 +51,23 @@ const GradientHeader = styled(GradientText)`
 `;
 
 const ChartContainer = styled.div`
+  position: relative;
   width: 100%;
   height: 21.7rem;
   background-color: rgba(13, 8, 42, 1);
   border-radius: 14px;
+`;
+
+interface IndicatorProps {
+  percent: number;
+}
+
+const ProgressIndicator = styled.div`
+  position: absolute;
+  height: calc(100% - 2.4rem);
+  border-right: solid 1px white;
+  left: ${(props: IndicatorProps) => `${Math.round(props.percent * 100)}%`};
+  top: 0;
 `;
 
 const EndDate = styled.div`
@@ -72,6 +85,7 @@ const StkBkdChart = (): JSX.Element => {
   const chart = useRef<ChartJS>(null);
   const [gradient, setGradient] = useState<CanvasGradient>();
   const [fill, setFill] = useState<CanvasGradient>();
+  const stkBkd = 430;
 
   const startDate = new Date();
   startDate.setDate(new Date().getDate() - 100);
@@ -182,10 +196,11 @@ const StkBkdChart = (): JSX.Element => {
   return (
     <StyledStkBkdChart>
       <Header>
-        stkBKD balance: <GradientHeader>430</GradientHeader>
+        stkBKD balance: <GradientHeader>{stkBkd}</GradientHeader>
       </Header>
       <ChartContainer>
         <Chart ref={chart} type="line" data={data} options={options} />
+        <ProgressIndicator percent={stkBkd / 1000} />
       </ChartContainer>
       <EndDate>{dateFormat(endDate, "yyyy-m-d")}</EndDate>
     </StyledStkBkdChart>
