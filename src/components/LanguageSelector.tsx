@@ -31,6 +31,10 @@ const languageOptions: SelectorOptionType[] = [
   //   value: "fr",
   //   label: "Français",
   // },
+  {
+    value: "ru",
+    label: "Русский",
+  },
 ];
 
 const StyledLanguageSelector = styled.button`

@@ -44,6 +44,14 @@ const isPortuguese = () => {
   cy.get("#how-it-works-2").contains("Proteja e ganhe");
 };
 
+const isRussian = () => {
+  cy.get("h1").contains("Реактивная ликвидность");
+  cy.get("h3").contains(
+    "Максимизируйте мощность своих активов и начните получать прибыль с помощью пулов ликвидности Backd."
+  );
+  cy.get("#how-it-works-2").contains("Защитите и Заработайте");
+};
+
 describe("Setting Language with Query Parameter", () => {
   it("Should Show English with no Parameter", () => {
     cy.visit("/");
@@ -73,6 +81,11 @@ describe("Setting Language with Query Parameter", () => {
   it("Should Show Portuguese with pt_PT Parameter", () => {
     cy.visit("/?lng=pt_PT");
     isPortuguese();
+  });
+
+  it("Should Show Russian with ru Parameter", () => {
+    cy.visit("/?lng=ru");
+    isRussian();
   });
 
   it("Should Show English with EN Parameter", () => {
@@ -106,6 +119,15 @@ describe("Language Switching", () => {
 
   it("Should Show Japanese", () => {
     isJapanese();
+  });
+
+  it("Should Change Language to Russian", () => {
+    cy.get('[id="language-selector"]').click();
+    cy.get('[id="ru"]').click();
+  });
+
+  it("Should Show Russian", () => {
+    isRussian();
   });
 
   it("Should Change Language to Portuguese", () => {
