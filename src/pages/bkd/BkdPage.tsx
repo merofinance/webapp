@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import Seo from "../../components/Seo";
 import BkdSummary from "./BkdSummary";
 import Overview from "../../components/Overview";
-import MultiplierChart from "./MultiplierChart";
+import BoostChart from "./BoostChart";
 import StakeBkd from "./StakeBkd";
 import StatCard, { StatCardType } from "../../components/StatCard";
 
@@ -60,7 +60,7 @@ const BkdPage = (): JSX.Element => {
           <StakeBkd />
         </InfoCards>
         <Content>
-          <MultiplierChart />
+          <BoostChart />
           <StatContainer>
             <StatCard
               data={[1, 2, 3, 1]}

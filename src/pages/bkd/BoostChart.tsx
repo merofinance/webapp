@@ -2,7 +2,7 @@ import styled from "styled-components";
 import dateFormat from "dateformat";
 import LineChart from "../../components/LineChart";
 
-const StyledMultiplierChart = styled.div`
+const StyledBoostChart = styled.div`
   width: 100%;
   padding: 2.1rem 1.4rem;
   padding-bottom: 0.5rem;
@@ -23,7 +23,7 @@ const EndDate = styled.div`
   transform: translateY(calc(-100% - 0.5rem));
 `;
 
-const MultiplierChart = (): JSX.Element => {
+const BoostChart = (): JSX.Element => {
   const endDate = new Date();
   endDate.setDate(endDate.getDate() - 100 + 365);
 
@@ -39,11 +39,11 @@ const MultiplierChart = (): JSX.Element => {
   });
 
   return (
-    <StyledMultiplierChart>
+    <StyledBoostChart>
       <LineChart chartData={data} chartLabels={labels} />
       <EndDate>{dateFormat(endDate, "yyyy-m-d")}</EndDate>
-    </StyledMultiplierChart>
+    </StyledBoostChart>
   );
 };
 
-export default MultiplierChart;
+export default BoostChart;
