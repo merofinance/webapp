@@ -1,6 +1,5 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import dateFormat from "dateformat";
 import {
   Chart as ChartJS,
   CategoryScale,
