@@ -42,6 +42,7 @@ const InfoCards = styled.div`
   @media (max-width: 1220px) {
     margin-left: 0;
     display: ${(props: InfoCardsProps) => (props.hideMobile ? "none" : "flex")};
+    width: 100%;
   }
 `;
 
