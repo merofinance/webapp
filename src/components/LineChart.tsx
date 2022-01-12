@@ -42,11 +42,6 @@ const StyledLineChart = styled.div`
   padding-left: ${(props: ChartProps) => (props.mini ? "0" : "1rem")};
 `;
 
-const ChartContainer = styled.div`
-  width: ${(props: ChartProps) => (props.mini ? "calc(100% + 4.5rem)" : "100%")};
-  height: ${(props: ChartProps) => (props.mini ? "calc(100% + 4.5rem)" : "100%")};
-`;
-
 interface IndicatorProps {
   percent: number;
   mini?: boolean;
@@ -83,9 +78,9 @@ const LineChart = ({ mini, chartData, chartLabels }: Props): JSX.Element => {
     const { height } = chart.current.canvas.getBoundingClientRect();
     const { width } = chart.current.canvas.getBoundingClientRect();
 
-    const gradient_ = chart.current.ctx.createLinearGradient(0, 0, 0, height);
-    gradient_.addColorStop(1, "#C532F9");
-    gradient_.addColorStop(0, "#32B2E5");
+    const gradient_ = chart.current.ctx.createLinearGradient(0, 0, width, 0);
+    gradient_.addColorStop(0, "#C532F9");
+    gradient_.addColorStop(1, "#32B2E5");
     setGradient(gradient_);
 
     const offset = 16;
@@ -153,9 +148,6 @@ const LineChart = ({ mini, chartData, chartLabels }: Props): JSX.Element => {
         display: false,
       },
     },
-    layout: {
-      padding: -100,
-    },
   };
 
   const data = {
@@ -166,9 +158,10 @@ const LineChart = ({ mini, chartData, chartLabels }: Props): JSX.Element => {
         label: "stkBKD balance",
         data: chartData,
         backgroundColor: gradient,
-        radius: mini ? 1 : 3,
-        borderColor: "transparent",
-        borderWidth: 20,
+        radius: mini ? 0 : 3,
+        borderColor: gradient,
+        borderWidth: mini ? 2 : 0,
+        tension: 0.3,
         fill: {
           target: "origin",
           above: mini ? "transparent" : fill,
@@ -182,9 +175,7 @@ const LineChart = ({ mini, chartData, chartLabels }: Props): JSX.Element => {
 
   return (
     <StyledLineChart mini={mini}>
-      <ChartContainer mini={mini}>
-        <Chart ref={chart} type="line" data={data} options={options} />
-      </ChartContainer>
+      <Chart ref={chart} type="line" data={data} options={options} />
       <ProgressIndicator mini={mini} percent={stkBkd / 1000} />
     </StyledLineChart>
   );
