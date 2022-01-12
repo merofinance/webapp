@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import LineChart from "./LineChart";
+import PieChart from "./PieChart";
 
 export enum StatCardType {
   HISTOGRAM = "histogram",
@@ -58,7 +59,7 @@ const StatCard = ({ type, header, value, subHeader, data, labels }: Props): JSX.
         {type === StatCardType.HISTOGRAM ? (
           <LineChart mini chartData={data} chartLabels={labels} />
         ) : (
-          <p>todo</p>
+          <PieChart mini chartData={data} chartLabels={labels} />
         )}
       </StatContainer>
       <Header>{header}</Header>

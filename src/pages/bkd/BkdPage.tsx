@@ -71,8 +71,8 @@ const BkdPage = (): JSX.Element => {
               subHeader="= 1000 BKD"
             />
             <StatCard
-              data={[1, 2, 3, 1]}
-              labels={["one", "two", "three", "four"]}
+              data={[70, 30]}
+              labels={["one", "two"]}
               type={StatCardType.PIE}
               header={t("bkd.statistics.boost.header")}
               value="2.6x"
