@@ -32,7 +32,7 @@ const StyledMultiplierChart = styled.div`
   border-radius: 14px;
   background: rgba(21, 14, 59, 0.5);
   box-shadow: 0px 0px 12px rgba(23, 18, 22, 0.05);
-  margin-bottom: 3.1rem;
+  margin-bottom: 2.4rem;
 `;
 
 const ChartContainer = styled.div`
