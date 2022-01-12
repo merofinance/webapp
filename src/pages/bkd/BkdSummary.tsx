@@ -10,7 +10,6 @@ const BkdSummary = (): JSX.Element => {
         {
           label: "Claimable platform fees",
           value: claimableFees.toUsdValue(1),
-          subValue: "= 1243.43 bkdDAI",
           buttonText: claimableFees.isZero() ? undefined : "Claim",
           buttonAction: () => console.log("todo"),
         },
