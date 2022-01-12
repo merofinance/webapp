@@ -6,7 +6,7 @@ import BkdSummary from "./BkdSummary";
 import Overview from "../../components/Overview";
 import MultiplierChart from "./MultiplierChart";
 import StakeBkd from "./StakeBkd";
-import StatCard from "../../components/StatCard";
+import StatCard, { StatCardType } from "../../components/StatCard";
 
 const StyledBkdPage = styled.div`
   width: 100%;
@@ -63,11 +63,17 @@ const BkdPage = (): JSX.Element => {
           <MultiplierChart />
           <StatContainer>
             <StatCard
+              data={[1, 2, 3, 1]}
+              labels={["one", "two", "three", "four"]}
+              type={StatCardType.HISTOGRAM}
               header={t("bkd.statistics.stkbkd.header")}
               value="312.34 stkBKD"
               subHeader="= 1000 BKD"
             />
             <StatCard
+              data={[1, 2, 3, 1]}
+              labels={["one", "two", "three", "four"]}
+              type={StatCardType.PIE}
               header={t("bkd.statistics.boost.header")}
               value="2.6x"
               subHeader={t("bkd.statistics.boost.subHeader")}

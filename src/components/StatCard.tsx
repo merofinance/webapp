@@ -1,4 +1,10 @@
 import styled from "styled-components";
+import LineChart from "./LineChart";
+
+export enum StatCardType {
+  HISTOGRAM = "histogram",
+  PIE = "pie",
+}
 
 const StyledStatCard = styled.div`
   border-radius: 1.4rem;
@@ -8,6 +14,11 @@ const StyledStatCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const StatContainer = styled.div`
+  width: 20rem;
+  margin-bottom: 1.6rem;
 `;
 
 const Header = styled.div`
@@ -32,14 +43,24 @@ const SubHeader = styled.div`
 `;
 
 interface Props {
+  type: StatCardType;
+  data: number[];
+  labels: string[];
   header: string;
   value: string;
   subHeader: string;
 }
 
-const StatCard = ({ header, value, subHeader }: Props): JSX.Element => {
+const StatCard = ({ type, header, value, subHeader, data, labels }: Props): JSX.Element => {
   return (
     <StyledStatCard>
+      <StatContainer>
+        {type === StatCardType.HISTOGRAM ? (
+          <LineChart mini chartData={data} chartLabels={labels} />
+        ) : (
+          <p>todo</p>
+        )}
+      </StatContainer>
       <Header>{header}</Header>
       <Value>{value}</Value>
       <SubHeader>{subHeader}</SubHeader>
