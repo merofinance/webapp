@@ -113,6 +113,9 @@ const LineChart = ({ mini, chartData, chartLabels }: Props): JSX.Element => {
       title: {
         display: false,
       },
+      tooltip: {
+        enabled: !mini,
+      },
     },
     elements: {
       point: {
