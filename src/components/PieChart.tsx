@@ -84,6 +84,9 @@ const PieChart = ({ mini, chartData, chartLabels }: Props): JSX.Element => {
       legend: {
         display: false,
       },
+      tooltip: {
+        enabled: !mini,
+      },
     },
   };
 

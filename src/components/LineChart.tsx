@@ -115,6 +115,23 @@ const LineChart = ({ mini, chartData, chartLabels }: Props): JSX.Element => {
       },
       tooltip: {
         enabled: !mini,
+        intersect: false,
+        backgroundColor: "white",
+        titleColor: "black",
+        titleFont: {
+          size: 14,
+          weight: "700",
+        },
+        bodyColor: "black",
+        bodyFont: {
+          size: 12,
+          weight: "700",
+        },
+        bodySpacing: 4,
+        padding: 8,
+        cornerRadius: 3,
+        displayColors: false,
+        boxWidth: 1000,
       },
     },
     elements: {
@@ -156,7 +173,7 @@ const LineChart = ({ mini, chartData, chartLabels }: Props): JSX.Element => {
     color: "red",
     datasets: [
       {
-        label: "stkBKD balance",
+        label: "Boost",
         data: chartData,
         backgroundColor: gradient,
         radius: mini ? 0 : 3,
