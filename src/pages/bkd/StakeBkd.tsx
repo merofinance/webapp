@@ -40,7 +40,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const StakeBkd = () => {
+const StakeBkd = (): JSX.Element => {
   const { t } = useTranslation();
   const [amount, setAmount] = useState("");
   const STAKING_CONTRACT = useSelector(selectPools)[0];

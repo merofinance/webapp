@@ -50,7 +50,7 @@ interface Props {
   amount: ScaledNumber;
 }
 
-const BkdCalculator = ({ amount }: Props) => {
+const BkdCalculator = ({ amount }: Props): JSX.Element => {
   const { t } = useTranslation();
 
   return (
