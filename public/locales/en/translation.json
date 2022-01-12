@@ -599,7 +599,8 @@
     "unstake": {
       "header": "Unstake BKD",
       "tab": "unstake",
-      "input": "Amount of BKD to unstake"
+      "input": "Amount of BKD to unstake",
+      "button": "Begin unstake queue"
     },
     "statistics": {
       "stkbkd": {

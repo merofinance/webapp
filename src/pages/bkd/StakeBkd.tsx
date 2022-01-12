@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import AmountInput from "../../components/AmountInput";
 import ApproveThenAction from "../../components/ApproveThenAction";
+import Button from "../../components/Button";
 import ContentSection from "../../components/ContentSection";
 import Tabs from "../../components/Tabs";
 import { ScaledNumber } from "../../lib/scaled-number";
@@ -20,19 +21,19 @@ const InputContainer = styled.div`
   width: 100%;
   display: flex;
 
-  @media (max-width: 1540px) {
+  @media (max-width: 1580px) {
     flex-direction: column;
   }
 `;
 
 const ButtonContainer = styled.div`
-  width: 16rem;
+  width: 20rem;
   margin-left: 1.3rem;
   margin-bottom: 0.3rem;
   display: flex;
   align-items: flex-end;
 
-  @media (max-width: 1540px) {
+  @media (max-width: 1580px) {
     margin-bottom: 0;
     width: 100%;
     margin-left: 0;
@@ -114,16 +115,7 @@ const StakeBkd = (): JSX.Element => {
                       symbol="bkd"
                     />
                     <ButtonContainer>
-                      <ApproveThenAction
-                        oneButton
-                        label={t("bkd.unstake.header")}
-                        action={() => console.log("todo")}
-                        value={ScaledNumber.fromUnscaled(amount)}
-                        loading={LOADING}
-                        disabled={!!error()}
-                        token={BKD}
-                        contract={STAKING_CONTRACT.address}
-                      />
+                      <Button primary medium wide text={t("bkd.unstake.button")} />
                     </ButtonContainer>
                   </InputContainer>
                   todo: list of pending unstakes
