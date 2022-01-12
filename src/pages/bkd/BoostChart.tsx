@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import dateFormat from "dateformat";
 import LineChart from "../../components/LineChart";
+import { DATE_FORMAT } from "../../lib/constants";
 
 const StyledBoostChart = styled.div`
   width: 100%;
@@ -19,8 +20,8 @@ const EndDate = styled.div`
   letter-spacing: 0.15px;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.6);
-  padding-right: 1.6rem;
-  transform: translateY(calc(-100% - 0.5rem));
+  padding-right: 0.5rem;
+  transform: translateY(calc(-100% + 0.7rem));
 `;
 
 const BoostChart = (): JSX.Element => {
@@ -35,13 +36,13 @@ const BoostChart = (): JSX.Element => {
   const labels = Array.from(Array(365).keys()).map((key: number) => {
     const today = new Date();
     today.setDate(today.getDate() - 100 + key);
-    return dateFormat(today, "yyyy-m-d");
+    return dateFormat(today, DATE_FORMAT);
   });
 
   return (
     <StyledBoostChart>
       <LineChart chartData={data} chartLabels={labels} />
-      <EndDate>{dateFormat(endDate, "yyyy-m-d")}</EndDate>
+      <EndDate>{dateFormat(endDate, DATE_FORMAT)}</EndDate>
     </StyledBoostChart>
   );
 };

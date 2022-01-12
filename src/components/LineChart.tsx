@@ -43,12 +43,11 @@ const StyledLineChart = styled.div`
 
 interface IndicatorProps {
   percent: number;
-  mini?: boolean;
 }
 
 const ProgressIndicator = styled.div`
   position: absolute;
-  height: ${(props: IndicatorProps) => (props.mini ? "100%" : "calc(100% - 2.4rem)")};
+  height: 100%;
   border-right: solid 1px white;
   left: ${(props: IndicatorProps) => `${Math.round(props.percent * 100)}%`};
   top: 0;
@@ -175,7 +174,7 @@ const LineChart = ({ mini, chartData, chartLabels }: Props): JSX.Element => {
   return (
     <StyledLineChart mini={mini}>
       <Chart ref={chart} type="line" data={data} options={options} />
-      <ProgressIndicator mini={mini} percent={stkBkd / 1000} />
+      <ProgressIndicator percent={stkBkd / 1000} />
     </StyledLineChart>
   );
 };
