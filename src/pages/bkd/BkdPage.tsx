@@ -6,6 +6,7 @@ import BkdSummary from "./BkdSummary";
 import Overview from "../../components/Overview";
 import MultiplierChart from "./MultiplierChart";
 import StakeBkd from "./StakeBkd";
+import StatCard from "../../components/StatCard";
 
 const StyledBkdPage = styled.div`
   width: 100%;
@@ -22,6 +23,13 @@ const Content = styled.div`
   flex: 6;
   display: flex;
   flex-direction: column;
+`;
+
+const StatContainer = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1.6rem;
 `;
 
 const InfoCards = styled.div`
@@ -53,6 +61,18 @@ const BkdPage = (): JSX.Element => {
         </InfoCards>
         <Content>
           <MultiplierChart />
+          <StatContainer>
+            <StatCard
+              header={t("bkd.statistics.stkbkd.header")}
+              value="312.34 stkBKD"
+              subHeader="= 1000 BKD"
+            />
+            <StatCard
+              header={t("bkd.statistics.boost.header")}
+              value="2.6x"
+              subHeader={t("bkd.statistics.boost.subHeader")}
+            />
+          </StatContainer>
         </Content>
       </Container>
     </StyledBkdPage>

@@ -600,6 +600,15 @@
       "header": "Unstake BKD",
       "tab": "unstake",
       "input": "Amount of BKD to unstake"
+    },
+    "statistics": {
+      "stkbkd": {
+        "header": "stkBKD balance"
+      },
+      "boost": {
+        "header": "Current boost",
+        "subHeader": "Max (5x) in 214 days"
+      }
     }
   },
   "headers": {
