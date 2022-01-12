@@ -51,14 +51,16 @@ const BkdPage = (): JSX.Element => {
       <Seo title={t("metadata.bkd.title")} description={t("metadata.bkd.description")} />
       <BkdSummary />
       <Container>
-        <InfoCards>
-          <Overview
-            defaultClosed
-            description={t("bkd.overview")}
-            link="https://docs.backd.fund/protocol-architecture/tokenomics/token-income"
-          />
-          <StakeBkd />
-        </InfoCards>
+        <div>
+          <InfoCards>
+            <Overview
+              defaultClosed
+              description={t("bkd.overview")}
+              link="https://docs.backd.fund/protocol-architecture/tokenomics/token-income"
+            />
+            <StakeBkd />
+          </InfoCards>
+        </div>
         <Content>
           <BoostChart />
           <StatContainer>
