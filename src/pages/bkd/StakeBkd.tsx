@@ -10,6 +10,7 @@ import Tabs from "../../components/Tabs";
 import { ScaledNumber } from "../../lib/scaled-number";
 import { selectPools } from "../../state/poolsListSlice";
 import BkdCalculator from "./BkdCalculator";
+import UnstakeQueue from "./UnstakeQueue";
 
 const Content = styled.div`
   width: 100%;
@@ -127,6 +128,7 @@ const StakeBkd = (): JSX.Element => {
                   {amount && !error() && (
                     <BkdCalculator withdraw amount={ScaledNumber.fromUnscaled(amount)} />
                   )}
+                  <UnstakeQueue />
                 </Content>
               ),
             },

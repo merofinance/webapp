@@ -20,7 +20,7 @@ const Container = styled.div`
 `;
 
 const Header = styled.div`
-  font-size: 2.6rem;
+  font-size: 2.3rem;
   font-weight: 700;
   margin-bottom: 1.7rem;
   margin-top: 0.3rem;
