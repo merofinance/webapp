@@ -600,7 +600,16 @@
       "header": "Unstake BKD",
       "tab": "unstake",
       "input": "Amount of BKD to unstake",
-      "button": "Begin unstake queue"
+      "button": "Begin unstake queue",
+      "queue": {
+        "header": "Your unstaking BKD",
+        "headers": {
+          "amount": "Amount",
+          "remaining": "Time remaining"
+        },
+        "claim": "Claim to wallet",
+        "pending": "Unstake in progress"
+      }
     },
     "statistics": {
       "stkbkd": {
