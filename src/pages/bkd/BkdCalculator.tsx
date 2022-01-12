@@ -48,9 +48,10 @@ const Label = styled.div`
 
 interface Props {
   amount: ScaledNumber;
+  withdraw?: boolean;
 }
 
-const BkdCalculator = ({ amount }: Props): JSX.Element => {
+const BkdCalculator = ({ amount, withdraw }: Props): JSX.Element => {
   const { t } = useTranslation();
 
   return (
@@ -63,13 +64,15 @@ const BkdCalculator = ({ amount }: Props): JSX.Element => {
         </Label>
         <Label>2.6x → 2.4x</Label>
       </Row>
-      <Row>
-        <Label>
-          {t("bkd.stake.calculator.full.label")}
-          <BackdTooltip content={t("bkd.stake.calculator.full.tooltip")} />
-        </Label>
-        <Label>22.01.2023</Label>
-      </Row>
+      {!withdraw && (
+        <Row>
+          <Label>
+            {t("bkd.stake.calculator.full.label")}
+            <BackdTooltip content={t("bkd.stake.calculator.full.tooltip")} />
+          </Label>
+          <Label>22.01.2023</Label>
+        </Row>
+      )}
     </Container>
   );
 };

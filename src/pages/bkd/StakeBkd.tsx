@@ -115,10 +115,18 @@ const StakeBkd = (): JSX.Element => {
                       symbol="bkd"
                     />
                     <ButtonContainer>
-                      <Button primary medium wide text={t("bkd.unstake.button")} />
+                      <Button
+                        primary
+                        medium
+                        wide
+                        text={t("bkd.unstake.button")}
+                        click={() => console.log("todo")}
+                      />
                     </ButtonContainer>
                   </InputContainer>
-                  todo: list of pending unstakes
+                  {amount && !error() && (
+                    <BkdCalculator withdraw amount={ScaledNumber.fromUnscaled(amount)} />
+                  )}
                 </Content>
               ),
             },
