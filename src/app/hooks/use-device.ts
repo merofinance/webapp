@@ -18,9 +18,11 @@ export const useDevice = (): useDeviceType => {
     setWidth(window.innerWidth);
   };
 
-  useEffect(refresh, [refresh]);
-
-  window.addEventListener("resize", refresh);
+  useEffect(() => {
+    refresh();
+    window.addEventListener("resize", refresh);
+    return () => window.removeEventListener("resize", refresh);
+  }, []);
 
   return { isMobile, isDesktop, width };
 };
