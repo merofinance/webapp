@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import { useIsLive } from "../app/hooks/use-is-live";
@@ -40,13 +42,51 @@ const StyledNavItems = styled.ul`
   margin: 0 1rem;
 `;
 
+interface UnderlineProps {
+  show: boolean;
+  index: number;
+}
+
+const Underline = styled.div`
+  height: 2px;
+  border-radius: 1px;
+  width: 7rem;
+  position: absolute;
+  left: 3.1rem;
+  bottom: -0.8rem;
+  background: var(--gradient);
+  transition: all 0.3s;
+  display: ${(props: UnderlineProps) => (props.show ? "flex" : "none")};
+  transform: translateX(${(props: UnderlineProps) => `${props.index * (7 + 6.2)}rem`});
+
+  @media (max-width: 600px) {
+    left: 1.7rem;
+  }
+`;
+
 const NavItems = (): JSX.Element => {
   const { protocolLive } = useIsLive();
+  const [active, setActive] = useState<string | null>(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/") setActive(null);
+  }, [location.pathname]);
 
   return (
     <StyledNavItems id="nav-items">
-      {protocolLive && navItems.map((navItem: NavItemType) => <NavItem navItem={navItem} />)}
-      {!protocolLive && preLaunchItems.map((navItem: NavItemType) => <NavItem navItem={navItem} />)}
+      <Underline
+        show={!!active}
+        index={active ? navItems.map((navItem: NavItemType) => navItem.label).indexOf(active) : 0}
+      />
+      {protocolLive &&
+        navItems.map((navItem: NavItemType) => (
+          <NavItem navItem={navItem} setActive={(v: string) => setActive(v)} />
+        ))}
+      {!protocolLive &&
+        preLaunchItems.map((navItem: NavItemType) => (
+          <NavItem navItem={navItem} setActive={(v: string) => setActive(v)} />
+        ))}
     </StyledNavItems>
   );
 };
