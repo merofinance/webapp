@@ -582,6 +582,49 @@
       }
     }
   },
+  "bkd": {
+    "overview": "Stake BKD to earn a share of platform fees and gain voting weight - which can be used to vote to determine which pools receive BKD inflation.",
+    "stake": {
+      "header": "Stake BKD",
+      "tab": "stake",
+      "input": "Amount of BKD to stake",
+      "calculator": {
+        "header": "Updated info",
+        "boost": {
+          "label": "Boost",
+          "tooltip": "todo"
+        },
+        "full": {
+          "label": "Date of full boost",
+          "tooltip": "todo"
+        }
+      }
+    },
+    "unstake": {
+      "header": "Unstake BKD",
+      "tab": "unstake",
+      "input": "Amount of BKD to unstake",
+      "button": "Begin unstake queue",
+      "queue": {
+        "header": "Your unstaking BKD",
+        "headers": {
+          "amount": "Amount",
+          "remaining": "Time remaining"
+        },
+        "claim": "Claim to wallet",
+        "pending": "Unstake in progress"
+      }
+    },
+    "statistics": {
+      "stkbkd": {
+        "header": "stkBKD balance"
+      },
+      "boost": {
+        "header": "Current boost",
+        "subHeader": "Max (5x) in 214 days"
+      }
+    }
+  },
   "headers": {
     "asset": "Asset",
     "apr": "APR",
@@ -653,6 +696,10 @@
       "description": "Earn yield and governance tokens while executing other acitons such as collateral top ups (Aave v2 & Compound)"
     },
     "stake": {
+      "title": "Stake LP Tokens & Earn Rewards",
+      "description": "Earn BKD token rewards for providing liquidity to AMMs for BKD pairs."
+    },
+    "bkd": {
       "title": "Stake BKD & Earn Rewards",
       "description": "Earn rewards and protocol profits in addition to aggregated yield from yield farming strategies"
     }
