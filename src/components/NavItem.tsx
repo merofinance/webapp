@@ -9,14 +9,15 @@ export type NavItemType = {
 };
 
 const StyledNavItem = styled.li`
-  margin: 0 3.1rem;
-  width: 7rem;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
 
+  width: 7rem;
+  margin: 0 3.1rem;
   @media (max-width: 600px) {
+    width: 5rem;
     margin: 0 1.7rem;
   }
 `;

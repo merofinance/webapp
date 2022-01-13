@@ -50,17 +50,20 @@ interface UnderlineProps {
 const Underline = styled.div`
   height: 2px;
   border-radius: 1px;
-  width: 7rem;
   position: absolute;
-  left: 3.1rem;
-  bottom: -0.8rem;
   background: var(--gradient);
   transition: all 0.3s;
   display: ${(props: UnderlineProps) => (props.show ? "flex" : "none")};
-  transform: translateX(${(props: UnderlineProps) => `${props.index * (7 + 6.2)}rem`});
 
+  width: 7rem;
+  left: 3.1rem;
+  bottom: -0.8rem;
+  transform: translateX(${(props: UnderlineProps) => `${props.index * (7 + 6.2)}rem`});
   @media (max-width: 600px) {
+    width: 5rem;
     left: 1.7rem;
+    bottom: -0.6rem;
+    transform: translateX(${(props: UnderlineProps) => `${props.index * (5 + 3.4)}rem`});
   }
 `;
 
