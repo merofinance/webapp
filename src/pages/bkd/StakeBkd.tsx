@@ -10,6 +10,7 @@ import Tabs from "../../components/Tabs";
 import { ScaledNumber } from "../../lib/scaled-number";
 import { selectPools } from "../../state/poolsListSlice";
 import BkdCalculator from "./BkdCalculator";
+import StakeConfirmation from "./StakeConfirmation";
 import UnstakeQueue from "./UnstakeQueue";
 
 const Content = styled.div`
@@ -45,6 +46,7 @@ const ButtonContainer = styled.div`
 const StakeBkd = (): JSX.Element => {
   const { t } = useTranslation();
   const [amount, setAmount] = useState("");
+  const [confirming, setConfirming] = useState(false);
   const STAKING_CONTRACT = useSelector(selectPools)[0];
   const BKD = useSelector(selectPools)[0].underlying;
   const BKD_BALANCE = ScaledNumber.fromUnscaled(245.123456);
@@ -71,65 +73,71 @@ const StakeBkd = (): JSX.Element => {
             {
               label: "bkd.stake.tab",
               content: (
-                <Content>
-                  <InputContainer>
-                    <AmountInput
-                      noSlider
-                      value={amount}
-                      setValue={(v: string) => setAmount(v)}
-                      label={t("bkd.stake.input")}
-                      max={BKD_BALANCE}
-                      error={error()}
-                      symbol="bkd"
-                    />
-                    <ButtonContainer>
-                      <ApproveThenAction
-                        oneButton
-                        label={t("bkd.stake.header")}
-                        action={() => console.log("todo")}
-                        value={ScaledNumber.fromUnscaled(amount)}
-                        loading={LOADING}
-                        disabled={!!error()}
-                        token={BKD}
-                        contract={STAKING_CONTRACT.address}
+                <>
+                  <Content>
+                    <InputContainer>
+                      <AmountInput
+                        noSlider
+                        value={amount}
+                        setValue={(v: string) => setAmount(v)}
+                        label={t("bkd.stake.input")}
+                        max={BKD_BALANCE}
+                        error={error()}
+                        symbol="bkd"
                       />
-                    </ButtonContainer>
-                  </InputContainer>
-                  {amount && !error() && (
-                    <BkdCalculator amount={ScaledNumber.fromUnscaled(amount)} />
-                  )}
-                </Content>
+                      <ButtonContainer>
+                        <ApproveThenAction
+                          oneButton
+                          label={t("bkd.stake.header")}
+                          action={() => setConfirming(true)}
+                          value={ScaledNumber.fromUnscaled(amount)}
+                          loading={LOADING}
+                          disabled={!!error()}
+                          token={BKD}
+                          contract={STAKING_CONTRACT.address}
+                        />
+                      </ButtonContainer>
+                    </InputContainer>
+                    {amount && !error() && (
+                      <BkdCalculator amount={ScaledNumber.fromUnscaled(amount)} />
+                    )}
+                  </Content>
+                  <StakeConfirmation show={confirming} close={() => setConfirming(false)} />
+                </>
               ),
             },
             {
               label: "bkd.unstake.tab",
               content: (
-                <Content>
-                  <InputContainer>
-                    <AmountInput
-                      noSlider
-                      value={amount}
-                      setValue={(v: string) => setAmount(v)}
-                      label={t("bkd.unstake.input")}
-                      max={BKD_BALANCE}
-                      error={error()}
-                      symbol="bkd"
-                    />
-                    <ButtonContainer>
-                      <Button
-                        primary
-                        medium
-                        wide
-                        text={t("bkd.unstake.button")}
-                        click={() => console.log("todo")}
+                <>
+                  <Content>
+                    <InputContainer>
+                      <AmountInput
+                        noSlider
+                        value={amount}
+                        setValue={(v: string) => setAmount(v)}
+                        label={t("bkd.unstake.input")}
+                        max={BKD_BALANCE}
+                        error={error()}
+                        symbol="bkd"
                       />
-                    </ButtonContainer>
-                  </InputContainer>
-                  {amount && !error() && (
-                    <BkdCalculator withdraw amount={ScaledNumber.fromUnscaled(amount)} />
-                  )}
-                  <UnstakeQueue />
-                </Content>
+                      <ButtonContainer>
+                        <Button
+                          primary
+                          medium
+                          wide
+                          text={t("bkd.unstake.button")}
+                          click={() => console.log("todo")}
+                        />
+                      </ButtonContainer>
+                    </InputContainer>
+                    {amount && !error() && (
+                      <BkdCalculator withdraw amount={ScaledNumber.fromUnscaled(amount)} />
+                    )}
+                    <UnstakeQueue />
+                  </Content>
+                  <StakeConfirmation show={confirming} close={() => setConfirming(false)} />
+                </>
               ),
             },
           ]}
