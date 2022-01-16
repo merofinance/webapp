@@ -598,6 +598,10 @@
           "label": "Date of full boost",
           "tooltip": "todo"
         }
+      },
+      "confirmation": {
+        "header": "Confirm stake",
+        "description": "You are about to stake {{bkdAmount}} BKD. It will take {{monthsRemaining}} months to reach maximum boost (5x) but you will immediately begin earning platform fees and gain the ability to vote in the BKD inflation."
       }
     },
     "unstake": {
@@ -613,6 +617,10 @@
         },
         "claim": "Claim to wallet",
         "pending": "Unstake in progress"
+      },
+      "confirmation": {
+        "header": "Confirm unstake",
+        "description": "You are about to stake {{bkdAmount}} BKD. It will take {{monthsRemaining}} months to reach maximum boost (5x) but you will immediately begin earning platform fees and gain the ability to vote in the BKD inflation."
       }
     },
     "statistics": {
