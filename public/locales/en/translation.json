@@ -584,6 +584,18 @@
   },
   "bkd": {
     "overview": "Stake BKD to earn a share of platform fees and gain voting weight - which can be used to vote to determine which pools receive BKD inflation.",
+    "cards": {
+      "claimable": {
+        "header": "Claimable platform fees"
+      },
+      "apr": {
+        "header": "Staked BKD APR",
+        "description": "Stake for 12 months to achieve max boost"
+      },
+      "stake": {
+        "header": "Staked BKD"
+      }
+    },
     "stake": {
       "header": "Stake BKD",
       "tab": "stake",

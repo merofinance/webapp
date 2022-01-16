@@ -1,3 +1,4 @@
+import { ContainerProps } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import Button from "./Button";
@@ -8,6 +9,7 @@ export interface SummaryStatisticType {
   subValue?: string;
   buttonText?: string;
   buttonAction?: () => void;
+  primary?: boolean;
 }
 
 const StyledSummaryStatistics = styled.div`
@@ -25,6 +27,10 @@ const StyledSummaryStatistics = styled.div`
   }
 `;
 
+interface ContainerType {
+  primary?: boolean;
+}
+
 const Container = styled.div`
   flex: 1;
   display: flex;
@@ -33,6 +39,15 @@ const Container = styled.div`
   background-color: #16122e;
   border-radius: 14px;
   margin: 0 0.8rem;
+
+  border: ${(props: ContainerType) => (props.primary ? "1px" : "0px")} solid transparent;
+  background: linear-gradient(#16122e, #16122e),
+    ${(props: ContainerType) =>
+      props.primary
+        ? "linear-gradient(to right, var(--primary), var(--secondary))"
+        : "linear-gradient(#16122e, #16122e)"};
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
 
   max-width: 40.7rem;
   padding: 3.3rem 0;
@@ -97,10 +112,10 @@ const SummaryStatistics = ({ statistics }: Props): JSX.Element => {
   return (
     <StyledSummaryStatistics>
       {statistics.map((statistic: SummaryStatisticType) => (
-        <Container key={statistic.label}>
+        <Container key={statistic.label} primary={statistic.primary}>
           <Label>{t(statistic.label)}</Label>
           <Number>{statistic.value}</Number>
-          {statistic.subValue && <SubValue>{statistic.subValue}</SubValue>}
+          {statistic.subValue && <SubValue>{t(statistic.subValue)}</SubValue>}
           {statistic.buttonText && statistic.buttonAction && (
             <ButtonContainer>
               <Button
