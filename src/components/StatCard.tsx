@@ -23,24 +23,38 @@ const StatContainer = styled.div`
 `;
 
 const Header = styled.div`
-  font-size: 1.4rem;
   letter-spacing: 0.15px;
   font-weight: 700;
   opacity: 0.8;
+
+  font-size: 1.4rem;
   margin-bottom: 1rem;
+  @media (max-width: 1220px) {
+    font-size: 1.2rem;
+    margin-bottom: 0.7rem;
+  }
 `;
 
 const Value = styled.div`
-  font-size: 2.8rem;
   letter-spacing: 0.25px;
   font-weight: 700;
+
+  font-size: 2.8rem;
+  @media (max-width: 1220px) {
+    font-size: 2.2rem;
+  }
 `;
 
 const SubHeader = styled.div`
-  font-size: 1.2rem;
   letter-spacing: 0.11px;
   font-weight: 400;
+
+  font-size: 1.2rem;
   margin-top: 1rem;
+  @media (max-width: 1220px) {
+    font-size: 1.1rem;
+    margin-top: 0.7rem;
+  }
 `;
 
 interface Props {

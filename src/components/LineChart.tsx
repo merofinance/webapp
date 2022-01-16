@@ -12,6 +12,7 @@ import {
   Filler,
 } from "chart.js";
 import { Chart } from "react-chartjs-2";
+import { useDevice } from "../app/hooks/use-device";
 
 ChartJS.register(
   CategoryScale,
@@ -39,6 +40,10 @@ const StyledLineChart = styled.div`
   background-color: ${(props: ChartProps) => (props.mini ? "transparent" : "rgba(13, 8, 42, 1)")};
   border-radius: ${(props: ChartProps) => (props.mini ? "0" : "14px")};
   padding-left: ${(props: ChartProps) => (props.mini ? "0" : "1rem")};
+
+  @media (max-width: 1220px) {
+    height: ${(props: ChartProps) => (props.mini ? "3rem" : "16rem")};
+  }
 `;
 
 interface IndicatorProps {
@@ -60,6 +65,7 @@ interface Props {
 }
 
 const LineChart = ({ mini, chartData, chartLabels }: Props): JSX.Element => {
+  const { isMobile } = useDevice();
   const chart = useRef<ChartJS>(null);
   const [gradient, setGradient] = useState<CanvasGradient>();
   const [fill, setFill] = useState<CanvasGradient>();
@@ -176,7 +182,7 @@ const LineChart = ({ mini, chartData, chartLabels }: Props): JSX.Element => {
         label: "Boost",
         data: chartData,
         backgroundColor: gradient,
-        radius: mini ? 0 : 3,
+        radius: mini ? 0 : isMobile ? 2 : 3,
         borderColor: gradient,
         borderWidth: mini ? 2 : 0,
         tension: 0.3,

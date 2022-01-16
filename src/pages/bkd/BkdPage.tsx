@@ -17,12 +17,20 @@ const StyledBkdPage = styled.div`
 const Container = styled.div`
   width: 100%;
   display: flex;
+
+  @media (max-width: 1220px) {
+    flex-direction: column;
+  }
 `;
 
 const Content = styled.div`
   flex: 6;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 1220px) {
+    flex: auto;
+  }
 `;
 
 const StatContainer = styled.div`
@@ -30,6 +38,11 @@ const StatContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 1.6rem;
+
+  @media (max-width: 1220px) {
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 2.4rem;
+  }
 `;
 
 const InfoCards = styled.div`
@@ -40,6 +53,8 @@ const InfoCards = styled.div`
 
   @media (max-width: 1220px) {
     margin-right: 0;
+    flex: auto;
+    margin-bottom: 2.4rem;
   }
 `;
 
