@@ -636,6 +636,7 @@
           "remaining": "Time remaining"
         },
         "claim": "Claim to wallet",
+        "claimMobile": "Unstake",
         "pending": "Unstake in progress"
       },
       "confirmation": {
