@@ -43,7 +43,7 @@ interface Props {
   text: string;
 }
 
-const Notice = ({ text }: Props) => {
+const Notice = ({ text }: Props): JSX.Element => {
   const { t } = useTranslation();
 
   return (
