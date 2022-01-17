@@ -12,7 +12,7 @@ const Container = styled.div`
   border-radius: 1.4rem;
   display: flex;
   flex-direction: column;
-  padding: 1.8rem 2.3rem;
+  padding: 1.6rem 2.1rem;
 
   margin-top: 3.5rem;
   @media (max-width: 600px) {
@@ -39,6 +39,20 @@ const Label = styled.div`
   }
 `;
 
+const SubLabel = styled.span`
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  letter-spacing: 0.15px;
+  color: #b0afba;
+  margin-right: 0.6rem;
+
+  font-size: 1.6rem;
+  @media (max-width: 600px) {
+    font-size: 1.4rem;
+  }
+`;
+
 interface Props {
   amount: ScaledNumber;
   withdraw?: boolean;
@@ -54,14 +68,18 @@ const BkdCalculator = ({ amount, withdraw }: Props): JSX.Element => {
           {t("bkd.stake.calculator.earnings.label")}
           <BackdTooltip content={t("bkd.stake.calculator.earnings.tooltip")} />
         </Label>
-        <Label>$23.32 → $32.23</Label>
+        <Label>
+          <SubLabel>$23.32 → </SubLabel>$32.23
+        </Label>
       </Row>
       <Row>
         <Label>
           {t("bkd.stake.calculator.boost.label")}
           <BackdTooltip content={t("bkd.stake.calculator.boost.tooltip")} />
         </Label>
-        <Label>2.6x → 2.4x</Label>
+        <Label>
+          <SubLabel>2.6x →</SubLabel>2.4x
+        </Label>
       </Row>
       {!withdraw && (
         <Row>
@@ -69,7 +87,9 @@ const BkdCalculator = ({ amount, withdraw }: Props): JSX.Element => {
             {t("bkd.stake.calculator.full.label")}
             <BackdTooltip content={t("bkd.stake.calculator.full.tooltip")} />
           </Label>
-          <Label>22.01.2023</Label>
+          <Label>
+            <SubLabel>Oct-23-2022 → </SubLabel>Jan-01-2023
+          </Label>
         </Row>
       )}
     </Container>
