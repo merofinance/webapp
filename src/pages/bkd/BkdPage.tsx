@@ -6,7 +6,7 @@ import BkdSummary from "./BkdSummary";
 import Overview from "../../components/Overview";
 import BoostChart from "./BoostChart";
 import StakeBkd from "./StakeBkd";
-import StatCard, { StatCardType } from "../../components/StatCard";
+import BasicCard from "../../components/BasicCard";
 
 const StyledBkdPage = styled.div`
   width: 100%;
@@ -79,15 +79,15 @@ const BkdPage = (): JSX.Element => {
         <Content>
           <BoostChart />
           <StatContainer>
-            <StatCard
-              header={t("bkd.statistics.stkbkd.header")}
+            <BasicCard
+              label={t("bkd.statistics.stkbkd.header")}
               value="312.34 stkBKD"
-              subHeader="= 1000 BKD"
+              subValue="= 1000 BKD"
             />
-            <StatCard
-              header={t("bkd.statistics.boost.header")}
+            <BasicCard
+              label={t("bkd.statistics.boost.header")}
               value="2.6x"
-              subHeader={t("bkd.statistics.boost.subHeader")}
+              subValue={t("bkd.statistics.boost.subHeader")}
             />
           </StatContainer>
         </Content>
