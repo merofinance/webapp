@@ -60,6 +60,7 @@ interface Props {
 
 const BkdCalculator = ({ amount, withdraw }: Props): JSX.Element => {
   const { t } = useTranslation();
+  const hasStaked = true; // TODO
 
   return (
     <Container>
@@ -68,18 +69,14 @@ const BkdCalculator = ({ amount, withdraw }: Props): JSX.Element => {
           {t("bkd.stake.calculator.earnings.label")}
           <BackdTooltip content={t("bkd.stake.calculator.earnings.tooltip")} />
         </Label>
-        <Label>
-          <SubLabel>$23.32 → </SubLabel>$32.23
-        </Label>
+        <Label>{hasStaked && <SubLabel>$23.32 → </SubLabel>}32.23</Label>
       </Row>
       <Row>
         <Label>
           {t("bkd.stake.calculator.boost.label")}
           <BackdTooltip content={t("bkd.stake.calculator.boost.tooltip")} />
         </Label>
-        <Label>
-          <SubLabel>2.6x →</SubLabel>2.4x
-        </Label>
+        <Label>{hasStaked && <SubLabel>2.6x →</SubLabel>}2.4x</Label>
       </Row>
       {!withdraw && (
         <Row>
@@ -87,9 +84,7 @@ const BkdCalculator = ({ amount, withdraw }: Props): JSX.Element => {
             {t("bkd.stake.calculator.full.label")}
             <BackdTooltip content={t("bkd.stake.calculator.full.tooltip")} />
           </Label>
-          <Label>
-            <SubLabel>Oct-23-2022 → </SubLabel>Jan-01-2023
-          </Label>
+          <Label>{hasStaked && <SubLabel>Oct-23-2022 → </SubLabel>}Jan-01-2023</Label>
         </Row>
       )}
     </Container>
