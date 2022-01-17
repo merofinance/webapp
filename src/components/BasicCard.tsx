@@ -7,6 +7,7 @@ interface BasicCardProps {
 }
 
 const StyledBasicCard = styled.div`
+  width: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -23,10 +24,8 @@ const StyledBasicCard = styled.div`
   background-origin: border-box;
   background-clip: padding-box, border-box;
 
-  max-width: 40.7rem;
   padding: 3.3rem 0;
   @media (max-width: 600px) {
-    width: 100%;
     max-width: 100%;
     padding: 2rem 0;
     margin: 0;
