@@ -91,7 +91,7 @@ const BkdCalculator = ({ amount, withdraw }: Props): JSX.Element => {
               : t("bkd.stake.calculator.full.label")}
             <BackdTooltip content={t("bkd.stake.calculator.full.tooltip")} />
           </Label>
-          <Label>{hasStaked && <SubLabel>Oct-23-2022 → </SubLabel>}Jan-01-2023</Label>
+          <Label>{hasStaked && !isMobile && <SubLabel>Oct-23-2022 → </SubLabel>}Jan-01-2023</Label>
         </Row>
       )}
     </Container>
