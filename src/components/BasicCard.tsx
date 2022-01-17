@@ -13,7 +13,6 @@ const StyledBasicCard = styled.div`
   align-items: center;
   background-color: #16122e;
   border-radius: 14px;
-  margin: 0 0.8rem;
 
   border: ${(props: BasicCardProps) => (props.primary ? "1px" : "0px")} solid transparent;
   background: linear-gradient(#16122e, #16122e),
