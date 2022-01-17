@@ -601,7 +601,10 @@
       "tab": "stake",
       "input": "Amount of BKD to stake",
       "calculator": {
-        "header": "Updated info",
+        "earnings": {
+          "label": "Estimated daily earnings",
+          "tooltip": "Estimated daily earnings based on your share of vwBKD and current daily platform revenue."
+        },
         "boost": {
           "label": "Boost",
           "tooltip": "todo"

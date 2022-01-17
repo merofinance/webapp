@@ -5,9 +5,10 @@ import { ScaledNumber } from "../../lib/scaled-number";
 
 const Container = styled.div`
   width: 100%;
-  background: rgba(37, 33, 64, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0px 0px 12px rgba(23, 18, 22, 0.05);
+  background: rgba(26, 23, 45, 1);
+  border: solid 1px rgba(44, 41, 63, 1);
+  box-shadow: 0px 0px 12px 0px rgba(23, 18, 22, 0.05);
+
   border-radius: 1.4rem;
   display: flex;
   flex-direction: column;
@@ -19,18 +20,11 @@ const Container = styled.div`
   }
 `;
 
-const Header = styled.div`
-  font-size: 2.3rem;
-  font-weight: 700;
-  margin-bottom: 1.7rem;
-  margin-top: 0.3rem;
-`;
-
 const Row = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin: 0.6rem 0;
+  margin: 0.5rem 0;
 `;
 
 const Label = styled.div`
@@ -38,11 +32,10 @@ const Label = styled.div`
   align-items: center;
   font-weight: 500;
   letter-spacing: 0.15px;
-  text-transform: capitalize;
 
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   @media (max-width: 600px) {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
 `;
 
@@ -56,7 +49,13 @@ const BkdCalculator = ({ amount, withdraw }: Props): JSX.Element => {
 
   return (
     <Container>
-      <Header>{t("bkd.stake.calculator.header")}</Header>
+      <Row>
+        <Label>
+          {t("bkd.stake.calculator.earnings.label")}
+          <BackdTooltip content={t("bkd.stake.calculator.earnings.tooltip")} />
+        </Label>
+        <Label>$23.32 → $32.23</Label>
+      </Row>
       <Row>
         <Label>
           {t("bkd.stake.calculator.boost.label")}
