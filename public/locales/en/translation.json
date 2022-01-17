@@ -616,8 +616,9 @@
         }
       },
       "confirmation": {
-        "header": "Confirm stake",
-        "description": "You are about to stake {{bkdAmount}} BKD. It will take {{monthsRemaining}} months to reach maximum boost (5x) but you will immediately begin earning platform fees and gain the ability to vote in the BKD inflation."
+        "header": "Confirm stake BKD",
+        "description": "You are about to stake {{ammount}} BKD. You will immediately begin earning platform fees, it will take 12 months to reach maximum boost (5x). Unstaking BKD takes two months, during this period you will continue to earn platform fees and can continue to vote.",
+        "notice": "NOTICE: It takes two months to unstake BKD"
       }
     },
     "unstake": {

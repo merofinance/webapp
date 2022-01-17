@@ -102,7 +102,11 @@ const StakeBkd = (): JSX.Element => {
                       <BkdCalculator amount={ScaledNumber.fromUnscaled(amount)} />
                     )}
                   </Content>
-                  <StakeConfirmation show={confirming} close={() => setConfirming(false)} />
+                  <StakeConfirmation
+                    show={confirming}
+                    close={() => setConfirming(false)}
+                    amount={ScaledNumber.fromUnscaled(amount)}
+                  />
                 </>
               ),
             },
@@ -136,7 +140,11 @@ const StakeBkd = (): JSX.Element => {
                     )}
                     <UnstakeQueue />
                   </Content>
-                  <StakeConfirmation show={confirming} close={() => setConfirming(false)} />
+                  <StakeConfirmation
+                    show={confirming}
+                    close={() => setConfirming(false)}
+                    amount={ScaledNumber.fromUnscaled(amount)}
+                  />
                 </>
               ),
             },
