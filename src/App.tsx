@@ -47,9 +47,9 @@ const App = (): JSX.Element => {
               </Route>
               <Route index element={<ActionsIndex />} />
             </Route>
-            {stakingLive && <Route path="claim" element={<ClaimPage />} />}
-            {stakingLive && <Route path="stake" element={<StakePage />} />}
-            {stakingLive && <Route path="bkd" element={<BkdPage />} />}
+            <Route path="claim" element={<ClaimPage />} />
+            <Route path="stake" element={<StakePage />} />
+            <Route path="bkd" element={<BkdPage />} />
             <Route path="litepaper" element={<LitepaperPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
