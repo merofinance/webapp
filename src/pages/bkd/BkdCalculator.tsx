@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import { useDevice } from "../../app/hooks/use-device";
 import BackdTooltip from "../../components/Tooltip";
 import { ScaledNumber } from "../../lib/scaled-number";
 
@@ -17,6 +18,7 @@ const Container = styled.div`
   margin-top: 3.5rem;
   @media (max-width: 600px) {
     margin-top: 1.8rem;
+    padding: 1.4rem 1.8rem;
   }
 `;
 
@@ -60,13 +62,16 @@ interface Props {
 
 const BkdCalculator = ({ amount, withdraw }: Props): JSX.Element => {
   const { t } = useTranslation();
+  const { isMobile } = useDevice();
   const hasStaked = true; // TODO
 
   return (
     <Container>
       <Row>
         <Label>
-          {t("bkd.stake.calculator.earnings.label")}
+          {isMobile
+            ? t("bkd.stake.calculator.earnings.labelMobile")
+            : t("bkd.stake.calculator.earnings.label")}
           <BackdTooltip content={t("bkd.stake.calculator.earnings.tooltip")} />
         </Label>
         <Label>{hasStaked && <SubLabel>$23.32 → </SubLabel>}32.23</Label>
@@ -81,7 +86,9 @@ const BkdCalculator = ({ amount, withdraw }: Props): JSX.Element => {
       {!withdraw && (
         <Row>
           <Label>
-            {t("bkd.stake.calculator.full.label")}
+            {isMobile
+              ? t("bkd.stake.calculator.full.labelMobile")
+              : t("bkd.stake.calculator.full.label")}
             <BackdTooltip content={t("bkd.stake.calculator.full.tooltip")} />
           </Label>
           <Label>{hasStaked && <SubLabel>Oct-23-2022 → </SubLabel>}Jan-01-2023</Label>
