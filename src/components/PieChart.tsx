@@ -26,21 +26,16 @@ ChartJS.register(
   ArcElement
 );
 
-interface ChartProps {
-  mini?: boolean;
-}
-
 const StyledPieChart = styled.div`
   position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  height: ${(props: ChartProps) => (props.mini ? "3rem" : "21.7rem")};
-  background-color: ${(props: ChartProps) => (props.mini ? "transparent" : "rgba(13, 8, 42, 1)")};
-  border-radius: ${(props: ChartProps) => (props.mini ? "0" : "14px")};
-  padding-left: ${(props: ChartProps) => (props.mini ? "0" : "1rem")};
+  height: 21.7rem;
+  background-color: rgba(13, 8, 42, 1);
+  border-radius: 14px;
+  padding-left: 1rem;
   width: 4rem;
   margin: auto;
 `;
@@ -48,10 +43,9 @@ const StyledPieChart = styled.div`
 interface Props {
   chartData: number[];
   chartLabels: string[];
-  mini?: boolean;
 }
 
-const PieChart = ({ mini, chartData, chartLabels }: Props): JSX.Element => {
+const PieChart = ({ chartData, chartLabels }: Props): JSX.Element => {
   const chart = useRef<ChartJS>(null);
   const [gradient, setGradient] = useState<CanvasGradient>();
   const [gradientDark, setGradientDark] = useState<CanvasGradient>();
@@ -85,7 +79,7 @@ const PieChart = ({ mini, chartData, chartLabels }: Props): JSX.Element => {
         display: false,
       },
       tooltip: {
-        enabled: !mini,
+        enabled: true,
       },
     },
   };
@@ -106,7 +100,7 @@ const PieChart = ({ mini, chartData, chartLabels }: Props): JSX.Element => {
   endDate.setDate(endDate.getDate() - 100 + 365);
 
   return (
-    <StyledPieChart mini={mini}>
+    <StyledPieChart>
       <Chart ref={chart} type="pie" data={data} options={options} />
     </StyledPieChart>
   );

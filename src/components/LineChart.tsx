@@ -25,24 +25,19 @@ ChartJS.register(
   Filler
 );
 
-interface ChartProps {
-  mini?: boolean;
-}
-
 const StyledLineChart = styled.div`
   position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgba(13, 8, 42, 1);
+  border-radius: 14px;
+  padding-left: 1rem;
 
-  height: ${(props: ChartProps) => (props.mini ? "3rem" : "21.7rem")};
-  background-color: ${(props: ChartProps) => (props.mini ? "transparent" : "rgba(13, 8, 42, 1)")};
-  border-radius: ${(props: ChartProps) => (props.mini ? "0" : "14px")};
-  padding-left: ${(props: ChartProps) => (props.mini ? "0" : "1rem")};
-
+  height: 21.7rem;
   @media (max-width: 1220px) {
-    height: ${(props: ChartProps) => (props.mini ? "3rem" : "16rem")};
+    height: 16rem;
   }
 `;
 
@@ -61,10 +56,9 @@ const ProgressIndicator = styled.div`
 interface Props {
   chartData: number[];
   chartLabels: string[];
-  mini?: boolean;
 }
 
-const LineChart = ({ mini, chartData, chartLabels }: Props): JSX.Element => {
+const LineChart = ({ chartData, chartLabels }: Props): JSX.Element => {
   const { isMobile } = useDevice();
   const chart = useRef<ChartJS>(null);
   const [gradient, setGradient] = useState<CanvasGradient>();
@@ -120,7 +114,7 @@ const LineChart = ({ mini, chartData, chartLabels }: Props): JSX.Element => {
         display: false,
       },
       tooltip: {
-        enabled: !mini,
+        enabled: true,
         intersect: false,
         backgroundColor: "white",
         titleColor: "black",
@@ -142,7 +136,7 @@ const LineChart = ({ mini, chartData, chartLabels }: Props): JSX.Element => {
     },
     elements: {
       point: {
-        radius: mini ? 2 : 10,
+        radius: 10,
         borderWidth: 0,
         hoverBorderWidth: 0,
         borderColor: "transparent",
@@ -151,10 +145,10 @@ const LineChart = ({ mini, chartData, chartLabels }: Props): JSX.Element => {
     },
     scales: {
       y: {
-        display: !mini,
+        display: true,
         beginAtZero: false,
         grid: {
-          display: !mini,
+          display: true,
           color: "rgba(22, 42, 85, 1)",
         },
         ticks: {
@@ -182,13 +176,13 @@ const LineChart = ({ mini, chartData, chartLabels }: Props): JSX.Element => {
         label: "Boost",
         data: chartData,
         backgroundColor: gradient,
-        radius: mini ? 0 : isMobile ? 2 : 3,
+        radius: isMobile ? 2 : 3,
         borderColor: gradient,
-        borderWidth: mini ? 2 : 0,
+        borderWidth: 0,
         tension: 0.3,
         fill: {
           target: "origin",
-          above: mini ? "transparent" : fill,
+          above: fill,
         },
       },
     ],
@@ -198,7 +192,7 @@ const LineChart = ({ mini, chartData, chartLabels }: Props): JSX.Element => {
   endDate.setDate(endDate.getDate() - 100 + 365);
 
   return (
-    <StyledLineChart mini={mini}>
+    <StyledLineChart>
       <Chart ref={chart} type="line" data={data} options={options} />
       <ProgressIndicator percent={stkBkd / 1000} />
     </StyledLineChart>

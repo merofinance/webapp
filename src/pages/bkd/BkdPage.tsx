@@ -80,17 +80,11 @@ const BkdPage = (): JSX.Element => {
           <BoostChart />
           <StatContainer>
             <StatCard
-              data={[1, 1, 2, 3, 5, 5, 3, 2, 1, 1]}
-              labels={[1, 1, 2, 3, 5, 5, 3, 2, 1, 1].map((v: number) => v.toString())}
-              type={StatCardType.HISTOGRAM}
               header={t("bkd.statistics.stkbkd.header")}
               value="312.34 stkBKD"
               subHeader="= 1000 BKD"
             />
             <StatCard
-              data={[70, 30]}
-              labels={["one", "two"]}
-              type={StatCardType.PIE}
               header={t("bkd.statistics.boost.header")}
               value="2.6x"
               subHeader={t("bkd.statistics.boost.subHeader")}

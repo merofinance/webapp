@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import LineChart from "./LineChart";
-import PieChart from "./PieChart";
 
 export enum StatCardType {
   HISTOGRAM = "histogram",
@@ -15,11 +13,6 @@ const StyledStatCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-
-const StatContainer = styled.div`
-  width: 20rem;
-  margin-bottom: 1.6rem;
 `;
 
 const Header = styled.div`
@@ -58,24 +51,14 @@ const SubHeader = styled.div`
 `;
 
 interface Props {
-  type: StatCardType;
-  data: number[];
-  labels: string[];
   header: string;
   value: string;
   subHeader: string;
 }
 
-const StatCard = ({ type, header, value, subHeader, data, labels }: Props): JSX.Element => {
+const StatCard = ({ header, value, subHeader }: Props): JSX.Element => {
   return (
     <StyledStatCard>
-      <StatContainer>
-        {type === StatCardType.HISTOGRAM ? (
-          <LineChart mini chartData={data} chartLabels={labels} />
-        ) : (
-          <PieChart mini chartData={data} chartLabels={labels} />
-        )}
-      </StatContainer>
       <Header>{header}</Header>
       <Value>{value}</Value>
       <SubHeader>{subHeader}</SubHeader>

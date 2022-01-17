@@ -12,7 +12,7 @@ interface Props {
   close: () => void;
 }
 
-const StakeConfirmation = ({ show, close }: Props) => {
+const StakeConfirmation = ({ show, close }: Props): JSX.Element => {
   const { t } = useTranslation();
 
   return (
