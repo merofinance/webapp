@@ -6,9 +6,6 @@ import { GradientLink } from "../styles/GradientText";
 
 const LinkContainer = styled.div`
   margin-top: 0.3rem;
-  @media (max-width: 1220px) {
-    margin-top: 0.4rem;
-  }
 `;
 
 const Link = styled(GradientLink)`
