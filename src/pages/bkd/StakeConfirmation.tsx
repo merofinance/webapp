@@ -43,7 +43,7 @@ const StakeConfirmation = ({ show, close, amount }: Props): JSX.Element => {
 
   return (
     <Popup
-      show
+      show={show}
       confirm
       close={close}
       header={t("bkd.stake.confirmation.header")}
