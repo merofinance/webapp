@@ -24,11 +24,6 @@ import { GradientLink } from "../styles/GradientText";
 const Container = styled.div`
   position: relative;
   margin-bottom: 2.4rem;
-
-  margin-left: 1.6rem;
-  @media (max-width: 1220px) {
-    margin-left: 0;
-  }
 `;
 
 interface LiveHelpProps {
@@ -49,8 +44,7 @@ const StyledLiveHelp = styled.div`
   padding: 2rem 1.8rem;
 
   max-height: ${(props: LiveHelpProps) =>
-    props.open ? `calc(25rem * ${props.suggestions})` : "5.4rem"};
-
+    props.open ? `calc(28rem * ${props.suggestions})` : "5.4rem"};
   // Background
   border: 1px solid transparent;
   background-origin: border-box;
