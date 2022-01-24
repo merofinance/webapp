@@ -84,7 +84,7 @@
           "earn": {
             "number": "02",
             "header": "Earn Yield",
-            "description": "Earn compounded yield from strategy profits and protocol fees as LP tokens appreciate over the underlying tokens."
+            "description": "Earn compounded yield from strategy profits and protocol fees."
           },
           "stake": {
             "number": "03",
@@ -109,12 +109,12 @@
           "register": {
             "number": "02",
             "header": "Register Loan on-Chain",
-            "description": "Register Compound or Aave v2 loans on-chain to receive collateral top-ups, and stake your pool LP tokens to earn Backd rewards."
+            "description": "Register Compound or Aave v2 loans on-chain to receive collateral top-ups."
           },
           "protect": {
             "number": "03",
             "header": "Protect & Earn",
-            "description": "Earn compounded yield and protocol fees as the LP token appreciates, while keepers monitor your loan and transfer your capital to avoid liquidation."
+            "description": "Earn compounded yield and protocol fees while keepers monitor your loan and transfer your capital to avoid liquidation."
           },
           "claim": {
             "number": "04",
