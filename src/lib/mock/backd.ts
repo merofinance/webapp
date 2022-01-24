@@ -18,6 +18,9 @@ import {
   PlainLoan,
   LendingProtocol,
   Optional,
+  PlainActionFees,
+  ActionFees,
+  toPlainActionFees,
 } from "../types";
 import { balances, makeContractTransaction, masterAccount, pools, positions, prices } from "./data";
 
@@ -113,6 +116,16 @@ export default class MockBackd implements Backd {
 
   getPositions(): Promise<PlainPosition[]> {
     return Promise.resolve(positions);
+  }
+
+  getActionFees(): Promise<PlainActionFees> {
+    const actionFees: ActionFees = {
+      total: ScaledNumber.fromUnscaled(0.03),
+      keeperFraction: ScaledNumber.fromUnscaled(0.01),
+      treasuryFraction: ScaledNumber.fromUnscaled(0.01),
+      lpFraction: ScaledNumber.fromUnscaled(0.01),
+    };
+    return Promise.resolve(toPlainActionFees(actionFees));
   }
 
   get topupActionAddress(): string {

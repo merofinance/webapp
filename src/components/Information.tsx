@@ -16,8 +16,8 @@ interface RowDetailType {
 interface InformationRowType {
   label: Optional<string>;
   tooltip: string;
-  value: Optional<string>;
   tooltipItems?: TooltipItemType[];
+  value: Optional<string>;
   details?: RowDetailType[];
 }
 
@@ -138,10 +138,10 @@ const DetailLabel = styled(GradientLink)`
   }
 `;
 
-type Props = {
+interface Props {
   header: string;
   rows: InformationRowType[];
-};
+}
 
 const Information = ({ header, rows }: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
