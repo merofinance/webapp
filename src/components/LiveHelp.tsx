@@ -15,6 +15,7 @@ import {
   selectSuggestions,
   SuggestionType,
   Suggestion,
+  addSuggestions,
 } from "../state/helpSlice";
 import Button from "./Button";
 import { selectPositions } from "../state/positionsSlice";
@@ -213,14 +214,18 @@ const LiveHelp = (): JSX.Element => {
 
   useEffect(() => {
     if (hasLowPositions) {
-      lowPositions.forEach((position: Position) =>
-        dispatch(
-          addSuggestion({
-            type: Suggestion.POSITION_LOW,
-            data: position.protocol.toLowerCase(),
-            text: t("liveHelp.suggestions.topupPositionLow.text", { protocol: position.protocol }),
-            button: t("liveHelp.suggestions.topupPositionLow.button"),
-            link: "https://docs.backd.fund/protocol-architecture/actions/top-ups",
+      dispatch(
+        addSuggestions(
+          lowPositions.map((position: Position) => {
+            return {
+              type: Suggestion.POSITION_LOW,
+              data: position.protocol.toLowerCase(),
+              text: t("liveHelp.suggestions.topupPositionLow.text", {
+                protocol: position.protocol,
+              }),
+              button: t("liveHelp.suggestions.topupPositionLow.button"),
+              link: "https://docs.backd.fund/protocol-architecture/actions/top-ups",
+            };
           })
         )
       );
