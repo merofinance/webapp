@@ -18,7 +18,6 @@ const StyledInfoCard = styled.div`
   overflow: hidden;
   transition: max-height 0.3s ease-out, background-color 0.3s;
   margin-bottom: 2.4rem;
-  width: 36rem;
 
   max-height: ${(props: StyleProps) =>
     !props.collapsible ? "auto" : props.open ? "24rem" : "5.4rem"};
