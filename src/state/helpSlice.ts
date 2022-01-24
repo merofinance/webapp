@@ -33,6 +33,16 @@ export const helpSlice = createSlice({
   name: "help",
   initialState,
   reducers: {
+    addSuggestions: (state, action: PayloadAction<SuggestionType[]>) => {
+      let newSuggestions = [...state.suggestions];
+      action.payload.forEach((sugg: SuggestionType) => {
+        newSuggestions = newSuggestions.filter(
+          (suggestion: SuggestionType) => suggestion.type !== sugg.type
+        );
+      });
+      state.suggestions = newSuggestions;
+      state.suggestions.push(...action.payload);
+    },
     addSuggestion: (state, action: PayloadAction<SuggestionType>) => {
       const newSuggestions = [...state.suggestions];
       state.suggestions = newSuggestions.filter(
