@@ -465,7 +465,7 @@
           "incomplete": "Select a pool",
           "deposit": {
             "header": "Enter an amount of {{asset}} to deposit",
-            "subHeader": "This {{asset}} can be transported over to protect your position in one or multiple lots. ",
+            "subHeader": "This {{asset}} can be used as backup collateral if triggered by user defined conditions.",
             "incomplete": "Deposit {{asset}} to continue"
           }
         },
