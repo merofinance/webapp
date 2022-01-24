@@ -84,7 +84,7 @@
           "earn": {
             "number": "02",
             "header": "Earn Yield",
-            "description": "Earn compounded yield from strategy profits and protocol fees as LP tokens appreciate over the underlying tokens."
+            "description": "Earn compounded yield from strategy profits and protocol fees."
           },
           "stake": {
             "number": "03",
@@ -109,12 +109,12 @@
           "register": {
             "number": "02",
             "header": "Register Loan on-Chain",
-            "description": "Register Compound or Aave v2 loans on-chain to receive collateral top-ups, and stake your pool LP tokens to earn Backd rewards."
+            "description": "Register Compound or Aave v2 loans on-chain to receive collateral top-ups."
           },
           "protect": {
             "number": "03",
             "header": "Protect & Earn",
-            "description": "Earn compounded yield and protocol fees as the LP token appreciates, while keepers monitor your loan and transfer your capital to avoid liquidation."
+            "description": "Earn compounded yield and protocol fees while keepers monitor your loan and transfer your capital to avoid liquidation."
           },
           "claim": {
             "number": "04",
@@ -181,8 +181,7 @@
       "links": {
         "litepaper": "Litepaper",
         "docs": "Docs",
-        "blog": "Blog",
-        "factSheet": "Fact Sheet"
+        "blog": "Blog"
       }
     },
     "updates": {
@@ -289,7 +288,7 @@
       "subHeader": "Begin earning yield immediately"
     },
     "header": "All pools",
-    "overview": "Backd’s single-asset pools aggregate yield across strategies. After depositing an asset, register an action to automate your liquidity to where it is needed most.",
+    "overview": "Backd’s single-asset pools aggregate yield across strategies. Add utility and autonomy to your liquidity with actions.",
     "deposit": "deposit",
     "information": {
       "header": "Pools information",
@@ -335,7 +334,6 @@
         "tooltip": "The current annual percent yield earned by pool LPs"
       },
       "lp": {
-        "header": "LP price",
         "tooltip": "The current exchange rate of {{lpToken}} to {{underlying}}. {{underlying}}={{lpToken}}*{{exchangeRate}}"
       },
       "strategy": {
@@ -467,7 +465,7 @@
           "incomplete": "Select a pool",
           "deposit": {
             "header": "Enter an amount of {{asset}} to deposit",
-            "subHeader": "This {{asset}} can be transported over to protect your position in one or multiple lots. ",
+            "subHeader": "This {{asset}} can be used as backup collateral if triggered by user defined conditions.",
             "incomplete": "Deposit {{asset}} to continue"
           }
         },

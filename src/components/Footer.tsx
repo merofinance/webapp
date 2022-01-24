@@ -60,11 +60,6 @@ const linkLists: LinkListType[] = [
         label: "footer.resources.links.blog",
         link: "https://backdfund.medium.com/",
       },
-      {
-        internal: false,
-        label: "footer.resources.links.factSheet",
-        link: "/fact-sheet.pdf",
-      },
     ],
   },
   {
