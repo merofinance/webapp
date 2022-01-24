@@ -109,6 +109,16 @@ const Option = styled.button`
   @media (max-width: 600px) {
     padding: 1.5rem 2rem;
   }
+
+  transform: scale(1);
+  /* opacity: 1; */
+  transition: all 0.4s;
+  box-shadow: 1px 1px 20px rgba(0, 0, 0, 0);
+  :hover {
+    transform: scale(1.015);
+    /* opacity: 0.8; */
+    box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.3);
+  }
 `;
 
 const Name = styled.div`
@@ -170,7 +180,7 @@ const WalletSelectPopup = ({ show, close, setWallet }: Props): JSX.Element => {
             <SubHeader>{t("walletConnect.newToEthereum")}</SubHeader>
             <Highlight
               id="wallet-select-link"
-              href="https://backd-1.gitbook.io/backd/resources/faq/general"
+              href="https://ethereum.org/en/wallets/"
               target="_blank"
               rel="noopener noreferrer"
             >
