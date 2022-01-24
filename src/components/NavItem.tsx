@@ -1,6 +1,7 @@
 import { Link, useMatch } from "react-router-dom";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import { useEffect } from "react";
 
 export type NavItemType = {
   label: string;
@@ -8,13 +9,15 @@ export type NavItemType = {
 };
 
 const StyledNavItem = styled.li`
-  margin: 0 4.1rem;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
 
+  width: 7rem;
+  margin: 0 3.1rem;
   @media (max-width: 600px) {
+    width: 5rem;
     margin: 0 1.7rem;
   }
 `;
@@ -28,9 +31,9 @@ const InternalLink = styled(Link)`
   font-size: 1.6rem;
   white-space: nowrap;
   letter-spacing: 0.15px;
+  font-weight: 500;
 
   opacity: ${(props: LinkProps) => (props.active ? "1" : "0.8")};
-  font-weight: ${(props: LinkProps) => (props.active ? "700" : "500")};
 
   transition: 0.3s opacity;
   :hover {
@@ -63,13 +66,18 @@ const ExternalLink = styled.a`
 
 interface Props {
   navItem: NavItemType;
+  setActive: (v: string) => void;
 }
 
-const NavItem = ({ navItem }: Props): JSX.Element => {
+const NavItem = ({ navItem, setActive }: Props): JSX.Element => {
   const { t } = useTranslation();
   const match = useMatch(`${navItem.link}/*`);
 
   const isExternal = navItem.link.substring(0, 4).toLowerCase() === "http";
+
+  useEffect(() => {
+    if (!!match && !isExternal) setActive(navItem.label);
+  }, [match]);
 
   return (
     <StyledNavItem>

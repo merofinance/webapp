@@ -21,6 +21,7 @@ type ButtonProps = {
   background?: string;
   width?: string;
   destructive?: boolean;
+  neutral?: boolean;
 };
 
 const StyledButton = styled.button`
@@ -76,6 +77,10 @@ const StyledButton = styled.button`
     if (props.complete) return "linear-gradient(#16C784, #16C784)";
     if (props.primary)
       return "linear-gradient(to right, var(--primary-gradient) 0%, var(--secondary-gradient) 50%, var(--primary-gradient) 100%)";
+    if (props.neutral)
+      return `linear-gradient(${props.background ? props.background : "var(--bg)"}, ${
+        props.background ? props.background : "var(--bg)"
+      }), linear-gradient(var(--sub), var(--sub))`;
     return `linear-gradient(${props.background ? props.background : "var(--bg)"}, ${
       props.background ? props.background : "var(--bg)"
     }), linear-gradient(to right, var(--primary-gradient) 0%, var(--secondary-gradient) 50%, var(--primary-gradient) 100%)`;
@@ -139,6 +144,7 @@ const Text = styled.div`
 
   color: ${(props: ButtonProps) => {
     if (props.disabled) return "rgba(0, 0, 0, 0.43)";
+    if (props.neutral) return "var(--sub)";
     return "var(--main)";
   }};
   text-transform: ${(props: ButtonProps) => {
@@ -170,20 +176,24 @@ const Text = styled.div`
   }};
   background: ${(props: ButtonProps) => {
     if (props.primary) return "none";
+    if (props.neutral) return "none";
     return "linear-gradient(to right, var(--primary-gradient) 0%, var(--secondary-gradient) 50%, var(--primary-gradient) 100%)";
   }};
   background-size: 200% auto;
   transition: background-position 0.5s;
   background-clip: ${(props: ButtonProps) => {
     if (props.primary) return "none";
+    if (props.neutral) return "none";
     return "text";
   }};
   -webkit-background-clip: ${(props: ButtonProps) => {
     if (props.primary) return "none";
+    if (props.neutral) return "none";
     return "text";
   }};
   -webkit-text-fill-color: ${(props: ButtonProps) => {
     if (props.primary) return "none";
+    if (props.neutral) return "none";
     return "transparent";
   }};
 
@@ -249,6 +259,7 @@ type Props = {
   hoverText?: string;
   width?: string;
   destructive?: boolean;
+  neutral?: boolean;
   id?: string;
 };
 
@@ -278,6 +289,7 @@ const Button = (props: Props): JSX.Element => {
       background={props.background}
       width={props.width}
       destructive={props.destructive}
+      neutral={props.neutral}
       onClick={() => {
         if (props.loading || pending || props.disabled || !props.click) return;
         if (props.loading !== undefined) setPending(true);
@@ -296,6 +308,7 @@ const Button = (props: Props): JSX.Element => {
           square={props.square}
           uppercase={props.uppercase}
           disabled={props.disabled}
+          neutral={props.neutral}
         >
           {props.text}
         </Text>

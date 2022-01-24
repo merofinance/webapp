@@ -36,7 +36,7 @@ const StyledPoolPage = styled.div`
 `;
 
 const ContentContainer = styled.div`
-  width: 100%;
+  flex: 1;
 `;
 
 const Content = styled.div`
@@ -49,11 +49,16 @@ const InfoCards = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 36rem;
+  margin-left: 1.6rem;
+
+  @media (max-width: 1220px) {
+    margin-left: 0;
+  }
 `;
 
 const ButtonContainer = styled.div`
   width: 100%;
-  padding-left: 2rem;
   @media (max-width: 1220px) {
     display: none;
   }

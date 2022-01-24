@@ -37,15 +37,18 @@ interface InfoCardsProps {
 const InfoCards = styled.div`
   display: flex;
   flex-direction: column;
+  width: 36rem;
+  margin-left: 1.6rem;
 
   @media (max-width: 1220px) {
+    margin-left: 0;
     display: ${(props: InfoCardsProps) => (props.hideMobile ? "none" : "flex")};
+    width: 100%;
   }
 `;
 
 const ProposeContainer = styled.div`
   width: 100%;
-  padding-left: 1.6rem;
   display: flex;
   justify-content: center;
 

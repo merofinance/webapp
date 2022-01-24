@@ -20,6 +20,7 @@ const handleError: CaseReducer<ErrorState, any> = (
 ): ErrorState => {
   Sentry.captureException(action.error);
   if (!action.error.message) throw Error("Missing error message when handing error");
+  if (IGNORED_ERRORS.includes(action.error.message)) return state;
   return { message: action.error.message };
 };
 

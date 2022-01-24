@@ -9,7 +9,7 @@ import { Optional } from "../../lib/types";
 
 const pools: string[] = ["meow", "woof"];
 
-const StyledPoolsPage = styled.div`
+const StyledStakePage = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -62,7 +62,7 @@ const StakePage = (): JSX.Element => {
   const isOpen = (index: number): boolean => activePool !== null && activePool === index;
 
   return (
-    <StyledPoolsPage>
+    <StyledStakePage>
       <Seo title={t("metadata.stake.title")} description={t("metadata.stake.description")} />
       <StakeSummary />
       <Headers>
@@ -83,7 +83,7 @@ const StakePage = (): JSX.Element => {
           }}
         />
       ))}
-    </StyledPoolsPage>
+    </StyledStakePage>
   );
 };
 

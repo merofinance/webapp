@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import AccordionChevron from "./AccordionChevron";
-import { useDevice } from "../app/hooks/use-device";
 
 interface StyleProps {
   collapsible?: boolean;
@@ -9,6 +8,7 @@ interface StyleProps {
 }
 
 const StyledInfoCard = styled.div`
+  width: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -23,11 +23,8 @@ const StyledInfoCard = styled.div`
   max-height: ${(props: StyleProps) =>
     !props.collapsible ? "auto" : props.open ? "24rem" : "5.4rem"};
 
-  margin-left: 1.6rem;
   padding: 2rem 1.8rem;
   @media (max-width: 1220px) {
-    margin-left: 0;
-    width: 100%;
     padding: 1.6rem;
     max-height: ${(props: StyleProps) => (props.open ? "19rem" : "4.8rem")};
   }
@@ -105,12 +102,11 @@ interface Props {
 }
 
 const InfoCard = ({ header, content, collapsible, defaultOpen, id }: Props): JSX.Element => {
-  const { isMobile } = useDevice();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    setOpen(defaultOpen || !isMobile);
-  }, [!isMobile]);
+    setOpen(!!defaultOpen);
+  }, []);
 
   return (
     <StyledInfoCard id={id} open={open} collapsible={collapsible}>

@@ -108,6 +108,7 @@ interface Props {
   contract: string;
   stepsOnTop?: boolean;
   hoverText?: string;
+  oneButton?: boolean;
 }
 
 const ApproveThenAction = ({
@@ -120,6 +121,7 @@ const ApproveThenAction = ({
   contract,
   stepsOnTop,
   hoverText,
+  oneButton,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -147,15 +149,15 @@ const ApproveThenAction = ({
 
   return (
     <Container stepsOnTop={stepsOnTop}>
-      <Buttons stepsOnTop={stepsOnTop} showApprove={!approved || persistApprove}>
-        {(!approved || persistApprove) && (
+      <Buttons stepsOnTop={stepsOnTop} showApprove={(!approved || persistApprove) && !oneButton}>
+        {(!approved || persistApprove) && !oneButton && (
           <Button
             id="approve-button"
             primary
             medium
             wide
             text={t("amountInput.approve", { asset: token.symbol })}
-            click={() => executeApprove()}
+            click={executeApprove}
             complete={approved}
             loading={approveLoading}
             disabled={disabled}
@@ -167,14 +169,20 @@ const ApproveThenAction = ({
           primary
           medium
           wide
-          text={label}
-          click={action}
-          disabled={!approved || disabled}
-          loading={loading}
-          hoverText={disabled ? hoverText : t("amountInput.approve", { asset: token.symbol })}
+          text={
+            oneButton
+              ? !approved
+                ? `1/2 ${t("amountInput.approve", { asset: token.symbol })}`
+                : `2/2 ${label}`
+              : label
+          }
+          click={!approved && oneButton ? executeApprove : action}
+          disabled={(!approved && !oneButton) || disabled}
+          loading={(approveLoading && oneButton) || loading}
+          hoverText={hoverText}
         />
       </Buttons>
-      {(!approved || persistApprove) && (
+      {(!approved || persistApprove) && !oneButton && (
         <ProgressContainer>
           <ProgressSection>
             <Line complete={approved} disabled={disabled} />

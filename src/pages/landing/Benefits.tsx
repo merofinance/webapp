@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import percent from "../../assets/benefits/percent.svg";
 import plus from "../../assets/benefits/plus.svg";
+import zap from "../../assets/benefits/zap.svg";
 import shield from "../../assets/benefits/shield.svg";
 import { GradientLink } from "../../styles/GradientText";
 import { Header5, Header6 } from "../../styles/Headers";
@@ -17,10 +18,10 @@ interface BenfitsType {
 
 const benefits: BenfitsType[] = [
   {
-    icon: shield,
+    icon: zap,
     header: "benefits.reactiveLiquidity.header",
     description: "benefits.reactiveLiquidity.description",
-    url: "https://docs.backd.fund/protocol-architecture/top-ups",
+    url: "https://docs.backd.fund/protocol-architecture/actions",
   },
   {
     icon: plus,
@@ -32,7 +33,13 @@ const benefits: BenfitsType[] = [
     icon: percent,
     header: "benefits.feeShare.header",
     description: "benefits.feeShare.description",
-    url: "https://docs.backd.fund/protocol-architecture/top-ups/backd-keepers",
+    url: "https://docs.backd.fund/protocol-architecture/tokenomics",
+  },
+  {
+    icon: shield,
+    header: "benefits.keepers.header",
+    description: "benefits.keepers.description",
+    url: "https://docs.backd.fund/protocol-architecture/backd-keepers",
   },
 ];
 
@@ -40,7 +47,7 @@ const StyledBenefits = styled.div`
   width: 100%;
   margin: var(--section-margin);
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: flex-start;
 
   @media (max-width: 600px) {
@@ -55,10 +62,12 @@ const Benefit = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 3.9rem;
+  max-width: 30rem;
+  margin: 0 3rem;
 
   @media (max-width: 600px) {
     margin: 2.9rem 0;
+    max-width: none;
   }
 
   @media (min-width: 601px) and (max-width: 1224px) {
@@ -102,7 +111,6 @@ const IconGlass = styled.div`
   border-radius: 13px;
   overflow: hidden;
   transition: transform 0.1s ease-out;
-
   backdrop-filter: blur(5px);
 
   @media (max-width: 600px) {
@@ -154,7 +162,7 @@ const Benefits = (): JSX.Element => {
             <Icon src={benefit.icon} alt="benefit icon" />
           </IconContainer>
           <IconGlass
-            right={index % 2 === 0}
+            right={index !== 1}
             top={index === 2}
             style={{
               transform: `translateY(${-(windowPosition - 380) / (window.innerHeight / 50)}px)`,
