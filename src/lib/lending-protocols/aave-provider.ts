@@ -1,6 +1,6 @@
 import { providers, Signer } from "ethers";
 
-import { Address, LendingProtocol, LendingProtocolProvider, PlainLoan } from "../types";
+import { Address, LendingProtocol, LendingProtocolProvider, Optional, PlainLoan } from "../types";
 import { LendingPoolFactory } from "../contracts/aave/LendingPool";
 import { ScaledNumber } from "../scaled-number";
 
@@ -8,7 +8,7 @@ export class AaveProvider implements LendingProtocolProvider {
   async getPosition(
     address: Address,
     provider: Signer | providers.Provider
-  ): Promise<PlainLoan | null> {
+  ): Promise<Optional<PlainLoan>> {
     const account = address;
     const lendingPoolContract = LendingPoolFactory.connect(provider);
     const userAccountData = await lendingPoolContract.getUserAccountData(account);

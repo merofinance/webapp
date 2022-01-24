@@ -13,6 +13,8 @@ import PoolsInformation from "./PoolsInformation";
 import PoolsStatistics from "./PoolsStatistics";
 import Overview from "../../components/Overview";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
+import LiveHelp from "../../components/LiveHelp";
+import Loader from "../../components/Loader";
 
 const StyledPoolsPage = styled.div`
   width: 100%;
@@ -21,6 +23,10 @@ const StyledPoolsPage = styled.div`
   @media (max-width: 1220px) {
     flex-direction: column-reverse;
   }
+`;
+
+const ContentContainer = styled.div`
+  flex: 1;
 `;
 
 const Table = styled.table`
@@ -95,29 +101,37 @@ const PoolsPage = (): JSX.Element => {
   return (
     <StyledPoolsPage>
       <Seo title={t("metadata.pools.title")} description={t("metadata.pools.description")} />
-      <ContentSection
-        header={t("pools.header")}
-        statistics={<PoolsStatistics />}
-        content={
-          <Table>
-            <thead>
-              <HeaderRow>
-                <Header>{t("headers.asset")}</Header>
-                <Header>{t("headers.apy")}</Header>
-                <Header>{t("headers.tvl")}</Header>
-                <Header hideOnMobile>{t("headers.deposits")}</Header>
-                <ChevronHeader />
-              </HeaderRow>
-            </thead>
-            {pools.map((pool: Pool) => (
-              <PoolsRow key={pool.address} pool={pool} />
-            ))}
-          </Table>
-        }
-      />
+      <ContentContainer>
+        <ContentSection
+          header={t("pools.header")}
+          statistics={<PoolsStatistics />}
+          content={
+            <Table>
+              <thead>
+                <HeaderRow>
+                  <Header>{t("headers.asset")}</Header>
+                  <Header>{t("headers.apy")}</Header>
+                  <Header>{t("headers.tvl")}</Header>
+                  <Header hideOnMobile>{t("headers.deposits")}</Header>
+                  <ChevronHeader />
+                </HeaderRow>
+              </thead>
+              {!pools && (
+                <>
+                  <Loader row />
+                  <Loader row />
+                  <Loader row />
+                </>
+              )}
+              {pools && pools.map((pool: Pool) => <PoolsRow key={pool.address} pool={pool} />)}
+            </Table>
+          }
+        />
+      </ContentContainer>
       <InfoCards>
         <Overview description={t("pools.overview")} link="https://docs.backd.fund/" />
         <PoolsInformation />
+        <LiveHelp />
       </InfoCards>
     </StyledPoolsPage>
   );

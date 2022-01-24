@@ -1,8 +1,10 @@
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { ScaledNumber } from "../lib/scaled-number";
+import { Optional } from "../lib/types";
 import AmountSlider from "./AmountSlider";
 import Input from "./Input";
+import Loader from "./Loader";
 
 const StyledAmountInput = styled.div`
   width: 100%;
@@ -19,6 +21,8 @@ const Available = styled.div`
   letter-spacing: 0.15px;
   margin-bottom: 1rem;
   padding-right: 0.5rem;
+  display: flex;
+  justify-content: flex-end;
 
   @media only percy {
     opacity: 0;
@@ -29,10 +33,10 @@ interface Props {
   value: string;
   setValue: (v: string) => void;
   label: string;
-  max: ScaledNumber;
+  max: Optional<ScaledNumber>;
+  noSlider?: boolean;
   error: string;
   symbol: string;
-  noSlider?: boolean;
 }
 
 const AmountInput = ({
@@ -49,7 +53,11 @@ const AmountInput = ({
   return (
     <StyledAmountInput>
       <Available id="available-amount">
-        {`${t("amountInput.available", { amount: max.toCryptoString() })} ${symbol.toUpperCase()}`}
+        {max ? (
+          `${t("amountInput.available", { amount: max.toCryptoString() })} ${symbol.toUpperCase()}`
+        ) : (
+          <Loader />
+        )}
       </Available>
       <Input
         id="amount-input"
@@ -60,10 +68,14 @@ const AmountInput = ({
         onChange={(v: string) => setValue(v)}
         background="#100830"
         buttonText={t("amountInput.max")}
-        buttonAction={() => setValue(max.toString())}
+        buttonAction={() => {
+          if (max) setValue(max.toString());
+        }}
         errorMessage={error}
       />
-      {!noSlider && <AmountSlider value={value} max={max} setValue={setValue} />}
+      {!noSlider && (
+        <AmountSlider value={value} max={max || new ScaledNumber()} setValue={setValue} />
+      )}
     </StyledAmountInput>
   );
 };

@@ -12,7 +12,7 @@ import fromEntries from "fromentries";
 import { UnsupportedNetwork } from "../app/errors";
 import { getPrices as getPricesFromCoingecko } from "./coingecko";
 import { getPrices as getPricesFromBinance } from "./binance";
-import { ETH_DECIMALS, ETH_DUMMY_ADDRESS, GWEI_SCALE, INFINITE_APPROVE_AMMOUNT } from "./constants";
+import { ETH_DECIMALS, ETH_DUMMY_ADDRESS, INFINITE_APPROVE_AMMOUNT } from "./constants";
 import { bigNumberToFloat, scale } from "./numeric";
 import { ScaledNumber } from "./scaled-number";
 import {
@@ -28,6 +28,7 @@ import {
   PlainWithdrawalFees,
   PlainLoan,
   LendingProtocol,
+  Optional,
 } from "./types";
 import { lendingProviders } from "./lending-protocols";
 
@@ -39,7 +40,7 @@ export interface Backd {
   currentAccount(): Promise<Address>;
   listPools(): Promise<Pool[]>;
   getPoolInfo(address: Address): Promise<Pool>;
-  getLoanPosition(protocol: LendingProtocol, address?: Address): Promise<PlainLoan | null>;
+  getLoanPosition(protocol: LendingProtocol, address?: Address): Promise<Optional<PlainLoan>>;
   getPositions(): Promise<PlainPosition[]>;
   registerPosition(pool: Pool, position: Position): Promise<ContractTransaction>;
   removePosition(
@@ -194,7 +195,7 @@ export class Web3Backd implements Backd {
     );
   }
 
-  async getLoanPosition(protocol: LendingProtocol, address: Address): Promise<PlainLoan | null> {
+  async getLoanPosition(protocol: LendingProtocol, address: Address): Promise<Optional<PlainLoan>> {
     return lendingProviders[protocol].getPosition(address, this._provider);
   }
 

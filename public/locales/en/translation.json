@@ -363,9 +363,9 @@
         "header": "Allocated to Actions",
         "tooltip": "The current value of your assets that are allocated to Actions. Assets allocated to Actions still earn yield"
       },
-      "rewards": {
-        "header": "Rewards accrued",
-        "tooltip": "The current value of earned rewards that have yet to be claimed"
+      "tvl": {
+        "header": "Pool TVL",
+        "tooltip": "The market capitalization of assets held in the pool (total value locked)"
       }
     },
     "tabs": {
@@ -434,7 +434,8 @@
     },
     "suggestions": {
       "topup": {
-        "header": "We have found a protectable loan!",
+        "header": "I have found a protectable loan!",
+        "headerMobile": "I found a protectable loan!",
         "subHeader": "The wallet you have connected has a loan that you can create a Top-up Position for.",
         "labels": {
           "protocol": "Protocol",
@@ -532,8 +533,7 @@
           "tooltip": "The maximum gas price used when paying for each top-up. Value is in Gwei units. If value is too low, then your top-up may not execute in time which could result in liquidation. A value of at least 200 Gwei is recommended.",
           "hover": "Enter max gas price",
           "required": "Max gas price required",
-          "positive": "Must be positive number",
-          "exceedsMax": "Not enough to cover gas cost of top-up"
+          "positive": "Must be positive number"
         }
       }
     },
@@ -667,6 +667,32 @@
     "transactionType": "Transaction type not supported",
     "unsupportedNetwork": "Network not supported",
     "tryTestnet": "Backd is not yet live on mainnet. You can test it now on Kovan by switching networks."
+  },
+  "liveHelp": {
+    "buttons": {
+      "ignore": "Ignore"
+    },
+    "header": "Live Help",
+    "disclaimer": "Note: this is not financial advice.",
+    "readMore": "Read more in <0>our docs</0>.",
+    "suggestions": {
+      "thresholdLow": {
+        "text": "I noticed you have entered a threshold top-up of {{threshold}}. This is very close to liquidation and in times of market volatility I suggest at least {{recommendedThreshold}} or more.",
+        "button": "Increase threshold"
+      },
+      "thresholdHigh": {
+        "text": "This will trigger immediately because the health factor you have entered exceeds the current health factor of the loan. I suggest you decrease the Health Factor of the top-up to {{recommendedThreshold}}.",
+        "button": "Decrease threshold"
+      },
+      "singleLow": {
+        "text": "Your estimated max gas cost per top-up is {{maxGas}} ({{ethAmount}} ETH), however the amount per top-up is only {{single}} ({{underlyingAmount}} {{underlyingSymbol}}). I recommend increasing the single top-up to {{suggestion}} {{underlyingSymbol}} for more efficient top-ups.",
+        "button": "Increase top-up"
+      },
+      "topupPositionLow": {
+        "text": "I’ve noticed your {{protocol}} top-up Action is running low on funds. I suggest you delete that top-up Action and register a new one as soon as possible.",
+        "button": "Delete action"
+      }
+    }
   },
   "metadata": {
     "landing": {

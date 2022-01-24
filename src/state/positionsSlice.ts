@@ -2,13 +2,25 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 import { Pool } from "../lib";
 import { Backd } from "../lib/backd";
-import { fromPlainPosition, Position, PlainPosition, toPlainPosition } from "../lib/types";
+import {
+  fromPlainPosition,
+  Position,
+  PlainPosition,
+  toPlainPosition,
+  Optional,
+} from "../lib/types";
 import { handleTransactionConfirmation } from "../lib/transactionsUtils";
 import { fetchAllowances, fetchBalances } from "./userSlice";
 
-type PositionsState = PlainPosition[];
+interface PositionsState {
+  positions: PlainPosition[];
+  loaded: boolean;
+}
 
-const initialState: PositionsState = [];
+const initialState: PositionsState = {
+  positions: [],
+  loaded: false,
+};
 
 export const fetchPositions = createAsyncThunk("positions/fetch", ({ backd }: { backd: Backd }) =>
   backd.getPositions()
@@ -20,7 +32,8 @@ export const positionsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchPositions.fulfilled, (state, action) => {
-      return action.payload;
+      state.positions = action.payload;
+      state.loaded = true;
     });
   },
 });
@@ -64,14 +77,20 @@ export const removePosition = createAsyncThunk(
   }
 );
 
-export const selectPositions = (state: RootState): Position[] =>
-  state.positions.map((position: PlainPosition) => fromPlainPosition(position));
+export const selectPositions = (state: RootState): Optional<Position[]> =>
+  state.positions.loaded
+    ? state.positions.positions.map((position: PlainPosition) => fromPlainPosition(position))
+    : null;
 
-export function selectPoolPositions(pool: Pool): (state: RootState) => Position[] {
+export function selectPoolPositions(
+  pool: Optional<Pool>
+): (state: RootState) => Optional<Position[]> {
   return (state: RootState) =>
-    state.positions
-      .filter((p) => p.actionToken === pool.underlying.address)
-      .map((position: PlainPosition) => fromPlainPosition(position));
+    pool && state.positions.loaded
+      ? state.positions.positions
+          .filter((p) => p.actionToken === pool.underlying.address)
+          .map((position: PlainPosition) => fromPlainPosition(position))
+      : null;
 }
 
 export default positionsSlice.reducer;

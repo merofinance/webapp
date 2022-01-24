@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { FormikFormType, FormType } from "./TopupConditions";
+import { FormikFormType, FormType } from "./TopupConditionsForm";
 import Tooltip from "../../../../components/Tooltip";
 
 const StyledRegisterTopupInput = styled.div`
@@ -64,7 +64,7 @@ const InputBorder = styled.div`
 
 const Input = styled.input`
   width: 100%;
-  background-color: #252140;
+  background-color: var(--bg-light);
   height: 100%;
   padding: 0 1rem;
   display: flex;
@@ -115,9 +115,18 @@ interface Props {
   name: keyof FormType;
   formik: FormikFormType;
   placeholder: string;
+  onBlur?: () => void;
 }
 
-const TopupInput = ({ label, tooltip, type, name, formik, placeholder }: Props): JSX.Element => {
+const TopupInput = ({
+  label,
+  tooltip,
+  type,
+  name,
+  formik,
+  placeholder,
+  onBlur,
+}: Props): JSX.Element => {
   const { t } = useTranslation();
   const valid = !formik.touched[name] || !formik.errors[name];
 
@@ -137,7 +146,10 @@ const TopupInput = ({ label, tooltip, type, name, formik, placeholder }: Props):
             value={formik.values[name]}
             placeholder={placeholder}
             onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
+            onBlur={(e) => {
+              if (onBlur) onBlur();
+              formik.handleBlur(e);
+            }}
           />
         </InputBorder>
         {!valid && (

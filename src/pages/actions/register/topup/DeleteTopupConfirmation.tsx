@@ -76,8 +76,8 @@ const DeleteTopupConfirmation = ({ show, close, position, pool, complete }: Prop
           <Button
             id="delete-topup-confirmation-cancel"
             medium
+            background="var(--bg-light)"
             neutral
-            background="#252140"
             text={t("actions.topup.delete.cancel")}
             click={() => close()}
           />

@@ -109,7 +109,7 @@ const ConnectionDetails = ({ show, close, changeWallet, wallet }: Props): JSX.El
             <Button
               tiny
               text={t("walletConnect.details.change")}
-              background="#252140"
+              background="var(--bg-light)"
               click={changeWallet}
             />
           </WalletContainer>

@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 
 import InfoCard from "../../components/InfoCard";
 import { selectPositions } from "../../state/positionsSlice";
-import { Position } from "../../lib/types";
+import { Optional, Position } from "../../lib/types";
 import ExistingAction from "./ExistingAction";
 
 const Content = styled.div`
@@ -40,14 +40,14 @@ const Header = styled.div`
   flex: ${(props: HeaderProps) => props.flex};
 `;
 
-const ExistingActions = (): JSX.Element => {
+const ExistingActions = (): Optional<JSX.Element> => {
   const { t } = useTranslation();
   const positions = useSelector(selectPositions);
   const location = useLocation();
 
-  const hasPosition = positions.length > 0;
+  const hasPosition = positions && positions.length > 0;
 
-  if (location.pathname === "/actions") return <div />;
+  if (location.pathname === "/actions") return null;
 
   return (
     <InfoCard
@@ -67,9 +67,10 @@ const ExistingActions = (): JSX.Element => {
                 <Header flex={3}>{t("actions.registered.columns.lockedShort")}</Header>
                 <Header flex={2} />
               </Headers>
-              {positions.map((position: Position) => (
-                <ExistingAction key={position.depositToken} position={position} />
-              ))}
+              {positions &&
+                positions.map((position: Position) => (
+                  <ExistingAction key={position.depositToken} position={position} />
+                ))}
             </>
           )}
         </Content>

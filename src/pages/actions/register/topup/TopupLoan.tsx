@@ -11,7 +11,7 @@ import RowSelector from "../../../../components/RowSelector";
 import { selectEthPrice } from "../../../../state/poolsListSlice";
 import { selectLoans } from "../../../../state/lendingSlice";
 import LoanSearch from "./LoanSearch";
-import { Loan, Position } from "../../../../lib/types";
+import { Loan, Optional, Position } from "../../../../lib/types";
 import { useDevice } from "../../../../app/hooks/use-device";
 import { selectPositions } from "../../../../state/positionsSlice";
 import { RowOptionType } from "../../../../components/RowOption";
@@ -69,9 +69,10 @@ const TopupLoan = (): JSX.Element => {
   const positions = useSelector(selectPositions);
   const ethPrice = useSelector(selectEthPrice);
   const [protocol, setProtocol] = useState("");
-  const [address, setAddress] = useState<string | null | undefined>("");
+  const [address, setAddress] = useState<Optional<string> | undefined>("");
 
   const positionExists = (loan: Loan) =>
+    positions &&
     positions.some(
       (position: Position) => position.protocol === loan.protocol && position.account === account
     );
@@ -97,11 +98,11 @@ const TopupLoan = (): JSX.Element => {
           },
           {
             label: t("actions.suggestions.topup.labels.totalCollateral"),
-            value: loan.totalCollateralETH.toCompactUsdValue(ethPrice),
+            value: ethPrice ? loan.totalCollateralETH.toCompactUsdValue(ethPrice) : null,
           },
           {
             label: t("actions.suggestions.topup.labels.totalLoan"),
-            value: loan.totalDebtETH.toCompactUsdValue(ethPrice),
+            value: ethPrice ? loan.totalDebtETH.toCompactUsdValue(ethPrice) : null,
           },
         ],
       };

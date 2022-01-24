@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useWeb3React } from "@web3-react/core";
 import { useNavigate } from "react-router-dom";
 
+import Loader from "../../../../components/Loader";
 import { selectEthPrice } from "../../../../state/poolsListSlice";
 import Button from "../../../../components/Button";
 import { Loan } from "../../../../lib/types";
@@ -15,7 +16,6 @@ const StyledProtectableLoan = styled.div`
   justify-content: space-between;
   align-items: center;
   background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 1.4rem;
   padding: 1.3rem 1.4rem;
   margin-top: 1rem;
@@ -77,8 +77,6 @@ const ProtectableLoan = ({ loan }: Props): JSX.Element => {
   const navigate = useNavigate();
   const ethPrice = useSelector(selectEthPrice);
 
-  if (!loan) return <div />;
-
   return (
     <StyledProtectableLoan id={`${loan.protocol.toLowerCase()}-protectable-loan`}>
       <Column>
@@ -91,11 +89,15 @@ const ProtectableLoan = ({ loan }: Props): JSX.Element => {
       </Column>
       <Column hideMobile>
         <Header>{t("actions.suggestions.topup.labels.totalCollateral")}</Header>
-        <Value hideOnSnapshot>{loan.totalCollateralETH.toUsdValue(ethPrice)}</Value>
+        <Value hideOnSnapshot>
+          {ethPrice ? loan.totalCollateralETH.toUsdValue(ethPrice) : <Loader />}
+        </Value>
       </Column>
       <Column hideMobile>
         <Header>{t("actions.suggestions.topup.labels.totalLoan")}</Header>
-        <Value hideOnSnapshot>{loan.totalDebtETH.toUsdValue(ethPrice)}</Value>
+        <Value hideOnSnapshot>
+          {ethPrice ? loan.totalDebtETH.toUsdValue(ethPrice) : <Loader />}
+        </Value>
       </Column>
       <Column>
         <Button

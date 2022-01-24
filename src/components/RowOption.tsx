@@ -1,10 +1,11 @@
 import styled from "styled-components";
+import { Optional } from "../lib/types";
 
-import Button from "./Button";
+import Loader from "./Loader";
 
 interface ColumnType {
   label: string;
-  value: string | JSX.Element;
+  value: Optional<string | JSX.Element>;
 }
 
 export interface RowOptionType {
@@ -135,6 +136,12 @@ interface Props {
 }
 
 const RowOption = ({ active, select, option }: Props): JSX.Element => {
+  const getColumnValue = (value: Optional<string | JSX.Element>): JSX.Element => {
+    if (typeof value === "string") return <Value>{value}</Value>;
+    if (value) return value;
+    return <Loader />;
+  };
+
   return (
     <Container>
       <StyledRowOption
@@ -148,7 +155,7 @@ const RowOption = ({ active, select, option }: Props): JSX.Element => {
         {option.columns.map((column: ColumnType) => (
           <Column key={column.label}>
             {column.label && <Header>{column.label}</Header>}
-            {typeof column.value === "string" ? <Value>{column.value}</Value> : column.value}
+            {getColumnValue(column.value)}
           </Column>
         ))}
       </StyledRowOption>
