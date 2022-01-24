@@ -7,7 +7,7 @@ import { Position, Pool } from "../../lib/types";
 import { selectPools } from "../../state/poolsListSlice";
 import chevron from "../../assets/ui/chevron.svg";
 import { selectPrice } from "../../state/selectors";
-import { selectImplement, Suggestion } from "../../state/helpSlice";
+import { selectActiveSuggestion, SuggestionType } from "../../state/helpSlice";
 import Loader from "../../components/Loader";
 import TopupAction from "./register/topup/TopupAction";
 
@@ -103,7 +103,7 @@ interface Props {
 const RegisteredAction = ({ position }: Props): JSX.Element => {
   const { t } = useTranslation();
   const pools = useSelector(selectPools);
-  const implement = useSelector(selectImplement);
+  const implement = useSelector(selectActiveSuggestion);
   const pool = pools
     ? pools.filter((pool: Pool) => pool.lpToken.address === position.depositToken)[0]
     : null;
@@ -113,7 +113,7 @@ const RegisteredAction = ({ position }: Props): JSX.Element => {
   useEffect(() => {
     if (
       implement &&
-      implement.type === Suggestion.POSITION_LOW &&
+      implement.type === SuggestionType.POSITION_LOW &&
       implement.data === position.protocol.toLowerCase()
     )
       setOpen(true);

@@ -53,9 +53,7 @@ export function selectLocked(): Selector<RootState, Optional<ScaledNumber>> {
 
     let total = new ScaledNumber();
     for (let i = 0; i < positions.length; i++) {
-      const pool = pools.filter(
-        (pool: Pool) => pool.underlying.address === positions[i].actionToken
-      )[0];
+      const pool = pools.find((pool: Pool) => pool.underlying.address === positions[i].actionToken);
       if (!pool) return null;
       const price = prices[pool.underlying.symbol];
       if (!price) return null;

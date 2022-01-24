@@ -24,8 +24,8 @@ import {
 import {
   addSuggestion,
   removeSuggestion,
-  selectImplement,
-  Suggestion,
+  selectActiveSuggestion,
+  SuggestionType,
 } from "../../../../state/helpSlice";
 import { Loan, Optional, Position } from "../../../../lib/types";
 import { selectLoans } from "../../../../state/lendingSlice";
@@ -120,7 +120,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
   const underlyingPrice = useSelector(selectPrice(pool));
   const ethPrice = useSelector(selectEthPrice);
   const balance = useSelector(selectPoolBalance(pool));
-  const implement = useSelector(selectImplement);
+  const implement = useSelector(selectActiveSuggestion);
   const [loading, setLoading] = useState(false);
   const [confirming, setConfirming] = useState(false);
   const loans = useSelector(selectLoans(address));
@@ -128,21 +128,21 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
 
   useEffect(() => {
     if (implement) {
-      if (implement.type === Suggestion.THRESHOLD_LOW) {
+      if (implement.type === SuggestionType.THRESHOLD_LOW) {
         formik.setFieldValue("threshold", RECOMMENDED_THRESHOLD, true);
-        dispatch(removeSuggestion(Suggestion.THRESHOLD_LOW));
-      } else if (implement.type === Suggestion.THRESHOLD_HIGH) {
+        dispatch(removeSuggestion(SuggestionType.THRESHOLD_LOW));
+      } else if (implement.type === SuggestionType.THRESHOLD_HIGH) {
         formik.setFieldValue("threshold", suggestedMaximumTreshold(), true);
-        dispatch(removeSuggestion(Suggestion.THRESHOLD_HIGH));
-      } else if (implement.type === Suggestion.SINGLE_LOW) {
+        dispatch(removeSuggestion(SuggestionType.THRESHOLD_HIGH));
+      } else if (implement.type === SuggestionType.SINGLE_LOW) {
         formik.setFieldValue("singleTopUp", suggestedSingleTopup(), true);
-        dispatch(removeSuggestion(Suggestion.SINGLE_LOW));
+        dispatch(removeSuggestion(SuggestionType.SINGLE_LOW));
       }
     }
     return () => {
-      dispatch(removeSuggestion(Suggestion.THRESHOLD_LOW));
-      dispatch(removeSuggestion(Suggestion.THRESHOLD_HIGH));
-      dispatch(removeSuggestion(Suggestion.SINGLE_LOW));
+      dispatch(removeSuggestion(SuggestionType.THRESHOLD_LOW));
+      dispatch(removeSuggestion(SuggestionType.THRESHOLD_HIGH));
+      dispatch(removeSuggestion(SuggestionType.SINGLE_LOW));
     };
   }, [implement]);
 
@@ -245,7 +245,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
       if (singleTopupUsd.mul(0.25).lte(gasCostUsd)) {
         dispatch(
           addSuggestion({
-            type: Suggestion.SINGLE_LOW,
+            type: SuggestionType.SINGLE_LOW,
             text: t("liveHelp.suggestions.singleLow.text", {
               maxGas: gasCost.toUsdValue(ethPrice),
               ethAmount: gasCost,
@@ -261,7 +261,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
         return;
       }
     }
-    dispatch(removeSuggestion(Suggestion.SINGLE_LOW));
+    dispatch(removeSuggestion(SuggestionType.SINGLE_LOW));
   };
 
   return (
@@ -287,7 +287,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
             ) {
               dispatch(
                 addSuggestion({
-                  type: Suggestion.THRESHOLD_LOW,
+                  type: SuggestionType.THRESHOLD_LOW,
                   text: t("liveHelp.suggestions.thresholdLow.text", {
                     threshold: formik.values.threshold,
                     recommendedThreshold: RECOMMENDED_THRESHOLD,
@@ -297,7 +297,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
                 })
               );
             } else {
-              dispatch(removeSuggestion(Suggestion.THRESHOLD_LOW));
+              dispatch(removeSuggestion(SuggestionType.THRESHOLD_LOW));
             }
             if (
               formik.values.threshold &&
@@ -307,7 +307,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
             ) {
               dispatch(
                 addSuggestion({
-                  type: Suggestion.THRESHOLD_HIGH,
+                  type: SuggestionType.THRESHOLD_HIGH,
                   text: t("liveHelp.suggestions.thresholdHigh.text", {
                     threshold: formik.values.threshold,
                     recommendedThreshold: suggestedMaximumTreshold(),
@@ -317,7 +317,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
                 })
               );
             } else {
-              dispatch(removeSuggestion(Suggestion.THRESHOLD_HIGH));
+              dispatch(removeSuggestion(SuggestionType.THRESHOLD_HIGH));
             }
           }}
         />

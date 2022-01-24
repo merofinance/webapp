@@ -7,14 +7,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 import AccordionChevron from "./AccordionChevron";
 import logo from "../assets/logo/logo.svg";
 import {
-  addSuggestion,
   ignoreSuggestion,
   implementSuggestion,
   removeSuggestion,
-  selectImplement,
+  selectActiveSuggestion,
   selectSuggestions,
-  SuggestionType,
   Suggestion,
+  SuggestionType,
   addSuggestions,
 } from "../state/helpSlice";
 import Button from "./Button";
@@ -199,7 +198,7 @@ const LiveHelp = (): Optional<JSX.Element> => {
   const navigate = useNavigate();
   const location = useLocation();
   const suggestions = useSelector(selectSuggestions);
-  const implement = useSelector(selectImplement);
+  const implement = useSelector(selectActiveSuggestion);
   const positions = useSelector(selectPositions);
   const [open, setOpen] = useState(false);
   const hasSuggestions = suggestions.length > 0;
@@ -214,14 +213,14 @@ const LiveHelp = (): Optional<JSX.Element> => {
 
   useEffect(() => {
     if (!hasLowPositions) {
-      dispatch(removeSuggestion(Suggestion.POSITION_LOW));
+      dispatch(removeSuggestion(SuggestionType.POSITION_LOW));
       return;
     }
     dispatch(
       addSuggestions(
         lowPositions.map((position: Position) => {
           return {
-            type: Suggestion.POSITION_LOW,
+            type: SuggestionType.POSITION_LOW,
             data: position.protocol.toLowerCase(),
             text: t("liveHelp.suggestions.topupPositionLow.text", {
               protocol: position.protocol,
@@ -237,7 +236,7 @@ const LiveHelp = (): Optional<JSX.Element> => {
   useEffect(() => {
     if (
       implement &&
-      implement.type === Suggestion.POSITION_LOW &&
+      implement.type === SuggestionType.POSITION_LOW &&
       location.pathname !== "/actions"
     ) {
       navigate("/actions");
@@ -254,7 +253,7 @@ const LiveHelp = (): Optional<JSX.Element> => {
         </ChevronContainer>
         <Header onClick={() => setOpen(!open)}>{t("liveHelp.header")}</Header>
         <Content>
-          {suggestions.map((suggestion: SuggestionType) => (
+          {suggestions.map((suggestion: Suggestion) => (
             <StyledSuggestion key={suggestion.type}>
               <SuggestionText>
                 {suggestion.text}{" "}
