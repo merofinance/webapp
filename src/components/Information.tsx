@@ -14,7 +14,7 @@ interface RowDetailType {
 }
 
 interface InformationRowType {
-  label: string;
+  label: Optional<string>;
   tooltip: string;
   value: Optional<string>;
   tooltipItems?: TooltipItemType[];
@@ -155,7 +155,7 @@ const Information = ({ header, rows }: Props): JSX.Element => {
             <InformationRow key={row.label}>
               <InformationHeader isAccordion={!!row.details} onClick={() => setOpen(!open)}>
                 <LabelContainer>
-                  <Label>{row.label}</Label>
+                  <Label>{row.label || <Loader />}</Label>
                   <Tooltip content={row.tooltip} items={row.tooltipItems} />
                 </LabelContainer>
                 <ValueContainer>
