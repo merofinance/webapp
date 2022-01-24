@@ -45,8 +45,12 @@ const ButtonContainer = styled.div`
 const StakeBkd = (): JSX.Element => {
   const { t } = useTranslation();
   const [amount, setAmount] = useState("");
-  const STAKING_CONTRACT = useSelector(selectPools)[0];
-  const BKD = useSelector(selectPools)[0].underlying;
+  const pools = useSelector(selectPools);
+
+  if (!pools) return <div />; // TODO Remove
+
+  const STAKING_CONTRACT = pools[0];
+  const BKD = pools[0].underlying;
   const BKD_BALANCE = ScaledNumber.fromUnscaled(245.123456);
   const LOADING = false;
 
