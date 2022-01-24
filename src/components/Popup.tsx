@@ -155,6 +155,7 @@ const Popup = ({
             <Button
               id={`${id}-popup-cancel`}
               medium
+              neutral
               background="#252140"
               text={isMobile ? t("components.back") : t("components.cancel")}
               click={close}
