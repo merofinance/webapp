@@ -19,7 +19,7 @@ import {
 } from "../state/helpSlice";
 import Button from "./Button";
 import { selectPositions } from "../state/positionsSlice";
-import { Position } from "../lib/types";
+import { Optional, Position } from "../lib/types";
 import { GradientLink } from "../styles/GradientText";
 
 const Container = styled.div`
@@ -193,7 +193,7 @@ const BackdHelper = styled.img`
   margin-right: 1rem;
 `;
 
-const LiveHelp = (): JSX.Element => {
+const LiveHelp = (): Optional<JSX.Element> => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -213,25 +213,25 @@ const LiveHelp = (): JSX.Element => {
   }, [hasSuggestions]);
 
   useEffect(() => {
-    if (hasLowPositions) {
-      dispatch(
-        addSuggestions(
-          lowPositions.map((position: Position) => {
-            return {
-              type: Suggestion.POSITION_LOW,
-              data: position.protocol.toLowerCase(),
-              text: t("liveHelp.suggestions.topupPositionLow.text", {
-                protocol: position.protocol,
-              }),
-              button: t("liveHelp.suggestions.topupPositionLow.button"),
-              link: "https://docs.backd.fund/protocol-architecture/actions/top-ups",
-            };
-          })
-        )
-      );
+    if (!hasLowPositions) {
+      dispatch(removeSuggestion(Suggestion.POSITION_LOW));
       return;
     }
-    dispatch(removeSuggestion(Suggestion.POSITION_LOW));
+    dispatch(
+      addSuggestions(
+        lowPositions.map((position: Position) => {
+          return {
+            type: Suggestion.POSITION_LOW,
+            data: position.protocol.toLowerCase(),
+            text: t("liveHelp.suggestions.topupPositionLow.text", {
+              protocol: position.protocol,
+            }),
+            button: t("liveHelp.suggestions.topupPositionLow.button"),
+            link: "https://docs.backd.fund/protocol-architecture/actions/top-ups",
+          };
+        })
+      )
+    );
   }, [hasLowPositions]);
 
   useEffect(() => {
@@ -244,7 +244,7 @@ const LiveHelp = (): JSX.Element => {
     }
   }, [implement, location]);
 
-  if (!hasSuggestions) return <div />;
+  if (!hasSuggestions) return null;
 
   return (
     <Container id="live-help">

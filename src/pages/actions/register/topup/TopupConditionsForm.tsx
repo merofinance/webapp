@@ -27,7 +27,7 @@ import {
   selectImplement,
   Suggestion,
 } from "../../../../state/helpSlice";
-import { Loan, Position } from "../../../../lib/types";
+import { Loan, Optional, Position } from "../../../../lib/types";
 import { selectLoans } from "../../../../state/lendingSlice";
 import TopupInput from "./TopupInput";
 import TopupConfirmation from "./TopupConfirmation";
@@ -109,7 +109,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const TopupConditionsForm = (): JSX.Element => {
+const TopupConditionsForm = (): Optional<JSX.Element> => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const backd = useBackd();
@@ -169,14 +169,14 @@ const TopupConditionsForm = (): JSX.Element => {
 
   if (!pool || !protocol || !address) {
     navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`);
-    return <div />;
+    return null;
   }
   if (!ethers.utils.isAddress(address)) {
     navigate(TOPUP_ACTION_ROUTE);
-    return <div />;
+    return null;
   }
 
-  if (!backd) return <div />;
+  if (!backd) return null;
 
   const buttonHoverText = () => {
     if (!formik.values.threshold) return t("actions.topup.fields.threshold.hover");

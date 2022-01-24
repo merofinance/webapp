@@ -20,6 +20,7 @@ import Tabs from "../../components/Tabs";
 import PoolStatistics from "./PoolStatistics";
 import ContentSection from "../../components/ContentSection";
 import LiveHelp from "../../components/LiveHelp";
+import { Optional } from "../../lib/types";
 
 const StyledPoolPage = styled.div`
   position: relative;
@@ -64,7 +65,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const PoolPage = (): JSX.Element => {
+const PoolPage = (): Optional<JSX.Element> => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { poolName } = useParams<"poolName">();
@@ -82,7 +83,7 @@ const PoolPage = (): JSX.Element => {
 
   if (!pool && poolsLoaded) {
     navigate("/");
-    return <div />;
+    return null;
   }
 
   return (
