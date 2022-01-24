@@ -80,7 +80,7 @@ const Value = styled.div`
   }
 `;
 
-const ChevronData = styled.td`
+const ChevronData = styled.div`
   width: 2.4rem;
 
   @media (max-width: 600px) {
@@ -117,6 +117,9 @@ const RegisteredAction = ({ position }: Props): JSX.Element => {
       implement.data === position.protocol.toLowerCase()
     )
       setOpen(true);
+    return () => {
+      setOpen(false);
+    };
   }, [implement]);
 
   return (

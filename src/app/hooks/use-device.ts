@@ -21,7 +21,12 @@ export const useDevice = (): useDeviceType => {
   useEffect(() => {
     refresh();
     window.addEventListener("resize", refresh);
-    return () => window.removeEventListener("resize", refresh);
+    return () => {
+      window.removeEventListener("resize", refresh);
+      setMobile(false);
+      setDesktop(true);
+      setWidth(0);
+    };
   }, []);
 
   return { isMobile, isDesktop, width };

@@ -269,6 +269,9 @@ const Button = (props: Props): JSX.Element => {
 
   useEffect(() => {
     if (error || props.loading) setPending(false);
+    return () => {
+      setPending(false);
+    };
   }, [error, props.loading]);
 
   return (

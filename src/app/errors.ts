@@ -12,7 +12,7 @@ export interface ErrorState {
 
 export class BackdError extends CustomError {
   get title(): string {
-    return "An Error Occured";
+    return "errors.header";
   }
 
   get hideContact(): boolean {
