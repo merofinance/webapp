@@ -38,7 +38,7 @@ const PoolInformation = ({ pool }: Props): JSX.Element => {
           value: formatPercent(pool.apy),
         },
         {
-          label: t("pool.information.lp.header"),
+          label: `${pool.lpToken.symbol}/${pool.underlying.symbol}`,
           tooltip: t("pool.information.lp.tooltip", {
             lpToken: pool.lpToken.symbol,
             underlying: pool.underlying.symbol,

@@ -334,7 +334,6 @@
         "tooltip": "The current annual percent yield earned by pool LPs"
       },
       "lp": {
-        "header": "LP price",
         "tooltip": "The current exchange rate of {{lpToken}} to {{underlying}}. {{underlying}}={{lpToken}}*{{exchangeRate}}"
       },
       "strategy": {
