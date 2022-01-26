@@ -57,9 +57,9 @@ const Content = styled.div`
   }
 `;
 
-type Props = {
+interface Props {
   token: Token;
-};
+}
 
 const StakeTokens = ({ token }: Props): JSX.Element => {
   const { t } = useTranslation();

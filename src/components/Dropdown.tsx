@@ -49,11 +49,11 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-type Props = {
+interface Props {
   formik: FormikFormType;
   name: keyof FormType;
   options: string[];
-};
+}
 
 const Dropdown = ({ formik, name, options }: Props): JSX.Element => {
   const { t } = useTranslation();

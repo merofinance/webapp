@@ -7,11 +7,11 @@ import discord from "../../assets/socials/discord.svg";
 import twitter from "../../assets/socials/twitter.svg";
 import github from "../../assets/socials/github.svg";
 
-type SocialType = {
+interface SocialType {
   label: string;
   icon: string;
   link: string;
-};
+}
 
 const socials: SocialType[] = [
   {

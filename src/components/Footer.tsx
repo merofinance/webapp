@@ -5,16 +5,16 @@ import { useTranslation } from "react-i18next";
 import logo from "../assets/logo/full-logo.svg";
 import LanguageSelector from "./LanguageSelector";
 
-type LinkType = {
+interface LinkType {
   internal: boolean;
   label: string;
   link: string;
-};
+}
 
-type LinkListType = {
+interface LinkListType {
   header: string;
   links: LinkType[];
-};
+}
 
 const linkLists: LinkListType[] = [
   {

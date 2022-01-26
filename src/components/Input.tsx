@@ -8,12 +8,12 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-type InputProps = {
+interface InputProps {
   focused?: boolean;
   hover?: boolean;
   background?: string;
   valid?: boolean;
-};
+}
 
 const InputContainer = styled.div`
   position: relative;
@@ -121,7 +121,7 @@ const Note = styled.div`
   color: ${(props: InputProps) => (props.valid ? "var(--main)" : "var(--error)")};
 `;
 
-type Props = {
+interface Props {
   label: string;
   value: string;
   valid: boolean;
@@ -133,7 +133,7 @@ type Props = {
   errorMessage: string;
   note?: string;
   id?: string;
-};
+}
 
 const Input = (props: Props): JSX.Element => {
   const [focused, setFocused] = useState(false);

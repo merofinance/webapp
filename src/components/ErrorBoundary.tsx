@@ -4,9 +4,9 @@ import * as Sentry from "@sentry/browser";
 import { AppDispatch } from "../app/store";
 import { setError } from "../state/errorSlice";
 
-type ErrorBoundaryProps = {
+interface ErrorBoundaryProps {
   dispatch: AppDispatch;
-};
+}
 
 export class ErrorBoundary extends Component<ErrorBoundaryProps, any> {
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {

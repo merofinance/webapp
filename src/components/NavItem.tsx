@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 
-export type NavItemType = {
+export interface NavItemType {
   label: string;
   link: string;
-};
+}
 
 const StyledNavItem = styled.li`
   display: flex;

@@ -12,13 +12,13 @@ import metamask from "../assets/wallets/metamask.svg";
 import walletConnect from "../assets/wallets/wallet-connect.svg";
 import Popup from "./Popup";
 
-type WalletOption = {
+interface WalletOption {
   name: string;
   icon: string;
   leftColor: string;
   rightColor: string;
   connector: AbstractConnector;
-};
+}
 
 const walletOptions: WalletOption[] = [
   {
@@ -86,10 +86,10 @@ const Highlight = styled.a`
   }
 `;
 
-type OptionProps = {
+interface OptionProps {
   leftColor: string;
   rightColor: string;
-};
+}
 
 const Option = styled.button`
   width: 100%;
@@ -145,11 +145,11 @@ const Icon = styled.img`
   max-width: 100%;
 `;
 
-type Props = {
+interface Props {
   show: boolean;
   close: (connected: boolean) => void;
   setWallet: (wallet: string) => void;
-};
+}
 
 const WalletSelectPopup = ({ show, close, setWallet }: Props): JSX.Element => {
   const { activate } = useWeb3React();
