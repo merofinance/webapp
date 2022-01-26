@@ -119,6 +119,7 @@ interface Props {
   confirmationText?: string;
   centerHeader?: boolean;
   id?: string;
+  descructive?: boolean;
 }
 
 const Popup = ({
@@ -133,6 +134,7 @@ const Popup = ({
   confirmationText,
   centerHeader,
   id,
+  descructive,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
   const { isMobile } = useDevice();
@@ -169,6 +171,7 @@ const Popup = ({
             <Button
               id={`${id}-popup-button`}
               primary
+              destructive={descructive}
               medium
               click={() => {
                 if (submit) submit();
