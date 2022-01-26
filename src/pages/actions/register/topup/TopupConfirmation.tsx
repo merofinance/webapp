@@ -47,7 +47,6 @@ const TopupConfirmation = ({ show, close, position, pool, complete }: Props): JS
       show={show}
       close={close}
       header={t("actions.topup.stages.confirmation.header")}
-      confirm
       submit={() => executeRegister()}
       loading={loading}
     >

@@ -60,7 +60,6 @@ const DeleteTopupConfirmation = ({ show, close, position, pool, complete }: Prop
         protocol: position.protocol,
       })}
       loading={loading}
-      confirm
       submit={handleRemovePosition}
       confirmationText={t("actions.topup.delete.header")}
     />

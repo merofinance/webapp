@@ -77,7 +77,6 @@ const WithdrawalConfirmation = ({
   return (
     <Popup
       id="withdrawal-confirmation"
-      confirm
       header={t("pool.tabs.withdraw.confirmation.header")}
       body={t("pool.tabs.withdraw.confirmation.subHeader", {
         amount: value.toCryptoString(),

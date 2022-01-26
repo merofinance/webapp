@@ -107,7 +107,6 @@ interface Props {
   header?: string;
   body?: string;
   children?: ReactNode;
-  confirm?: boolean;
   submit?: () => void;
   loading?: boolean;
   small?: boolean;
@@ -122,7 +121,6 @@ const Popup = ({
   header,
   body,
   children,
-  confirm,
   submit,
   loading,
   small,
@@ -151,7 +149,7 @@ const Popup = ({
         )}
         {body && <Body id={`${id}-popup-body`}>{body}</Body>}
         {children && children}
-        {confirm && submit && (
+        {submit && (
           <ButtonContainer>
             <Button
               id={`${id}-popup-cancel`}
