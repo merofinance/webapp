@@ -97,35 +97,35 @@ const WithdrawalConfirmation = ({
             {isMobile
               ? t("pool.tabs.withdraw.confirmation.details.amount.labelMobile")
               : t("pool.tabs.withdraw.confirmation.details.amount.label")}
-            <BackdTooltip
-              content={t("pool.tabs.withdraw.confirmation.details.amount.tooltip", {
+            <BackdTooltip>
+              {t("pool.tabs.withdraw.confirmation.details.amount.tooltip", {
                 asset,
               })}
-            />
+            </BackdTooltip>
           </Label>
           <Label hideOnSnapshot>{`${value.toCryptoString()} ${asset}`}</Label>
         </Row>
         <Row>
           <Label>
             {t("pool.tabs.withdraw.confirmation.details.fee.label")}
-            <BackdTooltip
-              content={t("pool.information.withdrawalFees.tooltip", {
+            <BackdTooltip>
+              {t("pool.information.withdrawalFees.tooltip", {
                 max: maxWithdrawalFee,
                 min: minWithdrawalFee,
                 days,
               })}
-            />
+            </BackdTooltip>
           </Label>
           <Label hideOnSnapshot>{`${feePercent}${isMobile ? "" : ` (${fee} ${asset})`}`}</Label>
         </Row>
         <Row>
           <Label>
             {t("pool.tabs.withdraw.confirmation.details.receive.label")}
-            <BackdTooltip
-              content={t("pool.tabs.withdraw.confirmation.details.receive.tooltip", {
+            <BackdTooltip>
+              {t("pool.tabs.withdraw.confirmation.details.receive.tooltip", {
                 asset,
               })}
-            />
+            </BackdTooltip>
           </Label>
           <Label hideOnSnapshot>{`${withdrawnAmount.toCryptoString()} ${asset}`}</Label>
         </Row>

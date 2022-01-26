@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import styled from "styled-components";
 import { makeStyles, Tooltip } from "@material-ui/core";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
@@ -55,12 +55,12 @@ const tooltipStyles = makeStyles(() => ({
 }));
 
 interface Props {
-  content: string;
+  children: ReactNode;
   items?: TooltipItemType[];
   info?: boolean;
 }
 
-const BackdTooltip = ({ content, items, info }: Props): JSX.Element => {
+const BackdTooltip = ({ children, items, info }: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
   const { isMobile } = useDevice();
 
@@ -79,7 +79,7 @@ const BackdTooltip = ({ content, items, info }: Props): JSX.Element => {
           arrow
           title={
             <>
-              {content}
+              {children}
               {items && (
                 <Items>
                   {items.map((item: TooltipItemType) => (
@@ -106,7 +106,7 @@ const BackdTooltip = ({ content, items, info }: Props): JSX.Element => {
           <div>
             <Tooltip
               arrow
-              title={content}
+              title={<>{children}</>}
               classes={tooltipStyles()}
               onClose={handleTooltipClose}
               open={open}

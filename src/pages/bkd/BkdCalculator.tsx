@@ -72,14 +72,14 @@ const BkdCalculator = ({ amount, withdraw }: Props): JSX.Element => {
           {isMobile
             ? t("bkd.stake.calculator.earnings.labelMobile")
             : t("bkd.stake.calculator.earnings.label")}
-          <BackdTooltip content={t("bkd.stake.calculator.earnings.tooltip")} />
+          <BackdTooltip>{t("bkd.stake.calculator.earnings.tooltip")}</BackdTooltip>
         </Label>
         <Label>{hasStaked && <SubLabel>$23.32 → </SubLabel>}32.23</Label>
       </Row>
       <Row>
         <Label>
           {t("bkd.stake.calculator.boost.label")}
-          <BackdTooltip content={t("bkd.stake.calculator.boost.tooltip")} />
+          <BackdTooltip>{t("bkd.stake.calculator.boost.tooltip")}</BackdTooltip>
         </Label>
         <Label>{hasStaked && <SubLabel>2.6x →</SubLabel>}2.4x</Label>
       </Row>
@@ -89,7 +89,7 @@ const BkdCalculator = ({ amount, withdraw }: Props): JSX.Element => {
             {isMobile
               ? t("bkd.stake.calculator.full.labelMobile")
               : t("bkd.stake.calculator.full.label")}
-            <BackdTooltip content={t("bkd.stake.calculator.full.tooltip")} />
+            <BackdTooltip>{t("bkd.stake.calculator.full.tooltip")}</BackdTooltip>
           </Label>
           <Label>{hasStaked && !isMobile && <SubLabel>Oct-23-2022 → </SubLabel>}Jan-01-2023</Label>
         </Row>
