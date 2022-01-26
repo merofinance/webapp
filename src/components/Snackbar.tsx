@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 import exit from "../assets/ui/snackbar-exit.svg";
+import { Optional } from "../lib/types";
 
 const StyledSnackbar = styled.div`
   width: 100%;
@@ -72,7 +73,7 @@ interface Props {
   link?: LinkProps;
 }
 
-const Snackbar = ({ show, close, text, link }: Props) => {
+const Snackbar = ({ show, close, text, link }: Props): Optional<JSX.Element> => {
   const { t } = useTranslation();
 
   if (!show) return null;

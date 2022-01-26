@@ -3,7 +3,7 @@ import { SHIELDED } from "../lib/constants";
 import { dismissBetaSnackbar, selectBetaSnackbarDismissed } from "../state/uiSlice";
 import Snackbar from "./Snackbar";
 
-const BetaSnackbar = () => {
+const BetaSnackbar = (): JSX.Element => {
   const dispatch = useDispatch();
   const dismissed = useSelector(selectBetaSnackbarDismissed);
 
