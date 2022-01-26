@@ -53,6 +53,10 @@ const Address = styled(GradientText)`
   font-weight: 500;
   line-height: 2.8rem;
   letter-spacing: 0.15px;
+
+  @media only percy {
+    opacity: 0;
+  }
 `;
 
 const NetworkContainer = styled.div`
