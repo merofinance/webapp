@@ -13,9 +13,9 @@ const StyledSnackbar = styled.div`
   display: flex;
   justify-content: space-between;
 
-  margin-bottom: 5rem;
+  margin-bottom: 2.6rem;
   @media (max-width: 600px) {
-    margin-bottom: 2.5rem;
+    margin-bottom: 2.4rem;
   }
 `;
 
