@@ -50,7 +50,7 @@ interface Props {
   rows: InfoBlockRow[];
 }
 
-const InfoBlock = ({ rows }: Props) => {
+const InfoBlock = ({ rows }: Props): JSX.Element => {
   return (
     <StyledInfoBlock>
       {rows.map((row: InfoBlockRow) => (
