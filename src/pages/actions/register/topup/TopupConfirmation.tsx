@@ -50,8 +50,9 @@ const TopupConfirmation = ({ show, close, position, pool, complete }: Props): JS
       confirm
       submit={() => executeRegister()}
       loading={loading}
-      content={<TopupInformation position={position} pool={pool} />}
-    />
+    >
+      <TopupInformation position={position} pool={pool} />
+    </Popup>
   );
 };
 

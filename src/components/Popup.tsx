@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import closeIcon from "../assets/ui/close.svg";
 import { useDevice } from "../app/hooks/use-device";
 import Button from "./Button";
+import { ReactNode } from "react";
 
 interface StyledPopupProps {
   show: boolean;
@@ -105,7 +106,7 @@ interface Props {
   close: () => void;
   header?: string;
   body?: string;
-  content?: JSX.Element;
+  children?: ReactNode;
   confirm?: boolean;
   submit?: () => void;
   loading?: boolean;
@@ -120,7 +121,7 @@ const Popup = ({
   close,
   header,
   body,
-  content,
+  children,
   confirm,
   submit,
   loading,
@@ -149,7 +150,7 @@ const Popup = ({
           </Header>
         )}
         {body && <Body id={`${id}-popup-body`}>{body}</Body>}
-        {content && content}
+        {children && children}
         {confirm && submit && (
           <ButtonContainer>
             <Button

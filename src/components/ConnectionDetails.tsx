@@ -104,35 +104,34 @@ const ConnectionDetails = ({ show, close, changeWallet, wallet }: Props): JSX.El
       show={show}
       close={close}
       header={t("walletConnect.details.header")}
-      content={
-        <Content>
-          <WalletContainer>
-            <Wallet id="account-details-wallet">
-              {t("walletConnect.details.connected", { wallet: t(wallet) })}
-            </Wallet>
-            <Button tiny background="var(--bg-light)" click={changeWallet}>
-              {t("walletConnect.details.change")}
-            </Button>
-          </WalletContainer>
-          <AddressContainer
-            href={getEtherscanAddressLink(chainId, account || "")}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Address id="account-details-address">{shortenAddress(account || "", 24)}</Address>
-            <LaunchIcon
-              fontSize="medium"
-              style={{ fill: "var(--secondary)", transform: "translateY(0px)" }}
-            />
-          </AddressContainer>
-          <NetworkContainer>
-            <PulsingDot success={chainId === 1} />
-            <Network id="account-details-network">{networkName()}</Network>
-          </NetworkContainer>
-          <RecentTransactions />
-        </Content>
-      }
-    />
+    >
+      <Content>
+        <WalletContainer>
+          <Wallet id="account-details-wallet">
+            {t("walletConnect.details.connected", { wallet: t(wallet) })}
+          </Wallet>
+          <Button tiny background="var(--bg-light)" click={changeWallet}>
+            {t("walletConnect.details.change")}
+          </Button>
+        </WalletContainer>
+        <AddressContainer
+          href={getEtherscanAddressLink(chainId, account || "")}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Address id="account-details-address">{shortenAddress(account || "", 24)}</Address>
+          <LaunchIcon
+            fontSize="medium"
+            style={{ fill: "var(--secondary)", transform: "translateY(0px)" }}
+          />
+        </AddressContainer>
+        <NetworkContainer>
+          <PulsingDot success={chainId === 1} />
+          <Network id="account-details-network">{networkName()}</Network>
+        </NetworkContainer>
+        <RecentTransactions />
+      </Content>
+    </Popup>
   );
 };
 

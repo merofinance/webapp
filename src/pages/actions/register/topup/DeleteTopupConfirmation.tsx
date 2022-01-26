@@ -74,31 +74,30 @@ const DeleteTopupConfirmation = ({ show, close, position, pool, complete }: Prop
         max: position.maxTopUp.toCryptoString(),
         protocol: position.protocol,
       })}
-      content={
-        <ButtonContainer>
-          <Button
-            id="delete-topup-confirmation-cancel"
-            medium
-            background="var(--bg-light)"
-            neutral
-            click={() => close()}
-          >
-            {t("actions.topup.delete.cancel")}
-          </Button>
-          <Button
-            id="delete-topup-confirmation-button"
-            medium
-            primary
-            destructive
-            loading={loading}
-            click={() => handleRemovePosition()}
-          >
-            {t("actions.topup.delete.header")}
-          </Button>
-        </ButtonContainer>
-      }
       loading={loading}
-    />
+    >
+      <ButtonContainer>
+        <Button
+          id="delete-topup-confirmation-cancel"
+          medium
+          background="var(--bg-light)"
+          neutral
+          click={() => close()}
+        >
+          {t("actions.topup.delete.cancel")}
+        </Button>
+        <Button
+          id="delete-topup-confirmation-button"
+          medium
+          primary
+          destructive
+          loading={loading}
+          click={() => handleRemovePosition()}
+        >
+          {t("actions.topup.delete.header")}
+        </Button>
+      </ButtonContainer>
+    </Popup>
   );
 };
 
