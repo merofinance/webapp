@@ -13,6 +13,11 @@ const StyledNotice = styled.div`
   background: rgba(54, 176, 230, 0.1);
   border: 1px solid rgba(100, 182, 247, 1);
   border-radius: 1.65rem;
+
+  margin-top: 3.4rem;
+  @media (max-width: 600px) {
+    margin-top: 1.8rem;
+  }
 `;
 
 const Content = styled.div`

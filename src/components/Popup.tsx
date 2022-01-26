@@ -1,10 +1,10 @@
+import { ReactNode } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 import closeIcon from "../assets/ui/close.svg";
 import { useDevice } from "../app/hooks/use-device";
 import Button from "./Button";
-import { ReactNode } from "react";
 
 interface StyledPopupProps {
   show: boolean;
@@ -88,6 +88,12 @@ const Body = styled.div`
   }
 `;
 
+const Content = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
 const ButtonContainer = styled.div`
   width: 100%;
   display: grid;
@@ -148,7 +154,7 @@ const Popup = ({
           </Header>
         )}
         {body && <Body id={`${id}-popup-body`}>{body}</Body>}
-        {children && children}
+        {children && <Content>{children}</Content>}
         {submit && (
           <ButtonContainer>
             <Button

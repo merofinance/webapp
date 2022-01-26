@@ -10,12 +10,6 @@ import { Paragraph } from "../styles/Headers";
 import Button from "./Button";
 import Popup from "./Popup";
 
-const Content = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
 const Text = styled(Paragraph)`
   width: 100%;
   margin-bottom: 3rem;
@@ -57,22 +51,20 @@ const ErrorAlert = (): JSX.Element => {
       close={handleClose}
       header={error.title ? t(error.title) : t("errors.header")}
     >
-      <Content>
-        <Text>{t(error.message)}</Text>
-        {error.hideContact ? null : (
-          <Text>
-            {t("errors.support")}
-            <Link href="https://discord.gg/jpGvaFV3Rv" target="_blank" rel="noopener noreferrer">
-              {t("footer.community.links.discord")}
-            </Link>
-          </Text>
-        )}
-        {error.hideButton ? null : (
-          <Button medium primary background="var(--bg-light)" click={handleClose}>
-            {t("components.close")}
-          </Button>
-        )}
-      </Content>
+      <Text>{t(error.message)}</Text>
+      {error.hideContact ? null : (
+        <Text>
+          {t("errors.support")}
+          <Link href="https://discord.gg/jpGvaFV3Rv" target="_blank" rel="noopener noreferrer">
+            {t("footer.community.links.discord")}
+          </Link>
+        </Text>
+      )}
+      {error.hideButton ? null : (
+        <Button medium primary background="var(--bg-light)" click={handleClose}>
+          {t("components.close")}
+        </Button>
+      )}
     </Popup>
   );
 };

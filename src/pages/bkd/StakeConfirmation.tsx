@@ -6,18 +6,6 @@ import Popup from "../../components/Popup";
 import { ScaledNumber } from "../../lib/scaled-number";
 import BkdCalculator from "./BkdCalculator";
 
-const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  > div:last-child {
-    margin-top: 3.4rem;
-    @media (max-width: 600px) {
-      margin-top: 1.8rem;
-    }
-  }
-`;
-
 const Description = styled.div`
   width: 100%;
   font-weight: 400;
@@ -49,16 +37,14 @@ const StakeConfirmation = ({ show, close, amount }: Props): JSX.Element => {
       submit={() => console.log("TODO")}
       confirmationText={t("bkd.stake.confirmation.action")}
     >
-      <Content>
-        <Description>
-          {t("bkd.stake.confirmation.description", { amount: amount.toCryptoString() })}
-        </Description>
-        <ExternalLink link="https://docs.backd.fund/protocol-architecture/tokenomics">
-          {t("components.moreInDocs")}
-        </ExternalLink>
-        <BkdCalculator amount={amount} />
-        <Notice>{t("bkd.stake.confirmation.notice")}</Notice>
-      </Content>
+      <Description>
+        {t("bkd.stake.confirmation.description", { amount: amount.toCryptoString() })}
+      </Description>
+      <ExternalLink link="https://docs.backd.fund/protocol-architecture/tokenomics">
+        {t("components.moreInDocs")}
+      </ExternalLink>
+      <BkdCalculator amount={amount} />
+      <Notice>{t("bkd.stake.confirmation.notice")}</Notice>
     </Popup>
   );
 };
