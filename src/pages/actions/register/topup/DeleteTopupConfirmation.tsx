@@ -9,20 +9,6 @@ import Popup from "../../../../components/Popup";
 import { Position, Pool, TransactionInfo, fromPlainPosition } from "../../../../lib/types";
 import { removePosition } from "../../../../state/positionsSlice";
 import { selectTransactions } from "../../../../state/transactionsSlice";
-import Button from "../../../../components/Button";
-
-const ButtonContainer = styled.div`
-  width: 100%;
-  display: grid;
-  margin-top: 4rem;
-
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 1.7rem;
-  @media (max-width: 600px) {
-    grid-template-columns: repeat(1, 1fr);
-    grid-gap: 1.8rem;
-  }
-`;
 
 interface Props {
   show: boolean;
@@ -75,29 +61,10 @@ const DeleteTopupConfirmation = ({ show, close, position, pool, complete }: Prop
         protocol: position.protocol,
       })}
       loading={loading}
-    >
-      <ButtonContainer>
-        <Button
-          id="delete-topup-confirmation-cancel"
-          medium
-          background="var(--bg-light)"
-          neutral
-          click={() => close()}
-        >
-          {t("actions.topup.delete.cancel")}
-        </Button>
-        <Button
-          id="delete-topup-confirmation-button"
-          medium
-          primary
-          destructive
-          loading={loading}
-          click={() => handleRemovePosition()}
-        >
-          {t("actions.topup.delete.header")}
-        </Button>
-      </ButtonContainer>
-    </Popup>
+      confirm
+      submit={() => handleRemovePosition()}
+      confirmationText={t("actions.topup.delete.header")}
+    />
   );
 };
 
