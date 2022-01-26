@@ -110,29 +110,25 @@ const PoolsPage = (): JSX.Element => {
       <BetaSnackbar />
       <PoolsPageContent>
         <ContentContainer>
-          <ContentSection
-            header={t("pools.header")}
-            statistics={<PoolsStatistics />}
-            content={
-              <PoolsContent>
-                <HeaderRow>
-                  <Header>{t("headers.asset")}</Header>
-                  <Header>{t("headers.apy")}</Header>
-                  <Header>{t("headers.tvl")}</Header>
-                  <Header hideOnMobile>{t("headers.deposits")}</Header>
-                  <ChevronHeader />
-                </HeaderRow>
-                {!pools && (
-                  <>
-                    <Loader row />
-                    <Loader row />
-                    <Loader row />
-                  </>
-                )}
-                {pools && pools.map((pool: Pool) => <PoolsRow key={pool.address} pool={pool} />)}
-              </PoolsContent>
-            }
-          />
+          <ContentSection header={t("pools.header")} statistics={<PoolsStatistics />}>
+            <PoolsContent>
+              <HeaderRow>
+                <Header>{t("headers.asset")}</Header>
+                <Header>{t("headers.apy")}</Header>
+                <Header>{t("headers.tvl")}</Header>
+                <Header hideOnMobile>{t("headers.deposits")}</Header>
+                <ChevronHeader />
+              </HeaderRow>
+              {!pools && (
+                <>
+                  <Loader row />
+                  <Loader row />
+                  <Loader row />
+                </>
+              )}
+              {pools && pools.map((pool: Pool) => <PoolsRow key={pool.address} pool={pool} />)}
+            </PoolsContent>
+          </ContentSection>
         </ContentContainer>
         <InfoCards>
           <Overview description={t("pools.overview")} link="https://docs.backd.fund/" />

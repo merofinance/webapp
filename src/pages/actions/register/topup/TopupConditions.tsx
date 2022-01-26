@@ -49,17 +49,16 @@ const TopupConditions = (): JSX.Element => {
         header={t("actions.register.header")}
         subHeader={t("actions.topup.label")}
         nav="4/4"
-        content={
-          <Content>
-            <ActionSummary />
-            <Header id="register-topup-conditions-header">
-              {t("actions.topup.stages.conditions.header")}
-            </Header>
-            <SubHeader>{t("actions.topup.stages.conditions.subHeader")}</SubHeader>
-            <TopupConditionsForm />
-          </Content>
-        }
-      />
+      >
+        <Content>
+          <ActionSummary />
+          <Header id="register-topup-conditions-header">
+            {t("actions.topup.stages.conditions.header")}
+          </Header>
+          <SubHeader>{t("actions.topup.stages.conditions.subHeader")}</SubHeader>
+          <TopupConditionsForm />
+        </Content>
+      </ContentSection>
     </Container>
   );
 };

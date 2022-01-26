@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import styled from "styled-components";
 
 const StyledContentSection = styled.div`
@@ -84,7 +85,7 @@ interface Props {
   header: string;
   subHeader?: string;
   statistics?: JSX.Element;
-  content: JSX.Element;
+  children: ReactNode;
   nav?: string;
   noContentPadding?: boolean;
 }
@@ -93,7 +94,7 @@ const ContentSection = ({
   header,
   subHeader,
   statistics,
-  content,
+  children,
   nav,
   noContentPadding,
 }: Props): JSX.Element => {
@@ -109,7 +110,7 @@ const ContentSection = ({
       <Line large />
       {statistics}
       {statistics && <Line />}
-      <Content noContentPadding={noContentPadding}>{content}</Content>
+      <Content noContentPadding={noContentPadding}>{children}</Content>
     </StyledContentSection>
   );
 };

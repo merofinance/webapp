@@ -114,48 +114,47 @@ const TopupLoan = (): JSX.Element => {
         header={t("actions.register.header")}
         subHeader={t("actions.topup.label")}
         nav="2/4"
-        content={
-          <Content>
-            {hasLoans && (
-              <>
-                <Header id="register-topup-loan-header">
-                  {t("actions.topup.stages.loan.header")}
-                </Header>
-                <SubHeader>{t("actions.topup.stages.loan.subHeader")}</SubHeader>
-                <RowSelector
-                  options={options}
-                  value={isAccountsLoan ? protocol : ""}
-                  setValue={(value: string) => {
-                    setProtocol(value);
-                    setAddress(account);
-                  }}
-                />
-              </>
-            )}
-            <LoanSearch
-              value={!isAccountsLoan ? protocol : ""}
-              setValue={(value: string, newAddress: string) => {
-                setProtocol(value);
-                setAddress(newAddress);
-              }}
-              hasExistingLoans={hasLoans}
-            />
-            <ButtonContainer>
-              <Button
-                id="register-topup-loan-button"
-                primary
-                medium
-                disabled={!address}
-                width={isMobile ? "100%" : "44%"}
-                click={() => navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`)}
-                hoverText={t("actions.topup.stages.loan.header")}
-              >
-                {t("components.continue")}
-              </Button>
-            </ButtonContainer>
-          </Content>
-        }
-      />
+      >
+        <Content>
+          {hasLoans && (
+            <>
+              <Header id="register-topup-loan-header">
+                {t("actions.topup.stages.loan.header")}
+              </Header>
+              <SubHeader>{t("actions.topup.stages.loan.subHeader")}</SubHeader>
+              <RowSelector
+                options={options}
+                value={isAccountsLoan ? protocol : ""}
+                setValue={(value: string) => {
+                  setProtocol(value);
+                  setAddress(account);
+                }}
+              />
+            </>
+          )}
+          <LoanSearch
+            value={!isAccountsLoan ? protocol : ""}
+            setValue={(value: string, newAddress: string) => {
+              setProtocol(value);
+              setAddress(newAddress);
+            }}
+            hasExistingLoans={hasLoans}
+          />
+          <ButtonContainer>
+            <Button
+              id="register-topup-loan-button"
+              primary
+              medium
+              disabled={!address}
+              width={isMobile ? "100%" : "44%"}
+              click={() => navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`)}
+              hoverText={t("actions.topup.stages.loan.header")}
+            >
+              {t("components.continue")}
+            </Button>
+          </ButtonContainer>
+        </Content>
+      </ContentSection>
     </Container>
   );
 };

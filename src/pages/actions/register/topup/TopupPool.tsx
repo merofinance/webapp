@@ -140,39 +140,38 @@ const TopupPool = (): JSX.Element => {
         header={t("actions.register.header")}
         subHeader={t("actions.topup.label")}
         nav="3/4"
-        content={
-          <Content>
-            <Header id="register-topup-pool-header">
-              {hasDeposits
-                ? t("actions.topup.stages.pool.header")
-                : t("actions.topup.stages.pool.noDepositsHeader")}
-            </Header>
-            {!hasDeposits && <SubHeader>{t("actions.topup.stages.pool.subHeader")}</SubHeader>}
-            <RowSelector
-              value={pool}
-              setValue={(value: string) => setPool(value)}
-              options={options}
-            />
-            <ButtonContainer>
-              <Button
-                id="register-topup-pool-button"
-                primary
-                medium
-                width={isMobile ? "100%" : "44%"}
-                click={() => {
-                  if (!hasSufficientBalance(selected))
-                    navigate(`${TOPUP_ACTION_ROUTE}/deposit/${pool}/${address}/${protocol}`);
-                  else navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${pool}`);
-                }}
-                disabled={!pool}
-                hoverText={t("actions.topup.stages.pool.incomplete")}
-              >
-                {t("components.continue")}
-              </Button>
-            </ButtonContainer>
-          </Content>
-        }
-      />
+      >
+        <Content>
+          <Header id="register-topup-pool-header">
+            {hasDeposits
+              ? t("actions.topup.stages.pool.header")
+              : t("actions.topup.stages.pool.noDepositsHeader")}
+          </Header>
+          {!hasDeposits && <SubHeader>{t("actions.topup.stages.pool.subHeader")}</SubHeader>}
+          <RowSelector
+            value={pool}
+            setValue={(value: string) => setPool(value)}
+            options={options}
+          />
+          <ButtonContainer>
+            <Button
+              id="register-topup-pool-button"
+              primary
+              medium
+              width={isMobile ? "100%" : "44%"}
+              click={() => {
+                if (!hasSufficientBalance(selected))
+                  navigate(`${TOPUP_ACTION_ROUTE}/deposit/${pool}/${address}/${protocol}`);
+                else navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${pool}`);
+              }}
+              disabled={!pool}
+              hoverText={t("actions.topup.stages.pool.incomplete")}
+            >
+              {t("components.continue")}
+            </Button>
+          </ButtonContainer>
+        </Content>
+      </ContentSection>
     </Container>
   );
 };

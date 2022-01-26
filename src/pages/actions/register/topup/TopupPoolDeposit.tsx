@@ -68,39 +68,38 @@ const TopupPoolDeposit = (): JSX.Element => {
         header={t("actions.register.header")}
         subHeader={t("actions.topup.label")}
         nav="3/4"
-        content={
-          <Content>
-            <Header id="register-topup-pool-deposit">
-              {t("actions.topup.stages.pool.deposit.header", { asset: pool.underlying.symbol })}
-            </Header>
-            <SubHeader>
-              {t("actions.topup.stages.pool.deposit.subHeader", { asset: pool.underlying.symbol })}
-            </SubHeader>
-            <PoolDeposit compact pool={pool} />
-            <ButtonContainer>
-              <Button
-                id="register-topup-pool-deposit-button"
-                primary
-                medium
-                width={isMobile ? "100%" : "44%"}
-                click={() => {
-                  if (address && protocol && poolName)
-                    navigate(
-                      `${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${poolName.toLowerCase()}`
-                    );
-                  else navigate(-1);
-                }}
-                disabled={!pool || !hasSufficientBalance()}
-                hoverText={t("actions.topup.stages.pool.deposit.incomplete", {
-                  asset: pool?.underlying.symbol,
-                })}
-              >
-                {t("components.continue")}
-              </Button>
-            </ButtonContainer>
-          </Content>
-        }
-      />
+      >
+        <Content>
+          <Header id="register-topup-pool-deposit">
+            {t("actions.topup.stages.pool.deposit.header", { asset: pool.underlying.symbol })}
+          </Header>
+          <SubHeader>
+            {t("actions.topup.stages.pool.deposit.subHeader", { asset: pool.underlying.symbol })}
+          </SubHeader>
+          <PoolDeposit compact pool={pool} />
+          <ButtonContainer>
+            <Button
+              id="register-topup-pool-deposit-button"
+              primary
+              medium
+              width={isMobile ? "100%" : "44%"}
+              click={() => {
+                if (address && protocol && poolName)
+                  navigate(
+                    `${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${poolName.toLowerCase()}`
+                  );
+                else navigate(-1);
+              }}
+              disabled={!pool || !hasSufficientBalance()}
+              hoverText={t("actions.topup.stages.pool.deposit.incomplete", {
+                asset: pool?.underlying.symbol,
+              })}
+            >
+              {t("components.continue")}
+            </Button>
+          </ButtonContainer>
+        </Content>
+      </ContentSection>
     </Container>
   );
 };
