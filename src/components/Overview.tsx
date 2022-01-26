@@ -38,13 +38,12 @@ const Overview = ({ description, link, defaultClosed }: Props): JSX.Element => {
       defaultOpen={!defaultClosed}
       collapsible
       header={t("components.overview")}
-      content={
-        <Content>
-          <Description id="overview-description">{description}</Description>
-          <ExternalLink label="components.moreInDocs" link={link} />
-        </Content>
-      }
-    />
+    >
+      <Content>
+        <Description id="overview-description">{description}</Description>
+        <ExternalLink label="components.moreInDocs" link={link} />
+      </Content>
+    </InfoCard>
   );
 };
 

@@ -55,27 +55,26 @@ const ExistingActions = (): Optional<JSX.Element> => {
       defaultOpen
       collapsible
       header={t("actions.registered.existing")}
-      content={
-        <Content>
-          {!hasPosition && (
-            <EmptyText id="existing-actions-empty">{t("actions.registered.empty")}</EmptyText>
-          )}
-          {hasPosition && (
-            <>
-              <Headers>
-                <Header flex={5}>{t("actions.registered.columns.type")}</Header>
-                <Header flex={3}>{t("actions.registered.columns.lockedShort")}</Header>
-                <Header flex={2} />
-              </Headers>
-              {positions &&
-                positions.map((position: Position) => (
-                  <ExistingAction key={position.depositToken} position={position} />
-                ))}
-            </>
-          )}
-        </Content>
-      }
-    />
+    >
+      <Content>
+        {!hasPosition && (
+          <EmptyText id="existing-actions-empty">{t("actions.registered.empty")}</EmptyText>
+        )}
+        {hasPosition && (
+          <>
+            <Headers>
+              <Header flex={5}>{t("actions.registered.columns.type")}</Header>
+              <Header flex={3}>{t("actions.registered.columns.lockedShort")}</Header>
+              <Header flex={2} />
+            </Headers>
+            {positions &&
+              positions.map((position: Position) => (
+                <ExistingAction key={position.depositToken} position={position} />
+              ))}
+          </>
+        )}
+      </Content>
+    </InfoCard>
   );
 };
 

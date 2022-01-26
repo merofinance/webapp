@@ -147,41 +147,38 @@ const Information = ({ header, rows }: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
 
   return (
-    <InfoCard
-      header={header}
-      content={
-        <StyledInformation>
-          {rows.map((row: InformationRowType) => (
-            <InformationRow key={row.label}>
-              <InformationHeader isAccordion={!!row.details} onClick={() => setOpen(!open)}>
-                <LabelContainer>
-                  <Label>{row.label || <Loader />}</Label>
-                  <Tooltip content={row.tooltip} items={row.tooltipItems} />
-                </LabelContainer>
-                <ValueContainer>
-                  <Value>{row.value || <Loader />}</Value>
-                  <Chevron src={arrow} isAccordion={!!row.details} open={open} />
-                </ValueContainer>
-              </InformationHeader>
-              {row.details && (
-                <AccordionContainer open={open}>
-                  <AccordionContent>
-                    {row.details.map((details: RowDetailType) => (
-                      <DetailItem>
-                        <DetailIcon src={details.icon} />
-                        <DetailLabel href={details.link} target="_blank" rel="noopener noreferrer">
-                          {details.label}
-                        </DetailLabel>
-                      </DetailItem>
-                    ))}
-                  </AccordionContent>
-                </AccordionContainer>
-              )}
-            </InformationRow>
-          ))}
-        </StyledInformation>
-      }
-    />
+    <InfoCard header={header}>
+      <StyledInformation>
+        {rows.map((row: InformationRowType) => (
+          <InformationRow key={row.label}>
+            <InformationHeader isAccordion={!!row.details} onClick={() => setOpen(!open)}>
+              <LabelContainer>
+                <Label>{row.label || <Loader />}</Label>
+                <Tooltip content={row.tooltip} items={row.tooltipItems} />
+              </LabelContainer>
+              <ValueContainer>
+                <Value>{row.value || <Loader />}</Value>
+                <Chevron src={arrow} isAccordion={!!row.details} open={open} />
+              </ValueContainer>
+            </InformationHeader>
+            {row.details && (
+              <AccordionContainer open={open}>
+                <AccordionContent>
+                  {row.details.map((details: RowDetailType) => (
+                    <DetailItem>
+                      <DetailIcon src={details.icon} />
+                      <DetailLabel href={details.link} target="_blank" rel="noopener noreferrer">
+                        {details.label}
+                      </DetailLabel>
+                    </DetailItem>
+                  ))}
+                </AccordionContent>
+              </AccordionContainer>
+            )}
+          </InformationRow>
+        ))}
+      </StyledInformation>
+    </InfoCard>
   );
 };
 

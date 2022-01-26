@@ -54,24 +54,23 @@ const YourDeposits = (): JSX.Element => {
       collapsible
       defaultOpen={isDesktop}
       header={t("actions.deposits.header")}
-      content={
-        <Content>
-          {!hasDeposits && (
-            <EmptyText id="your-deposits-empty">{t("actions.deposits.empty")}</EmptyText>
-          )}
-          {hasDeposits && depositedPools && (
-            <>
-              {depositedPools.map((pool: Pool) => (
-                <YourDepositsRow pool={pool} />
-              ))}
-              <Total id="your-deposits-total">
-                {balance ? `= ${balance.toUsdValue(1)}` : <Loader />}
-              </Total>
-            </>
-          )}
-        </Content>
-      }
-    />
+    >
+      <Content>
+        {!hasDeposits && (
+          <EmptyText id="your-deposits-empty">{t("actions.deposits.empty")}</EmptyText>
+        )}
+        {hasDeposits && depositedPools && (
+          <>
+            {depositedPools.map((pool: Pool) => (
+              <YourDepositsRow pool={pool} />
+            ))}
+            <Total id="your-deposits-total">
+              {balance ? `= ${balance.toUsdValue(1)}` : <Loader />}
+            </Total>
+          </>
+        )}
+      </Content>
+    </InfoCard>
   );
 };
 

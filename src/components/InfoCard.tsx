@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import styled from "styled-components";
 import AccordionChevron from "./AccordionChevron";
 
@@ -94,13 +94,13 @@ const Content = styled.div`
 
 interface Props {
   header: string;
-  content: JSX.Element;
+  children: ReactNode;
   collapsible?: boolean;
   defaultOpen?: boolean;
   id?: string;
 }
 
-const InfoCard = ({ header, content, collapsible, defaultOpen, id }: Props): JSX.Element => {
+const InfoCard = ({ header, children, collapsible, defaultOpen, id }: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -118,7 +118,7 @@ const InfoCard = ({ header, content, collapsible, defaultOpen, id }: Props): JSX
       <Header id={`${id}-header`} onClick={() => setOpen(!open)} collapsible={collapsible}>
         {header}
       </Header>
-      <Content collapsible={collapsible}>{content}</Content>
+      <Content collapsible={collapsible}>{children}</Content>
     </StyledInfoCard>
   );
 };
