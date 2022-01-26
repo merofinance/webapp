@@ -1,4 +1,3 @@
-import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { GradientText } from "../styles/GradientText";
 import BasicCard, { BasicCardType } from "./BasicCard";
@@ -70,22 +69,20 @@ interface Props {
 }
 
 const SummaryStatistics = ({ statistics }: Props): JSX.Element => {
-  const { t } = useTranslation();
-
   return (
     <>
       <MobileContainer>
         {statistics.map((statistic: BasicCardType) => (
-          <MobileRow>
+          <MobileRow key={statistic.label}>
             <Label>
-              {t(statistic.label)}
+              {statistic.label}
               {statistic.buttonAction && statistic.buttonText && (
                 <ClaimButton
                   onClick={() => {
                     if (statistic.buttonAction) statistic.buttonAction();
                   }}
                 >
-                  <ClaimText>{t(statistic.buttonText)}</ClaimText>
+                  <ClaimText>{statistic.buttonText}</ClaimText>
                 </ClaimButton>
               )}
             </Label>

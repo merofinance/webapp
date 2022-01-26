@@ -1,4 +1,3 @@
-import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import Button from "./Button";
 
@@ -92,13 +91,11 @@ const BasicCard = ({
   buttonAction,
   primary,
 }: BasicCardType): JSX.Element => {
-  const { t } = useTranslation();
-
   return (
     <StyledBasicCard key={label} primary={primary}>
-      <Label>{t(label)}</Label>
+      <Label>{label}</Label>
       <Number>{value}</Number>
-      {subValue && <SubValue>{t(subValue)}</SubValue>}
+      {subValue && <SubValue>{subValue}</SubValue>}
       {buttonText && buttonAction && (
         <ButtonContainer>
           <Button primary medium width="13rem" text={buttonText} click={buttonAction} />
