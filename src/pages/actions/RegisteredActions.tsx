@@ -10,12 +10,6 @@ import Button from "../../components/Button";
 import RegisteredAction from "./RegisteredAction";
 import { useDevice } from "../../app/hooks/use-device";
 
-const Content = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-`;
-
 const Empty = styled.div`
   letter-spacing: 0.46px;
   opacity: 0.8;
@@ -48,26 +42,24 @@ const RegisteredActions = (): JSX.Element => {
   return (
     <div>
       <ContentSection header={t("actions.registered.header")}>
-        <Content>
-          {!hasPosition && (
-            <Empty id="register-positions-empty">{t("actions.registered.empty")}</Empty>
-          )}
-          {positions.map((position: Position) => (
-            <RegisteredAction key={position.protocol} position={position} />
-          ))}
-          <ButtonContainer>
-            <Button
-              id="register-action-button"
-              primary={!hasPosition}
-              medium
-              width={isMobile ? "100%" : "44%"}
-              background="#0F0830"
-              click={() => navigate("/actions/register")}
-            >
-              {t("actions.register.button")}
-            </Button>
-          </ButtonContainer>
-        </Content>
+        {!hasPosition && (
+          <Empty id="register-positions-empty">{t("actions.registered.empty")}</Empty>
+        )}
+        {positions.map((position: Position) => (
+          <RegisteredAction key={position.protocol} position={position} />
+        ))}
+        <ButtonContainer>
+          <Button
+            id="register-action-button"
+            primary={!hasPosition}
+            medium
+            width={isMobile ? "100%" : "44%"}
+            background="#0F0830"
+            click={() => navigate("/actions/register")}
+          >
+            {t("actions.register.button")}
+          </Button>
+        </ButtonContainer>
       </ContentSection>
     </div>
   );

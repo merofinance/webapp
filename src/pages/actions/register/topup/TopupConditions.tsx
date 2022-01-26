@@ -9,12 +9,6 @@ const Container = styled.div`
   position: relative;
 `;
 
-const Content = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
 const Header = styled.div`
   font-weight: 600;
   letter-spacing: 0.25px;
@@ -50,14 +44,12 @@ const TopupConditions = (): JSX.Element => {
         subHeader={t("actions.topup.label")}
         nav="4/4"
       >
-        <Content>
-          <ActionSummary />
-          <Header id="register-topup-conditions-header">
-            {t("actions.topup.stages.conditions.header")}
-          </Header>
-          <SubHeader>{t("actions.topup.stages.conditions.subHeader")}</SubHeader>
-          <TopupConditionsForm />
-        </Content>
+        <ActionSummary />
+        <Header id="register-topup-conditions-header">
+          {t("actions.topup.stages.conditions.header")}
+        </Header>
+        <SubHeader>{t("actions.topup.stages.conditions.subHeader")}</SubHeader>
+        <TopupConditionsForm />
       </ContentSection>
     </Container>
   );

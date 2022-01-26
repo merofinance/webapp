@@ -35,12 +35,6 @@ const ContentContainer = styled.div`
   flex: 1;
 `;
 
-const PoolsContent = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
 const HeaderRow = styled.div`
   width: 100%;
   display: flex;
@@ -111,23 +105,21 @@ const PoolsPage = (): JSX.Element => {
       <PoolsPageContent>
         <ContentContainer>
           <ContentSection header={t("pools.header")} statistics={<PoolsStatistics />}>
-            <PoolsContent>
-              <HeaderRow>
-                <Header>{t("headers.asset")}</Header>
-                <Header>{t("headers.apy")}</Header>
-                <Header>{t("headers.tvl")}</Header>
-                <Header hideOnMobile>{t("headers.deposits")}</Header>
-                <ChevronHeader />
-              </HeaderRow>
-              {!pools && (
-                <>
-                  <Loader row />
-                  <Loader row />
-                  <Loader row />
-                </>
-              )}
-              {pools && pools.map((pool: Pool) => <PoolsRow key={pool.address} pool={pool} />)}
-            </PoolsContent>
+            <HeaderRow>
+              <Header>{t("headers.asset")}</Header>
+              <Header>{t("headers.apy")}</Header>
+              <Header>{t("headers.tvl")}</Header>
+              <Header hideOnMobile>{t("headers.deposits")}</Header>
+              <ChevronHeader />
+            </HeaderRow>
+            {!pools && (
+              <>
+                <Loader row />
+                <Loader row />
+                <Loader row />
+              </>
+            )}
+            {pools && pools.map((pool: Pool) => <PoolsRow key={pool.address} pool={pool} />)}
           </ContentSection>
         </ContentContainer>
         <InfoCards>
