@@ -6,12 +6,21 @@ import { LiquidityPoolFactory } from "@backdfund/protocol/typechain/LiquidityPoo
 import { StakerVaultFactory } from "@backdfund/protocol/typechain/StakerVaultFactory";
 import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
 import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFactory";
+import { TopUpActionFeeHandlerFactory } from "@backdfund/protocol";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
+import fromEntries from "fromentries";
+
 import { UnsupportedNetwork } from "../app/errors";
 import { getPrices as getPricesFromCoingecko } from "./coingecko";
 import { getPrices as getPricesFromBinance } from "./binance";
-import { ETH_DECIMALS, ETH_DUMMY_ADDRESS, INFINITE_APPROVE_AMMOUNT } from "./constants";
-import { bigNumberToFloat, scale } from "./numeric";
+import {
+  ETH_DECIMALS,
+  ETH_DUMMY_ADDRESS,
+  INFINITE_APPROVE_AMMOUNT,
+  MILLISECONDS_PER_YEAR,
+  DEFAULT_SCALE,
+} from "./constants";
+import { bigNumberToFloat } from "./numeric";
 import { ScaledNumber } from "./scaled-number";
 import {
   Address,
@@ -23,7 +32,16 @@ import {
   PlainPosition,
   Token,
   transformPool,
+  PlainWithdrawalFees,
+  PlainLoan,
+  LendingProtocol,
+  Optional,
+  PlainActionFees,
+  ActionFees,
+  toPlainActionFees,
 } from "./types";
+import { lendingProviders } from "./lending-protocols";
+import poolMetadata from "./data/pool-metadata";
 
 export type BackdOptions = {
   chainId: number;
@@ -33,7 +51,9 @@ export interface Backd {
   currentAccount(): Promise<Address>;
   listPools(): Promise<Pool[]>;
   getPoolInfo(address: Address): Promise<Pool>;
+  getLoanPosition(protocol: LendingProtocol, address?: Address): Promise<Optional<PlainLoan>>;
   getPositions(): Promise<PlainPosition[]>;
+  getActionFees(): Promise<PlainActionFees>;
   registerPosition(pool: Pool, position: Position): Promise<ContractTransaction>;
   removePosition(
     account: Address,
@@ -44,6 +64,7 @@ export interface Backd {
   getBalances(addresses: Address[], account?: Address): Promise<Balances>;
   getAllowance(token: Token, spender: Address, account?: string): Promise<ScaledNumber>;
   getAllowances(queries: AllowanceQuery[]): Promise<Record<string, Balances>>;
+  getWithdrawalFees(pools: Pool[]): Promise<PlainWithdrawalFees>;
   getPrices(symbol: string[]): Promise<Prices>;
   approve(token: Token, spender: Address, amount: ScaledNumber): Promise<ContractTransaction>;
   deposit(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction>;
@@ -61,11 +82,16 @@ export class Web3Backd implements Backd {
 
   private topupAction: TopUpAction;
 
+  private chainId: number;
+
   constructor(private _provider: Signer | providers.Provider, private options: BackdOptions) {
-    const contracts = this.getContracts(options.chainId);
+    this.chainId = options.chainId;
+    const contracts = this.getContracts();
 
     // eslint-disable-next-line dot-notation
     this.controller = ControllerFactory.connect(contracts["Controller"][0], _provider);
+    // eslint-disable-next-line dot-notation
+    this.topupAction = TopUpActionFactory.connect(contracts["TopUpAction"][0], _provider);
     // eslint-disable-next-line dot-notation
     this.topupAction = TopUpActionFactory.connect(contracts["TopUpAction"][0], _provider);
   }
@@ -83,14 +109,14 @@ export class Web3Backd implements Backd {
     return provider;
   }
 
-  private getContracts(chainId: number): Record<string, string[]> {
-    switch (chainId) {
+  private getContracts(): Record<string, string[]> {
+    switch (this.chainId) {
       case 42:
         return contracts["42"];
       case 1337:
         return contracts["1337"];
       default:
-        throw new UnsupportedNetwork(chainId);
+        throw new UnsupportedNetwork(this.chainId);
     }
   }
 
@@ -122,21 +148,40 @@ export class Web3Backd implements Backd {
 
   async getPoolInfo(address: Address): Promise<Pool> {
     const pool = LiquidityPoolFactory.connect(address, this._provider);
-    const [name, lpTokenAddress, underlyingAddress, totalAssets, rawApy, exchangeRate] =
-      await Promise.all([
-        pool.name(),
-        pool.getLpToken(),
-        pool.getUnderlying(),
-        pool.totalUnderlying(),
-        pool.computeAPY(),
-        pool.exchangeRate(),
-      ]);
+    const [
+      name,
+      lpTokenAddress,
+      underlyingAddress,
+      totalAssets,
+      exchangeRate,
+      maxWithdrawalFee,
+      minWithdrawalFee,
+      feeDecreasePeriod,
+    ] = await Promise.all([
+      pool.name(),
+      pool.getLpToken(),
+      pool.getUnderlying(),
+      pool.totalUnderlying(),
+      pool.exchangeRate(),
+      pool.getMaxWithdrawalFee(),
+      pool.getMinWithdrawalFee(),
+      pool.getWithdrawalFeeDecreasePeriod(),
+    ]);
     const [lpToken, underlying, stakerVaultAddress] = await Promise.all([
       this.getTokenInfo(lpTokenAddress),
       this.getTokenInfo(underlyingAddress),
       this.controller.getStakerVault(lpTokenAddress),
     ]);
-    const apy = rawApy.sub(scale(1));
+
+    let apy = null;
+    const metadata = poolMetadata[underlying.symbol];
+    if (metadata && metadata.deployment[this.chainId.toString()]) {
+      const deployedtime = metadata.deployment[this.chainId.toString()].time;
+      const compoundExponent =
+        MILLISECONDS_PER_YEAR / (new Date().getTime() - deployedtime.getTime());
+      const unscaledApy = Number(new ScaledNumber(exchangeRate).toString()) ** compoundExponent - 1;
+      apy = ScaledNumber.fromUnscaled(unscaledApy).value;
+    }
 
     const rawPool = {
       name,
@@ -147,14 +192,70 @@ export class Web3Backd implements Backd {
       totalAssets,
       exchangeRate,
       stakerVaultAddress,
+      maxWithdrawalFee,
+      minWithdrawalFee,
+      feeDecreasePeriod,
     };
     return transformPool(rawPool, bigNumberToFloat);
+  }
+
+  async getWithdrawalFees(pools: Pool[]): Promise<PlainWithdrawalFees> {
+    const account = await this.currentAccount();
+    const promises = pools.map((pool: Pool) => {
+      const poolFactory = LiquidityPoolFactory.connect(pool.address, this._provider);
+      const ONE = ScaledNumber.fromUnscaled(1, pool.underlying.decimals).value;
+      return poolFactory.getWithdrawalFee(account, ONE);
+    });
+
+    const withdrawalFees = await Promise.all(promises);
+
+    return fromEntries(
+      pools.map((pool: Pool, index: number) => {
+        const ONE = ScaledNumber.fromUnscaled(1, pool.underlying.decimals);
+        const withdrawalFee = new ScaledNumber(withdrawalFees[index], pool.underlying.decimals);
+        const percent = withdrawalFee.div(ONE);
+        return [pool.address, percent.toPlain()];
+      })
+    );
+  }
+
+  async getLoanPosition(protocol: LendingProtocol, address: Address): Promise<Optional<PlainLoan>> {
+    return lendingProviders[protocol].getPosition(address, this._provider);
   }
 
   async getPositions(): Promise<PlainPosition[]> {
     const account = await this.currentAccount();
     const rawPositions = await this.topupAction.listPositions(account);
     return Promise.all(rawPositions.map((v: any) => this.getPositionInfo(v)));
+  }
+
+  async getActionFees(): Promise<PlainActionFees> {
+    const feeHandlerAddress = await this.topupAction.getFeeHandler();
+    const feeHandler = TopUpActionFeeHandlerFactory.connect(feeHandlerAddress, this._provider);
+
+    /* We can change to this when the latest protocol code is deployed to Kovan */
+    // const [totalBn, keeperFractionBn, treasuryFractionBn] = await Promise.all([
+    //   this.topupAction.getActionFee(),
+    //   feeHandler.getKeeperFeeFraction(),
+    //   feeHandler.getTreasuryFeeFraction(),
+    // ]);
+    const [totalBn, keeperFractionBn] = await Promise.all([
+      this.topupAction.getActionFee(),
+      feeHandler.getKeeperFeeFraction(),
+    ]);
+    const treasuryFractionBn = BigNumber.from(3).mul(DEFAULT_SCALE).div(10);
+    const total = new ScaledNumber(totalBn);
+    const keeperFraction = new ScaledNumber(keeperFractionBn).mul(total);
+    const treasuryFraction = new ScaledNumber(treasuryFractionBn).mul(total);
+
+    const actionfees: ActionFees = {
+      total,
+      keeperFraction,
+      treasuryFraction,
+      lpFraction: ScaledNumber.fromUnscaled(1).sub(keeperFraction).sub(treasuryFraction).mul(total),
+    };
+
+    return toPlainActionFees(actionfees);
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -169,7 +270,7 @@ export class Web3Backd implements Backd {
       threshold: new ScaledNumber(rawPosition.record.threshold, decimals).toPlain(),
       singleTopUp: new ScaledNumber(rawPosition.record.singleTopUpAmount, decimals).toPlain(),
       maxTopUp: new ScaledNumber(rawPosition.record.totalTopUpAmount, decimals).toPlain(),
-      maxGasPrice: rawPosition.record.maxGasPrice.toNumber(),
+      maxGasPrice: new ScaledNumber(rawPosition.record.maxGasPrice, 9).toPlain(),
     };
     return position;
   }
@@ -182,9 +283,18 @@ export class Web3Backd implements Backd {
     const protocol = utils.formatBytes32String(position.protocol);
     const depositAmount = position.maxTopUp.value.mul(rawExchangeRate).div(scale);
 
-    // TODO: allow to customize maxGasPrice, currently 200Gwei
-    const maxGasPrice = BigNumber.from(200).mul(BigNumber.from(10).pow(9));
-
+    const gasEstimate = await this.topupAction.estimateGas.register(
+      position.account,
+      protocol,
+      position.threshold.value,
+      pool.lpToken.address,
+      depositAmount,
+      pool.underlying.address,
+      position.singleTopUp.value,
+      position.maxTopUp.value,
+      position.maxGasPrice.value
+    );
+    const gasLimit = gasEstimate.mul(12).div(10);
     return this.topupAction.register(
       position.account,
       protocol,
@@ -194,12 +304,27 @@ export class Web3Backd implements Backd {
       pool.underlying.address,
       position.singleTopUp.value,
       position.maxTopUp.value,
-      maxGasPrice
+      position.maxGasPrice.value,
+      {
+        gasLimit,
+      }
     );
   }
 
-  removePosition(account: Address, protocol: string, unstake = true): Promise<ContractTransaction> {
-    return this.topupAction.resetPosition(account, utils.formatBytes32String(protocol), unstake);
+  async removePosition(
+    account: Address,
+    protocol: string,
+    unstake = true
+  ): Promise<ContractTransaction> {
+    const gasEstimate = await this.topupAction.estimateGas.resetPosition(
+      account,
+      utils.formatBytes32String(protocol),
+      unstake
+    );
+    const gasLimit = gasEstimate.mul(12).div(10);
+    return this.topupAction.resetPosition(account, utils.formatBytes32String(protocol), unstake, {
+      gasLimit,
+    });
   }
 
   async getAllowance(
@@ -273,7 +398,7 @@ export class Web3Backd implements Backd {
   async getBalances(addresses: string[], account?: string): Promise<Balances> {
     const promises = addresses.map((a) => this.getBalance(a, account));
     const balances = await Promise.all(promises);
-    return Object.fromEntries(addresses.map((a, i) => [a, balances[i]]));
+    return fromEntries(addresses.map((a, i) => [a, balances[i]]));
   }
 
   async getPrices(symbols: string[]): Promise<Prices> {

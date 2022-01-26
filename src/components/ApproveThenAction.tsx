@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -36,6 +36,8 @@ const Buttons = styled.div`
   @media (max-width: 600px) {
     grid-template-columns: repeat(1, 1fr);
     grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: ${(props: ButtonsProps) =>
+      props.showApprove ? "repeat(2, 1fr)" : "repeat(1, 1fr)"};
     grid-gap: 1.8rem;
   }
 `;
@@ -57,10 +59,10 @@ const ProgressSection = styled.div`
   align-items: center;
 `;
 
-type StepProps = {
+interface StepProps {
   complete: boolean;
   disabled: boolean;
-};
+}
 
 const Number = styled.div`
   position: relative;
@@ -105,6 +107,8 @@ interface Props {
   token: Token;
   contract: string;
   stepsOnTop?: boolean;
+  hoverText?: string;
+  oneButton?: boolean;
 }
 
 const ApproveThenAction = ({
@@ -116,6 +120,8 @@ const ApproveThenAction = ({
   token,
   contract,
   stepsOnTop,
+  hoverText,
+  oneButton,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -124,7 +130,9 @@ const ApproveThenAction = ({
   const approveLoading = useSelector(hasPendingTransaction("Approve"));
   const [persistApprove, setPersistApprove] = useState(false);
 
-  const approved = value.isZero() ? !approvedAmount.isZero() : approvedAmount.gte(value);
+  const approved =
+    !!approvedAmount && (value.isZero() ? !approvedAmount.isZero() : approvedAmount.gte(value));
+  hoverText = hoverText || t("amountInput.enter");
 
   const executeApprove = () => {
     if (!backd || approved || approveLoading) return;
@@ -141,34 +149,40 @@ const ApproveThenAction = ({
 
   return (
     <Container stepsOnTop={stepsOnTop}>
-      <Buttons stepsOnTop={stepsOnTop} showApprove={!approved || persistApprove}>
-        {(!approved || persistApprove) && (
+      <Buttons stepsOnTop={stepsOnTop} showApprove={(!approved || persistApprove) && !oneButton}>
+        {(!approved || persistApprove) && !oneButton && (
           <Button
+            id="approve-button"
             primary
             medium
             wide
             text={t("amountInput.approve", { asset: token.symbol })}
-            click={() => executeApprove()}
+            click={executeApprove}
             complete={approved}
             loading={approveLoading}
             disabled={disabled}
-            hoverText={t("amountInput.enter")}
+            hoverText={hoverText}
           />
         )}
         <Button
+          id="action-button"
           primary
           medium
           wide
-          text={label}
-          click={action}
-          disabled={!approved || disabled}
-          loading={loading}
-          hoverText={
-            disabled ? t("amountInput.enter") : t("amountInput.approve", { asset: token.symbol })
+          text={
+            oneButton
+              ? !approved
+                ? `1/2 ${t("amountInput.approve", { asset: token.symbol })}`
+                : `2/2 ${label}`
+              : label
           }
+          click={!approved && oneButton ? executeApprove : action}
+          disabled={(!approved && !oneButton) || disabled}
+          loading={(approveLoading && oneButton) || loading}
+          hoverText={hoverText}
         />
       </Buttons>
-      {(!approved || persistApprove) && (
+      {(!approved || persistApprove) && !oneButton && (
         <ProgressContainer>
           <ProgressSection>
             <Line complete={approved} disabled={disabled} />

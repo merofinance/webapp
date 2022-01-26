@@ -1,26 +1,27 @@
-import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 import percent from "../../assets/benefits/percent.svg";
 import plus from "../../assets/benefits/plus.svg";
+import zap from "../../assets/benefits/zap.svg";
 import shield from "../../assets/benefits/shield.svg";
 import { GradientLink } from "../../styles/GradientText";
-import { Header4, Header5 } from "../../styles/Headers";
+import { Header5, Header6 } from "../../styles/Headers";
+import useWindowPosition from "../../app/hooks/use-window-position";
 
-type BenfitsType = {
+interface BenfitsType {
   icon: string;
   header: string;
   description: string;
   url: string;
-};
+}
 
 const benefits: BenfitsType[] = [
   {
-    icon: shield,
-    header: "benefits.avoidLiquidation.header",
-    description: "benefits.avoidLiquidation.description",
-    url: "https://docs.backd.fund/protocol-architecture/top-ups",
+    icon: zap,
+    header: "benefits.reactiveLiquidity.header",
+    description: "benefits.reactiveLiquidity.description",
+    url: "https://docs.backd.fund/protocol-architecture/actions",
   },
   {
     icon: plus,
@@ -32,7 +33,13 @@ const benefits: BenfitsType[] = [
     icon: percent,
     header: "benefits.feeShare.header",
     description: "benefits.feeShare.description",
-    url: "https://docs.backd.fund/protocol-architecture/top-ups/backd-keepers",
+    url: "https://docs.backd.fund/protocol-architecture/tokenomics",
+  },
+  {
+    icon: shield,
+    header: "benefits.keepers.header",
+    description: "benefits.keepers.description",
+    url: "https://docs.backd.fund/protocol-architecture/backd-keepers",
   },
 ];
 
@@ -40,7 +47,7 @@ const StyledBenefits = styled.div`
   width: 100%;
   margin: var(--section-margin);
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: flex-start;
 
   @media (max-width: 600px) {
@@ -55,10 +62,12 @@ const Benefit = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 3.9rem;
+  max-width: 30rem;
+  margin: 0 3rem;
 
   @media (max-width: 600px) {
     margin: 2.9rem 0;
+    max-width: none;
   }
 
   @media (min-width: 601px) and (max-width: 1224px) {
@@ -88,17 +97,12 @@ const Icon = styled.img`
   }
 `;
 
-type IconGlassProps = {
+interface IconGlassProps {
   right: boolean;
   top: boolean;
-  transform: string;
-};
+}
 
-const IconGlass = styled.div.attrs((props: IconGlassProps) => ({
-  style: {
-    transform: props.transform,
-  },
-}))`
+const IconGlass = styled.div`
   position: absolute;
   top: ${(props: IconGlassProps) => (props.top ? "1rem" : "3.8rem")};
   left: calc(50% + ${(props: IconGlassProps) => (props.right ? "0.5rem" : "-4.5rem")});
@@ -107,7 +111,6 @@ const IconGlass = styled.div.attrs((props: IconGlassProps) => ({
   border-radius: 13px;
   overflow: hidden;
   transition: transform 0.1s ease-out;
-
   backdrop-filter: blur(5px);
 
   @media (max-width: 600px) {
@@ -120,9 +123,9 @@ const IconGlass = styled.div.attrs((props: IconGlassProps) => ({
   }
 `;
 
-type IconGlassGradientProps = {
+interface IconGlassGradientProps {
   rotate: number;
-};
+}
 
 const IconGlassGradient = styled.div`
   width: 100%;
@@ -148,39 +151,27 @@ const ReadMore = styled(GradientLink)`
 `;
 
 const Benefits = (): JSX.Element => {
-  const benefitsRef = useRef<HTMLDivElement>(null);
-  const [scrollPosition, setScrollPosition] = useState(0);
   const { t } = useTranslation();
-
-  const handleScroll = () => {
-    const position = window.pageYOffset;
-    setScrollPosition(position);
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  const windowPosition = useWindowPosition();
 
   return (
-    <StyledBenefits ref={benefitsRef}>
+    <StyledBenefits>
       {benefits.map((benefit: BenfitsType, index: number) => (
         <Benefit key={benefit.header} id={benefit.header}>
           <IconContainer>
             <Icon src={benefit.icon} alt="benefit icon" />
           </IconContainer>
           <IconGlass
-            right={index % 2 === 0}
+            right={index !== 1}
             top={index === 2}
-            transform={`translateY(${-(scrollPosition - 380) / (window.innerHeight / 50)}px)`}
+            style={{
+              transform: `translateY(${-(windowPosition - 380) / (window.innerHeight / 50)}px)`,
+            }}
           >
             <IconGlassGradient rotate={index === 1 ? 90 : index === 2 ? -90 : 0} />
           </IconGlass>
-          <Header4>{t(benefit.header)}</Header4>
-          <Header5>{t(benefit.description)}</Header5>
+          <Header5>{t(benefit.header)}</Header5>
+          <Header6>{t(benefit.description)}</Header6>
           <ReadMore href={benefit.url} target="_blank" rel="noopener noreferrer">
             {`${t("benefits.readMore")} →`}
           </ReadMore>

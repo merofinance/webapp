@@ -1,5 +1,12 @@
 import { BigNumber } from "ethers";
-import { bigNumberToString, formatCrypto, formatCurrency, stringToBigNumber } from "./numeric";
+import {
+  bigNumberToString,
+  formatCrypto,
+  formatCurrency,
+  formatPercent,
+  numberToCompactCurrency,
+  stringToBigNumber,
+} from "./numeric";
 
 export interface PlainScaledNumber {
   value: string;
@@ -21,6 +28,7 @@ export class ScaledNumber {
   }
 
   static fromPlain(value: PlainScaledNumber): ScaledNumber {
+    if (!value) return new ScaledNumber();
     return new ScaledNumber(BigNumber.from(value.value), value.decimals);
   }
 
@@ -39,6 +47,10 @@ export class ScaledNumber {
 
   get decimals(): number {
     return this._decimals;
+  }
+
+  get scale(): BigNumber {
+    return BigNumber.from(10).pow(this.decimals);
   }
 
   toPlain = (): PlainScaledNumber => {
@@ -90,10 +102,26 @@ export class ScaledNumber {
     return this.value.lte(other.value);
   }
 
-  mul(value: number | string): ScaledNumber {
-    const scale = BigNumber.from(10).pow(this.decimals);
-    const scaledValue = stringToBigNumber(value.toString(), this.decimals);
-    return new ScaledNumber(this.value.mul(scaledValue).div(scale), this.decimals);
+  max(other: ScaledNumber): ScaledNumber {
+    this.assertSameDecimals(other);
+    return this.value.gt(other.value) ? this : other;
+  }
+
+  mul(value: number | string | ScaledNumber): ScaledNumber {
+    const scaledValue =
+      value instanceof ScaledNumber
+        ? value.value
+        : stringToBigNumber(value.toString(), this.decimals);
+    return new ScaledNumber(this.value.mul(scaledValue).div(this.scale), this.decimals);
+  }
+
+  div(value: number | string | ScaledNumber): ScaledNumber {
+    const scaledValue =
+      value instanceof ScaledNumber
+        ? value.value
+        : stringToBigNumber(value.toString(), this.decimals);
+    if (scaledValue.isZero()) return new ScaledNumber();
+    return new ScaledNumber(this.value.mul(this.scale).div(scaledValue), this.decimals);
   }
 
   toString = (): string => bigNumberToString(this._value, this._decimals);
@@ -102,4 +130,9 @@ export class ScaledNumber {
     formatCrypto(Number(this.toString()), parameters);
 
   toUsdValue = (price: number): string => formatCurrency(Number(this.toString()) * price);
+
+  toCompactUsdValue = (price: number): string =>
+    numberToCompactCurrency(Number(this.toString()) * price);
+
+  toPercent = (): string => formatPercent(Number(this.toString()));
 }

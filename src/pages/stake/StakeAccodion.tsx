@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import Accordion from "../../components/Accordion";
 import Asset from "../../components/Asset";
@@ -170,24 +169,23 @@ const StakeAccordion = ({ open, toggle }: Props): JSX.Element => {
           </EndContainer>
         </Header>
       }
-      content={
-        <ContentContainer>
-          <Tabs
-            tabs={[
-              {
-                label: "stake.tabs.stake.header",
-                content: <StakeTokens token={token} />,
-              },
-              {
-                label: "stake.tabs.unstake.header",
-                content: <UnstakeTokens token={token} />,
-              },
-            ]}
-          />
-        </ContentContainer>
-      }
       open={open}
-    />
+    >
+      <ContentContainer>
+        <Tabs
+          tabs={[
+            {
+              label: "stake.tabs.stake.header",
+              content: <StakeTokens token={token} />,
+            },
+            {
+              label: "stake.tabs.unstake.header",
+              content: <UnstakeTokens token={token} />,
+            },
+          ]}
+        />
+      </ContentContainer>
+    </Accordion>
   );
 };
 

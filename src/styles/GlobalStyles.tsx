@@ -1,9 +1,9 @@
-import React from "react";
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
     :root {
         --bg: #0a0622;
+        --bg-light:#252140;
         --main: #fff;
         --sub: #cecdd3;
         --subtle: #9d9ca6;
@@ -18,7 +18,9 @@ const GlobalStyle = createGlobalStyle`
         --neutral: #8966F6;
         --gradient: linear-gradient(to right, var(--primary), var(--secondary));
 
-        --section-margin: 8rem 0;
+        --row-bg: #141128;
+
+        --section-margin: 8.5rem 0;
         --mobile-section-margin: 3.6rem 0;
     }
 

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
@@ -15,17 +15,25 @@ const languageOptions: SelectorOptionType[] = [
     value: "zh-Hant",
     label: "中文",
   },
+  // {
+  //   value: "es",
+  //   label: "Español",
+  // },
+  {
+    value: "pt_PT",
+    label: "Português",
+  },
   {
     value: "ja",
     label: "日本語",
   },
+  // {
+  //   value: "fr",
+  //   label: "Français",
+  // },
   {
-    value: "es",
-    label: "Español",
-  },
-  {
-    value: "fr",
-    label: "Français",
+    value: "ru",
+    label: "Русский",
   },
 ];
 
@@ -73,7 +81,7 @@ const Arrow = styled.div`
   }
 `;
 
-const LanguageSelector = () => {
+const LanguageSelector = (): JSX.Element => {
   const { i18n } = useTranslation();
   const anchorRef = useRef<HTMLButtonElement>(null);
 

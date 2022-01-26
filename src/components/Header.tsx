@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
@@ -6,10 +5,11 @@ import logo from "../assets/logo/logo.svg";
 import Connector from "./Connector";
 import NavItems from "./NavItems";
 import Banner from "./Banner";
+import useWindowPosition from "../app/hooks/use-window-position";
 
-type HeaderProps = {
+interface HeaderProps {
   isSticky: boolean;
-};
+}
 
 const StyledHeader = styled.div`
   position: sticky;
@@ -60,23 +60,10 @@ const Logo = styled.img`
 `;
 
 const Header = (): JSX.Element => {
-  const [scrollPosition, setScrollPosition] = useState(0);
-
-  const handleScroll = () => {
-    const position = window.pageYOffset;
-    setScrollPosition(position);
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  const windowPosition = useWindowPosition();
 
   return (
-    <StyledHeader isSticky={scrollPosition > 40}>
+    <StyledHeader isSticky={windowPosition > 40}>
       <Banner />
       <Content>
         <Link to="/">

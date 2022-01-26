@@ -26,6 +26,9 @@ export const pools: Pool<BigNumber>[] = [
       symbol: "bDAI",
       decimals: 18,
     },
+    maxWithdrawalFee: scale(1, 18),
+    minWithdrawalFee: scale(0, 18),
+    feeDecreasePeriod: scale(10, 18),
   },
   {
     name: "bUSDC3CRV",
@@ -46,6 +49,9 @@ export const pools: Pool<BigNumber>[] = [
       symbol: "bUSDC",
       decimals: 18,
     },
+    maxWithdrawalFee: scale(1, 18),
+    minWithdrawalFee: scale(0, 18),
+    feeDecreasePeriod: scale(10, 18),
   },
   {
     name: "bETHCRV",
@@ -66,6 +72,9 @@ export const pools: Pool<BigNumber>[] = [
       decimals: 18,
       address: "0xa09021117e4f31B83140Ae16b44F634c8624b625",
     },
+    maxWithdrawalFee: scale(1, 18),
+    minWithdrawalFee: scale(0, 18),
+    feeDecreasePeriod: scale(10, 18),
   },
 ];
 
@@ -98,7 +107,7 @@ export const positions: PlainPosition[] = [
   {
     singleTopUp: ScaledNumber.fromUnscaled(1500).toPlain(),
     maxTopUp: ScaledNumber.fromUnscaled(4500).toPlain(),
-    maxGasPrice: 10 ** 10,
+    maxGasPrice: ScaledNumber.fromUnscaled(50, 9).toPlain(),
     actionToken: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
     depositToken: "0x99A77926B3FB49619DC3A1DAc18565bcB5A98b93",
     ...positionKeys[0],
@@ -106,7 +115,7 @@ export const positions: PlainPosition[] = [
   {
     singleTopUp: ScaledNumber.fromUnscaled(10_000).toPlain(),
     maxTopUp: ScaledNumber.fromUnscaled(50_000).toPlain(),
-    maxGasPrice: 5 * 10 ** 10,
+    maxGasPrice: ScaledNumber.fromUnscaled(50, 9).toPlain(),
     actionToken: "0x6b175474e89094c44da98b954eedeac495271d0f",
     depositToken: "0x25FF22De379B644BD5C2263404baC6FeE5a4b8de",
     ...positionKeys[1],

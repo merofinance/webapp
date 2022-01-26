@@ -75,12 +75,10 @@ export const numberToCompactCurrency = (value: number): string => {
 };
 
 export const formatCurrency = (number: number): string => {
-  return number.toLocaleString(undefined, {
+  return `$${number.toLocaleString(undefined, {
     maximumFractionDigits: 2,
     minimumFractionDigits: 2,
-    style: "currency",
-    currency: "USD",
-  });
+  })}`;
 };
 
 export const formatPercent = (number: number): string => {
@@ -90,7 +88,7 @@ export const formatPercent = (number: number): string => {
 export const formatCrypto = (number: number, parameters: Intl.NumberFormatOptions = {}): string => {
   let decimals = Math.max(5 - Math.floor(number ** (1 / 10)), 0);
   if (number < 0.0001) decimals = 18;
-  return number.toLocaleString("un-US", {
+  return number.toLocaleString("en-US", {
     maximumFractionDigits: decimals,
     ...parameters,
   });

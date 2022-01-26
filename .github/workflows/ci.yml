@@ -4,7 +4,7 @@ jobs:
   unit_test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
       - name: Installing Dependencies
         run: yarn
       - name: Running Unit Tests
@@ -12,7 +12,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
       - name: Installing Dependencies
         run: yarn
       - name: Building App
@@ -32,6 +32,7 @@ jobs:
         run: yarn run percy
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+          CYPRESS_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
   preview_deploy:
     runs-on: ubuntu-latest
     steps:
@@ -46,5 +47,5 @@ jobs:
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
-          expires: 7d
+          expires: 4d
           projectId: backd-ffbef

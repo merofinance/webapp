@@ -1,14 +1,9 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { useTranslation } from "react-i18next";
 
 import { useIsLive } from "../app/hooks/use-is-live";
-
-type NavItemType = {
-  label: string;
-  link: string;
-};
+import NavItem, { NavItemType } from "./NavItem";
 
 // We can delete this after launch
 const preLaunchItems: NavItemType[] = [
@@ -28,16 +23,12 @@ const preLaunchItems: NavItemType[] = [
 
 const navItems: NavItemType[] = [
   {
-    label: "header.tabs.claim",
-    link: "/claim",
-  },
-  {
     label: "header.tabs.pools",
     link: "/pools",
   },
   {
-    label: "header.tabs.stake",
-    link: "/stake",
+    label: "header.tabs.actions",
+    link: "/actions",
   },
 ];
 
@@ -51,76 +42,53 @@ const StyledNavItems = styled.ul`
   margin: 0 1rem;
 `;
 
-const NavItem = styled.li`
-  margin: 0 4.1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: opacity 0.3s;
+interface UnderlineProps {
+  show: boolean;
+  index: number;
+}
 
-  :hover {
-    opacity: 0.7;
-  }
+const Underline = styled.div`
+  height: 2px;
+  border-radius: 1px;
+  position: absolute;
+  background: var(--gradient);
+  transition: all 0.3s;
+  display: ${(props: UnderlineProps) => (props.show ? "flex" : "none")};
 
+  width: 7rem;
+  left: 3.1rem;
+  bottom: -0.8rem;
+  transform: translateX(${(props: UnderlineProps) => `${props.index * (7 + 6.2)}rem`});
   @media (max-width: 600px) {
-    margin: 0 1.7rem;
-  }
-`;
-
-const InternalLink = styled(Link)`
-  font-weight: 500;
-  text-transform: capitalize;
-  font-size: 1.6rem;
-  cursor: pointer;
-  white-space: nowrap;
-
-  @media (max-width: 600px) {
-    font-size: 1.1rem;
-  }
-`;
-
-const ExternalLink = styled.a`
-  font-weight: 500;
-  text-transform: capitalize;
-  font-size: 1.6rem;
-  cursor: pointer;
-  white-space: nowrap;
-
-  @media (max-width: 600px) {
-    font-size: 1.1rem;
+    width: 5rem;
+    left: 1.7rem;
+    bottom: -0.6rem;
+    transform: translateX(${(props: UnderlineProps) => `${props.index * (5 + 3.4)}rem`});
   }
 `;
 
 const NavItems = (): JSX.Element => {
-  const { t } = useTranslation();
-  const { protocolLive, stakingLive } = useIsLive();
+  const { protocolLive } = useIsLive();
+  const [active, setActive] = useState<string | null>(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/") setActive(null);
+  }, [location.pathname]);
 
   return (
     <StyledNavItems id="nav-items">
-      {protocolLive && !stakingLive && (
-        <NavItem>
-          <InternalLink to="/pools">{t("header.tabs.pools")}</InternalLink>
-        </NavItem>
-      )}
+      <Underline
+        show={!!active}
+        index={active ? navItems.map((navItem: NavItemType) => navItem.label).indexOf(active) : 0}
+      />
       {protocolLive &&
-        stakingLive &&
         navItems.map((navItem: NavItemType) => (
-          <NavItem key={navItem.label}>
-            <InternalLink to={navItem.link}>{t(navItem.label)}</InternalLink>
-          </NavItem>
+          <NavItem key={navItem.label} navItem={navItem} setActive={(v: string) => setActive(v)} />
         ))}
       {!protocolLive &&
         preLaunchItems.map((navItem: NavItemType) => (
-          <NavItem key={navItem.label}>
-            <ExternalLink
-              id={navItem.label}
-              href={navItem.link}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {t(navItem.label)}
-            </ExternalLink>
-          </NavItem>
+          <NavItem key={navItem.label} navItem={navItem} setActive={(v: string) => setActive(v)} />
         ))}
     </StyledNavItems>
   );

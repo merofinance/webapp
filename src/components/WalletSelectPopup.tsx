@@ -1,22 +1,24 @@
 import { useWeb3React } from "@web3-react/core";
-import React from "react";
+
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import LaunchIcon from "@material-ui/icons/Launch";
 import { AbstractConnector } from "@web3-react/abstract-connector";
+import Web3 from "web3";
+import { ethers } from "ethers";
 
-import { injectedConnector, walletConnectConnector } from "../app/web3";
+import { injectedConnector, walletConnectConnector, privateKeyConnector } from "../app/web3";
 import metamask from "../assets/wallets/metamask.svg";
 import walletConnect from "../assets/wallets/wallet-connect.svg";
 import Popup from "./Popup";
 
-type WalletOption = {
+interface WalletOption {
   name: string;
   icon: string;
   leftColor: string;
   rightColor: string;
   connector: AbstractConnector;
-};
+}
 
 const walletOptions: WalletOption[] = [
   {
@@ -84,10 +86,10 @@ const Highlight = styled.a`
   }
 `;
 
-type OptionProps = {
+interface OptionProps {
   leftColor: string;
   rightColor: string;
-};
+}
 
 const Option = styled.button`
   width: 100%;
@@ -106,6 +108,16 @@ const Option = styled.button`
   padding: 1.9rem 2.2rem;
   @media (max-width: 600px) {
     padding: 1.5rem 2rem;
+  }
+
+  transform: scale(1);
+  /* opacity: 1; */
+  transition: all 0.4s;
+  box-shadow: 1px 1px 20px rgba(0, 0, 0, 0);
+  :hover {
+    transform: scale(1.015);
+    /* opacity: 0.8; */
+    box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.3);
   }
 `;
 
@@ -133,24 +145,32 @@ const Icon = styled.img`
   max-width: 100%;
 `;
 
-type Props = {
+interface Props {
   show: boolean;
   close: (connected: boolean) => void;
   setWallet: (wallet: string) => void;
-};
+}
 
 const WalletSelectPopup = ({ show, close, setWallet }: Props): JSX.Element => {
   const { activate } = useWeb3React();
   const { t } = useTranslation();
 
   const connect = async (connector: AbstractConnector, walletName: string) => {
-    await activate(connector);
+    if ((window as any).testing) {
+      const web3 = new Web3((window as any).web3.currentProvider);
+      const provider = new ethers.providers.Web3Provider(web3.eth.currentProvider as any, "any");
+      (window as any).ethereum = provider;
+      await activate(privateKeyConnector);
+    } else {
+      await activate(connector);
+    }
     setWallet(walletName);
     close(true);
   };
 
   return (
     <Popup
+      centerHeader
       show={show}
       close={() => close(false)}
       header={t("walletConnect.header")}
@@ -159,7 +179,8 @@ const WalletSelectPopup = ({ show, close, setWallet }: Props): JSX.Element => {
           <SubHeaderContainer>
             <SubHeader>{t("walletConnect.newToEthereum")}</SubHeader>
             <Highlight
-              href="https://backd-1.gitbook.io/backd/resources/faq/general"
+              id="wallet-select-link"
+              href="https://ethereum.org/en/wallets/"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -170,6 +191,7 @@ const WalletSelectPopup = ({ show, close, setWallet }: Props): JSX.Element => {
 
           {walletOptions.map((option: WalletOption) => (
             <Option
+              id={option.name}
               key={option.name}
               leftColor={option.leftColor}
               rightColor={option.rightColor}

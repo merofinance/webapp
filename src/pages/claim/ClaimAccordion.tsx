@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
@@ -146,16 +145,15 @@ const ClaimAccordion = ({ open, toggle, rows }: Props): JSX.Element => {
           </EndContainer>
         </Header>
       }
-      content={
-        <ContentContainer>
-          <Breakdown>{t("claim.breakdown")}</Breakdown>
-          {rows.map((row: string, index: number) => (
-            <ClaimRow key={row} index={index} />
-          ))}
-        </ContentContainer>
-      }
       open={open}
-    />
+    >
+      <ContentContainer>
+        <Breakdown>{t("claim.breakdown")}</Breakdown>
+        {rows.map((row: string, index: number) => (
+          <ClaimRow key={row} index={index} />
+        ))}
+      </ContentContainer>
+    </Accordion>
   );
 };
 

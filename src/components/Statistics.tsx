@@ -1,27 +1,30 @@
-import React from "react";
 import styled from "styled-components";
+import { Optional } from "../lib/types";
+import Loader from "./Loader";
 import Tooltip from "./Tooltip";
 
 interface StatisticType {
   header: string;
   tooltip: string;
-  value: string;
+  value: Optional<string>;
+  usd?: Optional<string>;
 }
 
 const StyledStatistics = styled.div`
   width: 100%;
   display: flex;
-  padding: 2.2rem 1.6rem;
+  padding: 2.2rem 2.4rem;
 
   padding-bottom: 2.6rem;
   @media (max-width: 600px) {
     flex-direction: column;
+    padding: 1.6rem;
     padding-bottom: 1rem;
   }
 `;
 
 const Statistic = styled.div`
-  width: 23.6rem;
+  width: 33%;
   display: flex;
   flex-direction: column;
 
@@ -52,20 +55,48 @@ const Header = styled.div`
   }
 `;
 
+const ValueContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const Value = styled.div`
   font-weight: 500;
-  line-height: 2.8rem;
   letter-spacing: 0.15px;
 
   font-size: 2rem;
+  line-height: 2.8rem;
   @media (max-width: 600px) {
     font-size: 1.4rem;
+    line-height: 1.8rem;
+  }
+
+  @media only percy {
+    opacity: 0;
   }
 `;
 
-type Props = {
+const Usd = styled.div`
+  font-weight: 400;
+  letter-spacing: 0.15px;
+  opacity: 0.6;
+  margin-top: 0.1rem;
+
+  font-size: 1.7rem;
+  line-height: 2.2rem;
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+  }
+
+  @media only percy {
+    opacity: 0;
+  }
+`;
+
+interface Props {
   statistics: StatisticType[];
-};
+}
 
 const Statistics = ({ statistics }: Props): JSX.Element => {
   return (
@@ -76,7 +107,10 @@ const Statistics = ({ statistics }: Props): JSX.Element => {
             <Header>{statistic.header}</Header>
             <Tooltip content={statistic.tooltip} />
           </HeaderContaner>
-          <Value>{statistic.value}</Value>
+          <ValueContainer>
+            <Value>{statistic.value ? statistic.value : <Loader />}</Value>
+            {statistic.usd !== undefined && <Usd>{statistic.usd || <Loader />}</Usd>}
+          </ValueContainer>
         </Statistic>
       ))}
     </StyledStatistics>

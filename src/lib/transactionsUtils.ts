@@ -2,6 +2,7 @@ import { ContractTransaction } from "@ethersproject/contracts";
 import { batch } from "react-redux";
 import { AppDispatch } from "../app/store";
 import {
+  fromPlainPosition,
   parseTransactionReceipt,
   Position,
   TransactionDescription,
@@ -9,6 +10,8 @@ import {
 } from "./types";
 import { setError } from "../state/errorSlice";
 import { addTransaction, confirmTransaction } from "../state/transactionsSlice";
+import { ScaledNumber } from "./scaled-number";
+import { shortenAddress } from "./text";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function formatError(err: any): string {
@@ -25,7 +28,7 @@ export async function handleTransactionConfirmation(
   const txInfo = {
     hash: tx.hash,
     chainId: tx.chainId,
-    confirmations: tx.confirmations,
+    confirmations: 0,
     description: txDescription,
     blockNumber: tx.blockNumber,
     timestamp: tx.timestamp || new Date().getTime(),
@@ -48,29 +51,29 @@ export async function handleTransactionConfirmation(
 export const formatTransactionInfo = (txDescription: TransactionDescription): string => {
   switch (txDescription.action) {
     case "Approve":
-      return `${txDescription.args?.amount.toLocaleString()} ${txDescription.args?.token.symbol}`;
+      return txDescription.args?.token.symbol;
     case "Deposit":
-      return `${txDescription.args?.amount.toLocaleString()} ${
+      return `${ScaledNumber.fromPlain(txDescription.args?.amount).toCryptoString()} ${
         txDescription.args?.pool.underlying.symbol
       }`;
     case "Withdraw":
-      return `${txDescription.args?.amount.toLocaleString()} ${
-        txDescription.args?.pool.lpToken.symbol
+      return `${ScaledNumber.fromPlain(txDescription.args?.amount).toCryptoString()} ${
+        txDescription.args?.pool.underlying.symbol
       }`;
     case "Unstake":
-      return `${txDescription.args?.amount.toLocaleString()} ${
+      return `${ScaledNumber.fromPlain(txDescription.args?.amount).toCryptoString()} ${
         txDescription.args?.pool.lpToken.symbol
       }`;
     case "Register": {
-      const position: Position = txDescription.args?.position;
-      return `${position.account.slice(0, 8)}... on ${position.protocol}`;
+      const position: Position = fromPlainPosition(txDescription.args?.plainPosition);
+      return `${shortenAddress(position.account, 8)} ${position.protocol}`;
     }
     case "Remove": {
-      const position: Position = txDescription.args?.position;
-      return `${position.account.slice(0, 8)}... on ${position.protocol}`;
+      const position: Position = fromPlainPosition(txDescription.args?.plainPosition);
+      return `${shortenAddress(position.account, 8)} ${position.protocol}`;
     }
     default:
-      return "";
+      throw Error("errors.transactionType");
   }
 };
 

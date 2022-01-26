@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 import Seo from "../../components/Seo";
 import StakeSummary from "./StakeSummary";
 import StakeAccordion from "./StakeAccodion";
+import { Optional } from "../../lib/types";
 
 const pools: string[] = ["meow", "woof"];
 
-const StyledPoolsPage = styled.div`
+const StyledStakePage = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -56,16 +57,13 @@ const ArrowHeader = styled.div`
 
 const StakePage = (): JSX.Element => {
   const { t } = useTranslation();
-  const [activePool, setActivePool] = useState<number | null>(0);
+  const [activePool, setActivePool] = useState<Optional<number>>(0);
 
   const isOpen = (index: number): boolean => activePool !== null && activePool === index;
 
   return (
-    <StyledPoolsPage>
-      <Seo
-        title="Stake BKD & Earn Rewards"
-        description="Earn rewards and protocol profits in addition to aggregated yield from yield farming strategies"
-      />
+    <StyledStakePage>
+      <Seo title={t("metadata.stake.title")} description={t("metadata.stake.description")} />
       <StakeSummary />
       <Headers>
         <Header>{t("headers.asset")}</Header>
@@ -85,7 +83,7 @@ const StakePage = (): JSX.Element => {
           }}
         />
       ))}
-    </StyledPoolsPage>
+    </StyledStakePage>
   );
 };
 

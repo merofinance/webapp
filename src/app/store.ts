@@ -18,25 +18,29 @@ import {
 } from "redux-persist";
 
 import poolsReducer from "../state/poolsListSlice";
+import lendingReducer from "../state/lendingSlice";
 import userReducer from "../state/userSlice";
 import errorReducer from "../state/errorSlice";
 import positionsReducer from "../state/positionsSlice";
 import transactionsReducer from "../state/transactionsSlice";
 import uiReducer from "../state/uiSlice";
+import helpReducer from "../state/helpSlice";
 
 const rootReducer = combineReducers({
   pools: poolsReducer,
+  lending: lendingReducer,
   user: userReducer,
   positions: positionsReducer,
   transactions: transactionsReducer,
   error: errorReducer,
   ui: uiReducer,
+  help: helpReducer,
 });
 
 const persistConfig = {
   key: "root",
   version: 1,
-  blacklist: ["error"],
+  blacklist: ["error", "user", "positions", "transactions", "help"],
   storage,
 };
 

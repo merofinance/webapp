@@ -1,5 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
-import React from "react";
+
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import LaunchIcon from "@material-ui/icons/Launch";
@@ -53,6 +53,10 @@ const Address = styled(GradientText)`
   font-weight: 500;
   line-height: 2.8rem;
   letter-spacing: 0.15px;
+
+  @media only percy {
+    opacity: 0;
+  }
 `;
 
 const NetworkContainer = styled.div`
@@ -81,7 +85,7 @@ interface Props {
   wallet: string;
 }
 
-const ConnectionDetails = ({ show, close, changeWallet, wallet }: Props) => {
+const ConnectionDetails = ({ show, close, changeWallet, wallet }: Props): JSX.Element => {
   const { t } = useTranslation();
   const { account, chainId } = useWeb3React();
 
@@ -95,6 +99,7 @@ const ConnectionDetails = ({ show, close, changeWallet, wallet }: Props) => {
 
   return (
     <Popup
+      id="connection-details"
       small
       show={show}
       close={close}
@@ -102,11 +107,13 @@ const ConnectionDetails = ({ show, close, changeWallet, wallet }: Props) => {
       content={
         <Content>
           <WalletContainer>
-            <Wallet>{t("walletConnect.details.connected", { wallet: t(wallet) })}</Wallet>
+            <Wallet id="account-details-wallet">
+              {t("walletConnect.details.connected", { wallet: t(wallet) })}
+            </Wallet>
             <Button
               tiny
               text={t("walletConnect.details.change")}
-              background="#252140"
+              background="var(--bg-light)"
               click={changeWallet}
             />
           </WalletContainer>
@@ -115,7 +122,7 @@ const ConnectionDetails = ({ show, close, changeWallet, wallet }: Props) => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Address>{shortenAddress(account || "", 24)}</Address>
+            <Address id="account-details-address">{shortenAddress(account || "", 24)}</Address>
             <LaunchIcon
               fontSize="medium"
               style={{ fill: "var(--secondary)", transform: "translateY(0px)" }}
@@ -123,7 +130,7 @@ const ConnectionDetails = ({ show, close, changeWallet, wallet }: Props) => {
           </AddressContainer>
           <NetworkContainer>
             <PulsingDot success={chainId === 1} />
-            <Network>{networkName()}</Network>
+            <Network id="account-details-network">{networkName()}</Network>
           </NetworkContainer>
           <RecentTransactions />
         </Content>

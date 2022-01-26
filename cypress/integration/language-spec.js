@@ -1,25 +1,23 @@
-import { percySnapshot } from "../support";
-
 const isEnglish = () => {
   cy.get("h1").contains("Reactive Liquidity");
   cy.get("h3").contains(
-    "A trustless and interest generating protocol designed to prevent collateralized loans from becoming liquidatable."
+    "Maximize the power of your assets and start earning yield"
   );
-  cy.get("#how-it-works-2").contains("Stake to Earn Rewards");
+  cy.get("#how-it-works-2").contains("Protect & Earn");
 };
 
 const isChinese = () => {
   cy.get("h1").contains("响应式流动资产");
   cy.get("h3").contains("一个去信任化利息生成，旨在防止担保贷款被清算的保护协议");
-  cy.get("#how-it-works-2").contains("质押盈利");
+  cy.get("#how-it-works-2").contains("安全放心地赚取");
 };
 
 const isJapanese = () => {
   cy.get("h1").contains("リアクティブ流動資産");
   cy.get("h3").contains(
-    "担保付ローンを清算から防ぐために設計された、管理者不在の利子生成プロトコルです。"
+    "お客様の資産を最大限活用し、Backdの流動性プールで利回りを稼ぎ始めましょう。"
   );
-  cy.get("#how-it-works-2").contains("利益獲得のための預け入れ");
+  cy.get("#how-it-works-2").contains("安全に稼ぐ");
 };
 
 const isSpanish = () => {
@@ -27,7 +25,7 @@ const isSpanish = () => {
   cy.get("h3").contains(
     "Un protocolo trustless y generador de intereses diseñado para prevenir que préstamos colaterizados se conviertan en liquidables."
   );
-  cy.get("#how-it-works-2").contains("Deposita para obtener recompensas");
+  cy.get("#how-it-works-2").contains("Protege y Gana");
 };
 
 const isFrench = () => {
@@ -35,7 +33,23 @@ const isFrench = () => {
   cy.get("h3").contains(
     "Un protocole qui génére des intérêts sans nécessiter de tiers de confiance. Conçu pour éviter la liquidation de prêts garantis."
   );
-  cy.get("#how-it-works-2").contains("Stakez pour toucher des primes");
+  cy.get("#how-it-works-2").contains("Protéger et gagner");
+};
+
+const isPortuguese = () => {
+  cy.get("h1").contains("Liquidez reativa");
+  cy.get("h3").contains(
+    "Maximize o poder de seus ativos e comece a ganhar rendimento com as pools de liquidez do Backd."
+  );
+  cy.get("#how-it-works-2").contains("Proteja e ganhe");
+};
+
+const isRussian = () => {
+  cy.get("h1").contains("Реактивная ликвидность");
+  cy.get("h3").contains(
+    "Максимизируйте мощность своих активов и начните получать прибыль с помощью пулов ликвидности Backd."
+  );
+  cy.get("#how-it-works-2").contains("Защитите и Заработайте");
 };
 
 describe("Setting Language with Query Parameter", () => {
@@ -64,6 +78,16 @@ describe("Setting Language with Query Parameter", () => {
     isFrench();
   });
 
+  it("Should Show Portuguese with pt_PT Parameter", () => {
+    cy.visit("/?lng=pt_PT");
+    isPortuguese();
+  });
+
+  it("Should Show Russian with ru Parameter", () => {
+    cy.visit("/?lng=ru");
+    isRussian();
+  });
+
   it("Should Show English with EN Parameter", () => {
     cy.visit("/?lng=en");
     isEnglish();
@@ -88,10 +112,6 @@ describe("Language Switching", () => {
     isChinese();
   });
 
-  it("Percy Should Screenshot Chinese Landing Page", () => {
-    percySnapshot();
-  });
-
   it("Should Change Language to Japanese", () => {
     cy.get('[id="language-selector"]').click();
     cy.get('[id="ja"]').click();
@@ -101,35 +121,41 @@ describe("Language Switching", () => {
     isJapanese();
   });
 
-  it("Percy Should Screenshot Japanese Landing Page", () => {
-    percySnapshot();
-  });
-
-  it("Should Change Language to Spanish", () => {
+  it("Should Change Language to Russian", () => {
     cy.get('[id="language-selector"]').click();
-    cy.get('[id="es"]').click();
+    cy.get('[id="ru"]').click();
   });
 
-  it("Should Show Spanish", () => {
-    isSpanish();
+  it("Should Show Russian", () => {
+    isRussian();
   });
 
-  it("Percy Should Screenshot Spanish Landing Page", () => {
-    percySnapshot();
-  });
-
-  it("Should Change Language to French", () => {
+  it("Should Change Language to Portuguese", () => {
     cy.get('[id="language-selector"]').click();
-    cy.get('[id="fr"]').click();
+    cy.get('[id="pt_PT"]').click();
   });
 
-  it("Should Show French", () => {
-    isFrench();
+  it("Should Show Portuguese", () => {
+    isPortuguese();
   });
 
-  it("Percy Should Screenshot French Landing Page", () => {
-    percySnapshot();
-  });
+  // it("Should Change Language to Spanish", () => {
+  //   cy.get('[id="language-selector"]').click();
+  //   cy.get('[id="es"]').click();
+  // });
+
+  // it("Should Show Spanish", () => {
+  //   isSpanish();
+  // });
+
+  // it("Should Change Language to French", () => {
+  //   cy.get('[id="language-selector"]').click();
+  //   cy.get('[id="fr"]').click();
+  // });
+
+  // it("Should Show French", () => {
+  //   isFrench();
+  // });
 
   it("Should Change Language back to English", () => {
     cy.get("#language-selector").click();

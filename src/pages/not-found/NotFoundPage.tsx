@@ -1,7 +1,6 @@
-import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 import { GradientLink } from "../../styles/GradientText";
 import { useDevice } from "../../app/hooks/use-device";
@@ -113,16 +112,16 @@ const NotFoundPage = (): JSX.Element => {
       <Number id="not-found-number">{t("notFound.number")}</Number>
       <Header>{isMobile ? t("notFound.header.mobile") : t("notFound.header.desktop")}</Header>
       <SubHeader>
-        {t("notFound.subHeader.start")}{" "}
-        <GetInTouch
-          id="not-found-support"
-          href="https://discord.gg/jpGvaFV3Rv"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {t("notFound.subHeader.getInTouch")}
-        </GetInTouch>{" "}
-        {t("notFound.subHeader.end")}
+        <Trans i18nKey="notFound.subHeader">
+          <GetInTouch
+            id="not-found-support"
+            href="https://discord.gg/jpGvaFV3Rv"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            link
+          </GetInTouch>
+        </Trans>
       </SubHeader>
       <LinkContainer>
         <InternalLink id="not-found-home" to="/">

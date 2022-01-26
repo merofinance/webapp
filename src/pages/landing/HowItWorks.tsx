@@ -1,44 +1,26 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
-import { Header2, Header4 } from "../../styles/Headers";
+import { Header2, Header4, Header5 } from "../../styles/Headers";
 import Radio, { RadioOptionType } from "../../components/Radio";
+import Button from "../../components/Button";
 
-type CardType = {
+interface CardType {
   number: string;
   header: string;
   description: string;
-};
+  depositButton?: boolean;
+}
 
 const cardsList: CardType[][] = [
-  [
-    {
-      number: "howItWorks.categories.earnYield.cards.deposit.number",
-      header: "howItWorks.categories.earnYield.cards.deposit.header",
-      description: "howItWorks.categories.earnYield.cards.deposit.description",
-    },
-    {
-      number: "howItWorks.categories.earnYield.cards.earn.number",
-      header: "howItWorks.categories.earnYield.cards.earn.header",
-      description: "howItWorks.categories.earnYield.cards.earn.description",
-    },
-    {
-      number: "howItWorks.categories.earnYield.cards.stake.number",
-      header: "howItWorks.categories.earnYield.cards.stake.header",
-      description: "howItWorks.categories.earnYield.cards.stake.description",
-    },
-    {
-      number: "howItWorks.categories.earnYield.cards.claim.number",
-      header: "howItWorks.categories.earnYield.cards.claim.header",
-      description: "howItWorks.categories.earnYield.cards.claim.description",
-    },
-  ],
   [
     {
       number: "howItWorks.categories.earnAndProtect.cards.deposit.number",
       header: "howItWorks.categories.earnAndProtect.cards.deposit.header",
       description: "howItWorks.categories.earnAndProtect.cards.deposit.description",
+      depositButton: true,
     },
     {
       number: "howItWorks.categories.earnAndProtect.cards.register.number",
@@ -56,6 +38,29 @@ const cardsList: CardType[][] = [
       description: "howItWorks.categories.earnAndProtect.cards.claim.description",
     },
   ],
+  [
+    {
+      number: "howItWorks.categories.earnYield.cards.deposit.number",
+      header: "howItWorks.categories.earnYield.cards.deposit.header",
+      description: "howItWorks.categories.earnYield.cards.deposit.description",
+      depositButton: true,
+    },
+    {
+      number: "howItWorks.categories.earnYield.cards.earn.number",
+      header: "howItWorks.categories.earnYield.cards.earn.header",
+      description: "howItWorks.categories.earnYield.cards.earn.description",
+    },
+    {
+      number: "howItWorks.categories.earnYield.cards.stake.number",
+      header: "howItWorks.categories.earnYield.cards.stake.header",
+      description: "howItWorks.categories.earnYield.cards.stake.description",
+    },
+    {
+      number: "howItWorks.categories.earnYield.cards.claim.number",
+      header: "howItWorks.categories.earnYield.cards.claim.header",
+      description: "howItWorks.categories.earnYield.cards.claim.description",
+    },
+  ],
 ];
 
 const StyledHowItWorks = styled.div`
@@ -70,9 +75,9 @@ const StyledHowItWorks = styled.div`
   }
 `;
 
-type CardContainerType = {
+interface CardContainerType {
   show: boolean;
-};
+}
 
 const CardContainer = styled.div`
   width: 100%;
@@ -87,6 +92,7 @@ const CardContainer = styled.div`
 `;
 
 const Card = styled.div`
+  position: relative;
   flex: 1;
   margin: 0 0.8rem;
   background-color: rgba(34, 31, 55, 0.6);
@@ -95,6 +101,7 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
   backdrop-filter: blur(8px);
+  padding-bottom: 5.3rem;
 
   @media (max-width: 713px) {
     flex-direction: column;
@@ -128,7 +135,7 @@ const Body = styled.p`
   }
 `;
 
-const Header = styled(Header4)`
+const Header = styled(Header5)`
   text-align: left;
   margin-bottom: 1rem;
 
@@ -137,24 +144,37 @@ const Header = styled(Header4)`
   }
 `;
 
+const ButtonContainer = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+
+  @media (max-width: 1280px) {
+    display: none;
+  }
+`;
+
 const HowItWorks = (): JSX.Element => {
   const { t } = useTranslation();
-  const [category, setCategory] = useState("earn");
+  const navigate = useNavigate();
+  const [category, setCategory] = useState("protect");
 
   const categories: RadioOptionType[] = [
     {
-      value: "earn",
-      label: t("howItWorks.categories.earnYield.tabName"),
-    },
-    {
       value: "protect",
       label: t("howItWorks.categories.earnAndProtect.tabName"),
+    },
+    {
+      value: "earn",
+      label: t("howItWorks.categories.earnYield.tabName"),
     },
   ];
 
   return (
     <StyledHowItWorks>
       <Header2>{t("howItWorks.header")}</Header2>
+      <Header4>{t("howItWorks.subHeader")}</Header4>
       <Radio
         options={categories}
         active={category}
@@ -170,6 +190,16 @@ const HowItWorks = (): JSX.Element => {
               <Number>{t(card.number)}</Number>
               <Header>{t(card.header)}</Header>
               <Body>{t(card.description)}</Body>
+              {card.depositButton && (
+                <ButtonContainer>
+                  <Button
+                    primary
+                    large
+                    text={t("howItWorks.deposit")}
+                    click={() => navigate("/pools")}
+                  />
+                </ButtonContainer>
+              )}
             </Card>
           ))}
         </CardContainer>

@@ -1,151 +1,94 @@
 {
-  "header": {
-    "tabs": {
-      "claim": "reclamar",
-      "pools": "fondos",
-      "stake": "deposita BKD",
-      "docs": "docs",
-      "blog": "blog",
-      "newsletter": "newsletter"
+  "amountInput": {
+    "approve": "Aprobar {{asset}}",
+    "available": "Disponible: {{amount}}",
+    "enter": "Introducir Importe",
+    "max": "max",
+    "validation": {
+      "exceedsBalance": "El importe supera el saldo disponible",
+      "invalid": "Número inválido",
+      "positive": "El importe debe ser un número positivo"
     }
   },
-  "walletConnect": {
-    "connectWallet": "Conectar cartera",
-    "header": "Conectar cartera",
-    "newToEthereum": "Nuevo en Ethereum?",
-    "aboutWallets": "Aprende sobre carteras",
-    "wallets": {
-      "metaMask": "MetaMask",
-      "walletConnect": "WalletConnect"
-    },
-    "details": {
-      "header": "Account",
-      "connected": "Connected with {{wallet}}",
-      "change": "Change",
-      "recentTransactions": "Recent transactions",
-      "clear": "Clear",
-      "empty": "Your transactions will appear here...",
-      "network": {
-        "unknown": "Unknown Network",
-        "ethereum": "Ethereum Mainet",
-        "chainId": "Chain id {{id}}",
-        "testnet": "Ethereum {{network}} Testnet"
-      }
+  "banner": {
+    "testnet": {
+      "blogPost": "el blog post",
+      "connect": "Conecta tu cartera para empezar o lea",
+      "live": "🎉 Backd está disponible en Kovan Testnet."
     }
-  },
-  "landingPage": {
-    "header": "Liquidez reactiva",
-    "subHeader": "Un protocolo trustless y generador de intereses diseñado para prevenir que préstamos colaterizados se conviertan en liquidables.",
-    "viewPools": "ver fondos"
   },
   "benefits": {
     "avoidLiquidation": {
-      "header": "Evitar Liquidación",
-      "description": "La liquidez depositada y marcada como colateral de back-up en Backd será transformada automaticamente cuando sea necesario realizar top-ups de colateral"
+      "description": "La liquidez depositada y marcada como colateral de back-up en Backd será transformada automaticamente cuando sea necesario realizar top-ups de colateral",
+      "header": "Evitar Liquidación"
     },
     "earnYield": {
-      "header": "Consigue rendimiento",
-      "description": "Consigue intereses sobre tu liqudiez mediante estrategias de yield-farming basadas en Curve y Convex."
+      "description": "Consigue intereses sobre tu liqudiez mediante estrategias de yield-farming basadas en Curve y Convex.",
+      "header": "Consigue rendimiento"
     },
     "feeShare": {
-      "header": "Distribución de Comisiones",
-      "description": "Una pequeña comisión sobre el colateral de top-up que se repartirá entre los proveedores de liquidez (LPs)"
+      "description": "Una pequeña comisión sobre el colateral de top-up que se repartirá entre los proveedores de liquidez (LPs)",
+      "header": "Distribución de Comisiones"
+    },
+    "reactiveLiquidity": {
+      "description": "Create Actions to automate your liquidity to where it is needed most.",
+      "header": "Liquidez reactiva"
     },
     "readMore": "Leer Más"
   },
-  "howItWorks": {
-    "header": "Como funciona?",
-    "categories": {
-      "earnYield": {
-        "tabName": "Obten rendimiento",
-        "cards": {
-          "deposit": {
-            "number": "01",
-            "header": "Deposita liquidez",
-            "description": "Deposita fondos en los fondos de liquidez de Backd y recibe tokens de LP"
-          },
-          "earn": {
-            "number": "02",
-            "header": "Obtener rendimiento",
-            "description": "Obten rendimiento compuesto de comisiones del protocolo "
-          },
-          "stake": {
-            "number": "03",
-            "header": "Deposita para obtener recompensas",
-            "description": "Deposita tus tokens de LP para recibir recompensas de Backd"
-          },
-          "claim": {
-            "number": "04",
-            "header": "Retira en cualquier momento",
-            "description": "Retira en cualquier momento y reclamana tus recompensas de Backd en cualquier momento"
-          }
-        }
-      },
-      "earnAndProtect": {
-        "tabName": "Gana y protege",
-        "cards": {
-          "deposit": {
-            "number": "01",
-            "header": "Deposita liquidez y empieza a obtener rendimiento",
-            "description": "Deposit funds into Backd liquidity pools and receive pool LP tokens "
-          },
-          "register": {
-            "number": "02",
-            "header": "Registra prestamos on-chain",
-            "description": "Registra prestamos on-chain de Compound o Aave para recibir top-ups de colateral y depositar tus tokens de LP para obtener recompensas de Backd"
-          },
-          "protect": {
-            "number": "03",
-            "header": "Protege y Gana",
-            "description": "Consigue rendimientos compuestos y comisiones de protocolo mientras los tokens de LP se aprecian, y los keepers monitorizan tus prestamos y transfieren tu capital para evitar liquidaciones"
-          },
-          "claim": {
-            "number": "04",
-            "header": "Retira en cualquier momento",
-            "description": "Actualiza o anula una posición, retira tokens de LP o hac claim de las recompensas de Backd en cualquier momento"
-          }
-        }
-      }
-    }
+  "claim": {
+    "breakdown": "Breakdown of claimable earnings:",
+    "buttons": {
+      "claim": "Claim",
+      "claimAll": "Claim all",
+      "claimAllAndStake": "Claim all & Stake",
+      "claimAndStake": "Claim & Stake"
+    },
+    "helpText": "Where are my pool rewards?",
+    "overview": {
+      "claimable": "claimable",
+      "deposits": "your total deposits"
+    },
+    "pool": "{{asset}} pool"
   },
-  "supportedBy": {
-    "header": "Apoyado por"
+  "components": {
+    "back": "Back",
+    "cancel": "Cancel",
+    "close": "Close",
+    "confirm": "Confirm",
+    "dropdownChoose": "choose",
+    "moreInDocs": "Find out more in the docs",
+    "overview": "Overview"
   },
-  "auditedBy": {
-    "preLaunchHeader": "Auditoria en progreso",
-    "header": "Auditado por",
-    "description": "Dirigido por expertos en seguridad de ETH Zurich y con la confianza de 85+ compañias y corporaciones blockchain",
-    "viewReport": "Ver reporte"
-  },
-  "joinCommunity": {
-    "header": "Únete a la comunidad",
-    "socials": {
-      "discord": "Discord",
-      "twitter": "Twitter",
-      "github": "GitHub"
-    }
-  },
-  "getStarted": {
-    "header": "Empieza aquí",
-    "description": "Deposita liquidez y empieza a obtener rendimiento"
+  "errors": {
+    "fetchPrices": "failed to fetch prices: {{error}}",
+    "header": "An Error Occured",
+    "invalidNumber": "Not a valid number",
+    "negativeNumber": "Negative numbers not supported",
+    "positionCreation": "Position creation failed",
+    "support": "Please try again in a moment. If the error persists, you can contact us on",
+    "transactionType": "Transaction type not supported",
+    "tryTestnet": "Backd is not yet live on mainnet. You can test it now on Kovan by switching networks.",
+    "unsupportedNetwork": "Network not supported",
+    "wrongNetwork": "Wrong network selected, please use a development network"
   },
   "footer": {
     "community": {
       "header": "Comunidad",
       "links": {
         "discord": "Discord",
-        "twitter": "Twitter",
         "github": "GitHub",
-        "telegram": "Telegram Chat"
+        "telegram": "Telegram Chat",
+        "twitter": "Twitter"
       }
     },
     "resources": {
       "header": "Recursos",
       "links": {
-        "litepaper": "Litepaper",
-        "docs": "Docs",
         "blog": "Blog",
-        "factSheet": "Hoja Informativa"
+        "docs": "Docs",
+        "factSheet": "Hoja Informativa",
+        "litepaper": "Litepaper"
       }
     },
     "updates": {
@@ -154,6 +97,275 @@
         "newsletter": "Newsletter",
         "telegram": "Telegram Ann."
       }
+    }
+  },
+  "futureActions": {
+    "actions": {
+      "curveImbalance": {
+        "description": "Keepers can detect when LP pools become imbalanaced and remove liquidity for you on your behalf - saving you from substantial losses.",
+        "header": "Curve Imbalance Protection"
+      },
+      "limitOrders": {
+        "description": "Once a limit order can be filled, a Keeper can withdraw the required funds from yield pools and execute the trade on the AMM.",
+        "header": "AMM Limit Orders"
+      },
+      "nfts": {
+        "description": "Create a limit order for an NFT with a specific set of rarity traits. Once the price drops within your desired amount, a purchase Action is executed and liquidity is removed from Backd’s yield pools.",
+        "header": "Limit Orders for NFTs"
+      },
+      "propose": {
+        "description": "Actions can be added through the Backd DAO. Join the Backd community and propose a new action!",
+        "header": "Propose your own"
+      },
+      "uniswap": {
+        "description": "Backd Keepers detect when the price has moved outside of your defined range and move the liquidity into Backd’s yield pools. Once the price is back within range, Keepers move your liquidity back into Uniswap.",
+        "header": "Uniswap V3 LP Management"
+      }
+    },
+    "header": "future actions",
+    "subHeader": "Building out essential DeFi infrastructure"
+  },
+  "getStarted": {
+    "description": "Deposita liquidez y empieza a obtener rendimiento",
+    "header": "Empieza aquí"
+  },
+  "header": {
+    "tabs": {
+      "blog": "blog",
+      "claim": "reclamar",
+      "docs": "docs",
+      "newsletter": "newsletter",
+      "pools": "fondos",
+      "stake": "deposita BKD"
+    }
+  },
+  "headers": {
+    "apr": "APR",
+    "apy": "APY",
+    "asset": "Asset",
+    "claimable": "Claimable (USD)",
+    "deposits": "Your deposits",
+    "staked": "Staked",
+    "tvl": "TVL"
+  },
+  "howItWorks": {
+    "categories": {
+      "earnAndProtect": {
+        "cards": {
+          "claim": {
+            "description": "Actualiza o anula una posición, retira tokens de LP o hac claim de las recompensas de Backd en cualquier momento",
+            "header": "Retira en cualquier momento",
+            "number": "04"
+          },
+          "deposit": {
+            "description": "Deposit funds into Backd liquidity pools and receive pool LP tokens ",
+            "header": "Deposita liquidez y empieza a obtener rendimiento",
+            "number": "01"
+          },
+          "protect": {
+            "description": "Consigue rendimientos compuestos y comisiones de protocolo mientras los tokens de LP se aprecian, y los keepers monitorizan tus prestamos y transfieren tu capital para evitar liquidaciones",
+            "header": "Protege y Gana",
+            "number": "03"
+          },
+          "register": {
+            "description": "Registra prestamos on-chain de Compound o Aave v2 para recibir top-ups de colateral y depositar tus tokens de LP para obtener recompensas de Backd",
+            "header": "Registra prestamos on-chain",
+            "number": "02"
+          }
+        },
+        "tabName": "Gana y protege"
+      },
+      "earnYield": {
+        "cards": {
+          "claim": {
+            "description": "Retira en cualquier momento y reclamana tus recompensas de Backd en cualquier momento",
+            "header": "Retira en cualquier momento",
+            "number": "04"
+          },
+          "deposit": {
+            "description": "Deposita fondos en los fondos de liquidez de Backd y recibe tokens de LP",
+            "header": "Deposita liquidez",
+            "number": "01"
+          },
+          "earn": {
+            "description": "Obten rendimiento compuesto de comisiones del protocolo ",
+            "header": "Obtener rendimiento",
+            "number": "02"
+          },
+          "stake": {
+            "description": "Deposita tus tokens de LP para recibir recompensas de Backd",
+            "header": "Deposita para obtener recompensas",
+            "number": "03"
+          }
+        },
+        "tabName": "Obten rendimiento"
+      }
+    },
+    "deposit": "Deposit now",
+    "header": "Como funciona?",
+    "subHeader": "Protect your loans from liquidation"
+  },
+  "joinCommunity": {
+    "header": "Únete a la comunidad",
+    "socials": {
+      "discord": "Discord",
+      "github": "GitHub",
+      "twitter": "Twitter"
+    }
+  },
+  "landingPage": {
+    "changeNetwork": "Try on Testnet",
+    "connectWallet": "Conectar cartera",
+    "header": "Liquidez reactiva",
+    "subHeader": "Un protocolo trustless y generador de intereses diseñado para prevenir que préstamos colaterizados se conviertan en liquidables.",
+    "unsupportedNetwork": "Unsupported Network",
+    "viewPools": "ver fondos"
+  },
+  "notFound": {
+    "header": {
+      "desktop": "Page could not be found.",
+      "mobile": "Page not found"
+    },
+    "links": {
+      "claim": "claim page",
+      "docs": "docs",
+      "home": "home page",
+      "pools": "view all pools"
+    },
+    "number": "404",
+    "subHeader": "Try one of the handy links below - or <0>get in touch</0> if you believe there is an issue."
+  },
+  "pool": {
+    "information": {
+      "apy": {
+        "header": "APY",
+        "tooltip": "The current annual percent yield earned by pool LPs"
+      },
+      "header": "Pool Information",
+      "strategy": {
+        "details": {
+          "readMore": "Read More",
+          "viewContract": "View Contract"
+        },
+        "header": "Strategy",
+        "tooltip": "The current protocol funds are allocated to for yield farming strategies"
+      },
+      "tvl": {
+        "header": "Pool TVL",
+        "tooltip": "The market capitalization of assets held in the pool (total value locked)"
+      }
+    },
+    "overview": "Deposit {{asset}} to begin earning yield via the {{strategy}} strategy. Once you have deposited, you can make your liquidity reactive by opening a top-up position.",
+    "statistics": {
+      "deposits": {
+        "header": "Your deposits",
+        "tooltip": "The current value of your assets held in the pools"
+      }
+    },
+    "tabs": {
+      "deposit": {
+        "action": "Deposit and Stake",
+        "header": "Deposit {{asset}}",
+        "input": {
+          "labelDesktop": "Enter an amount of {{asset}} to deposit",
+          "labelMobile": "Enter amount to deposit"
+        },
+        "tab": "Deposit"
+      },
+      "withdraw": {
+        "action": "Withdraw {{asset}}",
+        "header": "Withdraw {{asset}}",
+        "input": {
+          "labelDesktop": "Enter an amount of {{asset}} to withdraw",
+          "labelMobile": "Enter amount to withdraw"
+        },
+        "tab": "Withdraw"
+      }
+    }
+  },
+  "pools": {
+    "deposit": "deposit",
+    "header": "All pools",
+    "information": {
+      "apy": {
+        "header": "Average APY",
+        "tooltip": "The average annual percent yield over a 30 day period"
+      },
+      "header": "Pools Information",
+      "revenue": {
+        "header": "Revenue",
+        "tooltip": "The total value of fees generated by the Backd protocol"
+      },
+      "tvl": {
+        "header": "Platform TVL",
+        "tooltip": "The market capitalization of total assets held in Backd liquidity pools (total value locked)"
+      }
+    },
+    "overview": "Backd’s single-asset pools aggregate yield across strategies. After depositing an asset, register a top-up position to protect from liquidation on supported collateralized lending protocols.",
+    "preview": {
+      "header": "yield farming",
+      "subHeader": "Begin earning yield immediately"
+    },
+    "statistics": {
+      "deposits": {
+        "header": "Your deposits",
+        "tooltip": "The current value of your assets held in Backd liquidity pools"
+      },
+      "rewards": {
+        "header": "Rewards accrued",
+        "tooltip": "The current value of earned rewards that have yet to be claimed"
+      }
+    }
+  },
+  "stake": {
+    "overview": {
+      "claimable": "claimable",
+      "deposits": "your total deposits"
+    },
+    "tabs": {
+      "stake": {
+        "action": "Deposit and Stake",
+        "description": "Stake BKD and earn a share in x% of platform revenue, paid out in bkdDAI tokens.",
+        "header": "stake",
+        "inputDesktop": "Enter an amount of BKD to stake",
+        "inputMobile": "Amount of BKD to stake",
+        "more": "More"
+      },
+      "unstake": {
+        "action": "Unstake and Withdraw",
+        "description": "Stake BKD and earn a share in x% of platform revenue, paid out in bkdDAI tokens.",
+        "header": "unstake",
+        "inputDesktop": "Enter an amount of BKD to unstake",
+        "inputMobile": "Amount of BKD to unstake",
+        "more": "More"
+      }
+    }
+  },
+  "supportedBy": {
+    "header": "Apoyado por"
+  },
+  "walletConnect": {
+    "aboutWallets": "Aprende sobre carteras",
+    "connectWallet": "Conectar cartera",
+    "details": {
+      "change": "Change",
+      "clear": "Clear",
+      "connected": "Connected with {{wallet}}",
+      "empty": "Your transactions will appear here...",
+      "header": "Account",
+      "network": {
+        "chainId": "Chain id {{id}}",
+        "ethereum": "Ethereum Mainet",
+        "testnet": "Ethereum {{network}} Testnet",
+        "unknown": "Unknown Network"
+      },
+      "recentTransactions": "Recent transactions"
+    },
+    "header": "Conectar cartera",
+    "newToEthereum": "Nuevo en Ethereum?",
+    "wallets": {
+      "metaMask": "MetaMask",
+      "walletConnect": "WalletConnect"
     }
   }
 }

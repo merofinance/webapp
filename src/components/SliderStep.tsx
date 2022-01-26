@@ -1,14 +1,12 @@
-import React from "react";
 import styled from "styled-components";
 
-type StepProps = {
+interface StepProps {
   percent: string;
   active: boolean;
-};
+}
 
 const Step = styled.button`
   position: absolute;
-  bottom: 1.4rem;
   left: ${(props: StepProps) => props.percent};
   transform: translateX(-50%);
   width: 15px;
@@ -21,10 +19,18 @@ const Step = styled.button`
 
   transition: all 0.2s;
 
+  bottom: 1.4rem;
+  @media (max-width: 600px) {
+    bottom: 2.1rem;
+  }
+
   :hover {
     width: 20px;
     height: 20px;
     bottom: 1.1rem;
+    @media (max-width: 600px) {
+      bottom: 1.8rem;
+    }
 
     > div {
       transform: scale(1) translateY(-10px);
@@ -60,18 +66,19 @@ const PercentText = styled.div`
   transform: rotate(45deg);
 `;
 
-type Props = {
+interface Props {
   percent: string;
   active: boolean;
   click: () => void;
-};
+  id: string;
+}
 
-const SliderStep = (props: Props): JSX.Element => {
+const SliderStep = ({ id, percent, active, click }: Props): JSX.Element => {
   return (
-    <Step percent={props.percent} onClick={() => props.click()} active={props.active}>
+    <Step id={id} percent={percent} onClick={() => click()} active={active}>
       <PercentContainer>
         <PercentBackground>
-          <PercentText>{props.percent}</PercentText>
+          <PercentText>{percent}</PercentText>
         </PercentBackground>
       </PercentContainer>
     </Step>

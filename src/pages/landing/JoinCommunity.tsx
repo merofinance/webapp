@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
@@ -8,11 +7,11 @@ import discord from "../../assets/socials/discord.svg";
 import twitter from "../../assets/socials/twitter.svg";
 import github from "../../assets/socials/github.svg";
 
-type SocialType = {
+interface SocialType {
   label: string;
   icon: string;
   link: string;
-};
+}
 
 const socials: SocialType[] = [
   {
@@ -61,7 +60,7 @@ const Social = styled.a`
   align-items: flex-end;
   justify-content: space-between;
   cursor: pointer;
-  background-color: #141128;
+  background-color: var(--row-bg);
   transition: background-color 0.3s;
 
   :hover {

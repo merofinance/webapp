@@ -1,6 +1,6 @@
 import { Slider, withStyles } from "@material-ui/core";
 import { BigNumber } from "ethers";
-import React from "react";
+
 import styled from "styled-components";
 import { ScaledNumber } from "../lib/scaled-number";
 import SliderStep from "./SliderStep";
@@ -14,13 +14,13 @@ const StyledAmountSlider = styled.div`
   position: relative;
   width: 100%;
   margin-bottom: 1.7rem;
+  margin-top: 1.8rem;
 `;
 
 const BackdSlider = withStyles({
   root: {
     color: "#52af77",
     height: 8,
-    marginTop: 18,
   },
   thumb: {
     height: 18,
@@ -58,11 +58,11 @@ const BackdSlider = withStyles({
 
 const valuetext = (value: any) => `${value}%`;
 
-type Props = {
+interface Props {
   value: string;
   max: ScaledNumber;
   setValue: (value: string) => void;
-};
+}
 
 const AmountSlider = ({ value, max, setValue }: Props): JSX.Element => {
   const percent = max.isZero() ? 0 : Math.round((Number(value) / Number(max.toString())) * 100);
@@ -88,6 +88,7 @@ const AmountSlider = ({ value, max, setValue }: Props): JSX.Element => {
       />
       {steps.map((step: number) => (
         <SliderStep
+          id={`slider-${step}`}
           key={step}
           percent={`${step}%`}
           click={() => updateValue(step)}

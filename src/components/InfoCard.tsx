@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import AccordionChevron from "./AccordionChevron";
 
@@ -8,6 +8,7 @@ interface StyleProps {
 }
 
 const StyledInfoCard = styled.div`
+  width: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -15,20 +16,21 @@ const StyledInfoCard = styled.div`
   border-radius: 1.4rem;
   box-shadow: 0px 0px 12px rgba(23, 18, 22, 0.05);
   overflow: hidden;
-  transition: max-height 0.3s ease-out;
+  transition: max-height 0.3s ease-out, background-color 0.3s;
   margin-bottom: 2.4rem;
 
   max-height: ${(props: StyleProps) =>
-    !props.collapsible ? "auto" : props.open ? "22rem" : "5.4rem"};
+    !props.collapsible ? "auto" : props.open ? "24rem" : "5.4rem"};
 
-  margin-left: 1.6rem;
-  width: 34rem;
   padding: 2rem 1.8rem;
-  @media (max-width: 1439px) {
-    margin-left: 0;
-    width: 100%;
+  @media (max-width: 1220px) {
     padding: 1.6rem;
     max-height: ${(props: StyleProps) => (props.open ? "19rem" : "4.8rem")};
+  }
+
+  :hover {
+    background-color: ${(props: StyleProps) =>
+      props.collapsible ? "#181532" : "rgba(37, 33, 64, 0.4)"};
   }
 `;
 
@@ -47,7 +49,7 @@ const Header = styled.button`
 
   font-size: 2.4rem;
   margin-bottom: 0.6rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     position: absolute;
     margin-bottom: 0;
     height: 4.8rem;
@@ -71,7 +73,7 @@ const ChevronContainer = styled.div`
   display: ${(props: StyleProps) => (props.collapsible ? "flex" : "none")};
   margin-right: 0.2rem;
 
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     height: 4.8rem;
     display: flex;
     margin-right: 0;
@@ -85,31 +87,35 @@ const Content = styled.div`
 
   margin-top: ${(props: StyleProps) => (props.collapsible ? "3.6rem" : "0")};
 
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     margin-top: 3.2rem;
   }
 `;
 
-type Props = {
+interface Props {
   header: string;
   content: JSX.Element;
   collapsible?: boolean;
   defaultOpen?: boolean;
-};
+  id?: string;
+}
 
-const InfoCard = ({ header, content, collapsible, defaultOpen }: Props): JSX.Element => {
+const InfoCard = ({ header, content, collapsible, defaultOpen, id }: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     setOpen(!!defaultOpen);
-  }, []);
+    return () => {
+      setOpen(false);
+    };
+  }, [defaultOpen]);
 
   return (
-    <StyledInfoCard open={open} collapsible={collapsible}>
+    <StyledInfoCard id={id} open={open} collapsible={collapsible}>
       <ChevronContainer collapsible={collapsible}>
         <AccordionChevron open={open} />
       </ChevronContainer>
-      <Header onClick={() => setOpen(!open)} collapsible={collapsible}>
+      <Header id={`${id}-header`} onClick={() => setOpen(!open)} collapsible={collapsible}>
         {header}
       </Header>
       <Content collapsible={collapsible}>{content}</Content>

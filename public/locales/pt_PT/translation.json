@@ -1,0 +1,423 @@
+{
+  "amountInput": {
+    "approve": "Aprove {{asset}}",
+    "available": "Disponível: {{amount}}",
+    "enter": "Insira o valor",
+    "max": "máximo",
+    "validation": {
+      "exceedsBalance": "O valor excede o saldo disponível",
+      "invalid": "Número inválido",
+      "positive": "O valor deve ser um número positivo"
+    }
+  },
+  "banner": {
+    "testnet": {
+      "blogPost": "a postagem do blog",
+      "connect": "Conecte a sua carteira para começar ou ler",
+      "live": "🎉 Backd está agora ao vivo na Kovan Testnet."
+    }
+  },
+  "benefits": {
+    "avoidLiquidation": {
+      "description": "A liquidez depositada em Backd e marcada como garantia colateral será automaticamente transferida quando necessário para colateralizar Top-ups.",
+      "header": "Evite a liquidação"
+    },
+    "earnYield": {
+      "description": "Ganhe juros sobre liquidez por meio de estratégias de yield-farming, como Curve e Convex.",
+      "header": "Ganhe rendimento"
+    },
+    "feeShare": {
+      "description": "Receba parte das taxas cobradas nas ações.",
+      "header": "Taxa de compartilhamento"
+    },
+    "reactiveLiquidity": {
+      "description": "Crie ações para automatizar a sua liquidez para onde ela é mais necessária.",
+      "header": "Liquidez reativa"
+    },
+    "readMore": "Leia mais"
+  },
+  "claim": {
+    "breakdown": "Repartição dos ganhos reivindicáveis:",
+    "buttons": {
+      "claim": "Reinvindicar",
+      "claimAll": "Reinvindicar tudo",
+      "claimAllAndStake": "Reinvindicar tudo e Stake",
+      "claimAndStake": "Reinvindicar e Stake"
+    },
+    "helpText": "Onde estão as minhas recompensas da pool?",
+    "overview": {
+      "claimable": "Reinvindicavel",
+      "deposits": "Os seus depósitos totais"
+    },
+    "pool": "{{asset}} pool"
+  },
+  "components": {
+    "back": "Voltar",
+    "cancel": "Cancelar",
+    "close": "Encerrar",
+    "confirm": "confirmar",
+    "dropdownChoose": "Escolher",
+    "moreInDocs": "Saiba mais nos documentos",
+    "overview": "visão-geral"
+  },
+  "errors": {
+    "fetchPrices": "falha ao encontrar os preços: {{error}}",
+    "header": "Ocorreu um erro",
+    "invalidNumber": "Não é um número válido",
+    "negativeNumber": "Números negativos não suportados",
+    "positionCreation": "Erro ao criar posição",
+    "support": "Por favor, tente novamente dentro de momentos. Se o erro persistir, você pode entrar em contato connosco em",
+    "transactionType": "O tipo de transação não é suportada",
+    "tryTestnet": "Backd ainda não está ativo na mainnet. Você pode testá-lo agora no Kovan trocando de rede.",
+    "unsupportedNetwork": "Rede não suportada",
+    "wrongNetwork": "Rede errada selecionada, use uma rede de desenvolvimento"
+  },
+  "footer": {
+    "community": {
+      "header": "Comunidade",
+      "links": {
+        "discord": "Discord",
+        "github": "GitHub",
+        "telegram": "Telegram Chat",
+        "twitter": "Twitter"
+      }
+    },
+    "resources": {
+      "header": "Recursos",
+      "links": {
+        "blog": "Blog",
+        "docs": "Documentos",
+        "factSheet": "Ficha informativa",
+        "litepaper": "Litepaper"
+      }
+    },
+    "updates": {
+      "header": "Atualizações",
+      "links": {
+        "newsletter": "Newsletter",
+        "telegram": "Telegram Ann."
+      }
+    }
+  },
+  "futureActions": {
+    "actions": {
+      "curveImbalance": {
+        "description": "Os Keepers podem detectar quando os pools de LP ficam desequilibrados e removem liquidez para você em seu nome - poupando-o de perdas substanciais.",
+        "header": "Proteção contra Curve Imbalance"
+      },
+      "limitOrders": {
+        "description": "Assim que uma ordem de limite possa ser preenchida, um Keeper pode retirar os fundos necessários das pools de rendimento e executa a negociação no AMM.",
+        "header": "Ordens limite AMM"
+      },
+      "nfts": {
+        "description": "Crie uma ordem de limite para um NFT com um conjunto específico de características de raridade. Uma vez que o preço cai dentro do valor desejado, uma ação de compra é executada e a liquidez é removida dos pools de rendimento do Backd.",
+        "header": "Ordens Limite para NFTs"
+      },
+      "propose": {
+        "description": "As ações podem ser adicionadas por meio do Backd DAO. Junte-se à comunidade Backd e proponha uma nova ação!",
+        "header": "Proponha o seu próprio"
+      },
+      "uniswap": {
+        "description": "Os Keepers de Backd  detectam quando o preço se moveu para fora do seu intervalo definido e movem a liquidez para os pools de rendimento do Backd. Assim que o preço estiver de volta ao intervalo, os Keepers movem sua liquidez de volta para o Uniswap.",
+        "header": "Gerenciamento de LP Uniswap V3"
+      }
+    },
+    "header": "ações futuras",
+    "subHeader": "A Construir uma infraestrutura DeFi essencial"
+  },
+  "getStarted": {
+    "description": "Deposite liquidez e comece a ganhar rendimento.",
+    "header": "Comece"
+  },
+  "header": {
+    "tabs": {
+      "blog": "blog",
+      "claim": "Reivindicar",
+      "docs": "Documentos",
+      "newsletter": "Newsletter",
+      "pools": "pools",
+      "stake": "stake BKD"
+    }
+  },
+  "headers": {
+    "apr": "APR",
+    "apy": "APY",
+    "asset": "Ativos",
+    "claimable": "Reividicar (USD)\n",
+    "deposits": "Seus depósitos",
+    "staked": "Staked",
+    "tvl": "TVL"
+  },
+  "howItWorks": {
+    "categories": {
+      "earnAndProtect": {
+        "cards": {
+          "claim": {
+            "description": "Cancele o registo ou atualize uma posição, retire tokens LP ou reivindique recompensas Backd a qualquer momento.",
+            "header": "Desfaça o stake a qualquer momento",
+            "number": "04"
+          },
+          "deposit": {
+            "description": "Deposite fundos em pools de liquidez Backd e receba pool LP tokens.",
+            "header": "Deposite liquidez",
+            "number": "01"
+          },
+          "protect": {
+            "description": "Ganhe rendimento composto e taxas de protocolo conforme o LP token  valorize, enquanto os Keepers monitorizam o seu empréstimo e transferem o seu capital para evitar a liquidação.",
+            "header": "Proteja e ganhe",
+            "number": "03"
+          },
+          "register": {
+            "description": "Registe empréstimos Compound ou Aave v2 na cadeia para receber top-ups colaterais e stake os seus pool LP tokens para ganhar recompensas em Backd.",
+            "header": "Registar empréstimo na cadeia",
+            "number": "02"
+          }
+        },
+        "tabName": "Ganhe e proteja"
+      },
+      "earnYield": {
+        "cards": {
+          "claim": {
+            "description": "Unstake os seus tokens LP ou reivindique suas recompensas Backd a qualquer momento.",
+            "header": "Desfaça o stake a qualquer momento",
+            "number": "04"
+          },
+          "deposit": {
+            "description": "Deposite fundos em pools de liquidez Backd e receba pool LP tokens.",
+            "header": "Deposite liquidez ",
+            "number": "01"
+          },
+          "earn": {
+            "description": "Ganhe rendimento composto de lucros estratégicos e taxas de protocolo à medida que os tokens LP valorizam sobre os tokens subjacentes.",
+            "header": "Ganhe rendimento",
+            "number": "02"
+          },
+          "stake": {
+            "description": "De stake nos seus tokens LP da pool para receber recompensas do Backd.",
+            "header": "Stake para ganhar recompensas",
+            "number": "03"
+          }
+        },
+        "tabName": "Ganhe rendimento"
+      }
+    },
+    "deposit": "Deposite agora",
+    "header": "ação 01: proteção de liquidação",
+    "subHeader": "Proteja seus empréstimos contra liquidação"
+  },
+  "joinCommunity": {
+    "header": "Junte-se à comunidade",
+    "socials": {
+      "discord": "Discord",
+      "github": "GitHub",
+      "twitter": "Twitter"
+    }
+  },
+  "landingPage": {
+    "changeNetwork": "Experimente no Testnet",
+    "connectWallet": "Conectar carteira",
+    "header": "Liquidez reativa",
+    "subHeader": "Maximize o poder de seus ativos e comece a ganhar rendimento com as pools de liquidez do Backd.",
+    "unsupportedNetwork": "Rede sem suporte",
+    "viewPools": "Ver Pools"
+  },
+  "notFound": {
+    "header": {
+      "desktop": "A página não pôde ser encontrada.",
+      "mobile": "Página não encontrada"
+    },
+    "links": {
+      "claim": "reivindique a pagina",
+      "docs": "Documentos",
+      "home": "Página inicial",
+      "pools": "ver todas as pools"
+    },
+    "number": "404",
+    "subHeader": "Experimente um dos links úteis abaixo - ou <0>entre em contato</0> se acredita que há um problema."
+  },
+  "pool": {
+    "information": {
+      "apy": {
+        "header": "APY",
+        "tooltip": "O rendimento percentual anual atual obtido pelos LPs da pool"
+      },
+      "header": "Informações sobre a pool",
+      "strategy": {
+        "details": {
+          "readMore": "Leia mais",
+          "viewContract": "Ver contrato"
+        },
+        "header": "Estratégia",
+        "tooltip": "Os fundos do protocolo atual são alocados para estratégias de yield farming."
+      },
+      "tvl": {
+        "header": "Pool TVL",
+        "tooltip": "A capitalização de mercado dos ativos mantidos na pool (valor total bloqueado)"
+      }
+    },
+    "overview": "Deposite {{asset}} para começar a ganhar rendimento por meio da {{strategy}} estratégia. Depois de depositar, você pode tornar a sua liquidez reativa ao criar uma ação.",
+    "statistics": {
+      "deposits": {
+        "header": "Seus depósitos",
+        "tooltip": "O valor atual de seus ativos mantidos no pool"
+      },
+      "locked": {
+        "header": "Ações bloqueadas",
+        "tooltip": "O valor atual de seus ativos bloqueados em ações. Ativos bloqueados em ações continuam a ganhar rendimentos"
+      }
+    },
+    "tabs": {
+      "deposit": {
+        "action": "Deposite e Stake",
+        "header": "Deposite {{asset}}",
+        "input": {
+          "labelDesktop": "Insira um valor de {{asset}} para depositar",
+          "labelMobile": "Insira o valor para depositar"
+        },
+        "tab": "Deposite "
+      },
+      "withdraw": {
+        "action": "Retirar {{asset}}",
+        "header": "Retirar {{asset}}",
+        "input": {
+          "labelDesktop": "Insira um valor de {{asset}} para retirar",
+          "labelMobile": "Insira o valor a ser retirado"
+        },
+        "tab": "Retirar"
+      }
+    }
+  },
+  "actions": {
+    "topup": {
+      "fields": {
+        "address": {
+          "hover": "Inserir endereço",
+          "invalid": "Endereço inválido",
+          "label": "Endereço",
+          "required": "O endereço é necessário",
+          "tooltip": "O endereço do proprietário da posição para top-up (por exemplo, se a Alice é o mutuário no Aave v2 que deve ser preenchido, então este seria o endereço da Alice)",
+          "unique": "Máximo de uma posição por protocolo e endereço"
+        },
+        "max": {
+          "exceedsBalance": "Excede o saldo depositado",
+          "hover": "Insira o Top-up máximo",
+          "invalid": "Número inválido",
+          "label": "Top-up máximo",
+          "positive": "Deve ser um número positivo",
+          "required": "Top-ups máximos necessários",
+          "tooltip": "Valor máximo de Top-up (valor de sua liquidez alocada para top-ups)"
+        },
+        "protocol": {
+          "hover": "Selecionar protocolo",
+          "label": "Protocolo",
+          "tooltip": "O protocolo de empréstimo no qual o usuário está a emprestantar fundos (atualmente compatível com Aave v2 e Compound)"
+        },
+        "single": {
+          "hover": "Inserir Top-up único",
+          "invalid": "Número inválido",
+          "label": "Top-up único",
+          "lessThanMax": "Deve ser menor que o máximo de top-up",
+          "positive": "tem que ser um número positivo",
+          "required": "É necessária um único Top-up ",
+          "tooltip": "Quantidade de um único incremento de top-up (por exemplo, incrementos de top-up de 2.500 DAI)"
+        },
+        "threshold": {
+          "greaterThanOne": "Deve ser maior que 1",
+          "hover": "Inserir o limite",
+          "label": "Limite",
+          "required": "O limite é obrigatório",
+          "tooltip": "O limite do fator de saúde em que um top-up colateral deve ocorrer em"
+        }
+      }
+    }
+  },
+  "pools": {
+    "deposit": "Depósito",
+    "header": "Todas as pools",
+    "information": {
+      "apy": {
+        "header": "APY médio",
+        "tooltip": "O rendimento percentual médio anual por um período de 30 dias"
+      },
+      "header": "Informações sobre Pools",
+      "revenue": {
+        "header": "Receita",
+        "tooltip": "O valor total das taxas geradas pelo protocolo de Backd"
+      },
+      "tvl": {
+        "header": "Plataforma TVL",
+        "tooltip": "A capitalização de mercado do total de ativos mantidos em pools de liquidez Backd (valor total bloqueado)"
+      }
+    },
+    "overview": "Os pools de ativos únicos (single-asset) da Backd agregam rendimentos em todas as estratégias. Depois de depositar um ativo, registre uma ação para automatizar sua liquidez para onde ela é mais necessária.",
+    "preview": {
+      "header": "yield farming",
+      "subHeader": "Comece a ganhar rendimento imediatamente"
+    },
+    "statistics": {
+      "deposits": {
+        "header": "Seus depósitos",
+        "tooltip": "O valor atual de seus ativos mantidos em pools de liquidez de Backd"
+      },
+      "locked": {
+        "header": "Ações bloqueadas",
+        "tooltip": "O valor atual de seus ativos bloqueados em ações. Ativos bloqueados em ações continuam a ganhar rendimentos"
+      },
+      "rewards": {
+        "header": "Recompensas acumuladas",
+        "tooltip": "O valor atual das recompensas ganhas que ainda não foram reivindicadas"
+      }
+    }
+  },
+  "stake": {
+    "overview": {
+      "claimable": "Reinvindicavel",
+      "deposits": "Os seus depósitos totais"
+    },
+    "tabs": {
+      "stake": {
+        "action": "Deposite e Stake",
+        "description": "Stake no BKD e ganhe uma participação em x% da receita da plataforma, paga em tokens BKDDAi.",
+        "header": "stake",
+        "inputDesktop": "Insira uma quantia de BKD para Stake",
+        "inputMobile": "Quantidade de BKD para stake",
+        "more": "Mais"
+      },
+      "unstake": {
+        "action": "Unstake e retirar",
+        "description": "Dê stake em BKD e ganhe uma participação em x% da receita da plataforma, paga em tokens BKDDAi.",
+        "header": "unstake",
+        "inputDesktop": "Insira uma quantidade de BKD para unstake",
+        "inputMobile": "Quantidade de BKD a ser unstake",
+        "more": "Mais"
+      }
+    }
+  },
+  "supportedBy": {
+    "header": "Suportado por"
+  },
+  "walletConnect": {
+    "aboutWallets": "Saiba mais sobre carteiras",
+    "connectWallet": "Conectar carteira",
+    "details": {
+      "change": "Alterar",
+      "clear": "Limpar",
+      "connected": "Conectado com {{wallet}}",
+      "empty": "Suas transações aparecerão aqui...",
+      "header": "Conta",
+      "network": {
+        "chainId": "ID da cadeia {{id}}",
+        "ethereum": "Ethereum Mainet",
+        "testnet": "Ethereum {{network}} Testnet",
+        "unknown": "Rede desconhecida"
+      },
+      "recentTransactions": "Transações recentes"
+    },
+    "header": "Conecte a sua carteira",
+    "newToEthereum": "Novo em Ethereum?",
+    "wallets": {
+      "metaMask": "MetaMask",
+      "walletConnect": "WalletConnect"
+    }
+  }
+}

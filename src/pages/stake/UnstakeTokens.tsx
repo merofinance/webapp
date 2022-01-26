@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import LaunchIcon from "@material-ui/icons/Launch";
@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 import AmountInput from "../../components/AmountInput";
 import ApproveThenAction from "../../components/ApproveThenAction";
-import { selectBalance } from "../../state/userSlice";
+import { selectPoolBalance } from "../../state/userSlice";
 import { Token } from "../../lib/types";
 import { GradientLink } from "../../styles/GradientText";
 import { useDevice } from "../../app/hooks/use-device";
@@ -57,13 +57,13 @@ const Content = styled.div`
   }
 `;
 
-type Props = {
+interface Props {
   token: Token;
-};
+}
 
 const UnstakeTokens = ({ token }: Props): JSX.Element => {
   const { t } = useTranslation();
-  const balance = useSelector(selectBalance(token.address));
+  const balance = useSelector(selectPoolBalance(token.address));
   const { isMobile } = useDevice();
 
   const [value, setValue] = useState("");
@@ -94,6 +94,7 @@ const UnstakeTokens = ({ token }: Props): JSX.Element => {
           }
           max={balance}
           error=""
+          symbol="DAI"
         />
         <ApproveThenAction
           stepsOnTop

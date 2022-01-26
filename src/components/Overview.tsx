@@ -1,10 +1,8 @@
-import React from "react";
 import styled from "styled-components";
-import LaunchIcon from "@material-ui/icons/Launch";
 import { useTranslation } from "react-i18next";
 
-import { GradientLink } from "../styles/GradientText";
 import InfoCard from "./InfoCard";
+import ExternalLink from "./ExternalLink";
 
 const Content = styled.div`
   width: 100%;
@@ -19,26 +17,7 @@ const Description = styled.div`
 
   font-size: 1.5rem;
   line-height: 2rem;
-  @media (max-width: 1439px) {
-    font-size: 1.2rem;
-    line-height: 1.7rem;
-  }
-`;
-
-const LinkContainer = styled.div`
-  margin-top: 0.2rem;
-  @media (max-width: 1439px) {
-    margin-top: 0.4rem;
-  }
-`;
-
-const Link = styled(GradientLink)`
-  font-weight: 500;
-  letter-spacing: 0.46px;
-
-  font-size: 1.5rem;
-  line-height: 2rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     font-size: 1.2rem;
     line-height: 1.7rem;
   }
@@ -47,32 +26,22 @@ const Link = styled(GradientLink)`
 interface Props {
   description: string;
   link: string;
+  defaultClosed?: boolean;
 }
 
-const Overview = ({ description, link }: Props) => {
+const Overview = ({ description, link, defaultClosed }: Props): JSX.Element => {
   const { t } = useTranslation();
 
   return (
     <InfoCard
-      defaultOpen
+      id="overview"
+      defaultOpen={!defaultClosed}
       collapsible
-      header="Overview"
+      header={t("components.overview")}
       content={
         <Content>
-          <Description>{description}</Description>
-          <LinkContainer>
-            <Link href={link} target="_blank" rel="noopener noreferrer">
-              {t("components.moreInDocs")}
-              <LaunchIcon
-                fontSize="small"
-                style={{
-                  fill: "var(--secondary)",
-                  transform: "translateY(2px)",
-                  marginLeft: "3px",
-                }}
-              />
-            </Link>
-          </LinkContainer>
+          <Description id="overview-description">{description}</Description>
+          <ExternalLink label="components.moreInDocs" link={link} />
         </Content>
       }
     />

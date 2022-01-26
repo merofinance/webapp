@@ -1,39 +1,45 @@
-import React from "react";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
 import chevron from "../../assets/ui/chevron.svg";
 import Asset from "../../components/Asset";
 import Button from "../../components/Button";
 import { GradientText } from "../../styles/GradientText";
-import { selectBalances } from "../../state/userSlice";
 import { Pool } from "../../lib";
-import { formatPercent, numberToCompactCurrency, formatCurrency } from "../../lib/numeric";
-import { selectPoolPositions } from "../../state/positionsSlice";
-import { Position } from "../../lib/types";
-import { selectPrice } from "../../state/selectors";
-import { ScaledNumber } from "../../lib/scaled-number";
+import { formatPercent } from "../../lib/numeric";
+import { selectPoolDeposits, selectPoolTotalDeposits, selectPrice } from "../../state/selectors";
+import Loader from "../../components/Loader";
+import { useDevice } from "../../app/hooks/use-device";
 
-type RowProps = {
+const RowContainer = styled.div`
+  width: 100%;
+  position: relative;
+  margin-top: 0.8rem;
+`;
+
+interface RowProps {
   preview?: boolean;
-};
+}
 
-const Row = styled.tr`
+const Row = styled.button`
+  width: 100%;
   position: relative;
   height: ${(props: RowProps) => (props.preview ? "5.6rem" : "7.2rem")};
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 0.8rem;
-  background-color: #141128;
+  background-color: var(--row-bg);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
   border-radius: 14px;
   padding: 0 1.7rem;
-  cursor: pointer;
+  cursor: ${(props: RowProps) => (props.preview ? "auto" : "pointer")};
 
+  transition: background-color 0.3s;
   :hover {
-    background-color: #1a1438;
+    background-color: ${(props: RowProps) => (props.preview ? "var(--row-bg)" : "#1a1438")};
   }
 
   @media (max-width: 600px) {
@@ -49,26 +55,32 @@ const Row = styled.tr`
   }
 `;
 
-type DataProps = {
+interface DataProps {
   right?: boolean;
   preview?: boolean;
-};
+  hideOnSnapshot?: boolean;
+}
 
-const Data = styled.td`
+const Data = styled.div`
   display: flex;
   flex: 1;
   align-items: center;
-  font-weight: 400;
   letter-spacing: 0.15px;
   justify-content: ${(props: DataProps) => (props.right ? "flex-end" : "flex-start")};
   display: ${(props: DataProps) => (!props.preview && props.right ? "none" : "flex")};
 
+  font-weight: 700;
   font-size: 1.6rem;
-  line-height: 1.4rem;
+  line-height: 2rem;
   @media (max-width: 600px) {
+    font-weight: 500;
     font-size: 1.4rem;
     line-height: 2.1rem;
     display: ${(props: DataProps) => (props.right ? "none" : "flex")};
+  }
+
+  @media only percy {
+    opacity: ${(props: DataProps) => (props.hideOnSnapshot ? "0" : "1")};
   }
 `;
 
@@ -77,6 +89,10 @@ const DepositedData = styled(Data)`
 
   @media (max-width: 600px) {
     display: none;
+  }
+
+  @media only percy {
+    opacity: 0;
   }
 `;
 
@@ -97,7 +113,7 @@ interface ChevronProps {
   preview?: boolean;
 }
 
-const ChevronData = styled.td`
+const ChevronData = styled.div`
   width: 2.4rem;
 
   @media (min-width: 601px) {
@@ -117,44 +133,67 @@ const Chevron = styled.img`
   width: 2.4rem;
 `;
 
-type Props = {
+const ButtonContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  display: ${(props: RowProps) => (props.preview ? "flex" : "none")};
+
+  right: 1.7rem;
+  @media (max-width: 600px) {
+    display: none;
+    right: 1.6rem;
+  }
+`;
+
+interface Props {
   pool: Pool;
   preview?: boolean;
-};
+}
 
 const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
-  const history = useHistory();
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { isDesktop } = useDevice();
 
   const price = useSelector(selectPrice(pool));
-  const balances = useSelector(selectBalances);
-  const positions = useSelector(selectPoolPositions(pool));
-
-  const balance = balances[pool.lpToken.address] || new ScaledNumber();
-  const locked = positions
-    .reduce((a: ScaledNumber, b: Position) => a.add(b.maxTopUp), new ScaledNumber())
-    .add(balance);
+  const totalDeposits = useSelector(selectPoolTotalDeposits(pool));
+  const deposits = useSelector(selectPoolDeposits(pool));
 
   return (
-    <tbody>
-      <Row onClick={() => history.push(`/pool/${pool.lpToken.symbol}`)} preview={preview}>
+    <RowContainer>
+      <Row
+        id={`pool-row-${pool.lpToken.symbol.toLowerCase()}`}
+        onClick={() => {
+          if (preview && isDesktop) return;
+          navigate(`/pool/${pool.lpToken.symbol}`);
+        }}
+        preview={preview}
+      >
         <Data>
           <Asset token={pool.underlying} />
         </Data>
-        <Data>
-          <Apy>{formatPercent(pool.apy)}</Apy>
+        <Data hideOnSnapshot>{pool.apy ? <Apy>{formatPercent(pool.apy)}</Apy> : <Loader />}</Data>
+        <Data hideOnSnapshot>
+          {price && totalDeposits ? totalDeposits.toCompactUsdValue(price) : <Loader />}
         </Data>
-        <Data>{numberToCompactCurrency(pool.totalAssets * price)}</Data>
         <DepositedData preview={preview}>
-          {formatCurrency(Number(locked.toString()) * price)}
+          {price && deposits ? deposits.toCompactUsdValue(price) : <Loader />}
         </DepositedData>
         <ChevronData preview={preview}>
           <Chevron src={chevron} alt="right arrow" />
         </ChevronData>
-        <Data right preview={preview}>
-          <Button text="deposit" background="#141128" />
-        </Data>
+        <Data right preview={preview} />
       </Row>
-    </tbody>
+      <ButtonContainer preview={preview}>
+        <Button
+          text={t("pools.deposit")}
+          background="var(--row-bg)"
+          click={() => navigate(`/pool/${pool.lpToken.symbol}`)}
+        />
+      </ButtonContainer>
+    </RowContainer>
   );
 };
 

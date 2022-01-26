@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
@@ -6,16 +5,16 @@ import { useTranslation } from "react-i18next";
 import logo from "../assets/logo/full-logo.svg";
 import LanguageSelector from "./LanguageSelector";
 
-type LinkType = {
+interface LinkType {
   internal: boolean;
   label: string;
   link: string;
-};
+}
 
-type LinkListType = {
+interface LinkListType {
   header: string;
   links: LinkType[];
-};
+}
 
 const linkLists: LinkListType[] = [
   {
@@ -61,11 +60,6 @@ const linkLists: LinkListType[] = [
         label: "footer.resources.links.blog",
         link: "https://backdfund.medium.com/",
       },
-      {
-        internal: false,
-        label: "footer.resources.links.factSheet",
-        link: "/fact-sheet.pdf",
-      },
     ],
   },
   {
@@ -88,6 +82,7 @@ const linkLists: LinkListType[] = [
 const StyledFooter = styled.div`
   position: relative;
   width: 100%;
+  max-width: 1400px;
   margin-top: 8rem;
   margin-bottom: 3.7rem;
   display: flex;

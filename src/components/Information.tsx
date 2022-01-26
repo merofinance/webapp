@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { GradientLink } from "../styles/GradientText";
 import InfoCard from "./InfoCard";
-import Tooltip from "./Tooltip";
+import Tooltip, { TooltipItemType } from "./Tooltip";
 import arrow from "../assets/ui/arrow.svg";
+import Loader from "./Loader";
+import { Optional } from "../lib/types";
 
 interface RowDetailType {
   icon: string;
@@ -12,9 +14,10 @@ interface RowDetailType {
 }
 
 interface InformationRowType {
-  label: string;
+  label: Optional<string>;
   tooltip: string;
-  value: string;
+  tooltipItems?: TooltipItemType[];
+  value: Optional<string>;
   details?: RowDetailType[];
 }
 
@@ -30,7 +33,7 @@ const InformationRow = styled.div`
   flex-direction: column;
 
   margin-top: 1.4rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     margin-top: 0.2rem;
   }
 `;
@@ -59,7 +62,7 @@ const Label = styled.div`
   letter-spacing: 0.15px;
 
   font-size: 2rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     font-size: 1.4rem;
   }
 `;
@@ -76,8 +79,12 @@ const Value = styled.div`
   color: var(--sub);
 
   font-size: 2rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     font-size: 1.4rem;
+  }
+
+  @media only percy {
+    opacity: 0;
   }
 `;
 
@@ -89,7 +96,7 @@ const Chevron = styled.img`
   transform: ${(props: RowProps) => (props.open ? "rotate(0deg)" : "rotate(180deg)")};
 
   width: 1.1rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     width: 1rem;
   }
 `;
@@ -126,15 +133,15 @@ const DetailLabel = styled(GradientLink)`
   margin-left: 0.7rem;
 
   font-size: 1.4rem;
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     font-size: 1.3rem;
   }
 `;
 
-type Props = {
+interface Props {
   header: string;
   rows: InformationRowType[];
-};
+}
 
 const Information = ({ header, rows }: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
@@ -148,11 +155,11 @@ const Information = ({ header, rows }: Props): JSX.Element => {
             <InformationRow key={row.label}>
               <InformationHeader isAccordion={!!row.details} onClick={() => setOpen(!open)}>
                 <LabelContainer>
-                  <Label>{row.label}</Label>
-                  <Tooltip content={row.tooltip} />
+                  <Label>{row.label || <Loader />}</Label>
+                  <Tooltip content={row.tooltip} items={row.tooltipItems} />
                 </LabelContainer>
                 <ValueContainer>
-                  <Value>{row.value}</Value>
+                  <Value>{row.value || <Loader />}</Value>
                   <Chevron src={arrow} isAccordion={!!row.details} open={open} />
                 </ValueContainer>
               </InformationHeader>

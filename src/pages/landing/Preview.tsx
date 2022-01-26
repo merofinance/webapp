@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -6,15 +6,22 @@ import { useTranslation } from "react-i18next";
 import PoolsRow from "../pools/PoolsRow";
 import swirls from "../../assets/background/swirls.svg";
 import { useBackd } from "../../app/hooks/use-backd";
-import { fetchState, selectPools } from "../../state/poolsListSlice";
+import { fetchPreviewState, fetchState, selectPools } from "../../state/poolsListSlice";
 import { Pool } from "../../lib";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
+import { Header2, Header4 } from "../../styles/Headers";
+import Loader from "../../components/Loader";
+import { AppDispatch } from "../../app/store";
+import { useIsLive } from "../../app/hooks/use-is-live";
+import { Optional } from "../../lib/types";
 
 const StyledPreview = styled.div`
   position: relative;
   width: 100%;
   margin: var(--section-margin);
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
 
   @media (max-width: 600px) {
@@ -22,13 +29,17 @@ const StyledPreview = styled.div`
   }
 `;
 
-const Table = styled.table`
+const TableContainer = styled.div`
   position: relative;
-  width: 79%;
 
+  width: 79%;
   @media (max-width: 600px) {
     width: 100%;
   }
+`;
+
+const Table = styled.table`
+  width: 100%;
 `;
 
 const HeaderRow = styled.tr`
@@ -80,34 +91,49 @@ const Swirls = styled.img`
   }
 `;
 
-const Preview = (): JSX.Element => {
+const Preview = (): Optional<JSX.Element> => {
   const { t } = useTranslation();
   const backd = useBackd();
-  const dispatch = useDispatch();
+  const { protocolLive } = useIsLive();
+  const dispatch = useDispatch<AppDispatch>();
   const pools = useSelector(selectPools);
   const updated = useWeb3Updated();
 
   useEffect(() => {
-    if (!backd) return;
+    if (!backd) {
+      if (protocolLive) dispatch(fetchPreviewState());
+      return;
+    }
     dispatch(fetchState(backd));
   }, [updated]);
 
+  if (!protocolLive) return null;
+
   return (
     <StyledPreview>
-      <Swirls src={swirls} alt="decorative swirls" />
-      <Table>
-        <thead>
-          <HeaderRow>
-            <Header>{t("headers.asset")}</Header>
-            <Header>{t("headers.apy")}</Header>
-            <Header>{t("headers.tvl")}</Header>
-            <ChevronHeader />
-          </HeaderRow>
-        </thead>
-        {pools.map((pool: Pool) => (
-          <PoolsRow key={pool.name} preview pool={pool} />
-        ))}
-      </Table>
+      <Header2>{t("pools.preview.header")}</Header2>
+      <Header4>{t("pools.preview.subHeader")}</Header4>
+      <TableContainer>
+        <Swirls src={swirls} alt="decorative swirls" />
+        <Table>
+          <thead>
+            <HeaderRow>
+              <Header>{t("headers.asset")}</Header>
+              <Header>{t("headers.apy")}</Header>
+              <Header>{t("headers.tvl")}</Header>
+              <ChevronHeader />
+            </HeaderRow>
+          </thead>
+          {!pools && (
+            <>
+              <Loader row preview />
+              <Loader row preview />
+              <Loader row preview />
+            </>
+          )}
+          {pools && pools.map((pool: Pool) => <PoolsRow key={pool.name} preview pool={pool} />)}
+        </Table>
+      </TableContainer>
     </StyledPreview>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
@@ -14,6 +14,8 @@ import PoolsStatistics from "./PoolsStatistics";
 import BetaSnackbar from "../../components/BetaSnackbar";
 import Overview from "../../components/Overview";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
+import LiveHelp from "../../components/LiveHelp";
+import Loader from "../../components/Loader";
 
 const StyledPoolsPage = styled.div`
   width: 100%;
@@ -25,16 +27,23 @@ const PageContent = styled.div`
   width: 100%;
   display: flex;
 
-  @media (max-width: 1439px) {
+  @media (max-width: 1220px) {
     flex-direction: column-reverse;
   }
 `;
 
-const Table = styled.table`
-  width: 100%;
+const ContentContainer = styled.div`
+  flex: 1;
 `;
 
-const HeaderRow = styled.tr`
+const PoolsContent = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const HeaderRow = styled.div`
+  width: 100%;
   display: flex;
   justify-content: space-between;
   padding: 0 1.7rem;
@@ -53,7 +62,7 @@ interface HeaderProps {
   hideOnMobile?: boolean;
 }
 
-const Header = styled.th`
+const Header = styled.div`
   flex: 1;
   text-align: left;
   font-weight: 700;
@@ -68,7 +77,7 @@ const Header = styled.th`
   }
 `;
 
-const ChevronHeader = styled.th`
+const ChevronHeader = styled.div`
   width: 2.4rem;
 
   @media (max-width: 600px) {
@@ -79,6 +88,13 @@ const ChevronHeader = styled.th`
 const InfoCards = styled.div`
   display: flex;
   flex-direction: column;
+  width: 36rem;
+  margin-left: 1.6rem;
+
+  @media (max-width: 1220px) {
+    margin-left: 0;
+    width: 100%;
+  }
 `;
 
 const PoolsPage = (): JSX.Element => {
@@ -101,6 +117,8 @@ const PoolsPage = (): JSX.Element => {
       />
       <BetaSnackbar />
       <PageContent>
+      <Seo title={t("metadata.pools.title")} description={t("metadata.pools.description")} />
+      <ContentContainer>
         <ContentSection
           header={t("pools.header")}
           statistics={<PoolsStatistics />}
@@ -126,6 +144,31 @@ const PoolsPage = (): JSX.Element => {
           <PoolsInformation />
         </InfoCards>
       </PageContent>
+            <PoolsContent>
+              <HeaderRow>
+                <Header>{t("headers.asset")}</Header>
+                <Header>{t("headers.apy")}</Header>
+                <Header>{t("headers.tvl")}</Header>
+                <Header hideOnMobile>{t("headers.deposits")}</Header>
+                <ChevronHeader />
+              </HeaderRow>
+              {!pools && (
+                <>
+                  <Loader row />
+                  <Loader row />
+                  <Loader row />
+                </>
+              )}
+              {pools && pools.map((pool: Pool) => <PoolsRow key={pool.address} pool={pool} />)}
+            </PoolsContent>
+          }
+        />
+      </ContentContainer>
+      <InfoCards>
+        <Overview description={t("pools.overview")} link="https://docs.backd.fund/" />
+        <PoolsInformation />
+        <LiveHelp />
+      </InfoCards>
     </StyledPoolsPage>
   );
 };

@@ -1,16 +1,18 @@
-import React from "react";
+import { useTranslation } from "react-i18next";
 import SummaryStatistics from "../../components/SummaryStatistics";
 
 const ClaimSummary = (): JSX.Element => {
+  const { t } = useTranslation();
+
   return (
     <SummaryStatistics
       statistics={[
         {
-          label: "claim.overview.claimable",
+          label: t("claim.overview.claimable"),
           value: "$1,243.34",
         },
         {
-          label: "claim.overview.deposits",
+          label: t("claim.overview.deposits"),
           value: "$65,530.34",
         },
       ]}

@@ -1,7 +1,7 @@
 import { FormControl, makeStyles, MenuItem, Select } from "@material-ui/core";
-import React from "react";
+
 import { useTranslation } from "react-i18next";
-import { FormikFormType, FormType } from "../pages/pool/NewPosition";
+import { FormikFormType, FormType } from "../pages/actions/register/topup/TopupConditionsForm";
 
 const useStyles = makeStyles(() => ({
   formControl: {
@@ -49,11 +49,11 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-type Props = {
+interface Props {
   formik: FormikFormType;
   name: keyof FormType;
   options: string[];
-};
+}
 
 const Dropdown = ({ formik, name, options }: Props): JSX.Element => {
   const { t } = useTranslation();

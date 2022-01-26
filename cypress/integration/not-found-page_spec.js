@@ -20,7 +20,7 @@ describe("Internal Links", () => {
   it("Should Navigate to Home Page", () => {
     cy.get("#not-found-home").click();
     cy.location().should((loc) => {
-      expect(loc.pathname).to.eq("/");
+      if (loc.pathname) expect(loc.pathname).to.eq("/");
     });
     cy.visit("/askkasklaslkaskjl");
   });
