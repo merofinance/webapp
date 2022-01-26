@@ -691,6 +691,8 @@
     "back": "Back",
     "close": "Close",
     "moreInDocs": "Find out more in the docs",
+    "betaSnackbar": "Currently, all pools are in a shielded state. This allows for a maximum TVL of about $1m per pool.",
+    "findOutMore": "Find out more.",
     "comingSoon": "Coming Soon",
     "overview": "Overview",
     "change": "Change",

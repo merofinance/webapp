@@ -19,13 +19,14 @@ const StyledHeader = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 8rem;
+  justify-content: space-between;
   z-index: 2;
   transition: all 0.3s;
 
   background-color: ${(props: HeaderProps) => (props.isSticky ? "#120e2c" : "transparent")};
   box-shadow: -4px 0px 4px rgba(0, 0, 0, ${(props: HeaderProps) => (props.isSticky ? "0.25" : "0")});
 
+  margin-bottom: 8rem;
   @media (max-width: 600px) {
     margin-bottom: 0;
   }

@@ -23,6 +23,7 @@ import userReducer from "../state/userSlice";
 import errorReducer from "../state/errorSlice";
 import positionsReducer from "../state/positionsSlice";
 import transactionsReducer from "../state/transactionsSlice";
+import uiReducer from "../state/uiSlice";
 import helpReducer from "../state/helpSlice";
 
 const rootReducer = combineReducers({
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   positions: positionsReducer,
   transactions: transactionsReducer,
   error: errorReducer,
+  ui: uiReducer,
   help: helpReducer,
 });
 
