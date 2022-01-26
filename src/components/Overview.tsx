@@ -34,7 +34,7 @@ const Overview = ({ description, link, defaultClosed }: Props): JSX.Element => {
       header={t("components.overview")}
     >
       <Description id="overview-description">{description}</Description>
-      <ExternalLink label="components.moreInDocs" link={link} />
+      <ExternalLink link={link}>{t("components.moreInDocs")}</ExternalLink>
     </InfoCard>
   );
 };

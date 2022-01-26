@@ -52,10 +52,9 @@ const StakeConfirmation = ({ show, close, amount }: Props): JSX.Element => {
           <Description>
             {t("bkd.stake.confirmation.description", { amount: amount.toCryptoString() })}
           </Description>
-          <ExternalLink
-            label="components.moreInDocs"
-            link="https://docs.backd.fund/protocol-architecture/tokenomics"
-          />
+          <ExternalLink link="https://docs.backd.fund/protocol-architecture/tokenomics">
+            {t("components.moreInDocs")}
+          </ExternalLink>
           <BkdCalculator amount={amount} />
           <Notice text="bkd.stake.confirmation.notice" />
         </Content>

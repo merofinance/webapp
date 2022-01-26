@@ -3,6 +3,7 @@ import LaunchIcon from "@material-ui/icons/Launch";
 import { useTranslation } from "react-i18next";
 
 import { GradientLink } from "../styles/GradientText";
+import { ReactNode } from "react";
 
 const LinkContainer = styled.div`
   margin-top: 0.3rem;
@@ -21,17 +22,17 @@ const Link = styled(GradientLink)`
 `;
 
 interface Props {
-  label: string;
+  children: ReactNode;
   link: string;
 }
 
-const ExternalLink = ({ label, link }: Props): JSX.Element => {
+const ExternalLink = ({ children, link }: Props): JSX.Element => {
   const { t } = useTranslation();
 
   return (
     <LinkContainer>
       <Link id="overview-link" href={link} target="_blank" rel="noopener noreferrer">
-        {t(label)}
+        {children}
         <LaunchIcon
           fontSize="small"
           style={{
