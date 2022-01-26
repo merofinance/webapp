@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
@@ -40,17 +41,17 @@ const Text = styled.div`
 `;
 
 interface Props {
-  text: string;
+  children: ReactNode;
 }
 
-const Notice = ({ text }: Props): JSX.Element => {
+const Notice = ({ children }: Props): JSX.Element => {
   const { t } = useTranslation();
 
   return (
     <StyledNotice>
       <Content>
         <Icon src={icon} alt="Warning icon" />
-        <Text>{t(text)}</Text>
+        <Text>{children}</Text>
       </Content>
     </StyledNotice>
   );

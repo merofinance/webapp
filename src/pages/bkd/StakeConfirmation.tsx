@@ -56,7 +56,7 @@ const StakeConfirmation = ({ show, close, amount }: Props): JSX.Element => {
             {t("components.moreInDocs")}
           </ExternalLink>
           <BkdCalculator amount={amount} />
-          <Notice text="bkd.stake.confirmation.notice" />
+          <Notice>{t("bkd.stake.confirmation.notice")}</Notice>
         </Content>
       }
       submit={() => console.log("TODO")}
