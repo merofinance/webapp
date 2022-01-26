@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { SHIELDED } from "../lib/constants";
 import { dismissBetaSnackbar, selectBetaSnackbarDismissed } from "../state/uiSlice";
 import Snackbar from "./Snackbar";
 
@@ -8,7 +9,7 @@ const BetaSnackbar = () => {
 
   return (
     <Snackbar
-      show={!dismissed && true}
+      show={!dismissed && SHIELDED}
       close={() => dispatch(dismissBetaSnackbar())}
       text="components.betaSnackbar"
       link={{
