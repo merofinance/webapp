@@ -34,7 +34,6 @@ const Label = styled.div`
   align-items: center;
   font-weight: 500;
   letter-spacing: 0.15px;
-  text-transform: capitalize;
 
   font-size: 1.8rem;
   @media (max-width: 600px) {
