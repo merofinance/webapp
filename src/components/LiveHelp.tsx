@@ -140,6 +140,10 @@ const SuggestionText = styled.div`
     font-size: 1.2rem;
     line-height: 1.7rem;
   }
+
+  @media only percy {
+    opacity: 0;
+  }
 `;
 
 const DocsLink = styled(GradientLink)`
