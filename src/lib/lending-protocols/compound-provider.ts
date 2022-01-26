@@ -28,7 +28,11 @@ export class CompoundProvider implements LendingProtocolProvider {
       totalDebtETH: debt.toPlain(),
       availableBorrowsETH: new ScaledNumber().toPlain(), // Not returned by API, set as 0 as not needed in UI at the moment
       currentLiquidationThreshold: new ScaledNumber().toPlain(), // Not returned by API, set as 0 as not needed in UI at the moment
-      healthFactor: debt.isZero() ? new ScaledNumber().toPlain() : collateral.div(debt).toPlain(),
+      healthFactor: debt.isZero()
+        ? new ScaledNumber().toPlain()
+        : collateral.div(debt).gt(ScaledNumber.fromUnscaled(100))
+        ? ScaledNumber.fromUnscaled(100).toPlain()
+        : collateral.div(debt).toPlain(),
     });
   }
 }

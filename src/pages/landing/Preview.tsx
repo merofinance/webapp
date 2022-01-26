@@ -13,6 +13,7 @@ import { Header2, Header4 } from "../../styles/Headers";
 import Loader from "../../components/Loader";
 import { AppDispatch } from "../../app/store";
 import { useIsLive } from "../../app/hooks/use-is-live";
+import { Optional } from "../../lib/types";
 
 const StyledPreview = styled.div`
   position: relative;
@@ -90,7 +91,7 @@ const Swirls = styled.img`
   }
 `;
 
-const Preview = (): JSX.Element => {
+const Preview = (): Optional<JSX.Element> => {
   const { t } = useTranslation();
   const backd = useBackd();
   const { protocolLive } = useIsLive();
@@ -106,7 +107,7 @@ const Preview = (): JSX.Element => {
     dispatch(fetchState(backd));
   }, [updated]);
 
-  if (!protocolLive) return <div />;
+  if (!protocolLive) return null;
 
   return (
     <StyledPreview>

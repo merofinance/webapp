@@ -19,6 +19,7 @@ import TopupConditions from "./pages/actions/register/topup/TopupConditions";
 import TopupPool from "./pages/actions/register/topup/TopupPool";
 import TopupLoan from "./pages/actions/register/topup/TopupLoan";
 import Layout from "./Layout";
+import BkdPage from "./pages/bkd/BkdPage";
 
 const App = (): JSX.Element => {
   const { stakingLive } = useIsLive();
@@ -48,6 +49,7 @@ const App = (): JSX.Element => {
             </Route>
             {stakingLive && <Route path="claim" element={<ClaimPage />} />}
             {stakingLive && <Route path="stake" element={<StakePage />} />}
+            {stakingLive && <Route path="bkd" element={<BkdPage />} />}
             <Route path="litepaper" element={<LitepaperPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>

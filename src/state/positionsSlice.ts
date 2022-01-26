@@ -8,22 +8,32 @@ import {
   PlainPosition,
   toPlainPosition,
   Optional,
+  PlainActionFees,
+  ActionFees,
+  fromPlainActionFees,
 } from "../lib/types";
 import { handleTransactionConfirmation } from "../lib/transactionsUtils";
 import { fetchAllowances, fetchBalances } from "./userSlice";
 
 interface PositionsState {
   positions: PlainPosition[];
+  fees: Optional<PlainActionFees>;
   loaded: boolean;
 }
 
 const initialState: PositionsState = {
   positions: [],
+  fees: null,
   loaded: false,
 };
 
 export const fetchPositions = createAsyncThunk("positions/fetch", ({ backd }: { backd: Backd }) =>
   backd.getPositions()
+);
+
+export const fetchActionFees = createAsyncThunk(
+  "positions/fetch-action-fees",
+  ({ backd }: { backd: Backd }) => backd.getActionFees()
 );
 
 export const positionsSlice = createSlice({
@@ -34,6 +44,9 @@ export const positionsSlice = createSlice({
     builder.addCase(fetchPositions.fulfilled, (state, action) => {
       state.positions = action.payload;
       state.loaded = true;
+    });
+    builder.addCase(fetchActionFees.fulfilled, (state, action) => {
+      state.fees = action.payload;
     });
   },
 });
@@ -92,5 +105,8 @@ export function selectPoolPositions(
           .map((position: PlainPosition) => fromPlainPosition(position))
       : null;
 }
+
+export const selectActionFees = (state: RootState): Optional<ActionFees> =>
+  state.positions.fees ? fromPlainActionFees(state.positions.fees) : null;
 
 export default positionsSlice.reducer;

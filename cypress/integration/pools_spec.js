@@ -11,7 +11,7 @@ describe("Wallet Select Popup", () => {
   it("Should have link", () => {
     cy.get("#wallet-select-link")
       .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://backd-1.gitbook.io/backd/resources/faq/general");
+      .should("have.attr", "href", "https://ethereum.org/en/wallets/");
   });
   it("Should connect wallet", () => {
     cy.get('[id="walletConnect.wallets.metaMask"]').click();

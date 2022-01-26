@@ -9,6 +9,9 @@ export function useWeb3Updated(): number {
 
   useEffect(() => {
     setUpdated(updated + 1);
+    return () => {
+      setUpdated(0);
+    };
   }, [account, chainId, backd]);
 
   return updated;

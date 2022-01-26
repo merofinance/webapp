@@ -44,6 +44,7 @@ export function convertPrices(
 
   Object.entries(apiPrices).forEach((apiPrice) => {
     const price = apiPrice[1][quote];
+    if (!price) throw new Error("Error retrieving price");
     const rawSymbol = geckoIdToSymbol[apiPrice[0]];
     const symbol = symbols.find((s) => s.toLowerCase() === rawSymbol);
     if (!symbol) {

@@ -85,6 +85,34 @@ export const fromPlainPosition = (position: PlainPosition): Position => {
   };
 };
 
+interface GenericActionFees<T> {
+  total: T;
+  keeperFraction: T;
+  treasuryFraction: T;
+  lpFraction: T;
+}
+
+export type ActionFees = GenericActionFees<ScaledNumber>;
+export type PlainActionFees = GenericActionFees<PlainScaledNumber>;
+
+export const toPlainActionFees = (actionFees: ActionFees): PlainActionFees => {
+  return {
+    total: actionFees.total.toPlain(),
+    keeperFraction: actionFees.keeperFraction.toPlain(),
+    treasuryFraction: actionFees.treasuryFraction.toPlain(),
+    lpFraction: actionFees.lpFraction.toPlain(),
+  };
+};
+
+export const fromPlainActionFees = (actionFees: PlainActionFees): ActionFees => {
+  return {
+    total: ScaledNumber.fromPlain(actionFees.total),
+    keeperFraction: ScaledNumber.fromPlain(actionFees.keeperFraction),
+    treasuryFraction: ScaledNumber.fromPlain(actionFees.treasuryFraction),
+    lpFraction: ScaledNumber.fromPlain(actionFees.lpFraction),
+  };
+};
+
 export function positionFromPartial<T>(pool: Pool<T>, position: Partial<Position>): Position {
   if (!position.protocol) throw Error("Missing protocol when creating position");
   if (!position.account) throw Error("Missing account when creating position");

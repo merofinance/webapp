@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -7,27 +7,23 @@ import { useNavigate, useLocation } from "react-router-dom";
 import AccordionChevron from "./AccordionChevron";
 import logo from "../assets/logo/logo.svg";
 import {
-  addSuggestion,
   ignoreSuggestion,
   implementSuggestion,
   removeSuggestion,
-  selectImplement,
+  selectActiveSuggestion,
   selectSuggestions,
-  SuggestionType,
   Suggestion,
+  SuggestionType,
+  addSuggestions,
 } from "../state/helpSlice";
 import Button from "./Button";
 import { selectPositions } from "../state/positionsSlice";
-import { Position } from "../lib/types";
+import { Optional, Position } from "../lib/types";
+import { GradientLink } from "../styles/GradientText";
 
 const Container = styled.div`
   position: relative;
   margin-bottom: 2.4rem;
-
-  margin-left: 1.6rem;
-  @media (max-width: 1220px) {
-    margin-left: 0;
-  }
 `;
 
 interface LiveHelpProps {
@@ -48,8 +44,7 @@ const StyledLiveHelp = styled.div`
   padding: 2rem 1.8rem;
 
   max-height: ${(props: LiveHelpProps) =>
-    props.open ? `calc(25rem * ${props.suggestions})` : "5.4rem"};
-
+    props.open ? `calc(28rem * ${props.suggestions})` : "5.4rem"};
   // Background
   border: 1px solid transparent;
   background-origin: border-box;
@@ -147,10 +142,36 @@ const SuggestionText = styled.div`
   }
 `;
 
+const DocsLink = styled(GradientLink)`
+  font-weight: 400;
+  letter-spacing: 0.42px;
+
+  font-size: 1.5rem;
+  line-height: 2.1rem;
+  @media (max-width: 1220px) {
+    font-size: 1.2rem;
+    line-height: 1.7rem;
+  }
+`;
+
+const NfaText = styled.div`
+  font-weight: 400;
+  letter-spacing: 0.42px;
+  font-style: italic;
+  margin-top: 0.4rem;
+
+  font-size: 1rem;
+  line-height: 2.1rem;
+  @media (max-width: 1220px) {
+    font-size: 0.8rem;
+    line-height: 1.7rem;
+  }
+`;
+
 const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: 1.3rem;
 
   button {
     margin-right: 1rem;
@@ -165,13 +186,13 @@ const BackdHelper = styled.img`
   margin-right: 1rem;
 `;
 
-const LiveHelp = (): JSX.Element => {
+const LiveHelp = (): Optional<JSX.Element> => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const suggestions = useSelector(selectSuggestions);
-  const implement = useSelector(selectImplement);
+  const implement = useSelector(selectActiveSuggestion);
   const positions = useSelector(selectPositions);
   const [open, setOpen] = useState(false);
   const hasSuggestions = suggestions.length > 0;
@@ -182,36 +203,44 @@ const LiveHelp = (): JSX.Element => {
 
   useEffect(() => {
     setOpen(hasSuggestions);
+    return () => {
+      setOpen(false);
+    };
   }, [hasSuggestions]);
 
   useEffect(() => {
-    if (hasLowPositions) {
-      lowPositions.forEach((position: Position) =>
-        dispatch(
-          addSuggestion({
-            type: Suggestion.POSITION_LOW,
-            data: position.protocol.toLowerCase(),
-            text: t("liveHelp.suggestions.topupPositionLow.text", { protocol: position.protocol }),
-            button: t("liveHelp.suggestions.topupPositionLow.button"),
-          })
-        )
-      );
+    if (!hasLowPositions) {
+      dispatch(removeSuggestion(SuggestionType.POSITION_LOW));
       return;
     }
-    dispatch(removeSuggestion(Suggestion.POSITION_LOW));
+    dispatch(
+      addSuggestions(
+        lowPositions.map((position: Position) => {
+          return {
+            type: SuggestionType.POSITION_LOW,
+            data: position.protocol.toLowerCase(),
+            text: t("liveHelp.suggestions.topupPositionLow.text", {
+              protocol: position.protocol,
+            }),
+            button: t("liveHelp.suggestions.topupPositionLow.button"),
+            link: "https://docs.backd.fund/protocol-architecture/actions/top-ups",
+          };
+        })
+      )
+    );
   }, [hasLowPositions]);
 
   useEffect(() => {
     if (
       implement &&
-      implement.type === Suggestion.POSITION_LOW &&
+      implement.type === SuggestionType.POSITION_LOW &&
       location.pathname !== "/actions"
     ) {
       navigate("/actions");
     }
   }, [implement, location]);
 
-  if (!hasSuggestions) return <div />;
+  if (!hasSuggestions) return null;
 
   return (
     <Container id="live-help">
@@ -221,9 +250,17 @@ const LiveHelp = (): JSX.Element => {
         </ChevronContainer>
         <Header onClick={() => setOpen(!open)}>{t("liveHelp.header")}</Header>
         <Content>
-          {suggestions.map((suggestion: SuggestionType) => (
+          {suggestions.map((suggestion: Suggestion) => (
             <StyledSuggestion key={suggestion.type}>
-              <SuggestionText>{suggestion.text}</SuggestionText>
+              <SuggestionText>
+                {suggestion.text}{" "}
+                <Trans i18nKey="liveHelp.readMore">
+                  <DocsLink href={suggestion.link} target="_blank" rel="noopener noreferrer">
+                    link
+                  </DocsLink>
+                </Trans>
+              </SuggestionText>
+              <NfaText>{t("liveHelp.disclaimer")}</NfaText>
               <ButtonContainer>
                 <Button
                   id="live-help-implement"

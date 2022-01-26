@@ -8,7 +8,11 @@ import { Pool, Position } from "../../../../lib/types";
 import TopupInformation from "./TopupInformation";
 import deleteIcon from "../../../../assets/ui/delete.svg";
 import DeletePositionConfirmation from "./DeleteTopupConfirmation";
-import { removeSuggestion, selectImplement, Suggestion } from "../../../../state/helpSlice";
+import {
+  removeSuggestion,
+  selectActiveSuggestion,
+  SuggestionType,
+} from "../../../../state/helpSlice";
 
 const Content = styled.div`
   width: 100%;
@@ -50,18 +54,21 @@ interface Props {
 const TopupAction = ({ show, close, position, pool }: Props): JSX.Element => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const implement = useSelector(selectImplement);
+  const implement = useSelector(selectActiveSuggestion);
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     if (
       implement &&
-      implement.type === Suggestion.POSITION_LOW &&
+      implement.type === SuggestionType.POSITION_LOW &&
       implement.data === position.protocol.toLowerCase()
     ) {
       setDeleting(true);
       dispatch(removeSuggestion(implement.type));
     }
+    return () => {
+      setDeleting(false);
+    };
   }, [implement]);
 
   return (

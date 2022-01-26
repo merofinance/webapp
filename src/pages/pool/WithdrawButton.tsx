@@ -47,6 +47,9 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
       setConfirming(false);
       complete();
     }
+    return () => {
+      setConfirming(false);
+    };
   }, [loading]);
 
   const executeWithdraw = (amount: ScaledNumber) => {

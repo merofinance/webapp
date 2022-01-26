@@ -6,6 +6,7 @@ import { LiquidityPoolFactory } from "@backdfund/protocol/typechain/LiquidityPoo
 import { StakerVaultFactory } from "@backdfund/protocol/typechain/StakerVaultFactory";
 import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
 import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFactory";
+import { TopUpActionFeeHandlerFactory } from "@backdfund/protocol";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
 import fromEntries from "fromentries";
 
@@ -17,6 +18,7 @@ import {
   ETH_DUMMY_ADDRESS,
   INFINITE_APPROVE_AMMOUNT,
   MILLISECONDS_PER_YEAR,
+  DEFAULT_SCALE,
 } from "./constants";
 import { bigNumberToFloat } from "./numeric";
 import { ScaledNumber } from "./scaled-number";
@@ -34,6 +36,9 @@ import {
   PlainLoan,
   LendingProtocol,
   Optional,
+  PlainActionFees,
+  ActionFees,
+  toPlainActionFees,
 } from "./types";
 import { lendingProviders } from "./lending-protocols";
 import poolMetadata from "./data/pool-metadata";
@@ -48,6 +53,7 @@ export interface Backd {
   getPoolInfo(address: Address): Promise<Pool>;
   getLoanPosition(protocol: LendingProtocol, address?: Address): Promise<Optional<PlainLoan>>;
   getPositions(): Promise<PlainPosition[]>;
+  getActionFees(): Promise<PlainActionFees>;
   registerPosition(pool: Pool, position: Position): Promise<ContractTransaction>;
   removePosition(
     account: Address,
@@ -84,6 +90,8 @@ export class Web3Backd implements Backd {
 
     // eslint-disable-next-line dot-notation
     this.controller = ControllerFactory.connect(contracts["Controller"][0], _provider);
+    // eslint-disable-next-line dot-notation
+    this.topupAction = TopUpActionFactory.connect(contracts["TopUpAction"][0], _provider);
     // eslint-disable-next-line dot-notation
     this.topupAction = TopUpActionFactory.connect(contracts["TopUpAction"][0], _provider);
   }
@@ -219,6 +227,35 @@ export class Web3Backd implements Backd {
     const account = await this.currentAccount();
     const rawPositions = await this.topupAction.listPositions(account);
     return Promise.all(rawPositions.map((v: any) => this.getPositionInfo(v)));
+  }
+
+  async getActionFees(): Promise<PlainActionFees> {
+    const feeHandlerAddress = await this.topupAction.getFeeHandler();
+    const feeHandler = TopUpActionFeeHandlerFactory.connect(feeHandlerAddress, this._provider);
+
+    /* We can change to this when the latest protocol code is deployed to Kovan */
+    // const [totalBn, keeperFractionBn, treasuryFractionBn] = await Promise.all([
+    //   this.topupAction.getActionFee(),
+    //   feeHandler.getKeeperFeeFraction(),
+    //   feeHandler.getTreasuryFeeFraction(),
+    // ]);
+    const [totalBn, keeperFractionBn] = await Promise.all([
+      this.topupAction.getActionFee(),
+      feeHandler.getKeeperFeeFraction(),
+    ]);
+    const treasuryFractionBn = BigNumber.from(3).mul(DEFAULT_SCALE).div(10);
+    const total = new ScaledNumber(totalBn);
+    const keeperFraction = new ScaledNumber(keeperFractionBn).mul(total);
+    const treasuryFraction = new ScaledNumber(treasuryFractionBn).mul(total);
+
+    const actionfees: ActionFees = {
+      total,
+      keeperFraction,
+      treasuryFraction,
+      lpFraction: ScaledNumber.fromUnscaled(1).sub(keeperFraction).sub(treasuryFraction).mul(total),
+    };
+
+    return toPlainActionFees(actionfees);
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

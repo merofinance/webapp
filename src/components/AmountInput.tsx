@@ -44,9 +44,9 @@ const AmountInput = ({
   setValue,
   label,
   max,
-  noSlider,
   error,
   symbol,
+  noSlider,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
 
