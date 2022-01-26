@@ -21,12 +21,13 @@ const CallToActionButton = ({ hero }: Props): JSX.Element => {
       primary
       hero={hero}
       large
-      text={!active || protocolLive ? t("landingPage.viewPools") : t("landingPage.changeNetwork")}
       click={() => {
         if (!active || protocolLive) navigate("/pools");
         else changeNetwork(42);
       }}
-    />
+    >
+      {!active || protocolLive ? t("landingPage.viewPools") : t("landingPage.changeNetwork")}
+    </Button>
   );
 };
 

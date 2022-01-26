@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
@@ -87,6 +88,12 @@ const Body = styled.div`
   }
 `;
 
+const Content = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
 const ButtonContainer = styled.div`
   width: 100%;
   display: grid;
@@ -105,14 +112,14 @@ interface Props {
   close: () => void;
   header?: string;
   body?: string;
-  content?: JSX.Element;
-  confirm?: boolean;
+  children?: ReactNode;
   submit?: () => void;
   loading?: boolean;
   small?: boolean;
   confirmationText?: string;
   centerHeader?: boolean;
   id?: string;
+  descructive?: boolean;
 }
 
 const Popup = ({
@@ -120,14 +127,14 @@ const Popup = ({
   close,
   header,
   body,
-  content,
-  confirm,
+  children,
   submit,
   loading,
   small,
   confirmationText,
   centerHeader,
   id,
+  descructive,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
   const { isMobile } = useDevice();
@@ -149,27 +156,30 @@ const Popup = ({
           </Header>
         )}
         {body && <Body id={`${id}-popup-body`}>{body}</Body>}
-        {content && content}
-        {confirm && submit && (
+        {children && <Content>{children}</Content>}
+        {submit && (
           <ButtonContainer>
             <Button
               id={`${id}-popup-cancel`}
               medium
               neutral
               background="var(--bg-light)"
-              text={isMobile ? t("components.back") : t("components.cancel")}
               click={close}
-            />
+            >
+              {isMobile ? t("components.back") : t("components.cancel")}
+            </Button>
             <Button
               id={`${id}-popup-button`}
               primary
+              destructive={descructive}
               medium
-              text={confirmationText || t("components.confirm")}
               click={() => {
                 if (submit) submit();
               }}
               loading={loading}
-            />
+            >
+              {confirmationText || t("components.confirm")}
+            </Button>
           </ButtonContainer>
         )}
       </PopupContainer>

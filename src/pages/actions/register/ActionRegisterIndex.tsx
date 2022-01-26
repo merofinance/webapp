@@ -9,12 +9,6 @@ import icon from "../../../assets/logo/white-logo.svg";
 import Button from "../../../components/Button";
 import { useDevice } from "../../../app/hooks/use-device";
 
-const Content = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
 const Header = styled.div`
   font-weight: 600;
   letter-spacing: 0.25px;
@@ -88,35 +82,30 @@ const ActionRegisterIndex = (): JSX.Element => {
   ];
 
   return (
-    <ContentSection
-      header={t("actions.register.header")}
-      nav="1/4"
-      content={
-        <Content>
-          <Header>{t("actions.register.choose")}</Header>
-          <Radio
-            gradient
-            options={actions}
-            active={actionOption}
-            setOption={(value: string) => setActionOption(value)}
-          />
-          <NoteContainer>
-            <BackdIcon src={icon} />
-            <Note id="top-up-note">{t("actions.topup.description")}</Note>
-          </NoteContainer>
-          <ButtonContainer>
-            <Button
-              id="register-action-button"
-              primary
-              medium
-              width={isMobile ? "100%" : "44%"}
-              text={t("components.continue")}
-              click={() => navigate(`/actions/register/${actionOption}`)}
-            />
-          </ButtonContainer>
-        </Content>
-      }
-    />
+    <ContentSection header={t("actions.register.header")} nav="1/4">
+      <Header>{t("actions.register.choose")}</Header>
+      <Radio
+        gradient
+        options={actions}
+        active={actionOption}
+        setOption={(value: string) => setActionOption(value)}
+      />
+      <NoteContainer>
+        <BackdIcon src={icon} />
+        <Note id="top-up-note">{t("actions.topup.description")}</Note>
+      </NoteContainer>
+      <ButtonContainer>
+        <Button
+          id="register-action-button"
+          primary
+          medium
+          width={isMobile ? "100%" : "44%"}
+          click={() => navigate(`/actions/register/${actionOption}`)}
+        >
+          {t("components.continue")}
+        </Button>
+      </ButtonContainer>
+    </ContentSection>
   );
 };
 

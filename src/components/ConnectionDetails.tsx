@@ -14,12 +14,6 @@ import PulsingDot from "./PulsingDot";
 import RecentTransactions from "./RecentTransactions";
 import { getEtherscanAddressLink } from "../lib/web3";
 
-const Content = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
 const WalletContainer = styled.div`
   width: 100%;
   display: flex;
@@ -104,38 +98,32 @@ const ConnectionDetails = ({ show, close, changeWallet, wallet }: Props): JSX.El
       show={show}
       close={close}
       header={t("walletConnect.details.header")}
-      content={
-        <Content>
-          <WalletContainer>
-            <Wallet id="account-details-wallet">
-              {t("walletConnect.details.connected", { wallet: t(wallet) })}
-            </Wallet>
-            <Button
-              tiny
-              text={t("walletConnect.details.change")}
-              background="var(--bg-light)"
-              click={changeWallet}
-            />
-          </WalletContainer>
-          <AddressContainer
-            href={getEtherscanAddressLink(chainId, account || "")}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Address id="account-details-address">{shortenAddress(account || "", 24)}</Address>
-            <LaunchIcon
-              fontSize="medium"
-              style={{ fill: "var(--secondary)", transform: "translateY(0px)" }}
-            />
-          </AddressContainer>
-          <NetworkContainer>
-            <PulsingDot success={chainId === 1} />
-            <Network id="account-details-network">{networkName()}</Network>
-          </NetworkContainer>
-          <RecentTransactions />
-        </Content>
-      }
-    />
+    >
+      <WalletContainer>
+        <Wallet id="account-details-wallet">
+          {t("walletConnect.details.connected", { wallet: t(wallet) })}
+        </Wallet>
+        <Button tiny background="var(--bg-light)" click={changeWallet}>
+          {t("walletConnect.details.change")}
+        </Button>
+      </WalletContainer>
+      <AddressContainer
+        href={getEtherscanAddressLink(chainId, account || "")}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Address id="account-details-address">{shortenAddress(account || "", 24)}</Address>
+        <LaunchIcon
+          fontSize="medium"
+          style={{ fill: "var(--secondary)", transform: "translateY(0px)" }}
+        />
+      </AddressContainer>
+      <NetworkContainer>
+        <PulsingDot success={chainId === 1} />
+        <Network id="account-details-network">{networkName()}</Network>
+      </NetworkContainer>
+      <RecentTransactions />
+    </Popup>
   );
 };
 

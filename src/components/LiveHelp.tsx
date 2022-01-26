@@ -270,16 +270,18 @@ const LiveHelp = (): Optional<JSX.Element> => {
                   id="live-help-implement"
                   primary
                   small
-                  text={suggestion.button}
                   click={() => dispatch(implementSuggestion(suggestion))}
-                />
+                >
+                  {suggestion.button}
+                </Button>
                 <Button
                   small
-                  text={t("liveHelp.buttons.ignore")}
                   background="var(--bg-light)"
                   width="10rem"
                   click={() => dispatch(ignoreSuggestion(suggestion.type))}
-                />
+                >
+                  {t("liveHelp.buttons.ignore")}
+                </Button>
               </ButtonContainer>
             </StyledSuggestion>
           ))}

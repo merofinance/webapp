@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -9,20 +8,6 @@ import Popup from "../../../../components/Popup";
 import { Position, Pool, TransactionInfo, fromPlainPosition } from "../../../../lib/types";
 import { removePosition } from "../../../../state/positionsSlice";
 import { selectTransactions } from "../../../../state/transactionsSlice";
-import Button from "../../../../components/Button";
-
-const ButtonContainer = styled.div`
-  width: 100%;
-  display: grid;
-  margin-top: 4rem;
-
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 1.7rem;
-  @media (max-width: 600px) {
-    grid-template-columns: repeat(1, 1fr);
-    grid-gap: 1.8rem;
-  }
-`;
 
 interface Props {
   show: boolean;
@@ -65,6 +50,7 @@ const DeleteTopupConfirmation = ({ show, close, position, pool, complete }: Prop
 
   return (
     <Popup
+      descructive
       id="delete-topup-confirmation"
       show={show}
       close={close}
@@ -74,28 +60,9 @@ const DeleteTopupConfirmation = ({ show, close, position, pool, complete }: Prop
         max: position.maxTopUp.toCryptoString(),
         protocol: position.protocol,
       })}
-      content={
-        <ButtonContainer>
-          <Button
-            id="delete-topup-confirmation-cancel"
-            medium
-            background="var(--bg-light)"
-            neutral
-            text={t("actions.topup.delete.cancel")}
-            click={() => close()}
-          />
-          <Button
-            id="delete-topup-confirmation-button"
-            medium
-            primary
-            destructive
-            text={t("actions.topup.delete.header")}
-            loading={loading}
-            click={() => handleRemovePosition()}
-          />
-        </ButtonContainer>
-      }
       loading={loading}
+      submit={handleRemovePosition}
+      confirmationText={t("actions.topup.delete.header")}
     />
   );
 };

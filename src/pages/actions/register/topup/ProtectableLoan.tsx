@@ -103,10 +103,11 @@ const ProtectableLoan = ({ loan }: Props): JSX.Element => {
         <Button
           id={`${loan.protocol.toLowerCase()}-protectable-loan-button`}
           medium
-          text={t("actions.suggestions.topup.register")}
           background="#3A3550"
           click={() => navigate(`${TOPUP_ACTION_ROUTE}/${account}/${loan.protocol}`)}
-        />
+        >
+          {t("actions.suggestions.topup.register")}
+        </Button>
       </Column>
     </StyledProtectableLoan>
   );

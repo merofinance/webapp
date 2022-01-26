@@ -37,13 +37,6 @@ const walletOptions: WalletOption[] = [
   },
 ];
 
-const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-items: center;
-`;
-
 const SubHeaderContainer = styled.div`
   display: flex;
   margin: auto;
@@ -169,43 +162,35 @@ const WalletSelectPopup = ({ show, close, setWallet }: Props): JSX.Element => {
   };
 
   return (
-    <Popup
-      centerHeader
-      show={show}
-      close={() => close(false)}
-      header={t("walletConnect.header")}
-      content={
-        <Content>
-          <SubHeaderContainer>
-            <SubHeader>{t("walletConnect.newToEthereum")}</SubHeader>
-            <Highlight
-              id="wallet-select-link"
-              href="https://ethereum.org/en/wallets/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {t("walletConnect.aboutWallets")}
-              <LaunchIcon style={{ fill: "var(--secondary)" }} />
-            </Highlight>
-          </SubHeaderContainer>
+    <Popup centerHeader show={show} close={() => close(false)} header={t("walletConnect.header")}>
+      <SubHeaderContainer>
+        <SubHeader>{t("walletConnect.newToEthereum")}</SubHeader>
+        <Highlight
+          id="wallet-select-link"
+          href="https://ethereum.org/en/wallets/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {t("walletConnect.aboutWallets")}
+          <LaunchIcon style={{ fill: "var(--secondary)" }} />
+        </Highlight>
+      </SubHeaderContainer>
 
-          {walletOptions.map((option: WalletOption) => (
-            <Option
-              id={option.name}
-              key={option.name}
-              leftColor={option.leftColor}
-              rightColor={option.rightColor}
-              onClick={() => connect(option.connector, option.name)}
-            >
-              <Name>{t(option.name)}</Name>
-              <IconContainer>
-                <Icon src={option.icon} alt={`${option.name} logo`} />
-              </IconContainer>
-            </Option>
-          ))}
-        </Content>
-      }
-    />
+      {walletOptions.map((option: WalletOption) => (
+        <Option
+          id={option.name}
+          key={option.name}
+          leftColor={option.leftColor}
+          rightColor={option.rightColor}
+          onClick={() => connect(option.connector, option.name)}
+        >
+          <Name>{t(option.name)}</Name>
+          <IconContainer>
+            <Icon src={option.icon} alt={`${option.name} logo`} />
+          </IconContainer>
+        </Option>
+      ))}
+    </Popup>
   );
 };
 

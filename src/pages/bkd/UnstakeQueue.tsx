@@ -92,21 +92,19 @@ const UnstakeQueue = (): JSX.Element => {
             small
             disabled
             hoverText={t("bkd.unstake.queue.pending")}
-            text={isMobile ? t("bkd.unstake.queue.claimMobile") : t("bkd.unstake.queue.claim")}
             click={() => console.log("todo")}
-          />
+          >
+            {isMobile ? t("bkd.unstake.queue.claimMobile") : t("bkd.unstake.queue.claim")}
+          </Button>
         </RowItem>
       </Row>
       <Row>
         <RowItem>1,345 BKD</RowItem>
         <RowItem>-</RowItem>
         <RowItem>
-          <Button
-            primary
-            small
-            text={isMobile ? t("bkd.unstake.queue.claimMobile") : t("bkd.unstake.queue.claim")}
-            click={() => console.log("todo")}
-          />
+          <Button primary small click={() => console.log("todo")}>
+            {isMobile ? t("bkd.unstake.queue.claimMobile") : t("bkd.unstake.queue.claim")}
+          </Button>
         </RowItem>
       </Row>
     </StyledUnstakeQueue>

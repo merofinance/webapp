@@ -617,11 +617,8 @@ describe("Existing Topup View", () => {
       "Deleting this Top-up Position will remove automated collateral top-ups of DAI on Aave. 300 DAI will be unstaked and can be withdrawn after removing the position."
     );
   });
-  it("Should have cancel button", () => {
-    cy.get("#delete-topup-confirmation-cancel").contains("Do not delete");
-  });
   it("Should have delete button", () => {
-    cy.get("#delete-topup-confirmation-button").contains("Delete Top-up Position");
+    cy.get("#delete-topup-confirmation-popup-button").contains("Delete Top-up Position");
     cy.get("#register-action-button").should(
       "have.css",
       "background-image",
@@ -629,11 +626,13 @@ describe("Existing Topup View", () => {
     );
   });
   it("Should Confirm", () => {
-    cy.get("#delete-topup-confirmation-button").should("be.enabled");
-    cy.get("#delete-topup-confirmation-button").click();
+    cy.get("#delete-topup-confirmation-popup-button").should("be.enabled");
+    cy.get("#delete-topup-confirmation-popup-button").click();
   });
   it("Should disable button", () => {
-    cy.get("#delete-topup-confirmation-button", { timeout: WEB3_TIMEOUT }).should("be.disabled");
+    cy.get("#delete-topup-confirmation-popup-button", { timeout: WEB3_TIMEOUT }).should(
+      "be.disabled"
+    );
   });
   it("Should not show popups", () => {
     cy.get("#delete-topup-confirmation-popup-header", { timeout: WEB3_TIMEOUT }).should(

@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { GradientLink } from "../styles/GradientText";
 import InfoCard from "./InfoCard";
-import Tooltip, { TooltipItemType } from "./Tooltip";
+import BackdTooltip, { TooltipItemType } from "./BackdTooltip";
 import arrow from "../assets/ui/arrow.svg";
 import Loader from "./Loader";
 import { Optional } from "../lib/types";
@@ -20,12 +20,6 @@ interface InformationRowType {
   value: Optional<string>;
   details?: RowDetailType[];
 }
-
-const StyledInformation = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
 
 const InformationRow = styled.div`
   width: 100%;
@@ -147,41 +141,36 @@ const Information = ({ header, rows }: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
 
   return (
-    <InfoCard
-      header={header}
-      content={
-        <StyledInformation>
-          {rows.map((row: InformationRowType) => (
-            <InformationRow key={row.label}>
-              <InformationHeader isAccordion={!!row.details} onClick={() => setOpen(!open)}>
-                <LabelContainer>
-                  <Label>{row.label || <Loader />}</Label>
-                  <Tooltip content={row.tooltip} items={row.tooltipItems} />
-                </LabelContainer>
-                <ValueContainer>
-                  <Value>{row.value || <Loader />}</Value>
-                  <Chevron src={arrow} isAccordion={!!row.details} open={open} />
-                </ValueContainer>
-              </InformationHeader>
-              {row.details && (
-                <AccordionContainer open={open}>
-                  <AccordionContent>
-                    {row.details.map((details: RowDetailType) => (
-                      <DetailItem>
-                        <DetailIcon src={details.icon} />
-                        <DetailLabel href={details.link} target="_blank" rel="noopener noreferrer">
-                          {details.label}
-                        </DetailLabel>
-                      </DetailItem>
-                    ))}
-                  </AccordionContent>
-                </AccordionContainer>
-              )}
-            </InformationRow>
-          ))}
-        </StyledInformation>
-      }
-    />
+    <InfoCard header={header}>
+      {rows.map((row: InformationRowType) => (
+        <InformationRow key={row.label}>
+          <InformationHeader isAccordion={!!row.details} onClick={() => setOpen(!open)}>
+            <LabelContainer>
+              <Label>{row.label || <Loader />}</Label>
+              <BackdTooltip items={row.tooltipItems}>{row.tooltip}</BackdTooltip>
+            </LabelContainer>
+            <ValueContainer>
+              <Value>{row.value || <Loader />}</Value>
+              <Chevron src={arrow} isAccordion={!!row.details} open={open} />
+            </ValueContainer>
+          </InformationHeader>
+          {row.details && (
+            <AccordionContainer open={open}>
+              <AccordionContent>
+                {row.details.map((details: RowDetailType) => (
+                  <DetailItem>
+                    <DetailIcon src={details.icon} />
+                    <DetailLabel href={details.link} target="_blank" rel="noopener noreferrer">
+                      {details.label}
+                    </DetailLabel>
+                  </DetailItem>
+                ))}
+              </AccordionContent>
+            </AccordionContainer>
+          )}
+        </InformationRow>
+      ))}
+    </InfoCard>
   );
 };
 

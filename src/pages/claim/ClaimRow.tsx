@@ -109,17 +109,12 @@ const ClaimRow = ({ index }: Props): JSX.Element => {
       <EndContainer>
         {isDesktop && (
           <>
-            <Button
-              text={t("claim.buttons.claim")}
-              background="#100830"
-              width="12rem"
-              primary={isMobile}
-            />
-            <Button
-              primary
-              text={t("claim.buttons.claimAndStake")}
-              width={isMobile ? "auto" : "18rem"}
-            />
+            <Button background="#100830" width="12rem" primary={isMobile}>
+              {t("claim.buttons.claim")}
+            </Button>
+            <Button primary width={isMobile ? "auto" : "18rem"}>
+              {t("claim.buttons.claimAndStake")}
+            </Button>
           </>
         )}
         {isMobile && (

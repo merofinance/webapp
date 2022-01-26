@@ -4,12 +4,6 @@ import { useTranslation } from "react-i18next";
 import InfoCard from "./InfoCard";
 import ExternalLink from "./ExternalLink";
 
-const Content = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
 const Description = styled.div`
   font-weight: 500;
   letter-spacing: 0.46px;
@@ -38,13 +32,10 @@ const Overview = ({ description, link, defaultClosed }: Props): JSX.Element => {
       defaultOpen={!defaultClosed}
       collapsible
       header={t("components.overview")}
-      content={
-        <Content>
-          <Description id="overview-description">{description}</Description>
-          <ExternalLink label="components.moreInDocs" link={link} />
-        </Content>
-      }
-    />
+    >
+      <Description id="overview-description">{description}</Description>
+      <ExternalLink link={link}>{t("components.moreInDocs")}</ExternalLink>
+    </InfoCard>
   );
 };
 

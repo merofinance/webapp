@@ -8,13 +8,6 @@ import { selectPositions } from "../../state/positionsSlice";
 import { Optional, Position } from "../../lib/types";
 import ExistingAction from "./ExistingAction";
 
-const Content = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-`;
-
 const EmptyText = styled.div`
   font-weight: 400;
   font-size: 1.5rem;
@@ -55,27 +48,24 @@ const ExistingActions = (): Optional<JSX.Element> => {
       defaultOpen
       collapsible
       header={t("actions.registered.existing")}
-      content={
-        <Content>
-          {!hasPosition && (
-            <EmptyText id="existing-actions-empty">{t("actions.registered.empty")}</EmptyText>
-          )}
-          {hasPosition && (
-            <>
-              <Headers>
-                <Header flex={5}>{t("actions.registered.columns.type")}</Header>
-                <Header flex={3}>{t("actions.registered.columns.lockedShort")}</Header>
-                <Header flex={2} />
-              </Headers>
-              {positions &&
-                positions.map((position: Position) => (
-                  <ExistingAction key={position.depositToken} position={position} />
-                ))}
-            </>
-          )}
-        </Content>
-      }
-    />
+    >
+      {!hasPosition && (
+        <EmptyText id="existing-actions-empty">{t("actions.registered.empty")}</EmptyText>
+      )}
+      {hasPosition && (
+        <>
+          <Headers>
+            <Header flex={5}>{t("actions.registered.columns.type")}</Header>
+            <Header flex={3}>{t("actions.registered.columns.lockedShort")}</Header>
+            <Header flex={2} />
+          </Headers>
+          {positions &&
+            positions.map((position: Position) => (
+              <ExistingAction key={position.depositToken} position={position} />
+            ))}
+        </>
+      )}
+    </InfoCard>
   );
 };
 

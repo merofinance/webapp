@@ -47,11 +47,11 @@ const TopupConfirmation = ({ show, close, position, pool, complete }: Props): JS
       show={show}
       close={close}
       header={t("actions.topup.stages.confirmation.header")}
-      confirm
       submit={() => executeRegister()}
       loading={loading}
-      content={<TopupInformation position={position} pool={pool} />}
-    />
+    >
+      <TopupInformation position={position} pool={pool} />
+    </Popup>
   );
 };
 

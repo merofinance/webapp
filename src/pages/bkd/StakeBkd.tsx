@@ -69,94 +69,86 @@ const StakeBkd = (): Optional<JSX.Element> => {
   };
 
   return (
-    <ContentSection
-      noContentPadding
-      header={t("bkd.stake.header")}
-      content={
-        <Tabs
-          tabs={[
-            {
-              label: "bkd.stake.tab",
-              content: (
-                <>
-                  <Content>
-                    <InputContainer>
-                      <AmountInput
-                        noSlider
-                        value={amount}
-                        setValue={(v: string) => setAmount(v)}
-                        label={t("bkd.stake.input")}
-                        max={BKD_BALANCE}
-                        error={error()}
-                        symbol="bkd"
+    <ContentSection noContentPadding header={t("bkd.stake.header")}>
+      <Tabs
+        tabs={[
+          {
+            label: "bkd.stake.tab",
+            content: (
+              <>
+                <Content>
+                  <InputContainer>
+                    <AmountInput
+                      noSlider
+                      value={amount}
+                      setValue={(v: string) => setAmount(v)}
+                      label={t("bkd.stake.input")}
+                      max={BKD_BALANCE}
+                      error={error()}
+                      symbol="bkd"
+                    />
+                    <ButtonContainer>
+                      <ApproveThenAction
+                        oneButton
+                        label={t("bkd.stake.header")}
+                        action={() => setConfirming(true)}
+                        value={ScaledNumber.fromUnscaled(amount)}
+                        loading={LOADING}
+                        disabled={!!error()}
+                        token={BKD}
+                        contract={STAKING_CONTRACT}
                       />
-                      <ButtonContainer>
-                        <ApproveThenAction
-                          oneButton
-                          label={t("bkd.stake.header")}
-                          action={() => setConfirming(true)}
-                          value={ScaledNumber.fromUnscaled(amount)}
-                          loading={LOADING}
-                          disabled={!!error()}
-                          token={BKD}
-                          contract={STAKING_CONTRACT}
-                        />
-                      </ButtonContainer>
-                    </InputContainer>
-                    {amount && !error() && (
-                      <BkdCalculator amount={ScaledNumber.fromUnscaled(amount)} />
-                    )}
-                  </Content>
-                  <StakeConfirmation
-                    show={confirming}
-                    close={() => setConfirming(false)}
-                    amount={ScaledNumber.fromUnscaled(amount)}
-                  />
-                </>
-              ),
-            },
-            {
-              label: "bkd.unstake.tab",
-              content: (
-                <>
-                  <Content>
-                    <InputContainer>
-                      <AmountInput
-                        noSlider
-                        value={amount}
-                        setValue={(v: string) => setAmount(v)}
-                        label={t("bkd.unstake.input")}
-                        max={BKD_BALANCE}
-                        error={error()}
-                        symbol="bkd"
-                      />
-                      <ButtonContainer>
-                        <Button
-                          primary
-                          medium
-                          wide
-                          text={t("bkd.unstake.button")}
-                          click={() => console.log("todo")}
-                        />
-                      </ButtonContainer>
-                    </InputContainer>
-                    {amount && !error() && (
-                      <BkdCalculator withdraw amount={ScaledNumber.fromUnscaled(amount)} />
-                    )}
-                    <UnstakeQueue />
-                  </Content>
-                  <StakeConfirmation
-                    show={confirming}
-                    close={() => setConfirming(false)}
-                    amount={ScaledNumber.fromUnscaled(amount)}
-                  />
-                </>
-              ),
-            },
-          ]}
-        />
-      }
-    />
+                    </ButtonContainer>
+                  </InputContainer>
+                  {amount && !error() && (
+                    <BkdCalculator amount={ScaledNumber.fromUnscaled(amount)} />
+                  )}
+                </Content>
+                <StakeConfirmation
+                  show={confirming}
+                  close={() => setConfirming(false)}
+                  amount={ScaledNumber.fromUnscaled(amount)}
+                />
+              </>
+            ),
+          },
+          {
+            label: "bkd.unstake.tab",
+            content: (
+              <>
+                <Content>
+                  <InputContainer>
+                    <AmountInput
+                      noSlider
+                      value={amount}
+                      setValue={(v: string) => setAmount(v)}
+                      label={t("bkd.unstake.input")}
+                      max={BKD_BALANCE}
+                      error={error()}
+                      symbol="bkd"
+                    />
+                    <ButtonContainer>
+                      <Button primary medium wide click={() => console.log("todo")}>
+                        {t("bkd.unstake.button")}
+                      </Button>
+                    </ButtonContainer>
+                  </InputContainer>
+                  {amount && !error() && (
+                    <BkdCalculator withdraw amount={ScaledNumber.fromUnscaled(amount)} />
+                  )}
+                  <UnstakeQueue />
+                </Content>
+                <StakeConfirmation
+                  show={confirming}
+                  close={() => setConfirming(false)}
+                  amount={ScaledNumber.fromUnscaled(amount)}
+                />
+              </>
+            ),
+          },
+        ]}
+      />
+    </ContentSection>
   );
 };
 

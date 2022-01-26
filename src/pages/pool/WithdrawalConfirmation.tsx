@@ -3,48 +3,10 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useDevice } from "../../app/hooks/use-device";
 import Popup from "../../components/Popup";
-import BackdTooltip from "../../components/Tooltip";
 import { Pool } from "../../lib";
 import { ScaledNumber } from "../../lib/scaled-number";
 import { selectWithdrawalFee } from "../../state/userSlice";
-
-const Summary = styled.div`
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(60, 60, 60, 0.5);
-  border-radius: 1.4rem;
-  display: flex;
-  flex-direction: column;
-  padding: 1.6rem;
-`;
-
-const Row = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin: 0.6rem 0;
-`;
-
-interface LabelProps {
-  hideOnSnapshot?: boolean;
-}
-
-const Label = styled.div`
-  display: flex;
-  align-items: center;
-  font-weight: 500;
-  letter-spacing: 0.15px;
-  text-transform: capitalize;
-
-  font-size: 1.8rem;
-  @media (max-width: 600px) {
-    font-size: 1.6rem;
-  }
-
-  @media only percy {
-    opacity: ${(props: LabelProps) => (props.hideOnSnapshot ? "0" : "1")};
-  }
-`;
+import InfoBlock from "../../components/InfoBlock";
 
 interface Props {
   pool: Pool;
@@ -77,53 +39,11 @@ const WithdrawalConfirmation = ({
   return (
     <Popup
       id="withdrawal-confirmation"
-      confirm
       header={t("pool.tabs.withdraw.confirmation.header")}
       body={t("pool.tabs.withdraw.confirmation.subHeader", {
         amount: value.toCryptoString(),
         asset,
       })}
-      content={
-        <Summary>
-          <Row>
-            <Label>
-              {isMobile
-                ? t("pool.tabs.withdraw.confirmation.details.amount.labelMobile")
-                : t("pool.tabs.withdraw.confirmation.details.amount.label")}
-              <BackdTooltip
-                content={t("pool.tabs.withdraw.confirmation.details.amount.tooltip", {
-                  asset,
-                })}
-              />
-            </Label>
-            <Label hideOnSnapshot>{`${value.toCryptoString()} ${asset}`}</Label>
-          </Row>
-          <Row>
-            <Label>
-              {t("pool.tabs.withdraw.confirmation.details.fee.label")}
-              <BackdTooltip
-                content={t("pool.information.withdrawalFees.tooltip", {
-                  max: maxWithdrawalFee,
-                  min: minWithdrawalFee,
-                  days,
-                })}
-              />
-            </Label>
-            <Label hideOnSnapshot>{`${feePercent}${isMobile ? "" : ` (${fee} ${asset})`}`}</Label>
-          </Row>
-          <Row>
-            <Label>
-              {t("pool.tabs.withdraw.confirmation.details.receive.label")}
-              <BackdTooltip
-                content={t("pool.tabs.withdraw.confirmation.details.receive.tooltip", {
-                  asset,
-                })}
-              />
-            </Label>
-            <Label hideOnSnapshot>{`${withdrawnAmount.toCryptoString()} ${asset}`}</Label>
-          </Row>
-        </Summary>
-      }
       show={show}
       close={close}
       submit={submit}
@@ -132,7 +52,37 @@ const WithdrawalConfirmation = ({
         amount: value.toCryptoString(),
         asset,
       })}
-    />
+    >
+      <InfoBlock
+        rows={[
+          {
+            label: isMobile
+              ? t("pool.tabs.withdraw.confirmation.details.amount.labelMobile")
+              : t("pool.tabs.withdraw.confirmation.details.amount.label"),
+            tooltip: t("pool.tabs.withdraw.confirmation.details.amount.tooltip", {
+              asset,
+            }),
+            value: `${value.toCryptoString()} ${asset}`,
+          },
+          {
+            label: t("pool.tabs.withdraw.confirmation.details.fee.label"),
+            tooltip: t("pool.information.withdrawalFees.tooltip", {
+              max: maxWithdrawalFee,
+              min: minWithdrawalFee,
+              days,
+            }),
+            value: `${feePercent}${isMobile ? "" : ` (${fee} ${asset})`}`,
+          },
+          {
+            label: t("pool.tabs.withdraw.confirmation.details.receive.label"),
+            tooltip: t("pool.tabs.withdraw.confirmation.details.receive.tooltip", {
+              asset,
+            }),
+            value: `${withdrawnAmount.toCryptoString()} ${asset}`,
+          },
+        ]}
+      />
+    </Popup>
   );
 };
 

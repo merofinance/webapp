@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useWeb3React } from "@web3-react/core";
 
 import { GradientLink } from "../../../../styles/GradientText";
-import Tooltip from "../../../../components/Tooltip";
+import BackdTooltip from "../../../../components/BackdTooltip";
 import { shortenAddress } from "../../../../lib/text";
 import { Pool, Position } from "../../../../lib/types";
 import { selectPrice } from "../../../../state/selectors";
@@ -13,6 +13,7 @@ import { useDevice } from "../../../../app/hooks/use-device";
 import { getEtherscanAddressLink } from "../../../../lib/web3";
 import { selectActionFees } from "../../../../state/positionsSlice";
 import Loader from "../../../../components/Loader";
+import InfoBlock from "../../../../components/InfoBlock";
 
 const StyledTopupInformation = styled.div`
   width: 100%;
@@ -27,8 +28,10 @@ const Summary = styled.div`
   letter-spacing: 0.15px;
 
   font-size: 1.6rem;
+  margin-bottom: 3.5rem;
   @media (max-width: 600px) {
     font-size: 1.4rem;
+    margin-bottom: 1.8rem;
   }
 `;
 
@@ -43,28 +46,6 @@ const Address = styled(GradientLink)`
   @media (max-width: 600px) {
     font-size: 1.4rem;
   }
-`;
-
-const PositionSummary = styled.div`
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(60, 60, 60, 0.5);
-  border-radius: 1.4rem;
-  display: flex;
-  flex-direction: column;
-  padding: 1.6rem;
-
-  margin-top: 3.5rem;
-  @media (max-width: 600px) {
-    margin-top: 1.8rem;
-  }
-`;
-
-const SummaryRow = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin: 0.6rem 0;
 `;
 
 const Label = styled.div`
@@ -155,68 +136,60 @@ const TopupInformation = ({ position, pool }: Props): JSX.Element => {
           maxUsd: price ? position.maxTopUp.toUsdValue(price) : "$---",
         })}
       </Summary>
-      <PositionSummary>
-        <SummaryRow>
-          <Label>
-            {t("actions.topup.fields.protocol.label")}
-            <Tooltip content={t("actions.topup.fields.protocol.tooltip")} />
-          </Label>
-          <Label id="topup-information-protocol">{position.protocol}</Label>
-        </SummaryRow>
-        <SummaryRow>
-          <Label>
-            {t("actions.topup.fields.address.label")}
-            <Tooltip content={t("actions.topup.fields.address.tooltip")} />
-          </Label>
-          <AddressLabel
-            href={getEtherscanAddressLink(chainId, position.account)}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {shortenAddress(position.account, 8)}
-            <LaunchIcon style={{ fill: "var(--secondary)" }} />
-          </AddressLabel>
-        </SummaryRow>
-        <SummaryRow>
-          <Label>
-            {t("actions.topup.fields.threshold.label")}
-            <Tooltip content={t("actions.topup.fields.threshold.tooltip")} />
-          </Label>
-          <Label id="topup-information-threshold">{position.threshold.toString()}</Label>
-        </SummaryRow>
-        <SummaryRow>
-          <Label>
-            {t("actions.topup.fields.single.label")}
-            <Tooltip content={t("actions.topup.fields.single.tooltip")} />
-          </Label>
-          <Label id="topup-information-single-topup">{`${position.singleTopUp.toCryptoString()} ${
-            pool.underlying.symbol
-          }`}</Label>
-        </SummaryRow>
-        <SummaryRow>
-          <Label>
-            {t("actions.topup.fields.max.label")}
-            <Tooltip content={t("actions.topup.fields.max.tooltip")} />
-          </Label>
-          <Label id="topup-information-max-topup">{`${position.maxTopUp.toCryptoString()} ${
-            pool.underlying.symbol
-          }`}</Label>
-        </SummaryRow>
-        <SummaryRow>
-          <Label>
-            {t("actions.topup.fields.gas.label")}
-            <Tooltip content={t("actions.topup.fields.gas.tooltip")} />
-          </Label>
-          <Label id="topup-information-max-gas">{`${position.maxGasPrice.toCryptoString()} Gwei`}</Label>
-        </SummaryRow>
-      </PositionSummary>
+      <InfoBlock
+        rows={[
+          {
+            label: t("actions.topup.fields.protocol.label"),
+            tooltip: t("actions.topup.fields.protocol.tooltip"),
+            value: position.protocol,
+            valueId: "topup-information-protocol",
+          },
+          {
+            label: t("actions.topup.fields.address.label"),
+            tooltip: t("actions.topup.fields.address.tooltip"),
+            value: (
+              <AddressLabel
+                href={getEtherscanAddressLink(chainId, position.account)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {shortenAddress(position.account, 8)}
+                <LaunchIcon style={{ fill: "var(--secondary)" }} />
+              </AddressLabel>
+            ),
+          },
+          {
+            label: t("actions.topup.fields.threshold.label"),
+            tooltip: t("actions.topup.fields.threshold.tooltip"),
+            value: position.threshold.toString(),
+            valueId: "topup-information-threshold",
+          },
+          {
+            label: t("actions.topup.fields.single.label"),
+            tooltip: t("actions.topup.fields.single.tooltip"),
+            value: `${position.singleTopUp.toCryptoString()} ${pool.underlying.symbol}`,
+            valueId: "topup-information-single-topup",
+          },
+          {
+            label: t("actions.topup.fields.max.label"),
+            tooltip: t("actions.topup.fields.max.tooltip"),
+            value: `${position.maxTopUp.toCryptoString()} ${pool.underlying.symbol}`,
+            valueId: "topup-information-max-topup",
+          },
+          {
+            label: t("actions.topup.fields.gas.label"),
+            tooltip: t("actions.topup.fields.gas.tooltip"),
+            value: `${position.maxGasPrice.toCryptoString()} Gwei`,
+            valueId: "topup-information-max-gas",
+          },
+        ]}
+      />
       <InfoSection>
         <InfoRow>
           <InfoLabel>
             {t("actions.topup.stages.confirmation.fees.label")}
-            <Tooltip
+            <BackdTooltip
               info
-              content={t("actions.topup.stages.confirmation.fees.tooltip.header")}
               items={[
                 {
                   label: t("actions.topup.stages.confirmation.fees.tooltip.itemLabels.lps"),
@@ -231,7 +204,9 @@ const TopupInformation = ({ position, pool }: Props): JSX.Element => {
                   value: actionFees ? actionFees.treasuryFraction.toPercent() : "--%",
                 },
               ]}
-            />
+            >
+              {t("actions.topup.stages.confirmation.fees.tooltip.header")}
+            </BackdTooltip>
           </InfoLabel>
           <InfoLabel>{actionFees ? actionFees.total.toPercent() : <Loader />}</InfoLabel>
         </InfoRow>

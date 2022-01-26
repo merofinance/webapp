@@ -192,12 +192,9 @@ const HowItWorks = (): JSX.Element => {
               <Body>{t(card.description)}</Body>
               {card.depositButton && (
                 <ButtonContainer>
-                  <Button
-                    primary
-                    large
-                    text={t("howItWorks.deposit")}
-                    click={() => navigate("/pools")}
-                  />
+                  <Button primary large click={() => navigate("/pools")}>
+                    {t("howItWorks.deposit")}
+                  </Button>
                 </ButtonContainer>
               )}
             </Card>

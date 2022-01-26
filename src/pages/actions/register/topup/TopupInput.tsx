@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { FormikFormType, FormType } from "./TopupConditionsForm";
-import Tooltip from "../../../../components/Tooltip";
+import BackdTooltip from "../../../../components/BackdTooltip";
 
 const StyledRegisterTopupInput = styled.div`
   width: 100%;
@@ -134,7 +134,7 @@ const TopupInput = ({
     <StyledRegisterTopupInput>
       <LabelContainer>
         <Label>{label}</Label>
-        <Tooltip content={tooltip} />
+        <BackdTooltip>{tooltip}</BackdTooltip>
       </LabelContainer>
       <InputContainer>
         <InputBorder valid={valid}>

@@ -107,21 +107,20 @@ const PoolPage = (): Optional<JSX.Element> => {
               noContentPadding
               header={t("pool.header", { asset: pool?.underlying.symbol || "---" })}
               statistics={<PoolStatistics pool={pool} />}
-              content={
-                <Tabs
-                  tabs={[
-                    {
-                      label: "pool.tabs.deposit.tab",
-                      content: <PoolDeposit pool={pool} />,
-                    },
-                    {
-                      label: "pool.tabs.withdraw.tab",
-                      content: <PoolWithdraw pool={pool} />,
-                    },
-                  ]}
-                />
-              }
-            />
+            >
+              <Tabs
+                tabs={[
+                  {
+                    label: "pool.tabs.deposit.tab",
+                    content: <PoolDeposit pool={pool} />,
+                  },
+                  {
+                    label: "pool.tabs.withdraw.tab",
+                    content: <PoolWithdraw pool={pool} />,
+                  },
+                ]}
+              />
+            </ContentSection>
           </Content>
         </ContentContainer>
         <InfoCards>
@@ -140,10 +139,11 @@ const PoolPage = (): Optional<JSX.Element> => {
                 id="create-topup-button"
                 medium
                 wide
-                text={`+ ${t("actions.register.nav")}`}
                 click={() => navigate("/actions")}
                 background="#0A0525"
-              />
+              >
+                {`+ ${t("actions.register.nav")}`}
+              </Button>
             </ButtonContainer>
           )}
         </InfoCards>

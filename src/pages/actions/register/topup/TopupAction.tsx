@@ -14,12 +14,6 @@ import {
   SuggestionType,
 } from "../../../../state/helpSlice";
 
-const Content = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
 const DeleteButton = styled.button`
   width: 100%;
   display: flex;
@@ -73,21 +67,13 @@ const TopupAction = ({ show, close, position, pool }: Props): JSX.Element => {
 
   return (
     <>
-      <Popup
-        id="topup-action"
-        show={show}
-        close={close}
-        header={t("actions.topup.label")}
-        content={
-          <Content>
-            <TopupInformation position={position} pool={pool} />
-            <DeleteButton id="delete-action-button" onClick={() => setDeleting(true)}>
-              <DeleteIcon src={deleteIcon} alt="delete button" />
-              <DeleteText>{t("actions.topup.delete.header")}</DeleteText>
-            </DeleteButton>
-          </Content>
-        }
-      />
+      <Popup id="topup-action" show={show} close={close} header={t("actions.topup.label")}>
+        <TopupInformation position={position} pool={pool} />
+        <DeleteButton id="delete-action-button" onClick={() => setDeleting(true)}>
+          <DeleteIcon src={deleteIcon} alt="delete button" />
+          <DeleteText>{t("actions.topup.delete.header")}</DeleteText>
+        </DeleteButton>
+      </Popup>
       <DeletePositionConfirmation
         show={deleting}
         close={() => setDeleting(false)}

@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
@@ -12,6 +13,11 @@ const StyledNotice = styled.div`
   background: rgba(54, 176, 230, 0.1);
   border: 1px solid rgba(100, 182, 247, 1);
   border-radius: 1.65rem;
+
+  margin-top: 3.4rem;
+  @media (max-width: 600px) {
+    margin-top: 1.8rem;
+  }
 `;
 
 const Content = styled.div`
@@ -40,17 +46,17 @@ const Text = styled.div`
 `;
 
 interface Props {
-  text: string;
+  children: ReactNode;
 }
 
-const Notice = ({ text }: Props): JSX.Element => {
+const Notice = ({ children }: Props): JSX.Element => {
   const { t } = useTranslation();
 
   return (
     <StyledNotice>
       <Content>
         <Icon src={icon} alt="Warning icon" />
-        <Text>{t(text)}</Text>
+        <Text>{children}</Text>
       </Content>
     </StyledNotice>
   );
