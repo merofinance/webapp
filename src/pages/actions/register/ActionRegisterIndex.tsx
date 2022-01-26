@@ -110,9 +110,10 @@ const ActionRegisterIndex = (): JSX.Element => {
               primary
               medium
               width={isMobile ? "100%" : "44%"}
-              text={t("components.continue")}
               click={() => navigate(`/actions/register/${actionOption}`)}
-            />
+            >
+              {t("components.continue")}
+            </Button>
           </ButtonContainer>
         </Content>
       }

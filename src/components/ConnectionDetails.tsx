@@ -110,12 +110,9 @@ const ConnectionDetails = ({ show, close, changeWallet, wallet }: Props): JSX.El
             <Wallet id="account-details-wallet">
               {t("walletConnect.details.connected", { wallet: t(wallet) })}
             </Wallet>
-            <Button
-              tiny
-              text={t("walletConnect.details.change")}
-              background="var(--bg-light)"
-              click={changeWallet}
-            />
+            <Button tiny background="var(--bg-light)" click={changeWallet}>
+              {t("walletConnect.details.change")}
+            </Button>
           </WalletContainer>
           <AddressContainer
             href={getEtherscanAddressLink(chainId, account || "")}

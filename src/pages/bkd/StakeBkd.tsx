@@ -131,13 +131,9 @@ const StakeBkd = (): Optional<JSX.Element> => {
                         symbol="bkd"
                       />
                       <ButtonContainer>
-                        <Button
-                          primary
-                          medium
-                          wide
-                          text={t("bkd.unstake.button")}
-                          click={() => console.log("todo")}
-                        />
+                        <Button primary medium wide click={() => console.log("todo")}>
+                          {t("bkd.unstake.button")}
+                        </Button>
                       </ButtonContainer>
                     </InputContainer>
                     {amount && !error() && (

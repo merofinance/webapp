@@ -81,18 +81,20 @@ const DeleteTopupConfirmation = ({ show, close, position, pool, complete }: Prop
             medium
             background="var(--bg-light)"
             neutral
-            text={t("actions.topup.delete.cancel")}
             click={() => close()}
-          />
+          >
+            {t("actions.topup.delete.cancel")}
+          </Button>
           <Button
             id="delete-topup-confirmation-button"
             medium
             primary
             destructive
-            text={t("actions.topup.delete.header")}
             loading={loading}
             click={() => handleRemovePosition()}
-          />
+          >
+            {t("actions.topup.delete.header")}
+          </Button>
         </ButtonContainer>
       }
       loading={loading}

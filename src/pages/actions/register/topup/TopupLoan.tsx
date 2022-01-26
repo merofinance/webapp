@@ -147,10 +147,11 @@ const TopupLoan = (): JSX.Element => {
                 medium
                 disabled={!address}
                 width={isMobile ? "100%" : "44%"}
-                text={t("components.continue")}
                 click={() => navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`)}
                 hoverText={t("actions.topup.stages.loan.header")}
-              />
+              >
+                {t("components.continue")}
+              </Button>
             </ButtonContainer>
           </Content>
         }

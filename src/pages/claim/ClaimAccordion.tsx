@@ -130,16 +130,14 @@ const ClaimAccordion = ({ open, toggle, rows }: Props): JSX.Element => {
           <Apr>5.2%</Apr>
           <EndContainer>
             {isDesktop && (
-              <Button
-                text={t("claim.buttons.claimAll")}
-                background="#1c0c37"
-                width="12rem"
-                small={isMobile}
-                primary={isMobile}
-              />
+              <Button background="#1c0c37" width="12rem" small={isMobile} primary={isMobile}>
+                {t("claim.buttons.claimAll")}
+              </Button>
             )}
             {isDesktop && (
-              <Button primary text={t("claim.buttons.claimAllAndStake")} width="18rem" />
+              <Button primary width="18rem">
+                {t("claim.buttons.claimAllAndStake")}
+              </Button>
             )}
             <AccordionChevron open={open} />
           </EndContainer>

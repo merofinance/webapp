@@ -157,19 +157,21 @@ const Popup = ({
               medium
               neutral
               background="var(--bg-light)"
-              text={isMobile ? t("components.back") : t("components.cancel")}
               click={close}
-            />
+            >
+              {isMobile ? t("components.back") : t("components.cancel")}
+            </Button>
             <Button
               id={`${id}-popup-button`}
               primary
               medium
-              text={confirmationText || t("components.confirm")}
               click={() => {
                 if (submit) submit();
               }}
               loading={loading}
-            />
+            >
+              {confirmationText || t("components.confirm")}
+            </Button>
           </ButtonContainer>
         )}
       </PopupContainer>

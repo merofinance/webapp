@@ -68,13 +68,9 @@ const ErrorAlert = (): JSX.Element => {
             </Text>
           )}
           {error.hideButton ? null : (
-            <Button
-              medium
-              primary
-              background="var(--bg-light)"
-              text={t("components.close")}
-              click={handleClose}
-            />
+            <Button medium primary background="var(--bg-light)" click={handleClose}>
+              {t("components.close")}
+            </Button>
           )}
         </Content>
       }

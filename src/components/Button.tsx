@@ -1,5 +1,5 @@
 import { CircularProgress } from "@material-ui/core";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { selectError } from "../state/errorSlice";
@@ -239,7 +239,7 @@ const HoverText = styled.div`
 `;
 
 interface Props {
-  text: string;
+  children: ReactNode;
   click?: () => void;
   primary?: boolean;
   hero?: boolean;
@@ -313,7 +313,7 @@ const Button = (props: Props): JSX.Element => {
           disabled={props.disabled}
           neutral={props.neutral}
         >
-          {props.text}
+          {props.children}
         </Text>
       </TextContainer>
       {props.hoverText && props.disabled && (

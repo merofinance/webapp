@@ -83,7 +83,6 @@ const TopupPoolDeposit = (): JSX.Element => {
                 primary
                 medium
                 width={isMobile ? "100%" : "44%"}
-                text={t("components.continue")}
                 click={() => {
                   if (address && protocol && poolName)
                     navigate(
@@ -95,7 +94,9 @@ const TopupPoolDeposit = (): JSX.Element => {
                 hoverText={t("actions.topup.stages.pool.deposit.incomplete", {
                   asset: pool?.underlying.symbol,
                 })}
-              />
+              >
+                {t("components.continue")}
+              </Button>
             </ButtonContainer>
           </Content>
         }

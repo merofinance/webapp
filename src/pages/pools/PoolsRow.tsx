@@ -187,11 +187,9 @@ const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
         <Data right preview={preview} />
       </Row>
       <ButtonContainer preview={preview}>
-        <Button
-          text={t("pools.deposit")}
-          background="var(--row-bg)"
-          click={() => navigate(`/pool/${pool.lpToken.symbol}`)}
-        />
+        <Button background="var(--row-bg)" click={() => navigate(`/pool/${pool.lpToken.symbol}`)}>
+          {t("pools.deposit")}
+        </Button>
       </ButtonContainer>
     </RowContainer>
   );

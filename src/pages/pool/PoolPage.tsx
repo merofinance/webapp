@@ -140,10 +140,11 @@ const PoolPage = (): Optional<JSX.Element> => {
                 id="create-topup-button"
                 medium
                 wide
-                text={`+ ${t("actions.register.nav")}`}
                 click={() => navigate("/actions")}
                 background="#0A0525"
-              />
+              >
+                {`+ ${t("actions.register.nav")}`}
+              </Button>
             </ButtonContainer>
           )}
         </InfoCards>

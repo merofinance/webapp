@@ -98,7 +98,9 @@ const BasicCard = ({
       {subValue && <SubValue>{subValue}</SubValue>}
       {buttonText && buttonAction && (
         <ButtonContainer>
-          <Button primary medium width="13rem" text={buttonText} click={buttonAction} />
+          <Button primary medium width="13rem" click={buttonAction}>
+            {buttonText}
+          </Button>
         </ButtonContainer>
       )}
     </StyledBasicCard>

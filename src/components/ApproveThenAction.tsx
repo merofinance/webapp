@@ -156,31 +156,31 @@ const ApproveThenAction = ({
             primary
             medium
             wide
-            text={t("amountInput.approve", { asset: token.symbol })}
             click={executeApprove}
             complete={approved}
             loading={approveLoading}
             disabled={disabled}
             hoverText={hoverText}
-          />
+          >
+            {t("amountInput.approve", { asset: token.symbol })}
+          </Button>
         )}
         <Button
           id="action-button"
           primary
           medium
           wide
-          text={
-            oneButton
-              ? !approved
-                ? `1/2 ${t("amountInput.approve", { asset: token.symbol })}`
-                : `2/2 ${label}`
-              : label
-          }
           click={!approved && oneButton ? executeApprove : action}
           disabled={(!approved && !oneButton) || disabled}
           loading={(approveLoading && oneButton) || loading}
           hoverText={hoverText}
-        />
+        >
+          {oneButton
+            ? !approved
+              ? `1/2 ${t("amountInput.approve", { asset: token.symbol })}`
+              : `2/2 ${label}`
+            : label}
+        </Button>
       </Buttons>
       {(!approved || persistApprove) && !oneButton && (
         <ProgressContainer>

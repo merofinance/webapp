@@ -64,9 +64,10 @@ const RegisteredActions = (): JSX.Element => {
                 medium
                 width={isMobile ? "100%" : "44%"}
                 background="#0F0830"
-                text={t("actions.register.button")}
                 click={() => navigate("/actions/register")}
-              />
+              >
+                {t("actions.register.button")}
+              </Button>
             </ButtonContainer>
           </Content>
         }

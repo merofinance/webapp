@@ -159,7 +159,6 @@ const TopupPool = (): JSX.Element => {
                 primary
                 medium
                 width={isMobile ? "100%" : "44%"}
-                text={t("components.continue")}
                 click={() => {
                   if (!hasSufficientBalance(selected))
                     navigate(`${TOPUP_ACTION_ROUTE}/deposit/${pool}/${address}/${protocol}`);
@@ -167,7 +166,9 @@ const TopupPool = (): JSX.Element => {
                 }}
                 disabled={!pool}
                 hoverText={t("actions.topup.stages.pool.incomplete")}
-              />
+              >
+                {t("components.continue")}
+              </Button>
             </ButtonContainer>
           </Content>
         }
