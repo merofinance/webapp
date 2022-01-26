@@ -71,7 +71,7 @@ const ErrorAlert = (): JSX.Element => {
             <Button
               medium
               primary
-              background="#252140"
+              background="var(--bg-light)"
               text={t("components.close")}
               click={handleClose}
             />

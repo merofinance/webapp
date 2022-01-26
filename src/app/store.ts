@@ -23,6 +23,7 @@ import userReducer from "../state/userSlice";
 import errorReducer from "../state/errorSlice";
 import positionsReducer from "../state/positionsSlice";
 import transactionsReducer from "../state/transactionsSlice";
+import helpReducer from "../state/helpSlice";
 
 const rootReducer = combineReducers({
   pools: poolsReducer,
@@ -31,12 +32,13 @@ const rootReducer = combineReducers({
   positions: positionsReducer,
   transactions: transactionsReducer,
   error: errorReducer,
+  help: helpReducer,
 });
 
 const persistConfig = {
   key: "root",
   version: 1,
-  blacklist: ["error", "user", "positions", "transactions"],
+  blacklist: ["error", "user", "positions", "transactions", "help"],
   storage,
 };
 

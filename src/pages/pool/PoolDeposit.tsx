@@ -5,10 +5,11 @@ import { useTranslation } from "react-i18next";
 
 import { useDevice } from "../../app/hooks/use-device";
 import AmountInput from "../../components/AmountInput";
-import { selectBalance } from "../../state/userSlice";
+import { selectPoolBalance } from "../../state/userSlice";
 import { Pool } from "../../lib";
 import { ScaledNumber } from "../../lib/scaled-number";
 import DepositButtons from "./DepositButtons";
+import { Optional } from "../../lib/types";
 
 interface PoolDepositProps {
   error: boolean;
@@ -35,25 +36,26 @@ const StyledPoolDeposit = styled.div`
 `;
 
 interface Props {
-  pool: Pool;
+  pool: Optional<Pool>;
   compact?: boolean;
 }
 
 const PoolDeposit = ({ pool, compact }: Props): JSX.Element => {
   const { t } = useTranslation();
-  const availableToDeposit = useSelector(selectBalance(pool.underlying.address));
+  const availableToDeposit = useSelector(selectPoolBalance(pool?.underlying.address));
   const { isMobile } = useDevice();
   const [depositAmount, setDepositAmount] = useState("");
-  const value = ScaledNumber.fromUnscaled(depositAmount, pool.underlying.decimals);
+  const value = ScaledNumber.fromUnscaled(depositAmount, pool?.underlying.decimals);
 
   const inputLabel = isMobile
     ? t("pool.tabs.deposit.input.labelMobile")
-    : t("pool.tabs.deposit.input.labelDesktop", { asset: pool.underlying.symbol });
+    : t("pool.tabs.deposit.input.labelDesktop", { asset: pool?.underlying.symbol || "---" });
 
   const error = () => {
+    if (!availableToDeposit) return "";
     if (depositAmount && Number(depositAmount) <= 0) return t("amountInput.validation.positive");
     try {
-      const amount = ScaledNumber.fromUnscaled(depositAmount, pool.underlying.decimals);
+      const amount = ScaledNumber.fromUnscaled(depositAmount, pool?.underlying.decimals);
       if (amount.gt(availableToDeposit)) return t("amountInput.validation.exceedsBalance");
       return "";
     } catch {
@@ -70,7 +72,7 @@ const PoolDeposit = ({ pool, compact }: Props): JSX.Element => {
         label={inputLabel}
         max={availableToDeposit}
         error={error()}
-        symbol={pool.underlying.symbol}
+        symbol={pool?.underlying.symbol || "---"}
       />
       <DepositButtons
         stepsOnTop={compact}

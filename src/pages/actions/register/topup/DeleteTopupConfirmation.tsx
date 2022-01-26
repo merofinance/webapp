@@ -53,6 +53,9 @@ const DeleteTopupConfirmation = ({ show, close, position, pool, complete }: Prop
       close();
     }
     setInitialised(true);
+    return () => {
+      setInitialised(false);
+    };
   }, [loading]);
 
   const handleRemovePosition = () => {
@@ -76,7 +79,8 @@ const DeleteTopupConfirmation = ({ show, close, position, pool, complete }: Prop
           <Button
             id="delete-topup-confirmation-cancel"
             medium
-            background="#252140"
+            background="var(--bg-light)"
+            neutral
             text={t("actions.topup.delete.cancel")}
             click={() => close()}
           />

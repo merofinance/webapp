@@ -3,6 +3,7 @@ import {
   bigNumberToString,
   formatCrypto,
   formatCurrency,
+  formatPercent,
   numberToCompactCurrency,
   stringToBigNumber,
 } from "./numeric";
@@ -101,6 +102,11 @@ export class ScaledNumber {
     return this.value.lte(other.value);
   }
 
+  max(other: ScaledNumber): ScaledNumber {
+    this.assertSameDecimals(other);
+    return this.value.gt(other.value) ? this : other;
+  }
+
   mul(value: number | string | ScaledNumber): ScaledNumber {
     const scaledValue =
       value instanceof ScaledNumber
@@ -127,4 +133,6 @@ export class ScaledNumber {
 
   toCompactUsdValue = (price: number): string =>
     numberToCompactCurrency(Number(this.toString()) * price);
+
+  toPercent = (): string => formatPercent(Number(this.toString()));
 }

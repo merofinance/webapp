@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 import AmountInput from "../../components/AmountInput";
 import ApproveThenAction from "../../components/ApproveThenAction";
-import { selectBalance } from "../../state/userSlice";
+import { selectPoolBalance } from "../../state/userSlice";
 import { Token } from "../../lib/types";
 import { GradientLink } from "../../styles/GradientText";
 import { useDevice } from "../../app/hooks/use-device";
@@ -63,7 +63,7 @@ type Props = {
 
 const UnstakeTokens = ({ token }: Props): JSX.Element => {
   const { t } = useTranslation();
-  const balance = useSelector(selectBalance(token.address));
+  const balance = useSelector(selectPoolBalance(token.address));
   const { isMobile } = useDevice();
 
   const [value, setValue] = useState("");

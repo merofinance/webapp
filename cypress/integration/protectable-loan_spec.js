@@ -12,7 +12,9 @@ describe("Default state", () => {
     cy.get("#content-header").contains("Registered Actions");
   });
   it("Should have Protectable Loans", () => {
-    cy.get("#protectable-loans-header").contains("We have found a protectable loan!");
+    cy.get("#protectable-loans-header", { timeout: WEB3_TIMEOUT }).contains(
+      "I have found a protectable loan!"
+    );
   });
   it("Should show Aave loan", () => {
     cy.get("#aave-protectable-loan", { timeout: WEB3_TIMEOUT }).should("exist");

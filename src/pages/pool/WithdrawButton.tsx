@@ -5,11 +5,18 @@ import { useTranslation } from "react-i18next";
 
 import Button from "../../components/Button";
 import { Pool } from "../../lib";
-import { selectBalance, unstake, withdraw } from "../../state/userSlice";
+import {
+  selectAvailableToWithdraw,
+  selectPoolBalance,
+  unstake,
+  withdraw,
+} from "../../state/userSlice";
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
 import { ScaledNumber } from "../../lib/scaled-number";
 import { hasPendingTransaction } from "../../state/transactionsSlice";
+import Loader from "../../components/Loader";
+import { Optional } from "../../lib/types";
 import WithdrawalConfirmation from "./WithdrawalConfirmation";
 
 const StyledProgressButtons = styled.div`
@@ -20,7 +27,7 @@ const StyledProgressButtons = styled.div`
 
 interface Props {
   value: ScaledNumber;
-  pool: Pool;
+  pool: Optional<Pool>;
   complete: () => void;
   valid: boolean;
 }
@@ -29,36 +36,39 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
   const { t } = useTranslation();
   const dispatch: AppDispatch = useDispatch();
   const backd = useBackd();
-  const totalBalance = useSelector(selectBalance(pool));
-  const staked = useSelector(selectBalance(pool.stakerVaultAddress));
+  const staked = useSelector(selectPoolBalance(pool?.stakerVaultAddress));
   const loading = useSelector(hasPendingTransaction("Withdraw"));
+  const availableToWithdraw = useSelector(selectAvailableToWithdraw(pool));
 
   const [confirming, setConfirming] = useState(false);
-
-  const availableToWithdraw = totalBalance.sub(staked);
 
   useEffect(() => {
     if (!loading) {
       setConfirming(false);
       complete();
     }
+    return () => {
+      setConfirming(false);
+    };
   }, [loading]);
 
   const executeWithdraw = (amount: ScaledNumber) => {
-    if (!backd || loading) return;
+    if (!backd || loading || !pool) return;
     dispatch(withdraw({ backd, pool, amount }));
   };
 
   const executeUnstake = () => {
-    if (!backd || loading) return;
+    if (!backd || loading || !staked || !pool) return;
     dispatch(unstake({ backd, pool, amount: staked }));
   };
 
   const submit = () => {
-    if (!valid) return;
+    if (!valid || !availableToWithdraw) return;
     if (value.lte(availableToWithdraw)) executeWithdraw(value);
     else executeUnstake();
   };
+
+  if (!pool) return <Loader button />;
 
   return (
     <StyledProgressButtons>

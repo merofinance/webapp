@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { makeStyles, Tooltip } from "@material-ui/core";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 
-import info from "../assets/ui/info.svg";
+import standardInfo from "../assets/ui/info.svg";
+import highlightedInfo from "../assets/ui/highlighted-info.svg";
 import { useDevice } from "../app/hooks/use-device";
 
 export interface TooltipItemType {
@@ -16,6 +17,7 @@ const Icon = styled.img`
   cursor: pointer;
 
   margin-left: 0.9rem;
+  margin-top: 0.2rem;
   height: 1.2rem;
   @media (max-width: 600px) {
     margin-top: 2.2px;
@@ -55,9 +57,10 @@ const tooltipStyles = makeStyles(() => ({
 interface Props {
   content: string;
   items?: TooltipItemType[];
+  info?: boolean;
 }
 
-const BackdTooltip = ({ content, items }: Props): JSX.Element => {
+const BackdTooltip = ({ content, items, info }: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
   const { isMobile } = useDevice();
 
@@ -91,7 +94,11 @@ const BackdTooltip = ({ content, items }: Props): JSX.Element => {
           }
           classes={tooltipStyles()}
         >
-          <Icon src={info} alt="help icon" onClick={handleTooltipOpen} />
+          <Icon
+            src={info ? highlightedInfo : standardInfo}
+            alt="help icon"
+            onClick={handleTooltipOpen}
+          />
         </Tooltip>
       )}
       {isMobile && (
@@ -107,7 +114,11 @@ const BackdTooltip = ({ content, items }: Props): JSX.Element => {
               disableHoverListener
               disableTouchListener
             >
-              <Icon src={info} alt="help icon" onClick={handleTooltipOpen} />
+              <Icon
+                src={info ? highlightedInfo : standardInfo}
+                alt="help icon"
+                onClick={handleTooltipOpen}
+              />
             </Tooltip>
           </div>
         </ClickAwayListener>

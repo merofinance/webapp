@@ -43,7 +43,7 @@
   },
   "landingPage": {
     "header": "Reactive Liquidity",
-    "subHeader": "Maximize the power of your assets and start earning yield with Backd's liquidity pools.",
+    "subHeader": "Maximize the power of your assets and start earning yield",
     "viewPools": "View Pools",
     "unsupportedNetwork": "Unsupported Network",
     "changeNetwork": "Try on Testnet",
@@ -84,7 +84,7 @@
           "earn": {
             "number": "02",
             "header": "Earn Yield",
-            "description": "Earn compounded yield from strategy profits and protocol fees as LP tokens appreciate over the underlying tokens."
+            "description": "Earn compounded yield from strategy profits and protocol fees."
           },
           "stake": {
             "number": "03",
@@ -109,12 +109,12 @@
           "register": {
             "number": "02",
             "header": "Register Loan on-Chain",
-            "description": "Register Compound or Aave v2 loans on-chain to receive collateral top-ups, and stake your pool LP tokens to earn Backd rewards."
+            "description": "Register Compound or Aave v2 loans on-chain to receive collateral top-ups."
           },
           "protect": {
             "number": "03",
             "header": "Protect & Earn",
-            "description": "Earn compounded yield and protocol fees as the LP token appreciates, while keepers monitor your loan and transfer your capital to avoid liquidation."
+            "description": "Earn compounded yield and protocol fees while keepers monitor your loan and transfer your capital to avoid liquidation."
           },
           "claim": {
             "number": "04",
@@ -181,8 +181,7 @@
       "links": {
         "litepaper": "Litepaper",
         "docs": "Docs",
-        "blog": "Blog",
-        "factSheet": "Fact Sheet"
+        "blog": "Blog"
       }
     },
     "updates": {
@@ -289,7 +288,7 @@
       "subHeader": "Begin earning yield immediately"
     },
     "header": "All pools",
-    "overview": "Backd’s single-asset pools aggregate yield across strategies. After depositing an asset, register an action to automate your liquidity to where it is needed most.",
+    "overview": "Backd’s single-asset pools aggregate yield across strategies. Add utility and autonomy to your liquidity with actions.",
     "deposit": "deposit",
     "information": {
       "header": "Pools information",
@@ -335,7 +334,6 @@
         "tooltip": "The current annual percent yield earned by pool LPs"
       },
       "lp": {
-        "header": "LP price",
         "tooltip": "The current exchange rate of {{lpToken}} to {{underlying}}. {{underlying}}={{lpToken}}*{{exchangeRate}}"
       },
       "strategy": {
@@ -365,9 +363,9 @@
         "header": "Allocated to Actions",
         "tooltip": "The current value of your assets that are allocated to Actions. Assets allocated to Actions still earn yield"
       },
-      "rewards": {
-        "header": "Rewards accrued",
-        "tooltip": "The current value of earned rewards that have yet to be claimed"
+      "tvl": {
+        "header": "Pool TVL",
+        "tooltip": "The market capitalization of assets held in the pool (total value locked)"
       }
     },
     "tabs": {
@@ -436,7 +434,8 @@
     },
     "suggestions": {
       "topup": {
-        "header": "We have found a protectable loan!",
+        "header": "I have found a protectable loan!",
+        "headerMobile": "I found a protectable loan!",
         "subHeader": "The wallet you have connected has a loan that you can create a Top-up Position for.",
         "labels": {
           "protocol": "Protocol",
@@ -467,7 +466,7 @@
           "incomplete": "Select a pool",
           "deposit": {
             "header": "Enter an amount of {{asset}} to deposit",
-            "subHeader": "This {{asset}} can be transported over to protect your position in one or multiple lots. ",
+            "subHeader": "This {{asset}} can be used as backup collateral if triggered by user defined conditions.",
             "incomplete": "Deposit {{asset}} to continue"
           }
         },
@@ -478,7 +477,18 @@
         "confirmation": {
           "header": "Confirm Top-up Position",
           "summaryStart": "When the collateralization of",
-          "summaryEnd": "drops below {{threshold}}, it will be topped up with {{single}} {{asset}} ({{singleUsd}}). This will be repeated each time the collateralization ratio drops below {{threshold}}, until a total of {{max}} {{asset}} ({{maxUsd}}) is topped up."
+          "summaryEnd": "drops below {{threshold}}, it will be topped up with {{single}} {{asset}} ({{singleUsd}}). This will be repeated each time the collateralization ratio drops below {{threshold}}, until a total of {{max}} {{asset}} ({{maxUsd}}) is topped up.",
+          "fees": {
+            "label": "Action fee",
+            "tooltip": {
+              "header": "When an Action is triggered a small fee is paid to Backd LPs, Keepers and BKD stakers.",
+              "itemLabels": {
+                "lps": "Backd LPs",
+                "keepers": "Keepers",
+                "stakers": "BKD stakers"
+              }
+            }
+          }
         }
       },
       "delete": {
@@ -534,8 +544,7 @@
           "tooltip": "The maximum gas price used when paying for each top-up. Value is in Gwei units. If value is too low, then your top-up may not execute in time which could result in liquidation. A value of at least 200 Gwei is recommended.",
           "hover": "Enter max gas price",
           "required": "Max gas price required",
-          "positive": "Must be positive number",
-          "exceedsMax": "Not enough to cover gas cost of top-up"
+          "positive": "Must be positive number"
         }
       }
     },
@@ -698,6 +707,32 @@
     "transactionType": "Transaction type not supported",
     "unsupportedNetwork": "Network not supported",
     "tryTestnet": "Backd is not yet live on mainnet. You can test it now on Kovan by switching networks."
+  },
+  "liveHelp": {
+    "buttons": {
+      "ignore": "Ignore"
+    },
+    "header": "Live Help",
+    "disclaimer": "Note: this is not financial advice.",
+    "readMore": "Read more in <0>our docs</0>.",
+    "suggestions": {
+      "thresholdLow": {
+        "text": "I noticed you have entered a threshold top-up of {{threshold}}. This is very close to liquidation and in times of market volatility I suggest at least {{recommendedThreshold}} or more.",
+        "button": "Increase threshold"
+      },
+      "thresholdHigh": {
+        "text": "This will trigger immediately because the health factor you have entered exceeds the current health factor of the loan. I suggest you decrease the Health Factor of the top-up to {{recommendedThreshold}}.",
+        "button": "Decrease threshold"
+      },
+      "singleLow": {
+        "text": "Your estimated max gas cost per top-up is {{maxGas}} ({{ethAmount}} ETH), however the amount per top-up is only {{single}} ({{underlyingAmount}} {{underlyingSymbol}}). I recommend increasing the single top-up to {{suggestion}} {{underlyingSymbol}} for more efficient top-ups.",
+        "button": "Increase top-up"
+      },
+      "topupPositionLow": {
+        "text": "I’ve noticed your {{protocol}} top-up Action is running low on funds. I suggest you delete that top-up Action and register a new one as soon as possible.",
+        "button": "Delete action"
+      }
+    }
   },
   "metadata": {
     "landing": {

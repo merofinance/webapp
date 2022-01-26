@@ -6,22 +6,22 @@ import Information from "../../components/Information";
 import { Pool } from "../../lib";
 import { selectPrice } from "../../state/selectors";
 import { formatPercent, numberToCompactCurrency } from "../../lib/numeric";
+import { Optional } from "../../lib/types";
 // import etherscan from "../../assets/ui/etherscan.svg";
 // import memo from "../../assets/ui/memo.svg";
 // import { getEtherscanAddressLink } from "../../lib/web3";
 
 interface Props {
-  pool: Pool;
+  pool: Optional<Pool>;
 }
 
 const PoolInformation = ({ pool }: Props): JSX.Element => {
   const { t } = useTranslation();
   const price = useSelector(selectPrice(pool));
   // const { chainId } = useWeb3React();
-  const locked = pool.totalAssets * price;
-  const maxWithdrawalFee = `${(pool.maxWithdrawalFee * 100).toString()}%`;
-  const minWithdrawalFee = `${(pool.minWithdrawalFee * 100).toString()}%`;
-  const days = (pool.feeDecreasePeriod * 10 ** 18) / 86400;
+  const maxWithdrawalFee = pool ? `${(pool.maxWithdrawalFee * 100).toString()}%` : null;
+  const minWithdrawalFee = pool ? `${(pool.minWithdrawalFee * 100).toString()}%` : null;
+  const days = pool ? (pool.feeDecreasePeriod * 10 ** 18) / 86400 : null;
 
   return (
     <Information
@@ -30,30 +30,30 @@ const PoolInformation = ({ pool }: Props): JSX.Element => {
         {
           label: t("pool.information.tvl.header"),
           tooltip: t("pool.information.tvl.tooltip"),
-          value: numberToCompactCurrency(locked),
+          value: pool && price ? numberToCompactCurrency(pool.totalAssets * price) : null,
         },
         {
           label: t("pool.information.apy.header"),
           tooltip: t("pool.information.apy.tooltip"),
-          value: formatPercent(pool.apy),
+          value: pool && pool.apy ? formatPercent(pool.apy) : null,
         },
         {
-          label: t("pool.information.lp.header"),
+          label: pool ? `${pool.lpToken.symbol}/${pool.underlying.symbol}` : null,
           tooltip: t("pool.information.lp.tooltip", {
-            lpToken: pool.lpToken.symbol,
-            underlying: pool.underlying.symbol,
-            exchangeRate: pool.exchangeRate.toString(),
+            lpToken: pool ? pool.lpToken.symbol : "---",
+            underlying: pool ? pool.underlying.symbol : "---",
+            exchangeRate: pool ? pool.exchangeRate.toString() : "---",
           }),
-          value: pool.exchangeRate.toString(),
+          value: pool ? pool.exchangeRate.toString() : null,
         },
         {
           label: t("pool.information.withdrawalFees.header"),
           tooltip: t("pool.information.withdrawalFees.tooltip", {
-            max: maxWithdrawalFee,
-            min: minWithdrawalFee,
-            days,
+            max: maxWithdrawalFee || "---",
+            min: minWithdrawalFee || "---",
+            days: days || "---",
           }),
-          value: pool ? `${maxWithdrawalFee} → ${minWithdrawalFee}` : "---",
+          value: pool ? `${maxWithdrawalFee} → ${minWithdrawalFee}` : null,
         },
         // {
         //   label: t("pool.information.strategy.header"),

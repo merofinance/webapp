@@ -39,7 +39,7 @@ const ButtonContainer = styled.div`
 
 const RegisteredActions = (): JSX.Element => {
   const { t } = useTranslation();
-  const positions = useSelector(selectPositions);
+  const positions = useSelector(selectPositions) || [];
   const navigate = useNavigate();
   const { isMobile } = useDevice();
 
@@ -54,8 +54,9 @@ const RegisteredActions = (): JSX.Element => {
             {!hasPosition && (
               <Empty id="register-positions-empty">{t("actions.registered.empty")}</Empty>
             )}
-            {hasPosition &&
-              positions.map((position: Position) => <RegisteredAction position={position} />)}
+            {positions.map((position: Position) => (
+              <RegisteredAction key={position.protocol} position={position} />
+            ))}
             <ButtonContainer>
               <Button
                 id="register-action-button"

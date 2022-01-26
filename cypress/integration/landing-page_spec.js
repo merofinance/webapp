@@ -142,12 +142,6 @@ describe("Footer", () => {
       .should("have.attr", "href", "https://backdfund.medium.com/");
   });
 
-  it("Should have Blog Fact Sheet", () => {
-    cy.get('[id="footer.resources.links.factSheet"]')
-      .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "/fact-sheet.pdf");
-  });
-
   it("Should have Newsletter Link", () => {
     cy.get('[id="footer.updates.links.newsletter"]')
       .should("have.attr", "target", "_blank")

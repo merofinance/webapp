@@ -4,10 +4,11 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 import { Position, Pool } from "../../lib/types";
-import { selectPools } from "../../state/poolsListSlice";
 import { selectPrice } from "../../state/selectors";
 import TopupAction from "./register/topup/TopupAction";
 import { GradientText } from "../../styles/GradientText";
+import Loader from "../../components/Loader";
+import { selectPools } from "../../state/poolsListSlice";
 
 const StyledRegisteredAction = styled.button`
   width: 100%;
@@ -47,7 +48,8 @@ interface Props {
 const ExistingAction = ({ position }: Props): JSX.Element => {
   const { t } = useTranslation();
   const pools = useSelector(selectPools);
-  const pool = pools.filter((pool: Pool) => pool.lpToken.address === position.depositToken)[0];
+  const pool =
+    pools?.filter((pool: Pool) => pool.lpToken.address === position.depositToken)[0] || null;
   const price = useSelector(selectPrice(pool));
   const [open, setOpen] = useState(false);
 
@@ -55,7 +57,7 @@ const ExistingAction = ({ position }: Props): JSX.Element => {
     <>
       <StyledRegisteredAction id={`existing-action-${position.protocol.toLowerCase()}`}>
         <Value flex={5}>{t("actions.topup.label")}</Value>
-        <Value flex={3}>{position.maxTopUp.toCompactUsdValue(price)}</Value>
+        <Value flex={3}>{price ? position.maxTopUp.toCompactUsdValue(price) : <Loader />}</Value>
         <ViewButton
           id={`existing-action-${position.protocol.toLowerCase()}-view`}
           onClick={() => setOpen(true)}
@@ -63,7 +65,9 @@ const ExistingAction = ({ position }: Props): JSX.Element => {
           <ViewText>{t("components.view")}</ViewText>
         </ViewButton>
       </StyledRegisteredAction>
-      <TopupAction show={open} close={() => setOpen(false)} position={position} pool={pool} />
+      {pool && (
+        <TopupAction show={open} close={() => setOpen(false)} position={position} pool={pool} />
+      )}
     </>
   );
 };

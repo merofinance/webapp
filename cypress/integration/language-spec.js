@@ -1,7 +1,7 @@
 const isEnglish = () => {
   cy.get("h1").contains("Reactive Liquidity");
   cy.get("h3").contains(
-    "Maximize the power of your assets and start earning yield with Backd's liquidity pools."
+    "Maximize the power of your assets and start earning yield"
   );
   cy.get("#how-it-works-2").contains("Protect & Earn");
 };

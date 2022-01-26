@@ -8,6 +8,7 @@ import Button from "../../components/Button";
 import ContentSection from "../../components/ContentSection";
 import Tabs from "../../components/Tabs";
 import { ScaledNumber } from "../../lib/scaled-number";
+import { Optional } from "../../lib/types";
 import { selectPools } from "../../state/poolsListSlice";
 import BkdCalculator from "./BkdCalculator";
 import StakeConfirmation from "./StakeConfirmation";
@@ -43,12 +44,16 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const StakeBkd = (): JSX.Element => {
+const StakeBkd = (): Optional<JSX.Element> => {
   const { t } = useTranslation();
   const [amount, setAmount] = useState("");
   const [confirming, setConfirming] = useState(false);
-  const STAKING_CONTRACT = useSelector(selectPools)[0];
-  const BKD = useSelector(selectPools)[0].underlying;
+  const pools = useSelector(selectPools);
+
+  if (!pools) return null; // TODO Remove
+
+  const STAKING_CONTRACT = pools[0].address;
+  const BKD = pools[0].underlying;
   const BKD_BALANCE = ScaledNumber.fromUnscaled(245.123456);
   const LOADING = false;
 
@@ -94,7 +99,7 @@ const StakeBkd = (): JSX.Element => {
                           loading={LOADING}
                           disabled={!!error()}
                           token={BKD}
-                          contract={STAKING_CONTRACT.address}
+                          contract={STAKING_CONTRACT}
                         />
                       </ButtonContainer>
                     </InputContainer>

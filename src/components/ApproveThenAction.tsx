@@ -130,7 +130,8 @@ const ApproveThenAction = ({
   const approveLoading = useSelector(hasPendingTransaction("Approve"));
   const [persistApprove, setPersistApprove] = useState(false);
 
-  const approved = value.isZero() ? !approvedAmount.isZero() : approvedAmount.gte(value);
+  const approved =
+    !!approvedAmount && (value.isZero() ? !approvedAmount.isZero() : approvedAmount.gte(value));
   hoverText = hoverText || t("amountInput.enter");
 
   const executeApprove = () => {

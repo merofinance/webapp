@@ -8,7 +8,6 @@ import LitepaperPage from "./pages/litepaper/LitepaperPage";
 import ClaimPage from "./pages/claim/ClaimPage";
 import PoolPage from "./pages/pool/PoolPage";
 import NotFoundPage from "./pages/not-found/NotFoundPage";
-import { useIsLive } from "./app/hooks/use-is-live";
 import ActionsPage from "./pages/actions/ActionsPage";
 import ActionRegister from "./pages/actions/register/ActionRegister";
 import ActionsIndex from "./pages/actions/ActionsIndex";
@@ -20,10 +19,9 @@ import TopupPool from "./pages/actions/register/topup/TopupPool";
 import TopupLoan from "./pages/actions/register/topup/TopupLoan";
 import Layout from "./Layout";
 import BkdPage from "./pages/bkd/BkdPage";
+import { STAKING_LIVE } from "./lib/constants";
 
 const App = (): JSX.Element => {
-  const { stakingLive } = useIsLive();
-
   return (
     <Suspense fallback={<div />}>
       <Router>
@@ -47,9 +45,9 @@ const App = (): JSX.Element => {
               </Route>
               <Route index element={<ActionsIndex />} />
             </Route>
-            {stakingLive && <Route path="claim" element={<ClaimPage />} />}
-            {stakingLive && <Route path="stake" element={<StakePage />} />}
-            {stakingLive && <Route path="bkd" element={<BkdPage />} />}
+            {STAKING_LIVE && <Route path="claim" element={<ClaimPage />} />}
+            {STAKING_LIVE && <Route path="stake" element={<StakePage />} />}
+            {STAKING_LIVE && <Route path="bkd" element={<BkdPage />} />}
             <Route path="litepaper" element={<LitepaperPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>

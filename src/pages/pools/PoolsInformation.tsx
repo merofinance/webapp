@@ -1,19 +1,15 @@
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-import { selectPools, selectPrices } from "../../state/poolsListSlice";
-import { Pool } from "../../lib";
+import { selectAverageApy } from "../../state/poolsListSlice";
 import Information from "../../components/Information";
-import { formatPercent, numberToCompactCurrency } from "../../lib/numeric";
+import { formatPercent } from "../../lib/numeric";
+import { selectTotalDeposits } from "../../state/selectors";
 
 const PoolsInformation = (): JSX.Element => {
   const { t } = useTranslation();
-  const pools = useSelector(selectPools);
-  const prices = useSelector(selectPrices);
-
-  const getPrice = (pool: Pool) => prices[pool.underlying.symbol] || 0;
-  const locked = pools.reduce((a: number, b: Pool) => a + b.totalAssets * getPrice(b), 0);
-  const averageApy = pools.reduce((a: number, b: Pool) => a + b.apy, 0) / pools.length;
+  const totalDeposits = useSelector(selectTotalDeposits());
+  const averageApy = useSelector(selectAverageApy);
 
   return (
     <Information
@@ -22,12 +18,12 @@ const PoolsInformation = (): JSX.Element => {
         {
           label: t("pools.information.tvl.header"),
           tooltip: t("pools.information.tvl.tooltip"),
-          value: numberToCompactCurrency(locked),
+          value: totalDeposits ? totalDeposits.toCompactUsdValue(1) : null,
         },
         {
           label: t("pools.information.apy.header"),
           tooltip: t("pools.information.apy.tooltip"),
-          value: formatPercent(averageApy),
+          value: averageApy ? formatPercent(averageApy) : null,
         },
         // {
         //   label: t("pools.information.revenue.header"),

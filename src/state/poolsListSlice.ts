@@ -4,20 +4,23 @@ import { ethers } from "ethers";
 import { AppThunk, RootState } from "../app/store";
 import { Pool } from "../lib";
 import { Backd } from "../lib/backd";
-import { Address, Prices } from "../lib/types";
+import { Address, fromPlainBalances, Optional, Prices } from "../lib/types";
 import { fetchLoans } from "./lendingSlice";
 import { INFURA_ID } from "../lib/constants";
 import { createBackd } from "../lib/factory";
-import { fetchPositions } from "./positionsSlice";
+import { fetchActionFees, fetchPositions } from "./positionsSlice";
 import { fetchAllowances, fetchBalances, fetchWithdrawalFees } from "./userSlice";
+import poolMetadata from "../lib/data/pool-metadata";
 
 interface PoolsState {
   pools: Pool[];
   prices: Prices;
+  loaded: boolean;
 }
 
 const initialState: PoolsState = {
   pools: [],
+  loaded: false,
   prices: {},
 };
 
@@ -46,6 +49,7 @@ export const poolsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchPools.fulfilled, (state, action) => {
       state.pools = action.payload;
+      state.loaded = true;
     });
 
     builder.addCase(fetchPool.fulfilled, (state, action) => {
@@ -76,6 +80,7 @@ export const fetchState =
       dispatch(fetchWithdrawalFees({ backd, pools }));
     });
     dispatch(fetchPositions({ backd }));
+    dispatch(fetchActionFees({ backd }));
   };
 
 export const fetchPreviewState = (): AppThunk => (dispatch) => {
@@ -88,10 +93,33 @@ export const fetchPreviewState = (): AppThunk => (dispatch) => {
   });
 };
 
-export const selectPools = (state: RootState): Pool[] => state.pools.pools;
+export const selectPoolsLoaded = (state: RootState): boolean => state.pools.loaded;
+
+export const selectPools = (state: RootState): Optional<Pool[]> => {
+  if (!state.pools.loaded) return null;
+  return state.pools.pools.filter((pool: Pool) => {
+    if (!pool.apy) return false;
+    if (!poolMetadata[pool.underlying.symbol]) return false;
+    return true;
+  });
+};
+
+export const selectDepositedPools = (state: RootState): Optional<Pool[]> => {
+  const pools = selectPools(state);
+  if (!pools) return null;
+  return pools.filter(
+    (pool: Pool) => !fromPlainBalances(state.user.balances)[pool.lpToken.address]?.isZero()
+  );
+};
 
 export const selectPrices = (state: RootState): Prices => state.pools.prices;
 
-export const selectEthPrice = (state: RootState): number => state.pools.prices.ETH;
+export const selectEthPrice = (state: RootState): Optional<number> => state.pools.prices.ETH;
+
+export const selectAverageApy = (state: RootState): Optional<number> => {
+  const pools = selectPools(state);
+  if (!pools) return null;
+  return pools.reduce((a: number, b: Pool) => a + (b.apy || 0), 0) / state.pools.pools.length;
+};
 
 export default poolsSlice.reducer;

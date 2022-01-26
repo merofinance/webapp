@@ -139,6 +139,9 @@ describe("Account Details", () => {
   it("Should network as Kovan", () => {
     cy.get("#account-details-network").contains("Ethereum Kovan Testnet");
   });
+  it("Should snapshot page", () => {
+    percySnapshot();
+  });
   it("Should finish loading", () => {
     cy.get("#connector-loading-indicator", { timeout: WEB3_TIMEOUT }).should(
       "have.css",

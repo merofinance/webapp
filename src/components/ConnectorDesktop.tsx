@@ -49,7 +49,7 @@ const Button = styled.button`
   cursor: pointer;
 
   height: ${(props: ButtonProps) => (props.connected ? "4.2rem" : "5.4rem")};
-  padding: ${(props: ButtonProps) => (props.connected ? "0 2px" : "0 2.2rem")};
+  width: ${(props: ButtonProps) => (props.connected ? "15rem" : "17.2rem")};
   border-radius: ${(props: ButtonProps) => (props.connected ? "8px" : "2.7rem")};
 
   transition: background-color 0.3s, background-position 0.5s;
@@ -77,6 +77,10 @@ const Button = styled.button`
   }
 `;
 
+interface TextProps {
+  connected: boolean;
+}
+
 const ConnectorText = styled.div`
   font-weight: 500;
   font-size: 1.5rem;
@@ -93,6 +97,10 @@ const ConnectorText = styled.div`
   -webkit-text-fill-color: transparent;
   transition: background-position 0.5s;
   background-size: 200% auto;
+
+  @media only percy {
+    opacity: ${(props: TextProps) => (props.connected ? 0 : 1)};
+  }
 `;
 
 const IndicatorContainer = styled.div`
@@ -139,6 +147,9 @@ const ConnectorDesktop = ({ connect }: Props): JSX.Element => {
 
   useEffect(() => {
     updateEns();
+    return () => {
+      setEns("");
+    };
   }, [updated]);
 
   return (
@@ -157,7 +168,7 @@ const ConnectorDesktop = ({ connect }: Props): JSX.Element => {
             <PulsingDot success={chainId === 1} />
           </IndicatorContainer>
         )}
-        <ConnectorText id="connector-address">
+        <ConnectorText id="connector-address" connected={active}>
           {account ? ens || shortenAddress(account, 8) : t("walletConnect.connectWallet")}
         </ConnectorText>
         {active && (

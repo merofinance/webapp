@@ -19,7 +19,7 @@ export interface Pool<Num = number> {
   stakerVaultAddress: string;
   lpToken: Token;
   underlying: Token;
-  apy: Num;
+  apy: Optional<Num>;
   totalAssets: Num;
   exchangeRate: Num;
   maxWithdrawalFee: Num;
@@ -37,6 +37,7 @@ interface GenericPosition<T> {
   actionToken: Address;
   depositToken: Address;
 }
+
 export type Position = GenericPosition<ScaledNumber>;
 export type PlainPosition = GenericPosition<PlainScaledNumber>;
 
@@ -46,7 +47,10 @@ export enum LendingProtocol {
 }
 
 export interface LendingProtocolProvider {
-  getPosition(address: Address, provider: Signer | providers.Provider): Promise<PlainLoan | null>;
+  getPosition(
+    address: Address,
+    provider: Signer | providers.Provider
+  ): Promise<Optional<PlainLoan>>;
 }
 
 interface GenericLoan<T> {
@@ -81,6 +85,34 @@ export const fromPlainPosition = (position: PlainPosition): Position => {
   };
 };
 
+interface GenericActionFees<T> {
+  total: T;
+  keeperFraction: T;
+  treasuryFraction: T;
+  lpFraction: T;
+}
+
+export type ActionFees = GenericActionFees<ScaledNumber>;
+export type PlainActionFees = GenericActionFees<PlainScaledNumber>;
+
+export const toPlainActionFees = (actionFees: ActionFees): PlainActionFees => {
+  return {
+    total: actionFees.total.toPlain(),
+    keeperFraction: actionFees.keeperFraction.toPlain(),
+    treasuryFraction: actionFees.treasuryFraction.toPlain(),
+    lpFraction: actionFees.lpFraction.toPlain(),
+  };
+};
+
+export const fromPlainActionFees = (actionFees: PlainActionFees): ActionFees => {
+  return {
+    total: ScaledNumber.fromPlain(actionFees.total),
+    keeperFraction: ScaledNumber.fromPlain(actionFees.keeperFraction),
+    treasuryFraction: ScaledNumber.fromPlain(actionFees.treasuryFraction),
+    lpFraction: ScaledNumber.fromPlain(actionFees.lpFraction),
+  };
+};
+
 export function positionFromPartial<T>(pool: Pool<T>, position: Partial<Position>): Position {
   if (!position.protocol) throw Error("Missing protocol when creating position");
   if (!position.account) throw Error("Missing account when creating position");
@@ -103,7 +135,7 @@ export function positionFromPartial<T>(pool: Pool<T>, position: Partial<Position
 export function transformPool<T, U>(pool: Pool<T>, f: (v: T) => U): Pool<U> {
   return {
     ...pool,
-    apy: f(pool.apy),
+    apy: pool.apy ? f(pool.apy) : null,
     totalAssets: f(pool.totalAssets),
     exchangeRate: f(pool.exchangeRate),
     maxWithdrawalFee: f(pool.maxWithdrawalFee),
@@ -114,16 +146,21 @@ export function transformPool<T, U>(pool: Pool<T>, f: (v: T) => U): Pool<U> {
 
 export type Address = string;
 
-export type Balances = Record<string, ScaledNumber>;
-export type PlainBalances = Record<string, PlainScaledNumber>;
+export type Balances = Record<string, Optional<ScaledNumber>>;
+export type PlainBalances = Record<string, Optional<PlainScaledNumber>>;
 
 export const toPlainBalances = (balances: Balances): PlainBalances => {
-  return fromEntries(Object.entries(balances).map(([key, value]) => [key, value.toPlain()]));
+  return fromEntries(
+    Object.entries(balances).map(([key, value]) => [key, value?.toPlain() || null])
+  );
 };
 
 export const fromPlainBalances = (balances: PlainBalances): Balances => {
   return fromEntries(
-    Object.entries(balances).map(([key, value]) => [key, ScaledNumber.fromPlain(value)])
+    Object.entries(balances).map(([key, value]) => [
+      key,
+      value ? ScaledNumber.fromPlain(value) : null,
+    ])
   );
 };
 
@@ -155,7 +192,7 @@ export const fromPlainAllowances = (allowances: PlainAllowances): Allowances => 
   );
 };
 
-export type Prices<Num = number> = Record<string, Num>;
+export type Prices<Num = number> = Record<string, Optional<Num>>;
 export type AllowanceQuery = {
   spender: Address;
   token: Pick<Token, "address" | "decimals">;

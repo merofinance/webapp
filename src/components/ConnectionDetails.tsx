@@ -53,6 +53,10 @@ const Address = styled(GradientText)`
   font-weight: 500;
   line-height: 2.8rem;
   letter-spacing: 0.15px;
+
+  @media only percy {
+    opacity: 0;
+  }
 `;
 
 const NetworkContainer = styled.div`
@@ -109,7 +113,7 @@ const ConnectionDetails = ({ show, close, changeWallet, wallet }: Props): JSX.El
             <Button
               tiny
               text={t("walletConnect.details.change")}
-              background="#252140"
+              background="var(--bg-light)"
               click={changeWallet}
             />
           </WalletContainer>

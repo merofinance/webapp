@@ -260,10 +260,6 @@
       "deposits": {
         "header": "Your deposits",
         "tooltip": "The current value of your assets held in the pools"
-      },
-      "rewards": {
-        "header": "Rewards accrued",
-        "tooltip": "The current value of earned rewards that have yet to be claimed"
       }
     },
     "tabs": {

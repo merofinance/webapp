@@ -74,6 +74,10 @@ const StyledInput = styled.input`
   }
 
   color: ${(props: InputProps) => (props.valid ? "var(--main)" : "var(--error)")};
+
+  @media only percy {
+    color: transparent;
+  }
 `;
 
 const Label = styled.label`

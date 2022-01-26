@@ -11,6 +11,8 @@ import { Pool, Position } from "../../../../lib/types";
 import { selectPrice } from "../../../../state/selectors";
 import { useDevice } from "../../../../app/hooks/use-device";
 import { getEtherscanAddressLink } from "../../../../lib/web3";
+import { selectActionFees } from "../../../../state/positionsSlice";
+import Loader from "../../../../components/Loader";
 
 const StyledTopupInformation = styled.div`
   width: 100%;
@@ -70,7 +72,6 @@ const Label = styled.div`
   align-items: center;
   font-weight: 500;
   letter-spacing: 0.15px;
-  text-transform: capitalize;
 
   font-size: 1.8rem;
   @media (max-width: 600px) {
@@ -89,6 +90,38 @@ const AddressLabel = styled(GradientLink)`
   }
 `;
 
+const InfoSection = styled.div`
+  position: relative;
+  width: 100%;
+  border: solid 2px var(--info);
+  border-radius: 8px;
+  padding: 1rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2.4rem;
+
+  :before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: var(--info);
+    opacity: 0.2;
+  }
+`;
+
+const InfoRow = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const InfoLabel = styled(Label)`
+  color: var(--info);
+`;
+
 interface Props {
   position: Position;
   pool: Pool;
@@ -97,6 +130,7 @@ interface Props {
 const TopupInformation = ({ position, pool }: Props): JSX.Element => {
   const { t } = useTranslation();
   const price = useSelector(selectPrice(pool));
+  const actionFees = useSelector(selectActionFees);
   const { chainId } = useWeb3React();
   const { isMobile } = useDevice();
 
@@ -116,9 +150,9 @@ const TopupInformation = ({ position, pool }: Props): JSX.Element => {
           threshold: position.threshold,
           single: position.singleTopUp,
           asset: pool.underlying.symbol,
-          singleUsd: position.singleTopUp.toUsdValue(price),
+          singleUsd: price ? position.singleTopUp.toUsdValue(price) : "$---",
           max: position.maxTopUp,
-          maxUsd: position.maxTopUp.toUsdValue(price),
+          maxUsd: price ? position.maxTopUp.toUsdValue(price) : "$---",
         })}
       </Summary>
       <PositionSummary>
@@ -176,6 +210,32 @@ const TopupInformation = ({ position, pool }: Props): JSX.Element => {
           <Label id="topup-information-max-gas">{`${position.maxGasPrice.toCryptoString()} Gwei`}</Label>
         </SummaryRow>
       </PositionSummary>
+      <InfoSection>
+        <InfoRow>
+          <InfoLabel>
+            {t("actions.topup.stages.confirmation.fees.label")}
+            <Tooltip
+              info
+              content={t("actions.topup.stages.confirmation.fees.tooltip.header")}
+              items={[
+                {
+                  label: t("actions.topup.stages.confirmation.fees.tooltip.itemLabels.lps"),
+                  value: actionFees ? actionFees.lpFraction.toPercent() : "--%",
+                },
+                {
+                  label: t("actions.topup.stages.confirmation.fees.tooltip.itemLabels.keepers"),
+                  value: actionFees ? actionFees.keeperFraction.toPercent() : "--%",
+                },
+                {
+                  label: t("actions.topup.stages.confirmation.fees.tooltip.itemLabels.stakers"),
+                  value: actionFees ? actionFees.treasuryFraction.toPercent() : "--%",
+                },
+              ]}
+            />
+          </InfoLabel>
+          <InfoLabel>{actionFees ? actionFees.total.toPercent() : <Loader />}</InfoLabel>
+        </InfoRow>
+      </InfoSection>
     </StyledTopupInformation>
   );
 };
