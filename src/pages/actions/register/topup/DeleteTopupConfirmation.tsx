@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
