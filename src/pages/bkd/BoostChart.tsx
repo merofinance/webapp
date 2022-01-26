@@ -16,12 +16,16 @@ const StyledBoostChart = styled.div`
 const EndDate = styled.div`
   width: 100%;
   text-align: right;
-  font-size: 1.2rem;
   letter-spacing: 0.15px;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.6);
   padding-right: 0.5rem;
   transform: translateY(calc(-100% + 0.7rem));
+
+  font-size: 1.2rem;
+  @media (max-width: 1220px) {
+    font-size: 1.1rem;
+  }
 `;
 
 const BoostChart = (): JSX.Element => {

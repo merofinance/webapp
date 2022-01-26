@@ -84,11 +84,11 @@ const NavItems = (): JSX.Element => {
       />
       {protocolLive &&
         navItems.map((navItem: NavItemType) => (
-          <NavItem navItem={navItem} setActive={(v: string) => setActive(v)} />
+          <NavItem key={navItem.label} navItem={navItem} setActive={(v: string) => setActive(v)} />
         ))}
       {!protocolLive &&
         preLaunchItems.map((navItem: NavItemType) => (
-          <NavItem navItem={navItem} setActive={(v: string) => setActive(v)} />
+          <NavItem key={navItem.label} navItem={navItem} setActive={(v: string) => setActive(v)} />
         ))}
     </StyledNavItems>
   );

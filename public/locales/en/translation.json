@@ -593,20 +593,44 @@
   },
   "bkd": {
     "overview": "Stake BKD to earn a share of platform fees and gain voting weight - which can be used to vote to determine which pools receive BKD inflation.",
+    "cards": {
+      "claimable": {
+        "header": "Claimable platform fees",
+        "headerMobile": "Claimable"
+      },
+      "apr": {
+        "header": "Staked BKD APR",
+        "description": "Stake for 12 months to achieve max boost"
+      },
+      "stake": {
+        "header": "Staked BKD"
+      }
+    },
     "stake": {
       "header": "Stake BKD",
       "tab": "stake",
       "input": "Amount of BKD to stake",
       "calculator": {
-        "header": "Updated info",
+        "earnings": {
+          "label": "Estimated daily earnings",
+          "labelMobile": "Daily earnings",
+          "tooltip": "Estimated daily earnings based on your share of vwBKD and current daily platform revenue."
+        },
         "boost": {
           "label": "Boost",
           "tooltip": "todo"
         },
         "full": {
           "label": "Date of full boost",
+          "labelMobile": "Max boost",
           "tooltip": "todo"
         }
+      },
+      "confirmation": {
+        "header": "Confirm stake BKD",
+        "description": "You are about to stake {{ammount}} BKD. You will immediately begin earning platform fees, it will take 12 months to reach maximum boost (5x). Unstaking BKD takes two months, during this period you will continue to earn platform fees and can continue to vote.",
+        "notice": "NOTICE: It takes two months to unstake BKD",
+        "action": "Confirm & Stake"
       }
     },
     "unstake": {
@@ -621,7 +645,12 @@
           "remaining": "Time remaining"
         },
         "claim": "Claim to wallet",
+        "claimMobile": "Unstake",
         "pending": "Unstake in progress"
+      },
+      "confirmation": {
+        "header": "Confirm unstake",
+        "description": "You are about to stake {{bkdAmount}} BKD. It will take {{monthsRemaining}} months to reach maximum boost (5x) but you will immediately begin earning platform fees and gain the ability to vote in the BKD inflation."
       }
     },
     "statistics": {

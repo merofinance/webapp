@@ -29,6 +29,9 @@ describe("Post test actions", () => {
     );
     cy.get("#connection-details-popup-exit").click();
   });
+  it("Should wait for transactions to finish", () => {
+    cy.wait(60_000);
+  });
   it("Should return Crypto", () => {
     returnCrypto();
   });

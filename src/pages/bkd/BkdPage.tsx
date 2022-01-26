@@ -6,7 +6,7 @@ import BkdSummary from "./BkdSummary";
 import Overview from "../../components/Overview";
 import BoostChart from "./BoostChart";
 import StakeBkd from "./StakeBkd";
-import StatCard, { StatCardType } from "../../components/StatCard";
+import BasicCard from "../../components/BasicCard";
 
 const StyledBkdPage = styled.div`
   width: 100%;
@@ -17,12 +17,20 @@ const StyledBkdPage = styled.div`
 const Container = styled.div`
   width: 100%;
   display: flex;
+
+  @media (max-width: 1220px) {
+    flex-direction: column;
+  }
 `;
 
 const Content = styled.div`
   flex: 6;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 1220px) {
+    flex: auto;
+  }
 `;
 
 const StatContainer = styled.div`
@@ -30,6 +38,11 @@ const StatContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 1.6rem;
+
+  @media (max-width: 1220px) {
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 2.4rem;
+  }
 `;
 
 const InfoCards = styled.div`
@@ -40,6 +53,8 @@ const InfoCards = styled.div`
 
   @media (max-width: 1220px) {
     margin-right: 0;
+    flex: auto;
+    margin-bottom: 2.4rem;
   }
 `;
 
@@ -64,21 +79,15 @@ const BkdPage = (): JSX.Element => {
         <Content>
           <BoostChart />
           <StatContainer>
-            <StatCard
-              data={[1, 1, 2, 3, 5, 5, 3, 2, 1, 1]}
-              labels={[1, 1, 2, 3, 5, 5, 3, 2, 1, 1].map((v: number) => v.toString())}
-              type={StatCardType.HISTOGRAM}
-              header={t("bkd.statistics.stkbkd.header")}
+            <BasicCard
+              label={t("bkd.statistics.stkbkd.header")}
               value="312.34 stkBKD"
-              subHeader="= 1000 BKD"
+              subValue="= 1000 BKD"
             />
-            <StatCard
-              data={[70, 30]}
-              labels={["one", "two"]}
-              type={StatCardType.PIE}
-              header={t("bkd.statistics.boost.header")}
+            <BasicCard
+              label={t("bkd.statistics.boost.header")}
               value="2.6x"
-              subHeader={t("bkd.statistics.boost.subHeader")}
+              subValue={t("bkd.statistics.boost.subHeader")}
             />
           </StatContainer>
         </Content>

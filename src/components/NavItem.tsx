@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 
-export type NavItemType = {
+export interface NavItemType {
   label: string;
   link: string;
-};
+}
 
 const StyledNavItem = styled.li`
   display: flex;
@@ -23,36 +23,16 @@ const StyledNavItem = styled.li`
 `;
 
 interface LinkProps {
-  active: boolean;
+  isActive: boolean;
 }
 
-const InternalLink = styled(Link)`
+const Text = styled.div`
   text-transform: capitalize;
   font-size: 1.6rem;
   white-space: nowrap;
-  letter-spacing: 0.15px;
   font-weight: 500;
-
-  opacity: ${(props: LinkProps) => (props.active ? "1" : "0.8")};
-
-  transition: 0.3s opacity;
-  :hover {
-    opacity: 1;
-  }
-
-  @media (max-width: 600px) {
-    font-size: 1.1rem;
-  }
-`;
-
-const ExternalLink = styled.a`
-  text-transform: capitalize;
-  font-size: 1.6rem;
-  white-space: nowrap;
   letter-spacing: 0.15px;
-
-  opacity: ${(props: LinkProps) => (props.active ? "1" : "0.8")};
-  font-weight: ${(props: LinkProps) => (props.active ? "700" : "500")};
+  opacity: ${(props: LinkProps) => (props.isActive ? "1" : "0.8")};
 
   transition: 0.3s opacity;
   :hover {
@@ -82,20 +62,14 @@ const NavItem = ({ navItem, setActive }: Props): JSX.Element => {
   return (
     <StyledNavItem>
       {!isExternal && (
-        <InternalLink active={!!match} id={navItem.label} to={navItem.link}>
-          {t(navItem.label)}
-        </InternalLink>
+        <Link id={navItem.label} to={navItem.link}>
+          <Text isActive={!!match}>{t(navItem.label)}</Text>
+        </Link>
       )}
       {isExternal && (
-        <ExternalLink
-          id={navItem.label}
-          href={navItem.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          active={!!match}
-        >
-          {t(navItem.label)}
-        </ExternalLink>
+        <a id={navItem.label} href={navItem.link} target="_blank" rel="noopener noreferrer">
+          <Text isActive={!!match}>{t(navItem.label)}</Text>
+        </a>
       )}
     </StyledNavItem>
   );

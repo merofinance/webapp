@@ -55,6 +55,7 @@ const InfoCards = styled.div`
 
   @media (max-width: 1220px) {
     margin-left: 0;
+    width: 100%;
   }
 `;
 

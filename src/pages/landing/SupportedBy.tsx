@@ -6,11 +6,11 @@ import divergence from "../../assets/protocols/divergence.svg";
 import curve from "../../assets/protocols/curve.svg";
 import aave from "../../assets/protocols/aave.svg";
 
-type ProtocolType = {
+interface ProtocolType {
   name: string;
   image: string;
   link: string;
-};
+}
 
 const protocols: ProtocolType[] = [
   {
@@ -76,9 +76,9 @@ const ProtocolContainer = styled.a`
   }
 `;
 
-type ProtocolImageType = {
+interface ProtocolImageType {
   maxWidthMobile: string;
-};
+}
 
 const Protocol = styled.img`
   max-width: 32.2rem;

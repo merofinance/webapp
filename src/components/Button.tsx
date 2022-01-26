@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { selectError } from "../state/errorSlice";
 
-type ButtonProps = {
+interface ButtonProps {
   primary?: boolean;
   hero?: boolean;
   large?: boolean;
@@ -22,7 +22,7 @@ type ButtonProps = {
   width?: string;
   destructive?: boolean;
   neutral?: boolean;
-};
+}
 
 const StyledButton = styled.button`
   position: relative;
@@ -238,7 +238,7 @@ const HoverText = styled.div`
   white-space: nowrap;
 `;
 
-type Props = {
+interface Props {
   text: string;
   click?: () => void;
   primary?: boolean;
@@ -261,7 +261,7 @@ type Props = {
   destructive?: boolean;
   neutral?: boolean;
   id?: string;
-};
+}
 
 const Button = (props: Props): JSX.Element => {
   const error = useSelector(selectError);

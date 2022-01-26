@@ -59,10 +59,10 @@ const ProgressSection = styled.div`
   align-items: center;
 `;
 
-type StepProps = {
+interface StepProps {
   complete: boolean;
   disabled: boolean;
-};
+}
 
 const Number = styled.div`
   position: relative;
