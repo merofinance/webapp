@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { useDevice } from "../../app/hooks/use-device";
-import BackdTooltip from "../../components/Tooltip";
+import BackdTooltip from "../../components/BackdTooltip";
 import { ScaledNumber } from "../../lib/scaled-number";
 
 const Container = styled.div`

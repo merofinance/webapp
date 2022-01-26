@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactChild, ReactNode, useState } from "react";
 import styled from "styled-components";
 import { makeStyles, Tooltip } from "@material-ui/core";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
@@ -106,7 +106,7 @@ const BackdTooltip = ({ children, items, info }: Props): JSX.Element => {
           <div>
             <Tooltip
               arrow
-              title={<>{children}</>}
+              title={children as ReactChild}
               classes={tooltipStyles()}
               onClose={handleTooltipClose}
               open={open}

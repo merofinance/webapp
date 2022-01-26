@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useDevice } from "../../app/hooks/use-device";
 import Popup from "../../components/Popup";
-import BackdTooltip from "../../components/Tooltip";
+import BackdTooltip from "../../components/BackdTooltip";
 import { Pool } from "../../lib";
 import { ScaledNumber } from "../../lib/scaled-number";
 import { selectWithdrawalFee } from "../../state/userSlice";

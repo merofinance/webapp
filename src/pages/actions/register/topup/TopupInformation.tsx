@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useWeb3React } from "@web3-react/core";
 
 import { GradientLink } from "../../../../styles/GradientText";
-import Tooltip from "../../../../components/Tooltip";
+import BackdTooltip from "../../../../components/BackdTooltip";
 import { shortenAddress } from "../../../../lib/text";
 import { Pool, Position } from "../../../../lib/types";
 import { selectPrice } from "../../../../state/selectors";
@@ -159,14 +159,14 @@ const TopupInformation = ({ position, pool }: Props): JSX.Element => {
         <SummaryRow>
           <Label>
             {t("actions.topup.fields.protocol.label")}
-            <Tooltip content={t("actions.topup.fields.protocol.tooltip")} />
+            <BackdTooltip>{t("actions.topup.fields.protocol.tooltip")}</BackdTooltip>
           </Label>
           <Label id="topup-information-protocol">{position.protocol}</Label>
         </SummaryRow>
         <SummaryRow>
           <Label>
             {t("actions.topup.fields.address.label")}
-            <Tooltip content={t("actions.topup.fields.address.tooltip")} />
+            <BackdTooltip>{t("actions.topup.fields.address.tooltip")}</BackdTooltip>
           </Label>
           <AddressLabel
             href={getEtherscanAddressLink(chainId, position.account)}
@@ -180,14 +180,14 @@ const TopupInformation = ({ position, pool }: Props): JSX.Element => {
         <SummaryRow>
           <Label>
             {t("actions.topup.fields.threshold.label")}
-            <Tooltip content={t("actions.topup.fields.threshold.tooltip")} />
+            <BackdTooltip>{t("actions.topup.fields.threshold.tooltip")}</BackdTooltip>
           </Label>
           <Label id="topup-information-threshold">{position.threshold.toString()}</Label>
         </SummaryRow>
         <SummaryRow>
           <Label>
             {t("actions.topup.fields.single.label")}
-            <Tooltip content={t("actions.topup.fields.single.tooltip")} />
+            <BackdTooltip>{t("actions.topup.fields.single.tooltip")}</BackdTooltip>
           </Label>
           <Label id="topup-information-single-topup">{`${position.singleTopUp.toCryptoString()} ${
             pool.underlying.symbol
@@ -196,7 +196,7 @@ const TopupInformation = ({ position, pool }: Props): JSX.Element => {
         <SummaryRow>
           <Label>
             {t("actions.topup.fields.max.label")}
-            <Tooltip content={t("actions.topup.fields.max.tooltip")} />
+            <BackdTooltip>{t("actions.topup.fields.max.tooltip")}</BackdTooltip>
           </Label>
           <Label id="topup-information-max-topup">{`${position.maxTopUp.toCryptoString()} ${
             pool.underlying.symbol
@@ -205,7 +205,7 @@ const TopupInformation = ({ position, pool }: Props): JSX.Element => {
         <SummaryRow>
           <Label>
             {t("actions.topup.fields.gas.label")}
-            <Tooltip content={t("actions.topup.fields.gas.tooltip")} />
+            <BackdTooltip>{t("actions.topup.fields.gas.tooltip")}</BackdTooltip>
           </Label>
           <Label id="topup-information-max-gas">{`${position.maxGasPrice.toCryptoString()} Gwei`}</Label>
         </SummaryRow>
@@ -214,9 +214,8 @@ const TopupInformation = ({ position, pool }: Props): JSX.Element => {
         <InfoRow>
           <InfoLabel>
             {t("actions.topup.stages.confirmation.fees.label")}
-            <Tooltip
+            <BackdTooltip
               info
-              content={t("actions.topup.stages.confirmation.fees.tooltip.header")}
               items={[
                 {
                   label: t("actions.topup.stages.confirmation.fees.tooltip.itemLabels.lps"),
@@ -231,7 +230,9 @@ const TopupInformation = ({ position, pool }: Props): JSX.Element => {
                   value: actionFees ? actionFees.treasuryFraction.toPercent() : "--%",
                 },
               ]}
-            />
+            >
+              {t("actions.topup.stages.confirmation.fees.tooltip.header")}
+            </BackdTooltip>
           </InfoLabel>
           <InfoLabel>{actionFees ? actionFees.total.toPercent() : <Loader />}</InfoLabel>
         </InfoRow>
