@@ -50,6 +50,7 @@ const DeleteTopupConfirmation = ({ show, close, position, pool, complete }: Prop
 
   return (
     <Popup
+      descructive
       id="delete-topup-confirmation"
       show={show}
       close={close}
