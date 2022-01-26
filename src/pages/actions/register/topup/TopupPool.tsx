@@ -123,7 +123,7 @@ const TopupPool = (): JSX.Element => {
             },
             {
               label: t("headers.apy"),
-              value: formatPercent(pool.apy),
+              value: pool.apy ? formatPercent(pool.apy) : null,
             },
             {
               label: t("headers.tvl"),

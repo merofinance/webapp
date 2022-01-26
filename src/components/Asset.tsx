@@ -1,19 +1,7 @@
 import styled from "styled-components";
-import eth from "../assets/tokens/eth.png";
-import usdc from "../assets/tokens/usdc.png";
-import dai from "../assets/tokens/dai.png";
 import { Token } from "../lib/types";
 import { numberToCompactString } from "../lib/numeric";
-
-type AssetType = {
-  [key: string]: string;
-};
-
-const assets: AssetType = {
-  ETH: eth,
-  USDC: usdc,
-  DAI: dai,
-};
+import poolMetadata from "../lib/data/pool-metadata";
 
 const StyledAsset = styled.div`
   display: flex;
@@ -54,7 +42,7 @@ const Label = styled.div`
   }
 `;
 
-type Props = {
+interface Props {
   token: Token;
   large?: boolean;
   small?: boolean;
@@ -62,12 +50,14 @@ type Props = {
   value?: number;
   hideIcon?: boolean;
   compact?: boolean;
-};
+}
 
 const Asset = ({ token, large, small, tiny, value, hideIcon, compact }: Props): JSX.Element => {
+  const { icon } = poolMetadata[token.symbol];
+
   return (
     <StyledAsset>
-      {!hideIcon && <Icon src={assets[token.symbol]} alt={`${token.symbol} icon`} tiny={tiny} />}
+      {!hideIcon && <Icon src={icon} alt={`${token.symbol} icon`} tiny={tiny} />}
       <Label large={large} small={small} tiny={tiny}>{`${
         value ? `${compact ? numberToCompactString(value) : value} ` : ""
       }${token.symbol}`}</Label>

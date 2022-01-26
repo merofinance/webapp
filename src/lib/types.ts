@@ -19,7 +19,7 @@ export interface Pool<Num = number> {
   stakerVaultAddress: string;
   lpToken: Token;
   underlying: Token;
-  apy: Num;
+  apy: Optional<Num>;
   totalAssets: Num;
   exchangeRate: Num;
   maxWithdrawalFee: Num;
@@ -135,7 +135,7 @@ export function positionFromPartial<T>(pool: Pool<T>, position: Partial<Position
 export function transformPool<T, U>(pool: Pool<T>, f: (v: T) => U): Pool<U> {
   return {
     ...pool,
-    apy: f(pool.apy),
+    apy: pool.apy ? f(pool.apy) : null,
     totalAssets: f(pool.totalAssets),
     exchangeRate: f(pool.exchangeRate),
     maxWithdrawalFee: f(pool.maxWithdrawalFee),
