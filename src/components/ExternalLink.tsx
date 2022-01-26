@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import styled from "styled-components";
 import LaunchIcon from "@material-ui/icons/Launch";
-import { useTranslation } from "react-i18next";
 
 import { GradientLink } from "../styles/GradientText";
 
@@ -27,8 +26,6 @@ interface Props {
 }
 
 const ExternalLink = ({ children, link }: Props): JSX.Element => {
-  const { t } = useTranslation();
-
   return (
     <LinkContainer>
       <Link id="overview-link" href={link} target="_blank" rel="noopener noreferrer">
