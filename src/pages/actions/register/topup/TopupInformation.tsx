@@ -13,6 +13,7 @@ import { useDevice } from "../../../../app/hooks/use-device";
 import { getEtherscanAddressLink } from "../../../../lib/web3";
 import { selectActionFees } from "../../../../state/positionsSlice";
 import Loader from "../../../../components/Loader";
+import InfoBlock from "../../../../components/InfoBlock";
 
 const StyledTopupInformation = styled.div`
   width: 100%;
@@ -27,8 +28,10 @@ const Summary = styled.div`
   letter-spacing: 0.15px;
 
   font-size: 1.6rem;
+  margin-bottom: 3.5rem;
   @media (max-width: 600px) {
     font-size: 1.4rem;
+    margin-bottom: 1.8rem;
   }
 `;
 
@@ -43,28 +46,6 @@ const Address = styled(GradientLink)`
   @media (max-width: 600px) {
     font-size: 1.4rem;
   }
-`;
-
-const PositionSummary = styled.div`
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(60, 60, 60, 0.5);
-  border-radius: 1.4rem;
-  display: flex;
-  flex-direction: column;
-  padding: 1.6rem;
-
-  margin-top: 3.5rem;
-  @media (max-width: 600px) {
-    margin-top: 1.8rem;
-  }
-`;
-
-const SummaryRow = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin: 0.6rem 0;
 `;
 
 const Label = styled.div`
@@ -155,61 +136,54 @@ const TopupInformation = ({ position, pool }: Props): JSX.Element => {
           maxUsd: price ? position.maxTopUp.toUsdValue(price) : "$---",
         })}
       </Summary>
-      <PositionSummary>
-        <SummaryRow>
-          <Label>
-            {t("actions.topup.fields.protocol.label")}
-            <BackdTooltip>{t("actions.topup.fields.protocol.tooltip")}</BackdTooltip>
-          </Label>
-          <Label id="topup-information-protocol">{position.protocol}</Label>
-        </SummaryRow>
-        <SummaryRow>
-          <Label>
-            {t("actions.topup.fields.address.label")}
-            <BackdTooltip>{t("actions.topup.fields.address.tooltip")}</BackdTooltip>
-          </Label>
-          <AddressLabel
-            href={getEtherscanAddressLink(chainId, position.account)}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {shortenAddress(position.account, 8)}
-            <LaunchIcon style={{ fill: "var(--secondary)" }} />
-          </AddressLabel>
-        </SummaryRow>
-        <SummaryRow>
-          <Label>
-            {t("actions.topup.fields.threshold.label")}
-            <BackdTooltip>{t("actions.topup.fields.threshold.tooltip")}</BackdTooltip>
-          </Label>
-          <Label id="topup-information-threshold">{position.threshold.toString()}</Label>
-        </SummaryRow>
-        <SummaryRow>
-          <Label>
-            {t("actions.topup.fields.single.label")}
-            <BackdTooltip>{t("actions.topup.fields.single.tooltip")}</BackdTooltip>
-          </Label>
-          <Label id="topup-information-single-topup">{`${position.singleTopUp.toCryptoString()} ${
-            pool.underlying.symbol
-          }`}</Label>
-        </SummaryRow>
-        <SummaryRow>
-          <Label>
-            {t("actions.topup.fields.max.label")}
-            <BackdTooltip>{t("actions.topup.fields.max.tooltip")}</BackdTooltip>
-          </Label>
-          <Label id="topup-information-max-topup">{`${position.maxTopUp.toCryptoString()} ${
-            pool.underlying.symbol
-          }`}</Label>
-        </SummaryRow>
-        <SummaryRow>
-          <Label>
-            {t("actions.topup.fields.gas.label")}
-            <BackdTooltip>{t("actions.topup.fields.gas.tooltip")}</BackdTooltip>
-          </Label>
-          <Label id="topup-information-max-gas">{`${position.maxGasPrice.toCryptoString()} Gwei`}</Label>
-        </SummaryRow>
-      </PositionSummary>
+      <InfoBlock
+        rows={[
+          {
+            label: t("actions.topup.fields.protocol.label"),
+            tooltip: t("actions.topup.fields.protocol.tooltip"),
+            value: position.protocol,
+            valueId: "topup-information-protocol",
+          },
+          {
+            label: t("actions.topup.fields.address.label"),
+            tooltip: t("actions.topup.fields.address.tooltip"),
+            value: (
+              <AddressLabel
+                href={getEtherscanAddressLink(chainId, position.account)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {shortenAddress(position.account, 8)}
+                <LaunchIcon style={{ fill: "var(--secondary)" }} />
+              </AddressLabel>
+            ),
+          },
+          {
+            label: t("actions.topup.fields.threshold.label"),
+            tooltip: t("actions.topup.fields.threshold.tooltip"),
+            value: position.threshold.toString(),
+            valueId: "topup-information-threshold",
+          },
+          {
+            label: t("actions.topup.fields.single.label"),
+            tooltip: t("actions.topup.fields.single.tooltip"),
+            value: `${position.singleTopUp.toCryptoString()} ${pool.underlying.symbol}`,
+            valueId: "topup-information-single-topup",
+          },
+          {
+            label: t("actions.topup.fields.max.label"),
+            tooltip: t("actions.topup.fields.max.tooltip"),
+            value: `${position.maxTopUp.toCryptoString()} ${pool.underlying.symbol}`,
+            valueId: "topup-information-max-topup",
+          },
+          {
+            label: t("actions.topup.fields.gas.label"),
+            tooltip: t("actions.topup.fields.gas.tooltip"),
+            value: `${position.maxGasPrice.toCryptoString()} Gwei`,
+            valueId: "topup-information-max-gas",
+          },
+        ]}
+      />
       <InfoSection>
         <InfoRow>
           <InfoLabel>
