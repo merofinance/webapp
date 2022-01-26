@@ -11,11 +11,11 @@ import Seo from "../../components/Seo";
 import PoolsRow from "./PoolsRow";
 import PoolsInformation from "./PoolsInformation";
 import PoolsStatistics from "./PoolsStatistics";
-import BetaSnackbar from "../../components/BetaSnackbar";
 import Overview from "../../components/Overview";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import LiveHelp from "../../components/LiveHelp";
 import Loader from "../../components/Loader";
+import BetaSnackbar from "../../components/BetaSnackbar";
 
 const StyledPoolsPage = styled.div`
   width: 100%;
@@ -23,10 +23,9 @@ const StyledPoolsPage = styled.div`
   flex-direction: column;
 `;
 
-const PageContent = styled.div`
+const PoolsPageContent = styled.div`
   width: 100%;
   display: flex;
-
   @media (max-width: 1220px) {
     flex-direction: column-reverse;
   }
@@ -47,7 +46,6 @@ const HeaderRow = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0 1.7rem;
-
   @media (max-width: 600px) {
     th:nth-child(1) {
       flex: 1.1;
@@ -69,7 +67,6 @@ const Header = styled.div`
   line-height: 2.4rem;
   letter-spacing: 0.15px;
   opacity: 0.6;
-
   font-size: 1.4rem;
   @media (max-width: 600px) {
     display: ${(props: HeaderProps) => (props.hideOnMobile ? "none" : "flex")};
@@ -79,7 +76,6 @@ const Header = styled.div`
 
 const ChevronHeader = styled.div`
   width: 2.4rem;
-
   @media (max-width: 600px) {
     display: none;
   }
@@ -90,7 +86,6 @@ const InfoCards = styled.div`
   flex-direction: column;
   width: 36rem;
   margin-left: 1.6rem;
-
   @media (max-width: 1220px) {
     margin-left: 0;
     width: 100%;
@@ -111,20 +106,15 @@ const PoolsPage = (): JSX.Element => {
 
   return (
     <StyledPoolsPage>
-      <Seo
-        title="Backd Pools"
-        description="Increase leverage, farm yield, & prevent DeFi loans (Aave, Compound, etc.) from liquidation"
-      />
-      <BetaSnackbar />
-      <PageContent>
       <Seo title={t("metadata.pools.title")} description={t("metadata.pools.description")} />
-      <ContentContainer>
-        <ContentSection
-          header={t("pools.header")}
-          statistics={<PoolsStatistics />}
-          content={
-            <Table>
-              <thead>
+      <BetaSnackbar />
+      <PoolsPageContent>
+        <ContentContainer>
+          <ContentSection
+            header={t("pools.header")}
+            statistics={<PoolsStatistics />}
+            content={
+              <PoolsContent>
                 <HeaderRow>
                   <Header>{t("headers.asset")}</Header>
                   <Header>{t("headers.apy")}</Header>
@@ -132,43 +122,24 @@ const PoolsPage = (): JSX.Element => {
                   <Header hideOnMobile>{t("headers.deposits")}</Header>
                   <ChevronHeader />
                 </HeaderRow>
-              </thead>
-              {pools.map((pool: Pool) => (
-                <PoolsRow key={pool.address} pool={pool} />
-              ))}
-            </Table>
-          }
-        />
+                {!pools && (
+                  <>
+                    <Loader row />
+                    <Loader row />
+                    <Loader row />
+                  </>
+                )}
+                {pools && pools.map((pool: Pool) => <PoolsRow key={pool.address} pool={pool} />)}
+              </PoolsContent>
+            }
+          />
+        </ContentContainer>
         <InfoCards>
           <Overview description={t("pools.overview")} link="https://docs.backd.fund/" />
           <PoolsInformation />
+          <LiveHelp />
         </InfoCards>
-      </PageContent>
-            <PoolsContent>
-              <HeaderRow>
-                <Header>{t("headers.asset")}</Header>
-                <Header>{t("headers.apy")}</Header>
-                <Header>{t("headers.tvl")}</Header>
-                <Header hideOnMobile>{t("headers.deposits")}</Header>
-                <ChevronHeader />
-              </HeaderRow>
-              {!pools && (
-                <>
-                  <Loader row />
-                  <Loader row />
-                  <Loader row />
-                </>
-              )}
-              {pools && pools.map((pool: Pool) => <PoolsRow key={pool.address} pool={pool} />)}
-            </PoolsContent>
-          }
-        />
-      </ContentContainer>
-      <InfoCards>
-        <Overview description={t("pools.overview")} link="https://docs.backd.fund/" />
-        <PoolsInformation />
-        <LiveHelp />
-      </InfoCards>
+      </PoolsPageContent>
     </StyledPoolsPage>
   );
 };

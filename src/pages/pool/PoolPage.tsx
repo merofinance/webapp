@@ -10,9 +10,6 @@ import Seo from "../../components/Seo";
 import PoolDeposit from "./PoolDeposit";
 import PoolWithdraw from "./PoolWithdraw";
 import PoolInformation from "./PoolInformation";
-import { selectBalance } from "../../state/userSlice";
-import { useDevice } from "../../app/hooks/use-device";
-import BetaSnackbar from "../../components/BetaSnackbar";
 import { selectPoolBalance } from "../../state/userSlice";
 import Overview from "../../components/Overview";
 import { useBackd } from "../../app/hooks/use-backd";
@@ -24,22 +21,22 @@ import PoolStatistics from "./PoolStatistics";
 import ContentSection from "../../components/ContentSection";
 import LiveHelp from "../../components/LiveHelp";
 import { Optional } from "../../lib/types";
+import BetaSnackbar from "../../components/BetaSnackbar";
 
 const StyledPoolPage = styled.div`
   position: relative;
-  width: 100%;
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
-const PageContent = styled.div`
+const PoolPageContent = styled.div`
   width: 100%;
   display: flex;
 
   @media (max-width: 1220px) {
     flex-direction: column;
-
-    > div:nth-child(2) {
+    > div:nth-child(1) {
       order: 3;
     }
   }
@@ -61,7 +58,6 @@ const InfoCards = styled.div`
   align-items: center;
   width: 36rem;
   margin-left: 1.6rem;
-
   @media (max-width: 1220px) {
     margin-left: 0;
     width: 100%;
@@ -102,74 +98,56 @@ const PoolPage = (): Optional<JSX.Element> => {
         title={t("metadata.pool.title", { asset: pool?.underlying.symbol || "---" })}
         description={t("metadata.pool.description", { asset: pool?.underlying.symbol || "---" })}
       />
-      <BetaSnackbar />
       <BackButton />
-      <ContentContainer>
-        <Content>
-          <ContentSection
-            noContentPadding
-            header={t("pool.header", { asset: pool?.underlying.symbol || "---" })}
-            statistics={<PoolStatistics pool={pool} />}
-            content={
-              <Tabs
-                tabs={[
-                  {
-                    label: "pool.tabs.deposit.tab",
-                    content: <PoolDeposit pool={pool} />,
-                  },
-                  {
-                    label: "pool.tabs.withdraw.tab",
-                    content: <PoolWithdraw pool={pool} />,
-                  },
-                ]}
-              />
-            }
-          />
-        </Content>
-      </ContentContainer>
-      <InfoCards>
-        <Overview
-          description={t("pool.overview", {
-            asset: pool?.underlying.symbol || "---",
-            strategy: pool?.name || "---",
-          })}
-          link="https://docs.backd.fund/"
-        />
-        <PoolInformation pool={pool} />
-        <LiveHelp />
-        {balance && !balance.isZero() && (
-          <ButtonContainer>
-            <Button
-              id="create-topup-button"
-              medium
-              wide
-              text={`+ ${t("actions.register.nav")}`}
-              click={() => navigate("/actions")}
-              background="#0A0525"
+      <BetaSnackbar />
+      <PoolPageContent>
+        <ContentContainer>
+          <Content>
+            <ContentSection
+              noContentPadding
+              header={t("pool.header", { asset: pool?.underlying.symbol || "---" })}
+              statistics={<PoolStatistics pool={pool} />}
+              content={
+                <Tabs
+                  tabs={[
+                    {
+                      label: "pool.tabs.deposit.tab",
+                      content: <PoolDeposit pool={pool} />,
+                    },
+                    {
+                      label: "pool.tabs.withdraw.tab",
+                      content: <PoolWithdraw pool={pool} />,
+                    },
+                  ]}
+                />
+              }
             />
-            {tab === "deposit" && <PoolDeposit pool={pool} />}
-            {tab === "withdraw" && <PoolWithdraw pool={pool} />}
-            {tab === "positions" && <PoolPositions pool={pool} />}
           </Content>
         </ContentContainer>
         <InfoCards>
           <Overview
-            description={t("pool.overview", { asset: pool.underlying.symbol, strategy: pool.name })}
+            description={t("pool.overview", {
+              asset: pool?.underlying.symbol || "---",
+              strategy: pool?.name || "---",
+            })}
             link="https://docs.backd.fund/"
           />
           <PoolInformation pool={pool} />
-          {tab !== "positions" && !balance.isZero() && (
+          <LiveHelp />
+          {balance && !balance.isZero() && (
             <ButtonContainer>
               <Button
+                id="create-topup-button"
                 medium
-                text={`+ ${t("pool.tabs.positions.buttons.nav")}`}
-                click={() => setTab("positions")}
+                wide
+                text={`+ ${t("actions.register.nav")}`}
+                click={() => navigate("/actions")}
                 background="#0A0525"
               />
             </ButtonContainer>
           )}
         </InfoCards>
-      </PageContent>
+      </PoolPageContent>
     </StyledPoolPage>
   );
 };
