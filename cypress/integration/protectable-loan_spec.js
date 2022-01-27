@@ -45,6 +45,7 @@ describe("Default state", () => {
 
 describe("Loan Selection", () => {
   it("Should navigate to Loan Selection", () => {
+    cy.get("#action-topup-option").click();
     cy.get("#register-action-button").click();
     cy.location().should((loc) => {
       if (loc.pathname) expect(loc.pathname).to.eq("/actions/register/topup");
