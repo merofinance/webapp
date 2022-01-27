@@ -345,6 +345,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
           name="maxTopUp"
           formik={formik}
           placeholder={`10,000 ${pool.underlying.symbol}`}
+          setMax={() => formik.setFieldValue("maxTopUp", balance?.toString(), true)}
         />
         <TopupInput
           label={
