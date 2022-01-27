@@ -96,6 +96,7 @@ const ActionRegisterIndex = (): JSX.Element => {
       <RowSelector
         options={[
           {
+            id: "action-topup-option",
             value: "topup",
             columns: [
               {
@@ -125,6 +126,8 @@ const ActionRegisterIndex = (): JSX.Element => {
       <ButtonContainer>
         <Button
           id="register-action-button"
+          disabled={!actionOption}
+          hoverText={t("actions.register.choose")}
           primary
           medium
           width={isMobile ? "100%" : "44%"}
