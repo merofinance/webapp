@@ -5,8 +5,8 @@ import Statistics from "../../components/Statistics";
 import { Optional, Pool } from "../../lib/types";
 import {
   selectPoolDeposits,
-  selectPoolLocked,
   selectPoolTotalDeposits,
+  selectPoolUnderlyingLocked,
   selectPrice,
 } from "../../state/selectors";
 
@@ -17,7 +17,7 @@ interface Props {
 const PoolStatistics = ({ pool }: Props): JSX.Element => {
   const { t } = useTranslation();
   const price = useSelector(selectPrice(pool));
-  const locked = useSelector(selectPoolLocked(pool));
+  const locked = useSelector(selectPoolUnderlyingLocked(pool));
   const deposits = useSelector(selectPoolDeposits(pool));
   const totalDeposits = useSelector(selectPoolTotalDeposits(pool));
 

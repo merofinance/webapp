@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import { useDevice } from "../../app/hooks/use-device";
 import AmountInput from "../../components/AmountInput";
-import { selectAvailableToWithdraw, selectPoolBalance } from "../../state/userSlice";
+import { selectAvailableToWithdraw, selectTokenBalance } from "../../state/userSlice";
 import { Pool } from "../../lib";
 import { ScaledNumber } from "../../lib/scaled-number";
 import WithdrawalButton from "./WithdrawButton";
@@ -23,7 +23,7 @@ interface Props {
 
 const PoolWithdraw = ({ pool }: Props): JSX.Element => {
   const { t } = useTranslation();
-  const staked = useSelector(selectPoolBalance(pool?.stakerVaultAddress));
+  const staked = useSelector(selectTokenBalance(pool?.stakerVaultAddress));
   const availableToWithdraw = useSelector(selectAvailableToWithdraw(pool));
   const { isMobile } = useDevice();
 

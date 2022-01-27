@@ -227,22 +227,31 @@ export const unstake = createAsyncThunk(
 export const selectBalances = (state: RootState): Balances =>
   fromPlainBalances(state.user.balances);
 
-export function selectPoolBalance(pool: Optional<Pool>): Selector<Optional<ScaledNumber>>;
-export function selectPoolBalance(address: string | undefined): Selector<Optional<ScaledNumber>>;
-export function selectPoolBalance(
-  addressOrPool: string | undefined | Optional<Pool>
+export function selectTokenBalance(address: string | undefined): Selector<Optional<ScaledNumber>> {
+  return (state: RootState) => {
+    if (!address) return null;
+    const plainBalance = state.user.balances[address];
+    if (!plainBalance) return null;
+    return ScaledNumber.fromPlain(plainBalance);
+  };
+}
+
+export function selectPoolUnderlyingBalance(
+  pool: Optional<Pool>
 ): Selector<Optional<ScaledNumber>> {
   return (state: RootState) => {
-    if (!addressOrPool) return null;
+    if (!pool) return null;
+    const poolLpBalance = useSelector(selectPoolLpBalance(pool));
+    if (!poolLpBalance) return null;
+    return poolLpBalance.mul(pool.exchangeRate);
+  };
+}
 
-    if (typeof addressOrPool === "string") {
-      const plainBalance = state.user.balances[addressOrPool];
-      if (!plainBalance) return null;
-      return ScaledNumber.fromPlain(plainBalance);
-    }
-
-    const plainLpTokenBalance = state.user.balances[addressOrPool.lpToken.address];
-    const plainStakedBalance = state.user.balances[addressOrPool.stakerVaultAddress];
+export function selectPoolLpBalance(pool: Optional<Pool>): Selector<Optional<ScaledNumber>> {
+  return (state: RootState) => {
+    if (!pool) return null;
+    const plainLpTokenBalance = state.user.balances[pool.lpToken.address];
+    const plainStakedBalance = state.user.balances[pool.stakerVaultAddress];
     if (!plainLpTokenBalance || !plainStakedBalance) return null;
     const lpTokenBalance = ScaledNumber.fromPlain(plainLpTokenBalance);
     const stakedBalance = ScaledNumber.fromPlain(plainStakedBalance);
@@ -254,8 +263,8 @@ export function selectAvailableToWithdraw(pool: Optional<Pool>): Selector<Option
   return (state: RootState) => {
     if (!pool) return null;
 
-    const balance = useSelector(selectPoolBalance(pool));
-    const staked = useSelector(selectPoolBalance(pool.stakerVaultAddress));
+    const balance = useSelector(selectPoolLpBalance(pool));
+    const staked = useSelector(selectTokenBalance(pool.stakerVaultAddress));
     if (!balance || !staked) return null;
 
     return balance.sub(staked);

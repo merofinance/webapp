@@ -7,7 +7,6 @@ import { FormikErrors, useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { ethers } from "ethers";
 
-import { selectPoolBalance } from "../../../../state/userSlice";
 import { useBackd } from "../../../../app/hooks/use-backd";
 import { ScaledNumber } from "../../../../lib/scaled-number";
 import { selectPool, selectPrice } from "../../../../state/selectors";
@@ -31,6 +30,7 @@ import { Loan, Optional, Position } from "../../../../lib/types";
 import { selectLoans } from "../../../../state/lendingSlice";
 import TopupInput from "./TopupInput";
 import TopupConfirmation from "./TopupConfirmation";
+import { selectPoolUnderlyingBalance } from "../../../../state/userSlice";
 
 export interface FormType {
   threshold: string;
@@ -119,7 +119,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
   const pool = useSelector(selectPool(poolName));
   const underlyingPrice = useSelector(selectPrice(pool));
   const ethPrice = useSelector(selectEthPrice);
-  const balance = useSelector(selectPoolBalance(pool));
+  const balance = useSelector(selectPoolUnderlyingBalance(pool));
   const implement = useSelector(selectActiveSuggestion);
   const [loading, setLoading] = useState(false);
   const [confirming, setConfirming] = useState(false);
