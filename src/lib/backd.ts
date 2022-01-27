@@ -370,7 +370,9 @@ export class Web3Backd implements Backd {
   async deposit(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction> {
     const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
     const value = pool.underlying.address === ETH_DUMMY_ADDRESS ? amount.value : 0;
-    const minTokenAmount = amount.div(pool.exchangeRate).mul(DEPOSIT_SLIPPAGE);
+    const minTokenAmount = amount
+      .div(pool.exchangeRate)
+      .mul(ScaledNumber.fromUnscaled(DEPOSIT_SLIPPAGE));
     return poolContract["depositFor(address,uint256,uint256)"](
       await this.currentAccount(),
       amount.value,
@@ -381,7 +383,9 @@ export class Web3Backd implements Backd {
 
   async withdraw(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction> {
     const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
-    const minRedeemAmount = amount.mul(pool.exchangeRate).mul(DEPOSIT_SLIPPAGE);
+    const minRedeemAmount = amount
+      .mul(pool.exchangeRate)
+      .mul(ScaledNumber.fromUnscaled(DEPOSIT_SLIPPAGE));
     return poolContract["redeem(uint256,uint256)"](amount.value, minRedeemAmount.value);
   }
 
