@@ -199,7 +199,7 @@ export const deposit = createAsyncThunk(
 export const withdraw = createAsyncThunk(
   "user/withdraw",
   async ({ backd, pool, amount }: WithdrawArgs, { dispatch }) => {
-    const tx = await backd.withdraw(pool.address, amount);
+    const tx = await backd.withdraw(pool, amount);
     handleTransactionConfirmation(
       tx,
       { action: "Withdraw", args: { pool, amount: amount.toPlain() } },

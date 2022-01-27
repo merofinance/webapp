@@ -19,6 +19,7 @@ import {
   INFINITE_APPROVE_AMMOUNT,
   MILLISECONDS_PER_YEAR,
   DEFAULT_SCALE,
+  DEPOSIT_SLIPPAGE,
 } from "./constants";
 import { bigNumberToFloat } from "./numeric";
 import { ScaledNumber } from "./scaled-number";
@@ -68,7 +69,7 @@ export interface Backd {
   getPrices(symbol: string[]): Promise<Prices>;
   approve(token: Token, spender: Address, amount: ScaledNumber): Promise<ContractTransaction>;
   deposit(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction>;
-  withdraw(poolAddress: Address, amount: ScaledNumber): Promise<ContractTransaction>;
+  withdraw(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction>;
   unstake(vaultAddress: Address, amount: ScaledNumber): Promise<ContractTransaction>;
 
   listSupportedProtocols(): Promise<string[]>;
@@ -369,12 +370,23 @@ export class Web3Backd implements Backd {
   async deposit(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction> {
     const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
     const value = pool.underlying.address === ETH_DUMMY_ADDRESS ? amount.value : 0;
-    return poolContract["deposit(uint256)"](amount.value, { value });
+    const minTokenAmount = amount
+      .div(pool.exchangeRate)
+      .mul(ScaledNumber.fromUnscaled(DEPOSIT_SLIPPAGE));
+    return poolContract["depositFor(address,uint256,uint256)"](
+      await this.currentAccount(),
+      amount.value,
+      minTokenAmount.value,
+      { value }
+    );
   }
 
-  async withdraw(pool: Address, amount: ScaledNumber): Promise<ContractTransaction> {
-    const poolContract = LiquidityPoolFactory.connect(pool, this._provider);
-    return poolContract["redeem(uint256)"](amount.value);
+  async withdraw(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction> {
+    const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
+    const minRedeemAmount = amount
+      .mul(pool.exchangeRate)
+      .mul(ScaledNumber.fromUnscaled(DEPOSIT_SLIPPAGE));
+    return poolContract["redeem(uint256,uint256)"](amount.value, minRedeemAmount.value);
   }
 
   async unstake(vault: Address, amount: ScaledNumber): Promise<ContractTransaction> {
