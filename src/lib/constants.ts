@@ -1,4 +1,5 @@
 import { BigNumber } from "ethers";
+import { ScaledNumber } from "./scaled-number";
 
 // Feature toggles
 export const STAKING_LIVE = false;
@@ -18,6 +19,7 @@ export const RECOMMENDED_THRESHOLD = 1.2;
 export const MILLISECONDS_PER_YEAR = 365 * 24 * 60 * 60 * 1000;
 export const DATE_FORMAT = "mmm-d-yyyy";
 export const TOPUP_ACTION_ROUTE = "/actions/register/topup";
+export const DEPOSIT_SLIPPAGE = ScaledNumber.fromUnscaled(0.97); // 3%
 
 export const chainIds: Record<string, string> = {
   "1": "Mainnet",

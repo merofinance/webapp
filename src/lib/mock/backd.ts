@@ -78,9 +78,9 @@ export default class MockBackd implements Backd {
     return makeContractTransaction(pool.address, account);
   }
 
-  async withdraw(poolAddress: Address, amount: ScaledNumber): Promise<ContractTransaction> {
+  async withdraw(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction> {
     const account = await this.currentAccount();
-    return makeContractTransaction(poolAddress, account);
+    return makeContractTransaction(pool.address, account);
   }
 
   async unstake(poolAddress: Address, amount: ScaledNumber): Promise<ContractTransaction> {
