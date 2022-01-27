@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { FormikFormType, FormType } from "./TopupConditionsForm";
 import BackdTooltip from "../../../../components/BackdTooltip";
+import Button from "../../../../components/Button";
 
 const StyledRegisterTopupInput = styled.div`
   width: 100%;
@@ -95,6 +96,13 @@ const Input = styled.input`
   }
 `;
 
+const MaxButtonContainer = styled.div`
+  position: absolute;
+  right: 1.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+`;
+
 const Error = styled.div`
   font-weight: 500;
   color: var(--error);
@@ -116,6 +124,7 @@ interface Props {
   formik: FormikFormType;
   placeholder: string;
   onBlur?: () => void;
+  setMax?: () => void;
 }
 
 const TopupInput = ({
@@ -126,6 +135,7 @@ const TopupInput = ({
   formik,
   placeholder,
   onBlur,
+  setMax,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
   const valid = !formik.touched[name] || !formik.errors[name];
@@ -151,6 +161,13 @@ const TopupInput = ({
               formik.handleBlur(e);
             }}
           />
+          {setMax && (
+            <MaxButtonContainer>
+              <Button click={setMax} id="topup-input-button" primary small uppercase>
+                max
+              </Button>
+            </MaxButtonContainer>
+          )}
         </InputBorder>
         {!valid && (
           <Error id={`register-topup-${name.toLowerCase()}-error`}>

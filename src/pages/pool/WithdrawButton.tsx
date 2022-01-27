@@ -7,7 +7,7 @@ import Button from "../../components/Button";
 import { Pool } from "../../lib";
 import {
   selectAvailableToWithdraw,
-  selectPoolBalance,
+  selectTokenBalance,
   unstake,
   withdraw,
 } from "../../state/userSlice";
@@ -36,7 +36,7 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
   const { t } = useTranslation();
   const dispatch: AppDispatch = useDispatch();
   const backd = useBackd();
-  const staked = useSelector(selectPoolBalance(pool?.stakerVaultAddress));
+  const staked = useSelector(selectTokenBalance(pool?.stakerVaultAddress));
   const loading = useSelector(hasPendingTransaction("Withdraw"));
   const availableToWithdraw = useSelector(selectAvailableToWithdraw(pool));
 

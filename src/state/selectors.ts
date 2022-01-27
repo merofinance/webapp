@@ -5,7 +5,7 @@ import { ScaledNumber } from "../lib/scaled-number";
 import { Optional, Pool, Position } from "../lib/types";
 import { selectPools, selectPrices } from "./poolsListSlice";
 import { selectPoolPositions, selectPositions } from "./positionsSlice";
-import { selectPoolBalance, selectBalances } from "./userSlice";
+import { selectBalances, selectPoolUnderlyingBalance } from "./userSlice";
 
 export function selectPool(poolName: string | undefined): (state: RootState) => Optional<Pool> {
   return (state: RootState) => {
@@ -29,7 +29,7 @@ export function selectPrice(pool: Optional<Pool>): Selector<RootState, Optional<
   return (state: RootState) => (pool ? state.pools.prices[pool.underlying.symbol] : null);
 }
 
-export function selectPoolLocked(
+export function selectPoolLpLocked(
   pool: Optional<Pool>
 ): Selector<RootState, Optional<ScaledNumber>> {
   return (state: RootState) => {
@@ -39,6 +39,17 @@ export function selectPoolLocked(
       (a: ScaledNumber, b: Position) => a.add(b.maxTopUp),
       new ScaledNumber()
     );
+  };
+}
+
+export function selectPoolUnderlyingLocked(
+  pool: Optional<Pool>
+): Selector<RootState, Optional<ScaledNumber>> {
+  return (state: RootState) => {
+    if (!pool) return null;
+    const lpLocked = useSelector(selectPoolLpLocked(pool));
+    if (!lpLocked) return null;
+    return lpLocked.mul(pool.exchangeRate);
   };
 }
 
@@ -87,8 +98,8 @@ export function selectPoolDeposits(
   pool: Optional<Pool>
 ): Selector<RootState, Optional<ScaledNumber>> {
   return (state: RootState) => {
-    const locked = useSelector(selectPoolLocked(pool));
-    const balance = useSelector(selectPoolBalance(pool));
+    const locked = useSelector(selectPoolUnderlyingLocked(pool));
+    const balance = useSelector(selectPoolUnderlyingBalance(pool));
     if (!pool || !locked || !balance) return null;
     return locked.add(balance);
   };

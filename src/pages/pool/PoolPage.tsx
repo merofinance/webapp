@@ -10,7 +10,6 @@ import Seo from "../../components/Seo";
 import PoolDeposit from "./PoolDeposit";
 import PoolWithdraw from "./PoolWithdraw";
 import PoolInformation from "./PoolInformation";
-import { selectPoolBalance } from "../../state/userSlice";
 import Overview from "../../components/Overview";
 import { useBackd } from "../../app/hooks/use-backd";
 import { fetchState, selectPoolsLoaded } from "../../state/poolsListSlice";
@@ -22,6 +21,7 @@ import ContentSection from "../../components/ContentSection";
 import LiveHelp from "../../components/LiveHelp";
 import { Optional } from "../../lib/types";
 import BetaSnackbar from "../../components/BetaSnackbar";
+import { selectPoolUnderlyingBalance } from "../../state/userSlice";
 
 const StyledPoolPage = styled.div`
   position: relative;
@@ -80,7 +80,7 @@ const PoolPage = (): Optional<JSX.Element> => {
   const updated = useWeb3Updated();
   const pool = useSelector(selectPool(poolName));
   const poolsLoaded = useSelector(selectPoolsLoaded);
-  const balance = useSelector(selectPoolBalance(pool));
+  const balance = useSelector(selectPoolUnderlyingBalance(pool));
 
   useEffect(() => {
     if (!backd) return;
