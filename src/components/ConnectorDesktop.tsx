@@ -49,7 +49,7 @@ const Button = styled.button`
   cursor: pointer;
 
   height: ${(props: ButtonProps) => (props.connected ? "4.2rem" : "5.4rem")};
-  width: ${(props: ButtonProps) => (props.connected ? "15rem" : "17.2rem")};
+  width: ${(props: ButtonProps) => (props.connected ? "15.2rem" : "17.2rem")};
   border-radius: ${(props: ButtonProps) => (props.connected ? "8px" : "2.7rem")};
 
   transition: background-color 0.3s, background-position 0.5s;
