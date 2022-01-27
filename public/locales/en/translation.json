@@ -449,7 +449,7 @@
     },
     "topup": {
       "label": "Top-up Position",
-      "description": "Use your Backd deposits as back-up collateral to protect your overcollateralised loans on Aave v2 or Compound from getting liquidated.",
+      "description": "Protect your loans from getting liquidated",
       "stages": {
         "loan": {
           "header": "Select a loan to protect",

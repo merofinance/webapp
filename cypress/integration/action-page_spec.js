@@ -79,10 +79,11 @@ describe("Register Page", () => {
   it("Should have no deposits", () => {
     cy.get("#existing-actions-empty").contains("You have not registered any Actions yet...");
   });
-  it("Should have Top-up Note", () => {
-    cy.get("#top-up-note").contains(
-      "Use your Backd deposits as back-up collateral to protect your overcollateralised loans on Aave v2 or Compound from getting liquidated."
-    );
+  it("Should have disabled button", () => {
+    cy.get("#register-action-button").should("be.disabled");
+  });
+  it("Should select top-up action", () => {
+    cy.get("#action-topup-option").click();
   });
   it("Should take snapshot", () => {
     percySnapshot();
@@ -115,6 +116,7 @@ describe("Loan Selection", () => {
     cy.location().should((loc) => {
       if (loc.pathname) expect(loc.pathname).to.eq("/actions/register");
     });
+    cy.get("#action-topup-option").click();
     cy.get("#register-action-button").click();
     cy.location().should((loc) => {
       if (loc.pathname) expect(loc.pathname).to.eq("/actions/register/topup");

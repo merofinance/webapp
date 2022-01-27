@@ -6,6 +6,7 @@ import Loader from "./Loader";
 interface ColumnType {
   label: string;
   value: Optional<string | JSX.Element>;
+  large?: boolean;
 }
 
 export interface RowOptionType {
@@ -65,13 +66,14 @@ const StyledRowOption = styled.button`
 
 interface ColumnProps {
   hideMobile?: boolean;
+  large?: boolean;
 }
 
 const Column = styled.div`
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  flex: ${(props: ColumnProps) => (props.large ? "2" : "1")};
 
   @media (max-width: 600px) {
     display: ${(props: ColumnProps) => (props.hideMobile ? "none" : "flex")};
@@ -94,6 +96,7 @@ const Header = styled.div`
 const Value = styled.div`
   font-weight: 700;
   letter-spacing: 0.2px;
+  text-align: left;
 
   font-size: 1.8rem;
   @media (max-width: 600px) {
@@ -153,7 +156,7 @@ const RowOption = ({ active, select, option }: Props): JSX.Element => {
         disabled={!!option.disabledText}
       >
         {option.columns.map((column: ColumnType) => (
-          <Column key={column.label}>
+          <Column key={column.label} large={column.large}>
             {column.label && <Header>{column.label}</Header>}
             {getColumnValue(column.value)}
           </Column>
