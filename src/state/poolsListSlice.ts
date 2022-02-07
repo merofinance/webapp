@@ -98,7 +98,6 @@ export const selectPoolsLoaded = (state: RootState): boolean => state.pools.load
 export const selectPools = (state: RootState): Optional<Pool[]> => {
   if (!state.pools.loaded) return null;
   return state.pools.pools.filter((pool: Pool) => {
-    if (!pool.apy) return false;
     if (!poolMetadata[pool.underlying.symbol]) return false;
     return true;
   });
