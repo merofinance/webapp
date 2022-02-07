@@ -159,6 +159,12 @@ export class Web3Backd implements Backd {
     return { address: tokenAddress, name, symbol, decimals };
   }
 
+  async getTokenDecimals(tokenAddress: Address): Promise<number> {
+    if (tokenAddress === ETH_DUMMY_ADDRESS) return ETH_DECIMALS;
+    const token = Ierc20FullFactory.connect(tokenAddress, this._provider);
+    return token.decimals();
+  }
+
   async getPoolInfo(address: Address): Promise<Pool> {
     const pool = LiquidityPoolFactory.connect(address, this._provider);
     const [
@@ -185,9 +191,6 @@ export class Web3Backd implements Backd {
       this.getTokenInfo(underlyingAddress),
       this.addressProvider.getStakerVault(lpTokenAddress),
     ]);
-
-    const usableTokens = await this.topupAction.getUsableTokens();
-    console.log(usableTokens);
 
     let apy = null;
     const metadata = poolMetadata[underlying.symbol];
@@ -276,18 +279,22 @@ export class Web3Backd implements Backd {
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async getPositionInfo(rawPosition: any): Promise<PlainPosition> {
-    const token = Ierc20FullFactory.connect(rawPosition.record.depositToken, this._provider);
-    const decimals = await token.decimals();
+    const positionInfo = await this.topupAction.getPosition(
+      await this.currentAccount(),
+      rawPosition.account,
+      rawPosition.protocol
+    );
+    const decimals = await this.getTokenDecimals(positionInfo.depositToken);
     const position: PlainPosition = {
       protocol: ethers.utils.parseBytes32String(rawPosition.protocol),
-      actionToken: rawPosition.record.actionToken,
-      depositToken: rawPosition.record.depositToken,
+      actionToken: positionInfo.actionToken,
+      depositToken: positionInfo.depositToken,
       account: rawPosition.account,
-      threshold: new ScaledNumber(rawPosition.record.threshold, decimals).toPlain(),
-      singleTopUp: new ScaledNumber(rawPosition.record.singleTopUpAmount, decimals).toPlain(),
-      maxTopUp: new ScaledNumber(rawPosition.record.totalTopUpAmount, decimals).toPlain(),
-      priorityFee: new ScaledNumber(rawPosition.record.priorityFee, GWEI_DECIMALS).toPlain(),
-      maxGasPrice: new ScaledNumber(rawPosition.record.maxGasPrice, GWEI_DECIMALS).toPlain(),
+      threshold: new ScaledNumber(positionInfo.threshold, decimals).toPlain(),
+      singleTopUp: new ScaledNumber(positionInfo.singleTopUpAmount, decimals).toPlain(),
+      maxTopUp: new ScaledNumber(positionInfo.totalTopUpAmount, decimals).toPlain(),
+      priorityFee: new ScaledNumber(positionInfo.priorityFee, GWEI_DECIMALS).toPlain(),
+      maxGasPrice: new ScaledNumber(positionInfo.maxFee, GWEI_DECIMALS).toPlain(),
     };
     return position;
   }
@@ -445,8 +452,10 @@ export class Web3Backd implements Backd {
       return new ScaledNumber(await this.provider.getBalance(account));
     }
     const token = Ierc20FullFactory.connect(address, this._provider);
-    const decimals = await token.decimals();
-    const rawBalance = await token.balanceOf(account);
+    const [decimals, rawBalance] = await Promise.all([
+      await token.decimals(),
+      await token.balanceOf(account),
+    ]);
     return new ScaledNumber(rawBalance, decimals);
   }
 
