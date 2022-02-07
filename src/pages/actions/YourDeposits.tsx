@@ -9,17 +9,23 @@ import Loader from "../../components/Loader";
 import { selectBalance } from "../../state/selectors";
 import { useDevice } from "../../app/hooks/use-device";
 import YourDepositsRow from "./YourDepositsRow";
+import Gasbank from "./GasBank";
 
 const LoaderContainer = styled.div`
   margin-bottom: 1rem;
 `;
 
 const SubHeader = styled.div`
-  font-size: 1.5rem;
   font-weight: 600;
   letter-spacing: 0.46px;
   opacity: 0.8;
+
+  font-size: 1.5rem;
   margin-bottom: 0.7rem;
+  @media (max-width: 600px) {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
 `;
 
 const EmptyText = styled.div`
@@ -59,6 +65,7 @@ const YourDeposits = (): JSX.Element => {
       collapsible
       defaultOpen={isDesktop}
       header={t("actions.deposits.header")}
+      maxHeight={`${10 * (depositedPools?.length || 2) + 10}rem`}
     >
       {!depositedPools && (
         <>
@@ -84,6 +91,7 @@ const YourDeposits = (): JSX.Element => {
           </Total>
         </>
       )}
+      <Gasbank />
     </InfoCard>
   );
 };
