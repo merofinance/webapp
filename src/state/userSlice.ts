@@ -26,6 +26,7 @@ import { handleTransactionConfirmation } from "../lib/transactionsUtils";
 
 interface UserState {
   balances: PlainBalances;
+  gasBankBalance: Optional<PlainScaledNumber>;
   allowances: PlainAllowances;
   withdrawalFees: PlainWithdrawalFees;
   connecting: boolean;
@@ -33,6 +34,7 @@ interface UserState {
 
 const initialState: UserState = {
   balances: {},
+  gasBankBalance: null,
   allowances: {},
   withdrawalFees: {},
   connecting: false,
@@ -48,6 +50,13 @@ export const fetchBalances = createAsyncThunk(
     ]);
     const balances = await backd.getBalances(allTokens);
     return toPlainBalances(balances);
+  }
+);
+
+export const fetchGasBankBalance = createAsyncThunk(
+  "user/fetchGasBankBalance",
+  async ({ backd }: { backd: Backd }) => {
+    return backd.getGasBankBalance();
   }
 );
 
@@ -125,6 +134,10 @@ export const userSlice = createSlice({
         // eslint-disable-next-line prefer-destructuring
         state.balances[tokenAddress[0]] = tokenAddress[1];
       });
+    });
+
+    builder.addCase(fetchGasBankBalance.fulfilled, (state, action) => {
+      state.gasBankBalance = action.payload;
     });
 
     builder.addCase(fetchAllowances.fulfilled, (state, action) => {
@@ -258,6 +271,9 @@ export function selectPoolLpBalance(pool: Optional<Pool>): Selector<Optional<Sca
     return lpTokenBalance.add(stakedBalance);
   };
 }
+
+export const selectGasBankBalance = (state: RootState): Optional<ScaledNumber> =>
+  state.user.gasBankBalance ? ScaledNumber.fromPlain(state.user.gasBankBalance) : null;
 
 export function selectAvailableToWithdraw(pool: Optional<Pool>): Selector<Optional<ScaledNumber>> {
   return (state: RootState) => {

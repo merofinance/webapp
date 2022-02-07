@@ -9,7 +9,12 @@ import { fetchLoans } from "./lendingSlice";
 import { INFURA_ID } from "../lib/constants";
 import { createBackd } from "../lib/factory";
 import { fetchActionFees, fetchEstimatedGasUsage, fetchPositions } from "./positionsSlice";
-import { fetchAllowances, fetchBalances, fetchWithdrawalFees } from "./userSlice";
+import {
+  fetchAllowances,
+  fetchBalances,
+  fetchGasBankBalance,
+  fetchWithdrawalFees,
+} from "./userSlice";
 import poolMetadata from "../lib/data/pool-metadata";
 
 interface PoolsState {
@@ -82,6 +87,7 @@ export const fetchState =
     dispatch(fetchPositions({ backd }));
     dispatch(fetchEstimatedGasUsage({ backd }));
     dispatch(fetchActionFees({ backd }));
+    dispatch(fetchGasBankBalance({ backd }));
   };
 
 export const fetchPreviewState = (): AppThunk => (dispatch) => {
@@ -116,6 +122,9 @@ export const selectDepositedPools = (state: RootState): Optional<Pool[]> => {
 export const selectPrices = (state: RootState): Prices => state.pools.prices;
 
 export const selectEthPrice = (state: RootState): Optional<number> => state.pools.prices.ETH;
+
+export const selectEthPool = (state: RootState): Optional<Pool> =>
+  state.pools.pools.find((pool: Pool) => pool.underlying.symbol.toLowerCase() === "eth") || null;
 
 export const selectAverageApy = (state: RootState): Optional<number> => {
   const pools = selectPools(state);

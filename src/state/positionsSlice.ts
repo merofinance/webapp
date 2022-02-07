@@ -15,7 +15,7 @@ import {
   fromPlainActionFees,
 } from "../lib/types";
 import { handleTransactionConfirmation } from "../lib/transactionsUtils";
-import { fetchAllowances, fetchBalances } from "./userSlice";
+import { fetchAllowances, fetchBalances, fetchGasBankBalance } from "./userSlice";
 import { PlainScaledNumber, ScaledNumber } from "../lib/scaled-number";
 
 interface PositionsState {
@@ -79,6 +79,7 @@ export const registerPosition = createAsyncThunk(
         fetchPositions({ backd }),
         fetchBalances({ backd, pools: [pool] }),
         fetchAllowances({ backd, pools: [pool] }),
+        fetchGasBankBalance({ backd }),
       ]
     );
     return tx.hash;
@@ -97,6 +98,7 @@ export const removePosition = createAsyncThunk(
         fetchPositions({ backd }),
         fetchBalances({ backd, pools: [pool] }),
         fetchAllowances({ backd, pools: [pool] }),
+        fetchGasBankBalance({ backd }),
       ]
     );
     return tx.hash;
