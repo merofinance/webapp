@@ -83,7 +83,7 @@ const BackdTooltip = ({ children, items, info }: Props): JSX.Element => {
               {items && (
                 <Items>
                   {items.map((item: TooltipItemType) => (
-                    <Item>
+                    <Item key={item.label}>
                       <Value>{item.label}</Value>
                       <Value>{item.value}</Value>
                     </Item>
