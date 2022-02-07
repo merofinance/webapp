@@ -19,7 +19,7 @@ const poolMetadata: Record<string, PoolMetadata> = {
         time: new Date(0),
       },
       "42": {
-        time: new Date(1629505560000),
+        time: new Date(1643997600000),
       },
     },
   },
@@ -30,7 +30,7 @@ const poolMetadata: Record<string, PoolMetadata> = {
         time: new Date(0),
       },
       "42": {
-        time: new Date(1629505560000),
+        time: new Date(1643997600000),
       },
     },
   },
@@ -38,7 +38,7 @@ const poolMetadata: Record<string, PoolMetadata> = {
     icon: usdc,
     deployment: {
       "1337": {
-        time: new Date(0),
+        time: new Date(1643997600000),
       },
     },
   },
