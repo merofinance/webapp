@@ -14,6 +14,14 @@ const LoaderContainer = styled.div`
   margin-bottom: 1rem;
 `;
 
+const SubHeader = styled.div`
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.46px;
+  opacity: 0.8;
+  margin-bottom: 0.7rem;
+`;
+
 const EmptyText = styled.div`
   font-weight: 400;
   font-size: 1.5rem;
@@ -67,6 +75,7 @@ const YourDeposits = (): JSX.Element => {
       )}
       {depositedPools && depositedPools.length > 0 && (
         <>
+          <SubHeader>{t("actions.deposits.poolsSubheader")}</SubHeader>
           {depositedPools.map((pool: Pool) => (
             <YourDepositsRow key={pool.name} pool={pool} />
           ))}

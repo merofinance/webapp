@@ -411,7 +411,8 @@
     "deposits": {
       "header": "Your deposits",
       "empty": "You do not have any existing Deposits...",
-      "manage": "Manage deposits"
+      "manage": "Manage deposits",
+      "poolsSubheader": "Pools"
     },
     "propose": "+ Propose a new Action on Discord",
     "register": {
