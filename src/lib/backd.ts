@@ -6,7 +6,11 @@ import { LiquidityPoolFactory } from "@backdfund/protocol/typechain/LiquidityPoo
 import { StakerVaultFactory } from "@backdfund/protocol/typechain/StakerVaultFactory";
 import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
 import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFactory";
-import { TopUpActionFeeHandlerFactory } from "@backdfund/protocol";
+import {
+  AddressProvider,
+  AddressProviderFactory,
+  TopUpActionFeeHandlerFactory,
+} from "@backdfund/protocol";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
 import fromEntries from "fromentries";
 
@@ -83,6 +87,8 @@ export class Web3Backd implements Backd {
 
   private topupAction: TopUpAction;
 
+  private addressProvider: AddressProvider;
+
   private chainId: number;
 
   constructor(private _provider: Signer | providers.Provider, private options: BackdOptions) {
@@ -95,6 +101,10 @@ export class Web3Backd implements Backd {
     this.topupAction = TopUpActionFactory.connect(contracts["TopUpAction"][0], _provider);
     // eslint-disable-next-line dot-notation
     this.topupAction = TopUpActionFactory.connect(contracts["TopUpAction"][0], _provider);
+    this.addressProvider = AddressProviderFactory.connect(
+      contracts["AddressProvider"][0], // eslint-disable-line dot-notation
+      _provider
+    );
   }
 
   get topupActionAddress(): string {
@@ -130,7 +140,7 @@ export class Web3Backd implements Backd {
   }
 
   async listPools(): Promise<Pool[]> {
-    const markets = await this.controller.allPools();
+    const markets = await this.addressProvider.allPools();
     return Promise.all(markets.map((v: any) => this.getPoolInfo(v)));
   }
 
@@ -171,7 +181,7 @@ export class Web3Backd implements Backd {
     const [lpToken, underlying, stakerVaultAddress] = await Promise.all([
       this.getTokenInfo(lpTokenAddress),
       this.getTokenInfo(underlyingAddress),
-      this.controller.getStakerVault(lpTokenAddress),
+      this.addressProvider.getStakerVault(lpTokenAddress),
     ]);
 
     let apy = null;
@@ -226,7 +236,7 @@ export class Web3Backd implements Backd {
 
   async getPositions(): Promise<PlainPosition[]> {
     const account = await this.currentAccount();
-    const rawPositions = await this.topupAction.listPositions(account);
+    const rawPositions = await this.topupAction.getUserPositions(account);
     return Promise.all(rawPositions.map((v: any) => this.getPositionInfo(v)));
   }
 
@@ -284,32 +294,36 @@ export class Web3Backd implements Backd {
     const protocol = utils.formatBytes32String(position.protocol);
     const depositAmount = position.maxTopUp.value.mul(rawExchangeRate).div(scale);
 
+    // TODO Remove old gas max thingy
+    // TODO Remove this duplication
     const gasEstimate = await this.topupAction.estimateGas.register(
       position.account,
       protocol,
-      position.threshold.value,
-      pool.lpToken.address,
       depositAmount,
-      pool.underlying.address,
-      position.singleTopUp.value,
-      position.maxTopUp.value,
-      position.maxGasPrice.value
-    );
-    const gasLimit = gasEstimate.mul(12).div(10);
-    return this.topupAction.register(
-      position.account,
-      protocol,
-      position.threshold.value,
-      pool.lpToken.address,
-      depositAmount,
-      pool.underlying.address,
-      position.singleTopUp.value,
-      position.maxTopUp.value,
-      position.maxGasPrice.value,
       {
-        gasLimit,
+        threshold: position.threshold.value,
+        priorityFee: ScaledNumber.fromUnscaled(2, 18).value, // TODO priorityFee
+        maxFee: ScaledNumber.fromUnscaled(2, 9).value, // TODO priorityFee
+        actionToken: pool.underlying.address,
+        depositToken: pool.lpToken.address,
+        singleTopUpAmount: position.singleTopUp.value,
+        totalTopUpAmount: position.maxTopUp.value,
+        depositTokenBalance: ScaledNumber.fromUnscaled(0).value, // TODO what is this
+        repayDebt: false,
       }
     );
+    const gasLimit = gasEstimate.mul(12).div(10);
+    return this.topupAction.register(position.account, protocol, depositAmount, {
+      threshold: position.threshold.value,
+      priorityFee: ScaledNumber.fromUnscaled(2, 18).value, // TODO priorityFee
+      maxFee: ScaledNumber.fromUnscaled(2, 9).value, // TODO priorityFee
+      actionToken: pool.underlying.address,
+      depositToken: pool.lpToken.address,
+      singleTopUpAmount: position.singleTopUp.value,
+      totalTopUpAmount: position.maxTopUp.value,
+      depositTokenBalance: ScaledNumber.fromUnscaled(0).value, // TODO what is this
+      repayDebt: false,
+    });
   }
 
   async removePosition(
