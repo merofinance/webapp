@@ -8,23 +8,23 @@ export type Optional<T> = T | null;
 
 export interface Token {
   address: string;
+  decimals: number;
   name: string;
   symbol: string;
-  decimals: number;
 }
 
 export interface Pool<Num = number> {
-  name: string;
   address: string;
-  stakerVaultAddress: string;
-  lpToken: Token;
-  underlying: Token;
   apy: Optional<Num>;
-  totalAssets: Num;
   exchangeRate: Num;
+  feeDecreasePeriod: Num;
+  lpToken: Token;
   maxWithdrawalFee: Num;
   minWithdrawalFee: Num;
-  feeDecreasePeriod: Num;
+  name: string;
+  stakerVaultAddress: string;
+  totalAssets: Num;
+  underlying: Token;
 }
 
 interface GenericPosition<T> {
