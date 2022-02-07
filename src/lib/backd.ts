@@ -9,6 +9,8 @@ import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFac
 import {
   AddressProvider,
   AddressProviderFactory,
+  GasBank,
+  GasBankFactory,
   TopUpActionFeeHandlerFactory,
 } from "@backdfund/protocol";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
@@ -69,6 +71,7 @@ export interface Backd {
   ): Promise<ContractTransaction>;
   getBalance(address: Address, account?: Address): Promise<ScaledNumber>;
   getBalances(addresses: Address[], account?: Address): Promise<Balances>;
+  getGasBankBalance(): Promise<PlainScaledNumber>;
   getAllowance(token: Token, spender: Address, account?: string): Promise<ScaledNumber>;
   getAllowances(queries: AllowanceQuery[]): Promise<Record<string, Balances>>;
   getWithdrawalFees(pools: Pool[]): Promise<PlainWithdrawalFees>;
@@ -91,6 +94,8 @@ export class Web3Backd implements Backd {
 
   private addressProvider: AddressProvider;
 
+  private gasBank: GasBank;
+
   private chainId: number;
 
   constructor(private _provider: Signer | providers.Provider, private options: BackdOptions) {
@@ -103,6 +108,8 @@ export class Web3Backd implements Backd {
     this.topupAction = TopUpActionFactory.connect(contracts["TopUpAction"][0], _provider);
     // eslint-disable-next-line dot-notation
     this.topupAction = TopUpActionFactory.connect(contracts["TopUpAction"][0], _provider);
+    // eslint-disable-next-line dot-notation
+    this.gasBank = GasBankFactory.connect(contracts["GasBank"][0], _provider);
     this.addressProvider = AddressProviderFactory.connect(
       contracts["AddressProvider"][0], // eslint-disable-line dot-notation
       _provider
@@ -315,51 +322,37 @@ export class Web3Backd implements Backd {
     const protocol = utils.formatBytes32String(position.protocol);
     const depositAmount = position.maxTopUp.value.mul(rawExchangeRate).div(scale);
 
-    // TODO Remove this duplication
-    // TODO SHow gas bank balance
-    // TODO Show ETH cost when registering
-    // TODO your deposits overflows when showing USDC
     // TODO All Vinnie feedback
+    // TODO Test USDC pool
+    // TODO Test confirmation topup on mobile
+    // TODO Remove default topup estimate and change to use the contract one, also, update wording on live help
+
+    const record = {
+      threshold: position.threshold.value,
+      priorityFee: position.priorityFee.value,
+      maxFee: position.maxGasPrice.value,
+      actionToken: pool.underlying.address,
+      depositToken: pool.lpToken.address,
+      singleTopUpAmount: position.singleTopUp.value,
+      totalTopUpAmount: position.maxTopUp.value,
+      depositTokenBalance: ScaledNumber.fromUnscaled(0).value,
+      repayDebt: false,
+    };
+
     const gasEstimate = await this.topupAction.estimateGas.register(
       position.account,
       protocol,
       depositAmount,
-      {
-        threshold: position.threshold.value,
-        priorityFee: position.priorityFee.value,
-        maxFee: position.maxGasPrice.value,
-        actionToken: pool.underlying.address,
-        depositToken: pool.lpToken.address,
-        singleTopUpAmount: position.singleTopUp.value,
-        totalTopUpAmount: position.maxTopUp.value,
-        depositTokenBalance: ScaledNumber.fromUnscaled(0).value,
-        repayDebt: false,
-      },
+      record,
       {
         value,
       }
     );
     const gasLimit = gasEstimate.mul(12).div(10);
-    return this.topupAction.register(
-      position.account,
-      protocol,
-      depositAmount,
-      {
-        threshold: position.threshold.value,
-        priorityFee: position.priorityFee.value,
-        maxFee: position.maxGasPrice.value,
-        actionToken: pool.underlying.address,
-        depositToken: pool.lpToken.address,
-        singleTopUpAmount: position.singleTopUp.value,
-        totalTopUpAmount: position.maxTopUp.value,
-        depositTokenBalance: ScaledNumber.fromUnscaled(0).value,
-        repayDebt: false,
-      },
-      {
-        gasLimit,
-        value,
-      }
-    );
+    return this.topupAction.register(position.account, protocol, depositAmount, record, {
+      gasLimit,
+      value,
+    });
   }
 
   async removePosition(
@@ -463,6 +456,11 @@ export class Web3Backd implements Backd {
     const promises = addresses.map((a) => this.getBalance(a, account));
     const balances = await Promise.all(promises);
     return fromEntries(addresses.map((a, i) => [a, balances[i]]));
+  }
+
+  async getGasBankBalance(): Promise<PlainScaledNumber> {
+    const balance = await this.gasBank.balanceOf(await this.currentAccount());
+    return new ScaledNumber(balance).toPlain();
   }
 
   async getPrices(symbols: string[]): Promise<Prices> {

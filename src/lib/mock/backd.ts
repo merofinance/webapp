@@ -70,6 +70,10 @@ export default class MockBackd implements Backd {
     return Promise.resolve(new ScaledNumber(number));
   }
 
+  getGasBankBalance(): Promise<PlainScaledNumber> {
+    return Promise.resolve(new ScaledNumber().toPlain());
+  }
+
   getWithdrawalFees(pools: Pool[]): Promise<PlainWithdrawalFees> {
     return Promise.resolve({});
   }
