@@ -3,17 +3,19 @@ import styled from "styled-components";
 import LaunchIcon from "@material-ui/icons/Launch";
 import { useTranslation } from "react-i18next";
 import { useWeb3React } from "@web3-react/core";
+import { BigNumber } from "ethers";
 
 import { GradientLink } from "../../../../styles/GradientText";
 import BackdTooltip from "../../../../components/BackdTooltip";
 import { shortenAddress } from "../../../../lib/text";
-import { Pool, Position } from "../../../../lib/types";
+import { ScaledNumber } from "../../../../lib/scaled-number";
+import { Optional, Pool, Position } from "../../../../lib/types";
 import { selectPrice } from "../../../../state/selectors";
 import { useDevice } from "../../../../app/hooks/use-device";
 import { getEtherscanAddressLink } from "../../../../lib/web3";
 import { selectActionFees } from "../../../../state/positionsSlice";
 import Loader from "../../../../components/Loader";
-import InfoBlock from "../../../../components/InfoBlock";
+import InfoBlock, { InfoBlockRow } from "../../../../components/InfoBlock";
 
 const StyledTopupInformation = styled.div`
   width: 100%;
@@ -106,14 +108,77 @@ const InfoLabel = styled(Label)`
 interface Props {
   position: Position;
   pool: Pool;
+  value?: Optional<BigNumber>;
 }
 
-const TopupInformation = ({ position, pool }: Props): JSX.Element => {
+const TopupInformation = ({ position, pool, value }: Props): JSX.Element => {
   const { t } = useTranslation();
   const price = useSelector(selectPrice(pool));
   const actionFees = useSelector(selectActionFees);
   const { chainId } = useWeb3React();
   const { isMobile } = useDevice();
+
+  const infoBlockRows: InfoBlockRow[] = [
+    {
+      label: t("actions.topup.fields.protocol.label"),
+      tooltip: t("actions.topup.fields.protocol.tooltip"),
+      value: position.protocol,
+      valueId: "topup-information-protocol",
+    },
+    {
+      label: t("actions.topup.fields.address.label"),
+      tooltip: t("actions.topup.fields.address.tooltip"),
+      value: (
+        <AddressLabel
+          href={getEtherscanAddressLink(chainId, position.account)}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {shortenAddress(position.account, 8)}
+          <LaunchIcon style={{ fill: "var(--secondary)" }} />
+        </AddressLabel>
+      ),
+    },
+    {
+      label: t("actions.topup.fields.threshold.label"),
+      tooltip: t("actions.topup.fields.threshold.tooltip"),
+      value: position.threshold.toString(),
+      valueId: "topup-information-threshold",
+    },
+    {
+      label: t("actions.topup.fields.single.label"),
+      tooltip: t("actions.topup.fields.single.tooltip"),
+      value: `${position.singleTopUp.toCryptoString()} ${pool.underlying.symbol}`,
+      valueId: "topup-information-single-topup",
+    },
+    {
+      label: t("actions.topup.fields.max.label"),
+      tooltip: t("actions.topup.fields.max.tooltip"),
+      value: `${position.maxTopUp.toCryptoString()} ${pool.underlying.symbol}`,
+      valueId: "topup-information-max-topup",
+    },
+    {
+      label: t("actions.topup.fields.priority.label"),
+      tooltip: t("actions.topup.fields.priority.tooltip"),
+      value: `${position.priorityFee.toCryptoString()} Gwei`,
+      valueId: "topup-information-priority-fee",
+    },
+    {
+      label: t("actions.topup.fields.gas.label"),
+      tooltip: t("actions.topup.fields.gas.tooltip"),
+      value: `${position.maxGasPrice.toCryptoString()} Gwei`,
+      valueId: "topup-information-max-gas",
+    },
+  ];
+
+  if (value !== undefined) {
+    infoBlockRows.push({
+      label: t("actions.gasBank.topupAmount"),
+      tooltip: t("actions.gasBank.topupAmountTooltip"),
+      value: value ? `${new ScaledNumber(value).toCryptoString()} ETH` : <Loader />,
+      valueId: "topup-information-gas-bank",
+    });
+  }
 
   return (
     <StyledTopupInformation>
@@ -136,54 +201,7 @@ const TopupInformation = ({ position, pool }: Props): JSX.Element => {
           maxUsd: price ? position.maxTopUp.toUsdValue(price) : "$---",
         })}
       </Summary>
-      <InfoBlock
-        rows={[
-          {
-            label: t("actions.topup.fields.protocol.label"),
-            tooltip: t("actions.topup.fields.protocol.tooltip"),
-            value: position.protocol,
-            valueId: "topup-information-protocol",
-          },
-          {
-            label: t("actions.topup.fields.address.label"),
-            tooltip: t("actions.topup.fields.address.tooltip"),
-            value: (
-              <AddressLabel
-                href={getEtherscanAddressLink(chainId, position.account)}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {shortenAddress(position.account, 8)}
-                <LaunchIcon style={{ fill: "var(--secondary)" }} />
-              </AddressLabel>
-            ),
-          },
-          {
-            label: t("actions.topup.fields.threshold.label"),
-            tooltip: t("actions.topup.fields.threshold.tooltip"),
-            value: position.threshold.toString(),
-            valueId: "topup-information-threshold",
-          },
-          {
-            label: t("actions.topup.fields.single.label"),
-            tooltip: t("actions.topup.fields.single.tooltip"),
-            value: `${position.singleTopUp.toCryptoString()} ${pool.underlying.symbol}`,
-            valueId: "topup-information-single-topup",
-          },
-          {
-            label: t("actions.topup.fields.max.label"),
-            tooltip: t("actions.topup.fields.max.tooltip"),
-            value: `${position.maxTopUp.toCryptoString()} ${pool.underlying.symbol}`,
-            valueId: "topup-information-max-topup",
-          },
-          {
-            label: t("actions.topup.fields.gas.label"),
-            tooltip: t("actions.topup.fields.gas.tooltip"),
-            value: `${position.maxGasPrice.toCryptoString()} Gwei`,
-            valueId: "topup-information-max-gas",
-          },
-        ]}
-      />
+      <InfoBlock rows={infoBlockRows} />
       <InfoSection>
         <InfoRow>
           <InfoLabel>

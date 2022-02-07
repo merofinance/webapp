@@ -8,7 +8,7 @@ import { Address, fromPlainBalances, Optional, Prices } from "../lib/types";
 import { fetchLoans } from "./lendingSlice";
 import { INFURA_ID } from "../lib/constants";
 import { createBackd } from "../lib/factory";
-import { fetchActionFees, fetchPositions } from "./positionsSlice";
+import { fetchActionFees, fetchEstimatedGasUsage, fetchPositions } from "./positionsSlice";
 import { fetchAllowances, fetchBalances, fetchWithdrawalFees } from "./userSlice";
 import poolMetadata from "../lib/data/pool-metadata";
 
@@ -80,6 +80,7 @@ export const fetchState =
       dispatch(fetchWithdrawalFees({ backd, pools }));
     });
     dispatch(fetchPositions({ backd }));
+    dispatch(fetchEstimatedGasUsage({ backd }));
     dispatch(fetchActionFees({ backd }));
   };
 

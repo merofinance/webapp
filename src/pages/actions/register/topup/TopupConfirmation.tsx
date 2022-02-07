@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { BigNumber } from "ethers";
 
 import { useBackd } from "../../../../app/hooks/use-backd";
 import { AppDispatch } from "../../../../app/store";
 import Popup from "../../../../components/Popup";
 import { registerPosition } from "../../../../state/positionsSlice";
-import { Pool, Position } from "../../../../lib/types";
+import { Optional, Pool, Position } from "../../../../lib/types";
 import { hasPendingTransaction } from "../../../../state/transactionsSlice";
 import TopupInformation from "./TopupInformation";
 
@@ -15,10 +16,18 @@ interface Props {
   close: () => void;
   position: Position;
   pool: Pool;
+  value: Optional<BigNumber>;
   complete: () => void;
 }
 
-const TopupConfirmation = ({ show, close, position, pool, complete }: Props): JSX.Element => {
+const TopupConfirmation = ({
+  show,
+  close,
+  position,
+  pool,
+  value,
+  complete,
+}: Props): JSX.Element => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const backd = useBackd();
@@ -37,8 +46,8 @@ const TopupConfirmation = ({ show, close, position, pool, complete }: Props): JS
   }, [loading]);
 
   const executeRegister = () => {
-    if (!backd || loading) return;
-    dispatch(registerPosition({ position, pool, backd }));
+    if (!backd || loading || !value) return;
+    dispatch(registerPosition({ position, pool, backd, value }));
   };
 
   return (
@@ -50,7 +59,7 @@ const TopupConfirmation = ({ show, close, position, pool, complete }: Props): JS
       submit={() => executeRegister()}
       loading={loading}
     >
-      <TopupInformation position={position} pool={pool} />
+      <TopupInformation position={position} pool={pool} value={value} />
     </Popup>
   );
 };

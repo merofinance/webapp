@@ -1,4 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { BigNumber } from "ethers";
+
 import { RootState } from "../app/store";
 import { Pool } from "../lib";
 import { Backd } from "../lib/backd";
@@ -14,21 +16,29 @@ import {
 } from "../lib/types";
 import { handleTransactionConfirmation } from "../lib/transactionsUtils";
 import { fetchAllowances, fetchBalances } from "./userSlice";
+import { PlainScaledNumber, ScaledNumber } from "../lib/scaled-number";
 
 interface PositionsState {
   positions: PlainPosition[];
   fees: Optional<PlainActionFees>;
   loaded: boolean;
+  estimatedGasUsage: Optional<PlainScaledNumber>;
 }
 
 const initialState: PositionsState = {
   positions: [],
   fees: null,
   loaded: false,
+  estimatedGasUsage: null,
 };
 
 export const fetchPositions = createAsyncThunk("positions/fetch", ({ backd }: { backd: Backd }) =>
   backd.getPositions()
+);
+
+export const fetchEstimatedGasUsage = createAsyncThunk(
+  "positions/fetch-estimated-gas-usage",
+  ({ backd }: { backd: Backd }) => backd.getEstimatedGasUsage()
 );
 
 export const fetchActionFees = createAsyncThunk(
@@ -48,16 +58,19 @@ export const positionsSlice = createSlice({
     builder.addCase(fetchActionFees.fulfilled, (state, action) => {
       state.fees = action.payload;
     });
+    builder.addCase(fetchEstimatedGasUsage.fulfilled, (state, action) => {
+      state.estimatedGasUsage = action.payload;
+    });
   },
 });
 
-type RegisterArgs = { backd: Backd; pool: Pool; position: Position };
+type RegisterArgs = { backd: Backd; pool: Pool; position: Position; value: BigNumber };
 type RemoveArgs = { backd: Backd; pool: Pool; position: Position };
 
 export const registerPosition = createAsyncThunk(
   "positions/register",
-  async ({ backd, pool, position }: RegisterArgs, { dispatch }) => {
-    const tx = await backd.registerPosition(pool, position);
+  async ({ backd, pool, position, value }: RegisterArgs, { dispatch }) => {
+    const tx = await backd.registerPosition(pool, position, value);
     handleTransactionConfirmation(
       tx,
       { action: "Register", args: { pool, plainPosition: toPlainPosition(position) } },
@@ -108,5 +121,10 @@ export function selectPoolPositions(
 
 export const selectActionFees = (state: RootState): Optional<ActionFees> =>
   state.positions.fees ? fromPlainActionFees(state.positions.fees) : null;
+
+export const selectEstimatedGasUsage = (state: RootState): Optional<ScaledNumber> =>
+  state.positions.estimatedGasUsage
+    ? ScaledNumber.fromPlain(state.positions.estimatedGasUsage)
+    : null;
 
 export default positionsSlice.reducer;

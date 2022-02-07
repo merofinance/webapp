@@ -24,9 +24,10 @@ import {
   MILLISECONDS_PER_YEAR,
   DEFAULT_SCALE,
   DEPOSIT_SLIPPAGE,
+  GWEI_DECIMALS,
 } from "./constants";
 import { bigNumberToFloat } from "./numeric";
-import { ScaledNumber } from "./scaled-number";
+import { PlainScaledNumber, ScaledNumber } from "./scaled-number";
 import {
   Address,
   AllowanceQuery,
@@ -59,7 +60,8 @@ export interface Backd {
   getLoanPosition(protocol: LendingProtocol, address?: Address): Promise<Optional<PlainLoan>>;
   getPositions(): Promise<PlainPosition[]>;
   getActionFees(): Promise<PlainActionFees>;
-  registerPosition(pool: Pool, position: Position): Promise<ContractTransaction>;
+  getEstimatedGasUsage(): Promise<PlainScaledNumber>;
+  registerPosition(pool: Pool, position: Position, value: BigNumber): Promise<ContractTransaction>;
   removePosition(
     account: Address,
     protocol: string,
@@ -184,6 +186,9 @@ export class Web3Backd implements Backd {
       this.addressProvider.getStakerVault(lpTokenAddress),
     ]);
 
+    const usableTokens = await this.topupAction.getUsableTokens();
+    console.log(usableTokens);
+
     let apy = null;
     const metadata = poolMetadata[underlying.symbol];
     if (metadata && metadata.deployment[this.chainId.toString()]) {
@@ -281,12 +286,21 @@ export class Web3Backd implements Backd {
       threshold: new ScaledNumber(rawPosition.record.threshold, decimals).toPlain(),
       singleTopUp: new ScaledNumber(rawPosition.record.singleTopUpAmount, decimals).toPlain(),
       maxTopUp: new ScaledNumber(rawPosition.record.totalTopUpAmount, decimals).toPlain(),
-      maxGasPrice: new ScaledNumber(rawPosition.record.maxGasPrice, 9).toPlain(),
+      priorityFee: new ScaledNumber(rawPosition.record.priorityFee, GWEI_DECIMALS).toPlain(),
+      maxGasPrice: new ScaledNumber(rawPosition.record.maxGasPrice, GWEI_DECIMALS).toPlain(),
     };
     return position;
   }
 
-  async registerPosition(pool: Pool, position: Position): Promise<ContractTransaction> {
+  async getEstimatedGasUsage(): Promise<PlainScaledNumber> {
+    return new ScaledNumber(await this.topupAction.getEstimatedGasUsage(), GWEI_DECIMALS).toPlain();
+  }
+
+  async registerPosition(
+    pool: Pool,
+    position: Position,
+    value: BigNumber
+  ): Promise<ContractTransaction> {
     const { decimals } = pool.underlying;
     const scale = BigNumber.from(10).pow(decimals);
     const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
@@ -294,36 +308,51 @@ export class Web3Backd implements Backd {
     const protocol = utils.formatBytes32String(position.protocol);
     const depositAmount = position.maxTopUp.value.mul(rawExchangeRate).div(scale);
 
-    // TODO Remove old gas max thingy
     // TODO Remove this duplication
+    // TODO SHow gas bank balance
+    // TODO Show ETH cost when registering
+    // TODO your deposits overflows when showing USDC
+    // TODO All Vinnie feedback
     const gasEstimate = await this.topupAction.estimateGas.register(
       position.account,
       protocol,
       depositAmount,
       {
         threshold: position.threshold.value,
-        priorityFee: ScaledNumber.fromUnscaled(2, 18).value, // TODO priorityFee
-        maxFee: ScaledNumber.fromUnscaled(2, 9).value, // TODO priorityFee
+        priorityFee: position.priorityFee.value,
+        maxFee: position.maxGasPrice.value,
         actionToken: pool.underlying.address,
         depositToken: pool.lpToken.address,
         singleTopUpAmount: position.singleTopUp.value,
         totalTopUpAmount: position.maxTopUp.value,
-        depositTokenBalance: ScaledNumber.fromUnscaled(0).value, // TODO what is this
+        depositTokenBalance: ScaledNumber.fromUnscaled(0).value,
         repayDebt: false,
+      },
+      {
+        value,
       }
     );
     const gasLimit = gasEstimate.mul(12).div(10);
-    return this.topupAction.register(position.account, protocol, depositAmount, {
-      threshold: position.threshold.value,
-      priorityFee: ScaledNumber.fromUnscaled(2, 18).value, // TODO priorityFee
-      maxFee: ScaledNumber.fromUnscaled(2, 9).value, // TODO priorityFee
-      actionToken: pool.underlying.address,
-      depositToken: pool.lpToken.address,
-      singleTopUpAmount: position.singleTopUp.value,
-      totalTopUpAmount: position.maxTopUp.value,
-      depositTokenBalance: ScaledNumber.fromUnscaled(0).value, // TODO what is this
-      repayDebt: false,
-    });
+    return this.topupAction.register(
+      position.account,
+      protocol,
+      depositAmount,
+      {
+        threshold: position.threshold.value,
+        priorityFee: position.priorityFee.value,
+        maxFee: position.maxGasPrice.value,
+        actionToken: pool.underlying.address,
+        depositToken: pool.lpToken.address,
+        singleTopUpAmount: position.singleTopUp.value,
+        totalTopUpAmount: position.maxTopUp.value,
+        depositTokenBalance: ScaledNumber.fromUnscaled(0).value,
+        repayDebt: false,
+      },
+      {
+        gasLimit,
+        value,
+      }
+    );
   }
 
   async removePosition(
