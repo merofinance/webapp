@@ -56,7 +56,7 @@ const YourDeposits = (): JSX.Element => {
       {hasDeposits && depositedPools && (
         <>
           {depositedPools.map((pool: Pool) => (
-            <YourDepositsRow pool={pool} />
+            <YourDepositsRow key={pool.name} pool={pool} />
           ))}
           <Total id="your-deposits-total">
             {balance ? `= ${balance.toUsdValue(1)}` : <Loader />}
