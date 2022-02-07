@@ -10,6 +10,10 @@ import { selectBalance } from "../../state/selectors";
 import { useDevice } from "../../app/hooks/use-device";
 import YourDepositsRow from "./YourDepositsRow";
 
+const LoaderContainer = styled.div`
+  margin-bottom: 1rem;
+`;
+
 const EmptyText = styled.div`
   font-weight: 400;
   font-size: 1.5rem;
@@ -41,8 +45,6 @@ const YourDeposits = (): JSX.Element => {
   const balance = useSelector(selectBalance());
   const depositedPools = useSelector(selectDepositedPools);
 
-  const hasDeposits = depositedPools && depositedPools.length > 0;
-
   return (
     <InfoCard
       id="your-deposits"
@@ -50,10 +52,20 @@ const YourDeposits = (): JSX.Element => {
       defaultOpen={isDesktop}
       header={t("actions.deposits.header")}
     >
-      {!hasDeposits && (
+      {!depositedPools && (
+        <>
+          <LoaderContainer>
+            <Loader button />
+          </LoaderContainer>
+          <LoaderContainer>
+            <Loader button />
+          </LoaderContainer>
+        </>
+      )}
+      {depositedPools && depositedPools.length === 0 && (
         <EmptyText id="your-deposits-empty">{t("actions.deposits.empty")}</EmptyText>
       )}
-      {hasDeposits && depositedPools && (
+      {depositedPools && depositedPools.length > 0 && (
         <>
           {depositedPools.map((pool: Pool) => (
             <YourDepositsRow key={pool.name} pool={pool} />

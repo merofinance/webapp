@@ -107,6 +107,7 @@ export const selectPools = (state: RootState): Optional<Pool[]> => {
 export const selectDepositedPools = (state: RootState): Optional<Pool[]> => {
   const pools = selectPools(state);
   if (!pools) return null;
+  if (pools.some((pool: Pool) => !state.user.balances[pool.lpToken.address])) return null;
   return pools.filter(
     (pool: Pool) => !fromPlainBalances(state.user.balances)[pool.lpToken.address]?.isZero()
   );
