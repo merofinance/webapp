@@ -449,6 +449,7 @@
       }
     },
     "gasBank": {
+      "header": "Gas Bank",
       "topupAmount": "Gas Bank top-up amount",
       "topupAmountTooltip": "The amount of ETH send to the Gas Bank to cover the gas cost of executing the transactions. Unspend ETH will be refunded to your wallet."
     },
