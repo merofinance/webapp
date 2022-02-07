@@ -5,6 +5,7 @@ import AccordionChevron from "./AccordionChevron";
 interface StyleProps {
   collapsible?: boolean;
   open?: boolean;
+  maxHeight?: string;
 }
 
 const StyledInfoCard = styled.div`
@@ -19,13 +20,19 @@ const StyledInfoCard = styled.div`
   transition: max-height 0.3s ease-out, background-color 0.3s;
   margin-bottom: 2.4rem;
 
-  max-height: ${(props: StyleProps) =>
-    !props.collapsible ? "auto" : props.open ? "24rem" : "5.4rem"};
+  max-height: ${(props: StyleProps) => {
+    if (!props.collapsible) return "auto";
+    if (props.open) return props.maxHeight || "24rem";
+    return "5.4rem";
+  }};
 
   padding: 2rem 1.8rem;
   @media (max-width: 1220px) {
     padding: 1.6rem;
-    max-height: ${(props: StyleProps) => (props.open ? "19rem" : "4.8rem")};
+    max-height: ${(props: StyleProps) => {
+      if (props.open) return props.maxHeight || "19rem";
+      return "4.8rem";
+    }};
   }
 
   :hover {
@@ -98,9 +105,17 @@ interface Props {
   collapsible?: boolean;
   defaultOpen?: boolean;
   id?: string;
+  maxHeight?: string;
 }
 
-const InfoCard = ({ header, children, collapsible, defaultOpen, id }: Props): JSX.Element => {
+const InfoCard = ({
+  header,
+  children,
+  collapsible,
+  defaultOpen,
+  id,
+  maxHeight,
+}: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -111,7 +126,7 @@ const InfoCard = ({ header, children, collapsible, defaultOpen, id }: Props): JS
   }, [defaultOpen]);
 
   return (
-    <StyledInfoCard id={id} open={open} collapsible={collapsible}>
+    <StyledInfoCard id={id} open={open} collapsible={collapsible} maxHeight={maxHeight}>
       <ChevronContainer collapsible={collapsible}>
         <AccordionChevron open={open} />
       </ChevronContainer>
