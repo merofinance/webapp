@@ -65,7 +65,7 @@ const YourDeposits = (): JSX.Element => {
       collapsible
       defaultOpen={isDesktop}
       header={t("actions.deposits.header")}
-      maxHeight={`${10 * (depositedPools?.length || 2) + 10}rem`}
+      maxHeight={`${5 * (depositedPools?.length || 2) + 20}rem`}
     >
       {!depositedPools && (
         <>
