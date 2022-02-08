@@ -240,6 +240,11 @@ export const unstake = createAsyncThunk(
 export const selectBalances = (state: RootState): Balances =>
   fromPlainBalances(state.user.balances);
 
+export const selectEthBalance = (state: RootState): Optional<ScaledNumber> =>
+  state.user.balances[ETH_DUMMY_ADDRESS]
+    ? ScaledNumber.fromPlain(state.user.balances[ETH_DUMMY_ADDRESS]!) // eslint-disable-line @typescript-eslint/no-non-null-assertion
+    : null;
+
 export function selectTokenBalance(address: string | undefined): Selector<Optional<ScaledNumber>> {
   return (state: RootState) => {
     if (!address) return null;
