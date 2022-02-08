@@ -278,7 +278,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
       formik.values.maxGasPrice &&
       ScaledNumber.isValid(formik.values.maxGasPrice)
     ) {
-      const single = ScaledNumber.fromUnscaled(formik.values.singleTopUp, pool.underlying.decimals);
+      const single = ScaledNumber.fromUnscaled(formik.values.singleTopUp);
       const max = ScaledNumber.fromUnscaled(formik.values.maxGasPrice, GWEI_DECIMALS);
       const singleTopupUsd = single.mul(underlyingPrice);
       const gasCost = new ScaledNumber(estimatedGasUsage.value.mul(max.value));
