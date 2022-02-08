@@ -71,8 +71,8 @@ interface Props {
 const InfoBlock = ({ sections }: Props): JSX.Element => {
   return (
     <StyledInfoBlock>
-      {sections.map((section: InfoBlockRow[]) => (
-        <Section>
+      {sections.map((section: InfoBlockRow[], i: number) => (
+        <Section key={i}>
           {section.map((row: InfoBlockRow) => (
             <Row key={row.label}>
               <Label>
