@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import BackdTooltip from "./BackdTooltip";
+import BackdTooltip, { TooltipItemType } from "./BackdTooltip";
 
 export interface InfoBlockRow {
   label: string;
   tooltip?: string;
+  tooltipItems?: TooltipItemType[];
   value: string | JSX.Element;
   valueId?: string;
 }
@@ -16,6 +17,24 @@ const StyledInfoBlock = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1.6rem;
+
+  > div:first-child {
+    padding-top: 0;
+  }
+
+  > div:last-child {
+    padding-bottom: 0;
+    border: none;
+  }
+`;
+
+const Section = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 0.4rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #494563;
 `;
 
 const Row = styled.div`
@@ -46,26 +65,30 @@ const Label = styled.div`
 `;
 
 interface Props {
-  rows: InfoBlockRow[];
+  sections: InfoBlockRow[][];
 }
 
-const InfoBlock = ({ rows }: Props): JSX.Element => {
+const InfoBlock = ({ sections }: Props): JSX.Element => {
   return (
     <StyledInfoBlock>
-      {rows.map((row: InfoBlockRow) => (
-        <Row key={row.label}>
-          <Label>
-            {row.label}
-            {row.tooltip && <BackdTooltip>{row.tooltip}</BackdTooltip>}
-          </Label>
-          {typeof row.value === "string" ? (
-            <Label id={row.valueId} hideOnSnapshot>
-              {row.value}
-            </Label>
-          ) : (
-            row.value
-          )}
-        </Row>
+      {sections.map((section: InfoBlockRow[]) => (
+        <Section>
+          {section.map((row: InfoBlockRow) => (
+            <Row key={row.label}>
+              <Label>
+                {row.label}
+                {row.tooltip && <BackdTooltip items={row.tooltipItems}>{row.tooltip}</BackdTooltip>}
+              </Label>
+              {typeof row.value === "string" ? (
+                <Label id={row.valueId} hideOnSnapshot>
+                  {row.value}
+                </Label>
+              ) : (
+                row.value
+              )}
+            </Row>
+          ))}
+        </Section>
       ))}
     </StyledInfoBlock>
   );
