@@ -162,7 +162,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
 
   const ethValue = (): Optional<BigNumber> => {
     if (!estimatedGasUsage) return null;
-    const topups = Math.floor(Number(position.maxTopUp.div(position.singleTopUp).toString()));
+    const topups = Math.ceil(Number(position.maxTopUp.div(position.singleTopUp).toString()));
     return estimatedGasUsage.value.mul(position.maxGasPrice.value).mul(topups);
   };
 
