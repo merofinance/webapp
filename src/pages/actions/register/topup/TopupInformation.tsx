@@ -211,9 +211,13 @@ const TopupInformation = ({ position, pool, value }: Props): JSX.Element => {
                   value: actionFees ? actionFees.treasuryFraction.toPercent() : "--%",
                 },
               ],
-              value: t("actions.topup.stages.confirmation.fees.value", {
-                percent: actionFees ? actionFees.total.toPercent() : "--%",
-              }),
+              value: isMobile
+                ? actionFees
+                  ? actionFees.total.toPercent()
+                  : "--%"
+                : t("actions.topup.stages.confirmation.fees.value", {
+                    percent: actionFees ? actionFees.total.toPercent() : "--%",
+                  }),
               valueId: "topup-information-action-fees",
             },
           ],
