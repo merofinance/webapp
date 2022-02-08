@@ -560,7 +560,8 @@
           "hover": "Enter max gas price",
           "required": "Max gas price required",
           "invalid": "Invalid number",
-          "positive": "Must be positive number"
+          "positive": "Must be positive number",
+          "notEnoughEth": "Not enough ETH in wallet to cover gas, {{needed}} ETH needed"
         }
       }
     },

@@ -30,7 +30,7 @@ import { Loan, Optional, Position } from "../../../../lib/types";
 import { selectLoans } from "../../../../state/lendingSlice";
 import TopupInput from "./TopupInput";
 import TopupConfirmation from "./TopupConfirmation";
-import { selectPoolUnderlyingBalance } from "../../../../state/userSlice";
+import { selectEthBalance, selectPoolUnderlyingBalance } from "../../../../state/userSlice";
 import { selectEstimatedGasUsage } from "../../../../state/positionsSlice";
 
 export interface FormType {
@@ -135,6 +135,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
   const balance = useSelector(selectPoolUnderlyingBalance(pool));
   const implement = useSelector(selectActiveSuggestion);
   const estimatedGasUsage = useSelector(selectEstimatedGasUsage);
+  const ethBalance = useSelector(selectEthBalance);
 
   const [loading, setLoading] = useState(false);
   const [confirming, setConfirming] = useState(false);
@@ -161,14 +162,35 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
     };
   }, [implement]);
 
+  const ethValue = (): Optional<BigNumber> => {
+    if (!estimatedGasUsage) return null;
+    const topups = Math.floor(Number(position.maxTopUp.div(position.singleTopUp).toString()));
+    return estimatedGasUsage.value.mul(position.maxGasPrice.value).mul(topups);
+  };
+
   const validate = (values: FormType): FormikErrors<FormType> => {
     const errors: FormikErrors<FormType> = {};
     if (!pool || !balance) return errors;
     const single = ScaledNumber.fromUnscaled(values.singleTopUp, pool.underlying.decimals);
     const max = ScaledNumber.fromUnscaled(values.maxTopUp, pool.underlying.decimals);
-    if (values.maxTopUp && single.gt(max))
+
+    // Validating Maximum Top-up is Greater than Single
+    if (values.maxTopUp && single.gt(max)) {
       errors.singleTopUp = "actions.topup.fields.single.lessThanMax";
-    if (max.gt(balance)) errors.maxTopUp = "actions.topup.fields.max.exceedsBalance";
+    }
+
+    // Validating that user has enough balance for top-up
+    if (max.gt(balance)) {
+      errors.maxTopUp = "actions.topup.fields.max.exceedsBalance";
+    }
+
+    // Validating that user has enough ETH for Gas Bank
+    const ethNeeded = ethValue();
+    if (ethNeeded && ethBalance && ethNeeded.gt(ethBalance.value)) {
+      const needed = new ScaledNumber(ethNeeded).toCryptoString();
+      errors.maxGasPrice = t("actions.topup.fields.gas.notEnoughEth", { needed });
+    }
+
     return errors;
   };
 
@@ -212,12 +234,6 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
     maxGasPrice: ScaledNumber.fromUnscaled(formik.values.maxGasPrice, GWEI_DECIMALS),
     actionToken: pool.underlying.address,
     depositToken: pool.lpToken.address,
-  };
-
-  const ethValue = (): Optional<BigNumber> => {
-    if (!estimatedGasUsage) return null;
-    const topups = Math.floor(Number(position.maxTopUp.div(position.singleTopUp).toString()));
-    return estimatedGasUsage.value.mul(position.maxGasPrice.value).mul(topups);
   };
 
   const suggestedMaximumTreshold = () => {
