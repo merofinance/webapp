@@ -27,6 +27,7 @@ import {
   DEFAULT_SCALE,
   DEPOSIT_SLIPPAGE,
   GWEI_DECIMALS,
+  DEFAULT_DECIMALS,
 } from "./constants";
 import { bigNumberToFloat } from "./numeric";
 import { PlainScaledNumber, ScaledNumber } from "./scaled-number";
@@ -215,7 +216,7 @@ export class Web3Backd implements Backd {
       lpToken,
       apy,
       address,
-      totalAssets,
+      totalAssets: totalAssets.mul(BigNumber.from(10).pow(DEFAULT_DECIMALS - underlying.decimals)),
       exchangeRate,
       stakerVaultAddress,
       maxWithdrawalFee,
