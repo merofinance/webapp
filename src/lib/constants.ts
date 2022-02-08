@@ -1,5 +1,4 @@
 import { BigNumber } from "ethers";
-import { ScaledNumber } from "./scaled-number";
 
 // Feature toggles
 export const STAKING_LIVE = false;
