@@ -8,7 +8,7 @@ export const masterAccount = "0xbacE8e7f276FD2Ee5ecE5C1df18BF381148862A6";
 // numbers are scaled to 10^18 to emulate contracst return values
 export const pools: Pool<BigNumber>[] = [
   {
-    name: "bDAI3CRV",
+    name: "bkdDAI3CRV",
     apy: scale(237, 17),
     totalAssets: scale(84180923),
     address: "0xC265707cb6Fa41b51F899000bF248A257eFB52aB",
@@ -23,7 +23,7 @@ export const pools: Pool<BigNumber>[] = [
     lpToken: {
       address: "0x25FF22De379B644BD5C2263404baC6FeE5a4b8de",
       name: "Backd DAI",
-      symbol: "bDAI",
+      symbol: "bkdDAI",
       decimals: 18,
     },
     maxWithdrawalFee: scale(1, 18),
@@ -54,7 +54,7 @@ export const pools: Pool<BigNumber>[] = [
     feeDecreasePeriod: scale(10, 18),
   },
   {
-    name: "bETHCRV",
+    name: "bkdethCRV",
     apy: scale(218, 17),
     totalAssets: scale(19738),
     address: "0xCa0cF7A135AC852a4d5591dC48e93e5F67425cB9",
@@ -85,9 +85,9 @@ export const prices: Record<string, BigNumber> = {
 };
 
 export const balances: Record<string, BigNumber> = {
-  [pools[0].lpToken.address]: scale(250_000, 18), // 250,000 bDAI
+  [pools[0].lpToken.address]: scale(250_000, 18), // 250,000 bkdDAI
   [pools[0].underlying.address]: scale(120_000, 18), // 120,000 DAI
-  [pools[2].lpToken.address]: scale(48, 18), // 48 bETH
+  [pools[2].lpToken.address]: scale(48, 18), // 48 bkdeth
 };
 
 const positionKeys = [
