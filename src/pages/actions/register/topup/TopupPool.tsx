@@ -17,12 +17,7 @@ import { Optional, Position } from "../../../../lib/types";
 import Asset from "../../../../components/Asset";
 import { useDevice } from "../../../../app/hooks/use-device";
 import { RowOptionType } from "../../../../components/RowOption";
-import {
-  GWEI_DECIMALS,
-  GWEI_SCALE,
-  TOPUP_ACTION_ROUTE,
-  TOPUP_GAS_COST,
-} from "../../../../lib/constants";
+import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
 
 const Container = styled.div`
   position: relative;
@@ -74,10 +69,7 @@ const TopupPool = (): JSX.Element => {
     const price = prices[pool.underlying.symbol];
     if (!lpBalance || !price || !ethPrice) return false;
     const usdBalance = lpBalance.mul(price);
-    const gasCostUsd = new ScaledNumber(
-      ScaledNumber.fromUnscaled(50, GWEI_DECIMALS).value.mul(TOPUP_GAS_COST).div(GWEI_SCALE)
-    ).mul(ethPrice);
-    return usdBalance.gte(gasCostUsd);
+    return usdBalance.gt(ScaledNumber.fromUnscaled(10, lpBalance.decimals));
   };
 
   const hasDeposits = pools ? pools.some((pool: Pool) => hasSufficientBalance(pool)) : false;

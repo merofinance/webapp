@@ -744,7 +744,7 @@
         "button": "Decrease threshold"
       },
       "singleLow": {
-        "text": "Your estimated max gas cost per top-up is {{maxGas}} ({{ethAmount}} ETH), however the amount per top-up is only {{single}} ({{underlyingAmount}} {{underlyingSymbol}}). I recommend increasing the single top-up to {{suggestion}} {{underlyingSymbol}} for more efficient top-ups.",
+        "text": "Your max gas cost per top-up is {{maxGas}} ({{ethAmount}} ETH), however the amount per top-up is only {{single}} ({{underlyingAmount}} {{underlyingSymbol}}). I recommend increasing the single top-up to {{suggestion}} {{underlyingSymbol}} for more efficient top-ups.",
         "button": "Increase top-up"
       },
       "topupPositionLow": {

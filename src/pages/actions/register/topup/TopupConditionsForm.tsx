@@ -15,10 +15,8 @@ import { useDevice } from "../../../../app/hooks/use-device";
 import { selectEthPrice } from "../../../../state/poolsListSlice";
 import {
   GWEI_DECIMALS,
-  GWEI_SCALE,
   RECOMMENDED_THRESHOLD,
   TOPUP_ACTION_ROUTE,
-  TOPUP_GAS_COST,
 } from "../../../../lib/constants";
 import {
   addSuggestion,
@@ -255,11 +253,12 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
       !formik.values.singleTopUp ||
       !ScaledNumber.isValid(formik.values.singleTopUp) ||
       !ethPrice ||
-      !underlyingPrice
+      !underlyingPrice ||
+      !estimatedGasUsage
     )
       return "";
-    const gas = ScaledNumber.fromUnscaled(formik.values.maxGasPrice, GWEI_DECIMALS);
-    const gasCost = new ScaledNumber(gas.value.mul(TOPUP_GAS_COST).div(GWEI_SCALE));
+    const max = ScaledNumber.fromUnscaled(formik.values.maxGasPrice, GWEI_DECIMALS);
+    const gasCost = new ScaledNumber(estimatedGasUsage.value.mul(max.value));
     const gasCostUsd = gasCost.mul(ethPrice);
     return gasCostUsd
       .mul(5)
@@ -274,12 +273,15 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
       formik.values.singleTopUp &&
       ScaledNumber.isValid(formik.values.singleTopUp) &&
       ethPrice &&
-      underlyingPrice
+      underlyingPrice &&
+      estimatedGasUsage &&
+      formik.values.maxGasPrice &&
+      ScaledNumber.isValid(formik.values.maxGasPrice)
     ) {
       const single = ScaledNumber.fromUnscaled(formik.values.singleTopUp, pool.underlying.decimals);
+      const max = ScaledNumber.fromUnscaled(formik.values.maxGasPrice, GWEI_DECIMALS);
       const singleTopupUsd = single.mul(underlyingPrice);
-      const gas = ScaledNumber.fromUnscaled(formik.values.maxGasPrice, GWEI_DECIMALS);
-      const gasCost = new ScaledNumber(gas.value.mul(TOPUP_GAS_COST).div(GWEI_SCALE));
+      const gasCost = new ScaledNumber(estimatedGasUsage.value.mul(max.value));
       const gasCostUsd = gasCost.mul(ethPrice);
       if (singleTopupUsd.mul(0.25).lte(gasCostUsd)) {
         dispatch(
@@ -287,7 +289,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
             type: SuggestionType.SINGLE_LOW,
             text: t("liveHelp.suggestions.singleLow.text", {
               maxGas: gasCost.toUsdValue(ethPrice),
-              ethAmount: gasCost,
+              ethAmount: gasCost.toCryptoString(),
               single: single.toUsdValue(underlyingPrice),
               underlyingAmount: single.toCryptoString(),
               underlyingSymbol: pool.underlying.symbol,
