@@ -93,7 +93,10 @@ const TopupPool = (): JSX.Element => {
               label: t("headers.deposits"),
               value:
                 price && positions
-                  ? (balances[pool.lpToken.address] || new ScaledNumber())
+                  ? (
+                      balances[pool.lpToken.address] ||
+                      ScaledNumber.fromUnscaled(0, pool.underlying.decimals)
+                    )
                       .add(
                         positions
                           .filter(
@@ -101,7 +104,7 @@ const TopupPool = (): JSX.Element => {
                           )
                           .reduce(
                             (a: ScaledNumber, b: Position) => a.add(b.maxTopUp),
-                            new ScaledNumber()
+                            ScaledNumber.fromUnscaled(0, pool.underlying.decimals)
                           )
                       )
                       .toCompactUsdValue(price)
