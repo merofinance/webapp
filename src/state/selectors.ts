@@ -1,6 +1,8 @@
+import { BigNumber } from "ethers";
 import { useSelector } from "react-redux";
 import { Selector } from "reselect";
 import { RootState } from "../app/store";
+import { DEFAULT_DECIMALS } from "../lib/constants";
 import { ScaledNumber } from "../lib/scaled-number";
 import { Optional, Pool, Position } from "../lib/types";
 import { selectPools, selectPrices } from "./poolsListSlice";
@@ -68,7 +70,12 @@ export function selectLocked(): Selector<RootState, Optional<ScaledNumber>> {
       if (!pool) return null;
       const price = prices[pool.underlying.symbol];
       if (!price) return null;
-      total = total.add(positions[i].maxTopUp.mul(price));
+      const maxTopUp = new ScaledNumber(
+        positions[i].maxTopUp.value.mul(
+          BigNumber.from(10).pow(DEFAULT_DECIMALS - pool.underlying.decimals)
+        )
+      );
+      total = total.add(maxTopUp.mul(price));
     }
     return total;
   };
