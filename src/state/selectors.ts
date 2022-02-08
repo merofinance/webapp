@@ -37,7 +37,7 @@ export function selectPoolLpLocked(
     if (!pool || !positions) return null;
     return positions.reduce(
       (a: ScaledNumber, b: Position) => a.add(b.maxTopUp),
-      new ScaledNumber()
+      ScaledNumber.fromUnscaled(0, pool.lpToken.decimals)
     );
   };
 }
