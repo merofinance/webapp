@@ -322,7 +322,6 @@ export class Web3Backd implements Backd {
     const protocol = utils.formatBytes32String(position.protocol);
     const depositAmount = position.maxTopUp.value.mul(rawExchangeRate).div(scale);
 
-    // TODO All Vinnie feedback
     // TODO Test USDC pool
     // TODO Test confirmation topup on mobile
     // TODO Remove default topup estimate and change to use the contract one, also, update wording on live help
@@ -415,7 +414,7 @@ export class Web3Backd implements Backd {
     const value = pool.underlying.address === ETH_DUMMY_ADDRESS ? amount.value : 0;
     const minTokenAmount = amount
       .div(pool.exchangeRate)
-      .mul(ScaledNumber.fromUnscaled(DEPOSIT_SLIPPAGE));
+      .mul(ScaledNumber.fromUnscaled(DEPOSIT_SLIPPAGE, amount.decimals));
     return poolContract["depositFor(address,uint256,uint256)"](
       await this.currentAccount(),
       amount.value,
