@@ -1,4 +1,4 @@
-import contracts from "@backdfund/protocol/build/deployments/map.json";
+import contracts from "@backdfund/protocol/config/deployments/map.json";
 import { Controller } from "@backdfund/protocol/typechain/Controller";
 import { ControllerFactory } from "@backdfund/protocol/typechain/ControllerFactory";
 import { Ierc20FullFactory } from "@backdfund/protocol/typechain/Ierc20FullFactory";
