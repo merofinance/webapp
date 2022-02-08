@@ -548,7 +548,7 @@
         "priority": {
           "label": "Priority fee",
           "question": "What priority fee should be used for your top-up?",
-          "tooltip": "An additional fee made to have your transaction completed faster. This fee is better known as a tip because it provides an economic incentive for Ethereum miners to confirm your transaction before others.",
+          "tooltip": "An additional fee paid to Ethereum miners to prioritise your transaction and have it completed quicker. 3 Gwei is a suitable amount.",
           "hover": "Enter priority fee",
           "invalid": "Invalid number",
           "required": "Priority fee required"
@@ -556,7 +556,7 @@
         "gas": {
           "label": "Max gas price",
           "question": "What is the maximum gas price to pay per top-up?",
-          "tooltip": "An additional fee paid to Ethereum miners to prioritise your transaction and have it completed quicker. 3 Gwei is a suitable amount.",
+          "tooltip": "The maximum gas price used when paying for each top-up. Value is in Gwei units. If value is too low, then your top-up may not execute in time which could result in liquidation. A value of at least 200 Gwei is recommended.",
           "hover": "Enter max gas price",
           "required": "Max gas price required",
           "invalid": "Invalid number",
