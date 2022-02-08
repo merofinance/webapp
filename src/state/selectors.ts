@@ -95,7 +95,10 @@ export function selectBalance(): Selector<RootState, Optional<ScaledNumber>> {
       const balance = balances[pools[i].lpToken.address];
       const price = prices[pools[i].underlying.symbol];
       if (!price || !balance) return null;
-      total = total.add(balance.mul(price));
+      const scaledBalance = new ScaledNumber(
+        balance.value.mul(BigNumber.from(10).pow(DEFAULT_DECIMALS - pools[i].underlying.decimals))
+      );
+      total = total.add(scaledBalance.mul(price));
     }
     return total;
   };
