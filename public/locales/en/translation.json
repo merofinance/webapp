@@ -45,7 +45,6 @@
     "header": "Reactive Liquidity",
     "subHeader": "Maximize the power of your assets and start earning yield",
     "viewPools": "View Pools",
-    "unsupportedNetwork": "Unsupported Network",
     "changeNetwork": "Try on Testnet",
     "connectWallet": "Connect Wallet"
   },
@@ -725,7 +724,8 @@
     "negativeNumber": "Negative numbers not supported",
     "transactionType": "Transaction type not supported",
     "unsupportedNetwork": "Network not supported",
-    "tryTestnet": "Backd is not yet live on mainnet. You can test it now on Kovan by switching networks."
+    "unsupportedNetworkBody": "This network is not currently supported, please switch to Ethereum Mainnet.",
+    "switchToMainnet": "Switch to Mainnet"
   },
   "liveHelp": {
     "buttons": {

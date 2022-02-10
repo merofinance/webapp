@@ -9,6 +9,7 @@ import { GradientLink } from "../styles/GradientText";
 import { Paragraph } from "../styles/Headers";
 import Button from "./Button";
 import Popup from "./Popup";
+import { changeNetwork } from "../lib/web3";
 
 const Text = styled(Paragraph)`
   width: 100%;
@@ -60,8 +61,13 @@ const ErrorAlert = (): JSX.Element => {
           </Link>
         </Text>
       )}
-      {error.hideButton ? null : (
-        <Button medium primary background="var(--bg-light)" click={handleClose}>
+      {error.switchToMainnetButton && (
+        <Button medium primary click={() => changeNetwork(1)}>
+          {t("errors.switchToMainnet")}
+        </Button>
+      )}
+      {!error.hideButton && (
+        <Button medium primary click={handleClose}>
           {t("components.close")}
         </Button>
       )}

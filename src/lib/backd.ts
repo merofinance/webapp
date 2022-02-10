@@ -136,8 +136,10 @@ export class Web3Backd implements Backd {
         return contracts["42"];
       case 1337:
         return contracts["1337"];
+      case 1:
+        return contracts["42"]; // TODO Change this to 1
       default:
-        throw new UnsupportedNetwork(this.chainId);
+        throw new UnsupportedNetwork();
     }
   }
 
