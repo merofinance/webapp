@@ -449,7 +449,7 @@
     },
     "topup": {
       "label": "Top-up Position",
-      "description": "Protect your loans from getting liquidated",
+      "description": "Protect your loans from liquidation",
       "stages": {
         "loan": {
           "header": "Select a loan to protect",
