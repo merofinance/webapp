@@ -2,6 +2,7 @@ import { Link, useMatch } from "react-router-dom";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
+import HoverFeedback from "./HoverFeedback";
 
 export interface NavItemType {
   label: string;
@@ -64,9 +65,11 @@ const NavItem = ({ navItem, setActive }: Props): JSX.Element => {
   return (
     <StyledNavItem>
       {!navItem.live && (
-        <Text isActive={!!match} live={navItem.live}>
-          {t(navItem.label)}
-        </Text>
+        <HoverFeedback text={t("components.comingSoon")}>
+          <Text isActive={!!match} live={navItem.live}>
+            {t(navItem.label)}
+          </Text>
+        </HoverFeedback>
       )}
       {navItem.live && !isExternal && (
         <Link id={navItem.label} to={navItem.link}>
