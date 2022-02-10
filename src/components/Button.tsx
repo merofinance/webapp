@@ -3,6 +3,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { selectError } from "../state/errorSlice";
+import HoverFeedback from "./HoverFeedback";
 
 interface ButtonProps {
   primary?: boolean;
@@ -96,12 +97,6 @@ const StyledButton = styled.button`
 
   :disabled {
     cursor: auto;
-  }
-
-  :hover {
-    > div {
-      transform: scale(1);
-    }
   }
 
   /* Mobile */
@@ -214,30 +209,6 @@ const Text = styled.div`
   }
 `;
 
-const HoverTextContainer = styled.div`
-  position: absolute;
-  left: 0;
-  top: calc(100% + 0.6rem);
-  width: 100%;
-  transition: transform 0.2s;
-  transform: scale(0) translateY(-1rem);
-  z-index: 1;
-`;
-
-const HoverText = styled.div`
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 0;
-  transform: translateX(-50%);
-  background-color: #433b6b;
-  border-radius: 4px;
-  padding: 4px 8px;
-  font-weight: 500;
-  font-size: 1rem;
-  white-space: nowrap;
-`;
-
 interface Props {
   children: ReactNode;
   click?: () => void;
@@ -275,53 +246,50 @@ const Button = (props: Props): JSX.Element => {
   }, [error, props.loading]);
 
   return (
-    <StyledButton
-      id={props.id}
-      type={props.submit ? "submit" : "button"}
-      hero={props.hero}
-      primary={props.primary}
-      large={props.large}
-      medium={props.medium}
-      small={props.small}
-      tiny={props.tiny}
-      square={props.square}
-      wide={props.wide}
-      disabled={props.disabled || props.loading || pending}
-      complete={props.complete}
-      inactive={props.inactive}
-      background={props.background}
-      width={props.width}
-      destructive={props.destructive}
-      neutral={props.neutral}
-      onClick={() => {
-        if (props.loading || pending || props.disabled || !props.click) return;
-        if (props.loading !== undefined) setPending(true);
-        props.click();
-      }}
-    >
-      <TextContainer>
-        {props.loading && <CircularProgress size={props.large ? 31 : 17} />}
-        <Text
-          primary={props.primary}
-          hero={props.hero}
-          large={props.large}
-          medium={props.medium}
-          small={props.small}
-          tiny={props.tiny}
-          square={props.square}
-          uppercase={props.uppercase}
-          disabled={props.disabled}
-          neutral={props.neutral}
-        >
-          {props.children}
-        </Text>
-      </TextContainer>
-      {props.hoverText && props.disabled && (
-        <HoverTextContainer>
-          <HoverText>{props.hoverText}</HoverText>
-        </HoverTextContainer>
-      )}
-    </StyledButton>
+    <HoverFeedback text={props.disabled ? props.hoverText : ""}>
+      <StyledButton
+        id={props.id}
+        type={props.submit ? "submit" : "button"}
+        hero={props.hero}
+        primary={props.primary}
+        large={props.large}
+        medium={props.medium}
+        small={props.small}
+        tiny={props.tiny}
+        square={props.square}
+        wide={props.wide}
+        disabled={props.disabled || props.loading || pending}
+        complete={props.complete}
+        inactive={props.inactive}
+        background={props.background}
+        width={props.width}
+        destructive={props.destructive}
+        neutral={props.neutral}
+        onClick={() => {
+          if (props.loading || pending || props.disabled || !props.click) return;
+          if (props.loading !== undefined) setPending(true);
+          props.click();
+        }}
+      >
+        <TextContainer>
+          {props.loading && <CircularProgress size={props.large ? 31 : 17} />}
+          <Text
+            primary={props.primary}
+            hero={props.hero}
+            large={props.large}
+            medium={props.medium}
+            small={props.small}
+            tiny={props.tiny}
+            square={props.square}
+            uppercase={props.uppercase}
+            disabled={props.disabled}
+            neutral={props.neutral}
+          >
+            {props.children}
+          </Text>
+        </TextContainer>
+      </StyledButton>
+    </HoverFeedback>
   );
 };
 
