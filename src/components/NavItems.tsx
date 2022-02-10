@@ -2,33 +2,18 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-import { useIsLive } from "../app/hooks/use-is-live";
 import NavItem, { NavItemType } from "./NavItem";
-
-// We can delete this after launch
-const preLaunchItems: NavItemType[] = [
-  {
-    label: "header.tabs.docs",
-    link: "https://docs.backd.fund/",
-  },
-  {
-    label: "header.tabs.blog",
-    link: "https://backdfund.medium.com/",
-  },
-  {
-    label: "header.tabs.newsletter",
-    link: "https://backd.substack.com/welcome",
-  },
-];
 
 const navItems: NavItemType[] = [
   {
     label: "header.tabs.pools",
     link: "/pools",
+    live: true,
   },
   {
     label: "header.tabs.actions",
     link: "/actions",
+    live: false,
   },
 ];
 
@@ -68,7 +53,6 @@ const Underline = styled.div`
 `;
 
 const NavItems = (): JSX.Element => {
-  const { protocolLive } = useIsLive();
   const [active, setActive] = useState<string | null>(null);
   const location = useLocation();
 
@@ -82,14 +66,9 @@ const NavItems = (): JSX.Element => {
         show={!!active}
         index={active ? navItems.map((navItem: NavItemType) => navItem.label).indexOf(active) : 0}
       />
-      {protocolLive &&
-        navItems.map((navItem: NavItemType) => (
-          <NavItem key={navItem.label} navItem={navItem} setActive={(v: string) => setActive(v)} />
-        ))}
-      {!protocolLive &&
-        preLaunchItems.map((navItem: NavItemType) => (
-          <NavItem key={navItem.label} navItem={navItem} setActive={(v: string) => setActive(v)} />
-        ))}
+      {navItems.map((navItem: NavItemType) => (
+        <NavItem key={navItem.label} navItem={navItem} setActive={(v: string) => setActive(v)} />
+      ))}
     </StyledNavItems>
   );
 };
