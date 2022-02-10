@@ -15,10 +15,11 @@ interface NavItemProps {
   live?: boolean;
 }
 
-const StyledNavItem = styled.li`
+const StyledLink = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: ${(props: NavItemProps) => (props.live ? "pointer" : "default")};
 
   width: 7rem;
   margin: 0 3.1rem;
@@ -29,7 +30,6 @@ const StyledNavItem = styled.li`
 `;
 
 const Text = styled.div`
-  cursor: ${(props: NavItemProps) => (props.live ? "pointer" : "default")};
   text-transform: capitalize;
   font-size: 1.6rem;
   white-space: nowrap;
@@ -56,36 +56,18 @@ const NavItem = ({ navItem, setActive }: Props): JSX.Element => {
   const { t } = useTranslation();
   const match = useMatch(`${navItem.link}/*`);
 
-  const isExternal = navItem.link.substring(0, 4).toLowerCase() === "http";
-
   useEffect(() => {
-    if (!!match && !isExternal) setActive(navItem.label);
+    if (match) setActive(navItem.label);
   }, [match]);
 
   return (
-    <StyledNavItem>
-      {!navItem.live && (
-        <HoverFeedback text={t("components.comingSoon")}>
-          <Text isActive={!!match} live={navItem.live}>
-            {t(navItem.label)}
-          </Text>
-        </HoverFeedback>
-      )}
-      {navItem.live && !isExternal && (
-        <Link id={navItem.label} to={navItem.link}>
-          <Text isActive={!!match} live={navItem.live}>
-            {t(navItem.label)}
-          </Text>
-        </Link>
-      )}
-      {navItem.live && isExternal && (
-        <a id={navItem.label} href={navItem.link} target="_blank" rel="noopener noreferrer">
-          <Text isActive={!!match} live={navItem.live}>
-            {t(navItem.label)}
-          </Text>
-        </a>
-      )}
-    </StyledNavItem>
+    <HoverFeedback text={navItem.live ? "" : t("components.comingSoon")}>
+      <StyledLink id={navItem.label} to={navItem.live ? navItem.link : "#"} live={navItem.live}>
+        <Text isActive={!!match} live={navItem.live}>
+          {t(navItem.label)}
+        </Text>
+      </StyledLink>
+    </HoverFeedback>
   );
 };
 
