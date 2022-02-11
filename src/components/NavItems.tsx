@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Dropdown from "./Dropdown";
 
@@ -69,6 +70,7 @@ const StyledNavItems = styled.ul`
 
 const NavItems = (): JSX.Element => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   return (
     <StyledNavItems id="nav-items">
@@ -76,11 +78,17 @@ const NavItems = (): JSX.Element => {
         navItem.navItems ? (
           <Dropdown
             key={navItem.label}
-            label="Meow"
+            label={t(navItem.label)}
             options={navItem.navItems.map((navItem: NavItemType) => {
+              const isExternal = navItem.link && navItem.link.startsWith("http");
+              const action = () => {
+                if (!navItem.link) return;
+                if (isExternal) (window as any).open(navItem.link, "_blank").focus();
+                else navigate(navItem.link);
+              };
               return {
                 label: t(navItem.label),
-                action: () => console.log(navItem.link),
+                action,
               };
             })}
           />
