@@ -121,9 +121,8 @@ const Radio = ({ options, active, setOption, gradient }: Props): JSX.Element => 
         gradient={gradient}
       />
       {options.map((option: RadioOptionType) => (
-        <HoverFeedback text={option.disabledText}>
+        <HoverFeedback key={option.label} text={option.disabledText}>
           <RadioOption
-            key={option.label}
             id={`radio-option-${option.value}`}
             onClick={() => setOption(option.value)}
             active={option.value === active}
