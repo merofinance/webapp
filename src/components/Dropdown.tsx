@@ -1,91 +1,66 @@
-import { FormControl, makeStyles, MenuItem, Select } from "@material-ui/core";
+import { useState } from "react";
+import styled from "styled-components";
+import arrow from "../assets/ui/accordion-chevron.svg";
 
-import { useTranslation } from "react-i18next";
-
-interface DropdownOption {
+export interface DropdownOptionType {
   label: string;
   action: () => void;
 }
 
-const useStyles = makeStyles(() => ({
-  formControl: {
-    margin: 1,
-    color: "red",
-  },
-  select: {
-    color: "var(--main)",
-    marginTop: 2,
-    fontWeight: 400,
-    letterSpacing: 0.15,
-    textTransform: "capitalize",
-    marginRight: 10,
+const StyledDropdown = styled.div`
+  position: relative;
+`;
 
-    fontSize: 16,
-    // eslint-disable-next-line no-useless-computed-key
-    ["@media (max-width:600px)"]: {
-      fontSize: 12,
-    },
-  },
-  icon: {
-    transform: "scale(1.5) translate(-4px, 2px)",
-  },
-  dropdownStyle: {
-    backgroundColor: "#433b6b",
-  },
-  menuItem: {
-    color: "var(--main)",
-    fontWeight: 400,
-    letterSpacing: 0.15,
-    textTransform: "capitalize",
-    transition: "all 0.3s",
+const DropdownButton = styled.button`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
 
-    fontSize: 16,
-    // eslint-disable-next-line no-useless-computed-key
-    ["@media (max-width:600px)"]: {
-      fontSize: 12,
-      minHeight: 0,
-    },
+const Label = styled.div`
+  text-transform: capitalize;
+  font-size: 1.6rem;
+  white-space: nowrap;
+  font-weight: 500;
+  letter-spacing: 0.15px;
+  margin-right: 0.7rem;
 
-    "&:hover": {
-      backgroundColor: "rgba(255, 255, 255, 0.2)",
-    },
-  },
-}));
+  @media (max-width: 600px) {
+    font-size: 1.1rem;
+  }
+`;
+
+const ArrowContainer = styled.div`
+  margin-top: 0rem;
+`;
+
+interface ArrowProps {
+  open: boolean;
+}
+
+const Arrow = styled.img`
+  width: 0.8rem;
+  transform: ${(props: ArrowProps) => (props.open ? "rotate(0deg)" : "rotate(180deg)")};
+  transition: 0.3s transform;
+`;
 
 interface Props {
-  label?: string;
-  options: DropdownOption[];
+  label: string;
+  options: DropdownOptionType[];
 }
 
 const Dropdown = ({ label, options }: Props): JSX.Element => {
-  const { t } = useTranslation();
-  const classes = useStyles();
+  const [open, setOpen] = useState(false);
 
   return (
-    <FormControl className={classes.formControl}>
-      <Select
-        value=""
-        displayEmpty
-        className={classes.select}
-        MenuProps={{ classes: { paper: classes.dropdownStyle } }}
-        classes={{ icon: classes.icon }}
-        disableUnderline
-      >
-        <MenuItem value="" className={classes.menuItem}>
-          {label || t("components.dropdownChoose")}
-        </MenuItem>
-        {options.map((option: DropdownOption) => (
-          <MenuItem
-            key={option.label}
-            value={option.label}
-            onClick={() => option.action()}
-            className={classes.menuItem}
-          >
-            {t(option.label)}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+    <StyledDropdown>
+      <DropdownButton onClick={() => setOpen(true)}>
+        <Label>{label}</Label>
+        <ArrowContainer>
+          <Arrow open={open} src={arrow} alt="Dropdown chevron" />
+        </ArrowContainer>
+      </DropdownButton>
+    </StyledDropdown>
   );
 };
 
