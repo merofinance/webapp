@@ -47,7 +47,10 @@
     "subHeader": "Maximize the power of your assets and start earning yield",
     "viewPools": "View Pools",
     "changeNetwork": "Try on Testnet",
-    "connectWallet": "Connect Wallet"
+    "connectWallet": "Connect Wallet",
+    "stats": {
+      "tvl": "Total value locked"
+    }
   },
   "benefits": {
     "reactiveLiquidity": {
