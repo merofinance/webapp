@@ -2,6 +2,7 @@ import { BigNumber } from "ethers";
 
 // Feature toggles
 export const STAKING_LIVE = false;
+export const ACTIONS_LIVE = false;
 export const SHIELDED = false;
 
 // Variables
