@@ -15,7 +15,6 @@ import { selectPositions } from "../../../../state/positionsSlice";
 import { ScaledNumber } from "../../../../lib/scaled-number";
 import { Optional, Position } from "../../../../lib/types";
 import Asset from "../../../../components/Asset";
-import { useDevice } from "../../../../app/hooks/use-device";
 import { RowOptionType } from "../../../../components/RowOption";
 import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
 
@@ -55,7 +54,6 @@ const TopupPool = (): JSX.Element => {
   const { t } = useTranslation();
   const { address, protocol } = useParams<"address" | "protocol">();
   const navigate = useNavigate();
-  const { isMobile } = useDevice();
   const pools = useSelector(selectPools);
   const balances = useSelector(selectBalances);
   const positions = useSelector(selectPositions);
@@ -142,7 +140,7 @@ const TopupPool = (): JSX.Element => {
             id="register-topup-pool-button"
             primary
             medium
-            width={isMobile ? "100%" : "44%"}
+            width="30rem"
             click={() => {
               if (!hasSufficientBalance(selected))
                 navigate(`${TOPUP_ACTION_ROUTE}/deposit/${pool}/${address}/${protocol}`);

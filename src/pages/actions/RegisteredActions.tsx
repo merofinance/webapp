@@ -8,7 +8,6 @@ import { Position } from "../../lib/types";
 import { selectPositions } from "../../state/positionsSlice";
 import Button from "../../components/Button";
 import RegisteredAction from "./RegisteredAction";
-import { useDevice } from "../../app/hooks/use-device";
 
 const Empty = styled.div`
   letter-spacing: 0.46px;
@@ -21,6 +20,7 @@ const Empty = styled.div`
 `;
 
 const ButtonContainer = styled.div`
+  position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -35,7 +35,6 @@ const RegisteredActions = (): JSX.Element => {
   const { t } = useTranslation();
   const positions = useSelector(selectPositions) || [];
   const navigate = useNavigate();
-  const { isMobile } = useDevice();
 
   const hasPosition = positions.length > 0;
 
@@ -53,7 +52,7 @@ const RegisteredActions = (): JSX.Element => {
             id="register-action-button"
             primary={!hasPosition}
             medium
-            width={isMobile ? "100%" : "44%"}
+            width="30rem"
             background="#0F0830"
             click={() => navigate("/actions/register")}
           >
