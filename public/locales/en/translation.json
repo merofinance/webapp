@@ -698,7 +698,8 @@
     "validation": {
       "positive": "Amount must be a positive number",
       "exceedsBalance": "Amount exceeds available balance",
-      "invalid": "Invalid number"
+      "invalid": "Invalid number",
+      "exceedsCap": "Amount exceeds deposit limit"
     },
     "approve": "Approve {{asset}}",
     "enter": "Enter amount"
