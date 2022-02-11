@@ -66,6 +66,12 @@ const StyledNavItems = styled.ul`
       margin: 0 1.5rem;
     }
   }
+
+  @media (max-width: 600px) {
+    > div:last-child {
+      display: none;
+    }
+  }
 `;
 
 const NavItems = (): JSX.Element => {
