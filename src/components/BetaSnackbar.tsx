@@ -1,19 +1,31 @@
 import { useDispatch, useSelector } from "react-redux";
-import { SHIELDED } from "../lib/constants";
+import { useTranslation } from "react-i18next";
+
+import { Pool } from "../lib";
 import { dismissBetaSnackbar, selectBetaSnackbarDismissed } from "../state/uiSlice";
 import Snackbar from "./Snackbar";
+import { Optional } from "../lib/types";
 
-const BetaSnackbar = (): JSX.Element => {
+interface Props {
+  pool: Optional<Pool>;
+}
+
+const BetaSnackbar = ({ pool }: Props): Optional<JSX.Element> => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const dismissed = useSelector(selectBetaSnackbarDismissed);
 
+  if (!pool || dismissed || !pool.depositCap.isZero || pool.depositCap.isZero()) return null;
+
   return (
     <Snackbar
-      show={!dismissed && SHIELDED}
       close={() => dispatch(dismissBetaSnackbar())}
-      text="components.betaSnackbar"
+      text={t("components.betaSnackbar", {
+        limit: pool.depositCap.toCryptoString(),
+        asset: pool.underlying.symbol,
+      })}
       link={{
-        label: "components.findOutMore",
+        label: t("components.findOutMore"),
         link: "",
       }}
     />

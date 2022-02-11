@@ -16,6 +16,7 @@ import {
   fetchWithdrawalFees,
 } from "./userSlice";
 import poolMetadata from "../lib/data/pool-metadata";
+import { ScaledNumber } from "../lib/scaled-number";
 
 interface PoolsState {
   pools: Pool[];
@@ -126,10 +127,14 @@ export const selectEthPrice = (state: RootState): Optional<number> => state.pool
 export const selectEthPool = (state: RootState): Optional<Pool> =>
   state.pools.pools.find((pool: Pool) => pool.underlying.symbol.toLowerCase() === "eth") || null;
 
-export const selectAverageApy = (state: RootState): Optional<number> => {
+export const selectAverageApy = (state: RootState): Optional<ScaledNumber> => {
   const pools = selectPools(state);
   if (!pools) return null;
-  return pools.reduce((a: number, b: Pool) => a + (b.apy || 0), 0) / state.pools.pools.length;
+  const poolsWithApy = pools.filter((pool: Pool) => pool.apy !== null);
+  if (poolsWithApy.length === 0) return null;
+  return poolsWithApy
+    .reduce((a: ScaledNumber, b: Pool) => a.add(b.apy!), new ScaledNumber())
+    .div(state.pools.pools.length);
 };
 
 export default poolsSlice.reducer;

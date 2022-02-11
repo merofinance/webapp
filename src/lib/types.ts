@@ -13,7 +13,7 @@ export interface Token {
   symbol: string;
 }
 
-export interface Pool<Num = number> {
+export interface Pool<Num = ScaledNumber> {
   address: string;
   apy: Optional<Num>;
   exchangeRate: Num;
@@ -25,6 +25,7 @@ export interface Pool<Num = number> {
   stakerVaultAddress: string;
   totalAssets: Num;
   underlying: Token;
+  depositCap: Num;
 }
 
 interface GenericPosition<T> {
@@ -146,6 +147,7 @@ export function transformPool<T, U>(pool: Pool<T>, f: (v: T) => U): Pool<U> {
     maxWithdrawalFee: f(pool.maxWithdrawalFee),
     minWithdrawalFee: f(pool.minWithdrawalFee),
     feeDecreasePeriod: f(pool.feeDecreasePeriod),
+    depositCap: f(pool.depositCap),
   };
 }
 

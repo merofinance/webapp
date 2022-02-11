@@ -23,7 +23,7 @@ const PoolsInformation = (): JSX.Element => {
         {
           label: t("pools.information.apy.header"),
           tooltip: t("pools.information.apy.tooltip"),
-          value: averageApy ? formatPercent(averageApy) : null,
+          value: averageApy ? averageApy.toPercent() : null,
         },
         // {
         //   label: t("pools.information.revenue.header"),

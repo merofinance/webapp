@@ -7,6 +7,7 @@ import {
   numberToCompactCurrency,
   stringToBigNumber,
 } from "./numeric";
+import { Optional } from "./types";
 
 export interface PlainScaledNumber {
   value: string;
@@ -18,9 +19,9 @@ export class ScaledNumber {
 
   private _decimals: number;
 
-  constructor(value = BigNumber.from(0), decimals = 18) {
+  constructor(value: Optional<BigNumber> = BigNumber.from(0), decimals = 18) {
     this._decimals = decimals;
-    this._value = value;
+    this._value = value || BigNumber.from(0);
   }
 
   static fromUnscaled(value: number | string = 0, decimals = 18): ScaledNumber {
@@ -49,9 +50,13 @@ export class ScaledNumber {
     return this._decimals;
   }
 
-  get scale(): BigNumber {
-    return BigNumber.from(10).pow(this.decimals);
-  }
+  // get scale(): BigNumber {
+  //   return BigNumber.from(10).pow(this.decimals);
+  // }
+
+  private scale = (decimals: number) => {
+    return BigNumber.from(10).pow(decimals);
+  };
 
   toPlain = (): PlainScaledNumber => {
     return {
@@ -112,7 +117,11 @@ export class ScaledNumber {
       value instanceof ScaledNumber
         ? value.value
         : stringToBigNumber(value.toString(), this.decimals);
-    return new ScaledNumber(this.value.mul(scaledValue).div(this.scale), this.decimals);
+    const scaledDecimals = value instanceof ScaledNumber ? value.decimals : this.decimals;
+    return new ScaledNumber(
+      this.value.mul(scaledValue).div(this.scale(scaledDecimals)),
+      this.decimals
+    );
   }
 
   div(value: number | string | ScaledNumber): ScaledNumber {
@@ -121,7 +130,11 @@ export class ScaledNumber {
         ? value.value
         : stringToBigNumber(value.toString(), this.decimals);
     if (scaledValue.isZero()) return new ScaledNumber();
-    return new ScaledNumber(this.value.mul(this.scale).div(scaledValue), this.decimals);
+    const scaledDecimals = value instanceof ScaledNumber ? value.decimals : this.decimals;
+    return new ScaledNumber(
+      this.value.mul(this.scale(scaledDecimals)).div(scaledValue),
+      this.decimals
+    );
   }
 
   toString = (): string => bigNumberToString(this._value, this._decimals);

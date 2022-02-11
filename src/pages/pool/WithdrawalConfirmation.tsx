@@ -31,9 +31,9 @@ const WithdrawalConfirmation = ({
   const feePercent = withdrawalFee ? `${withdrawalFee.mul(100).toCryptoString()}%` : "---";
   const fee = withdrawalFee ? withdrawalFee.mul(value).toCryptoString() : "---";
   const withdrawnAmount = withdrawalFee ? value.sub(value.mul(withdrawalFee)) : new ScaledNumber();
-  const maxWithdrawalFee = `${(pool.maxWithdrawalFee * 100).toString()}%`;
-  const minWithdrawalFee = `${(pool.minWithdrawalFee * 100).toString()}%`;
-  const days = (pool.feeDecreasePeriod * 10 ** 18) / 86400;
+  const maxWithdrawalFee = pool.maxWithdrawalFee.toPercent();
+  const minWithdrawalFee = pool.minWithdrawalFee.toPercent();
+  const days = Number(pool.feeDecreasePeriod.toString()) / 86400;
   const asset = pool.underlying.symbol;
 
   return (

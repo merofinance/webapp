@@ -99,7 +99,7 @@ const PoolPage = (): Optional<JSX.Element> => {
         description={t("metadata.pool.description", { asset: pool?.underlying.symbol || "---" })}
       />
       <BackButton />
-      <BetaSnackbar />
+      <BetaSnackbar pool={pool} />
       <PoolPageContent>
         <ContentContainer>
           <Content>

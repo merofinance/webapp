@@ -27,23 +27,32 @@ const PoolStatistics = ({ pool }: Props): JSX.Element => {
         {
           header: t("pool.statistics.deposits.header"),
           tooltip: t("pool.statistics.deposits.tooltip"),
-          value: pool && deposits ? `${deposits.toCryptoString()} ${pool.underlying.symbol}` : null,
-          usd: pool && price && deposits ? deposits.toUsdValue(price) : null,
+          value:
+            pool && deposits && deposits.toCryptoString
+              ? `${deposits.toCryptoString()} ${pool.underlying.symbol}`
+              : null,
+          usd: pool && price && deposits && deposits.toUsdValue ? deposits.toUsdValue(price) : null,
         },
         {
           header: t("pool.statistics.locked.header"),
           tooltip: t("pool.statistics.locked.tooltip"),
-          value: pool && locked ? `${locked.toCryptoString()} ${pool.underlying.symbol}` : null,
-          usd: price && locked ? locked.toUsdValue(price) : null,
+          value:
+            pool && locked && locked.toCryptoString
+              ? `${locked.toCryptoString()} ${pool.underlying.symbol}`
+              : null,
+          usd: price && locked && locked.toUsdValue ? locked.toUsdValue(price) : null,
         },
         {
           header: t("pool.statistics.tvl.header"),
           tooltip: t("pool.statistics.tvl.tooltip"),
           value:
-            pool && totalDeposits
+            pool && totalDeposits && totalDeposits.toCryptoString
               ? `${totalDeposits.toCryptoString()} ${pool.underlying.symbol}`
               : null,
-          usd: price && totalDeposits ? totalDeposits.toUsdValue(price) : null,
+          usd:
+            price && totalDeposits && totalDeposits.toUsdValue
+              ? totalDeposits.toUsdValue(price)
+              : null,
         },
       ]}
     />

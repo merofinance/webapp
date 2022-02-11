@@ -1,6 +1,6 @@
 import { BigNumber } from "ethers";
 import {
-  bigNumberToFloat,
+  bigNumberToScaledNumber,
   floatToBigNumber,
   formatCrypto,
   numberToCompactCurrency,
@@ -18,7 +18,7 @@ test("should convert big numbers to floats", () => {
     { value: scale(84180923, 18), digits: 5, decimals: 18, expected: 84180923 },
   ];
   testCases.forEach(({ value, digits, decimals, expected }) => {
-    const actual = bigNumberToFloat(value, decimals, digits);
+    const actual = bigNumberToScaledNumber(value, decimals, digits);
     expect(Math.abs(actual - expected)).toBeLessThan(epsilon);
   });
 });

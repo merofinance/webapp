@@ -29,6 +29,7 @@ export const pools: Pool<BigNumber>[] = [
     maxWithdrawalFee: scale(1, 18),
     minWithdrawalFee: scale(0, 18),
     feeDecreasePeriod: scale(10, 18),
+    depositCap: scale(10000, 18),
   },
   {
     name: "bUSDC3CRV",
@@ -52,6 +53,7 @@ export const pools: Pool<BigNumber>[] = [
     maxWithdrawalFee: scale(1, 18),
     minWithdrawalFee: scale(0, 18),
     feeDecreasePeriod: scale(10, 18),
+    depositCap: scale(10000, 18),
   },
   {
     name: "bkdethCRV",
@@ -75,6 +77,7 @@ export const pools: Pool<BigNumber>[] = [
     maxWithdrawalFee: scale(1, 18),
     minWithdrawalFee: scale(0, 18),
     feeDecreasePeriod: scale(10, 18),
+    depositCap: scale(10000, 18),
   },
 ];
 

@@ -3,7 +3,6 @@ import { BigNumber } from "ethers";
 // Feature toggles
 export const STAKING_LIVE = false;
 export const ACTIONS_LIVE = false;
-export const SHIELDED = false;
 
 // Variables
 export const ETH_DUMMY_ADDRESS = "0x0000000000000000000000000000000000000000";

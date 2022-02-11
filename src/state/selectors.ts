@@ -9,7 +9,9 @@ import { selectPools, selectPrices } from "./poolsListSlice";
 import { selectPoolPositions, selectPositions } from "./positionsSlice";
 import { selectBalances, selectPoolUnderlyingBalance } from "./userSlice";
 
-export function selectPool(poolName: string | undefined): (state: RootState) => Optional<Pool> {
+export function selectPool(
+  poolName: string | undefined
+): (state: RootState) => Optional<Pool<ScaledNumber>> {
   return (state: RootState) => {
     if (!poolName) return null;
     return (
@@ -36,11 +38,17 @@ export function selectPoolLpLocked(
 ): Selector<RootState, Optional<ScaledNumber>> {
   return (state: RootState) => {
     const positions = useSelector(selectPoolPositions(pool));
+    console.log("meow");
     if (!pool || !positions) return null;
-    return positions.reduce(
+    console.log("woof");
+    console.log(positions);
+    console.log(pool.lpToken.decimals);
+    const meow = positions.reduce(
       (a: ScaledNumber, b: Position) => a.add(b.maxTopUp),
       ScaledNumber.fromUnscaled(0, pool.lpToken.decimals)
     );
+    console.log(meow.toString());
+    return meow;
   };
 }
 
@@ -120,7 +128,7 @@ export function selectPoolTotalDeposits(
 ): Selector<RootState, Optional<ScaledNumber>> {
   return (state: RootState) => {
     if (!pool) return null;
-    return ScaledNumber.fromUnscaled(pool.totalAssets, pool.underlying.decimals);
+    return pool.totalAssets;
   };
 }
 
@@ -143,8 +151,8 @@ export function selectTotalDeposits(): Selector<RootState, Optional<ScaledNumber
     let total = new ScaledNumber();
     for (let i = 0; i < pools.length; i++) {
       const price = prices[pools[i].underlying.symbol];
-      if (!price) return null;
-      total = total.add(ScaledNumber.fromUnscaled(pools[i].totalAssets).mul(price));
+      if (!price || !pools[i].totalAssets.mul) return null;
+      total = total.add(pools[i].totalAssets.mul(price));
     }
     return total;
   };

@@ -19,9 +19,11 @@ const PoolInformation = ({ pool }: Props): JSX.Element => {
   const { t } = useTranslation();
   const price = useSelector(selectPrice(pool));
   // const { chainId } = useWeb3React();
-  const maxWithdrawalFee = pool ? `${(pool.maxWithdrawalFee * 100).toString()}%` : null;
-  const minWithdrawalFee = pool ? `${(pool.minWithdrawalFee * 100).toString()}%` : null;
-  const days = pool ? (pool.feeDecreasePeriod * 10 ** 18) / 86400 : null;
+  const maxWithdrawalFee =
+    pool && pool.maxWithdrawalFee.toPercent ? pool.maxWithdrawalFee.toPercent() : null;
+  const minWithdrawalFee =
+    pool && pool.minWithdrawalFee.toPercent ? pool.minWithdrawalFee.toPercent() : null;
+  const days = pool ? Number(pool.feeDecreasePeriod.toString()) / 86400 : null;
 
   return (
     <Information
@@ -30,12 +32,15 @@ const PoolInformation = ({ pool }: Props): JSX.Element => {
         {
           label: t("pool.information.tvl.header"),
           tooltip: t("pool.information.tvl.tooltip"),
-          value: pool && price ? numberToCompactCurrency(pool.totalAssets * price) : null,
+          value:
+            pool && price && pool.totalAssets.toCompactUsdValue
+              ? pool.totalAssets.toCompactUsdValue(price)
+              : null,
         },
         {
           label: t("pool.information.apy.header"),
           tooltip: t("pool.information.apy.tooltip"),
-          value: pool && pool.apy ? formatPercent(pool.apy) : null,
+          value: pool && pool.apy && pool.apy.toPercent ? pool.apy.toPercent() : null,
         },
         {
           label: pool ? `${pool.lpToken.symbol}/${pool.underlying.symbol}` : null,
@@ -44,7 +49,8 @@ const PoolInformation = ({ pool }: Props): JSX.Element => {
             underlying: pool ? pool.underlying.symbol : "---",
             exchangeRate: pool ? pool.exchangeRate.toString() : "---",
           }),
-          value: pool ? pool.exchangeRate.toString() : null,
+          value:
+            pool && pool.exchangeRate.toCryptoString ? pool.exchangeRate.toCryptoString() : null,
         },
         {
           label: t("pool.information.withdrawalFees.header"),

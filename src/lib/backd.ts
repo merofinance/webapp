@@ -29,7 +29,6 @@ import {
   GWEI_DECIMALS,
   DEFAULT_DECIMALS,
 } from "./constants";
-import { bigNumberToFloat } from "./numeric";
 import { PlainScaledNumber, ScaledNumber } from "./scaled-number";
 import {
   Address,
@@ -186,6 +185,7 @@ export class Web3Backd implements Backd {
       maxWithdrawalFee,
       minWithdrawalFee,
       feeDecreasePeriod,
+      depositCap,
     ] = await Promise.all([
       pool.name(),
       pool.getLpToken(),
@@ -195,6 +195,7 @@ export class Web3Backd implements Backd {
       pool.getMaxWithdrawalFee(),
       pool.getMinWithdrawalFee(),
       pool.getWithdrawalFeeDecreasePeriod(),
+      pool.depositCap(),
     ]);
     const [lpToken, underlying, stakerVaultAddress] = await Promise.all([
       this.getTokenInfo(lpTokenAddress),
@@ -209,23 +210,23 @@ export class Web3Backd implements Backd {
       const compoundExponent =
         MILLISECONDS_PER_YEAR / (new Date().getTime() - deployedtime.getTime());
       const unscaledApy = Number(new ScaledNumber(exchangeRate).toString()) ** compoundExponent - 1;
-      apy = ScaledNumber.fromUnscaled(unscaledApy).value;
+      if (unscaledApy >= 0) apy = ScaledNumber.fromUnscaled(unscaledApy).value;
     }
 
-    const rawPool = {
+    return {
       name,
       underlying,
       lpToken,
-      apy,
+      apy: new ScaledNumber(apy),
       address,
-      totalAssets: totalAssets.mul(BigNumber.from(10).pow(DEFAULT_DECIMALS - underlying.decimals)),
-      exchangeRate,
+      totalAssets: new ScaledNumber(totalAssets, underlying.decimals),
+      exchangeRate: new ScaledNumber(exchangeRate),
       stakerVaultAddress,
-      maxWithdrawalFee,
-      minWithdrawalFee,
-      feeDecreasePeriod,
+      maxWithdrawalFee: new ScaledNumber(maxWithdrawalFee),
+      minWithdrawalFee: new ScaledNumber(minWithdrawalFee),
+      feeDecreasePeriod: new ScaledNumber(feeDecreasePeriod),
+      depositCap: new ScaledNumber(depositCap, underlying.decimals),
     };
-    return transformPool(rawPool, bigNumberToFloat);
   }
 
   async getWithdrawalFees(pools: Pool[]): Promise<PlainWithdrawalFees> {

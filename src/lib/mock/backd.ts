@@ -37,13 +37,13 @@ export default class MockBackd implements Backd {
   }
 
   listPools(): Promise<Pool[]> {
-    return Promise.resolve(pools.map((pool) => transformPool(pool, (v) => bigNumberToFloat(v))));
+    return Promise.resolve(pools.map((pool) => transformPool(pool, (v) => new ScaledNumber(v))));
   }
 
   getPoolInfo(address: Address): Promise<Pool> {
     const pool = pools.find((pool) => pool.address === address);
     if (!pool) throw Error("No pool found for address");
-    return Promise.resolve(transformPool(pool, bigNumberToFloat));
+    return Promise.resolve(transformPool(pool, (v) => new ScaledNumber(v)));
   }
 
   getLoanPosition(protocol: LendingProtocol, address?: Address): Promise<Optional<PlainLoan>> {
@@ -146,7 +146,7 @@ export default class MockBackd implements Backd {
   }
 
   async registerPosition(
-    pool: Pool<number>,
+    pool: Pool,
     position: Position,
     value: BigNumber
   ): Promise<ContractTransaction> {

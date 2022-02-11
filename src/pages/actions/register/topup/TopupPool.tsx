@@ -110,11 +110,11 @@ const TopupPool = (): JSX.Element => {
             },
             {
               label: t("headers.apy"),
-              value: pool.apy ? formatPercent(pool.apy) : null,
+              value: pool.apy ? pool.apy.toPercent() : null,
             },
             {
               label: t("headers.tvl"),
-              value: price ? numberToCompactCurrency(pool.totalAssets * price) : null,
+              value: price ? pool.totalAssets.toCompactUsdValue(price) : null,
             },
           ],
         };
