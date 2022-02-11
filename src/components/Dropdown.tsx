@@ -1,12 +1,15 @@
 import { FormControl, makeStyles, MenuItem, Select } from "@material-ui/core";
 
 import { useTranslation } from "react-i18next";
-import { FormikFormType, FormType } from "../pages/actions/register/topup/TopupConditionsForm";
+
+interface DropdownOption {
+  label: string;
+  action: () => void;
+}
 
 const useStyles = makeStyles(() => ({
   formControl: {
     margin: 1,
-    minWidth: 120,
     color: "red",
   },
   select: {
@@ -50,22 +53,18 @@ const useStyles = makeStyles(() => ({
 }));
 
 interface Props {
-  formik: FormikFormType;
-  name: keyof FormType;
-  options: string[];
+  label?: string;
+  options: DropdownOption[];
 }
 
-const Dropdown = ({ formik, name, options }: Props): JSX.Element => {
+const Dropdown = ({ label, options }: Props): JSX.Element => {
   const { t } = useTranslation();
   const classes = useStyles();
 
   return (
     <FormControl className={classes.formControl}>
       <Select
-        value={formik.values[name]}
-        name={name}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
+        value=""
         displayEmpty
         className={classes.select}
         MenuProps={{ classes: { paper: classes.dropdownStyle } }}
@@ -73,11 +72,16 @@ const Dropdown = ({ formik, name, options }: Props): JSX.Element => {
         disableUnderline
       >
         <MenuItem value="" className={classes.menuItem}>
-          {t("components.dropdownChoose")}
+          {label || t("components.dropdownChoose")}
         </MenuItem>
-        {options.map((option: string) => (
-          <MenuItem key={option} value={option} className={classes.menuItem}>
-            {option}
+        {options.map((option: DropdownOption) => (
+          <MenuItem
+            key={option.label}
+            value={option.label}
+            onClick={() => option.action()}
+            className={classes.menuItem}
+          >
+            {t(option.label)}
           </MenuItem>
         ))}
       </Select>
