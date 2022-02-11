@@ -14,7 +14,8 @@
       "docs": "docs",
       "blog": "blog",
       "newsletter": "newsletter",
-      "actions": "actions"
+      "actions": "actions",
+      "more": "more"
     }
   },
   "walletConnect": {

@@ -1,8 +1,14 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import styled from "styled-components";
+import Dropdown from "./Dropdown";
 
-import NavItem, { NavItemType } from "./NavItem";
+import NavItem from "./NavItem";
+
+export interface NavItemType {
+  label: string;
+  link?: string;
+  live?: boolean;
+  navItems?: NavItemType[];
+}
 
 const navItems: NavItemType[] = [
   {
@@ -15,6 +21,31 @@ const navItems: NavItemType[] = [
     link: "/actions",
     live: false,
   },
+  {
+    label: "header.tabs.claim",
+    link: "/claim",
+    live: false,
+  },
+  {
+    label: "header.tabs.more",
+    navItems: [
+      {
+        label: "header.tabs.docs",
+        link: "https://docs.backd.fund/",
+        live: true,
+      },
+      {
+        label: "header.tabs.blog",
+        link: "https://backdfund.medium.com/",
+        live: true,
+      },
+      {
+        label: "header.tabs.newsletter",
+        link: "https://backd.substack.com/welcome",
+        live: true,
+      },
+    ],
+  },
 ];
 
 const StyledNavItems = styled.ul`
@@ -23,52 +54,37 @@ const StyledNavItems = styled.ul`
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
+  align-items: center;
   list-style-type: none;
   margin: 0 1rem;
-`;
 
-interface UnderlineProps {
-  show: boolean;
-  index: number;
-}
-
-const Underline = styled.div`
-  height: 2px;
-  border-radius: 1px;
-  position: absolute;
-  background: var(--gradient);
-  transition: all 0.3s;
-  display: ${(props: UnderlineProps) => (props.show ? "flex" : "none")};
-
-  width: 7rem;
-  left: 3.1rem;
-  bottom: -0.8rem;
-  transform: translateX(${(props: UnderlineProps) => `${props.index * (7 + 6.2)}rem`});
-  @media (max-width: 600px) {
-    width: 5rem;
-    left: 1.7rem;
-    bottom: -0.6rem;
-    transform: translateX(${(props: UnderlineProps) => `${props.index * (5 + 3.4)}rem`});
+  > div {
+    margin: 0 3rem;
+    @media (max-width: 600px) {
+      margin: 0 1.5rem;
+    }
   }
 `;
 
 const NavItems = (): JSX.Element => {
-  const [active, setActive] = useState<string | null>(null);
-  const location = useLocation();
-
-  useEffect(() => {
-    if (location.pathname === "/") setActive(null);
-  }, [location.pathname]);
-
   return (
     <StyledNavItems id="nav-items">
-      <Underline
-        show={!!active}
-        index={active ? navItems.map((navItem: NavItemType) => navItem.label).indexOf(active) : 0}
-      />
-      {navItems.map((navItem: NavItemType) => (
-        <NavItem key={navItem.label} navItem={navItem} setActive={(v: string) => setActive(v)} />
-      ))}
+      {navItems.map((navItem: NavItemType) =>
+        navItem.navItems ? (
+          <Dropdown
+            key={navItem.label}
+            label="Meow"
+            options={navItem.navItems.map((navItem: NavItemType) => {
+              return {
+                label: navItem.label,
+                action: () => console.log(navItem.link),
+              };
+            })}
+          />
+        ) : (
+          <NavItem key={navItem.label} navItem={navItem as NavItemType} />
+        )
+      )}
     </StyledNavItems>
   );
 };
