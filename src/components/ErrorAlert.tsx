@@ -62,12 +62,12 @@ const ErrorAlert = (): JSX.Element => {
         </Text>
       )}
       {error.switchToMainnetButton && (
-        <Button medium primary click={() => changeNetwork(1)}>
+        <Button wide medium primary click={() => changeNetwork(1)}>
           {t("errors.switchToMainnet")}
         </Button>
       )}
       {!error.hideButton && (
-        <Button medium primary click={handleClose}>
+        <Button wide medium primary click={handleClose}>
           {t("components.close")}
         </Button>
       )}
