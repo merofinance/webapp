@@ -53,6 +53,16 @@ const ExitEvent = styled.button`
   transform: translate(-50%, -50%);
 `;
 
+interface OptionsProps {
+  show: boolean;
+}
+
+const OptionsContainer = styled.div`
+  opacity: ${(props: OptionsProps) => (props.show ? "1" : "0")};
+  transform: ${(props: OptionsProps) => (props.show ? "scale(1)" : "scale(0)")};
+  transition: 0.3s all;
+`;
+
 const Options = styled.div`
   position: absolute;
   top: calc(100% + 1rem);
@@ -63,6 +73,7 @@ const Options = styled.div`
   box-shadow: 0px 0px 12px 0px #00000066;
   border: 1px solid #554d82;
   border-radius: 14px;
+  min-width: 18rem;
 `;
 
 const Option = styled.button`
@@ -75,6 +86,7 @@ const Option = styled.button`
   display: flex;
   align-items: center;
   text-transform: capitalize;
+  cursor: pointer;
 
   background: #423b68;
   transition: all 0.3s;
@@ -99,24 +111,22 @@ const Dropdown = ({ label, options }: Props): JSX.Element => {
           <Arrow open={open} src={arrow} alt="Dropdown chevron" />
         </ArrowContainer>
       </DropdownButton>
-      {open && (
-        <>
-          <ExitEvent onClick={() => setOpen(false)} />
-          <Options>
-            {options.map((option: DropdownOptionType) => (
-              <Option
-                key={option.label}
-                onClick={() => {
-                  option.action();
-                  setOpen(false);
-                }}
-              >
-                {option.label}
-              </Option>
-            ))}
-          </Options>
-        </>
-      )}
+      {open && <ExitEvent onClick={() => setOpen(false)} />}
+      <OptionsContainer show={open}>
+        <Options>
+          {options.map((option: DropdownOptionType) => (
+            <Option
+              key={option.label}
+              onClick={() => {
+                option.action();
+                setOpen(false);
+              }}
+            >
+              {option.label}
+            </Option>
+          ))}
+        </Options>
+      </OptionsContainer>
     </StyledDropdown>
   );
 };
