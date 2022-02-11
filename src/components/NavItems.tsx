@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import Dropdown from "./Dropdown";
 
@@ -67,6 +68,8 @@ const StyledNavItems = styled.ul`
 `;
 
 const NavItems = (): JSX.Element => {
+  const { t } = useTranslation();
+
   return (
     <StyledNavItems id="nav-items">
       {navItems.map((navItem: NavItemType) =>
@@ -76,7 +79,7 @@ const NavItems = (): JSX.Element => {
             label="Meow"
             options={navItem.navItems.map((navItem: NavItemType) => {
               return {
-                label: navItem.label,
+                label: t(navItem.label),
                 action: () => console.log(navItem.link),
               };
             })}
