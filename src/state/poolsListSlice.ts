@@ -12,7 +12,6 @@ import {
   Optional,
   PlainPool,
   Prices,
-  transformPool,
 } from "../lib/types";
 import { fetchLoans } from "./lendingSlice";
 import { INFURA_ID } from "../lib/constants";
