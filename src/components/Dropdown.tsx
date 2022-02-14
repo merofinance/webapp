@@ -68,7 +68,7 @@ const Options = styled.div`
   top: calc(100% + 1rem);
   left: 50%;
   transform: translateX(-50%);
-  padding: 1.7rem 0;
+  padding: 1.3rem 0;
   background: #423b68;
   box-shadow: 0px 0px 12px 0px #00000066;
   border: 1px solid #554d82;
