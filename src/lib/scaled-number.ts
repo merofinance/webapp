@@ -50,10 +50,6 @@ export class ScaledNumber {
     return this._decimals;
   }
 
-  // get scale(): BigNumber {
-  //   return BigNumber.from(10).pow(this.decimals);
-  // }
-
   private scale = (decimals: number) => {
     return BigNumber.from(10).pow(decimals);
   };
@@ -69,17 +65,21 @@ export class ScaledNumber {
 
   isNegative = (): boolean => this.value.isNegative();
 
-  assertSameDecimals(other: ScaledNumber): void {
-    console.assert(this.decimals === other.decimals, "should have the same number of decimals");
+  standardizeDecimals(other: ScaledNumber): ScaledNumber {
+    if (this.decimals === other.decimals) return other;
+    return new ScaledNumber(
+      other.value.mul(BigNumber.from(10).pow(this._decimals - other.decimals)),
+      this.decimals
+    );
   }
 
   add(other: ScaledNumber): ScaledNumber {
-    this.assertSameDecimals(other);
+    other = this.standardizeDecimals(other);
     return new ScaledNumber(this.value.add(other.value), this.decimals);
   }
 
   sub(other: ScaledNumber): ScaledNumber {
-    this.assertSameDecimals(other);
+    other = this.standardizeDecimals(other);
     return new ScaledNumber(this.value.sub(other.value), this.decimals);
   }
 
@@ -88,27 +88,27 @@ export class ScaledNumber {
   }
 
   gt(other: ScaledNumber): boolean {
-    this.assertSameDecimals(other);
+    other = this.standardizeDecimals(other);
     return this.value.gt(other.value);
   }
 
   gte(other: ScaledNumber): boolean {
-    this.assertSameDecimals(other);
+    other = this.standardizeDecimals(other);
     return this.value.gte(other.value);
   }
 
   lt(other: ScaledNumber): boolean {
-    this.assertSameDecimals(other);
+    other = this.standardizeDecimals(other);
     return this.value.lt(other.value);
   }
 
   lte(other: ScaledNumber): boolean {
-    this.assertSameDecimals(other);
+    other = this.standardizeDecimals(other);
     return this.value.lte(other.value);
   }
 
   max(other: ScaledNumber): ScaledNumber {
-    this.assertSameDecimals(other);
+    other = this.standardizeDecimals(other);
     return this.value.gt(other.value) ? this : other;
   }
 
