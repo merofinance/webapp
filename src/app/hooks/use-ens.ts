@@ -1,25 +1,29 @@
+import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
+import { Optional } from "../../lib/types";
 
-const useENS = (
-  address: string | null | undefined
-): { ensName: string | null | undefined; ensAvatar: string | null | undefined } => {
-  const [ensName, setENSName] = useState<string | null | undefined>(null);
-  const [ensAvatar, setENSAvatar] = useState<string | null | undefined>(null);
+const useENS = (): { ensName: Optional<string>; ensAvatar: Optional<string> } => {
+  const { account } = useWeb3React();
+  const [ensName, setENSName] = useState<Optional<string>>(null);
+  const [ensAvatar, setENSAvatar] = useState<Optional<string>>(null);
+
+  const resolveENS = async (): Promise<void> => {
+    if (!account) return;
+    const provider = ethers.providers.getDefaultProvider();
+    const ensName = await provider.lookupAddress(account);
+    setENSName(ensName);
+    if (!ensName) return;
+    const resolver = await provider.getResolver(ensName);
+    if (!resolver) return;
+    const ensAvatar = await resolver.getAvatar();
+    if (!ensAvatar) return;
+    setENSAvatar(ensAvatar.url);
+  };
 
   useEffect(() => {
-    const resolveENS = async (): Promise<void> => {
-      if (address) {
-        const provider = await ethers.providers.getDefaultProvider();
-        const ensName = await provider.lookupAddress(address);
-        const resolver = await provider.getResolver(ensName ?? "");
-        const ensAvatar = await resolver?.getAvatar();
-        setENSAvatar(ensAvatar?.url);
-        setENSName(ensName);
-      }
-    };
     resolveENS();
-  }, [address]);
+  }, [account]);
 
   return { ensName, ensAvatar };
 };

