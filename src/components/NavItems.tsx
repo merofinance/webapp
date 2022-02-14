@@ -8,7 +8,7 @@ import NavItem from "./NavItem";
 export interface NavItemType {
   label: string;
   link?: string;
-  live?: boolean;
+  comingSoon?: boolean;
   navItems?: NavItemType[];
 }
 
@@ -16,17 +16,16 @@ const navItems: NavItemType[] = [
   {
     label: "header.tabs.pools",
     link: "/pools",
-    live: true,
   },
   {
     label: "header.tabs.actions",
     link: "/actions",
-    live: false,
+    comingSoon: true,
   },
   {
     label: "header.tabs.claim",
     link: "/claim",
-    live: false,
+    comingSoon: true,
   },
   {
     label: "header.tabs.more",
@@ -34,17 +33,14 @@ const navItems: NavItemType[] = [
       {
         label: "header.tabs.docs",
         link: "https://docs.backd.fund/",
-        live: true,
       },
       {
         label: "header.tabs.blog",
         link: "https://backdfund.medium.com/",
-        live: true,
       },
       {
         label: "header.tabs.newsletter",
         link: "https://backd.substack.com/welcome",
-        live: true,
       },
     ],
   },

@@ -6,14 +6,19 @@ import { NavItemType } from "./NavItems";
 import { Optional } from "../lib/types";
 
 interface NavItemProps {
-  live?: boolean;
+  comingSoon?: boolean;
 }
+
+const LinkContainer = styled.div`
+  a {
+    cursor: ${(props: NavItemProps) => (!props.comingSoon ? "pointer" : "default")};
+  }
+`;
 
 const StyledLink = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: ${(props: NavItemProps) => (props.live ? "pointer" : "default")};
 `;
 
 const Text = styled.div`
@@ -22,11 +27,11 @@ const Text = styled.div`
   white-space: nowrap;
   font-weight: 500;
   letter-spacing: 0.15px;
-  opacity: ${(props: NavItemProps) => (props.live ? "1" : "0.4")};
+  opacity: ${(props: NavItemProps) => (!props.comingSoon ? "1" : "0.4")};
 
   transition: 0.3s opacity;
   :hover {
-    opacity: ${(props: NavItemProps) => (props.live ? "0.8" : "0.4")};
+    opacity: ${(props: NavItemProps) => (!props.comingSoon ? "0.8" : "0.4")};
   }
 
   @media (max-width: 600px) {
@@ -44,10 +49,12 @@ const NavItem = ({ navItem }: Props): Optional<JSX.Element> => {
   if (!navItem.link) return null;
 
   return (
-    <HoverFeedback text={navItem.live ? "" : t("components.comingSoon")}>
-      <StyledLink id={navItem.label} to={navItem.live ? navItem.link : "#"} live={navItem.live}>
-        <Text live={navItem.live}>{t(navItem.label)}</Text>
-      </StyledLink>
+    <HoverFeedback text={navItem.comingSoon ? t("components.comingSoon") : ""}>
+      <LinkContainer comingSoon={navItem.comingSoon}>
+        <StyledLink id={navItem.label} to={navItem.comingSoon ? "#" : navItem.link}>
+          <Text comingSoon={navItem.comingSoon}>{t(navItem.label)}</Text>
+        </StyledLink>
+      </LinkContainer>
     </HoverFeedback>
   );
 };
