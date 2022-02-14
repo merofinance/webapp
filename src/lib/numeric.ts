@@ -110,15 +110,7 @@ export const stringToBigNumber = (value: string, decimals: number): BigNumber =>
 
   const [num, power] = value.split("e");
 
-  if (power) {
-    decimals += Number(power);
-    if (decimals < 0) {
-      console.log("meow");
-      console.log(value);
-      console.log(decimals);
-      console.log(power);
-    }
-  }
+  if (power) decimals += Number(power);
 
   const comps = num.split(".");
   const whole = comps[0] || "0";
@@ -134,7 +126,6 @@ export const stringToBigNumber = (value: string, decimals: number): BigNumber =>
     const base = BigNumber.from(10).pow(BigNumber.from(decimals));
     return BigNumber.from(whole).mul(base).add(fraction);
   }
-  return BigNumber.from(10);
   const base = BigNumber.from(10).pow(BigNumber.from(-decimals));
   return BigNumber.from(whole).div(base);
 };

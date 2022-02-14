@@ -38,17 +38,11 @@ export function selectPoolLpLocked(
 ): Selector<RootState, Optional<ScaledNumber>> {
   return (state: RootState) => {
     const positions = useSelector(selectPoolPositions(pool));
-    console.log("meow");
     if (!pool || !positions) return null;
-    console.log("woof");
-    console.log(positions);
-    console.log(pool.lpToken.decimals);
-    const meow = positions.reduce(
+    return positions.reduce(
       (a: ScaledNumber, b: Position) => a.add(b.maxTopUp),
       ScaledNumber.fromUnscaled(0, pool.lpToken.decimals)
     );
-    console.log(meow.toString());
-    return meow;
   };
 }
 
