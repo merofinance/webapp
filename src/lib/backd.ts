@@ -27,7 +27,6 @@ import {
   DEFAULT_SCALE,
   DEPOSIT_SLIPPAGE,
   GWEI_DECIMALS,
-  DEFAULT_DECIMALS,
 } from "./constants";
 import { PlainScaledNumber, ScaledNumber } from "./scaled-number";
 import {
@@ -47,6 +46,7 @@ import {
   PlainActionFees,
   ActionFees,
   toPlainActionFees,
+  PlainPool,
 } from "./types";
 import { lendingProviders } from "./lending-protocols";
 import poolMetadata from "./data/pool-metadata";
@@ -57,8 +57,8 @@ export type BackdOptions = {
 
 export interface Backd {
   currentAccount(): Promise<Address>;
-  listPools(): Promise<Pool[]>;
-  getPoolInfo(address: Address): Promise<Pool>;
+  listPools(): Promise<PlainPool[]>;
+  getPoolInfo(address: Address): Promise<PlainPool>;
   getLoanPosition(protocol: LendingProtocol, address?: Address): Promise<Optional<PlainLoan>>;
   getPositions(): Promise<PlainPosition[]>;
   getActionFees(): Promise<PlainActionFees>;
@@ -150,7 +150,7 @@ export class Web3Backd implements Backd {
     return Promise.resolve("");
   }
 
-  async listPools(): Promise<Pool[]> {
+  async listPools(): Promise<PlainPool[]> {
     const markets = await this.addressProvider.allPools();
     return Promise.all(markets.map((v: any) => this.getPoolInfo(v)));
   }
@@ -174,7 +174,7 @@ export class Web3Backd implements Backd {
     return token.decimals();
   }
 
-  async getPoolInfo(address: Address): Promise<Pool> {
+  async getPoolInfo(address: Address): Promise<PlainPool> {
     const pool = LiquidityPoolFactory.connect(address, this._provider);
     const [
       name,
@@ -217,15 +217,15 @@ export class Web3Backd implements Backd {
       name,
       underlying,
       lpToken,
-      apy: new ScaledNumber(apy),
+      apy: new ScaledNumber(apy).toPlain(),
       address,
-      totalAssets: new ScaledNumber(totalAssets, underlying.decimals),
-      exchangeRate: new ScaledNumber(exchangeRate),
+      totalAssets: new ScaledNumber(totalAssets, underlying.decimals).toPlain(),
+      exchangeRate: new ScaledNumber(exchangeRate).toPlain(),
       stakerVaultAddress,
-      maxWithdrawalFee: new ScaledNumber(maxWithdrawalFee),
-      minWithdrawalFee: new ScaledNumber(minWithdrawalFee),
-      feeDecreasePeriod: new ScaledNumber(feeDecreasePeriod, 0),
-      depositCap: new ScaledNumber(depositCap, underlying.decimals),
+      maxWithdrawalFee: new ScaledNumber(maxWithdrawalFee).toPlain(),
+      minWithdrawalFee: new ScaledNumber(minWithdrawalFee).toPlain(),
+      feeDecreasePeriod: new ScaledNumber(feeDecreasePeriod, 0).toPlain(),
+      depositCap: new ScaledNumber(depositCap, underlying.decimals).toPlain(),
     };
   }
 

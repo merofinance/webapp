@@ -1,12 +1,12 @@
 import { BigNumber, ContractReceipt, ContractTransaction } from "ethers";
 import { scale } from "../numeric";
 import { ScaledNumber } from "../scaled-number";
-import { Address, Pool, PlainPosition } from "../types";
+import { Address, PlainPosition, GenericPool } from "../types";
 
 export const masterAccount = "0xbacE8e7f276FD2Ee5ecE5C1df18BF381148862A6";
 
 // numbers are scaled to 10^18 to emulate contracst return values
-export const pools: Pool<BigNumber>[] = [
+export const pools: GenericPool<BigNumber>[] = [
   {
     name: "bkdDAI3CRV",
     apy: scale(237, 17),

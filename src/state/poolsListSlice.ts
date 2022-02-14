@@ -1,10 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ethers } from "ethers";
+import { useSelector } from "react-redux";
 
 import { AppThunk, RootState } from "../app/store";
 import { Pool } from "../lib";
 import { Backd } from "../lib/backd";
-import { Address, fromPlainBalances, Optional, Prices } from "../lib/types";
+import {
+  Address,
+  fromPlainBalances,
+  fromPlainPool,
+  Optional,
+  PlainPool,
+  Prices,
+  transformPool,
+} from "../lib/types";
 import { fetchLoans } from "./lendingSlice";
 import { INFURA_ID } from "../lib/constants";
 import { createBackd } from "../lib/factory";
@@ -19,7 +28,7 @@ import poolMetadata from "../lib/data/pool-metadata";
 import { ScaledNumber } from "../lib/scaled-number";
 
 interface PoolsState {
-  pools: Pool[];
+  pools: PlainPool[];
   prices: Prices;
   loaded: boolean;
 }
@@ -105,10 +114,12 @@ export const selectPoolsLoaded = (state: RootState): boolean => state.pools.load
 
 export const selectPools = (state: RootState): Optional<Pool[]> => {
   if (!state.pools.loaded) return null;
-  return state.pools.pools.filter((pool: Pool) => {
-    if (!poolMetadata[pool.underlying.symbol]) return false;
-    return true;
-  });
+  return state.pools.pools
+    .map((plainPool: PlainPool) => fromPlainPool(plainPool))
+    .filter((pool: Pool) => {
+      if (!poolMetadata[pool.underlying.symbol]) return false;
+      return true;
+    });
 };
 
 export const selectDepositedPools = (state: RootState): Optional<Pool[]> => {
@@ -124,8 +135,11 @@ export const selectPrices = (state: RootState): Prices => state.pools.prices;
 
 export const selectEthPrice = (state: RootState): Optional<number> => state.pools.prices.ETH;
 
-export const selectEthPool = (state: RootState): Optional<Pool> =>
-  state.pools.pools.find((pool: Pool) => pool.underlying.symbol.toLowerCase() === "eth") || null;
+export const selectEthPool = (state: RootState): Optional<Pool> => {
+  const pools = useSelector(selectPools);
+  if (!pools) return null;
+  return pools.find((pool: Pool) => pool.underlying.symbol.toLowerCase() === "eth") || null;
+};
 
 export const selectAverageApy = (state: RootState): Optional<ScaledNumber> => {
   const pools = selectPools(state);

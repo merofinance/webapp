@@ -9,15 +9,11 @@ import { selectPools, selectPrices } from "./poolsListSlice";
 import { selectPoolPositions, selectPositions } from "./positionsSlice";
 import { selectBalances, selectPoolUnderlyingBalance } from "./userSlice";
 
-export function selectPool(
-  poolName: string | undefined
-): (state: RootState) => Optional<Pool<ScaledNumber>> {
+export function selectPool(poolName: string | undefined): (state: RootState) => Optional<Pool> {
   return (state: RootState) => {
-    if (!poolName) return null;
-    return (
-      state.pools.pools.find((p) => p.lpToken.symbol.toLowerCase() === poolName.toLowerCase()) ||
-      null
-    );
+    const pools = useSelector(selectPools);
+    if (!poolName || !pools) return null;
+    return pools.find((p) => p.lpToken.symbol.toLowerCase() === poolName.toLowerCase()) || null;
   };
 }
 

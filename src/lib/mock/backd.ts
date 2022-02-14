@@ -22,6 +22,7 @@ import {
   PlainActionFees,
   ActionFees,
   toPlainActionFees,
+  PlainPool,
 } from "../types";
 import { balances, makeContractTransaction, masterAccount, pools, positions, prices } from "./data";
 
@@ -36,14 +37,20 @@ export default class MockBackd implements Backd {
     return Promise.resolve(masterAccount);
   }
 
-  listPools(): Promise<Pool[]> {
-    return Promise.resolve(pools.map((pool) => transformPool(pool, (v) => new ScaledNumber(v))));
+  listPools(): Promise<PlainPool[]> {
+    return Promise.resolve(
+      pools.map((pool) =>
+        transformPool(pool, (v: Optional<BigNumber> | undefined) => new ScaledNumber(v).toPlain())
+      )
+    );
   }
 
-  getPoolInfo(address: Address): Promise<Pool> {
+  getPoolInfo(address: Address): Promise<PlainPool> {
     const pool = pools.find((pool) => pool.address === address);
     if (!pool) throw Error("No pool found for address");
-    return Promise.resolve(transformPool(pool, (v) => new ScaledNumber(v)));
+    return Promise.resolve(
+      transformPool(pool, (v: Optional<BigNumber> | undefined) => new ScaledNumber(v).toPlain())
+    );
   }
 
   getLoanPosition(protocol: LendingProtocol, address?: Address): Promise<Optional<PlainLoan>> {
