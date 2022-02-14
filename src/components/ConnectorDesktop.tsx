@@ -155,7 +155,7 @@ const ConnectorDesktop = ({ connect }: Props): JSX.Element => {
           </IndicatorContainer>
         )}
         <ConnectorText id="connector-address" connected={active}>
-          {ensAvatar && <ENSAvatar src={ensAvatar} />}
+          {ensAvatar && <ENSAvatar src={ensAvatar} alt="ENS Avatar" />}
           {account ? ensName || shortenAddress(account, 8) : t("walletConnect.connectWallet")}
         </ConnectorText>
         {active && (
