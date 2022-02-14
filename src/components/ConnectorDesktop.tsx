@@ -136,7 +136,7 @@ const ConnectorDesktop = ({ connect }: Props): JSX.Element => {
   const { account, active, chainId } = useWeb3React();
   const windowPosition = useWindowPosition();
   const loading = useSelector(pendingTransactionsCount) > 0;
-  const { ensName, ensAvatar } = useENS(account);
+  const { ensName, ensAvatar } = useENS();
 
   return (
     <StyledConnectorDesktop>
