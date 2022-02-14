@@ -13,6 +13,7 @@ import pending from "../assets/ui/status/pending.svg";
 import { spinAnimation } from "../styles/animations/SpinAnimation";
 import { pendingTransactionsCount } from "../state/transactionsSlice";
 import useWindowPosition from "../app/hooks/use-window-position";
+import useENS from "../app/hooks/use-ens";
 
 const StyledConnectorDesktop = styled.div`
   display: flex;
@@ -49,7 +50,7 @@ const Button = styled.button`
   cursor: pointer;
 
   height: ${(props: ButtonProps) => (props.connected ? "4.2rem" : "5.4rem")};
-  width: ${(props: ButtonProps) => (props.connected ? "15.2rem" : "17.2rem")};
+  width: ${(props: ButtonProps) => (props.connected ? "fit-content" : "17.2rem")};
   border-radius: ${(props: ButtonProps) => (props.connected ? "8px" : "2.7rem")};
 
   transition: background-color 0.3s, background-position 0.5s;
@@ -82,6 +83,8 @@ interface TextProps {
 }
 
 const ConnectorText = styled.div`
+  display: flex;
+  align-items: center;
   font-weight: 500;
   font-size: 1.5rem;
   line-height: 1.4rem;
@@ -107,6 +110,13 @@ const IndicatorContainer = styled.div`
   margin: 0 0.7rem;
 `;
 
+const ENSAvatar = styled.img`
+  margin-right: 8px;
+  height: 25px;
+  width: 25px;
+  border-radius: 100px;
+`;
+
 interface LoadingProps {
   pending: boolean;
 }
@@ -123,34 +133,10 @@ interface Props {
 
 const ConnectorDesktop = ({ connect }: Props): JSX.Element => {
   const { t } = useTranslation();
-  const backd = useBackd();
   const { account, active, chainId } = useWeb3React();
-  const updated = useWeb3Updated();
   const windowPosition = useWindowPosition();
   const loading = useSelector(pendingTransactionsCount) > 0;
-
-  const [ens, setEns] = useState("");
-
-  const updateEns = async () => {
-    if (!account || !backd) return;
-    try {
-      const ens = await backd.provider.lookupAddress(account);
-      if (ens) {
-        setEns(ens);
-        return;
-      }
-    } catch {
-      console.log("ENS Not Supported");
-    }
-    setEns("");
-  };
-
-  useEffect(() => {
-    updateEns();
-    return () => {
-      setEns("");
-    };
-  }, [updated]);
+  const { ensName, ensAvatar } = useENS();
 
   return (
     <StyledConnectorDesktop>
@@ -169,7 +155,8 @@ const ConnectorDesktop = ({ connect }: Props): JSX.Element => {
           </IndicatorContainer>
         )}
         <ConnectorText id="connector-address" connected={active}>
-          {account ? ens || shortenAddress(account, 8) : t("walletConnect.connectWallet")}
+          {ensAvatar && <ENSAvatar src={ensAvatar} alt="ENS Avatar" />}
+          {account ? ensName || shortenAddress(account, 8) : t("walletConnect.connectWallet")}
         </ConnectorText>
         {active && (
           <IndicatorContainer>
