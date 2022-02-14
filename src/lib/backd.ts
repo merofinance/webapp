@@ -217,7 +217,7 @@ export class Web3Backd implements Backd {
       name,
       underlying,
       lpToken,
-      apy: new ScaledNumber(apy).toPlain(),
+      apy: apy ? new ScaledNumber(apy).toPlain() : null,
       address,
       totalAssets: new ScaledNumber(totalAssets, underlying.decimals).toPlain(),
       exchangeRate: new ScaledNumber(exchangeRate).toPlain(),
