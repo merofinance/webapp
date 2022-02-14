@@ -52,7 +52,7 @@ const BkdCalculator = ({ amount, withdraw }: Props): JSX.Element => {
       value: <> {hasStaked && !isMobile && <SubLabel>Oct-23-2022 → </SubLabel>}Jan-01-2023 </>,
     });
 
-  return <InfoBlock rows={infoBlockRows} />;
+  return <InfoBlock sections={[infoBlockRows]} />;
 };
 
 export default BkdCalculator;

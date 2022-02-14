@@ -1,6 +1,8 @@
+import { BigNumber } from "ethers";
 import { useSelector } from "react-redux";
 import { Selector } from "reselect";
 import { RootState } from "../app/store";
+import { DEFAULT_DECIMALS } from "../lib/constants";
 import { ScaledNumber } from "../lib/scaled-number";
 import { Optional, Pool, Position } from "../lib/types";
 import { selectPools, selectPrices } from "./poolsListSlice";
@@ -37,7 +39,7 @@ export function selectPoolLpLocked(
     if (!pool || !positions) return null;
     return positions.reduce(
       (a: ScaledNumber, b: Position) => a.add(b.maxTopUp),
-      new ScaledNumber()
+      ScaledNumber.fromUnscaled(0, pool.lpToken.decimals)
     );
   };
 }
@@ -68,7 +70,12 @@ export function selectLocked(): Selector<RootState, Optional<ScaledNumber>> {
       if (!pool) return null;
       const price = prices[pool.underlying.symbol];
       if (!price) return null;
-      total = total.add(positions[i].maxTopUp.mul(price));
+      const maxTopUp = new ScaledNumber(
+        positions[i].maxTopUp.value.mul(
+          BigNumber.from(10).pow(DEFAULT_DECIMALS - pool.underlying.decimals)
+        )
+      );
+      total = total.add(maxTopUp.mul(price));
     }
     return total;
   };
@@ -88,7 +95,10 @@ export function selectBalance(): Selector<RootState, Optional<ScaledNumber>> {
       const balance = balances[pools[i].lpToken.address];
       const price = prices[pools[i].underlying.symbol];
       if (!price || !balance) return null;
-      total = total.add(balance.mul(price));
+      const scaledBalance = new ScaledNumber(
+        balance.value.mul(BigNumber.from(10).pow(DEFAULT_DECIMALS - pools[i].underlying.decimals))
+      );
+      total = total.add(scaledBalance.mul(price));
     }
     return total;
   };

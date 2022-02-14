@@ -8,8 +8,13 @@ import { Address, fromPlainBalances, Optional, Prices } from "../lib/types";
 import { fetchLoans } from "./lendingSlice";
 import { INFURA_ID } from "../lib/constants";
 import { createBackd } from "../lib/factory";
-import { fetchActionFees, fetchPositions } from "./positionsSlice";
-import { fetchAllowances, fetchBalances, fetchWithdrawalFees } from "./userSlice";
+import { fetchActionFees, fetchEstimatedGasUsage, fetchPositions } from "./positionsSlice";
+import {
+  fetchAllowances,
+  fetchBalances,
+  fetchGasBankBalance,
+  fetchWithdrawalFees,
+} from "./userSlice";
 import poolMetadata from "../lib/data/pool-metadata";
 
 interface PoolsState {
@@ -80,7 +85,9 @@ export const fetchState =
       dispatch(fetchWithdrawalFees({ backd, pools }));
     });
     dispatch(fetchPositions({ backd }));
+    dispatch(fetchEstimatedGasUsage({ backd }));
     dispatch(fetchActionFees({ backd }));
+    dispatch(fetchGasBankBalance({ backd }));
   };
 
 export const fetchPreviewState = (): AppThunk => (dispatch) => {
@@ -98,7 +105,6 @@ export const selectPoolsLoaded = (state: RootState): boolean => state.pools.load
 export const selectPools = (state: RootState): Optional<Pool[]> => {
   if (!state.pools.loaded) return null;
   return state.pools.pools.filter((pool: Pool) => {
-    if (!pool.apy) return false;
     if (!poolMetadata[pool.underlying.symbol]) return false;
     return true;
   });
@@ -107,6 +113,7 @@ export const selectPools = (state: RootState): Optional<Pool[]> => {
 export const selectDepositedPools = (state: RootState): Optional<Pool[]> => {
   const pools = selectPools(state);
   if (!pools) return null;
+  if (pools.some((pool: Pool) => !state.user.balances[pool.lpToken.address])) return null;
   return pools.filter(
     (pool: Pool) => !fromPlainBalances(state.user.balances)[pool.lpToken.address]?.isZero()
   );
@@ -115,6 +122,9 @@ export const selectDepositedPools = (state: RootState): Optional<Pool[]> => {
 export const selectPrices = (state: RootState): Prices => state.pools.prices;
 
 export const selectEthPrice = (state: RootState): Optional<number> => state.pools.prices.ETH;
+
+export const selectEthPool = (state: RootState): Optional<Pool> =>
+  state.pools.pools.find((pool: Pool) => pool.underlying.symbol.toLowerCase() === "eth") || null;
 
 export const selectAverageApy = (state: RootState): Optional<number> => {
   const pools = selectPools(state);

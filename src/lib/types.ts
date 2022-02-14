@@ -8,23 +8,23 @@ export type Optional<T> = T | null;
 
 export interface Token {
   address: string;
+  decimals: number;
   name: string;
   symbol: string;
-  decimals: number;
 }
 
 export interface Pool<Num = number> {
-  name: string;
   address: string;
-  stakerVaultAddress: string;
-  lpToken: Token;
-  underlying: Token;
   apy: Optional<Num>;
-  totalAssets: Num;
   exchangeRate: Num;
+  feeDecreasePeriod: Num;
+  lpToken: Token;
   maxWithdrawalFee: Num;
   minWithdrawalFee: Num;
-  feeDecreasePeriod: Num;
+  name: string;
+  stakerVaultAddress: string;
+  totalAssets: Num;
+  underlying: Token;
 }
 
 interface GenericPosition<T> {
@@ -33,6 +33,7 @@ interface GenericPosition<T> {
   threshold: T;
   singleTopUp: T;
   maxTopUp: T;
+  priorityFee: T;
   maxGasPrice: T;
   actionToken: Address;
   depositToken: Address;
@@ -72,6 +73,7 @@ export const toPlainPosition = (position: Position): PlainPosition => {
     singleTopUp: position.singleTopUp.toPlain(),
     maxTopUp: position.maxTopUp.toPlain(),
     maxGasPrice: position.maxGasPrice.toPlain(),
+    priorityFee: position.priorityFee.toPlain(),
   };
 };
 
@@ -82,6 +84,7 @@ export const fromPlainPosition = (position: PlainPosition): Position => {
     singleTopUp: ScaledNumber.fromPlain(position.singleTopUp),
     maxTopUp: ScaledNumber.fromPlain(position.maxTopUp),
     maxGasPrice: ScaledNumber.fromPlain(position.maxGasPrice),
+    priorityFee: ScaledNumber.fromPlain(position.priorityFee),
   };
 };
 
@@ -120,11 +123,13 @@ export function positionFromPartial<T>(pool: Pool<T>, position: Partial<Position
   if (!position.singleTopUp) throw Error("Missing single top-up when creating position");
   if (!position.maxTopUp) throw Error("Missing max top-up when creating position");
   if (!position.maxGasPrice) throw Error("Missing max top-up when creating position");
+  if (!position.priorityFee) throw Error("Missing priority fee when creating position");
   return {
     protocol: position.protocol,
     account: position.account,
     threshold: position.threshold,
     singleTopUp: position.singleTopUp,
+    priorityFee: position.priorityFee,
     maxTopUp: position.maxTopUp,
     maxGasPrice: position.maxGasPrice,
     actionToken: pool.underlying.address,

@@ -3,17 +3,19 @@ import styled from "styled-components";
 import LaunchIcon from "@material-ui/icons/Launch";
 import { useTranslation } from "react-i18next";
 import { useWeb3React } from "@web3-react/core";
+import { BigNumber } from "ethers";
 
 import { GradientLink } from "../../../../styles/GradientText";
 import BackdTooltip from "../../../../components/BackdTooltip";
 import { shortenAddress } from "../../../../lib/text";
-import { Pool, Position } from "../../../../lib/types";
+import { ScaledNumber } from "../../../../lib/scaled-number";
+import { Optional, Pool, Position } from "../../../../lib/types";
 import { selectPrice } from "../../../../state/selectors";
 import { useDevice } from "../../../../app/hooks/use-device";
 import { getEtherscanAddressLink } from "../../../../lib/web3";
 import { selectActionFees } from "../../../../state/positionsSlice";
 import Loader from "../../../../components/Loader";
-import InfoBlock from "../../../../components/InfoBlock";
+import InfoBlock, { InfoBlockRow } from "../../../../components/InfoBlock";
 
 const StyledTopupInformation = styled.div`
   width: 100%;
@@ -106,9 +108,10 @@ const InfoLabel = styled(Label)`
 interface Props {
   position: Position;
   pool: Pool;
+  value?: Optional<BigNumber>;
 }
 
-const TopupInformation = ({ position, pool }: Props): JSX.Element => {
+const TopupInformation = ({ position, pool, value }: Props): JSX.Element => {
   const { t } = useTranslation();
   const price = useSelector(selectPrice(pool));
   const actionFees = useSelector(selectActionFees);
@@ -137,60 +140,64 @@ const TopupInformation = ({ position, pool }: Props): JSX.Element => {
         })}
       </Summary>
       <InfoBlock
-        rows={[
-          {
-            label: t("actions.topup.fields.protocol.label"),
-            tooltip: t("actions.topup.fields.protocol.tooltip"),
-            value: position.protocol,
-            valueId: "topup-information-protocol",
-          },
-          {
-            label: t("actions.topup.fields.address.label"),
-            tooltip: t("actions.topup.fields.address.tooltip"),
-            value: (
-              <AddressLabel
-                href={getEtherscanAddressLink(chainId, position.account)}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {shortenAddress(position.account, 8)}
-                <LaunchIcon style={{ fill: "var(--secondary)" }} />
-              </AddressLabel>
-            ),
-          },
-          {
-            label: t("actions.topup.fields.threshold.label"),
-            tooltip: t("actions.topup.fields.threshold.tooltip"),
-            value: position.threshold.toString(),
-            valueId: "topup-information-threshold",
-          },
-          {
-            label: t("actions.topup.fields.single.label"),
-            tooltip: t("actions.topup.fields.single.tooltip"),
-            value: `${position.singleTopUp.toCryptoString()} ${pool.underlying.symbol}`,
-            valueId: "topup-information-single-topup",
-          },
-          {
-            label: t("actions.topup.fields.max.label"),
-            tooltip: t("actions.topup.fields.max.tooltip"),
-            value: `${position.maxTopUp.toCryptoString()} ${pool.underlying.symbol}`,
-            valueId: "topup-information-max-topup",
-          },
-          {
-            label: t("actions.topup.fields.gas.label"),
-            tooltip: t("actions.topup.fields.gas.tooltip"),
-            value: `${position.maxGasPrice.toCryptoString()} Gwei`,
-            valueId: "topup-information-max-gas",
-          },
-        ]}
-      />
-      <InfoSection>
-        <InfoRow>
-          <InfoLabel>
-            {t("actions.topup.stages.confirmation.fees.label")}
-            <BackdTooltip
-              info
-              items={[
+        sections={[
+          [
+            {
+              label: t("actions.topup.fields.protocol.label"),
+              tooltip: t("actions.topup.fields.protocol.tooltip"),
+              value: position.protocol,
+              valueId: "topup-information-protocol",
+            },
+            {
+              label: t("actions.topup.fields.address.label"),
+              tooltip: t("actions.topup.fields.address.tooltip"),
+              value: (
+                <AddressLabel
+                  href={getEtherscanAddressLink(chainId, position.account)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {shortenAddress(position.account, 8)}
+                  <LaunchIcon style={{ fill: "var(--secondary)" }} />
+                </AddressLabel>
+              ),
+            },
+            {
+              label: t("actions.topup.fields.threshold.label"),
+              tooltip: t("actions.topup.fields.threshold.tooltip"),
+              value: position.threshold.toString(),
+              valueId: "topup-information-threshold",
+            },
+            {
+              label: t("actions.topup.fields.single.label"),
+              tooltip: t("actions.topup.fields.single.tooltip"),
+              value: `${position.singleTopUp.toCryptoString()} ${pool.underlying.symbol}`,
+              valueId: "topup-information-single-topup",
+            },
+            {
+              label: t("actions.topup.fields.max.label"),
+              tooltip: t("actions.topup.fields.max.tooltip"),
+              value: `${position.maxTopUp.toCryptoString()} ${pool.underlying.symbol}`,
+              valueId: "topup-information-max-topup",
+            },
+            {
+              label: t("actions.topup.fields.priority.label"),
+              tooltip: t("actions.topup.fields.priority.tooltip"),
+              value: `${position.priorityFee.toCryptoString()} Gwei`,
+              valueId: "topup-information-priority-fee",
+            },
+            {
+              label: t("actions.topup.fields.gas.label"),
+              tooltip: t("actions.topup.fields.gas.tooltip"),
+              value: `${position.maxGasPrice.toCryptoString()} Gwei`,
+              valueId: "topup-information-max-gas",
+            },
+          ],
+          [
+            {
+              label: t("actions.topup.stages.confirmation.fees.label"),
+              tooltip: t("actions.topup.stages.confirmation.fees.tooltip.header"),
+              tooltipItems: [
                 {
                   label: t("actions.topup.stages.confirmation.fees.tooltip.itemLabels.lps"),
                   value: actionFees ? actionFees.lpFraction.toPercent() : "--%",
@@ -203,14 +210,32 @@ const TopupInformation = ({ position, pool }: Props): JSX.Element => {
                   label: t("actions.topup.stages.confirmation.fees.tooltip.itemLabels.stakers"),
                   value: actionFees ? actionFees.treasuryFraction.toPercent() : "--%",
                 },
-              ]}
-            >
-              {t("actions.topup.stages.confirmation.fees.tooltip.header")}
-            </BackdTooltip>
-          </InfoLabel>
-          <InfoLabel>{actionFees ? actionFees.total.toPercent() : <Loader />}</InfoLabel>
-        </InfoRow>
-      </InfoSection>
+              ],
+              value: isMobile
+                ? actionFees
+                  ? actionFees.total.toPercent()
+                  : "--%"
+                : t("actions.topup.stages.confirmation.fees.value", {
+                    percent: actionFees ? actionFees.total.toPercent() : "--%",
+                  }),
+              valueId: "topup-information-action-fees",
+            },
+          ],
+        ]}
+      />
+      {value && (
+        <InfoSection>
+          <InfoRow>
+            <InfoLabel>
+              {t("actions.gasBank.topupAmount")}
+              <BackdTooltip info>{t("actions.gasBank.topupAmountTooltip")}</BackdTooltip>
+            </InfoLabel>
+            <InfoLabel>
+              {value ? `${new ScaledNumber(value).toCryptoString()} ETH` : <Loader />}
+            </InfoLabel>
+          </InfoRow>
+        </InfoSection>
+      )}
     </StyledTopupInformation>
   );
 };

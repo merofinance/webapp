@@ -233,7 +233,7 @@ describe("Pool Selection", () => {
     cy.location().should((loc) => {
       if (loc.pathname)
         expect(loc.pathname).to.eq(
-          "/actions/register/topup/deposit/bdai/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
+          "/actions/register/topup/deposit/bkddai/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
         );
     });
   });
@@ -297,7 +297,7 @@ describe("Pool Deposit", () => {
     cy.location().should((loc) => {
       if (loc.pathname)
         expect(loc.pathname).to.eq(
-          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/bdai"
+          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/bkddai"
         );
     });
   });
@@ -334,7 +334,7 @@ describe("Conditions Page", () => {
     cy.location().should((loc) => {
       if (loc.pathname)
         expect(loc.pathname).to.eq(
-          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/bdai"
+          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/bkddai"
         );
     });
   });
@@ -441,6 +441,23 @@ describe("Conditions Page", () => {
     cy.get("#register-topup-singletopup-error").should("not.exist");
   });
 
+  it("Should have nothing in priority input", () => {
+    cy.get("#register-topup-priorityfee-input").should("have.value", "");
+  });
+  it("Should not have priority error", () => {
+    cy.get("#register-topup-priorityfee-error").should("not.exist");
+  });
+  it("Should show priority error on no entry", () => {
+    cy.get("#register-topup-priorityfee-input").focus();
+    cy.get("#register-topup-priorityfee-input").blur();
+    cy.get("#register-topup-priorityfee-error").contains("Priority fee required");
+  });
+  it("Should enter priority", () => {
+    cy.get("#register-topup-priorityfee-input").clear();
+    cy.get("#register-topup-priorityfee-input").type("3");
+    cy.get("#register-topup-priorityfee-error").should("not.exist");
+  });
+
   it("Should have nothing in gas input", () => {
     cy.get("#register-topup-maxgasprice-input").should("have.value", "");
   });
@@ -452,7 +469,13 @@ describe("Conditions Page", () => {
     cy.get("#register-topup-maxgasprice-input").blur();
     cy.get("#register-topup-maxgasprice-error").contains("Max gas price required");
   });
+  it("Should show gas error on not enough ETH", () => {
+    cy.get("#register-topup-maxgasprice-input").focus();
+    cy.get("#register-topup-maxgasprice-input").type("100000000");
+    cy.get("#register-topup-maxgasprice-error").contains("Not enough ETH in wallet to cover gas, ");
+  });
   it("Should show gas error on 0", () => {
+    cy.get("#register-topup-maxgasprice-input").clear();
     cy.get("#register-topup-maxgasprice-input").focus();
     cy.get("#register-topup-maxgasprice-input").type("0");
     cy.get("#register-topup-maxgasprice-error").contains("Must be positive number");
@@ -480,7 +503,7 @@ describe("Conditions Page", () => {
   });
   it("Should enter gas", () => {
     cy.get("#register-topup-maxgasprice-input").clear();
-    cy.get("#register-topup-maxgasprice-input").type("50");
+    cy.get("#register-topup-maxgasprice-input").type("2");
     cy.get("#register-topup-maxgasprice-error").should("not.exist");
     cy.get("#register-topup-maxtopup-error").should("not.exist");
   });
@@ -528,7 +551,7 @@ describe("Top-up Position Confirmation", () => {
     cy.get("#topup-information-threshold").contains("2");
     cy.get("#topup-information-single-topup").contains("100");
     cy.get("#topup-information-max-topup").contains("300");
-    cy.get("#topup-information-max-gas").contains("50");
+    cy.get("#topup-information-max-gas").contains("2");
   });
   it("Should take snapshot", () => {
     percySnapshot();
@@ -605,7 +628,7 @@ describe("Existing Topup View", () => {
     cy.get("#topup-information-threshold").contains("2");
     cy.get("#topup-information-single-topup").contains("100");
     cy.get("#topup-information-max-topup").contains("300");
-    cy.get("#topup-information-max-gas").contains("50");
+    cy.get("#topup-information-max-gas").contains("2");
   });
   it("Should have delete button", () => {
     cy.get("#delete-action-button").contains("Delete Top-up Position");

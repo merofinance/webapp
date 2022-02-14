@@ -4,7 +4,12 @@ import * as Sentry from "@sentry/browser";
 import { RootState } from "../app/store";
 import { ErrorState } from "../app/errors";
 import { fetchPool, fetchPools, fetchPrices } from "./poolsListSlice";
-import { fetchPositions, registerPosition, removePosition } from "./positionsSlice";
+import {
+  fetchEstimatedGasUsage,
+  fetchPositions,
+  registerPosition,
+  removePosition,
+} from "./positionsSlice";
 import { fetchPendingTransactions } from "./transactionsSlice";
 import { deposit, fetchAllowances, fetchBalances, withdraw } from "./userSlice";
 
@@ -43,6 +48,7 @@ export const errorSlice = createSlice({
     builder.addCase(deposit.rejected, handleError);
     builder.addCase(withdraw.rejected, handleError);
     builder.addCase(fetchPositions.rejected, handleError);
+    builder.addCase(fetchEstimatedGasUsage.rejected, handleError);
     builder.addCase(registerPosition.rejected, handleError);
     builder.addCase(removePosition.rejected, handleError);
   },

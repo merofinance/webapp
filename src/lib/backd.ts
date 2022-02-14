@@ -1,4 +1,4 @@
-import contracts from "@backdfund/protocol/build/deployments/map.json";
+import contracts from "@backdfund/protocol/config/deployments/map.json";
 import { Controller } from "@backdfund/protocol/typechain/Controller";
 import { ControllerFactory } from "@backdfund/protocol/typechain/ControllerFactory";
 import { Ierc20FullFactory } from "@backdfund/protocol/typechain/Ierc20FullFactory";
@@ -6,7 +6,13 @@ import { LiquidityPoolFactory } from "@backdfund/protocol/typechain/LiquidityPoo
 import { StakerVaultFactory } from "@backdfund/protocol/typechain/StakerVaultFactory";
 import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
 import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFactory";
-import { TopUpActionFeeHandlerFactory } from "@backdfund/protocol";
+import {
+  AddressProvider,
+  AddressProviderFactory,
+  GasBank,
+  GasBankFactory,
+  TopUpActionFeeHandlerFactory,
+} from "@backdfund/protocol";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
 import fromEntries from "fromentries";
 
@@ -20,9 +26,11 @@ import {
   MILLISECONDS_PER_YEAR,
   DEFAULT_SCALE,
   DEPOSIT_SLIPPAGE,
+  GWEI_DECIMALS,
+  DEFAULT_DECIMALS,
 } from "./constants";
 import { bigNumberToFloat } from "./numeric";
-import { ScaledNumber } from "./scaled-number";
+import { PlainScaledNumber, ScaledNumber } from "./scaled-number";
 import {
   Address,
   AllowanceQuery,
@@ -55,7 +63,8 @@ export interface Backd {
   getLoanPosition(protocol: LendingProtocol, address?: Address): Promise<Optional<PlainLoan>>;
   getPositions(): Promise<PlainPosition[]>;
   getActionFees(): Promise<PlainActionFees>;
-  registerPosition(pool: Pool, position: Position): Promise<ContractTransaction>;
+  getEstimatedGasUsage(): Promise<PlainScaledNumber>;
+  registerPosition(pool: Pool, position: Position, value: BigNumber): Promise<ContractTransaction>;
   removePosition(
     account: Address,
     protocol: string,
@@ -63,6 +72,7 @@ export interface Backd {
   ): Promise<ContractTransaction>;
   getBalance(address: Address, account?: Address): Promise<ScaledNumber>;
   getBalances(addresses: Address[], account?: Address): Promise<Balances>;
+  getGasBankBalance(): Promise<PlainScaledNumber>;
   getAllowance(token: Token, spender: Address, account?: string): Promise<ScaledNumber>;
   getAllowances(queries: AllowanceQuery[]): Promise<Record<string, Balances>>;
   getWithdrawalFees(pools: Pool[]): Promise<PlainWithdrawalFees>;
@@ -83,6 +93,10 @@ export class Web3Backd implements Backd {
 
   private topupAction: TopUpAction;
 
+  private addressProvider: AddressProvider;
+
+  private gasBank: GasBank;
+
   private chainId: number;
 
   constructor(private _provider: Signer | providers.Provider, private options: BackdOptions) {
@@ -95,6 +109,12 @@ export class Web3Backd implements Backd {
     this.topupAction = TopUpActionFactory.connect(contracts["TopUpAction"][0], _provider);
     // eslint-disable-next-line dot-notation
     this.topupAction = TopUpActionFactory.connect(contracts["TopUpAction"][0], _provider);
+    // eslint-disable-next-line dot-notation
+    this.gasBank = GasBankFactory.connect(contracts["GasBank"][0], _provider);
+    this.addressProvider = AddressProviderFactory.connect(
+      contracts["AddressProvider"][0], // eslint-disable-line dot-notation
+      _provider
+    );
   }
 
   get topupActionAddress(): string {
@@ -130,7 +150,7 @@ export class Web3Backd implements Backd {
   }
 
   async listPools(): Promise<Pool[]> {
-    const markets = await this.controller.allPools();
+    const markets = await this.addressProvider.allPools();
     return Promise.all(markets.map((v: any) => this.getPoolInfo(v)));
   }
 
@@ -145,6 +165,12 @@ export class Web3Backd implements Backd {
       token.decimals(),
     ]);
     return { address: tokenAddress, name, symbol, decimals };
+  }
+
+  async getTokenDecimals(tokenAddress: Address): Promise<number> {
+    if (tokenAddress === ETH_DUMMY_ADDRESS) return ETH_DECIMALS;
+    const token = Ierc20FullFactory.connect(tokenAddress, this._provider);
+    return token.decimals();
   }
 
   async getPoolInfo(address: Address): Promise<Pool> {
@@ -171,7 +197,7 @@ export class Web3Backd implements Backd {
     const [lpToken, underlying, stakerVaultAddress] = await Promise.all([
       this.getTokenInfo(lpTokenAddress),
       this.getTokenInfo(underlyingAddress),
-      this.controller.getStakerVault(lpTokenAddress),
+      this.addressProvider.getStakerVault(lpTokenAddress),
     ]);
 
     let apy = null;
@@ -190,7 +216,7 @@ export class Web3Backd implements Backd {
       lpToken,
       apy,
       address,
-      totalAssets,
+      totalAssets: totalAssets.mul(BigNumber.from(10).pow(DEFAULT_DECIMALS - underlying.decimals)),
       exchangeRate,
       stakerVaultAddress,
       maxWithdrawalFee,
@@ -226,7 +252,7 @@ export class Web3Backd implements Backd {
 
   async getPositions(): Promise<PlainPosition[]> {
     const account = await this.currentAccount();
-    const rawPositions = await this.topupAction.listPositions(account);
+    const rawPositions = await this.topupAction.getUserPositions(account);
     return Promise.all(rawPositions.map((v: any) => this.getPositionInfo(v)));
   }
 
@@ -261,22 +287,35 @@ export class Web3Backd implements Backd {
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async getPositionInfo(rawPosition: any): Promise<PlainPosition> {
-    const token = Ierc20FullFactory.connect(rawPosition.record.depositToken, this._provider);
-    const decimals = await token.decimals();
+    const positionInfo = await this.topupAction.getPosition(
+      await this.currentAccount(),
+      rawPosition.account,
+      rawPosition.protocol
+    );
+    const decimals = await this.getTokenDecimals(positionInfo.actionToken);
     const position: PlainPosition = {
       protocol: ethers.utils.parseBytes32String(rawPosition.protocol),
-      actionToken: rawPosition.record.actionToken,
-      depositToken: rawPosition.record.depositToken,
+      actionToken: positionInfo.actionToken,
+      depositToken: positionInfo.depositToken,
       account: rawPosition.account,
-      threshold: new ScaledNumber(rawPosition.record.threshold, decimals).toPlain(),
-      singleTopUp: new ScaledNumber(rawPosition.record.singleTopUpAmount, decimals).toPlain(),
-      maxTopUp: new ScaledNumber(rawPosition.record.totalTopUpAmount, decimals).toPlain(),
-      maxGasPrice: new ScaledNumber(rawPosition.record.maxGasPrice, 9).toPlain(),
+      threshold: new ScaledNumber(positionInfo.threshold).toPlain(),
+      singleTopUp: new ScaledNumber(positionInfo.singleTopUpAmount, decimals).toPlain(),
+      maxTopUp: new ScaledNumber(positionInfo.totalTopUpAmount, decimals).toPlain(),
+      priorityFee: new ScaledNumber(positionInfo.priorityFee, GWEI_DECIMALS).toPlain(),
+      maxGasPrice: new ScaledNumber(positionInfo.maxFee, GWEI_DECIMALS).toPlain(),
     };
     return position;
   }
 
-  async registerPosition(pool: Pool, position: Position): Promise<ContractTransaction> {
+  async getEstimatedGasUsage(): Promise<PlainScaledNumber> {
+    return new ScaledNumber(await this.topupAction.getEstimatedGasUsage(), GWEI_DECIMALS).toPlain();
+  }
+
+  async registerPosition(
+    pool: Pool,
+    position: Position,
+    value: BigNumber
+  ): Promise<ContractTransaction> {
     const { decimals } = pool.underlying;
     const scale = BigNumber.from(10).pow(decimals);
     const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
@@ -284,32 +323,34 @@ export class Web3Backd implements Backd {
     const protocol = utils.formatBytes32String(position.protocol);
     const depositAmount = position.maxTopUp.value.mul(rawExchangeRate).div(scale);
 
+    // TODO Test USDC pool
+
+    const record = {
+      threshold: position.threshold.value,
+      priorityFee: position.priorityFee.value,
+      maxFee: position.maxGasPrice.value,
+      actionToken: pool.underlying.address,
+      depositToken: pool.lpToken.address,
+      singleTopUpAmount: position.singleTopUp.value,
+      totalTopUpAmount: position.maxTopUp.value,
+      depositTokenBalance: ScaledNumber.fromUnscaled(0).value,
+      repayDebt: false,
+    };
+
     const gasEstimate = await this.topupAction.estimateGas.register(
       position.account,
       protocol,
-      position.threshold.value,
-      pool.lpToken.address,
       depositAmount,
-      pool.underlying.address,
-      position.singleTopUp.value,
-      position.maxTopUp.value,
-      position.maxGasPrice.value
-    );
-    const gasLimit = gasEstimate.mul(12).div(10);
-    return this.topupAction.register(
-      position.account,
-      protocol,
-      position.threshold.value,
-      pool.lpToken.address,
-      depositAmount,
-      pool.underlying.address,
-      position.singleTopUp.value,
-      position.maxTopUp.value,
-      position.maxGasPrice.value,
+      record,
       {
-        gasLimit,
+        value,
       }
     );
+    const gasLimit = gasEstimate.mul(12).div(10);
+    return this.topupAction.register(position.account, protocol, depositAmount, record, {
+      gasLimit,
+      value,
+    });
   }
 
   async removePosition(
@@ -372,7 +413,7 @@ export class Web3Backd implements Backd {
     const value = pool.underlying.address === ETH_DUMMY_ADDRESS ? amount.value : 0;
     const minTokenAmount = amount
       .div(pool.exchangeRate)
-      .mul(ScaledNumber.fromUnscaled(DEPOSIT_SLIPPAGE));
+      .mul(ScaledNumber.fromUnscaled(DEPOSIT_SLIPPAGE, amount.decimals));
     return poolContract["depositFor(address,uint256,uint256)"](
       await this.currentAccount(),
       amount.value,
@@ -385,7 +426,7 @@ export class Web3Backd implements Backd {
     const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
     const minRedeemAmount = amount
       .mul(pool.exchangeRate)
-      .mul(ScaledNumber.fromUnscaled(DEPOSIT_SLIPPAGE));
+      .mul(ScaledNumber.fromUnscaled(DEPOSIT_SLIPPAGE, amount.decimals));
     return poolContract["redeem(uint256,uint256)"](amount.value, minRedeemAmount.value);
   }
 
@@ -402,8 +443,10 @@ export class Web3Backd implements Backd {
       return new ScaledNumber(await this.provider.getBalance(account));
     }
     const token = Ierc20FullFactory.connect(address, this._provider);
-    const decimals = await token.decimals();
-    const rawBalance = await token.balanceOf(account);
+    const [decimals, rawBalance] = await Promise.all([
+      await token.decimals(),
+      await token.balanceOf(account),
+    ]);
     return new ScaledNumber(rawBalance, decimals);
   }
 
@@ -411,6 +454,11 @@ export class Web3Backd implements Backd {
     const promises = addresses.map((a) => this.getBalance(a, account));
     const balances = await Promise.all(promises);
     return fromEntries(addresses.map((a, i) => [a, balances[i]]));
+  }
+
+  async getGasBankBalance(): Promise<PlainScaledNumber> {
+    const balance = await this.gasBank.balanceOf(await this.currentAccount());
+    return new ScaledNumber(balance).toPlain();
   }
 
   async getPrices(symbols: string[]): Promise<Prices> {

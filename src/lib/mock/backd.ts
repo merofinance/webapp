@@ -3,8 +3,9 @@ import fromEntries from "fromentries";
 
 import { Pool } from "..";
 import { Backd } from "../backd";
+import { GWEI_DECIMALS } from "../constants";
 import { bigNumberToFloat } from "../numeric";
-import { ScaledNumber } from "../scaled-number";
+import { PlainScaledNumber, ScaledNumber } from "../scaled-number";
 import {
   Address,
   AllowanceQuery,
@@ -69,8 +70,16 @@ export default class MockBackd implements Backd {
     return Promise.resolve(new ScaledNumber(number));
   }
 
+  getGasBankBalance(): Promise<PlainScaledNumber> {
+    return Promise.resolve(new ScaledNumber().toPlain());
+  }
+
   getWithdrawalFees(pools: Pool[]): Promise<PlainWithdrawalFees> {
     return Promise.resolve({});
+  }
+
+  getEstimatedGasUsage(): Promise<PlainScaledNumber> {
+    return Promise.resolve(ScaledNumber.fromUnscaled(1000, GWEI_DECIMALS).toPlain());
   }
 
   async deposit(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction> {
@@ -136,7 +145,11 @@ export default class MockBackd implements Backd {
     return Promise.resolve(["Aave", "Compound"]);
   }
 
-  async registerPosition(pool: Pool<number>, position: Position): Promise<ContractTransaction> {
+  async registerPosition(
+    pool: Pool<number>,
+    position: Position,
+    value: BigNumber
+  ): Promise<ContractTransaction> {
     const account = await this.currentAccount();
     return makeContractTransaction(this.topupActionAddress, account);
   }

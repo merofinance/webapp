@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
 import { FormikErrors, useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 
 import { useBackd } from "../../../../app/hooks/use-backd";
 import { ScaledNumber } from "../../../../lib/scaled-number";
@@ -15,10 +15,8 @@ import { useDevice } from "../../../../app/hooks/use-device";
 import { selectEthPrice } from "../../../../state/poolsListSlice";
 import {
   GWEI_DECIMALS,
-  GWEI_SCALE,
   RECOMMENDED_THRESHOLD,
   TOPUP_ACTION_ROUTE,
-  TOPUP_GAS_COST,
 } from "../../../../lib/constants";
 import {
   addSuggestion,
@@ -30,12 +28,14 @@ import { Loan, Optional, Position } from "../../../../lib/types";
 import { selectLoans } from "../../../../state/lendingSlice";
 import TopupInput from "./TopupInput";
 import TopupConfirmation from "./TopupConfirmation";
-import { selectPoolUnderlyingBalance } from "../../../../state/userSlice";
+import { selectEthBalance, selectPoolUnderlyingBalance } from "../../../../state/userSlice";
+import { selectEstimatedGasUsage } from "../../../../state/positionsSlice";
 
 export interface FormType {
   threshold: string;
   singleTopUp: string;
   maxTopUp: string;
+  priorityFee: string;
   maxGasPrice: string;
 }
 
@@ -43,6 +43,7 @@ const initialValues: FormType = {
   threshold: "",
   singleTopUp: "",
   maxTopUp: "",
+  priorityFee: "",
   maxGasPrice: "",
 };
 
@@ -73,9 +74,18 @@ const validationSchema = yup.object().shape({
       "actions.topup.fields.max.invalid",
       (s: any) => !ScaledNumber.fromUnscaled(s).isZero()
     ),
+  priorityFee: yup
+    .string()
+    .required("actions.topup.fields.priority.required")
+    .test("is-valid-number", "actions.topup.fields.priority.invalid", (s: any) =>
+      ScaledNumber.isValid(s)
+    ),
   maxGasPrice: yup
     .string()
     .required("actions.topup.fields.gas.required")
+    .test("is-valid-number", "actions.topup.fields.priority.invalid", (s: any) =>
+      ScaledNumber.isValid(s)
+    )
     .test("is-positive-number", "actions.topup.fields.gas.positive", (s: any) => Number(s) > 0),
 });
 
@@ -116,11 +126,15 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
   const navigate = useNavigate();
   const { isMobile } = useDevice();
   const { address, protocol, poolName } = useParams<"address" | "protocol" | "poolName">();
+
   const pool = useSelector(selectPool(poolName));
   const underlyingPrice = useSelector(selectPrice(pool));
   const ethPrice = useSelector(selectEthPrice);
   const balance = useSelector(selectPoolUnderlyingBalance(pool));
   const implement = useSelector(selectActiveSuggestion);
+  const estimatedGasUsage = useSelector(selectEstimatedGasUsage);
+  const ethBalance = useSelector(selectEthBalance);
+
   const [loading, setLoading] = useState(false);
   const [confirming, setConfirming] = useState(false);
   const loans = useSelector(selectLoans(address));
@@ -146,14 +160,35 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
     };
   }, [implement]);
 
+  const ethValue = (): Optional<BigNumber> => {
+    if (!estimatedGasUsage) return null;
+    const topups = Math.ceil(Number(position.maxTopUp.div(position.singleTopUp).toString()));
+    return estimatedGasUsage.value.mul(position.maxGasPrice.value).mul(topups);
+  };
+
   const validate = (values: FormType): FormikErrors<FormType> => {
     const errors: FormikErrors<FormType> = {};
     if (!pool || !balance) return errors;
     const single = ScaledNumber.fromUnscaled(values.singleTopUp, pool.underlying.decimals);
     const max = ScaledNumber.fromUnscaled(values.maxTopUp, pool.underlying.decimals);
-    if (values.maxTopUp && single.gt(max))
+
+    // Validating Maximum Top-up is Greater than Single
+    if (values.maxTopUp && single.gt(max)) {
       errors.singleTopUp = "actions.topup.fields.single.lessThanMax";
-    if (max.gt(balance)) errors.maxTopUp = "actions.topup.fields.max.exceedsBalance";
+    }
+
+    // Validating that user has enough balance for top-up
+    if (max.gt(balance)) {
+      errors.maxTopUp = "actions.topup.fields.max.exceedsBalance";
+    }
+
+    // Validating that user has enough ETH for Gas Bank
+    const ethNeeded = ethValue();
+    if (ethNeeded && ethBalance && ethNeeded.gt(ethBalance.value)) {
+      const needed = new ScaledNumber(ethNeeded).toCryptoString();
+      errors.maxGasPrice = t("actions.topup.fields.gas.notEnoughEth", { needed });
+    }
+
     return errors;
   };
 
@@ -182,6 +217,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
     if (!formik.values.threshold) return t("actions.topup.fields.threshold.hover");
     if (!formik.values.singleTopUp) return t("actions.topup.fields.single.hover");
     if (!formik.values.maxTopUp) return t("actions.topup.fields.max.hover");
+    if (!formik.values.priorityFee) return t("actions.topup.fields.priority.hover");
     if (!formik.values.maxGasPrice) return t("actions.topup.fields.gas.hover");
     return "";
   };
@@ -192,6 +228,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
     threshold: ScaledNumber.fromUnscaled(formik.values.threshold),
     singleTopUp: ScaledNumber.fromUnscaled(formik.values.singleTopUp, pool.underlying.decimals),
     maxTopUp: ScaledNumber.fromUnscaled(formik.values.maxTopUp, pool.underlying.decimals),
+    priorityFee: ScaledNumber.fromUnscaled(formik.values.priorityFee, GWEI_DECIMALS),
     maxGasPrice: ScaledNumber.fromUnscaled(formik.values.maxGasPrice, GWEI_DECIMALS),
     actionToken: pool.underlying.address,
     depositToken: pool.lpToken.address,
@@ -216,11 +253,12 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
       !formik.values.singleTopUp ||
       !ScaledNumber.isValid(formik.values.singleTopUp) ||
       !ethPrice ||
-      !underlyingPrice
+      !underlyingPrice ||
+      !estimatedGasUsage
     )
       return "";
-    const gas = ScaledNumber.fromUnscaled(formik.values.maxGasPrice, GWEI_DECIMALS);
-    const gasCost = new ScaledNumber(gas.value.mul(TOPUP_GAS_COST).div(GWEI_SCALE));
+    const max = ScaledNumber.fromUnscaled(formik.values.maxGasPrice, GWEI_DECIMALS);
+    const gasCost = new ScaledNumber(estimatedGasUsage.value.mul(max.value));
     const gasCostUsd = gasCost.mul(ethPrice);
     return gasCostUsd
       .mul(5)
@@ -235,12 +273,15 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
       formik.values.singleTopUp &&
       ScaledNumber.isValid(formik.values.singleTopUp) &&
       ethPrice &&
-      underlyingPrice
+      underlyingPrice &&
+      estimatedGasUsage &&
+      formik.values.maxGasPrice &&
+      ScaledNumber.isValid(formik.values.maxGasPrice)
     ) {
-      const single = ScaledNumber.fromUnscaled(formik.values.singleTopUp, pool.underlying.decimals);
+      const single = ScaledNumber.fromUnscaled(formik.values.singleTopUp);
+      const max = ScaledNumber.fromUnscaled(formik.values.maxGasPrice, GWEI_DECIMALS);
       const singleTopupUsd = single.mul(underlyingPrice);
-      const gas = ScaledNumber.fromUnscaled(formik.values.maxGasPrice, GWEI_DECIMALS);
-      const gasCost = new ScaledNumber(gas.value.mul(TOPUP_GAS_COST).div(GWEI_SCALE));
+      const gasCost = new ScaledNumber(estimatedGasUsage.value.mul(max.value));
       const gasCostUsd = gasCost.mul(ethPrice);
       if (singleTopupUsd.mul(0.25).lte(gasCostUsd)) {
         dispatch(
@@ -248,7 +289,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
             type: SuggestionType.SINGLE_LOW,
             text: t("liveHelp.suggestions.singleLow.text", {
               maxGas: gasCost.toUsdValue(ethPrice),
-              ethAmount: gasCost,
+              ethAmount: gasCost.toCryptoString(),
               single: single.toUsdValue(underlyingPrice),
               underlyingAmount: single.toCryptoString(),
               underlyingSymbol: pool.underlying.symbol,
@@ -349,6 +390,18 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
         />
         <TopupInput
           label={
+            isMobile
+              ? t("actions.topup.fields.priority.label")
+              : t("actions.topup.fields.priority.question")
+          }
+          tooltip={t("actions.topup.fields.priority.tooltip")}
+          type="number"
+          name="priorityFee"
+          formik={formik}
+          placeholder="3 Gwei"
+        />
+        <TopupInput
+          label={
             isMobile ? t("actions.topup.fields.gas.label") : t("actions.topup.fields.gas.question")
           }
           tooltip={t("actions.topup.fields.gas.tooltip")}
@@ -380,6 +433,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
           setLoading(false);
         }}
         position={position}
+        value={ethValue()}
         pool={pool}
         complete={() => {
           formik.resetForm({ values: initialValues });

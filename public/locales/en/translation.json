@@ -411,7 +411,8 @@
     "deposits": {
       "header": "Your deposits",
       "empty": "You do not have any existing Deposits...",
-      "manage": "Manage deposits"
+      "manage": "Manage deposits",
+      "poolsSubheader": "Pools"
     },
     "propose": "+ Propose a new Action on Discord",
     "register": {
@@ -447,6 +448,11 @@
         "register": "Register Top-up Position"
       }
     },
+    "gasBank": {
+      "header": "Gas Bank",
+      "topupAmount": "Gas Bank top-up amount",
+      "topupAmountTooltip": "The amount of ETH send to the Gas Bank to cover the gas cost of executing the transactions. Unspend ETH will be refunded to your wallet."
+    },
     "topup": {
       "label": "Top-up Position",
       "description": "Protect your loans from liquidation",
@@ -479,7 +485,8 @@
           "summaryStart": "When the collateralization of",
           "summaryEnd": "drops below {{threshold}}, it will be topped up with {{single}} {{asset}} ({{singleUsd}}). This will be repeated each time the collateralization ratio drops below {{threshold}}, until a total of {{max}} {{asset}} ({{maxUsd}}) is topped up.",
           "fees": {
-            "label": "Action fee",
+            "label": "Action trigger fee",
+            "value": "{{percent}} of single top-up",
             "tooltip": {
               "header": "When an Action is triggered a small fee is paid to Backd LPs, Keepers and BKD stakers.",
               "itemLabels": {
@@ -538,13 +545,23 @@
           "positive": "Must be positive number",
           "exceedsBalance": "Exceeds deposited balance"
         },
+        "priority": {
+          "label": "Priority fee",
+          "question": "What priority fee should be used for your top-up?",
+          "tooltip": "An additional fee paid to Ethereum miners to prioritise your transaction and have it completed quicker. 3 Gwei is a suitable amount.",
+          "hover": "Enter priority fee",
+          "invalid": "Invalid number",
+          "required": "Priority fee required"
+        },
         "gas": {
           "label": "Max gas price",
           "question": "What is the maximum gas price to pay per top-up?",
           "tooltip": "The maximum gas price used when paying for each top-up. Value is in Gwei units. If value is too low, then your top-up may not execute in time which could result in liquidation. A value of at least 200 Gwei is recommended.",
           "hover": "Enter max gas price",
           "required": "Max gas price required",
-          "positive": "Must be positive number"
+          "invalid": "Invalid number",
+          "positive": "Must be positive number",
+          "notEnoughEth": "Not enough ETH in wallet to cover gas, {{needed}} ETH needed"
         }
       }
     },
@@ -699,7 +716,7 @@
     "view": "View"
   },
   "errors": {
-    "header": "An Error Occured",
+    "header": "An error occured",
     "support": "Please try again in a moment. If the error persists, you can contact us on",
     "positionCreation": "Position creation failed",
     "wrongNetwork": "Wrong network selected, please use a development network",
@@ -727,7 +744,7 @@
         "button": "Decrease threshold"
       },
       "singleLow": {
-        "text": "Your estimated max gas cost per top-up is {{maxGas}} ({{ethAmount}} ETH), however the amount per top-up is only {{single}} ({{underlyingAmount}} {{underlyingSymbol}}). I recommend increasing the single top-up to {{suggestion}} {{underlyingSymbol}} for more efficient top-ups.",
+        "text": "Your max gas cost per top-up is {{maxGas}} ({{ethAmount}} ETH), however the amount per top-up is only {{single}} ({{underlyingAmount}} {{underlyingSymbol}}). I recommend increasing the single top-up to {{suggestion}} {{underlyingSymbol}} for more efficient top-ups.",
         "button": "Increase top-up"
       },
       "topupPositionLow": {
