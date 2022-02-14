@@ -224,7 +224,7 @@ export class Web3Backd implements Backd {
       stakerVaultAddress,
       maxWithdrawalFee: new ScaledNumber(maxWithdrawalFee),
       minWithdrawalFee: new ScaledNumber(minWithdrawalFee),
-      feeDecreasePeriod: new ScaledNumber(feeDecreasePeriod),
+      feeDecreasePeriod: new ScaledNumber(feeDecreasePeriod, 0),
       depositCap: new ScaledNumber(depositCap, underlying.decimals),
     };
   }
