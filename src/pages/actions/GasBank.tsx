@@ -79,10 +79,8 @@ const Gasbank = (): Optional<JSX.Element> => {
       <Row>
         <Asset tiny token={ethPool.underlying} />
         <Balances>
-          <Underlying>
-            {gasBankBalance ? `${gasBankBalance.toCryptoString()} ETH` : <Loader />}
-          </Underlying>
-          <Usd>{gasBankBalance && ethPrice ? gasBankBalance.toUsdValue(ethPrice) : <Loader />}</Usd>
+          <Underlying>{`${gasBankBalance.toCryptoString()} ETH`}</Underlying>
+          <Usd>{ethPrice ? gasBankBalance.toUsdValue(ethPrice) : <Loader />}</Usd>
         </Balances>
       </Row>
     </>
