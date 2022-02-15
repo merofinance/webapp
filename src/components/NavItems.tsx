@@ -1,3 +1,4 @@
+import { useWeb3React } from "@web3-react/core";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -11,40 +12,6 @@ export interface NavItemType {
   comingSoon?: boolean;
   navItems?: NavItemType[];
 }
-
-const navItems: NavItemType[] = [
-  {
-    label: "header.tabs.pools",
-    link: "/pools",
-  },
-  {
-    label: "header.tabs.actions",
-    link: "/actions",
-    comingSoon: true,
-  },
-  {
-    label: "header.tabs.claim",
-    link: "/claim",
-    comingSoon: true,
-  },
-  {
-    label: "header.tabs.more",
-    navItems: [
-      {
-        label: "header.tabs.docs",
-        link: "https://docs.backd.fund/",
-      },
-      {
-        label: "header.tabs.blog",
-        link: "https://backdfund.medium.com/",
-      },
-      {
-        label: "header.tabs.newsletter",
-        link: "https://backd.substack.com/welcome",
-      },
-    ],
-  },
-];
 
 const StyledNavItems = styled.ul`
   position: absolute;
@@ -73,6 +40,41 @@ const StyledNavItems = styled.ul`
 const NavItems = (): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { chainId } = useWeb3React();
+
+  const navItems: NavItemType[] = [
+    {
+      label: "header.tabs.pools",
+      link: "/pools",
+    },
+    {
+      label: "header.tabs.actions",
+      link: "/actions",
+      comingSoon: !chainId || chainId !== 42,
+    },
+    {
+      label: "header.tabs.claim",
+      link: "/claim",
+      comingSoon: true,
+    },
+    {
+      label: "header.tabs.more",
+      navItems: [
+        {
+          label: "header.tabs.docs",
+          link: "https://docs.backd.fund/",
+        },
+        {
+          label: "header.tabs.blog",
+          link: "https://backdfund.medium.com/",
+        },
+        {
+          label: "header.tabs.newsletter",
+          link: "https://backd.substack.com/welcome",
+        },
+      ],
+    },
+  ];
 
   return (
     <StyledNavItems id="nav-items">
