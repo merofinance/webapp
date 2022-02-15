@@ -7,7 +7,6 @@ import HoverFeedback from "./HoverFeedback";
 
 interface ButtonProps {
   primary?: boolean;
-  hero?: boolean;
   large?: boolean;
   medium?: boolean;
   small?: boolean;
@@ -33,7 +32,6 @@ const StyledButton = styled.button`
 
   cursor: ${(props: ButtonProps) => (props.complete ? "auto" : "pointer")};
   pointer-events: ${(props: ButtonProps) => (props.inactive ? "none" : "auto")};
-  margin-top: ${(props: ButtonProps) => (props.hero ? "8rem" : "0")};
 
   width: ${(props: ButtonProps) => {
     if (props.width) return props.width;
@@ -213,7 +211,6 @@ interface Props {
   children: ReactNode;
   click?: () => void;
   primary?: boolean;
-  hero?: boolean;
   large?: boolean;
   medium?: boolean;
   small?: boolean;
@@ -250,7 +247,6 @@ const Button = (props: Props): JSX.Element => {
       <StyledButton
         id={props.id}
         type={props.submit ? "submit" : "button"}
-        hero={props.hero}
         primary={props.primary}
         large={props.large}
         medium={props.medium}
@@ -275,7 +271,6 @@ const Button = (props: Props): JSX.Element => {
           {props.loading && <CircularProgress size={props.large ? 31 : 17} />}
           <Text
             primary={props.primary}
-            hero={props.hero}
             large={props.large}
             medium={props.medium}
             small={props.small}

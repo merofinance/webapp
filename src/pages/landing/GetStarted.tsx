@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 import { Header2 } from "../../styles/Headers";
-import CallToActionButton from "./CallToActionButton";
+import Button from "../../components/Button";
 
 const StyledGetStarted = styled.div`
   width: 100%;
@@ -58,13 +59,16 @@ const Body = styled.p`
 
 const GetStarted = (): JSX.Element => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   return (
     <StyledGetStarted>
       <Container>
         <Header2>{t("getStarted.header")}</Header2>
         <Body>{t("getStarted.description")}</Body>
-        <CallToActionButton />
+        <Button primary large click={() => navigate("/pools")}>
+          {t("landingPage.viewPools")}
+        </Button>
       </Container>
     </StyledGetStarted>
   );
