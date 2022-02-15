@@ -8,7 +8,7 @@ import Button from "../../../../components/Button";
 import { selectPool } from "../../../../state/selectors";
 import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
 import PoolDeposit from "../../../pool/PoolDeposit";
-import { selectBalances } from "../../../../state/userSlice";
+import { selectTokenBalance } from "../../../../state/userSlice";
 import { ScaledNumber } from "../../../../lib/scaled-number";
 
 const Container = styled.div`
@@ -41,7 +41,7 @@ const TopupPoolDeposit = (): JSX.Element => {
   const { address, protocol, poolName } = useParams<"address" | "protocol" | "poolName">();
   const navigate = useNavigate();
   const pool = useSelector(selectPool(poolName));
-  const balances = useSelector(selectBalances);
+  const lpBalance = useSelector(selectTokenBalance(pool?.lpToken.address));
 
   if (!pool) {
     navigate("/");
@@ -49,7 +49,6 @@ const TopupPoolDeposit = (): JSX.Element => {
   }
 
   const hasSufficientBalance = () => {
-    const lpBalance = balances[pool.lpToken.address];
     if (!lpBalance) return false;
     return lpBalance.gt(new ScaledNumber());
   };

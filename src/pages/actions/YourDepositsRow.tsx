@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Pool } from "../../lib";
 import { selectPrices } from "../../state/poolsListSlice";
-import { selectBalances } from "../../state/userSlice";
+import { selectTokenBalance } from "../../state/userSlice";
 import Asset from "../../components/Asset";
 import { GradientText } from "../../styles/GradientText";
 import { TOPUP_ACTION_ROUTE } from "../../lib/constants";
@@ -77,9 +77,8 @@ const YourDepositsRow = ({ pool }: Props): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const prices = useSelector(selectPrices);
-  const balances = useSelector(selectBalances);
+  const balance = useSelector(selectTokenBalance(pool.lpToken.address));
   const price = prices[pool.underlying.symbol];
-  const balance = balances[pool.lpToken.address];
 
   return (
     <Row id={`your-deposits-${pool.underlying.symbol.toLowerCase()}`} key={pool.name}>

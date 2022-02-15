@@ -57,10 +57,9 @@ export function selectLocked(): Selector<RootState, Optional<ScaledNumber>> {
   return (state: RootState) => {
     const pools = useSelector(selectPools);
     const prices = useSelector(selectPrices);
-    const balances = useSelector(selectBalances);
     const positions = useSelector(selectPositions);
 
-    if (!pools || !prices || !balances || !positions) return null;
+    if (!pools || !prices || !positions) return null;
 
     let total = new ScaledNumber();
     for (let i = 0; i < positions.length; i++) {
@@ -84,9 +83,8 @@ export function selectBalance(): Selector<RootState, Optional<ScaledNumber>> {
     const pools = useSelector(selectPools);
     const prices = useSelector(selectPrices);
     const balances = useSelector(selectBalances);
-    const positions = useSelector(selectPositions);
 
-    if (!pools || !prices || !balances || !positions) return null;
+    if (!pools || !prices || !balances) return null;
 
     let total = new ScaledNumber();
     for (let i = 0; i < pools.length; i++) {
