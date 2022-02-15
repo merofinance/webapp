@@ -26,7 +26,6 @@ interface Props {
 
 const TopupPoolTvl = ({ pool }: Props): Optional<JSX.Element> => {
   const prices = useSelector(selectPrices);
-  // TODO Update this
 
   if (!pool) return null;
 

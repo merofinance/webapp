@@ -6,10 +6,6 @@ import { Optional, Pool } from "../lib/types";
 import { selectPools, selectPrice, selectPrices } from "./poolsListSlice";
 import { selectPoolPositions, selectPositions } from "./positionsSlice";
 import { selectBalances } from "./userSlice";
-// TODO Do a check of all selectors used to make sure they make sense
-// TODO Check for remaining TODOs
-// TODO Check for remaining meows
-// TODO Change toUsdValue and toCompacttUsd to have the input as optional
 
 /*
  * VALUE SELECTOR NAMING CONVENTION
