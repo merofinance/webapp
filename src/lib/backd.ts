@@ -292,17 +292,24 @@ export class Web3Backd implements Backd {
       rawPosition.account,
       rawPosition.protocol
     );
-    const decimals = await this.getTokenDecimals(positionInfo.actionToken);
+    const [actionTokenDecimals, depositTokenDecimals] = await Promise.all([
+      this.getTokenDecimals(positionInfo.actionToken),
+      this.getTokenDecimals(positionInfo.depositToken),
+    ]);
     const position: PlainPosition = {
       protocol: ethers.utils.parseBytes32String(rawPosition.protocol),
       actionToken: positionInfo.actionToken,
       depositToken: positionInfo.depositToken,
       account: rawPosition.account,
       threshold: new ScaledNumber(positionInfo.threshold).toPlain(),
-      singleTopUp: new ScaledNumber(positionInfo.singleTopUpAmount, decimals).toPlain(),
-      maxTopUp: new ScaledNumber(positionInfo.totalTopUpAmount, decimals).toPlain(),
+      singleTopUp: new ScaledNumber(positionInfo.singleTopUpAmount, actionTokenDecimals).toPlain(),
+      maxTopUp: new ScaledNumber(positionInfo.totalTopUpAmount, actionTokenDecimals).toPlain(),
       priorityFee: new ScaledNumber(positionInfo.priorityFee, GWEI_DECIMALS).toPlain(),
       maxGasPrice: new ScaledNumber(positionInfo.maxFee, GWEI_DECIMALS).toPlain(),
+      depositTokenBalance: new ScaledNumber(
+        positionInfo.depositTokenBalance,
+        depositTokenDecimals
+      ).toPlain(),
     };
     return position;
   }

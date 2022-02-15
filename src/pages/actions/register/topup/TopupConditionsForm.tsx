@@ -232,6 +232,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
     maxGasPrice: ScaledNumber.fromUnscaled(formik.values.maxGasPrice, GWEI_DECIMALS),
     actionToken: pool.underlying.address,
     depositToken: pool.lpToken.address,
+    depositTokenBalance: ScaledNumber.fromUnscaled(0),
   };
 
   const suggestedMaximumTreshold = () => {
