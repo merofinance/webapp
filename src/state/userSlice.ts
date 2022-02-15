@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { useSelector } from "react-redux";
 
 import { RootState, Selector } from "../app/store";
 import { Backd } from "../lib/backd";
@@ -18,12 +17,10 @@ import {
   PlainBalances,
   Token,
   PlainWithdrawalFees,
-  WithdrawalFees,
   fromPlainWithdrawalFees,
 } from "../lib/types";
 import { fetchPool } from "./poolsListSlice";
 import { handleTransactionConfirmation } from "../lib/transactionsUtils";
-import { selectUsersPoolLpUnlocked, selectTokenBalance } from "./valueSelectors";
 
 interface UserState {
   balances: PlainBalances;
@@ -259,6 +256,26 @@ export function selectWithdrawalFee(pool: Optional<Pool>): Selector<Optional<Sca
 
 export function isConnecting(state: RootState): boolean {
   return state.user.connecting;
+}
+
+export function selectPoolUnderlyingBalance(
+  pool: Optional<Pool>
+): Selector<Optional<ScaledNumber>> {
+  return (state: RootState) => {
+    if (!pool) return null;
+    const poolUnderlyingBalance = state.user.balances[pool.underlying.address];
+    if (!poolUnderlyingBalance) return null;
+    return ScaledNumber.fromPlain(poolUnderlyingBalance);
+  };
+}
+
+export function selectPoolLpBalance(pool: Optional<Pool>): Selector<Optional<ScaledNumber>> {
+  return (state: RootState) => {
+    if (!pool) return null;
+    const poolLpBalance = state.user.balances[pool.lpToken.address];
+    if (!poolLpBalance) return null;
+    return ScaledNumber.fromPlain(poolLpBalance);
+  };
 }
 
 export function selectDepositAllowance(pool: Pool): Selector<Optional<ScaledNumber>> {

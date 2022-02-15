@@ -63,7 +63,7 @@ interface Props {
 
 const StakeTokens = ({ token }: Props): JSX.Element => {
   const { t } = useTranslation();
-  const balance = useSelector(selectTokenBalance(token.address));
+  const balance = useSelector(selectTokenBalance(token.address)); // TODO BUild a dedicated selector for this instead in user slice
   const { isMobile } = useDevice();
 
   const [value, setValue] = useState("");

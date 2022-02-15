@@ -1,18 +1,16 @@
-import { BigNumber } from "ethers";
 import { useSelector } from "react-redux";
 import { Selector } from "reselect";
 import { RootState } from "../app/store";
-import { DEFAULT_DECIMALS } from "../lib/constants";
 import { ScaledNumber } from "../lib/scaled-number";
-import { Optional, Pool, Position } from "../lib/types";
+import { Optional, Pool } from "../lib/types";
 import { selectPools, selectPrice, selectPrices } from "./poolsListSlice";
 import { selectPoolPositions, selectPositions } from "./positionsSlice";
 import { selectBalances } from "./userSlice";
 // TODO Do a check of all selectors used to make sure they make sense
-// TODO Remove use of selectTokenBalance
 // TODO Remove use of selectBalance
 // TODO Check for remaining TODOs
 // TODO Check for remaining meows
+// TODO Change toUsdValue and toCompacttUsd to have the input as optional
 
 /*
  * VALUE SELECTOR NAMING CONVENTION

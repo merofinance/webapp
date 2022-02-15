@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import Button from "../../components/Button";
 import { Pool } from "../../lib";
 import { unstake, withdraw } from "../../state/userSlice";
-import { selectUsersPoolLpHeld, selectTokenBalance } from "../../state/valueSelectors";
+import { selectUsersPoolLpHeld, selectUsersPoolLpStaked } from "../../state/valueSelectors";
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
 import { ScaledNumber } from "../../lib/scaled-number";
@@ -32,9 +32,9 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
   const { t } = useTranslation();
   const dispatch: AppDispatch = useDispatch();
   const backd = useBackd();
-  const staked = useSelector(selectTokenBalance(pool?.stakerVaultAddress));
+  const usersPoolLpStaked = useSelector(selectUsersPoolLpStaked(pool));
   const loading = useSelector(hasPendingTransaction("Withdraw"));
-  const availableToWithdraw = useSelector(selectUsersPoolLpHeld(pool));
+  const usersPoolLpHeld = useSelector(selectUsersPoolLpHeld(pool));
 
   const [confirming, setConfirming] = useState(false);
 
@@ -54,13 +54,13 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
   };
 
   const executeUnstake = () => {
-    if (!backd || loading || !staked || !pool) return;
-    dispatch(unstake({ backd, pool, amount: staked }));
+    if (!backd || loading || !usersPoolLpStaked || !pool) return;
+    dispatch(unstake({ backd, pool, amount: usersPoolLpStaked }));
   };
 
   const submit = () => {
-    if (!valid || !availableToWithdraw) return;
-    if (value.lte(availableToWithdraw)) executeWithdraw(value);
+    if (!valid || !usersPoolLpHeld) return;
+    if (value.lte(usersPoolLpHeld)) executeWithdraw(value);
     else executeUnstake();
   };
 
