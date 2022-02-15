@@ -8,17 +8,15 @@ import { Optional, Pool, Position } from "../lib/types";
 import { selectPools, selectPrices } from "./poolsListSlice";
 import { selectPoolPositions, selectPositions } from "./positionsSlice";
 import { selectBalances } from "./userSlice";
-// TODO Rename to value selectors and split out others
-// TODO Add gas bank to totals
 // TODO Change from using maxFee to using depositTokenBalance for pretty much everything
 // TODO Do a check of all selectors used to make sure they make sense
 // TODO Remove use of selectTokenBalance
 // TODO Remove use of selectBalance
 
 /*
- * SELECTOR NAMING CONVENTION
- * There were a few bugs from selectors having slightly ambigious naming conventions.
- * So this is an attempt to standardise all our value selectors so it's always explicitly clear what we should expect as a return value.
+ * VALUE SELECTOR NAMING CONVENTION
+ * There were a few bugs from the value selectors having slightly ambigious naming conventions.
+ * So this is an attempt to standardise so it's explicitly clear what we should expect as a return value.
  *
  * The selectors have a naming convention of: `select[Owner][Domain][What][Where]`
  *
@@ -146,9 +144,9 @@ export function selectUsersPoolUnderlyingEverywhere(
 }
 
 export const selectUsersTotalUsdHeld = (state: RootState): Optional<ScaledNumber> => {
-  const pools = useSelector(selectPools);
-  const prices = useSelector(selectPrices);
-  const balances = useSelector(selectBalances);
+  const pools = selectPools(state);
+  const prices = selectPrices(state);
+  const balances = selectBalances(state);
   if (!pools || !prices || !balances) return null;
   let total = new ScaledNumber();
   for (let i = 0; i < pools.length; i++) {
@@ -161,9 +159,9 @@ export const selectUsersTotalUsdHeld = (state: RootState): Optional<ScaledNumber
 };
 
 export const selectUsersTotalUsdStaked = (state: RootState): Optional<ScaledNumber> => {
-  const pools = useSelector(selectPools);
-  const prices = useSelector(selectPrices);
-  const balances = useSelector(selectBalances);
+  const pools = selectPools(state);
+  const prices = selectPrices(state);
+  const balances = selectBalances(state);
   if (!pools || !prices || !balances) return null;
   let total = new ScaledNumber();
   for (let i = 0; i < pools.length; i++) {
@@ -176,9 +174,9 @@ export const selectUsersTotalUsdStaked = (state: RootState): Optional<ScaledNumb
 };
 
 export const selectUsersTotalUsdLocked = (state: RootState): Optional<ScaledNumber> => {
-  const pools = useSelector(selectPools);
-  const prices = useSelector(selectPrices);
-  const positions = useSelector(selectPositions);
+  const pools = selectPools(state);
+  const prices = selectPrices(state);
+  const positions = selectPositions(state);
   if (!pools || !prices || !positions) return null;
   let total = new ScaledNumber();
   for (let i = 0; i < positions.length; i++) {
@@ -192,9 +190,9 @@ export const selectUsersTotalUsdLocked = (state: RootState): Optional<ScaledNumb
 };
 
 export const selectUsersTotalUsdEverywhere = (state: RootState): Optional<ScaledNumber> => {
-  const usersTotalUsdHeld = useSelector(selectUsersTotalUsdHeld);
-  const usersTotalUsdStaked = useSelector(selectUsersTotalUsdStaked);
-  const usersTotalUsdLocked = useSelector(selectUsersTotalUsdLocked);
+  const usersTotalUsdHeld = selectUsersTotalUsdHeld(state);
+  const usersTotalUsdStaked = selectUsersTotalUsdStaked(state);
+  const usersTotalUsdLocked = selectUsersTotalUsdLocked(state);
   if (!usersTotalUsdHeld || !usersTotalUsdStaked || !usersTotalUsdLocked) return null;
   return usersTotalUsdHeld.add(usersTotalUsdStaked).add(usersTotalUsdLocked);
 };
@@ -209,8 +207,8 @@ export function selectProtocolPoolUnderlyingEverywhere(
 }
 
 export const selectProtocolTotalUsdEverywhere = (state: RootState): Optional<ScaledNumber> => {
-  const pools = useSelector(selectPools);
-  const prices = useSelector(selectPrices);
+  const pools = selectPools(state);
+  const prices = selectPrices(state);
   if (!pools || !prices) return null;
   let total = new ScaledNumber();
   for (let i = 0; i < pools.length; i++) {
@@ -222,20 +220,6 @@ export const selectProtocolTotalUsdEverywhere = (state: RootState): Optional<Sca
 };
 
 // Meow
-
-export const selectAverageApy = (state: RootState): Optional<ScaledNumber> => {
-  const pools = selectPools(state);
-  if (!pools) return null;
-  let poolCount = 0;
-  let total = new ScaledNumber();
-  for (let i = 0; i < pools.length; i++) {
-    const { apy } = pools[i];
-    if (!apy) return null;
-    total = total.add(apy);
-    poolCount++;
-  }
-  return total.div(poolCount);
-};
 
 export function selectTokenBalance(
   address: string | undefined
@@ -249,9 +233,9 @@ export function selectTokenBalance(
 }
 
 export const selectBalance = (state: RootState): Optional<ScaledNumber> => {
-  const pools = useSelector(selectPools);
-  const prices = useSelector(selectPrices);
-  const balances = useSelector(selectBalances);
+  const pools = selectPools(state);
+  const prices = selectPrices(state);
+  const balances = selectBalances(state);
   if (!pools || !prices || !balances) return null;
   let total = new ScaledNumber();
   for (let i = 0; i < pools.length; i++) {
