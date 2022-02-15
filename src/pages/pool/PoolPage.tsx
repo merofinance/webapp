@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 import Button from "../../components/Button";
-import { selectPoolUnderlyingBalance } from "../../state/selectors";
+import { selectUsersPoolUnderlyingUnlocked } from "../../state/selectors";
 import Seo from "../../components/Seo";
 import PoolDeposit from "./PoolDeposit";
 import PoolWithdraw from "./PoolWithdraw";
@@ -79,7 +79,7 @@ const PoolPage = (): Optional<JSX.Element> => {
   const updated = useWeb3Updated();
   const pool = useSelector(selectPool(poolName));
   const poolsLoaded = useSelector(selectPoolsLoaded);
-  const balance = useSelector(selectPoolUnderlyingBalance(pool));
+  const balance = useSelector(selectUsersPoolUnderlyingUnlocked(pool));
 
   useEffect(() => {
     if (!backd) return;

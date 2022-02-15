@@ -4,9 +4,9 @@ import { useTranslation } from "react-i18next";
 import Statistics from "../../components/Statistics";
 import { Optional, Pool } from "../../lib/types";
 import {
-  selectPoolDeposits,
-  selectPoolTotalDeposits,
-  selectPoolUnderlyingLocked,
+  selectUsersPoolUnderlyingEverywhere,
+  selectProtocolPoolUnderlyingEverywhere,
+  selectUsersPoolUnderlyingLocked,
 } from "../../state/selectors";
 import { selectPrice } from "../../state/poolsListSlice";
 
@@ -17,9 +17,9 @@ interface Props {
 const PoolStatistics = ({ pool }: Props): JSX.Element => {
   const { t } = useTranslation();
   const price = useSelector(selectPrice(pool));
-  const locked = useSelector(selectPoolUnderlyingLocked(pool));
-  const deposits = useSelector(selectPoolDeposits(pool));
-  const totalDeposits = useSelector(selectPoolTotalDeposits(pool));
+  const locked = useSelector(selectUsersPoolUnderlyingLocked(pool));
+  const deposits = useSelector(selectUsersPoolUnderlyingEverywhere(pool));
+  const totalDeposits = useSelector(selectProtocolPoolUnderlyingEverywhere(pool));
 
   return (
     <Statistics

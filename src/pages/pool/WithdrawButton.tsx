@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import Button from "../../components/Button";
 import { Pool } from "../../lib";
 import { unstake, withdraw } from "../../state/userSlice";
-import { selectAvailableToWithdraw, selectTokenBalance } from "../../state/selectors";
+import { selectUsersPoolLpHeld, selectTokenBalance } from "../../state/selectors";
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
 import { ScaledNumber } from "../../lib/scaled-number";
@@ -34,7 +34,7 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
   const backd = useBackd();
   const staked = useSelector(selectTokenBalance(pool?.stakerVaultAddress));
   const loading = useSelector(hasPendingTransaction("Withdraw"));
-  const availableToWithdraw = useSelector(selectAvailableToWithdraw(pool));
+  const availableToWithdraw = useSelector(selectUsersPoolLpHeld(pool));
 
   const [confirming, setConfirming] = useState(false);
 

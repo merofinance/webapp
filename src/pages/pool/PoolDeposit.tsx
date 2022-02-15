@@ -9,7 +9,7 @@ import { Pool } from "../../lib";
 import { ScaledNumber } from "../../lib/scaled-number";
 import DepositButtons from "./DepositButtons";
 import { Optional } from "../../lib/types";
-import { selectPoolDeposits, selectTokenBalance } from "../../state/selectors";
+import { selectUsersPoolUnderlyingEverywhere, selectTokenBalance } from "../../state/selectors";
 
 interface PoolDepositProps {
   error: boolean;
@@ -43,7 +43,7 @@ interface Props {
 const PoolDeposit = ({ pool, compact }: Props): JSX.Element => {
   const { t } = useTranslation();
   const availableToDeposit = useSelector(selectTokenBalance(pool?.underlying.address));
-  const deposits = useSelector(selectPoolDeposits(pool));
+  const deposits = useSelector(selectUsersPoolUnderlyingEverywhere(pool));
   const { isMobile } = useDevice();
   const [depositAmount, setDepositAmount] = useState("");
   const value = ScaledNumber.fromUnscaled(depositAmount, pool?.underlying.decimals);

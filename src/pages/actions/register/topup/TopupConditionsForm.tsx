@@ -9,7 +9,7 @@ import { BigNumber, ethers } from "ethers";
 
 import { useBackd } from "../../../../app/hooks/use-backd";
 import { ScaledNumber } from "../../../../lib/scaled-number";
-import { selectPoolUnderlyingBalance } from "../../../../state/selectors";
+import { selectUsersPoolUnderlyingUnlocked } from "../../../../state/selectors";
 import ApproveThenAction from "../../../../components/ApproveThenAction";
 import { useDevice } from "../../../../app/hooks/use-device";
 import { selectPool, selectEthPrice, selectPrice } from "../../../../state/poolsListSlice";
@@ -130,7 +130,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
   const pool = useSelector(selectPool(poolName));
   const underlyingPrice = useSelector(selectPrice(pool));
   const ethPrice = useSelector(selectEthPrice);
-  const balance = useSelector(selectPoolUnderlyingBalance(pool));
+  const balance = useSelector(selectUsersPoolUnderlyingUnlocked(pool));
   const implement = useSelector(selectActiveSuggestion);
   const estimatedGasUsage = useSelector(selectEstimatedGasUsage);
   const ethBalance = useSelector(selectEthBalance);
