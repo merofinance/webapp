@@ -263,17 +263,11 @@ export class Web3Backd implements Backd {
     const feeHandlerAddress = await this.topupAction.getFeeHandler();
     const feeHandler = TopUpActionFeeHandlerFactory.connect(feeHandlerAddress, this._provider);
 
-    /* We can change to this when the latest protocol code is deployed to Kovan */
-    // const [totalBn, keeperFractionBn, treasuryFractionBn] = await Promise.all([
-    //   this.topupAction.getActionFee(),
-    //   feeHandler.getKeeperFeeFraction(),
-    //   feeHandler.getTreasuryFeeFraction(),
-    // ]);
-    const [totalBn, keeperFractionBn] = await Promise.all([
+    const [totalBn, keeperFractionBn, treasuryFractionBn] = await Promise.all([
       this.topupAction.getActionFee(),
       feeHandler.getKeeperFeeFraction(),
+      feeHandler.getTreasuryFeeFraction(),
     ]);
-    const treasuryFractionBn = BigNumber.from(3).mul(DEFAULT_SCALE).div(10);
     const total = new ScaledNumber(totalBn);
     const keeperFraction = new ScaledNumber(keeperFractionBn).mul(total);
     const treasuryFraction = new ScaledNumber(treasuryFractionBn).mul(total);
