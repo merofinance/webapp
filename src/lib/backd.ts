@@ -24,7 +24,6 @@ import {
   ETH_DUMMY_ADDRESS,
   INFINITE_APPROVE_AMMOUNT,
   MILLISECONDS_PER_YEAR,
-  DEFAULT_SCALE,
   DEPOSIT_SLIPPAGE,
   GWEI_DECIMALS,
 } from "./constants";
@@ -38,7 +37,6 @@ import {
   Prices,
   PlainPosition,
   Token,
-  transformPool,
   PlainWithdrawalFees,
   PlainLoan,
   LendingProtocol,
@@ -56,6 +54,7 @@ export type BackdOptions = {
 };
 
 export interface Backd {
+  getChainId(): number;
   currentAccount(): Promise<Address>;
   listPools(): Promise<PlainPool[]>;
   getPoolInfo(address: Address): Promise<PlainPool>;
@@ -140,6 +139,10 @@ export class Web3Backd implements Backd {
       default:
         throw new UnsupportedNetwork();
     }
+  }
+
+  getChainId(): number {
+    return this.chainId;
   }
 
   currentAccount(): Promise<string> {

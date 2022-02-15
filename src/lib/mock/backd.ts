@@ -33,6 +33,10 @@ export default class MockBackd implements Backd {
     return providers.getDefaultProvider();
   }
 
+  getChainId(): number {
+    return 1;
+  }
+
   currentAccount(): Promise<Address> {
     return Promise.resolve(masterAccount);
   }

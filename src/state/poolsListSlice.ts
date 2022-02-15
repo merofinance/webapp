@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ethers } from "ethers";
-import { useSelector } from "react-redux";
 
 import { AppThunk, RootState } from "../app/store";
 import { Pool } from "../lib";
@@ -14,7 +13,7 @@ import {
   Prices,
 } from "../lib/types";
 import { fetchLoans } from "./lendingSlice";
-import { INFURA_ID } from "../lib/constants";
+import { ACTIONS_LIVE, INFURA_ID } from "../lib/constants";
 import { createBackd } from "../lib/factory";
 import { fetchActionFees, fetchEstimatedGasUsage, fetchPositions } from "./positionsSlice";
 import {
@@ -84,7 +83,6 @@ export const poolsSlice = createSlice({
 export const fetchState =
   (backd: Backd): AppThunk =>
   (dispatch) => {
-    backd.currentAccount().then((address: Address) => dispatch(fetchLoans({ backd, address })));
     dispatch(fetchPools({ backd })).then((v) => {
       if (v.meta.requestStatus !== "fulfilled") return;
       const pools = v.payload as Pool[];
@@ -93,10 +91,14 @@ export const fetchState =
       dispatch(fetchAllowances({ backd, pools }));
       dispatch(fetchWithdrawalFees({ backd, pools }));
     });
-    dispatch(fetchPositions({ backd }));
-    dispatch(fetchEstimatedGasUsage({ backd }));
-    dispatch(fetchActionFees({ backd }));
-    dispatch(fetchGasBankBalance({ backd }));
+    const chainId = backd.getChainId();
+    if (ACTIONS_LIVE || chainId === 42) {
+      backd.currentAccount().then((address: Address) => dispatch(fetchLoans({ backd, address })));
+      dispatch(fetchPositions({ backd }));
+      dispatch(fetchEstimatedGasUsage({ backd }));
+      dispatch(fetchActionFees({ backd }));
+      dispatch(fetchGasBankBalance({ backd }));
+    }
   };
 
 export const fetchPreviewState = (): AppThunk => (dispatch) => {
