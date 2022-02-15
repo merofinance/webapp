@@ -154,4 +154,18 @@ export function selectPrice(pool: Optional<Pool>): (state: RootState) => Optiona
   return (state: RootState) => (pool ? state.pools.prices[pool.underlying.symbol] : null);
 }
 
+export const selectAverageApy = (state: RootState): Optional<ScaledNumber> => {
+  const pools = selectPools(state);
+  if (!pools) return null;
+  let poolCount = 0;
+  let total = new ScaledNumber();
+  for (let i = 0; i < pools.length; i++) {
+    const { apy } = pools[i];
+    if (!apy) return null;
+    total = total.add(apy);
+    poolCount++;
+  }
+  return total.div(poolCount);
+};
+
 export default poolsSlice.reducer;
