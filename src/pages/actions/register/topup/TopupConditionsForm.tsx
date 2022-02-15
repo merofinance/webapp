@@ -9,10 +9,10 @@ import { BigNumber, ethers } from "ethers";
 
 import { useBackd } from "../../../../app/hooks/use-backd";
 import { ScaledNumber } from "../../../../lib/scaled-number";
-import { selectPoolUnderlyingBalance, selectPool, selectPrice } from "../../../../state/selectors";
+import { selectPoolUnderlyingBalance } from "../../../../state/selectors";
 import ApproveThenAction from "../../../../components/ApproveThenAction";
 import { useDevice } from "../../../../app/hooks/use-device";
-import { selectEthPrice } from "../../../../state/poolsListSlice";
+import { selectPool, selectEthPrice, selectPrice } from "../../../../state/poolsListSlice";
 import {
   GWEI_DECIMALS,
   RECOMMENDED_THRESHOLD,

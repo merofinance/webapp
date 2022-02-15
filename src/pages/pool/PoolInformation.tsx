@@ -4,8 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import Information from "../../components/Information";
 import { Pool } from "../../lib";
-import { selectPrice } from "../../state/selectors";
-import { formatPercent, numberToCompactCurrency } from "../../lib/numeric";
+import { selectPrice } from "../../state/poolsListSlice";
 import { Optional } from "../../lib/types";
 // import etherscan from "../../assets/ui/etherscan.svg";
 // import memo from "../../assets/ui/memo.svg";

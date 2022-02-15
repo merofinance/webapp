@@ -142,4 +142,16 @@ export const selectEthPool = (state: RootState): Optional<Pool> => {
   return pools.find((pool: Pool) => pool.underlying.symbol.toLowerCase() === "eth") || null;
 };
 
+export function selectPool(poolName: string | undefined): (state: RootState) => Optional<Pool> {
+  return (state: RootState) => {
+    const pools = selectPools(state);
+    if (!poolName || !pools) return null;
+    return pools.find((p) => p.lpToken.symbol.toLowerCase() === poolName.toLowerCase()) || null;
+  };
+}
+
+export function selectPrice(pool: Optional<Pool>): (state: RootState) => Optional<number> {
+  return (state: RootState) => (pool ? state.pools.prices[pool.underlying.symbol] : null);
+}
+
 export default poolsSlice.reducer;

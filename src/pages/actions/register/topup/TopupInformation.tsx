@@ -10,12 +10,12 @@ import BackdTooltip from "../../../../components/BackdTooltip";
 import { shortenAddress } from "../../../../lib/text";
 import { ScaledNumber } from "../../../../lib/scaled-number";
 import { Optional, Pool, Position } from "../../../../lib/types";
-import { selectPrice } from "../../../../state/selectors";
 import { useDevice } from "../../../../app/hooks/use-device";
 import { getEtherscanAddressLink } from "../../../../lib/web3";
 import { selectActionFees } from "../../../../state/positionsSlice";
+import { selectPrice } from "../../../../state/poolsListSlice";
 import Loader from "../../../../components/Loader";
-import InfoBlock, { InfoBlockRow } from "../../../../components/InfoBlock";
+import InfoBlock from "../../../../components/InfoBlock";
 
 const StyledTopupInformation = styled.div`
   width: 100%;

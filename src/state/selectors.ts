@@ -9,18 +9,6 @@ import { selectPools, selectPrices } from "./poolsListSlice";
 import { selectPoolPositions, selectPositions } from "./positionsSlice";
 import { selectBalances } from "./userSlice";
 
-export function selectPool(poolName: string | undefined): (state: RootState) => Optional<Pool> {
-  return (state: RootState) => {
-    const pools = useSelector(selectPools);
-    if (!poolName || !pools) return null;
-    return pools.find((p) => p.lpToken.symbol.toLowerCase() === poolName.toLowerCase()) || null;
-  };
-}
-
-export function selectPrice(pool: Optional<Pool>): Selector<RootState, Optional<number>> {
-  return (state: RootState) => (pool ? state.pools.prices[pool.underlying.symbol] : null);
-}
-
 export function selectPoolLpLocked(
   pool: Optional<Pool>
 ): Selector<RootState, Optional<ScaledNumber>> {

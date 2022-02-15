@@ -4,9 +4,8 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 import { Position, Pool } from "../../lib/types";
-import { selectPools } from "../../state/poolsListSlice";
+import { selectPrice, selectPools } from "../../state/poolsListSlice";
 import chevron from "../../assets/ui/chevron.svg";
-import { selectPrice } from "../../state/selectors";
 import { selectActiveSuggestion, SuggestionType } from "../../state/helpSlice";
 import Loader from "../../components/Loader";
 import TopupAction from "./register/topup/TopupAction";

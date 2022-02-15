@@ -5,7 +5,8 @@ import { useSelector } from "react-redux";
 
 import ContentSection from "../../../../components/ContentSection";
 import Button from "../../../../components/Button";
-import { selectPool, selectTokenBalance } from "../../../../state/selectors";
+import { selectTokenBalance } from "../../../../state/selectors";
+import { selectPool } from "../../../../state/poolsListSlice";
 import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
 import PoolDeposit from "../../../pool/PoolDeposit";
 import { ScaledNumber } from "../../../../lib/scaled-number";

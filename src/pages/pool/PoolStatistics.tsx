@@ -7,8 +7,8 @@ import {
   selectPoolDeposits,
   selectPoolTotalDeposits,
   selectPoolUnderlyingLocked,
-  selectPrice,
 } from "../../state/selectors";
+import { selectPrice } from "../../state/poolsListSlice";
 
 interface Props {
   pool: Optional<Pool>;

@@ -4,11 +4,10 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 import { Position, Pool } from "../../lib/types";
-import { selectPrice } from "../../state/selectors";
 import TopupAction from "./register/topup/TopupAction";
 import { GradientText } from "../../styles/GradientText";
 import Loader from "../../components/Loader";
-import { selectPools } from "../../state/poolsListSlice";
+import { selectPrice, selectPools } from "../../state/poolsListSlice";
 
 const StyledRegisteredAction = styled.button`
   width: 100%;

@@ -5,14 +5,14 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 import Button from "../../components/Button";
-import { selectPool, selectPoolUnderlyingBalance } from "../../state/selectors";
+import { selectPoolUnderlyingBalance } from "../../state/selectors";
 import Seo from "../../components/Seo";
 import PoolDeposit from "./PoolDeposit";
 import PoolWithdraw from "./PoolWithdraw";
 import PoolInformation from "./PoolInformation";
 import Overview from "../../components/Overview";
 import { useBackd } from "../../app/hooks/use-backd";
-import { fetchState, selectPoolsLoaded } from "../../state/poolsListSlice";
+import { selectPool, fetchState, selectPoolsLoaded } from "../../state/poolsListSlice";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import BackButton from "../../components/BackButton";
 import Tabs from "../../components/Tabs";

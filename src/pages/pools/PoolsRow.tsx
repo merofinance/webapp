@@ -8,7 +8,8 @@ import Asset from "../../components/Asset";
 import Button from "../../components/Button";
 import { GradientText } from "../../styles/GradientText";
 import { Pool } from "../../lib";
-import { selectPoolDeposits, selectPoolTotalDeposits, selectPrice } from "../../state/selectors";
+import { selectPoolDeposits, selectPoolTotalDeposits } from "../../state/selectors";
+import { selectPrice } from "../../state/poolsListSlice";
 import Loader from "../../components/Loader";
 import { useDevice } from "../../app/hooks/use-device";
 
