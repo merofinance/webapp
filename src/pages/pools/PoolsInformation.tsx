@@ -1,10 +1,8 @@
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-import { selectAverageApy } from "../../state/poolsListSlice";
 import Information from "../../components/Information";
-import { formatPercent } from "../../lib/numeric";
-import { selectTotalDeposits } from "../../state/selectors";
+import { selectTotalDeposits, selectAverageApy } from "../../state/selectors";
 
 const PoolsInformation = (): JSX.Element => {
   const { t } = useTranslation();

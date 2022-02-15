@@ -137,3 +137,13 @@ export function selectTotalDeposits(): Selector<RootState, Optional<ScaledNumber
     return total;
   };
 }
+
+export const selectAverageApy = (state: RootState): Optional<ScaledNumber> => {
+  const pools = selectPools(state);
+  if (!pools) return null;
+  const poolsWithApy = pools.filter((pool: Pool) => !!pool.apy);
+  if (poolsWithApy.length === 0) return null;
+  return poolsWithApy
+    .reduce((a: ScaledNumber, b: Pool) => a.add(b.apy!), new ScaledNumber()) // eslint-disable-line @typescript-eslint/no-non-null-assertion
+    .div(state.pools.pools.length);
+};
