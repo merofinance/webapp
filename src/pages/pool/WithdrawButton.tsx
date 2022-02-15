@@ -59,8 +59,9 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
   };
 
   const submit = () => {
-    if (!valid || !usersPoolLpHeld) return;
-    if (value.lte(usersPoolLpHeld)) executeWithdraw(value);
+    if (!valid || !usersPoolLpHeld || !pool) return;
+    const lpValue = value.div(pool.exchangeRate);
+    if (lpValue.lte(usersPoolLpHeld)) executeWithdraw(lpValue);
     else executeUnstake();
   };
 

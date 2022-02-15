@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import { useDevice } from "../../app/hooks/use-device";
 import AmountInput from "../../components/AmountInput";
-import { selectUsersPoolLpUnlocked } from "../../state/valueSelectors";
+import { selectUsersPoolUnderlyingUnlocked } from "../../state/valueSelectors";
 import { Pool } from "../../lib";
 import { ScaledNumber } from "../../lib/scaled-number";
 import WithdrawalButton from "./WithdrawButton";
@@ -23,18 +23,18 @@ interface Props {
 
 const PoolWithdraw = ({ pool }: Props): JSX.Element => {
   const { t } = useTranslation();
-  const usersPoolLpUnlocked = useSelector(selectUsersPoolLpUnlocked(pool));
+  const usersPoolUnderlyingUnlocked = useSelector(selectUsersPoolUnderlyingUnlocked(pool));
   const { isMobile } = useDevice();
 
   const [withdrawAmount, setWithdrawAmount] = useState("");
   const value = ScaledNumber.fromUnscaled(withdrawAmount, pool?.lpToken.decimals);
 
   const error = () => {
-    if (!usersPoolLpUnlocked) return "";
+    if (!usersPoolUnderlyingUnlocked) return "";
     if (withdrawAmount && Number(withdrawAmount) <= 0) return t("amountInput.validation.positive");
     try {
       const amount = ScaledNumber.fromUnscaled(withdrawAmount, pool?.underlying.decimals);
-      if (amount.gt(usersPoolLpUnlocked)) return t("amountInput.validation.exceedsBalance");
+      if (amount.gt(usersPoolUnderlyingUnlocked)) return t("amountInput.validation.exceedsBalance");
       return "";
     } catch {
       return t("amountInput.validation.invalid");
@@ -51,7 +51,7 @@ const PoolWithdraw = ({ pool }: Props): JSX.Element => {
         value={withdrawAmount}
         setValue={(v: string) => setWithdrawAmount(v)}
         label={inputLabel}
-        max={usersPoolLpUnlocked}
+        max={usersPoolUnderlyingUnlocked}
         error={error()}
         symbol={pool?.underlying.symbol || "---"}
       />
