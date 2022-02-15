@@ -56,7 +56,13 @@ const ExistingAction = ({ position }: Props): JSX.Element => {
     <>
       <StyledRegisteredAction id={`existing-action-${position.protocol.toLowerCase()}`}>
         <Value flex={5}>{t("actions.topup.label")}</Value>
-        <Value flex={3}>{price ? position.maxTopUp.toCompactUsdValue(price) : <Loader />}</Value>
+        <Value flex={3}>
+          {price && pool ? (
+            position.depositTokenBalance.mul(pool.exchangeRate).toCompactUsdValue(price)
+          ) : (
+            <Loader />
+          )}
+        </Value>
         <ViewButton
           id={`existing-action-${position.protocol.toLowerCase()}-view`}
           onClick={() => setOpen(true)}
