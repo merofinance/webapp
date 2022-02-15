@@ -1,4 +1,4 @@
-import { percySnapshot } from "../support";
+import { percySnapshot, WEB3_TIMEOUT } from "../support";
 
 describe("Innitial Load", () => {
   it("Should Load Home Page", () => {
@@ -104,6 +104,13 @@ describe("Join The Community", () => {
     cy.get('[id="joinCommunity.socials.github"]')
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://github.com/backdfund");
+  });
+});
+
+describe("Statistics", () => {
+  it("Should show TVL", () => {
+    cy.get("#hero-statistics-tvl", { timeout: WEB3_TIMEOUT }).should("exist");
+    cy.get("#hero-statistics-tvl").contains("$");
   });
 });
 

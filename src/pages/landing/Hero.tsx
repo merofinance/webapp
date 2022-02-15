@@ -67,7 +67,7 @@ const Hero = (): JSX.Element => {
       <Header3>{t("landingPage.subHeader")}</Header3>
       <TvlHeader>{t("landingPage.stats.tvl")}</TvlHeader>
       {totalDeposits ? (
-        <TvlValue>{totalDeposits.toCompactUsdValue(1)}</TvlValue>
+        <TvlValue id="hero-statistics-tvl">{totalDeposits.toCompactUsdValue(1)}</TvlValue>
       ) : (
         <LoaderContainer>
           <Loader button />
