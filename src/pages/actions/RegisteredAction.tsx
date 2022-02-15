@@ -134,7 +134,11 @@ const RegisteredAction = ({ position }: Props): JSX.Element => {
         <Column>
           <Header>{t("actions.registered.columns.locked")}</Header>
           <Value hideOnSnapshot>
-            {price ? position.maxTopUp.toCompactUsdValue(price) : <Loader />}
+            {price && pool ? (
+              position.depositTokenBalance.mul(pool.exchangeRate).toCompactUsdValue(price)
+            ) : (
+              <Loader />
+            )}
           </Value>
         </Column>
         <Column hideMobile>
