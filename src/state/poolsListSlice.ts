@@ -135,7 +135,7 @@ export const selectPrices = (state: RootState): Prices => state.pools.prices;
 export const selectEthPrice = (state: RootState): Optional<number> => state.pools.prices.ETH;
 
 export const selectEthPool = (state: RootState): Optional<Pool> => {
-  const pools = useSelector(selectPools);
+  const pools = selectPools(state);
   if (!pools) return null;
   return pools.find((pool: Pool) => pool.underlying.symbol.toLowerCase() === "eth") || null;
 };
