@@ -67,8 +67,14 @@ export class ScaledNumber {
 
   standardizeDecimals(other: ScaledNumber): ScaledNumber {
     if (this.decimals === other.decimals) return other;
+    if (this.decimals >= other.decimals) {
+      return new ScaledNumber(
+        other.value.mul(BigNumber.from(10).pow(this._decimals - other.decimals)),
+        this.decimals
+      );
+    }
     return new ScaledNumber(
-      other.value.mul(BigNumber.from(10).pow(this._decimals - other.decimals)),
+      other.value.div(BigNumber.from(10).pow(other.decimals - this._decimals)),
       this.decimals
     );
   }
