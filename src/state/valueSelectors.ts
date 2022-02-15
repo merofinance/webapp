@@ -5,14 +5,14 @@ import { RootState } from "../app/store";
 import { DEFAULT_DECIMALS } from "../lib/constants";
 import { ScaledNumber } from "../lib/scaled-number";
 import { Optional, Pool, Position } from "../lib/types";
-import { selectPools, selectPrices } from "./poolsListSlice";
+import { selectPools, selectPrice, selectPrices } from "./poolsListSlice";
 import { selectPoolPositions, selectPositions } from "./positionsSlice";
 import { selectBalances } from "./userSlice";
-// TODO Change from using maxFee to using depositTokenBalance for pretty much everything
 // TODO Do a check of all selectors used to make sure they make sense
 // TODO Remove use of selectTokenBalance
 // TODO Remove use of selectBalance
 // TODO Check for remaining TODOs
+// TODO Check for remaining meows
 
 /*
  * VALUE SELECTOR NAMING CONVENTION
@@ -76,10 +76,10 @@ export function selectUsersPoolLpLocked(
 ): Selector<RootState, Optional<ScaledNumber>> {
   return (state: RootState) => {
     const positions = useSelector(selectPoolPositions(pool));
-    if (!positions) return null;
+    if (!positions || !pool) return null;
     let total = new ScaledNumber();
     for (let i = 0; i < positions.length; i++) {
-      total = total.add(positions[i].maxTopUp);
+      total = total.add(positions[i].depositTokenBalance.mul(pool.exchangeRate));
     }
     return total;
   };
@@ -138,6 +138,17 @@ export function selectUsersPoolUnderlyingEverywhere(
   };
 }
 
+export function selectUsersPoolUsdUnlocked(
+  pool: Optional<Pool>
+): Selector<RootState, Optional<ScaledNumber>> {
+  return (state: RootState) => {
+    const poolPrice = useSelector(selectPrice(pool));
+    const usersPoolUnderlyingUnlocked = useSelector(selectUsersPoolUnderlyingUnlocked(pool));
+    if (!usersPoolUnderlyingUnlocked || !poolPrice) return null;
+    return usersPoolUnderlyingUnlocked.mul(poolPrice);
+  };
+}
+
 export const selectUsersTotalUsdHeld = (state: RootState): Optional<ScaledNumber> => {
   const pools = selectPools(state);
   const prices = selectPrices(state);
@@ -179,7 +190,7 @@ export const selectUsersTotalUsdLocked = (state: RootState): Optional<ScaledNumb
     if (!pool) return null;
     const price = prices[pool.underlying.symbol];
     if (!price) return null;
-    total = total.add(positions[i].maxTopUp.mul(price));
+    total = total.add(positions[i].depositTokenBalance.mul(pool.exchangeRate).mul(price));
   }
   return total;
 };
