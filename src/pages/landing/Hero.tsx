@@ -59,7 +59,7 @@ const ButtonContainer = styled.div`
 const Hero = (): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const totalDeposits = useSelector(selectProtocolTotalUsdEverywhere());
+  const totalDeposits = useSelector(selectProtocolTotalUsdEverywhere);
 
   return (
     <StyledHero>

@@ -56,7 +56,7 @@ const Total = styled.div`
 const YourDeposits = (): JSX.Element => {
   const { t } = useTranslation();
   const { isDesktop } = useDevice();
-  const balance = useSelector(selectBalance());
+  const balance = useSelector(selectBalance);
   const depositedPools = useSelector(selectDepositedPools);
 
   return (

@@ -56,7 +56,7 @@ const TopupPool = (): JSX.Element => {
   const { address, protocol } = useParams<"address" | "protocol">();
   const navigate = useNavigate();
   const pools = useSelector(selectPools);
-  const deposits = useSelector(selectUsersTotalUsdEverywhere()); // TODO Update this
+  const deposits = useSelector(selectUsersTotalUsdEverywhere); // TODO Update this
   const [poolName, setPoolName] = useState("");
   const pool = useSelector(selectPool(poolName));
   const poolBalance = useSelector(selectUsersPoolLpUnlocked(pool));

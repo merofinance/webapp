@@ -6,7 +6,7 @@ import { selectProtocolTotalUsdEverywhere, selectAverageApy } from "../../state/
 
 const PoolsInformation = (): JSX.Element => {
   const { t } = useTranslation();
-  const totalDeposits = useSelector(selectProtocolTotalUsdEverywhere());
+  const totalDeposits = useSelector(selectProtocolTotalUsdEverywhere);
   const averageApy = useSelector(selectAverageApy);
 
   return (

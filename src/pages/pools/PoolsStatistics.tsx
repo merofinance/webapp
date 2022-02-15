@@ -7,8 +7,8 @@ import { selectUsersTotalUsdEverywhere, selectUsersTotalUsdLocked } from "../../
 
 const PoolsStatistics = (): JSX.Element => {
   const { t } = useTranslation();
-  const locked = useSelector(selectUsersTotalUsdLocked());
-  const deposits = useSelector(selectUsersTotalUsdEverywhere());
+  const locked = useSelector(selectUsersTotalUsdLocked);
+  const deposits = useSelector(selectUsersTotalUsdEverywhere);
 
   return (
     <Statistics

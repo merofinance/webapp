@@ -146,67 +146,59 @@ export function selectUsersPoolUnderlyingEverywhere(
   };
 }
 
-export function selectUsersTotalUsdHeld(): Selector<RootState, Optional<ScaledNumber>> {
-  return (state: RootState) => {
-    const pools = useSelector(selectPools);
-    const prices = useSelector(selectPrices);
-    const balances = useSelector(selectBalances);
-    if (!pools || !prices || !balances) return null;
-    let total = new ScaledNumber();
-    for (let i = 0; i < pools.length; i++) {
-      const usersPoolLpHeld = balances[pools[i].lpToken.address];
-      const underlyingPrice = prices[pools[i].underlying.symbol];
-      if (!underlyingPrice || !usersPoolLpHeld) return null;
-      total = total.add(usersPoolLpHeld.mul(pools[i].exchangeRate).mul(underlyingPrice));
-    }
-    return total;
-  };
-}
+export const selectUsersTotalUsdHeld = (state: RootState): Optional<ScaledNumber> => {
+  const pools = useSelector(selectPools);
+  const prices = useSelector(selectPrices);
+  const balances = useSelector(selectBalances);
+  if (!pools || !prices || !balances) return null;
+  let total = new ScaledNumber();
+  for (let i = 0; i < pools.length; i++) {
+    const usersPoolLpHeld = balances[pools[i].lpToken.address];
+    const underlyingPrice = prices[pools[i].underlying.symbol];
+    if (!underlyingPrice || !usersPoolLpHeld) return null;
+    total = total.add(usersPoolLpHeld.mul(pools[i].exchangeRate).mul(underlyingPrice));
+  }
+  return total;
+};
 
-export function selectUsersTotalUsdStaked(): Selector<RootState, Optional<ScaledNumber>> {
-  return (state: RootState) => {
-    const pools = useSelector(selectPools);
-    const prices = useSelector(selectPrices);
-    const balances = useSelector(selectBalances);
-    if (!pools || !prices || !balances) return null;
-    let total = new ScaledNumber();
-    for (let i = 0; i < pools.length; i++) {
-      const usersPoolLpStaked = balances[pools[i].stakerVaultAddress];
-      const underlyingPrice = prices[pools[i].underlying.symbol];
-      if (!underlyingPrice || !usersPoolLpStaked) return null;
-      total = total.add(usersPoolLpStaked.mul(pools[i].exchangeRate).mul(underlyingPrice));
-    }
-    return total;
-  };
-}
+export const selectUsersTotalUsdStaked = (state: RootState): Optional<ScaledNumber> => {
+  const pools = useSelector(selectPools);
+  const prices = useSelector(selectPrices);
+  const balances = useSelector(selectBalances);
+  if (!pools || !prices || !balances) return null;
+  let total = new ScaledNumber();
+  for (let i = 0; i < pools.length; i++) {
+    const usersPoolLpStaked = balances[pools[i].stakerVaultAddress];
+    const underlyingPrice = prices[pools[i].underlying.symbol];
+    if (!underlyingPrice || !usersPoolLpStaked) return null;
+    total = total.add(usersPoolLpStaked.mul(pools[i].exchangeRate).mul(underlyingPrice));
+  }
+  return total;
+};
 
-export function selectUsersTotalUsdLocked(): Selector<RootState, Optional<ScaledNumber>> {
-  return (state: RootState) => {
-    const pools = useSelector(selectPools);
-    const prices = useSelector(selectPrices);
-    const positions = useSelector(selectPositions);
-    if (!pools || !prices || !positions) return null;
-    let total = new ScaledNumber();
-    for (let i = 0; i < positions.length; i++) {
-      const pool = pools.find((pool: Pool) => pool.underlying.address === positions[i].actionToken);
-      if (!pool) return null;
-      const price = prices[pool.underlying.symbol];
-      if (!price) return null;
-      total = total.add(positions[i].maxTopUp.mul(price));
-    }
-    return total;
-  };
-}
+export const selectUsersTotalUsdLocked = (state: RootState): Optional<ScaledNumber> => {
+  const pools = useSelector(selectPools);
+  const prices = useSelector(selectPrices);
+  const positions = useSelector(selectPositions);
+  if (!pools || !prices || !positions) return null;
+  let total = new ScaledNumber();
+  for (let i = 0; i < positions.length; i++) {
+    const pool = pools.find((pool: Pool) => pool.underlying.address === positions[i].actionToken);
+    if (!pool) return null;
+    const price = prices[pool.underlying.symbol];
+    if (!price) return null;
+    total = total.add(positions[i].maxTopUp.mul(price));
+  }
+  return total;
+};
 
-export function selectUsersTotalUsdEverywhere(): Selector<RootState, Optional<ScaledNumber>> {
-  return (state: RootState) => {
-    const usersTotalUsdHeld = useSelector(selectUsersTotalUsdHeld());
-    const usersTotalUsdStaked = useSelector(selectUsersTotalUsdStaked());
-    const usersTotalUsdLocked = useSelector(selectUsersTotalUsdLocked());
-    if (!usersTotalUsdHeld || !usersTotalUsdStaked || !usersTotalUsdLocked) return null;
-    return usersTotalUsdHeld.add(usersTotalUsdStaked).add(usersTotalUsdLocked);
-  };
-}
+export const selectUsersTotalUsdEverywhere = (state: RootState): Optional<ScaledNumber> => {
+  const usersTotalUsdHeld = useSelector(selectUsersTotalUsdHeld);
+  const usersTotalUsdStaked = useSelector(selectUsersTotalUsdStaked);
+  const usersTotalUsdLocked = useSelector(selectUsersTotalUsdLocked);
+  if (!usersTotalUsdHeld || !usersTotalUsdStaked || !usersTotalUsdLocked) return null;
+  return usersTotalUsdHeld.add(usersTotalUsdStaked).add(usersTotalUsdLocked);
+};
 
 export function selectProtocolPoolUnderlyingEverywhere(
   pool: Optional<Pool>
@@ -217,20 +209,18 @@ export function selectProtocolPoolUnderlyingEverywhere(
   };
 }
 
-export function selectProtocolTotalUsdEverywhere(): Selector<RootState, Optional<ScaledNumber>> {
-  return (state: RootState) => {
-    const pools = useSelector(selectPools);
-    const prices = useSelector(selectPrices);
-    if (!pools || !prices) return null;
-    let total = new ScaledNumber();
-    for (let i = 0; i < pools.length; i++) {
-      const price = prices[pools[i].underlying.symbol];
-      if (!price || !pools[i].totalAssets.mul) return null;
-      total = total.add(pools[i].totalAssets.mul(price));
-    }
-    return total;
-  };
-}
+export const selectProtocolTotalUsdEverywhere = (state: RootState): Optional<ScaledNumber> => {
+  const pools = useSelector(selectPools);
+  const prices = useSelector(selectPrices);
+  if (!pools || !prices) return null;
+  let total = new ScaledNumber();
+  for (let i = 0; i < pools.length; i++) {
+    const price = prices[pools[i].underlying.symbol];
+    if (!price || !pools[i].totalAssets.mul) return null;
+    total = total.add(pools[i].totalAssets.mul(price));
+  }
+  return total;
+};
 
 // Meow
 
@@ -259,21 +249,17 @@ export function selectTokenBalance(
   };
 }
 
-export function selectBalance(): Selector<RootState, Optional<ScaledNumber>> {
-  return (state: RootState) => {
-    const pools = useSelector(selectPools);
-    const prices = useSelector(selectPrices);
-    const balances = useSelector(selectBalances);
-
-    if (!pools || !prices || !balances) return null;
-
-    let total = new ScaledNumber();
-    for (let i = 0; i < pools.length; i++) {
-      const balance = balances[pools[i].lpToken.address];
-      const price = prices[pools[i].underlying.symbol];
-      if (!price || !balance) return null;
-      total = total.add(balance.mul(price));
-    }
-    return total;
-  };
-}
+export const selectBalance = (state: RootState): Optional<ScaledNumber> => {
+  const pools = useSelector(selectPools);
+  const prices = useSelector(selectPrices);
+  const balances = useSelector(selectBalances);
+  if (!pools || !prices || !balances) return null;
+  let total = new ScaledNumber();
+  for (let i = 0; i < pools.length; i++) {
+    const balance = balances[pools[i].lpToken.address];
+    const price = prices[pools[i].underlying.symbol];
+    if (!price || !balance) return null;
+    total = total.add(balance.mul(price));
+  }
+  return total;
+};
