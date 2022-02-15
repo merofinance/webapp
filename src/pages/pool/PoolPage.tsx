@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 import Button from "../../components/Button";
-import { selectPool } from "../../state/selectors";
+import { selectPool, selectPoolUnderlyingBalance } from "../../state/selectors";
 import Seo from "../../components/Seo";
 import PoolDeposit from "./PoolDeposit";
 import PoolWithdraw from "./PoolWithdraw";
@@ -21,7 +21,6 @@ import ContentSection from "../../components/ContentSection";
 import LiveHelp from "../../components/LiveHelp";
 import { Optional } from "../../lib/types";
 import BetaSnackbar from "../../components/BetaSnackbar";
-import { selectPoolUnderlyingBalance } from "../../state/userSlice";
 
 const StyledPoolPage = styled.div`
   position: relative;

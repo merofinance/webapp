@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Pool } from "../../lib";
 import { selectPrices } from "../../state/poolsListSlice";
-import { selectTokenBalance } from "../../state/userSlice";
+import { selectTokenBalance } from "../../state/selectors";
 import Asset from "../../components/Asset";
 import { GradientText } from "../../styles/GradientText";
 import { TOPUP_ACTION_ROUTE } from "../../lib/constants";

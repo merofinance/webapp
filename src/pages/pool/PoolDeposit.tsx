@@ -5,12 +5,11 @@ import { useTranslation } from "react-i18next";
 
 import { useDevice } from "../../app/hooks/use-device";
 import AmountInput from "../../components/AmountInput";
-import { selectTokenBalance } from "../../state/userSlice";
 import { Pool } from "../../lib";
 import { ScaledNumber } from "../../lib/scaled-number";
 import DepositButtons from "./DepositButtons";
 import { Optional } from "../../lib/types";
-import { selectPoolDeposits } from "../../state/selectors";
+import { selectPoolDeposits, selectTokenBalance } from "../../state/selectors";
 
 interface PoolDepositProps {
   error: boolean;

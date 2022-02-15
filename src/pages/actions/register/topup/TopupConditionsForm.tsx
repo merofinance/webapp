@@ -9,7 +9,7 @@ import { BigNumber, ethers } from "ethers";
 
 import { useBackd } from "../../../../app/hooks/use-backd";
 import { ScaledNumber } from "../../../../lib/scaled-number";
-import { selectPool, selectPrice } from "../../../../state/selectors";
+import { selectPoolUnderlyingBalance, selectPool, selectPrice } from "../../../../state/selectors";
 import ApproveThenAction from "../../../../components/ApproveThenAction";
 import { useDevice } from "../../../../app/hooks/use-device";
 import { selectEthPrice } from "../../../../state/poolsListSlice";
@@ -28,7 +28,7 @@ import { Loan, Optional, Position } from "../../../../lib/types";
 import { selectLoans } from "../../../../state/lendingSlice";
 import TopupInput from "./TopupInput";
 import TopupConfirmation from "./TopupConfirmation";
-import { selectEthBalance, selectPoolUnderlyingBalance } from "../../../../state/userSlice";
+import { selectEthBalance } from "../../../../state/userSlice";
 import { selectEstimatedGasUsage } from "../../../../state/positionsSlice";
 
 export interface FormType {

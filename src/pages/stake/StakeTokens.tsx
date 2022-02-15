@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 import AmountInput from "../../components/AmountInput";
 import ApproveThenAction from "../../components/ApproveThenAction";
-import { selectTokenBalance } from "../../state/userSlice";
+import { selectTokenBalance } from "../../state/selectors";
 import { Token } from "../../lib/types";
 import { GradientLink } from "../../styles/GradientText";
 import { useDevice } from "../../app/hooks/use-device";

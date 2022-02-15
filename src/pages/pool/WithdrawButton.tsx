@@ -5,12 +5,8 @@ import { useTranslation } from "react-i18next";
 
 import Button from "../../components/Button";
 import { Pool } from "../../lib";
-import {
-  selectAvailableToWithdraw,
-  selectTokenBalance,
-  unstake,
-  withdraw,
-} from "../../state/userSlice";
+import { unstake, withdraw } from "../../state/userSlice";
+import { selectAvailableToWithdraw, selectTokenBalance } from "../../state/selectors";
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
 import { ScaledNumber } from "../../lib/scaled-number";
