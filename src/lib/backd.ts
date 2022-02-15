@@ -330,8 +330,6 @@ export class Web3Backd implements Backd {
     const protocol = utils.formatBytes32String(position.protocol);
     const depositAmount = position.maxTopUp.value.mul(rawExchangeRate).div(scale);
 
-    // TODO Test USDC pool
-
     const record = {
       threshold: position.threshold.value,
       priorityFee: position.priorityFee.value,
