@@ -7,7 +7,7 @@ import {
   selectUsersPoolUnderlyingEverywhere,
   selectProtocolPoolUnderlyingEverywhere,
   selectUsersPoolUnderlyingLocked,
-} from "../../state/selectors";
+} from "../../state/valueSelectors";
 import { selectPrice } from "../../state/poolsListSlice";
 
 interface Props {

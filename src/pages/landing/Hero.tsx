@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Header1, Header3 } from "../../styles/Headers";
 import { GradientText } from "../../styles/GradientText";
-import { selectProtocolTotalUsdEverywhere } from "../../state/selectors";
+import { selectProtocolTotalUsdEverywhere } from "../../state/valueSelectors";
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
 

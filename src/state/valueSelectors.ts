@@ -8,7 +8,6 @@ import { Optional, Pool, Position } from "../lib/types";
 import { selectPools, selectPrices } from "./poolsListSlice";
 import { selectPoolPositions, selectPositions } from "./positionsSlice";
 import { selectBalances } from "./userSlice";
-// TODO Change to use the simpler syntax like average apy
 // TODO Rename to value selectors and split out others
 // TODO Add gas bank to totals
 // TODO Change from using maxFee to using depositTokenBalance for pretty much everything

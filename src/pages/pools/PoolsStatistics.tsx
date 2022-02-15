@@ -3,7 +3,10 @@ import { useTranslation } from "react-i18next";
 
 import Statistics from "../../components/Statistics";
 import { formatCurrency } from "../../lib/numeric";
-import { selectUsersTotalUsdEverywhere, selectUsersTotalUsdLocked } from "../../state/selectors";
+import {
+  selectUsersTotalUsdEverywhere,
+  selectUsersTotalUsdLocked,
+} from "../../state/valueSelectors";
 
 const PoolsStatistics = (): JSX.Element => {
   const { t } = useTranslation();

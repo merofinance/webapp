@@ -11,7 +11,7 @@ import { Pool } from "../../lib";
 import {
   selectUsersPoolUnderlyingEverywhere,
   selectProtocolPoolUnderlyingEverywhere,
-} from "../../state/selectors";
+} from "../../state/valueSelectors";
 import { selectPrice } from "../../state/poolsListSlice";
 import Loader from "../../components/Loader";
 import { useDevice } from "../../app/hooks/use-device";

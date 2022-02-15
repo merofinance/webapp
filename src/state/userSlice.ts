@@ -23,7 +23,7 @@ import {
 } from "../lib/types";
 import { fetchPool } from "./poolsListSlice";
 import { handleTransactionConfirmation } from "../lib/transactionsUtils";
-import { selectUsersPoolLpUnlocked, selectTokenBalance } from "./selectors";
+import { selectUsersPoolLpUnlocked, selectTokenBalance } from "./valueSelectors";
 
 interface UserState {
   balances: PlainBalances;

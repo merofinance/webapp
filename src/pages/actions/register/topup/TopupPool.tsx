@@ -17,7 +17,7 @@ import TopupPoolTvl from "./TopupPoolTvl";
 import {
   selectUsersTotalUsdEverywhere,
   selectUsersPoolLpUnlocked,
-} from "../../../../state/selectors";
+} from "../../../../state/valueSelectors";
 
 const Container = styled.div`
   position: relative;

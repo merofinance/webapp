@@ -9,7 +9,7 @@ import { BigNumber, ethers } from "ethers";
 
 import { useBackd } from "../../../../app/hooks/use-backd";
 import { ScaledNumber } from "../../../../lib/scaled-number";
-import { selectUsersPoolUnderlyingUnlocked } from "../../../../state/selectors";
+import { selectUsersPoolUnderlyingUnlocked } from "../../../../state/valueSelectors";
 import ApproveThenAction from "../../../../components/ApproveThenAction";
 import { useDevice } from "../../../../app/hooks/use-device";
 import { selectPool, selectEthPrice, selectPrice } from "../../../../state/poolsListSlice";

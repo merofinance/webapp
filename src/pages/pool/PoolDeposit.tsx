@@ -9,7 +9,10 @@ import { Pool } from "../../lib";
 import { ScaledNumber } from "../../lib/scaled-number";
 import DepositButtons from "./DepositButtons";
 import { Optional } from "../../lib/types";
-import { selectUsersPoolUnderlyingEverywhere, selectTokenBalance } from "../../state/selectors";
+import {
+  selectUsersPoolUnderlyingEverywhere,
+  selectTokenBalance,
+} from "../../state/valueSelectors";
 
 interface PoolDepositProps {
   error: boolean;

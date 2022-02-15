@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 import Button from "../../components/Button";
-import { selectUsersPoolUnderlyingUnlocked } from "../../state/selectors";
+import { selectUsersPoolUnderlyingUnlocked } from "../../state/valueSelectors";
 import Seo from "../../components/Seo";
 import PoolDeposit from "./PoolDeposit";
 import PoolWithdraw from "./PoolWithdraw";

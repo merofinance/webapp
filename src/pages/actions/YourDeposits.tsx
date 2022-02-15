@@ -6,7 +6,7 @@ import InfoCard from "../../components/InfoCard";
 import { Pool } from "../../lib";
 import { selectDepositedPools } from "../../state/poolsListSlice";
 import Loader from "../../components/Loader";
-import { selectBalance } from "../../state/selectors";
+import { selectBalance } from "../../state/valueSelectors";
 import { useDevice } from "../../app/hooks/use-device";
 import YourDepositsRow from "./YourDepositsRow";
 import Gasbank from "./GasBank";
