@@ -81,6 +81,7 @@ const NavItems = (): JSX.Element => {
       {navItems.map((navItem: NavItemType) =>
         navItem.navItems ? (
           <Dropdown
+            id={navItem.label}
             key={navItem.label}
             label={t(navItem.label)}
             options={navItem.navItems.map((navItem: NavItemType) => {

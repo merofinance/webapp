@@ -96,26 +96,28 @@ const Option = styled.button`
 `;
 
 interface Props {
+  id?: string;
   label: string;
   options: DropdownOptionType[];
 }
 
-const Dropdown = ({ label, options }: Props): JSX.Element => {
+const Dropdown = ({ id, label, options }: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
 
   return (
     <StyledDropdown>
-      <DropdownButton onClick={() => setOpen(true)}>
-        <Label>{label}</Label>
+      <DropdownButton id={`${id}-dropdown-button`} onClick={() => setOpen(true)}>
+        <Label id={`${id}-dropdown-label`}>{label}</Label>
         <ArrowContainer>
           <Arrow open={open} src={arrow} alt="Dropdown chevron" />
         </ArrowContainer>
       </DropdownButton>
-      {open && <ExitEvent onClick={() => setOpen(false)} />}
+      {open && <ExitEvent id={`${id}-dropdown-exit-event`} onClick={() => setOpen(false)} />}
       <OptionsContainer show={open}>
-        <Options>
+        <Options id={`${id}-dropdown-options`}>
           {options.map((option: DropdownOptionType) => (
             <Option
+              id={`${id}-dropdown-${option.label}-option`}
               key={option.label}
               onClick={() => {
                 option.action();

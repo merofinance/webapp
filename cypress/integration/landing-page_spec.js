@@ -7,22 +7,32 @@ describe("Innitial Load", () => {
 });
 
 describe("Nav Items", () => {
-  it("Should have Docs Link", () => {
-    cy.get('[id="header.tabs.docs"]')
-      .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://docs.backd.fund/");
+  it("Should have pools tab", () => {
+    cy.get('[id="header.tabs.pools"]').contains("pools");
+    cy.get('[id="header.tabs.pools"]').click();
+    cy.location().should((loc) => {
+      if (loc.pathname) expect(loc.pathname).to.eq("/pools");
+    });
+    cy.visit("/");
   });
-
-  it("Should have Blog Link", () => {
-    cy.get('[id="header.tabs.blog"]')
-      .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://backdfund.medium.com/");
+  it("Should have actions tab", () => {
+    cy.get('[id="header.tabs.actions"]').contains("actions");
   });
-
-  it("Should have Newsletter Link", () => {
-    cy.get('[id="header.tabs.newsletter"]')
-      .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://backd.substack.com/welcome");
+  it("Should have claim tab", () => {
+    cy.get('[id="header.tabs.claim"]').contains("claim");
+  });
+  it("Should have more tab", () => {
+    cy.get('[id="header.tabs.more-dropdown-label"]').contains("more");
+    cy.get('[id="header.tabs.more-dropdown-exit-event"]').should("not.exist");
+    cy.get('[id="header.tabs.more-dropdown-button"]').click();
+    cy.get('[id="header.tabs.more-dropdown-options"]').should("be.visible");
+    cy.get('[id="header.tabs.more-dropdown-exit-event"]').should("exist");
+    cy.get('[id="header.tabs.more-dropdown-docs-option"]').contains("docs");
+    cy.get('[id="header.tabs.more-dropdown-blog-option"]').contains("blog");
+    cy.get('[id="header.tabs.more-dropdown-newsletter-option"]').contains("newsletter");
+    cy.get('[id="header.tabs.more-dropdown-exit-event"]').click();
+    cy.get('[id="header.tabs.more-dropdown-options"]').should("not.be.visible");
+    cy.get('[id="header.tabs.more-dropdown-exit-event"]').should("not.exist");
   });
 });
 
