@@ -7,7 +7,6 @@ import { selectPools, selectPrice, selectPrices } from "./poolsListSlice";
 import { selectPoolPositions, selectPositions } from "./positionsSlice";
 import { selectBalances } from "./userSlice";
 // TODO Do a check of all selectors used to make sure they make sense
-// TODO Remove use of selectBalance
 // TODO Check for remaining TODOs
 // TODO Check for remaining meows
 // TODO Change toUsdValue and toCompacttUsd to have the input as optional
@@ -193,6 +192,13 @@ export const selectUsersTotalUsdLocked = (state: RootState): Optional<ScaledNumb
   return total;
 };
 
+export const selectUsersTotalUsdUnlocked = (state: RootState): Optional<ScaledNumber> => {
+  const usersTotalUsdHeld = selectUsersTotalUsdHeld(state);
+  const usersTotalUsdStaked = selectUsersTotalUsdStaked(state);
+  if (!usersTotalUsdHeld || !usersTotalUsdStaked) return null;
+  return usersTotalUsdHeld.add(usersTotalUsdStaked);
+};
+
 export const selectUsersTotalUsdEverywhere = (state: RootState): Optional<ScaledNumber> => {
   const usersTotalUsdHeld = selectUsersTotalUsdHeld(state);
   const usersTotalUsdStaked = selectUsersTotalUsdStaked(state);
@@ -235,18 +241,3 @@ export function selectTokenBalance(
     return ScaledNumber.fromPlain(plainBalance);
   };
 }
-
-export const selectBalance = (state: RootState): Optional<ScaledNumber> => {
-  const pools = selectPools(state);
-  const prices = selectPrices(state);
-  const balances = selectBalances(state);
-  if (!pools || !prices || !balances) return null;
-  let total = new ScaledNumber();
-  for (let i = 0; i < pools.length; i++) {
-    const balance = balances[pools[i].lpToken.address];
-    const price = prices[pools[i].underlying.symbol];
-    if (!price || !balance) return null;
-    total = total.add(balance.mul(price));
-  }
-  return total;
-};
