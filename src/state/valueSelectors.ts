@@ -12,6 +12,7 @@ import { selectBalances } from "./userSlice";
 // TODO Do a check of all selectors used to make sure they make sense
 // TODO Remove use of selectTokenBalance
 // TODO Remove use of selectBalance
+// TODO Check for remaining TODOs
 
 /*
  * VALUE SELECTOR NAMING CONVENTION
@@ -74,7 +75,6 @@ export function selectUsersPoolLpLocked(
   pool: Optional<Pool>
 ): Selector<RootState, Optional<ScaledNumber>> {
   return (state: RootState) => {
-    if (!pool) return null;
     const positions = useSelector(selectPoolPositions(pool));
     if (!positions) return null;
     let total = new ScaledNumber();
@@ -89,7 +89,6 @@ export function selectUsersPoolLpUnlocked(
   pool: Optional<Pool>
 ): Selector<RootState, Optional<ScaledNumber>> {
   return (state: RootState) => {
-    if (!pool) return null;
     const usersPoolLpHeld = useSelector(selectUsersPoolLpHeld(pool));
     const usersPoolLpStaked = useSelector(selectUsersPoolLpStaked(pool));
     if (!usersPoolLpHeld || !usersPoolLpStaked) return null;
@@ -101,7 +100,6 @@ export function selectUsersPoolLpEverywhere(
   pool: Optional<Pool>
 ): Selector<RootState, Optional<ScaledNumber>> {
   return (state: RootState) => {
-    if (!pool) return null;
     const usersPoolLpHeld = useSelector(selectUsersPoolLpHeld(pool));
     const usersPoolLpStaked = useSelector(selectUsersPoolLpStaked(pool));
     const usersPoolLpLocked = useSelector(selectUsersPoolLpLocked(pool));
@@ -114,9 +112,8 @@ export function selectUsersPoolUnderlyingLocked(
   pool: Optional<Pool>
 ): Selector<RootState, Optional<ScaledNumber>> {
   return (state: RootState) => {
-    if (!pool) return null;
     const usersPoolLpLocked = useSelector(selectUsersPoolLpLocked(pool));
-    if (!usersPoolLpLocked) return null;
+    if (!usersPoolLpLocked || !pool) return null;
     return usersPoolLpLocked.mul(pool.exchangeRate);
   };
 }
@@ -125,9 +122,8 @@ export function selectUsersPoolUnderlyingUnlocked(
   pool: Optional<Pool>
 ): Selector<RootState, Optional<ScaledNumber>> {
   return (state: RootState) => {
-    if (!pool) return null;
     const usersPoolLpUnlocked = useSelector(selectUsersPoolLpUnlocked(pool));
-    if (!usersPoolLpUnlocked) return null;
+    if (!usersPoolLpUnlocked || !pool) return null;
     return usersPoolLpUnlocked.mul(pool.exchangeRate);
   };
 }
@@ -136,9 +132,8 @@ export function selectUsersPoolUnderlyingEverywhere(
   pool: Optional<Pool>
 ): Selector<RootState, Optional<ScaledNumber>> {
   return (state: RootState) => {
-    if (!pool) return null;
     const usersPoolLpEverywhere = useSelector(selectUsersPoolLpEverywhere(pool));
-    if (!usersPoolLpEverywhere) return null;
+    if (!usersPoolLpEverywhere || !pool) return null;
     return usersPoolLpEverywhere.mul(pool.exchangeRate);
   };
 }
