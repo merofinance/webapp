@@ -175,9 +175,15 @@ const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
           <Asset token={pool.underlying} />
         </Data>
         <Data hideOnSnapshot>
-          {pool.apy && pool.apy.toPercent ? <Apy>{pool.apy.toPercent()}</Apy> : <Loader />}
+          {pool.apy && pool.apy.toPercent ? (
+            <Apy id={`pool-row-${pool.lpToken.symbol.toLowerCase()}-apy`}>
+              {pool.apy.toPercent()}
+            </Apy>
+          ) : (
+            <Loader />
+          )}
         </Data>
-        <Data hideOnSnapshot>
+        <Data id={`pool-row-${pool.lpToken.symbol.toLowerCase()}-tvl`} hideOnSnapshot>
           {price && totalDeposits && totalDeposits.toCompactUsdValue ? (
             totalDeposits.toCompactUsdValue(price)
           ) : (
