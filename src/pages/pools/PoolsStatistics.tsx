@@ -10,8 +10,8 @@ import {
 
 const PoolsStatistics = (): JSX.Element => {
   const { t } = useTranslation();
-  const locked = useSelector(selectUsersTotalUsdLocked);
-  const deposits = useSelector(selectUsersTotalUsdEverywhere);
+  const usersTotalUsdLocked = useSelector(selectUsersTotalUsdLocked);
+  const usersTotalUsdEverywhere = useSelector(selectUsersTotalUsdEverywhere);
 
   return (
     <Statistics
@@ -19,12 +19,16 @@ const PoolsStatistics = (): JSX.Element => {
         {
           header: t("pools.statistics.deposits.header"),
           tooltip: t("pools.statistics.deposits.tooltip"),
-          value: deposits ? formatCurrency(Number(deposits.toString())) : null,
+          value: usersTotalUsdEverywhere
+            ? formatCurrency(Number(usersTotalUsdEverywhere.toString()))
+            : null,
         },
         {
           header: t("pools.statistics.locked.header"),
           tooltip: t("pools.statistics.locked.tooltip"),
-          value: locked ? formatCurrency(Number(locked.toString())) : null,
+          value: usersTotalUsdLocked
+            ? formatCurrency(Number(usersTotalUsdLocked.toString()))
+            : null,
         },
         // {
         //   header: t("pools.statistics.rewards.header"),

@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 import Button from "../../components/Button";
-import { selectUsersPoolUnderlyingUnlocked } from "../../state/valueSelectors";
+import { selectUsersPoolLpUnlocked } from "../../state/valueSelectors";
 import Seo from "../../components/Seo";
 import PoolDeposit from "./PoolDeposit";
 import PoolWithdraw from "./PoolWithdraw";
@@ -79,7 +79,7 @@ const PoolPage = (): Optional<JSX.Element> => {
   const updated = useWeb3Updated();
   const pool = useSelector(selectPool(poolName));
   const poolsLoaded = useSelector(selectPoolsLoaded);
-  const balance = useSelector(selectUsersPoolUnderlyingUnlocked(pool));
+  const usersPoolLpUnlocked = useSelector(selectUsersPoolLpUnlocked(pool));
 
   useEffect(() => {
     if (!backd) return;
@@ -132,7 +132,7 @@ const PoolPage = (): Optional<JSX.Element> => {
           />
           <PoolInformation pool={pool} />
           <LiveHelp />
-          {balance && !balance.isZero() && (
+          {usersPoolLpUnlocked && !usersPoolLpUnlocked.isZero() && (
             <ButtonContainer>
               <Button
                 id="create-topup-button"
