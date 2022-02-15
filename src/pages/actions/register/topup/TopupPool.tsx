@@ -15,8 +15,8 @@ import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
 import TopupPoolDeposits from "./TopupPoolDeposits";
 import TopupPoolTvl from "./TopupPoolTvl";
 import {
-  selectUsersTotalUsdEverywhere,
   selectUsersPoolLpUnlocked,
+  selectUsersTotalUsdUnlocked,
 } from "../../../../state/valueSelectors";
 
 const Container = styled.div`
@@ -56,12 +56,12 @@ const TopupPool = (): JSX.Element => {
   const { address, protocol } = useParams<"address" | "protocol">();
   const navigate = useNavigate();
   const pools = useSelector(selectPools);
-  const deposits = useSelector(selectUsersTotalUsdEverywhere); // TODO Update this
+  const usersTotalUsdUnlocked = useSelector(selectUsersTotalUsdUnlocked);
   const [poolName, setPoolName] = useState("");
   const pool = useSelector(selectPool(poolName));
-  const poolBalance = useSelector(selectUsersPoolLpUnlocked(pool));
+  const usersPoolLpUnlocked = useSelector(selectUsersPoolLpUnlocked(pool));
 
-  const hasDeposits = !deposits?.isZero();
+  const hasDeposits = !usersTotalUsdUnlocked?.isZero();
 
   const options: RowOptionType[] = pools
     ? pools.map((pool: Pool) => {
@@ -115,7 +115,7 @@ const TopupPool = (): JSX.Element => {
             medium
             width="30rem"
             click={() => {
-              if (poolBalance && !poolBalance?.isZero())
+              if (usersPoolLpUnlocked && !usersPoolLpUnlocked?.isZero())
                 navigate(`${TOPUP_ACTION_ROUTE}/deposit/${poolName}/${address}/${protocol}`);
               else navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${poolName}`);
             }}
