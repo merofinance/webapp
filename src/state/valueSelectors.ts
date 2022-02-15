@@ -228,16 +228,3 @@ export const selectProtocolTotalUsdEverywhere = (state: RootState): Optional<Sca
   }
   return total;
 };
-
-// Meow
-
-export function selectTokenBalance(
-  address: string | undefined
-): Selector<RootState, Optional<ScaledNumber>> {
-  return (state: RootState) => {
-    if (!address) return null;
-    const plainBalance = state.user.balances[address];
-    if (!plainBalance) return null;
-    return ScaledNumber.fromPlain(plainBalance);
-  };
-}
