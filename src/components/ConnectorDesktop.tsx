@@ -1,14 +1,11 @@
 import { useWeb3React } from "@web3-react/core";
-import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
 import { shortenAddress } from "../lib/text";
-import { useBackd } from "../app/hooks/use-backd";
 import { chainIds } from "../lib/constants";
 import PulsingDot from "./PulsingDot";
-import { useWeb3Updated } from "../app/hooks/use-web3-updated";
 import pending from "../assets/ui/status/pending.svg";
 import { spinAnimation } from "../styles/animations/SpinAnimation";
 import { pendingTransactionsCount } from "../state/transactionsSlice";
