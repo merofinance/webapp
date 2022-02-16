@@ -142,14 +142,30 @@ export const selectEthPool = (state: RootState): Optional<Pool> => {
   return pools.find((pool: Pool) => pool.underlying.symbol.toLowerCase() === "eth") || null;
 };
 
+export function selectPool(poolName: string | undefined): (state: RootState) => Optional<Pool> {
+  return (state: RootState) => {
+    const pools = selectPools(state);
+    if (!poolName || !pools) return null;
+    return pools.find((p) => p.lpToken.symbol.toLowerCase() === poolName.toLowerCase()) || null;
+  };
+}
+
+export function selectPrice(pool: Optional<Pool>): (state: RootState) => Optional<number> {
+  return (state: RootState) => (pool ? state.pools.prices[pool.underlying.symbol] : null);
+}
+
 export const selectAverageApy = (state: RootState): Optional<ScaledNumber> => {
   const pools = selectPools(state);
   if (!pools) return null;
-  const poolsWithApy = pools.filter((pool: Pool) => !!pool.apy);
-  if (poolsWithApy.length === 0) return null;
-  return poolsWithApy
-    .reduce((a: ScaledNumber, b: Pool) => a.add(b.apy!), new ScaledNumber()) // eslint-disable-line @typescript-eslint/no-non-null-assertion
-    .div(state.pools.pools.length);
+  let poolCount = 0;
+  let total = new ScaledNumber();
+  for (let i = 0; i < pools.length; i++) {
+    const { apy } = pools[i];
+    if (!apy) return null;
+    total = total.add(apy);
+    poolCount++;
+  }
+  return total.div(poolCount);
 };
 
 export default poolsSlice.reducer;

@@ -9,10 +9,10 @@ import { BigNumber, ethers } from "ethers";
 
 import { useBackd } from "../../../../app/hooks/use-backd";
 import { ScaledNumber } from "../../../../lib/scaled-number";
-import { selectPool, selectPrice } from "../../../../state/selectors";
+import { selectUsersPoolUnderlyingUnlocked } from "../../../../state/valueSelectors";
 import ApproveThenAction from "../../../../components/ApproveThenAction";
 import { useDevice } from "../../../../app/hooks/use-device";
-import { selectEthPrice } from "../../../../state/poolsListSlice";
+import { selectPool, selectEthPrice, selectPrice } from "../../../../state/poolsListSlice";
 import {
   GWEI_DECIMALS,
   RECOMMENDED_THRESHOLD,
@@ -28,7 +28,7 @@ import { Loan, Optional, Position } from "../../../../lib/types";
 import { selectLoans } from "../../../../state/lendingSlice";
 import TopupInput from "./TopupInput";
 import TopupConfirmation from "./TopupConfirmation";
-import { selectEthBalance, selectPoolUnderlyingBalance } from "../../../../state/userSlice";
+import { selectEthBalance } from "../../../../state/userSlice";
 import { selectEstimatedGasUsage } from "../../../../state/positionsSlice";
 
 export interface FormType {
@@ -130,7 +130,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
   const pool = useSelector(selectPool(poolName));
   const underlyingPrice = useSelector(selectPrice(pool));
   const ethPrice = useSelector(selectEthPrice);
-  const balance = useSelector(selectPoolUnderlyingBalance(pool));
+  const usersPoolUnderlyingUnlocked = useSelector(selectUsersPoolUnderlyingUnlocked(pool));
   const implement = useSelector(selectActiveSuggestion);
   const estimatedGasUsage = useSelector(selectEstimatedGasUsage);
   const ethBalance = useSelector(selectEthBalance);
@@ -168,7 +168,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
 
   const validate = (values: FormType): FormikErrors<FormType> => {
     const errors: FormikErrors<FormType> = {};
-    if (!pool || !balance) return errors;
+    if (!pool || !usersPoolUnderlyingUnlocked) return errors;
     const single = ScaledNumber.fromUnscaled(values.singleTopUp, pool.underlying.decimals);
     const max = ScaledNumber.fromUnscaled(values.maxTopUp, pool.underlying.decimals);
 
@@ -178,7 +178,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
     }
 
     // Validating that user has enough balance for top-up
-    if (max.gt(balance)) {
+    if (max.gt(usersPoolUnderlyingUnlocked)) {
       errors.maxTopUp = "actions.topup.fields.max.exceedsBalance";
     }
 
@@ -232,6 +232,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
     maxGasPrice: ScaledNumber.fromUnscaled(formik.values.maxGasPrice, GWEI_DECIMALS),
     actionToken: pool.underlying.address,
     depositToken: pool.lpToken.address,
+    depositTokenBalance: ScaledNumber.fromUnscaled(0),
   };
 
   const suggestedMaximumTreshold = () => {
@@ -386,7 +387,9 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
           name="maxTopUp"
           formik={formik}
           placeholder={`10,000 ${pool.underlying.symbol}`}
-          setMax={() => formik.setFieldValue("maxTopUp", balance?.toString(), true)}
+          setMax={() =>
+            formik.setFieldValue("maxTopUp", usersPoolUnderlyingUnlocked?.toString(), true)
+          }
         />
         <TopupInput
           label={

@@ -4,8 +4,10 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 import { Pool } from "../../lib";
-import { selectPrices } from "../../state/poolsListSlice";
-import { selectBalances } from "../../state/userSlice";
+import {
+  selectUsersPoolUnderlyingUnlocked,
+  selectUsersPoolUsdUnlocked,
+} from "../../state/valueSelectors";
 import Asset from "../../components/Asset";
 import { GradientText } from "../../styles/GradientText";
 import { TOPUP_ACTION_ROUTE } from "../../lib/constants";
@@ -76,10 +78,8 @@ interface Props {
 const YourDepositsRow = ({ pool }: Props): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const prices = useSelector(selectPrices);
-  const balances = useSelector(selectBalances);
-  const price = prices[pool.underlying.symbol];
-  const balance = balances[pool.lpToken.address];
+  const usersPoolUnderlyingUnlocked = useSelector(selectUsersPoolUnderlyingUnlocked(pool));
+  const usersPoolUsdUnlocked = useSelector(selectUsersPoolUsdUnlocked(pool));
 
   return (
     <Row id={`your-deposits-${pool.underlying.symbol.toLowerCase()}`} key={pool.name}>
@@ -96,9 +96,13 @@ const YourDepositsRow = ({ pool }: Props): JSX.Element => {
 
       <Balances>
         <Underlying>
-          {balance ? `${balance.toCryptoString()} ${pool.underlying.symbol}` : <Loader />}
+          {usersPoolUnderlyingUnlocked ? (
+            `${usersPoolUnderlyingUnlocked.toCryptoString()} ${pool.underlying.symbol}`
+          ) : (
+            <Loader />
+          )}
         </Underlying>
-        <Usd>{balance && price ? balance.toUsdValue(price) : <Loader />}</Usd>
+        <Usd>{usersPoolUsdUnlocked ? usersPoolUsdUnlocked.toUsdValue(1) : <Loader />}</Usd>
       </Balances>
     </Row>
   );

@@ -57,7 +57,7 @@ const DeleteTopupConfirmation = ({ show, close, position, pool, complete }: Prop
       header={t("actions.topup.delete.header")}
       body={t("actions.topup.delete.body", {
         asset: pool.underlying.symbol,
-        max: position.maxTopUp.toCryptoString(),
+        max: position.depositTokenBalance.mul(pool.exchangeRate).toCryptoString(),
         protocol: position.protocol,
       })}
       loading={loading}

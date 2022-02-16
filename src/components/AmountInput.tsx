@@ -37,7 +37,6 @@ interface Props {
   noSlider?: boolean;
   error: string;
   symbol: string;
-  hideMax?: boolean;
 }
 
 const AmountInput = ({
@@ -48,7 +47,6 @@ const AmountInput = ({
   error,
   symbol,
   noSlider,
-  hideMax,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
 
@@ -69,7 +67,7 @@ const AmountInput = ({
         type="number"
         onChange={(v: string) => setValue(v)}
         background="#100830"
-        buttonText={hideMax ? "" : t("amountInput.max")}
+        buttonText={t("amountInput.max")}
         buttonAction={() => {
           if (max) setValue(max.toString());
         }}

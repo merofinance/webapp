@@ -45,6 +45,7 @@ interface GenericPosition<T> {
   maxTopUp: T;
   priorityFee: T;
   maxGasPrice: T;
+  depositTokenBalance: T;
   actionToken: Address;
   depositToken: Address;
 }
@@ -84,6 +85,7 @@ export const toPlainPosition = (position: Position): PlainPosition => {
     maxTopUp: position.maxTopUp.toPlain(),
     maxGasPrice: position.maxGasPrice.toPlain(),
     priorityFee: position.priorityFee.toPlain(),
+    depositTokenBalance: position.depositTokenBalance.toPlain(),
   };
 };
 
@@ -95,6 +97,7 @@ export const fromPlainPosition = (position: PlainPosition): Position => {
     maxTopUp: ScaledNumber.fromPlain(position.maxTopUp),
     maxGasPrice: ScaledNumber.fromPlain(position.maxGasPrice),
     priorityFee: ScaledNumber.fromPlain(position.priorityFee),
+    depositTokenBalance: ScaledNumber.fromPlain(position.depositTokenBalance),
   };
 };
 
@@ -134,6 +137,8 @@ export function positionFromPartial<T>(pool: Pool, position: Partial<Position>):
   if (!position.maxTopUp) throw Error("Missing max top-up when creating position");
   if (!position.maxGasPrice) throw Error("Missing max top-up when creating position");
   if (!position.priorityFee) throw Error("Missing priority fee when creating position");
+  if (!position.depositTokenBalance)
+    throw Error("Missing deposit token balance when creating position");
   return {
     protocol: position.protocol,
     account: position.account,
@@ -144,6 +149,7 @@ export function positionFromPartial<T>(pool: Pool, position: Partial<Position>):
     maxGasPrice: position.maxGasPrice,
     actionToken: pool.underlying.address,
     depositToken: pool.lpToken.address,
+    depositTokenBalance: position.depositTokenBalance,
   };
 }
 

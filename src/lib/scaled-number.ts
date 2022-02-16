@@ -67,8 +67,14 @@ export class ScaledNumber {
 
   standardizeDecimals(other: ScaledNumber): ScaledNumber {
     if (this.decimals === other.decimals) return other;
+    if (this.decimals >= other.decimals) {
+      return new ScaledNumber(
+        other.value.mul(BigNumber.from(10).pow(this._decimals - other.decimals)),
+        this.decimals
+      );
+    }
     return new ScaledNumber(
-      other.value.mul(BigNumber.from(10).pow(this._decimals - other.decimals)),
+      other.value.div(BigNumber.from(10).pow(other.decimals - this._decimals)),
       this.decimals
     );
   }
@@ -110,6 +116,11 @@ export class ScaledNumber {
   max(other: ScaledNumber): ScaledNumber {
     other = this.standardizeDecimals(other);
     return this.value.gt(other.value) ? this : other;
+  }
+
+  min(other: ScaledNumber): ScaledNumber {
+    other = this.standardizeDecimals(other);
+    return this.value.lt(other.value) ? this : other;
   }
 
   mul(value: number | string | ScaledNumber): ScaledNumber {

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Header1, Header3 } from "../../styles/Headers";
 import { GradientText } from "../../styles/GradientText";
-import { selectTotalDeposits } from "../../state/selectors";
+import { selectProtocolTotalUsdEverywhere } from "../../state/valueSelectors";
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
 
@@ -59,7 +59,7 @@ const ButtonContainer = styled.div`
 const Hero = (): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const totalDeposits = useSelector(selectTotalDeposits());
+  const totalDeposits = useSelector(selectProtocolTotalUsdEverywhere);
 
   return (
     <StyledHero>

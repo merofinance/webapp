@@ -6,7 +6,7 @@ import InfoCard from "../../components/InfoCard";
 import { Pool } from "../../lib";
 import { selectDepositedPools } from "../../state/poolsListSlice";
 import Loader from "../../components/Loader";
-import { selectBalance } from "../../state/selectors";
+import { selectUsersTotalUsdUnlocked } from "../../state/valueSelectors";
 import { useDevice } from "../../app/hooks/use-device";
 import YourDepositsRow from "./YourDepositsRow";
 import Gasbank from "./GasBank";
@@ -56,7 +56,7 @@ const Total = styled.div`
 const YourDeposits = (): JSX.Element => {
   const { t } = useTranslation();
   const { isDesktop } = useDevice();
-  const balance = useSelector(selectBalance());
+  const usersTotalUsdUnlocked = useSelector(selectUsersTotalUsdUnlocked);
   const depositedPools = useSelector(selectDepositedPools);
 
   return (
@@ -87,7 +87,7 @@ const YourDeposits = (): JSX.Element => {
             <YourDepositsRow key={pool.name} pool={pool} />
           ))}
           <Total id="your-deposits-total">
-            {balance ? `= ${balance.toUsdValue(1)}` : <Loader />}
+            {usersTotalUsdUnlocked ? `= ${usersTotalUsdUnlocked.toUsdValue(1)}` : <Loader />}
           </Total>
         </>
       )}

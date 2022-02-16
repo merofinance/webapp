@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { useSelector } from "react-redux";
 
 import { RootState, Selector } from "../app/store";
 import { Backd } from "../lib/backd";
@@ -18,7 +17,6 @@ import {
   PlainBalances,
   Token,
   PlainWithdrawalFees,
-  WithdrawalFees,
   fromPlainWithdrawalFees,
 } from "../lib/types";
 import { fetchPool } from "./poolsListSlice";
@@ -240,60 +238,13 @@ export const unstake = createAsyncThunk(
 export const selectBalances = (state: RootState): Balances =>
   fromPlainBalances(state.user.balances);
 
-export const selectEthBalance = (state: RootState): Optional<ScaledNumber> =>
-  state.user.balances[ETH_DUMMY_ADDRESS]
-    ? ScaledNumber.fromPlain(state.user.balances[ETH_DUMMY_ADDRESS]!) // eslint-disable-line @typescript-eslint/no-non-null-assertion
-    : null;
-
-export function selectTokenBalance(address: string | undefined): Selector<Optional<ScaledNumber>> {
-  return (state: RootState) => {
-    if (!address) return null;
-    const plainBalance = state.user.balances[address];
-    if (!plainBalance) return null;
-    return ScaledNumber.fromPlain(plainBalance);
-  };
-}
-
-export function selectPoolUnderlyingBalance(
-  pool: Optional<Pool>
-): Selector<Optional<ScaledNumber>> {
-  return (state: RootState) => {
-    if (!pool) return null;
-    const poolLpBalance = useSelector(selectPoolLpBalance(pool));
-    if (!poolLpBalance) return null;
-    return poolLpBalance.mul(pool.exchangeRate);
-  };
-}
-
-export function selectPoolLpBalance(pool: Optional<Pool>): Selector<Optional<ScaledNumber>> {
-  return (state: RootState) => {
-    if (!pool) return null;
-    const plainLpTokenBalance = state.user.balances[pool.lpToken.address];
-    const plainStakedBalance = state.user.balances[pool.stakerVaultAddress];
-    if (!plainLpTokenBalance || !plainStakedBalance) return null;
-    const lpTokenBalance = ScaledNumber.fromPlain(plainLpTokenBalance);
-    const stakedBalance = ScaledNumber.fromPlain(plainStakedBalance);
-    return lpTokenBalance.add(stakedBalance);
-  };
-}
+export const selectEthBalance = (state: RootState): Optional<ScaledNumber> => {
+  const balance = state.user.balances[ETH_DUMMY_ADDRESS];
+  return balance ? ScaledNumber.fromPlain(balance) : null;
+};
 
 export const selectGasBankBalance = (state: RootState): Optional<ScaledNumber> =>
   state.user.gasBankBalance ? ScaledNumber.fromPlain(state.user.gasBankBalance) : null;
-
-export function selectAvailableToWithdraw(pool: Optional<Pool>): Selector<Optional<ScaledNumber>> {
-  return (state: RootState) => {
-    if (!pool) return null;
-
-    const balance = useSelector(selectPoolLpBalance(pool));
-    const staked = useSelector(selectTokenBalance(pool.stakerVaultAddress));
-    if (!balance || !staked) return null;
-
-    return balance.sub(staked);
-  };
-}
-
-export const selectWithdrawalFees = (state: RootState): WithdrawalFees =>
-  fromPlainWithdrawalFees(state.user.withdrawalFees);
 
 export function selectWithdrawalFee(pool: Optional<Pool>): Selector<Optional<ScaledNumber>> {
   return (state: RootState) => {
@@ -305,6 +256,26 @@ export function selectWithdrawalFee(pool: Optional<Pool>): Selector<Optional<Sca
 
 export function isConnecting(state: RootState): boolean {
   return state.user.connecting;
+}
+
+export function selectPoolUnderlyingBalance(
+  pool: Optional<Pool>
+): Selector<Optional<ScaledNumber>> {
+  return (state: RootState) => {
+    if (!pool) return null;
+    const poolUnderlyingBalance = state.user.balances[pool.underlying.address];
+    if (!poolUnderlyingBalance) return null;
+    return ScaledNumber.fromPlain(poolUnderlyingBalance);
+  };
+}
+
+export function selectPoolLpBalance(pool: Optional<Pool>): Selector<Optional<ScaledNumber>> {
+  return (state: RootState) => {
+    if (!pool) return null;
+    const poolLpBalance = state.user.balances[pool.lpToken.address];
+    if (!poolLpBalance) return null;
+    return ScaledNumber.fromPlain(poolLpBalance);
+  };
 }
 
 export function selectDepositAllowance(pool: Pool): Selector<Optional<ScaledNumber>> {
@@ -329,7 +300,6 @@ export function selectToupAllowance(
 ): Selector<Optional<ScaledNumber>> {
   return (state: RootState) => {
     if (!backd) return null;
-
     const plainLpTokenAllowance =
       state.user.allowances[pool.lpToken.address]?.[backd.topupActionAddress];
     const plainVaultAllowance =

@@ -5,11 +5,10 @@ import { useSelector } from "react-redux";
 
 import ContentSection from "../../../../components/ContentSection";
 import Button from "../../../../components/Button";
-import { selectPool } from "../../../../state/selectors";
+import { selectUsersPoolLpUnlocked } from "../../../../state/valueSelectors";
+import { selectPool } from "../../../../state/poolsListSlice";
 import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
 import PoolDeposit from "../../../pool/PoolDeposit";
-import { selectBalances } from "../../../../state/userSlice";
-import { ScaledNumber } from "../../../../lib/scaled-number";
 
 const Container = styled.div`
   position: relative;
@@ -41,18 +40,12 @@ const TopupPoolDeposit = (): JSX.Element => {
   const { address, protocol, poolName } = useParams<"address" | "protocol" | "poolName">();
   const navigate = useNavigate();
   const pool = useSelector(selectPool(poolName));
-  const balances = useSelector(selectBalances);
+  const usersPoolLpUnlocked = useSelector(selectUsersPoolLpUnlocked(pool));
 
   if (!pool) {
     navigate("/");
     throw Error("Pool not found");
   }
-
-  const hasSufficientBalance = () => {
-    const lpBalance = balances[pool.lpToken.address];
-    if (!lpBalance) return false;
-    return lpBalance.gt(new ScaledNumber());
-  };
 
   return (
     <Container>
@@ -79,7 +72,7 @@ const TopupPoolDeposit = (): JSX.Element => {
                 navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${poolName.toLowerCase()}`);
               else navigate(-1);
             }}
-            disabled={!pool || !hasSufficientBalance()}
+            disabled={!pool || !usersPoolLpUnlocked || usersPoolLpUnlocked.isZero()}
             hoverText={t("actions.topup.stages.pool.deposit.incomplete", {
               asset: pool?.underlying.symbol,
             })}

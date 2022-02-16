@@ -5,9 +5,8 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import Loader from "../../../../components/Loader";
 import { selectLoans } from "../../../../state/lendingSlice";
-import { selectEthPrice } from "../../../../state/poolsListSlice";
+import { selectPool, selectEthPrice } from "../../../../state/poolsListSlice";
 import Asset from "../../../../components/Asset";
-import { selectPool } from "../../../../state/selectors";
 import { GradientText } from "../../../../styles/GradientText";
 import { Loan } from "../../../../lib/types";
 import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";

@@ -6,11 +6,11 @@ import { useTranslation } from "react-i18next";
 
 import AmountInput from "../../components/AmountInput";
 import ApproveThenAction from "../../components/ApproveThenAction";
-import { selectTokenBalance } from "../../state/userSlice";
 import { Token } from "../../lib/types";
 import { GradientLink } from "../../styles/GradientText";
 import { useDevice } from "../../app/hooks/use-device";
 import { ScaledNumber } from "../../lib/scaled-number";
+import { selectEthBalance } from "../../state/userSlice";
 
 const StyledStakeTokens = styled.div`
   width: 100%;
@@ -63,7 +63,7 @@ interface Props {
 
 const StakeTokens = ({ token }: Props): JSX.Element => {
   const { t } = useTranslation();
-  const balance = useSelector(selectTokenBalance(token.address));
+  const balance = useSelector(selectEthBalance); // TODO This is not the correct balance
   const { isMobile } = useDevice();
 
   const [value, setValue] = useState("");

@@ -5,12 +5,12 @@ import { useTranslation } from "react-i18next";
 
 import { useDevice } from "../../app/hooks/use-device";
 import AmountInput from "../../components/AmountInput";
-import { selectTokenBalance } from "../../state/userSlice";
 import { Pool } from "../../lib";
 import { ScaledNumber } from "../../lib/scaled-number";
 import DepositButtons from "./DepositButtons";
 import { Optional } from "../../lib/types";
-import { selectPoolDeposits } from "../../state/selectors";
+import { selectUsersPoolUnderlyingEverywhere } from "../../state/valueSelectors";
+import { selectPoolUnderlyingBalance } from "../../state/userSlice";
 
 interface PoolDepositProps {
   error: boolean;
@@ -43,8 +43,8 @@ interface Props {
 
 const PoolDeposit = ({ pool, compact }: Props): JSX.Element => {
   const { t } = useTranslation();
-  const availableToDeposit = useSelector(selectTokenBalance(pool?.underlying.address));
-  const deposits = useSelector(selectPoolDeposits(pool));
+  const poolUnderlyingBalance = useSelector(selectPoolUnderlyingBalance(pool));
+  const usersPoolUnderlyingEverywhere = useSelector(selectUsersPoolUnderlyingEverywhere(pool));
   const { isMobile } = useDevice();
   const [depositAmount, setDepositAmount] = useState("");
   const value = ScaledNumber.fromUnscaled(depositAmount, pool?.underlying.decimals);
@@ -54,13 +54,16 @@ const PoolDeposit = ({ pool, compact }: Props): JSX.Element => {
     : t("pool.tabs.deposit.input.labelDesktop", { asset: pool?.underlying.symbol || "---" });
 
   const error = () => {
-    if (!availableToDeposit) return "";
+    if (!poolUnderlyingBalance) return "";
     if (depositAmount && Number(depositAmount) <= 0) return t("amountInput.validation.positive");
     try {
       const amount = ScaledNumber.fromUnscaled(depositAmount, pool?.underlying.decimals);
-      if (amount.gt(availableToDeposit)) return t("amountInput.validation.exceedsBalance");
-      if (!pool || !deposits) return "";
-      if (!pool.depositCap.isZero() && amount.gt(pool.depositCap.sub(deposits)))
+      if (amount.gt(poolUnderlyingBalance)) return t("amountInput.validation.exceedsBalance");
+      if (!pool || !usersPoolUnderlyingEverywhere) return "";
+      if (
+        !pool.depositCap.isZero() &&
+        amount.gt(pool.depositCap.sub(usersPoolUnderlyingEverywhere))
+      )
         return t("amountInput.validation.exceedsCap");
       return "";
     } catch {
@@ -75,10 +78,13 @@ const PoolDeposit = ({ pool, compact }: Props): JSX.Element => {
         value={depositAmount}
         setValue={(v: string) => setDepositAmount(v)}
         label={inputLabel}
-        max={availableToDeposit}
+        max={
+          poolUnderlyingBalance && pool && usersPoolUnderlyingEverywhere
+            ? poolUnderlyingBalance.min(pool.depositCap.sub(usersPoolUnderlyingEverywhere))
+            : null
+        }
         error={error()}
         symbol={pool?.underlying.symbol || "---"}
-        hideMax={!pool || !pool.depositCap.isZero || !pool.depositCap.isZero()}
       />
       <DepositButtons
         stepsOnTop={compact}

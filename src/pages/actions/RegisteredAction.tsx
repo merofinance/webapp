@@ -4,9 +4,8 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 import { Position, Pool } from "../../lib/types";
-import { selectPools } from "../../state/poolsListSlice";
+import { selectPrice, selectPools } from "../../state/poolsListSlice";
 import chevron from "../../assets/ui/chevron.svg";
-import { selectPrice } from "../../state/selectors";
 import { selectActiveSuggestion, SuggestionType } from "../../state/helpSlice";
 import Loader from "../../components/Loader";
 import TopupAction from "./register/topup/TopupAction";
@@ -135,7 +134,11 @@ const RegisteredAction = ({ position }: Props): JSX.Element => {
         <Column>
           <Header>{t("actions.registered.columns.locked")}</Header>
           <Value hideOnSnapshot>
-            {price ? position.maxTopUp.toCompactUsdValue(price) : <Loader />}
+            {price && pool ? (
+              position.depositTokenBalance.mul(pool.exchangeRate).toCompactUsdValue(price)
+            ) : (
+              <Loader />
+            )}
           </Value>
         </Column>
         <Column hideMobile>

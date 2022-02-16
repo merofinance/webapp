@@ -5,14 +5,14 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 import Button from "../../components/Button";
-import { selectPool } from "../../state/selectors";
+import { selectUsersPoolLpUnlocked } from "../../state/valueSelectors";
 import Seo from "../../components/Seo";
 import PoolDeposit from "./PoolDeposit";
 import PoolWithdraw from "./PoolWithdraw";
 import PoolInformation from "./PoolInformation";
 import Overview from "../../components/Overview";
 import { useBackd } from "../../app/hooks/use-backd";
-import { fetchState, selectPoolsLoaded } from "../../state/poolsListSlice";
+import { selectPool, fetchState, selectPoolsLoaded } from "../../state/poolsListSlice";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import BackButton from "../../components/BackButton";
 import Tabs from "../../components/Tabs";
@@ -21,7 +21,6 @@ import ContentSection from "../../components/ContentSection";
 import LiveHelp from "../../components/LiveHelp";
 import { Optional } from "../../lib/types";
 import BetaSnackbar from "../../components/BetaSnackbar";
-import { selectPoolUnderlyingBalance } from "../../state/userSlice";
 
 const StyledPoolPage = styled.div`
   position: relative;
@@ -80,7 +79,7 @@ const PoolPage = (): Optional<JSX.Element> => {
   const updated = useWeb3Updated();
   const pool = useSelector(selectPool(poolName));
   const poolsLoaded = useSelector(selectPoolsLoaded);
-  const balance = useSelector(selectPoolUnderlyingBalance(pool));
+  const usersPoolLpUnlocked = useSelector(selectUsersPoolLpUnlocked(pool));
 
   useEffect(() => {
     if (!backd) return;
@@ -133,7 +132,7 @@ const PoolPage = (): Optional<JSX.Element> => {
           />
           <PoolInformation pool={pool} />
           <LiveHelp />
-          {balance && !balance.isZero() && (
+          {usersPoolLpUnlocked && !usersPoolLpUnlocked.isZero() && (
             <ButtonContainer>
               <Button
                 id="create-topup-button"

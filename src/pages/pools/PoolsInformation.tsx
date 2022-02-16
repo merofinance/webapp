@@ -1,14 +1,13 @@
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-import { selectAverageApy } from "../../state/poolsListSlice";
 import Information from "../../components/Information";
-import { formatPercent } from "../../lib/numeric";
-import { selectTotalDeposits } from "../../state/selectors";
+import { selectProtocolTotalUsdEverywhere } from "../../state/valueSelectors";
+import { selectAverageApy } from "../../state/poolsListSlice";
 
 const PoolsInformation = (): JSX.Element => {
   const { t } = useTranslation();
-  const totalDeposits = useSelector(selectTotalDeposits());
+  const totalDeposits = useSelector(selectProtocolTotalUsdEverywhere);
   const averageApy = useSelector(selectAverageApy);
 
   return (

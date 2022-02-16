@@ -3,12 +3,15 @@ import { useTranslation } from "react-i18next";
 
 import Statistics from "../../components/Statistics";
 import { formatCurrency } from "../../lib/numeric";
-import { selectDeposits, selectLocked } from "../../state/selectors";
+import {
+  selectUsersTotalUsdEverywhere,
+  selectUsersTotalUsdLocked,
+} from "../../state/valueSelectors";
 
 const PoolsStatistics = (): JSX.Element => {
   const { t } = useTranslation();
-  const locked = useSelector(selectLocked());
-  const deposits = useSelector(selectDeposits());
+  const usersTotalUsdLocked = useSelector(selectUsersTotalUsdLocked);
+  const usersTotalUsdEverywhere = useSelector(selectUsersTotalUsdEverywhere);
 
   return (
     <Statistics
@@ -16,12 +19,16 @@ const PoolsStatistics = (): JSX.Element => {
         {
           header: t("pools.statistics.deposits.header"),
           tooltip: t("pools.statistics.deposits.tooltip"),
-          value: deposits ? formatCurrency(Number(deposits.toString())) : null,
+          value: usersTotalUsdEverywhere
+            ? formatCurrency(Number(usersTotalUsdEverywhere.toString()))
+            : null,
         },
         {
           header: t("pools.statistics.locked.header"),
           tooltip: t("pools.statistics.locked.tooltip"),
-          value: locked ? formatCurrency(Number(locked.toString())) : null,
+          value: usersTotalUsdLocked
+            ? formatCurrency(Number(usersTotalUsdLocked.toString()))
+            : null,
         },
         // {
         //   header: t("pools.statistics.rewards.header"),

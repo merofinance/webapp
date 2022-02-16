@@ -8,8 +8,11 @@ import Asset from "../../components/Asset";
 import Button from "../../components/Button";
 import { GradientText } from "../../styles/GradientText";
 import { Pool } from "../../lib";
-import { formatPercent } from "../../lib/numeric";
-import { selectPoolDeposits, selectPoolTotalDeposits, selectPrice } from "../../state/selectors";
+import {
+  selectUsersPoolUnderlyingEverywhere,
+  selectProtocolPoolUnderlyingEverywhere,
+} from "../../state/valueSelectors";
+import { selectPrice } from "../../state/poolsListSlice";
 import Loader from "../../components/Loader";
 import { useDevice } from "../../app/hooks/use-device";
 
@@ -158,8 +161,8 @@ const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
   const { isDesktop } = useDevice();
 
   const price = useSelector(selectPrice(pool));
-  const totalDeposits = useSelector(selectPoolTotalDeposits(pool));
-  const deposits = useSelector(selectPoolDeposits(pool));
+  const totalDeposits = useSelector(selectProtocolPoolUnderlyingEverywhere(pool));
+  const deposits = useSelector(selectUsersPoolUnderlyingEverywhere(pool));
 
   return (
     <RowContainer>
