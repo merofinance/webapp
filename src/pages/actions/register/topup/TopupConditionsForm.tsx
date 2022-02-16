@@ -424,7 +424,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
             loading={loading}
             disabled={!formik.dirty || !formik.isValid || loading}
             token={pool.lpToken}
-            contract={backd.topupActionAddress}
+            contract={backd.topupActionAddress || ""}
             hoverText={buttonHoverText()}
           />
         </ButtonContainer>

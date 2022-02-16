@@ -67,11 +67,11 @@ export const fetchAllowances = createAsyncThunk(
         token: pool.underlying,
       },
       {
-        spender: backd.topupActionAddress,
+        spender: backd.topupActionAddress || "",
         token: pool.lpToken,
       },
       {
-        spender: backd.topupActionAddress,
+        spender: backd.topupActionAddress || "",
         token: { address: pool.stakerVaultAddress, decimals: pool.underlying.decimals },
       },
     ]);
@@ -299,7 +299,7 @@ export function selectToupAllowance(
   pool: Pool
 ): Selector<Optional<ScaledNumber>> {
   return (state: RootState) => {
-    if (!backd) return null;
+    if (!backd || !backd.topupActionAddress) return null;
     const plainLpTokenAllowance =
       state.user.allowances[pool.lpToken.address]?.[backd.topupActionAddress];
     const plainVaultAllowance =

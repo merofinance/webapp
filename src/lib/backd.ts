@@ -48,6 +48,7 @@ import {
 } from "./types";
 import { lendingProviders } from "./lending-protocols";
 import poolMetadata from "./data/pool-metadata";
+import { positions as mockPositions, makeContractTransaction } from "./mock/data";
 
 export type BackdOptions = {
   chainId: number;
@@ -83,13 +84,13 @@ export interface Backd {
   listSupportedProtocols(): Promise<string[]>;
 
   provider: providers.Provider;
-  topupActionAddress: string;
+  topupActionAddress: Optional<string>;
 }
 
 export class Web3Backd implements Backd {
   private controller: Controller;
 
-  private topupAction: TopUpAction;
+  private topupAction: TopUpAction | undefined;
 
   private addressProvider: AddressProvider;
 
@@ -102,21 +103,20 @@ export class Web3Backd implements Backd {
     const contracts = this.getContracts();
 
     // eslint-disable-next-line dot-notation
-    this.controller = ControllerFactory.connect(contracts["Controller"][0], _provider);
+    this.controller = ControllerFactory.connect(contracts.Controller[0], _provider);
     // eslint-disable-next-line dot-notation
-    this.topupAction = TopUpActionFactory.connect(contracts["TopUpAction"][0], _provider);
+    if (contracts.TopUpAction.length > 0)
+      this.topupAction = TopUpActionFactory.connect(contracts.TopUpAction[0], _provider);
     // eslint-disable-next-line dot-notation
-    this.topupAction = TopUpActionFactory.connect(contracts["TopUpAction"][0], _provider);
-    // eslint-disable-next-line dot-notation
-    this.gasBank = GasBankFactory.connect(contracts["GasBank"][0], _provider);
+    this.gasBank = GasBankFactory.connect(contracts.GasBank[0], _provider);
     this.addressProvider = AddressProviderFactory.connect(
-      contracts["AddressProvider"][0], // eslint-disable-line dot-notation
+      contracts.AddressProvider[0], // eslint-disable-line dot-notation
       _provider
     );
   }
 
-  get topupActionAddress(): string {
-    return this.topupAction.address;
+  get topupActionAddress(): Optional<string> {
+    return this.topupAction ? this.topupAction.address : null;
   }
 
   get provider(): providers.Provider {
@@ -135,7 +135,7 @@ export class Web3Backd implements Backd {
       case 1337:
         return contracts["1337"];
       case 1:
-        return contracts["42"]; // TODO Change this to 1
+        return contracts["1"];
       default:
         throw new UnsupportedNetwork();
     }
@@ -257,12 +257,20 @@ export class Web3Backd implements Backd {
   }
 
   async getPositions(): Promise<PlainPosition[]> {
+    if (!this.topupAction) return [];
     const account = await this.currentAccount();
     const rawPositions = await this.topupAction.getUserPositions(account);
     return Promise.all(rawPositions.map((v: any) => this.getPositionInfo(v)));
   }
 
   async getActionFees(): Promise<PlainActionFees> {
+    if (!this.topupAction)
+      return {
+        total: new ScaledNumber().toPlain(),
+        keeperFraction: new ScaledNumber().toPlain(),
+        treasuryFraction: new ScaledNumber().toPlain(),
+        lpFraction: new ScaledNumber().toPlain(),
+      };
     const feeHandlerAddress = await this.topupAction.getFeeHandler();
     const feeHandler = TopUpActionFeeHandlerFactory.connect(feeHandlerAddress, this._provider);
 
@@ -287,6 +295,7 @@ export class Web3Backd implements Backd {
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async getPositionInfo(rawPosition: any): Promise<PlainPosition> {
+    if (!this.topupAction) return mockPositions[0];
     const positionInfo = await this.topupAction.getPosition(
       await this.currentAccount(),
       rawPosition.account,
@@ -315,6 +324,7 @@ export class Web3Backd implements Backd {
   }
 
   async getEstimatedGasUsage(): Promise<PlainScaledNumber> {
+    if (!this.topupAction) return new ScaledNumber().toPlain();
     return new ScaledNumber(await this.topupAction.getEstimatedGasUsage(), GWEI_DECIMALS).toPlain();
   }
 
@@ -323,6 +333,8 @@ export class Web3Backd implements Backd {
     position: Position,
     value: BigNumber
   ): Promise<ContractTransaction> {
+    if (!this.topupAction) return makeContractTransaction("", "");
+
     const { decimals } = pool.underlying;
     const scale = BigNumber.from(10).pow(decimals);
     const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
@@ -363,6 +375,8 @@ export class Web3Backd implements Backd {
     protocol: string,
     unstake = true
   ): Promise<ContractTransaction> {
+    if (!this.topupAction) return makeContractTransaction("", "");
+
     const gasEstimate = await this.topupAction.estimateGas.resetPosition(
       account,
       utils.formatBytes32String(protocol),
@@ -475,6 +489,8 @@ export class Web3Backd implements Backd {
   }
 
   async listSupportedProtocols(): Promise<string[]> {
+    if (!this.topupAction) return [];
+
     const protocols = await this.topupAction.getSupportedProtocols();
     return protocols.map((p) => utils.parseBytes32String(p));
   }
