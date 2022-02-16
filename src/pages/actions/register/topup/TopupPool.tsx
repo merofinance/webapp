@@ -115,7 +115,7 @@ const TopupPool = (): JSX.Element => {
             medium
             width="30rem"
             click={() => {
-              if (usersPoolLpUnlocked && !usersPoolLpUnlocked?.isZero())
+              if (usersPoolLpUnlocked && usersPoolLpUnlocked?.isZero())
                 navigate(`${TOPUP_ACTION_ROUTE}/deposit/${poolName}/${address}/${protocol}`);
               else navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${poolName}`);
             }}

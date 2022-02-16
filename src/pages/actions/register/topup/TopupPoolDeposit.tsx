@@ -72,7 +72,7 @@ const TopupPoolDeposit = (): JSX.Element => {
                 navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${poolName.toLowerCase()}`);
               else navigate(-1);
             }}
-            disabled={!pool || !usersPoolLpUnlocked || !usersPoolLpUnlocked.isZero()}
+            disabled={!pool || !usersPoolLpUnlocked || usersPoolLpUnlocked.isZero()}
             hoverText={t("actions.topup.stages.pool.deposit.incomplete", {
               asset: pool?.underlying.symbol,
             })}
