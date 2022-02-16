@@ -89,6 +89,7 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
         click={() => setConfirming(true)}
         disabled={!valid}
         hoverText={t("amountInput.enter")}
+        loading={loading}
       >
         {t("pool.tabs.withdraw.action", { asset: pool.underlying.symbol.toUpperCase() })}
       </Button>
