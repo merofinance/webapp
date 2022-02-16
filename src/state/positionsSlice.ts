@@ -49,7 +49,11 @@ export const fetchActionFees = createAsyncThunk(
 export const positionsSlice = createSlice({
   name: "positions",
   initialState,
-  reducers: {},
+  reducers: {
+    setPositionsLoaded: (state) => {
+      state.loaded = true;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchPositions.fulfilled, (state, action) => {
       state.positions = action.payload;
@@ -63,6 +67,8 @@ export const positionsSlice = createSlice({
     });
   },
 });
+
+export const { setPositionsLoaded } = positionsSlice.actions;
 
 type RegisterArgs = { backd: Backd; pool: Pool; position: Position; value: BigNumber };
 type RemoveArgs = { backd: Backd; pool: Pool; position: Position };

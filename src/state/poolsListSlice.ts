@@ -15,7 +15,12 @@ import {
 import { fetchLoans } from "./lendingSlice";
 import { ACTIONS_LIVE, INFURA_ID } from "../lib/constants";
 import { createBackd } from "../lib/factory";
-import { fetchActionFees, fetchEstimatedGasUsage, fetchPositions } from "./positionsSlice";
+import {
+  fetchActionFees,
+  fetchEstimatedGasUsage,
+  fetchPositions,
+  setPositionsLoaded,
+} from "./positionsSlice";
 import {
   fetchAllowances,
   fetchBalances,
@@ -98,6 +103,8 @@ export const fetchState =
       dispatch(fetchEstimatedGasUsage({ backd }));
       dispatch(fetchActionFees({ backd }));
       dispatch(fetchGasBankBalance({ backd }));
+    } else {
+      dispatch(setPositionsLoaded());
     }
   };
 
