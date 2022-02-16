@@ -41,9 +41,9 @@ describe("Default state", () => {
     cy.get("#action-button").contains("Deposit and Stake");
     cy.get("#action-button").should("be.disabled");
   });
-  // it("Should have max button", () => {
-  //   cy.get("#input-button").contains("max");
-  // });
+  it("Should have max button", () => {
+    cy.get("#input-button").contains("max");
+  });
 });
 
 describe("Deposit Validation", () => {
@@ -62,11 +62,11 @@ describe("Deposit Validation", () => {
 });
 
 describe("Deposit Input Methods", () => {
-  // it("Should input max amount", () => {
-  //   cy.get("#input-button").click();
-  //   cy.get("#amount-input").should("have.value", "500");
-  //   cy.get("#amount-input").clear();
-  // });
+  it("Should input max amount", () => {
+    cy.get("#input-button").click();
+    cy.get("#amount-input").should("have.value", "500");
+    cy.get("#amount-input").clear();
+  });
   it("Should input 50%", () => {
     cy.get("#slider-50").click();
     cy.get("#amount-input").should("have.value", "250");
@@ -184,7 +184,9 @@ describe("Withdraw Tab", () => {
     cy.get("#input-button").contains("max");
   });
   it("Should load balance", () => {
-    cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains(".", { timeout: WEB3_TIMEOUT });
+    cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains("10", {
+      timeout: WEB3_TIMEOUT,
+    });
   });
 });
 
