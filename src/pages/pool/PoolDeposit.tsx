@@ -78,10 +78,13 @@ const PoolDeposit = ({ pool, compact }: Props): JSX.Element => {
         value={depositAmount}
         setValue={(v: string) => setDepositAmount(v)}
         label={inputLabel}
-        max={poolUnderlyingBalance}
+        max={
+          poolUnderlyingBalance && pool && usersPoolUnderlyingEverywhere
+            ? poolUnderlyingBalance.min(pool.depositCap.sub(usersPoolUnderlyingEverywhere))
+            : null
+        }
         error={error()}
         symbol={pool?.underlying.symbol || "---"}
-        hideMax={!pool || !pool.depositCap.isZero || !pool.depositCap.isZero()}
       />
       <DepositButtons
         stepsOnTop={compact}

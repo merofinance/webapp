@@ -118,6 +118,11 @@ export class ScaledNumber {
     return this.value.gt(other.value) ? this : other;
   }
 
+  min(other: ScaledNumber): ScaledNumber {
+    other = this.standardizeDecimals(other);
+    return this.value.lt(other.value) ? this : other;
+  }
+
   mul(value: number | string | ScaledNumber): ScaledNumber {
     const scaledValue =
       value instanceof ScaledNumber
