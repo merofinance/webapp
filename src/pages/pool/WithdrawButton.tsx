@@ -61,6 +61,18 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
   const submit = () => {
     if (!valid || !usersPoolLpHeld || !pool) return;
     const lpValue = value.div(pool.exchangeRate);
+
+    // If the amount the user is withdrawing is 99.9% of their total, then withdraw their total
+    // This is to avoid the situation where a user withdraws all their tokens other than 0.00000001 DAI from a rounding error
+    const isMaxWithdrawal = usersPoolLpHeld
+      .sub(lpValue)
+      .div(usersPoolLpHeld)
+      .lte(ScaledNumber.fromUnscaled(0.001, lpValue.decimals));
+    if (isMaxWithdrawal) {
+      executeWithdraw(usersPoolLpHeld);
+      return;
+    }
+
     if (lpValue.lte(usersPoolLpHeld)) executeWithdraw(lpValue);
     else executeUnstake();
   };
