@@ -39,7 +39,7 @@ import { selectBalances } from "./userSlice";
  * - Staked: The value is the amount staked in the staker vault
  * - Locked: The value is the amount locked in actions
  * - Unlocked: The value is the amount that are not locked in actions (i.e. Held + Staked)
- * - Anywhere: The value is the amount that is anywhere (i.e. Held + Staked + Locked)A
+ * - Everywhere: The value is the amount that is anywhere (i.e. Held + Staked + Locked)
  */
 
 export function selectUsersPoolLpHeld(
