@@ -79,7 +79,7 @@ export const registerPosition = createAsyncThunk(
     const tx = await backd.registerPosition(pool, position, value);
     handleTransactionConfirmation(
       tx,
-      { action: "Register", args: { pool, plainPosition: toPlainPosition(position) } },
+      { action: "Register", args: { plainPosition: toPlainPosition(position) } },
       dispatch,
       [
         fetchPositions({ backd }),
