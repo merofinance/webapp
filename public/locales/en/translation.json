@@ -423,7 +423,7 @@
       "header": "Register an Action",
       "nav": "Register an Action",
       "create": "Confirm Top-up Position",
-      "choose": "Choose the type of Action",
+      "choose": "Choose the type of Action:",
       "overview": "Define the market triggers that will enable your action using this interface.",
       "step": "STEP {{step}}"
     },
@@ -462,15 +462,15 @@
       "description": "Protect your loans from liquidation",
       "stages": {
         "loan": {
-          "header": "Select a loan to protect",
-          "subHeader": "Backd has detected the following loans on supported platforms associated with your current connected wallet:",
+          "header": "Select a loan to protect:",
+          "subHeader": "The following supported loans have been found:",
           "search": "Or, enter wallet address with a loan:",
           "enterAddress": "Enter the wallet address that the loan is associated with:",
           "notFound": "No loans associated with this address.",
           "alreadyExists": "A top-up action already exists for this loan"
         },
         "pool": {
-          "header": "Which pool do you want the top-up to come from?",
+          "header": "Select the pool you want the top-up to come from:",
           "noDepositsHeader": "To register an action you must deposit assets into a Backd pool",
           "subHeader": "Liquidity deposited into a Backd pool can be earmarked for top-up protection. You will earn yield and BKD rewards while your liquidity is in a Backd pool.",
           "incomplete": "Select a pool",
