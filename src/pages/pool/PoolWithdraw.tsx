@@ -51,7 +51,7 @@ const PoolWithdraw = ({ pool }: Props): JSX.Element => {
         value={withdrawAmount}
         setValue={(v: string) => setWithdrawAmount(v)}
         label={inputLabel}
-        max={usersPoolUnderlyingUnlocked}
+        balance={usersPoolUnderlyingUnlocked}
         error={error()}
         symbol={pool?.underlying.symbol || "---"}
       />

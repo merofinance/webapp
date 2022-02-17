@@ -92,7 +92,7 @@ const UnstakeTokens = ({ token }: Props): JSX.Element => {
           label={
             isMobile ? t("stake.tabs.unstake.inputMobile") : t("stake.tabs.unstake.inputDesktop")
           }
-          max={balance}
+          balance={balance}
           error=""
           symbol="DAI"
         />

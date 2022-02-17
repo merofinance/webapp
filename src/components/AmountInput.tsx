@@ -33,28 +33,34 @@ interface Props {
   value: string;
   setValue: (v: string) => void;
   label: string;
-  max: Optional<ScaledNumber>;
   noSlider?: boolean;
   error: string;
   symbol: string;
+  balance: Optional<ScaledNumber>;
+  max?: Optional<ScaledNumber>;
 }
 
 const AmountInput = ({
   value,
   setValue,
   label,
-  max,
   error,
   symbol,
   noSlider,
+  balance,
+  max,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
+
+  max = max === undefined ? balance : max;
 
   return (
     <StyledAmountInput>
       <Available id="available-amount">
-        {max ? (
-          `${t("amountInput.available", { amount: max.toCryptoString() })} ${symbol.toUpperCase()}`
+        {balance ? (
+          `${t("amountInput.available", {
+            amount: balance.toCryptoString(),
+          })} ${symbol.toUpperCase()}`
         ) : (
           <Loader />
         )}

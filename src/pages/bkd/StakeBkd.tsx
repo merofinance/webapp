@@ -83,7 +83,7 @@ const StakeBkd = (): Optional<JSX.Element> => {
                       value={amount}
                       setValue={(v: string) => setAmount(v)}
                       label={t("bkd.stake.input")}
-                      max={BKD_BALANCE}
+                      balance={BKD_BALANCE}
                       error={error()}
                       symbol="bkd"
                     />
@@ -123,7 +123,7 @@ const StakeBkd = (): Optional<JSX.Element> => {
                       value={amount}
                       setValue={(v: string) => setAmount(v)}
                       label={t("bkd.unstake.input")}
-                      max={BKD_BALANCE}
+                      balance={BKD_BALANCE}
                       error={error()}
                       symbol="bkd"
                     />

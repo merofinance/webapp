@@ -90,7 +90,7 @@ const StakeTokens = ({ token }: Props): JSX.Element => {
           value={value}
           setValue={(v: string) => setValue(v)}
           label={isMobile ? t("stake.tabs.stake.inputMobile") : t("stake.tabs.stake.inputDesktop")}
-          max={balance}
+          balance={balance}
           error=""
           symbol="DAI"
         />
