@@ -105,7 +105,7 @@ export class Web3Backd implements Backd {
     // eslint-disable-next-line dot-notation
     this.controller = ControllerFactory.connect(contracts.Controller[0], _provider);
     // eslint-disable-next-line dot-notation
-    if (contracts.TopUpAction.length > 0)
+    if (contracts.TopUpAction && contracts.TopUpAction.length > 0)
       this.topupAction = TopUpActionFactory.connect(contracts.TopUpAction[0], _provider);
     // eslint-disable-next-line dot-notation
     this.gasBank = GasBankFactory.connect(contracts.GasBank[0], _provider);
