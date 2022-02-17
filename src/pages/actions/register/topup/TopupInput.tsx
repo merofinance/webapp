@@ -23,7 +23,7 @@ const LabelContainer = styled.div`
 `;
 
 const Label = styled.div`
-  font-weight: 700;
+  font-weight: 600;
 
   font-size: 1.8rem;
   @media (max-width: 600px) {
