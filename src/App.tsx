@@ -19,7 +19,7 @@ import TopupPool from "./pages/actions/register/topup/TopupPool";
 import TopupLoan from "./pages/actions/register/topup/TopupLoan";
 import Layout from "./Layout";
 import BkdPage from "./pages/bkd/BkdPage";
-import { ACTIONS_LIVE, STAKING_LIVE } from "./lib/constants";
+import { STAKING_LIVE } from "./lib/constants";
 
 const App = (): JSX.Element => {
   return (
