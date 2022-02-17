@@ -22,6 +22,14 @@ const StyledRegisteredAction = styled.button`
   padding: 1.3rem 1.4rem;
   cursor: pointer;
 
+  > div:first-child {
+    flex: 1.3;
+  }
+
+  > div:last-child {
+    flex: 0.8;
+  }
+
   transition: background-color 0.3s;
   :hover {
     background-color: #1a1438;
