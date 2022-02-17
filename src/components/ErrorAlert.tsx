@@ -1,15 +1,18 @@
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
+import { useWeb3React } from "@web3-react/core";
 
 import { AppDispatch } from "../app/store";
-import { selectError, setError } from "../state/errorSlice";
+import { clearError, selectError, setUnsupportedNetwork } from "../state/errorSlice";
 import { GradientLink } from "../styles/GradientText";
 import { Paragraph } from "../styles/Headers";
 import Button from "./Button";
 import Popup from "./Popup";
 import { changeNetwork } from "../lib/web3";
+import { supportedChainIds } from "../app/web3";
 
 const Text = styled(Paragraph)`
   width: 100%;
@@ -33,17 +36,24 @@ const Link = styled(GradientLink)`
 
 const ErrorAlert = (): JSX.Element => {
   const { t } = useTranslation();
+  const { chainId } = useWeb3React();
   const error = useSelector(selectError);
   const dispatch: AppDispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
 
   const handleClose = () => {
-    dispatch(setError({ message: "" }));
+    dispatch(clearError());
     if (error.redirectOnClose && location.pathname !== "/") {
       navigate("/");
     }
   };
+
+  useEffect(() => {
+    if (chainId && error.switchToMainnetButton && chainId === 1) {
+      dispatch(clearError());
+    }
+  }, [chainId]);
 
   return (
     <Popup
