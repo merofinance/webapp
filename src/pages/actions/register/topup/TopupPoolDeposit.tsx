@@ -52,7 +52,7 @@ const TopupPoolDeposit = (): JSX.Element => {
       <ContentSection
         header={t("actions.register.header")}
         subHeader={t("actions.topup.label")}
-        nav="3/4"
+        nav={t("actions.register.step", { step: "3/4" })}
       >
         <Header id="register-topup-pool-deposit">
           {t("actions.topup.stages.pool.deposit.header", { asset: pool.underlying.symbol })}

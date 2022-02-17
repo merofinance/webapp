@@ -424,7 +424,8 @@
       "nav": "Register an Action",
       "create": "Confirm Top-up Position",
       "choose": "Choose the type of Action",
-      "overview": "Define the market triggers that will enable your action using this interface."
+      "overview": "Define the market triggers that will enable your action using this interface.",
+      "step": "STEP {{step}}"
     },
     "registered": {
       "header": "Registered Actions",

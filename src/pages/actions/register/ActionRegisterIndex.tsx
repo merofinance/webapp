@@ -88,7 +88,10 @@ const ActionRegisterIndex = (): JSX.Element => {
   const [actionOption, setActionOption] = useState("");
 
   return (
-    <ContentSection header={t("actions.register.header")} nav="1/4">
+    <ContentSection
+      header={t("actions.register.header")}
+      nav={t("actions.register.step", { step: "1/4" })}
+    >
       <Header>{t("actions.register.choose")}</Header>
 
       <RowSelector

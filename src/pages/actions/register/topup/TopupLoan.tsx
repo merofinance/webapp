@@ -105,7 +105,7 @@ const TopupLoan = (): JSX.Element => {
       <ContentSection
         header={t("actions.register.header")}
         subHeader={t("actions.topup.label")}
-        nav="2/4"
+        nav={t("actions.register.step", { step: "2/4" })}
       >
         {hasLoans && (
           <>
