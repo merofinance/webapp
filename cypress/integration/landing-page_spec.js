@@ -115,13 +115,13 @@ describe("Statistics", () => {
 });
 
 describe("Pool Preview", () => {
-  it("Should load dai Pool", () => {
-    cy.get("#pool-row-bkddai", { timeout: WEB3_TIMEOUT }).should("be.visible");
-    cy.get("#pool-row-bkddai-apy", { timeout: WEB3_TIMEOUT }).should("be.visible");
-    cy.get("#pool-row-bkddai-apy", { timeout: WEB3_TIMEOUT }).contains("%");
-    cy.get("#pool-row-bkddai-tvl", { timeout: WEB3_TIMEOUT }).should("be.visible");
-    cy.get("#pool-row-bkddai-tvl").contains("$", { timeout: WEB3_TIMEOUT });
-  });
+  // it("Should load dai Pool", () => {
+  //   cy.get("#pool-row-bkddai", { timeout: WEB3_TIMEOUT }).should("be.visible");
+  //   cy.get("#pool-row-bkddai-apy", { timeout: WEB3_TIMEOUT }).should("be.visible");
+  //   cy.get("#pool-row-bkddai-apy", { timeout: WEB3_TIMEOUT }).contains("%");
+  //   cy.get("#pool-row-bkddai-tvl", { timeout: WEB3_TIMEOUT }).should("be.visible");
+  //   cy.get("#pool-row-bkddai-tvl").contains("$", { timeout: WEB3_TIMEOUT });
+  // });
   it("Should load usdc Pool", () => {
     cy.get("#pool-row-bkdusdc", { timeout: WEB3_TIMEOUT }).should("be.visible");
     cy.get("#pool-row-bkdusdc-apy", { timeout: WEB3_TIMEOUT }).should("be.visible");
@@ -129,13 +129,13 @@ describe("Pool Preview", () => {
     cy.get("#pool-row-bkdusdc-tvl", { timeout: WEB3_TIMEOUT }).should("be.visible");
     cy.get("#pool-row-bkdusdc-tvl").contains("$", { timeout: WEB3_TIMEOUT });
   });
-  it("Should load eth Pool", () => {
-    cy.get("#pool-row-bkdeth", { timeout: WEB3_TIMEOUT }).should("be.visible");
-    cy.get("#pool-row-bkdeth-apy", { timeout: WEB3_TIMEOUT }).should("be.visible");
-    cy.get("#pool-row-bkdeth-apy", { timeout: WEB3_TIMEOUT }).contains("%");
-    cy.get("#pool-row-bkdeth-tvl", { timeout: WEB3_TIMEOUT }).should("be.visible");
-    cy.get("#pool-row-bkdeth-tvl").contains("$", { timeout: WEB3_TIMEOUT });
-  });
+  // it("Should load eth Pool", () => {
+  //   cy.get("#pool-row-bkdeth", { timeout: WEB3_TIMEOUT }).should("be.visible");
+  //   cy.get("#pool-row-bkdeth-apy", { timeout: WEB3_TIMEOUT }).should("be.visible");
+  //   cy.get("#pool-row-bkdeth-apy", { timeout: WEB3_TIMEOUT }).contains("%");
+  //   cy.get("#pool-row-bkdeth-tvl", { timeout: WEB3_TIMEOUT }).should("be.visible");
+  //   cy.get("#pool-row-bkdeth-tvl").contains("$", { timeout: WEB3_TIMEOUT });
+  // });
 });
 
 describe("Percy", () => {
