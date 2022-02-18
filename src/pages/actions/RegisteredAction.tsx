@@ -26,7 +26,7 @@ const StyledRegisteredAction = styled.button`
     flex: 1.3;
   }
 
-  > div:last-child {
+  > div:nth-child(4) {
     flex: 0.8;
   }
 
