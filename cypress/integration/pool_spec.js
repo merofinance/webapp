@@ -49,13 +49,13 @@ describe("Default state", () => {
 describe("Deposit Validation", () => {
   it("Should error on 0", () => {
     cy.get("#amount-input").type("0");
-    cy.get("#input-label").should("have.css", "color", "rgb(244, 67, 54)");
+    cy.get("#input-label").should("have.css", "color", "rgb(244, 74, 61)");
     cy.get("#input-note").contains("Amount must be a positive number");
     cy.get("#amount-input").clear();
   });
   it("Should error on above amount", () => {
     cy.get("#amount-input").type("600");
-    cy.get("#input-label").should("have.css", "color", "rgb(244, 67, 54)");
+    cy.get("#input-label").should("have.css", "color", "rgb(244, 74, 61)");
     cy.get("#input-note").contains("Amount exceeds available balance");
     cy.get("#amount-input").clear();
   });
@@ -193,13 +193,13 @@ describe("Withdraw Tab", () => {
 describe("Withdraw Validation", () => {
   it("Should error on 0", () => {
     cy.get("#amount-input").type("0");
-    cy.get("#input-label").should("have.css", "color", "rgb(244, 67, 54)");
+    cy.get("#input-label").should("have.css", "color", "rgb(244, 74, 61)");
     cy.get("#input-note").contains("Amount must be a positive number");
     cy.get("#amount-input").clear();
   });
   it("Should error on above amount", () => {
     cy.get("#amount-input").type("1000000000000");
-    cy.get("#input-label").should("have.css", "color", "rgb(244, 67, 54)");
+    cy.get("#input-label").should("have.css", "color", "rgb(244, 74, 61)");
     cy.get("#input-note").contains("Amount exceeds available balance");
     cy.get("#amount-input").clear();
   });
