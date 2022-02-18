@@ -61,20 +61,22 @@ export const fetchGasBankBalance = createAsyncThunk(
 export const fetchAllowances = createAsyncThunk(
   "user/fetchAllowances",
   async ({ backd, pools }: { backd: Backd; pools: Pool[] }) => {
-    const queries: AllowanceQuery[] = pools.flatMap((pool) => [
-      {
-        spender: pool.address,
-        token: pool.underlying,
-      },
-      {
-        spender: backd.topupActionAddress || "",
-        token: pool.lpToken,
-      },
-      {
-        spender: backd.topupActionAddress || "",
-        token: { address: pool.stakerVaultAddress, decimals: pool.underlying.decimals },
-      },
-    ]);
+    const queries: AllowanceQuery[] = pools
+      .flatMap((pool) => [
+        {
+          spender: pool.address,
+          token: pool.underlying,
+        },
+        {
+          spender: backd.topupActionAddress || "",
+          token: pool.lpToken,
+        },
+        {
+          spender: backd.topupActionAddress || "",
+          token: { address: pool.stakerVaultAddress, decimals: pool.underlying.decimals },
+        },
+      ])
+      .filter((a: AllowanceQuery) => !!a.spender);
     const allowances = await backd.getAllowances(queries);
     return toPlainAllowances(allowances);
   }
