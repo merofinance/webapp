@@ -1082,10 +1082,13 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
-"@backdfund/protocol@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@backdfund/protocol/-/protocol-1.0.0.tgz#b3bcf0776a539bcb2d59ccee98cb9f0655ee0317"
-  integrity sha512-EpWASHcQk9oXIuHhaIgfxJQ5ndjgWAcNGE68NarHT0yNJzMeMaY98COBomkbvoHuAdqRPNkFwD/V4a/ajthZeQ==
+"@backdfund/protocol@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@backdfund/protocol/-/protocol-1.1.0.tgz#bea6c6bacf41983194c7aeaddb651ce3299526eb"
+  integrity sha512-1qWMMkFxyIGnt0dmAg8DtA4ODEN+sU6PagL9ir+5VMRm/j0XGJqBWhP3WurU1gOzb6HEXfRVaiq7VjSCknBJXA==
+  dependencies:
+    "@openzeppelin/contracts" "^4.5.0"
+    "@openzeppelin/contracts-upgradeable" "^4.5.1"
 
 "@bcoe/v8-coverage@^0.2.3":
   version "0.2.3"
@@ -1972,6 +1975,16 @@
   dependencies:
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
+
+"@openzeppelin/contracts-upgradeable@^4.5.1":
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/@openzeppelin/contracts-upgradeable/-/contracts-upgradeable-4.5.1.tgz#dc354082460eb34f5833afdecfab46538b208c4f"
+  integrity sha512-xcKycsSyFauIGMhSeeTJW/Jzz9jZUJdiFNP9Wo/9VhMhw8t5X0M92RY6x176VfcIWsxURMHFWOJVTlFA78HI/w==
+
+"@openzeppelin/contracts@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-4.5.0.tgz#3fd75d57de172b3743cdfc1206883f56430409cc"
+  integrity sha512-fdkzKPYMjrRiPK6K4y64e6GzULR7R7RwxSigHS8DDp7aWDeoReqsQI+cxHV1UuhAqX69L1lAaWDxenfP+xiqzA==
 
 "@pedrouid/environment@^1.0.1":
   version "1.0.1"

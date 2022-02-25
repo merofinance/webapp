@@ -10,7 +10,7 @@
     "percy": "percy exec -- cypress run"
   },
   "dependencies": {
-    "@backdfund/protocol": "^1.0.0",
+    "@backdfund/protocol": "^1.1.0",
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
     "@reduxjs/toolkit": "^1.7.1",
