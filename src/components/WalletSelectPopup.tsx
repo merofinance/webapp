@@ -6,13 +6,11 @@ import LaunchIcon from "@material-ui/icons/Launch";
 import { AbstractConnector } from "@web3-react/abstract-connector";
 import Web3 from "web3";
 import { ethers } from "ethers";
-import { useDispatch } from "react-redux";
 
 import { injectedConnector, walletConnectConnector, privateKeyConnector } from "../app/web3";
 import metamask from "../assets/wallets/metamask.svg";
 import walletConnect from "../assets/wallets/wallet-connect.svg";
 import Popup from "./Popup";
-import { setUnsupportedNetwork } from "../state/errorSlice";
 
 interface WalletOption {
   name: string;
@@ -147,7 +145,6 @@ interface Props {
 }
 
 const WalletSelectPopup = ({ show, close, setWallet }: Props): JSX.Element => {
-  const dispatch = useDispatch();
   const { activate } = useWeb3React();
   const { t } = useTranslation();
 
@@ -158,8 +155,7 @@ const WalletSelectPopup = ({ show, close, setWallet }: Props): JSX.Element => {
       (window as any).ethereum = provider;
       await activate(privateKeyConnector);
     } else {
-      const result = await activate(connector);
-      if (result === undefined) dispatch(setUnsupportedNetwork());
+      await activate(connector);
     }
     setWallet(walletName);
     close(true);
