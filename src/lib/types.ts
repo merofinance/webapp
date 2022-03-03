@@ -26,6 +26,7 @@ export interface GenericPool<T> {
   totalAssets: T;
   underlying: Token;
   depositCap: T;
+  harvestable: T;
 }
 
 export type Pool = GenericPool<ScaledNumber>;
@@ -163,6 +164,7 @@ export function transformPool<T, U>(pool: GenericPool<T>, f: (v: T) => U): Gener
     minWithdrawalFee: f(pool.minWithdrawalFee),
     feeDecreasePeriod: f(pool.feeDecreasePeriod),
     depositCap: f(pool.depositCap),
+    harvestable: f(pool.harvestable),
   };
 }
 

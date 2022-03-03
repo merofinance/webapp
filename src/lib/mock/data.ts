@@ -30,6 +30,7 @@ export const pools: GenericPool<BigNumber>[] = [
     minWithdrawalFee: scale(0, 18),
     feeDecreasePeriod: scale(10, 18),
     depositCap: scale(10000, 18),
+    harvestable: scale(3, 18),
   },
   {
     name: "bUSDC3CRV",
@@ -54,6 +55,7 @@ export const pools: GenericPool<BigNumber>[] = [
     minWithdrawalFee: scale(0, 18),
     feeDecreasePeriod: scale(10, 18),
     depositCap: scale(10000, 18),
+    harvestable: scale(3, 6),
   },
   {
     name: "bkdethCRV",
@@ -78,6 +80,7 @@ export const pools: GenericPool<BigNumber>[] = [
     minWithdrawalFee: scale(0, 18),
     feeDecreasePeriod: scale(10, 18),
     depositCap: scale(10000, 18),
+    harvestable: scale(3, 18),
   },
 ];
 

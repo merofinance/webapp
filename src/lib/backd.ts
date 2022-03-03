@@ -6,6 +6,8 @@ import { LiquidityPoolFactory } from "@backdfund/protocol/typechain/LiquidityPoo
 import { StakerVaultFactory } from "@backdfund/protocol/typechain/StakerVaultFactory";
 import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
 import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFactory";
+import { VaultFactory } from "@backdfund/protocol/typechain/VaultFactory";
+import { IStrategyFactory } from "@backdfund/protocol/typechain/IStrategyFactory";
 import {
   AddressProvider,
   AddressProviderFactory,
@@ -189,6 +191,7 @@ export class Web3Backd implements Backd {
       minWithdrawalFee,
       feeDecreasePeriod,
       depositCap,
+      harvestable,
     ] = await Promise.all([
       pool.name(),
       pool.getLpToken(),
@@ -199,6 +202,7 @@ export class Web3Backd implements Backd {
       pool.getMinWithdrawalFee(),
       pool.getWithdrawalFeeDecreasePeriod(),
       pool.depositCap(),
+      this.getHarvestable(address),
     ]);
     const [lpToken, underlying, stakerVaultAddress] = await Promise.all([
       this.getTokenInfo(lpTokenAddress),
@@ -212,7 +216,13 @@ export class Web3Backd implements Backd {
       const deployedtime = metadata.deployment[this.chainId.toString()].time;
       const compoundExponent =
         MILLISECONDS_PER_YEAR / (new Date().getTime() - deployedtime.getTime());
-      const unscaledApy = Number(new ScaledNumber(exchangeRate).toString()) ** compoundExponent - 1;
+      const scaledTotalAssets = new ScaledNumber(totalAssets, underlying.decimals);
+      const lpBalance = scaledTotalAssets.div(new ScaledNumber(exchangeRate));
+      const balanceAfterHarvest = scaledTotalAssets.add(
+        new ScaledNumber(harvestable, underlying.decimals)
+      );
+      const exchangeRateAfterHarvest = balanceAfterHarvest.div(lpBalance);
+      const unscaledApy = Number(exchangeRateAfterHarvest.toString()) ** compoundExponent - 1;
       if (unscaledApy >= 0) apy = ScaledNumber.fromUnscaled(unscaledApy).value;
     }
 
@@ -229,7 +239,17 @@ export class Web3Backd implements Backd {
       minWithdrawalFee: new ScaledNumber(minWithdrawalFee).toPlain(),
       feeDecreasePeriod: new ScaledNumber(feeDecreasePeriod, 0).toPlain(),
       depositCap: new ScaledNumber(depositCap, underlying.decimals).toPlain(),
+      harvestable: new ScaledNumber(harvestable, underlying.decimals).toPlain(),
     };
+  }
+
+  async getHarvestable(poolAddress: Address): Promise<BigNumber> {
+    const pool = LiquidityPoolFactory.connect(poolAddress, this._provider);
+    const vaultAddress = await pool.getVault();
+    const vault = VaultFactory.connect(vaultAddress, this._provider);
+    const strategyAddress = await vault.getStrategy();
+    const strategy = IStrategyFactory.connect(strategyAddress, this._provider);
+    return strategy.harvestable();
   }
 
   async getWithdrawalFees(pools: Pool[]): Promise<PlainWithdrawalFees> {
