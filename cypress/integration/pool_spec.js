@@ -38,7 +38,7 @@ describe("Default state", () => {
     cy.get("#content-header").contains("DAI pool");
   });
   it("Should have disabled button", () => {
-    cy.get("#action-button").contains("Deposit and Stake");
+    cy.get("#action-button").contains("Deposit");
     cy.get("#action-button").should("be.disabled");
   });
   it("Should have max button", () => {

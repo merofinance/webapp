@@ -378,7 +378,7 @@
           "labelMobile": "Enter amount to deposit",
           "labelDesktop": "Enter an amount of {{asset}} to deposit"
         },
-        "action": "Deposit and Stake"
+        "action": "Deposit"
       },
       "withdraw": {
         "tab": "Withdraw",
