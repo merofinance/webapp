@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ethers } from "ethers";
+import { ScaledNumber } from "scaled-number";
 
 import { AppThunk, RootState } from "../app/store";
 import { Pool } from "../lib";
@@ -28,7 +29,6 @@ import {
   fetchWithdrawalFees,
 } from "./userSlice";
 import poolMetadata from "../lib/data/pool-metadata";
-import { ScaledNumber } from "../lib/scaled-number";
 
 interface PoolsState {
   pools: PlainPool[];

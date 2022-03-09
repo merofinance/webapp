@@ -2,13 +2,13 @@ import { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { ScaledNumber } from "scaled-number";
 
 import Button from "./Button";
 import tick from "../assets/ui/tick.svg";
 import { Token } from "../lib/types";
 import { useBackd } from "../app/hooks/use-backd";
 import { approve, selectAllowance } from "../state/userSlice";
-import { ScaledNumber } from "../lib/scaled-number";
 import { hasPendingTransaction } from "../state/transactionsSlice";
 import { INFINITE_APPROVE_AMMOUNT } from "../lib/constants";
 

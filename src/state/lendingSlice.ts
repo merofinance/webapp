@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { ScaledNumber } from "scaled-number";
+
 import { RootState } from "../app/store";
 import { Backd } from "../lib/backd";
-import { ScaledNumber } from "../lib/scaled-number";
 import { Address, LendingProtocol, Loan, Optional, PlainLoan, PlainLoans } from "../lib/types";
 
 interface LendingState {

@@ -1,10 +1,10 @@
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import styled from "styled-components";
+import { ScaledNumber } from "scaled-number";
+
 import { useDevice } from "../../app/hooks/use-device";
 import Popup from "../../components/Popup";
 import { Pool } from "../../lib";
-import { ScaledNumber } from "../../lib/scaled-number";
 import { selectWithdrawalFee } from "../../state/userSlice";
 import InfoBlock from "../../components/InfoBlock";
 

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { BigNumber } from "ethers";
+import { PlainScaledNumber, ScaledNumber } from "scaled-number";
 
 import { RootState } from "../app/store";
 import { Pool } from "../lib";
@@ -16,7 +17,6 @@ import {
 } from "../lib/types";
 import { handleTransactionConfirmation } from "../lib/transactionsUtils";
 import { fetchAllowances, fetchBalances, fetchGasBankBalance } from "./userSlice";
-import { PlainScaledNumber, ScaledNumber } from "../lib/scaled-number";
 
 interface PositionsState {
   positions: PlainPosition[];

@@ -1,8 +1,7 @@
 import { TransactionReceipt } from "@ethersproject/providers";
 import fromEntries from "fromentries";
 import { providers, Signer } from "ethers";
-
-import { PlainScaledNumber, ScaledNumber } from "./scaled-number";
+import { PlainScaledNumber, ScaledNumber } from "scaled-number";
 
 export type Optional<T> = T | null;
 

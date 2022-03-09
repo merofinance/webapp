@@ -1,6 +1,7 @@
 import { BigNumber, ContractReceipt, ContractTransaction } from "ethers";
+import { ScaledNumber } from "scaled-number";
+
 import { scale } from "../numeric";
-import { ScaledNumber } from "../scaled-number";
 import { Address, PlainPosition, GenericPool } from "../types";
 
 export const masterAccount = "0xbacE8e7f276FD2Ee5ecE5C1df18BF381148862A6";

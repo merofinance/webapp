@@ -1,5 +1,7 @@
 import { ContractTransaction } from "@ethersproject/contracts";
 import { batch } from "react-redux";
+import { ScaledNumber } from "scaled-number";
+
 import { AppDispatch } from "../app/store";
 import {
   fromPlainPosition,
@@ -10,7 +12,6 @@ import {
 } from "./types";
 import { setError } from "../state/errorSlice";
 import { addTransaction, confirmTransaction } from "../state/transactionsSlice";
-import { ScaledNumber } from "./scaled-number";
 import { shortenAddress } from "./text";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

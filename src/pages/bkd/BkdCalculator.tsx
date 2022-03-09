@@ -1,8 +1,9 @@
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import { ScaledNumber } from "scaled-number";
+
 import { useDevice } from "../../app/hooks/use-device";
 import InfoBlock, { InfoBlockRow } from "../../components/InfoBlock";
-import { ScaledNumber } from "../../lib/scaled-number";
 
 const SubLabel = styled.span`
   display: flex;

@@ -1,7 +1,8 @@
 import { useSelector } from "react-redux";
 import { Selector } from "reselect";
+import { ScaledNumber } from "scaled-number";
+
 import { RootState } from "../app/store";
-import { ScaledNumber } from "../lib/scaled-number";
 import { Optional, Pool } from "../lib/types";
 import { selectPools, selectPrice, selectPrices } from "./poolsListSlice";
 import { selectPoolPositions, selectPositions } from "./positionsSlice";

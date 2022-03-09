@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PlainScaledNumber, ScaledNumber } from "scaled-number";
 
 import { RootState, Selector } from "../app/store";
 import { Backd } from "../lib/backd";
 import { ETH_DUMMY_ADDRESS } from "../lib/constants";
-import { PlainScaledNumber, ScaledNumber } from "../lib/scaled-number";
 import {
   Address,
   AllowanceQuery,

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { ScaledNumber } from "scaled-number";
 
 import Button from "../../components/Button";
 import { Pool } from "../../lib";
@@ -9,7 +10,6 @@ import { unstake, withdraw } from "../../state/userSlice";
 import { selectUsersPoolLpHeld, selectUsersPoolLpStaked } from "../../state/valueSelectors";
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
-import { ScaledNumber } from "../../lib/scaled-number";
 import { hasPendingTransaction } from "../../state/transactionsSlice";
 import Loader from "../../components/Loader";
 import { Optional } from "../../lib/types";

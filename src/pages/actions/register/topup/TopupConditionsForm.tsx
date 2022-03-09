@@ -6,9 +6,9 @@ import * as yup from "yup";
 import { FormikErrors, useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { BigNumber, ethers } from "ethers";
+import { ScaledNumber } from "scaled-number";
 
 import { useBackd } from "../../../../app/hooks/use-backd";
-import { ScaledNumber } from "../../../../lib/scaled-number";
 import { selectUsersPoolUnderlyingUnlocked } from "../../../../state/valueSelectors";
 import ApproveThenAction from "../../../../components/ApproveThenAction";
 import { useDevice } from "../../../../app/hooks/use-device";

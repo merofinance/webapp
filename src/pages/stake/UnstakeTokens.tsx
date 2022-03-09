@@ -3,13 +3,13 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import LaunchIcon from "@material-ui/icons/Launch";
 import { useTranslation } from "react-i18next";
+import { ScaledNumber } from "scaled-number";
 
 import AmountInput from "../../components/AmountInput";
 import ApproveThenAction from "../../components/ApproveThenAction";
 import { Token } from "../../lib/types";
 import { GradientLink } from "../../styles/GradientText";
 import { useDevice } from "../../app/hooks/use-device";
-import { ScaledNumber } from "../../lib/scaled-number";
 import { selectEthBalance } from "../../state/userSlice";
 
 const StyledUnstakeTokens = styled.div`

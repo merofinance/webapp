@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { ScaledNumber } from "../lib/scaled-number";
+import { ScaledNumber } from "scaled-number";
+
 import { Optional } from "../lib/types";
 import AmountSlider from "./AmountSlider";
 import Input from "./Input";

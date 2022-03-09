@@ -1,11 +1,11 @@
 import { BigNumber, ContractTransaction, providers } from "ethers";
 import fromEntries from "fromentries";
+import { PlainScaledNumber, ScaledNumber } from "scaled-number";
 
 import { Pool } from "..";
 import { Backd } from "../backd";
 import { GWEI_DECIMALS } from "../constants";
 import { bigNumberToFloat } from "../numeric";
-import { PlainScaledNumber, ScaledNumber } from "../scaled-number";
 import {
   Address,
   AllowanceQuery,

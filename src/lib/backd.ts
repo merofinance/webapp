@@ -17,6 +17,7 @@ import {
 } from "@backdfund/protocol";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
 import fromEntries from "fromentries";
+import { PlainScaledNumber, ScaledNumber } from "scaled-number";
 
 import { UnsupportedNetwork } from "../app/errors";
 import { getPrices as getPricesFromCoingecko } from "./coingecko";
@@ -29,7 +30,6 @@ import {
   DEPOSIT_SLIPPAGE,
   GWEI_DECIMALS,
 } from "./constants";
-import { PlainScaledNumber, ScaledNumber } from "./scaled-number";
 import {
   Address,
   AllowanceQuery,

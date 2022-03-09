@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import { ScaledNumber } from "scaled-number";
 
 import { useDevice } from "../../app/hooks/use-device";
 import AmountInput from "../../components/AmountInput";
 import { Pool } from "../../lib";
-import { ScaledNumber } from "../../lib/scaled-number";
 import DepositButtons from "./DepositButtons";
 import { Optional } from "../../lib/types";
 import { selectUsersPoolUnderlyingEverywhere } from "../../state/valueSelectors";

@@ -1,7 +1,7 @@
 import { providers, Signer } from "ethers";
+import { ScaledNumber } from "scaled-number";
 
 import { Address, LendingProtocol, LendingProtocolProvider, PlainLoan, Optional } from "../types";
-import { ScaledNumber } from "../scaled-number";
 
 // The Compound Web API is used here instead of their contracts to get the data
 // The contracts do not have a clean API for this data, resulting in several calls which can be messy and slow

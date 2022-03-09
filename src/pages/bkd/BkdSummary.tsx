@@ -1,9 +1,9 @@
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { ScaledNumber } from "scaled-number";
+
 import { useDevice } from "../../app/hooks/use-device";
 import SummaryStatistics from "../../components/SummaryStatistics";
-import { formatPercent } from "../../lib/numeric";
-import { ScaledNumber } from "../../lib/scaled-number";
 
 const BkdSummary = (): JSX.Element => {
   const { t } = useTranslation();

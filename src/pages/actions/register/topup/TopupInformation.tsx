@@ -4,11 +4,11 @@ import LaunchIcon from "@material-ui/icons/Launch";
 import { useTranslation } from "react-i18next";
 import { useWeb3React } from "@web3-react/core";
 import { BigNumber } from "ethers";
+import { ScaledNumber } from "scaled-number";
 
 import { GradientLink } from "../../../../styles/GradientText";
 import BackdTooltip from "../../../../components/BackdTooltip";
 import { shortenAddress } from "../../../../lib/text";
-import { ScaledNumber } from "../../../../lib/scaled-number";
 import { Optional, Pool, Position } from "../../../../lib/types";
 import { useDevice } from "../../../../app/hooks/use-device";
 import { getEtherscanAddressLink } from "../../../../lib/web3";
