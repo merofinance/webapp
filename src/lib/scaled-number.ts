@@ -150,6 +150,8 @@ export class ScaledNumber {
 
   toString = (): string => bigNumberToString(this._value, this._decimals);
 
+  toNumber = (): number => Number(this.toString());
+
   toCryptoString = (parameters: Intl.NumberFormatOptions = {}): string =>
     formatCrypto(Number(this.toString()), parameters);
 
