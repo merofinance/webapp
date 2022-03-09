@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { useWeb3React } from "@web3-react/core";
 
 import Statistics, { StatisticType } from "../../components/Statistics";
-import { formatCurrency } from "../../lib/numeric";
 import {
   selectUsersTotalUsdEverywhere,
   selectUsersTotalUsdLocked,
@@ -20,9 +19,7 @@ const PoolsStatistics = (): JSX.Element => {
     {
       header: t("pools.statistics.deposits.header"),
       tooltip: t("pools.statistics.deposits.tooltip"),
-      value: usersTotalUsdEverywhere
-        ? formatCurrency(Number(usersTotalUsdEverywhere.toString()))
-        : null,
+      value: usersTotalUsdEverywhere ? usersTotalUsdEverywhere.toUsdValue(1) : null,
     },
   ];
 
@@ -30,7 +27,7 @@ const PoolsStatistics = (): JSX.Element => {
     statistics.push({
       header: t("pools.statistics.locked.header"),
       tooltip: t("pools.statistics.locked.tooltip"),
-      value: usersTotalUsdLocked ? formatCurrency(Number(usersTotalUsdLocked.toString())) : null,
+      value: usersTotalUsdLocked ? usersTotalUsdLocked.toUsdValue(1) : null,
     });
 
   // statistics.push({

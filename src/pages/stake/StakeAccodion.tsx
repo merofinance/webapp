@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { ScaledNumber } from "scaled-number";
+
 import Accordion from "../../components/Accordion";
 import Asset from "../../components/Asset";
 import { GradientText } from "../../styles/GradientText";
@@ -9,7 +11,6 @@ import { ETH_DUMMY_ADDRESS } from "../../lib/constants";
 import UnstakeTokens from "./UnstakeTokens";
 import AccordionChevron from "../../components/AccordionChevron";
 import { useDevice } from "../../app/hooks/use-device";
-import { numberToCompactCurrency } from "../../lib/numeric";
 
 const Header = styled.div`
   position: relative;
@@ -161,7 +162,9 @@ const StakeAccordion = ({ open, toggle }: Props): JSX.Element => {
           <Apr>5.2%</Apr>
           <ValueContainer>
             <ValueToken>40 BKD</ValueToken>
-            <ValueUsd>{`${isDesktop ? "=$3200.93" : numberToCompactCurrency(3200.93)}`}</ValueUsd>
+            <ValueUsd>{`${
+              isDesktop ? "=$3200.93" : ScaledNumber.fromUnscaled(3200.93).toCompactUsdValue(1)
+            }`}</ValueUsd>
           </ValueContainer>
           <Tvl>$30,034</Tvl>
           <EndContainer>

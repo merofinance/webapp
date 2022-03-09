@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Token } from "../lib/types";
-import { numberToCompactString } from "../lib/numeric";
 import poolMetadata from "../lib/data/pool-metadata";
 
 const StyledAsset = styled.div`
@@ -47,20 +46,17 @@ interface Props {
   large?: boolean;
   small?: boolean;
   tiny?: boolean;
-  value?: number;
+  value?: string;
   hideIcon?: boolean;
-  compact?: boolean;
 }
 
-const Asset = ({ token, large, small, tiny, value, hideIcon, compact }: Props): JSX.Element => {
+const Asset = ({ token, large, small, tiny, value, hideIcon }: Props): JSX.Element => {
   const { icon } = poolMetadata[token.symbol];
 
   return (
     <StyledAsset>
       {!hideIcon && <Icon src={icon} alt={`${token.symbol} icon`} tiny={tiny} />}
-      <Label large={large} small={small} tiny={tiny}>{`${
-        value ? `${compact ? numberToCompactString(value) : value} ` : ""
-      }${token.symbol}`}</Label>
+      <Label large={large} small={small} tiny={tiny}>{`${value || ""}${token.symbol}`}</Label>
     </StyledAsset>
   );
 };

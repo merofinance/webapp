@@ -5,7 +5,6 @@ import { PlainScaledNumber, ScaledNumber } from "scaled-number";
 import { Pool } from "..";
 import { Backd } from "../backd";
 import { GWEI_DECIMALS } from "../constants";
-import { bigNumberToFloat } from "../numeric";
 import {
   Address,
   AllowanceQuery,
@@ -127,11 +126,7 @@ export default class MockBackd implements Backd {
   }
 
   getPrices(symbols: string[]): Promise<Prices> {
-    return Promise.resolve(
-      fromEntries(
-        symbols.map((symbol) => [symbol, bigNumberToFloat(prices[symbol] || BigNumber.from(0))])
-      )
-    );
+    return Promise.resolve(fromEntries(symbols.map((symbol) => [symbol, 3])));
   }
 
   getPositions(): Promise<PlainPosition[]> {
