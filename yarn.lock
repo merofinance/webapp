@@ -13163,6 +13163,13 @@ saxes@^5.0.1:
   dependencies:
     xmlchars "^2.2.0"
 
+scaled-number@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/scaled-number/-/scaled-number-1.0.0.tgz#07292017cf32b8f8544d025b8c526408388a479b"
+  integrity sha512-4iEN+yFviPyENRZF6kY+w/fd7u19dLZPdaxHHdKiQ1JUz1PwH38mBuHRPA1CjWHEI34mGOPfm/rVO9P7HF2EwQ==
+  dependencies:
+    "@ethersproject/bignumber" "^5.5.0"
+
 scheduler@^0.20.2:
   version "0.20.2"
   resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.20.2.tgz#4baee39436e34aa93b4874bddcbf0fe8b8b50e91"
