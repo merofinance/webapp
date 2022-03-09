@@ -22,7 +22,7 @@ const PoolInformation = ({ pool }: Props): JSX.Element => {
     pool && pool.maxWithdrawalFee.toPercent ? pool.maxWithdrawalFee.toPercent() : null;
   const minWithdrawalFee =
     pool && pool.minWithdrawalFee.toPercent ? pool.minWithdrawalFee.toPercent() : null;
-  const days = pool ? Number(pool.feeDecreasePeriod.toString()) / 86400 : null;
+  const days = pool ? pool.feeDecreasePeriod.toNumber() / 86400 : null;
 
   return (
     <Information

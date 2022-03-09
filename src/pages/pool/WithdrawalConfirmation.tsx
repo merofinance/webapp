@@ -33,7 +33,7 @@ const WithdrawalConfirmation = ({
   const withdrawnAmount = withdrawalFee ? value.sub(value.mul(withdrawalFee)) : new ScaledNumber();
   const maxWithdrawalFee = pool.maxWithdrawalFee.toPercent();
   const minWithdrawalFee = pool.minWithdrawalFee.toPercent();
-  const days = Number(pool.feeDecreasePeriod.toString()) / 86400;
+  const days = pool.feeDecreasePeriod.toNumber() / 86400;
   const asset = pool.underlying.symbol;
 
   return (

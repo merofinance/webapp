@@ -65,7 +65,7 @@ interface Props {
 }
 
 const AmountSlider = ({ value, max, setValue }: Props): JSX.Element => {
-  const percent = max.isZero() ? 0 : Math.round((Number(value) / Number(max.toString())) * 100);
+  const percent = max.isZero() ? 0 : Math.round((Number(value) / max.toNumber()) * 100);
 
   const updateValue = (percent: number) => {
     const newValue = max.value.mul(BigNumber.from(percent)).div(BigNumber.from(100));
@@ -92,7 +92,7 @@ const AmountSlider = ({ value, max, setValue }: Props): JSX.Element => {
           key={step}
           percent={`${step}%`}
           click={() => updateValue(step)}
-          active={Number(value || 0) / Number(max.toString()) > step / 100}
+          active={Number(value || 0) / max.toNumber() > step / 100}
         />
       ))}
     </StyledAmountSlider>

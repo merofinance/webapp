@@ -25,9 +25,7 @@ const BkdSummary = (): JSX.Element => {
         {
           primary: true,
           label: t("bkd.cards.apr.header"),
-          value: `${formatPercent(Number(startApr.toString()))} - ${formatPercent(
-            Number(endApr.toString())
-          )}`,
+          value: `${startApr.toPercent()} - ${endApr.toPercent()}`,
           subValue: t("bkd.cards.apr.description"),
         },
         {
