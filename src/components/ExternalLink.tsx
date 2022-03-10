@@ -18,7 +18,7 @@ const Link = styled(GradientLink)`
 
   font-size: ${(props: LinkProps) => (props.large ? "1.6rem" : "1.5rem")};
   @media (max-width: 1220px) {
-    font-size: ${(props: LinkProps) => (props.large ? "1.6rem" : "1.2rem")};
+    font-size: ${(props: LinkProps) => (props.large ? "1.4rem" : "1.2rem")};
   }
 `;
 

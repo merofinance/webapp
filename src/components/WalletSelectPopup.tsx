@@ -50,12 +50,13 @@ const SubHeaderContainer = styled.div`
 
 const SubHeader = styled.div`
   font-weight: 400;
-  font-size: 1.6rem;
   letter-spacing: 0.15px;
   text-align: center;
   margin-right: 0.5rem;
 
+  font-size: 1.6rem;
   @media (max-width: 600px) {
+    font-size: 1.4rem;
     margin-bottom: 0.2rem;
   }
 `;
