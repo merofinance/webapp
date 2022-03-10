@@ -1,12 +1,10 @@
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import LaunchIcon from "@material-ui/icons/Launch";
 import { useTranslation } from "react-i18next";
 import { useWeb3React } from "@web3-react/core";
 import { BigNumber } from "ethers";
 import { ScaledNumber } from "scaled-number";
 
-import { GradientLink } from "../../../../styles/GradientText";
 import BackdTooltip from "../../../../components/BackdTooltip";
 import { shortenAddress } from "../../../../lib/text";
 import { Optional, Pool, Position } from "../../../../lib/types";
@@ -16,6 +14,7 @@ import { selectActionFees } from "../../../../state/positionsSlice";
 import { selectPrice } from "../../../../state/poolsListSlice";
 import Loader from "../../../../components/Loader";
 import InfoBlock from "../../../../components/InfoBlock";
+import ExternalLink from "../../../../components/ExternalLink";
 
 const StyledTopupInformation = styled.div`
   width: 100%;
@@ -37,35 +36,11 @@ const Summary = styled.div`
   }
 `;
 
-const Address = styled(GradientLink)`
-  font-weight: 400;
-  line-height: 2.4rem;
-  letter-spacing: 0.15px;
-  cursor: pointer;
-  margin-left: 0.5rem;
-
-  font-size: 1.6rem;
-  @media (max-width: 600px) {
-    font-size: 1.4rem;
-  }
-`;
-
 const Label = styled.div`
   display: flex;
   align-items: center;
   font-weight: 500;
   letter-spacing: 0.15px;
-
-  font-size: 1.8rem;
-  @media (max-width: 600px) {
-    font-size: 1.6rem;
-  }
-`;
-
-const AddressLabel = styled(GradientLink)`
-  font-weight: 500;
-  letter-spacing: 0.15px;
-  cursor: pointer;
 
   font-size: 1.8rem;
   @media (max-width: 600px) {
@@ -122,14 +97,9 @@ const TopupInformation = ({ position, pool, value }: Props): JSX.Element => {
     <StyledTopupInformation>
       <Summary>
         {t("actions.topup.stages.confirmation.summaryStart")}
-        <Address
-          href={getEtherscanAddressLink(chainId, position.account)}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <ExternalLink large link={getEtherscanAddressLink(chainId, position.account)}>
           {shortenAddress(position.account, isMobile ? 10 : 26)}
-          <LaunchIcon style={{ fill: "var(--secondary)" }} />
-        </Address>
+        </ExternalLink>
         {t("actions.topup.stages.confirmation.summaryEnd", {
           threshold: position.threshold,
           single: position.singleTopUp,
@@ -152,14 +122,9 @@ const TopupInformation = ({ position, pool, value }: Props): JSX.Element => {
               label: t("actions.topup.fields.address.label"),
               tooltip: t("actions.topup.fields.address.tooltip"),
               value: (
-                <AddressLabel
-                  href={getEtherscanAddressLink(chainId, position.account)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <ExternalLink large link={getEtherscanAddressLink(chainId, position.account)}>
                   {shortenAddress(position.account, 8)}
-                  <LaunchIcon style={{ fill: "var(--secondary)" }} />
-                </AddressLabel>
+                </ExternalLink>
               ),
             },
             {
