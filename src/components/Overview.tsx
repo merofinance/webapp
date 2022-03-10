@@ -8,6 +8,7 @@ const Description = styled.div`
   font-weight: 500;
   letter-spacing: 0.46px;
   opacity: 0.8;
+  margin-bottom: 0.3rem;
 
   font-size: 1.5rem;
   line-height: 2rem;
