@@ -61,6 +61,7 @@ const PoolDeposit = ({ pool, compact }: Props): JSX.Element => {
       if (amount.gt(poolUnderlyingBalance)) return t("amountInput.validation.exceedsBalance");
       if (!pool || !usersPoolUnderlyingEverywhere) return "";
       if (
+        !amount.isZero() &&
         !pool.depositCap.isZero() &&
         amount.gt(pool.depositCap.sub(usersPoolUnderlyingEverywhere))
       )
