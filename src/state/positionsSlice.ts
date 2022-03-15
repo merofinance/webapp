@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { BigNumber } from "ethers";
 import { PlainScaledNumber, ScaledNumber } from "scaled-number";
 
-import { RootState } from "../app/store";
+import { appCreateAsyncThunk, AppDispatch, RootState } from "../app/store";
 import { Pool } from "../lib";
 import { Backd } from "../lib/backd";
 import {
@@ -73,7 +73,7 @@ export const { setPositionsLoaded } = positionsSlice.actions;
 type RegisterArgs = { backd: Backd; pool: Pool; position: Position; value: BigNumber };
 type RemoveArgs = { backd: Backd; pool: Pool; position: Position };
 
-export const registerPosition = createAsyncThunk(
+export const registerPosition = appCreateAsyncThunk(
   "positions/register",
   async ({ backd, pool, position, value }: RegisterArgs, { dispatch }) => {
     const tx = await backd.registerPosition(pool, position, value);
@@ -92,7 +92,7 @@ export const registerPosition = createAsyncThunk(
   }
 );
 
-export const removePosition = createAsyncThunk(
+export const removePosition = appCreateAsyncThunk(
   "positions/remove",
   async ({ backd, pool, position }: RemoveArgs, { dispatch }) => {
     const tx = await backd.removePosition(position.account, position.protocol);

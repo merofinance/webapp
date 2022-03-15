@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PlainScaledNumber, ScaledNumber } from "scaled-number";
 
-import { RootState, Selector } from "../app/store";
+import { appCreateAsyncThunk, RootState, Selector } from "../app/store";
 import { Backd } from "../lib/backd";
 import { ETH_DUMMY_ADDRESS } from "../lib/constants";
 import {
@@ -172,7 +172,7 @@ export const userSlice = createSlice({
 
 export const { setAllowance, decreaseAllowance, setConnecting } = userSlice.actions;
 
-export const approve = createAsyncThunk(
+export const approve = appCreateAsyncThunk(
   "user/approve",
   async ({ backd, token, spender, amount }: ApproveArgs, { dispatch }) => {
     const tx = await backd.approve(token, spender, amount);
@@ -186,7 +186,7 @@ export const approve = createAsyncThunk(
   }
 );
 
-export const deposit = createAsyncThunk(
+export const deposit = appCreateAsyncThunk(
   "user/deposit",
   async ({ backd, pool, amount }: DepositArgs, { dispatch }) => {
     const tx = await backd.deposit(pool, amount);
@@ -209,7 +209,7 @@ export const deposit = createAsyncThunk(
   }
 );
 
-export const withdraw = createAsyncThunk(
+export const withdraw = appCreateAsyncThunk(
   "user/withdraw",
   async ({ backd, pool, amount }: WithdrawArgs, { dispatch }) => {
     const tx = await backd.withdraw(pool, amount);
@@ -223,7 +223,7 @@ export const withdraw = createAsyncThunk(
   }
 );
 
-export const unstake = createAsyncThunk(
+export const unstake = appCreateAsyncThunk(
   "user/unstake",
   async ({ backd, pool, amount }: UnstakeArgs, { dispatch }) => {
     const tx = await backd.unstake(pool.stakerVaultAddress, amount);

@@ -1,7 +1,11 @@
 import {
   Action,
+  AsyncThunk,
+  AsyncThunkOptions,
+  AsyncThunkPayloadCreator,
   combineReducers,
   configureStore,
+  createAsyncThunk,
   getDefaultMiddleware,
   ThunkAction,
 } from "@reduxjs/toolkit";
@@ -64,6 +68,29 @@ export type AppThunk<ReturnType = void> = ThunkAction<
 >;
 
 export type AppDispatch = typeof store.dispatch;
+
+declare type AppAsyncThunkConfig = {
+  state?: unknown;
+  dispatch?: AppDispatch;
+  extra?: unknown;
+  rejectValue?: unknown;
+  serializedErrorType?: unknown;
+  pendingMeta?: unknown;
+  fulfilledMeta?: unknown;
+  rejectedMeta?: unknown;
+};
+
+export function appCreateAsyncThunk<
+  Returned,
+  ThunkArg,
+  ThunkApiConfig extends AppAsyncThunkConfig = { dispatch: AppDispatch }
+>(
+  typePrefix: string,
+  payloadCreator: AsyncThunkPayloadCreator<Returned, ThunkArg, ThunkApiConfig>,
+  options?: AsyncThunkOptions<ThunkArg, ThunkApiConfig>
+): AsyncThunk<Returned, ThunkArg, ThunkApiConfig> {
+  return createAsyncThunk<Returned, ThunkArg, ThunkApiConfig>(typePrefix, payloadCreator, options);
+}
 
 export type Selector<T> = (state: RootState) => T;
 
