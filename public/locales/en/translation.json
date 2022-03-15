@@ -341,7 +341,7 @@
       },
       "strategy": {
         "header": "Strategy",
-        "tooltip": "Deposits into this pool are allocated to the 3CRV yield farming strategy. Strategy profits are subject to a performance fee of 20%. This fee is already deducted from the APR displayed.",
+        "tooltip": "Deposits into this pool are allocated to the 3CRV yield farming strategy. Strategy profits are subject to a performance fee of 0%. This fee is already deducted from the APR displayed.",
         "tooltipItemLabels": {
           "strategist": "Strategist Fee",
           "treasury": "Treasury Fee",
