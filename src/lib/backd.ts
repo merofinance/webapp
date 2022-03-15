@@ -1,57 +1,56 @@
-import contracts from "@backdfund/protocol/config/deployments/map.json";
-import { Controller } from "@backdfund/protocol/typechain/Controller";
-import { ControllerFactory } from "@backdfund/protocol/typechain/ControllerFactory";
-import { Ierc20FullFactory } from "@backdfund/protocol/typechain/Ierc20FullFactory";
-import { LiquidityPoolFactory } from "@backdfund/protocol/typechain/LiquidityPoolFactory";
-import { StakerVaultFactory } from "@backdfund/protocol/typechain/StakerVaultFactory";
-import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
-import { TopUpActionFactory } from "@backdfund/protocol/typechain/TopUpActionFactory";
-import { VaultFactory } from "@backdfund/protocol/typechain/VaultFactory";
-import { IStrategyFactory } from "@backdfund/protocol/typechain/IStrategyFactory";
 import {
   AddressProvider,
-  AddressProviderFactory,
-  BkdTriHopCvxFactory,
+  AddressProvider__factory as AddressProviderFactory,
+  BkdTriHopCvx__factory as BkdTriHopCvxFactory,
+  Controller__factory as ControllerFactory,
   GasBank,
-  GasBankFactory,
-  TopUpActionFeeHandlerFactory,
+  GasBank__factory as GasBankFactory,
+  IERC20Full__factory as Ierc20FullFactory,
+  IStrategy__factory as IStrategyFactory,
+  LiquidityPool__factory as LiquidityPoolFactory,
+  StakerVault__factory as StakerVaultFactory,
+  TopUpActionFeeHandler__factory as TopUpActionFeeHandlerFactory,
+  TopUpAction__factory as TopUpActionFactory,
+  Vault__factory as VaultFactory,
 } from "@backdfund/protocol";
+import contracts from "@backdfund/protocol/config/deployments/map.json";
+import { Controller } from "@backdfund/protocol/typechain/Controller";
+import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
 import fromEntries from "fromentries";
 import { PlainScaledNumber, ScaledNumber } from "scaled-number";
-
 import { UnsupportedNetwork } from "../app/errors";
-import { getPrices as getPricesFromCoingecko } from "./coingecko";
 import { getPrices as getPricesFromBinance } from "./binance";
+import { getPrices as getPricesFromCoingecko } from "./coingecko";
 import {
+  DEPOSIT_SLIPPAGE,
   ETH_DECIMALS,
   ETH_DUMMY_ADDRESS,
+  GWEI_DECIMALS,
   INFINITE_APPROVE_AMMOUNT,
   MILLISECONDS_PER_YEAR,
-  DEPOSIT_SLIPPAGE,
-  GWEI_DECIMALS,
 } from "./constants";
+import poolMetadata from "./data/pool-metadata";
+import { lendingProviders } from "./lending-protocols";
+import { makeContractTransaction, positions as mockPositions } from "./mock/data";
 import {
+  ActionFees,
   Address,
   AllowanceQuery,
   Balances,
-  Pool,
-  Position,
-  Prices,
-  PlainPosition,
-  Token,
-  PlainWithdrawalFees,
-  PlainLoan,
   LendingProtocol,
   Optional,
   PlainActionFees,
-  ActionFees,
-  toPlainActionFees,
+  PlainLoan,
   PlainPool,
+  PlainPosition,
+  PlainWithdrawalFees,
+  Pool,
+  Position,
+  Prices,
+  Token,
+  toPlainActionFees,
 } from "./types";
-import { lendingProviders } from "./lending-protocols";
-import poolMetadata from "./data/pool-metadata";
-import { positions as mockPositions, makeContractTransaction } from "./mock/data";
 
 export type BackdOptions = {
   chainId: number;
@@ -97,7 +96,7 @@ export class Web3Backd implements Backd {
 
   private addressProvider: AddressProvider;
 
-  private gasBank: GasBank;
+  private gasBank: GasBank | undefined;
 
   private chainId: number;
 
@@ -111,7 +110,8 @@ export class Web3Backd implements Backd {
     if (contracts.TopUpAction && contracts.TopUpAction.length > 0)
       this.topupAction = TopUpActionFactory.connect(contracts.TopUpAction[0], _provider);
     // eslint-disable-next-line dot-notation
-    this.gasBank = GasBankFactory.connect(contracts.GasBank[0], _provider);
+    if (contracts.GasBank && contracts.GasBank.length > 0)
+      this.gasBank = GasBankFactory.connect(contracts.GasBank[0], _provider);
     this.addressProvider = AddressProviderFactory.connect(
       contracts.AddressProvider[0], // eslint-disable-line dot-notation
       _provider
@@ -217,7 +217,7 @@ export class Web3Backd implements Backd {
     ]);
 
     const strategy = BkdTriHopCvxFactory.connect(strategyAddress, this._provider);
-    // const strategyName = strategy.name();
+    // const strategyName = await strategy.name();
     const strategyName = "TEST NAME"; // TODO Change this
 
     let apy = null;
@@ -508,6 +508,7 @@ export class Web3Backd implements Backd {
   }
 
   async getGasBankBalance(): Promise<PlainScaledNumber> {
+    if (!this.gasBank) return ScaledNumber.fromUnscaled(0).toPlain();
     const balance = await this.gasBank.balanceOf(await this.currentAccount());
     return new ScaledNumber(balance).toPlain();
   }
