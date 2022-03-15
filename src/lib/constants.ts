@@ -17,7 +17,7 @@ export const RECOMMENDED_THRESHOLD = 1.2;
 export const MILLISECONDS_PER_YEAR = 365 * 24 * 60 * 60 * 1000;
 export const DATE_FORMAT = "mmm-d-yyyy";
 export const TOPUP_ACTION_ROUTE = "/actions/register/topup";
-export const DEPOSIT_SLIPPAGE = 0.98; // 2%
+export const DEPOSIT_SLIPPAGE = 0.94; // 6%
 
 export const chainIds: Record<string, string> = {
   "1": "Mainnet",
