@@ -126,7 +126,7 @@ const PoolPage = (): Optional<JSX.Element> => {
           <Overview
             description={t("pool.overview", {
               asset: pool?.underlying.symbol || "---",
-              strategy: pool?.name || "---",
+              strategy: pool?.strategyName || "---",
             })}
             link="https://docs.backd.fund/"
           />

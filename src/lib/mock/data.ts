@@ -32,6 +32,8 @@ export const pools: GenericPool<BigNumber>[] = [
     feeDecreasePeriod: scale(10, 18),
     depositCap: scale(10000, 18),
     harvestable: scale(3, 18),
+    strategyAddress: "0x1F7EEe24524fbA780E018EDBfda0Ad4881321118",
+    strategyName: "Strategy Name",
   },
   {
     name: "bUSDC3CRV",
@@ -57,6 +59,8 @@ export const pools: GenericPool<BigNumber>[] = [
     feeDecreasePeriod: scale(10, 18),
     depositCap: scale(10000, 18),
     harvestable: scale(3, 6),
+    strategyAddress: "0x1F7EEe24524fbA780E018EDBfda0Ad4881321118",
+    strategyName: "Strategy Name",
   },
   {
     name: "bkdethCRV",
@@ -82,6 +86,8 @@ export const pools: GenericPool<BigNumber>[] = [
     feeDecreasePeriod: scale(10, 18),
     depositCap: scale(10000, 18),
     harvestable: scale(3, 18),
+    strategyAddress: "0x1F7EEe24524fbA780E018EDBfda0Ad4881321118",
+    strategyName: "Strategy Name",
   },
 ];
 

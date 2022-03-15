@@ -78,12 +78,12 @@ const PoolInformation = ({ pool }: Props): JSX.Element => {
           //     value: "5%",
           //   },
           // ],
-          value: pool ? pool.name : null,
+          value: pool ? pool.strategyName : null,
           details: [
             {
               icon: etherscan,
               label: t("pool.information.strategy.details.viewContract"),
-              link: pool ? getEtherscanAddressLink(chainId, pool.address) : "",
+              link: pool ? getEtherscanAddressLink(chainId, pool.strategyAddress) : "",
             },
             {
               icon: memo,

@@ -11,6 +11,7 @@ import { IStrategyFactory } from "@backdfund/protocol/typechain/IStrategyFactory
 import {
   AddressProvider,
   AddressProviderFactory,
+  BkdTriHopCvxFactory,
   GasBank,
   GasBankFactory,
   TopUpActionFeeHandlerFactory,
@@ -192,6 +193,7 @@ export class Web3Backd implements Backd {
       feeDecreasePeriod,
       depositCap,
       harvestable,
+      vaultAddress,
     ] = await Promise.all([
       pool.name(),
       pool.getLpToken(),
@@ -203,12 +205,20 @@ export class Web3Backd implements Backd {
       pool.getWithdrawalFeeDecreasePeriod(),
       pool.depositCap(),
       this.getHarvestable(address),
+      pool.getVault(),
     ]);
-    const [lpToken, underlying, stakerVaultAddress] = await Promise.all([
+
+    const vault = VaultFactory.connect(vaultAddress, this._provider);
+    const [lpToken, underlying, stakerVaultAddress, strategyAddress] = await Promise.all([
       this.getTokenInfo(lpTokenAddress),
       this.getTokenInfo(underlyingAddress),
       this.addressProvider.getStakerVault(lpTokenAddress),
+      vault.getStrategy(),
     ]);
+
+    const strategy = BkdTriHopCvxFactory.connect(strategyAddress, this._provider);
+    // const strategyName = strategy.name();
+    const strategyName = "TEST NAME"; // TODO Change this
 
     let apy = null;
     const metadata = poolMetadata[underlying.symbol];
@@ -240,6 +250,8 @@ export class Web3Backd implements Backd {
       feeDecreasePeriod: new ScaledNumber(feeDecreasePeriod, 0).toPlain(),
       depositCap: new ScaledNumber(depositCap, underlying.decimals).toPlain(),
       harvestable: new ScaledNumber(harvestable, underlying.decimals).toPlain(),
+      strategyAddress,
+      strategyName,
     };
   }
 

@@ -26,6 +26,8 @@ export interface GenericPool<T> {
   underlying: Token;
   depositCap: T;
   harvestable: T;
+  strategyAddress: string;
+  strategyName: string;
 }
 
 export type Pool = GenericPool<ScaledNumber>;
