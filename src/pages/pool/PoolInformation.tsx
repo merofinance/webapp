@@ -63,20 +63,21 @@ const PoolInformation = ({ pool }: Props): JSX.Element => {
         {
           label: t("pool.information.strategy.header"),
           tooltip: t("pool.information.strategy.tooltip"),
-          tooltipItems: [
-            {
-              label: t("pool.information.strategy.tooltipItemLabels.strategist"),
-              value: "5%",
-            },
-            {
-              label: t("pool.information.strategy.tooltipItemLabels.treasury"),
-              value: "10%",
-            },
-            {
-              label: t("pool.information.strategy.tooltipItemLabels.reserve"),
-              value: "5%",
-            },
-          ],
+          tooltipItems: undefined,
+          // tooltipItems: [
+          //   {
+          //     label: t("pool.information.strategy.tooltipItemLabels.strategist"),
+          //     value: "5%",
+          //   },
+          //   {
+          //     label: t("pool.information.strategy.tooltipItemLabels.treasury"),
+          //     value: "10%",
+          //   },
+          //   {
+          //     label: t("pool.information.strategy.tooltipItemLabels.reserve"),
+          //     value: "5%",
+          //   },
+          // ],
           value: pool ? pool.name : null,
           details: [
             {
