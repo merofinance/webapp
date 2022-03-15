@@ -217,8 +217,7 @@ export class Web3Backd implements Backd {
     ]);
 
     const strategy = BkdTriHopCvxFactory.connect(strategyAddress, this._provider);
-    // const strategyName = await strategy.name();
-    const strategyName = "TEST NAME"; // TODO Change this
+    const strategyName = await strategy.name();
 
     let apy = null;
     const metadata = poolMetadata[underlying.symbol];
