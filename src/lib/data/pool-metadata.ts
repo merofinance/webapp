@@ -21,6 +21,9 @@ const poolMetadata: Record<string, PoolMetadata> = {
       "42": {
         time: new Date(1643997600000),
       },
+      "1": {
+        time: new Date(1647367666000),
+      },
     },
   },
   DAI: {
