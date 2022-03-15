@@ -32,6 +32,9 @@ const poolMetadata: Record<string, PoolMetadata> = {
       "42": {
         time: new Date(1643997600000),
       },
+      "1": {
+        time: new Date(1647362120000),
+      },
     },
   },
   USDC: {
@@ -44,7 +47,7 @@ const poolMetadata: Record<string, PoolMetadata> = {
         time: new Date(1643997600000),
       },
       "1": {
-        time: new Date(1645835667000),
+        time: new Date(1647360920000),
       },
     },
   },
