@@ -227,9 +227,10 @@ export class Web3Backd implements Backd {
         MILLISECONDS_PER_YEAR / (new Date().getTime() - deployedtime.getTime());
       const scaledTotalAssets = new ScaledNumber(totalAssets, underlying.decimals);
       const lpBalance = scaledTotalAssets.div(new ScaledNumber(exchangeRate));
-      const balanceAfterHarvest = scaledTotalAssets.add(
-        new ScaledNumber(harvestable, underlying.decimals)
+      const scaledHarvestable = new ScaledNumber(harvestable, underlying.decimals).mul(
+        poolMetadata[underlying.symbol].harvestableMultiplier
       );
+      const balanceAfterHarvest = scaledTotalAssets.add(scaledHarvestable);
       const exchangeRateAfterHarvest = balanceAfterHarvest.div(lpBalance);
       const unscaledApy = Number(exchangeRateAfterHarvest.toString()) ** compoundExponent - 1;
       if (unscaledApy >= 0) apy = ScaledNumber.fromUnscaled(unscaledApy).value;
