@@ -216,8 +216,11 @@ export class Web3Backd implements Backd {
       vault.getStrategy(),
     ]);
 
-    const strategy = BkdTriHopCvxFactory.connect(strategyAddress, this._provider);
-    const strategyName = await strategy.name();
+    let strategyName = name;
+    if (strategyAddress !== ETH_DUMMY_ADDRESS) {
+      const strategy = BkdTriHopCvxFactory.connect(strategyAddress, this._provider);
+      strategyName = await strategy.name();
+    }
 
     let apy = null;
     const metadata = poolMetadata[underlying.symbol];
@@ -260,6 +263,7 @@ export class Web3Backd implements Backd {
     const vaultAddress = await pool.getVault();
     const vault = VaultFactory.connect(vaultAddress, this._provider);
     const strategyAddress = await vault.getStrategy();
+    if (strategyAddress === ETH_DUMMY_ADDRESS) return BigNumber.from(0);
     const strategy = IStrategyFactory.connect(strategyAddress, this._provider);
     return strategy.harvestable();
   }
