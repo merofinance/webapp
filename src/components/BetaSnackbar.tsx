@@ -26,7 +26,7 @@ const BetaSnackbar = ({ pool }: Props): Optional<JSX.Element> => {
       })}
       link={{
         label: t("components.findOutMore"),
-        link: "https://docs.backd.fund/",
+        link: "https://blog.backd.fund/backd-is-live-c90e8dc08f34",
       }}
     />
   );
