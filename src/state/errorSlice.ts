@@ -15,6 +15,7 @@ import { deposit, fetchAllowances, fetchBalances, withdraw } from "./userSlice";
 
 const IGNORED_ERRORS: string[] = [
   "This request is not supported because your node is running with state pruning. Run with --pruning=archive.",
+  "header not found",
 ];
 
 const initialState: ErrorState = { message: "" };
