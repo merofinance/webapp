@@ -127,7 +127,7 @@ interface Props {
 }
 
 const WalletSelectPopup = ({ show, close, setWallet }: Props): JSX.Element => {
-  const { activate } = useWeb3React();
+  const { chainId, activate } = useWeb3React();
   const { t } = useTranslation();
 
   const connect = async (connector: AbstractConnector, walletName: string) => {
