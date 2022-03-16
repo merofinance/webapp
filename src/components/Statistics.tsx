@@ -3,7 +3,7 @@ import { Optional } from "../lib/types";
 import BackdTooltip from "./BackdTooltip";
 import Loader from "./Loader";
 
-interface StatisticType {
+export interface StatisticType {
   header: string;
   tooltip: string;
   value: Optional<string>;

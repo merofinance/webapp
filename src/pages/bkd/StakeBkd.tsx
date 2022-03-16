@@ -2,12 +2,13 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { ScaledNumber } from "scaled-number";
+
 import AmountInput from "../../components/AmountInput";
 import ApproveThenAction from "../../components/ApproveThenAction";
 import Button from "../../components/Button";
 import ContentSection from "../../components/ContentSection";
 import Tabs from "../../components/Tabs";
-import { ScaledNumber } from "../../lib/scaled-number";
 import { Optional } from "../../lib/types";
 import { selectPools } from "../../state/poolsListSlice";
 import BkdCalculator from "./BkdCalculator";
@@ -83,7 +84,7 @@ const StakeBkd = (): Optional<JSX.Element> => {
                       value={amount}
                       setValue={(v: string) => setAmount(v)}
                       label={t("bkd.stake.input")}
-                      max={BKD_BALANCE}
+                      balance={BKD_BALANCE}
                       error={error()}
                       symbol="bkd"
                     />
@@ -123,7 +124,7 @@ const StakeBkd = (): Optional<JSX.Element> => {
                       value={amount}
                       setValue={(v: string) => setAmount(v)}
                       label={t("bkd.unstake.input")}
-                      max={BKD_BALANCE}
+                      balance={BKD_BALANCE}
                       error={error()}
                       symbol="bkd"
                     />

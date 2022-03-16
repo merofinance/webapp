@@ -8,6 +8,7 @@ const Description = styled.div`
   font-weight: 500;
   letter-spacing: 0.46px;
   opacity: 0.8;
+  margin-bottom: 0.3rem;
 
   font-size: 1.5rem;
   line-height: 2rem;
@@ -34,7 +35,9 @@ const Overview = ({ description, link, defaultClosed }: Props): JSX.Element => {
       header={t("components.overview")}
     >
       <Description id="overview-description">{description}</Description>
-      <ExternalLink link={link}>{t("components.moreInDocs")}</ExternalLink>
+      <ExternalLink id="overview-link" link={link}>
+        {t("components.moreInDocs")}
+      </ExternalLink>
     </InfoCard>
   );
 };

@@ -1,8 +1,8 @@
 import { providers, Signer } from "ethers";
+import { ScaledNumber } from "scaled-number";
 
 import { Address, LendingProtocol, LendingProtocolProvider, Optional, PlainLoan } from "../types";
 import { LendingPoolFactory } from "../contracts/aave/LendingPool";
-import { ScaledNumber } from "../scaled-number";
 
 export class AaveProvider implements LendingProtocolProvider {
   async getPosition(

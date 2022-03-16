@@ -2,7 +2,7 @@ import { CaseReducer, createSlice, PayloadAction, SerializedError } from "@redux
 import * as Sentry from "@sentry/browser";
 
 import { RootState } from "../app/store";
-import { ErrorState } from "../app/errors";
+import { ErrorState, UnsupportedNetwork } from "../app/errors";
 import { fetchPool, fetchPools, fetchPrices } from "./poolsListSlice";
 import {
   fetchEstimatedGasUsage,
@@ -37,6 +37,12 @@ export const errorSlice = createSlice({
       if (IGNORED_ERRORS.includes(action.payload.message)) return state;
       return action.payload;
     },
+    clearError: (state) => {
+      return { message: "" };
+    },
+    setUnsupportedNetwork: (state) => {
+      return new UnsupportedNetwork().toErrorState();
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchBalances.rejected, handleError);
@@ -54,7 +60,7 @@ export const errorSlice = createSlice({
   },
 });
 
-export const { setError } = errorSlice.actions;
+export const { setError, setUnsupportedNetwork, clearError } = errorSlice.actions;
 
 export const selectError = (state: RootState): ErrorState => state.error;
 

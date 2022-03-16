@@ -7,17 +7,17 @@ import { useSelector } from "react-redux";
 import ContentSection from "../../../../components/ContentSection";
 import Button from "../../../../components/Button";
 import RowSelector from "../../../../components/RowSelector";
-import { selectEthPrice, selectPools, selectPrices } from "../../../../state/poolsListSlice";
+import { selectPool, selectPools } from "../../../../state/poolsListSlice";
 import { Pool } from "../../../../lib";
-import { formatPercent, numberToCompactCurrency } from "../../../../lib/numeric";
-import { selectBalances } from "../../../../state/userSlice";
-import { selectPositions } from "../../../../state/positionsSlice";
-import { ScaledNumber } from "../../../../lib/scaled-number";
-import { Optional, Position } from "../../../../lib/types";
 import Asset from "../../../../components/Asset";
-import { useDevice } from "../../../../app/hooks/use-device";
 import { RowOptionType } from "../../../../components/RowOption";
 import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
+import TopupPoolDeposits from "./TopupPoolDeposits";
+import TopupPoolTvl from "./TopupPoolTvl";
+import {
+  selectUsersPoolLpUnlocked,
+  selectUsersTotalUsdUnlocked,
+} from "../../../../state/valueSelectors";
 
 const Container = styled.div`
   position: relative;
@@ -55,34 +55,18 @@ const TopupPool = (): JSX.Element => {
   const { t } = useTranslation();
   const { address, protocol } = useParams<"address" | "protocol">();
   const navigate = useNavigate();
-  const { isMobile } = useDevice();
   const pools = useSelector(selectPools);
-  const balances = useSelector(selectBalances);
-  const positions = useSelector(selectPositions);
-  const prices = useSelector(selectPrices);
-  const ethPrice = useSelector(selectEthPrice);
-  const [pool, setPool] = useState("");
+  const usersTotalUsdUnlocked = useSelector(selectUsersTotalUsdUnlocked);
+  const [poolName, setPoolName] = useState("");
+  const pool = useSelector(selectPool(poolName));
+  const usersPoolLpUnlocked = useSelector(selectUsersPoolLpUnlocked(pool));
 
-  const hasSufficientBalance = (pool: Optional<Pool>) => {
-    if (!pool) return false;
-    const lpBalance = balances[pool.lpToken.address];
-    const price = prices[pool.underlying.symbol];
-    if (!lpBalance || !price || !ethPrice) return false;
-    const usdBalance = lpBalance.mul(price);
-    return usdBalance.gt(ScaledNumber.fromUnscaled(10, lpBalance.decimals));
-  };
-
-  const hasDeposits = pools ? pools.some((pool: Pool) => hasSufficientBalance(pool)) : false;
-  const selected = pools
-    ? pools.filter((p: Pool) => p.lpToken.symbol.toLowerCase() === pool)[0]
-    : null;
+  const hasDeposits = !usersTotalUsdUnlocked?.isZero();
 
   const options: RowOptionType[] = pools
     ? pools.map((pool: Pool) => {
-        const value = pool.lpToken.symbol.toLowerCase();
-        const price = prices[pool.underlying.symbol];
         return {
-          value,
+          value: pool.lpToken.symbol.toLowerCase(),
           id: `${pool.underlying.symbol.toLowerCase()}-pool-option`,
           columns: [
             {
@@ -91,32 +75,15 @@ const TopupPool = (): JSX.Element => {
             },
             {
               label: t("headers.deposits"),
-              value:
-                price && positions
-                  ? (
-                      balances[pool.lpToken.address] ||
-                      ScaledNumber.fromUnscaled(0, pool.underlying.decimals)
-                    )
-                      .add(
-                        positions
-                          .filter(
-                            (position: Position) => position.depositToken === pool.lpToken.symbol
-                          )
-                          .reduce(
-                            (a: ScaledNumber, b: Position) => a.add(b.maxTopUp),
-                            ScaledNumber.fromUnscaled(0, pool.underlying.decimals)
-                          )
-                      )
-                      .toCompactUsdValue(price)
-                  : null,
+              value: <TopupPoolDeposits pool={pool} />,
             },
             {
               label: t("headers.apy"),
-              value: pool.apy ? formatPercent(pool.apy) : null,
+              value: pool.apy ? pool.apy.toPercent() : null,
             },
             {
               label: t("headers.tvl"),
-              value: price ? numberToCompactCurrency(pool.totalAssets * price) : null,
+              value: <TopupPoolTvl pool={pool} />,
             },
           ],
         };
@@ -128,7 +95,7 @@ const TopupPool = (): JSX.Element => {
       <ContentSection
         header={t("actions.register.header")}
         subHeader={t("actions.topup.label")}
-        nav="3/4"
+        nav={t("actions.register.step", { step: "3/4" })}
       >
         <Header id="register-topup-pool-header">
           {hasDeposits
@@ -136,17 +103,21 @@ const TopupPool = (): JSX.Element => {
             : t("actions.topup.stages.pool.noDepositsHeader")}
         </Header>
         {!hasDeposits && <SubHeader>{t("actions.topup.stages.pool.subHeader")}</SubHeader>}
-        <RowSelector value={pool} setValue={(value: string) => setPool(value)} options={options} />
+        <RowSelector
+          value={poolName}
+          setValue={(value: string) => setPoolName(value)}
+          options={options}
+        />
         <ButtonContainer>
           <Button
             id="register-topup-pool-button"
             primary
             medium
-            width={isMobile ? "100%" : "44%"}
+            width="30rem"
             click={() => {
-              if (!hasSufficientBalance(selected))
-                navigate(`${TOPUP_ACTION_ROUTE}/deposit/${pool}/${address}/${protocol}`);
-              else navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${pool}`);
+              if (usersPoolLpUnlocked && usersPoolLpUnlocked?.isZero())
+                navigate(`${TOPUP_ACTION_ROUTE}/deposit/${poolName}/${address}/${protocol}`);
+              else navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${poolName}`);
             }}
             disabled={!pool}
             hoverText={t("actions.topup.stages.pool.incomplete")}

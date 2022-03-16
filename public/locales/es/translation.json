@@ -68,7 +68,7 @@
     "positionCreation": "Position creation failed",
     "support": "Please try again in a moment. If the error persists, you can contact us on",
     "transactionType": "Transaction type not supported",
-    "tryTestnet": "Backd is not yet live on mainnet. You can test it now on Kovan by switching networks.",
+    "tryTestnet": "Backd is not yet live on Mainnet. You can test it now on Kovan by switching networks.",
     "unsupportedNetwork": "Network not supported",
     "wrongNetwork": "Wrong network selected, please use a development network"
   },

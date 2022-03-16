@@ -42,7 +42,7 @@ const TopupConditions = (): JSX.Element => {
       <ContentSection
         header={t("actions.register.header")}
         subHeader={t("actions.topup.label")}
-        nav="4/4"
+        nav={t("actions.register.step", { step: "4/4" })}
       >
         <ActionSummary />
         <Header id="register-topup-conditions-header">

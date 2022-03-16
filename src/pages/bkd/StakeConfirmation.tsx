@@ -1,9 +1,10 @@
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import { ScaledNumber } from "scaled-number";
+
 import ExternalLink from "../../components/ExternalLink";
 import Notice from "../../components/Notice";
 import Popup from "../../components/Popup";
-import { ScaledNumber } from "../../lib/scaled-number";
 import BkdCalculator from "./BkdCalculator";
 
 const Description = styled.div`

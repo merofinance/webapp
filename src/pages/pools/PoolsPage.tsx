@@ -101,7 +101,6 @@ const PoolsPage = (): JSX.Element => {
   return (
     <StyledPoolsPage>
       <Seo title={t("metadata.pools.title")} description={t("metadata.pools.description")} />
-      <BetaSnackbar />
       <PoolsPageContent>
         <ContentContainer>
           <ContentSection header={t("pools.header")} statistics={<PoolsStatistics />}>

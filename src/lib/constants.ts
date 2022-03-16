@@ -2,7 +2,7 @@ import { BigNumber } from "ethers";
 
 // Feature toggles
 export const STAKING_LIVE = false;
-export const SHIELDED = false;
+export const ACTIONS_LIVE = false;
 
 // Variables
 export const ETH_DUMMY_ADDRESS = "0x0000000000000000000000000000000000000000";
@@ -17,7 +17,7 @@ export const RECOMMENDED_THRESHOLD = 1.2;
 export const MILLISECONDS_PER_YEAR = 365 * 24 * 60 * 60 * 1000;
 export const DATE_FORMAT = "mmm-d-yyyy";
 export const TOPUP_ACTION_ROUTE = "/actions/register/topup";
-export const DEPOSIT_SLIPPAGE = 0.98; // 2%
+export const DEPOSIT_SLIPPAGE = 0.94; // 6%
 
 export const chainIds: Record<string, string> = {
   "1": "Mainnet",

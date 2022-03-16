@@ -7,15 +7,14 @@ export const privateKeyConnector = new PrivateKeyConnector({
   supportedChainIds: [42],
 });
 
+export const supportedChainIds = [
+  1, // Mainet
+  42, // Kovan
+  1337, // Dev
+];
+
 export const injectedConnector = new InjectedConnector({
-  supportedChainIds: [
-    1, // Mainet
-    3, // Ropsten
-    4, // Rinkeby
-    5, // Goerli
-    42, // Kovan
-    1337, // Dev
-  ],
+  supportedChainIds,
 });
 
 export const walletConnectConnector = new WalletConnectConnector({

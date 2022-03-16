@@ -1,36 +1,17 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useWeb3React } from "@web3-react/core";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Dropdown from "./Dropdown";
 
-import { useIsLive } from "../app/hooks/use-is-live";
-import NavItem, { NavItemType } from "./NavItem";
+import NavItem from "./NavItem";
 
-// We can delete this after launch
-const preLaunchItems: NavItemType[] = [
-  {
-    label: "header.tabs.docs",
-    link: "https://docs.backd.fund/",
-  },
-  {
-    label: "header.tabs.blog",
-    link: "https://backdfund.medium.com/",
-  },
-  {
-    label: "header.tabs.newsletter",
-    link: "https://backd.substack.com/welcome",
-  },
-];
-
-const navItems: NavItemType[] = [
-  {
-    label: "header.tabs.pools",
-    link: "/pools",
-  },
-  {
-    label: "header.tabs.actions",
-    link: "/actions",
-  },
-];
+export interface NavItemType {
+  label: string;
+  link?: string;
+  comingSoon?: boolean;
+  navItems?: NavItemType[];
+}
 
 const StyledNavItems = styled.ul`
   position: absolute;
@@ -38,58 +19,88 @@ const StyledNavItems = styled.ul`
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
+  align-items: center;
   list-style-type: none;
   margin: 0 1rem;
-`;
 
-interface UnderlineProps {
-  show: boolean;
-  index: number;
-}
+  > div {
+    margin: 0 3rem;
+    @media (max-width: 600px) {
+      margin: 0 1.5rem;
+    }
+  }
 
-const Underline = styled.div`
-  height: 2px;
-  border-radius: 1px;
-  position: absolute;
-  background: var(--gradient);
-  transition: all 0.3s;
-  display: ${(props: UnderlineProps) => (props.show ? "flex" : "none")};
-
-  width: 7rem;
-  left: 3.1rem;
-  bottom: -0.8rem;
-  transform: translateX(${(props: UnderlineProps) => `${props.index * (7 + 6.2)}rem`});
   @media (max-width: 600px) {
-    width: 5rem;
-    left: 1.7rem;
-    bottom: -0.6rem;
-    transform: translateX(${(props: UnderlineProps) => `${props.index * (5 + 3.4)}rem`});
+    > div:last-child {
+      display: none;
+    }
   }
 `;
 
 const NavItems = (): JSX.Element => {
-  const { protocolLive } = useIsLive();
-  const [active, setActive] = useState<string | null>(null);
-  const location = useLocation();
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { chainId } = useWeb3React();
 
-  useEffect(() => {
-    if (location.pathname === "/") setActive(null);
-  }, [location.pathname]);
+  const navItems: NavItemType[] = [
+    {
+      label: "header.tabs.pools",
+      link: "/pools",
+    },
+    {
+      label: "header.tabs.actions",
+      link: "/actions",
+      comingSoon: !chainId || chainId !== 42,
+    },
+    {
+      label: "header.tabs.claim",
+      link: "/claim",
+      comingSoon: true,
+    },
+    {
+      label: "header.tabs.more",
+      navItems: [
+        {
+          label: "header.tabs.docs",
+          link: "https://docs.backd.fund/",
+        },
+        {
+          label: "header.tabs.blog",
+          link: "https://backdfund.medium.com/",
+        },
+        {
+          label: "header.tabs.newsletter",
+          link: "https://backd.substack.com/welcome",
+        },
+      ],
+    },
+  ];
 
   return (
     <StyledNavItems id="nav-items">
-      <Underline
-        show={!!active}
-        index={active ? navItems.map((navItem: NavItemType) => navItem.label).indexOf(active) : 0}
-      />
-      {protocolLive &&
-        navItems.map((navItem: NavItemType) => (
-          <NavItem key={navItem.label} navItem={navItem} setActive={(v: string) => setActive(v)} />
-        ))}
-      {!protocolLive &&
-        preLaunchItems.map((navItem: NavItemType) => (
-          <NavItem key={navItem.label} navItem={navItem} setActive={(v: string) => setActive(v)} />
-        ))}
+      {navItems.map((navItem: NavItemType) =>
+        navItem.navItems ? (
+          <Dropdown
+            id={navItem.label}
+            key={navItem.label}
+            label={t(navItem.label)}
+            options={navItem.navItems.map((navItem: NavItemType) => {
+              const isExternal = navItem.link && navItem.link.startsWith("http");
+              const action = () => {
+                if (!navItem.link) return;
+                if (isExternal) (window as any).open(navItem.link, "_blank").focus();
+                else navigate(navItem.link);
+              };
+              return {
+                label: t(navItem.label),
+                action,
+              };
+            })}
+          />
+        ) : (
+          <NavItem key={navItem.label} navItem={navItem as NavItemType} />
+        )
+      )}
     </StyledNavItems>
   );
 };

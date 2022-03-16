@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 import ContentSection from "../../../components/ContentSection";
 import Button from "../../../components/Button";
-import { useDevice } from "../../../app/hooks/use-device";
 import icon from "../../../assets/logo/white-logo.svg";
 import RowSelector from "../../../components/RowSelector";
 import zap from "../../../assets/benefits/zap.svg";
@@ -86,11 +85,13 @@ const ButtonContainer = styled.div`
 const ActionRegisterIndex = (): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { isMobile } = useDevice();
   const [actionOption, setActionOption] = useState("");
 
   return (
-    <ContentSection header={t("actions.register.header")} nav="1/4">
+    <ContentSection
+      header={t("actions.register.header")}
+      nav={t("actions.register.step", { step: "1/4" })}
+    >
       <Header>{t("actions.register.choose")}</Header>
 
       <RowSelector
@@ -130,7 +131,7 @@ const ActionRegisterIndex = (): JSX.Element => {
           hoverText={t("actions.register.choose")}
           primary
           medium
-          width={isMobile ? "100%" : "44%"}
+          width="30rem"
           click={() => navigate(`/actions/register/${actionOption}`)}
         >
           {t("components.continue")}

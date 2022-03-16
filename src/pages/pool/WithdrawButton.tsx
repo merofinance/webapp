@@ -2,18 +2,14 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { ScaledNumber } from "scaled-number";
 
 import Button from "../../components/Button";
 import { Pool } from "../../lib";
-import {
-  selectAvailableToWithdraw,
-  selectTokenBalance,
-  unstake,
-  withdraw,
-} from "../../state/userSlice";
+import { unstake, withdraw } from "../../state/userSlice";
+import { selectUsersPoolLpHeld, selectUsersPoolLpStaked } from "../../state/valueSelectors";
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
-import { ScaledNumber } from "../../lib/scaled-number";
 import { hasPendingTransaction } from "../../state/transactionsSlice";
 import Loader from "../../components/Loader";
 import { Optional } from "../../lib/types";
@@ -36,9 +32,9 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
   const { t } = useTranslation();
   const dispatch: AppDispatch = useDispatch();
   const backd = useBackd();
-  const staked = useSelector(selectTokenBalance(pool?.stakerVaultAddress));
+  const usersPoolLpStaked = useSelector(selectUsersPoolLpStaked(pool));
   const loading = useSelector(hasPendingTransaction("Withdraw"));
-  const availableToWithdraw = useSelector(selectAvailableToWithdraw(pool));
+  const usersPoolLpHeld = useSelector(selectUsersPoolLpHeld(pool));
 
   const [confirming, setConfirming] = useState(false);
 
@@ -58,13 +54,26 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
   };
 
   const executeUnstake = () => {
-    if (!backd || loading || !staked || !pool) return;
-    dispatch(unstake({ backd, pool, amount: staked }));
+    if (!backd || loading || !usersPoolLpStaked || !pool) return;
+    dispatch(unstake({ backd, pool, amount: usersPoolLpStaked }));
   };
 
   const submit = () => {
-    if (!valid || !availableToWithdraw) return;
-    if (value.lte(availableToWithdraw)) executeWithdraw(value);
+    if (!valid || !usersPoolLpHeld || !pool) return;
+    const lpValue = value.div(pool.exchangeRate);
+
+    // If the amount the user is withdrawing is 99.9% of their total, then withdraw their total
+    // This is to avoid the situation where a user withdraws all their tokens other than 0.00000001 DAI from a rounding error
+    const isMaxWithdrawal = usersPoolLpHeld
+      .sub(lpValue)
+      .div(usersPoolLpHeld)
+      .lte(ScaledNumber.fromUnscaled(0.001, lpValue.decimals));
+    if (isMaxWithdrawal) {
+      executeWithdraw(usersPoolLpHeld);
+      return;
+    }
+
+    if (lpValue.lte(usersPoolLpHeld)) executeWithdraw(lpValue);
     else executeUnstake();
   };
 
@@ -80,6 +89,7 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
         click={() => setConfirming(true)}
         disabled={!valid}
         hoverText={t("amountInput.enter")}
+        loading={loading}
       >
         {t("pool.tabs.withdraw.action", { asset: pool.underlying.symbol.toUpperCase() })}
       </Button>

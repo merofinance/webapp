@@ -12,7 +12,6 @@ import { selectEthPrice } from "../../../../state/poolsListSlice";
 import { selectLoans } from "../../../../state/lendingSlice";
 import LoanSearch from "./LoanSearch";
 import { Loan, Optional, Position } from "../../../../lib/types";
-import { useDevice } from "../../../../app/hooks/use-device";
 import { selectPositions } from "../../../../state/positionsSlice";
 import { RowOptionType } from "../../../../components/RowOption";
 import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
@@ -58,7 +57,6 @@ const TopupLoan = (): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { account } = useWeb3React();
-  const { isMobile } = useDevice();
   const loans = useSelector(selectLoans(account));
   const positions = useSelector(selectPositions);
   const ethPrice = useSelector(selectEthPrice);
@@ -107,7 +105,7 @@ const TopupLoan = (): JSX.Element => {
       <ContentSection
         header={t("actions.register.header")}
         subHeader={t("actions.topup.label")}
-        nav="2/4"
+        nav={t("actions.register.step", { step: "2/4" })}
       >
         {hasLoans && (
           <>
@@ -137,7 +135,7 @@ const TopupLoan = (): JSX.Element => {
             primary
             medium
             disabled={!address}
-            width={isMobile ? "100%" : "44%"}
+            width="30rem"
             click={() => navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`)}
             hoverText={t("actions.topup.stages.loan.header")}
           >

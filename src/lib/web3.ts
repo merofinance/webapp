@@ -1,4 +1,3 @@
-import { UnsupportedNetwork } from "../app/errors";
 import { etherscanUrls } from "./constants";
 
 export const changeNetwork = (chainId: number): void => {
@@ -22,6 +21,6 @@ export const getEtherscanTransactionLink = (
 const getEtherscanLink = (chainId: number | undefined, type: string, data: string): string => {
   if (!chainId) return "";
   const url = etherscanUrls[chainId];
-  if (!url) throw new UnsupportedNetwork(chainId);
+  if (!url) return "";
   return `${url}${type}/${data}`;
 };

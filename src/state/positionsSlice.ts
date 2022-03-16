@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { BigNumber } from "ethers";
+import { PlainScaledNumber, ScaledNumber } from "scaled-number";
 
 import { RootState } from "../app/store";
 import { Pool } from "../lib";
@@ -16,7 +17,6 @@ import {
 } from "../lib/types";
 import { handleTransactionConfirmation } from "../lib/transactionsUtils";
 import { fetchAllowances, fetchBalances, fetchGasBankBalance } from "./userSlice";
-import { PlainScaledNumber, ScaledNumber } from "../lib/scaled-number";
 
 interface PositionsState {
   positions: PlainPosition[];
@@ -49,7 +49,11 @@ export const fetchActionFees = createAsyncThunk(
 export const positionsSlice = createSlice({
   name: "positions",
   initialState,
-  reducers: {},
+  reducers: {
+    setPositionsLoaded: (state) => {
+      state.loaded = true;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchPositions.fulfilled, (state, action) => {
       state.positions = action.payload;
@@ -64,6 +68,8 @@ export const positionsSlice = createSlice({
   },
 });
 
+export const { setPositionsLoaded } = positionsSlice.actions;
+
 type RegisterArgs = { backd: Backd; pool: Pool; position: Position; value: BigNumber };
 type RemoveArgs = { backd: Backd; pool: Pool; position: Position };
 
@@ -73,7 +79,7 @@ export const registerPosition = createAsyncThunk(
     const tx = await backd.registerPosition(pool, position, value);
     handleTransactionConfirmation(
       tx,
-      { action: "Register", args: { pool, plainPosition: toPlainPosition(position) } },
+      { action: "Register", args: { plainPosition: toPlainPosition(position) } },
       dispatch,
       [
         fetchPositions({ backd }),

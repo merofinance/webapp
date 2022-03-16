@@ -52,6 +52,7 @@ const Key = styled.div`
   font-weight: 700;
   font-size: 1.6rem;
   letter-spacing: 0.25px;
+  opacity: 0.4;
 `;
 
 interface LineProps {

@@ -1,11 +1,11 @@
 import { useTranslation } from "react-i18next";
+import { ScaledNumber } from "scaled-number";
 import styled from "styled-components";
 
 import { useDevice } from "../../app/hooks/use-device";
 import Asset from "../../components/Asset";
 import Button from "../../components/Button";
 import SplitButton from "../../components/SplitButton";
-import { numberToCompactCurrency } from "../../lib/numeric";
 
 interface ClaimRowProps {
   index: number;
@@ -100,11 +100,10 @@ const ClaimRow = ({ index }: Props): JSX.Element => {
             decimals: 16,
           }}
           hideIcon={isMobile}
-          value={18300000}
+          value="1.8m"
           small
-          compact
         />
-        <ValueUsd>{`=${numberToCompactCurrency(18300000)}`}</ValueUsd>
+        <ValueUsd>{`=${ScaledNumber.fromUnscaled(18300000).toCompactUsdValue(1)}`}</ValueUsd>
       </ValueContainer>
       <EndContainer>
         {isDesktop && (

@@ -1,11 +1,10 @@
 import { BigNumber, ContractTransaction, providers } from "ethers";
 import fromEntries from "fromentries";
+import { PlainScaledNumber, ScaledNumber } from "scaled-number";
 
 import { Pool } from "..";
 import { Backd } from "../backd";
 import { GWEI_DECIMALS } from "../constants";
-import { bigNumberToFloat } from "../numeric";
-import { PlainScaledNumber, ScaledNumber } from "../scaled-number";
 import {
   Address,
   AllowanceQuery,
@@ -22,6 +21,7 @@ import {
   PlainActionFees,
   ActionFees,
   toPlainActionFees,
+  PlainPool,
 } from "../types";
 import { balances, makeContractTransaction, masterAccount, pools, positions, prices } from "./data";
 
@@ -32,18 +32,28 @@ export default class MockBackd implements Backd {
     return providers.getDefaultProvider();
   }
 
+  getChainId(): number {
+    return 1;
+  }
+
   currentAccount(): Promise<Address> {
     return Promise.resolve(masterAccount);
   }
 
-  listPools(): Promise<Pool[]> {
-    return Promise.resolve(pools.map((pool) => transformPool(pool, (v) => bigNumberToFloat(v))));
+  listPools(): Promise<PlainPool[]> {
+    return Promise.resolve(
+      pools.map((pool) =>
+        transformPool(pool, (v: Optional<BigNumber> | undefined) => new ScaledNumber(v).toPlain())
+      )
+    );
   }
 
-  getPoolInfo(address: Address): Promise<Pool> {
+  getPoolInfo(address: Address): Promise<PlainPool> {
     const pool = pools.find((pool) => pool.address === address);
     if (!pool) throw Error("No pool found for address");
-    return Promise.resolve(transformPool(pool, bigNumberToFloat));
+    return Promise.resolve(
+      transformPool(pool, (v: Optional<BigNumber> | undefined) => new ScaledNumber(v).toPlain())
+    );
   }
 
   getLoanPosition(protocol: LendingProtocol, address?: Address): Promise<Optional<PlainLoan>> {
@@ -116,11 +126,7 @@ export default class MockBackd implements Backd {
   }
 
   getPrices(symbols: string[]): Promise<Prices> {
-    return Promise.resolve(
-      fromEntries(
-        symbols.map((symbol) => [symbol, bigNumberToFloat(prices[symbol] || BigNumber.from(0))])
-      )
-    );
+    return Promise.resolve(fromEntries(symbols.map((symbol) => [symbol, 3])));
   }
 
   getPositions(): Promise<PlainPosition[]> {
@@ -146,7 +152,7 @@ export default class MockBackd implements Backd {
   }
 
   async registerPosition(
-    pool: Pool<number>,
+    pool: Pool,
     position: Position,
     value: BigNumber
   ): Promise<ContractTransaction> {

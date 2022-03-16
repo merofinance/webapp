@@ -1,30 +1,25 @@
-import { Link, useMatch } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
-import { useEffect } from "react";
+import HoverFeedback from "./HoverFeedback";
+import { NavItemType } from "./NavItems";
+import { Optional } from "../lib/types";
 
-export interface NavItemType {
-  label: string;
-  link: string;
+interface NavItemProps {
+  comingSoon?: boolean;
 }
 
-const StyledNavItem = styled.li`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-
-  width: 7rem;
-  margin: 0 3.1rem;
-  @media (max-width: 600px) {
-    width: 5rem;
-    margin: 0 1.7rem;
+const LinkContainer = styled.div`
+  a {
+    cursor: ${(props: NavItemProps) => (!props.comingSoon ? "pointer" : "default")};
   }
 `;
 
-interface LinkProps {
-  isActive: boolean;
-}
+const StyledLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const Text = styled.div`
   text-transform: capitalize;
@@ -32,11 +27,11 @@ const Text = styled.div`
   white-space: nowrap;
   font-weight: 500;
   letter-spacing: 0.15px;
-  opacity: ${(props: LinkProps) => (props.isActive ? "1" : "0.8")};
+  opacity: ${(props: NavItemProps) => (!props.comingSoon ? "1" : "0.4")};
 
   transition: 0.3s opacity;
   :hover {
-    opacity: 1;
+    opacity: ${(props: NavItemProps) => (!props.comingSoon ? "0.8" : "0.4")};
   }
 
   @media (max-width: 600px) {
@@ -46,32 +41,21 @@ const Text = styled.div`
 
 interface Props {
   navItem: NavItemType;
-  setActive: (v: string) => void;
 }
 
-const NavItem = ({ navItem, setActive }: Props): JSX.Element => {
+const NavItem = ({ navItem }: Props): Optional<JSX.Element> => {
   const { t } = useTranslation();
-  const match = useMatch(`${navItem.link}/*`);
 
-  const isExternal = navItem.link.substring(0, 4).toLowerCase() === "http";
-
-  useEffect(() => {
-    if (!!match && !isExternal) setActive(navItem.label);
-  }, [match]);
+  if (!navItem.link) return null;
 
   return (
-    <StyledNavItem>
-      {!isExternal && (
-        <Link id={navItem.label} to={navItem.link}>
-          <Text isActive={!!match}>{t(navItem.label)}</Text>
-        </Link>
-      )}
-      {isExternal && (
-        <a id={navItem.label} href={navItem.link} target="_blank" rel="noopener noreferrer">
-          <Text isActive={!!match}>{t(navItem.label)}</Text>
-        </a>
-      )}
-    </StyledNavItem>
+    <HoverFeedback text={navItem.comingSoon ? t("components.comingSoon") : ""}>
+      <LinkContainer comingSoon={navItem.comingSoon}>
+        <StyledLink id={navItem.label} to={navItem.comingSoon ? "#" : navItem.link}>
+          <Text comingSoon={navItem.comingSoon}>{t(navItem.label)}</Text>
+        </StyledLink>
+      </LinkContainer>
+    </HoverFeedback>
   );
 };
 

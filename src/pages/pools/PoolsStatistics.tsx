@@ -1,36 +1,42 @@
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { useWeb3React } from "@web3-react/core";
 
-import Statistics from "../../components/Statistics";
-import { formatCurrency } from "../../lib/numeric";
-import { selectDeposits, selectLocked } from "../../state/selectors";
+import Statistics, { StatisticType } from "../../components/Statistics";
+import {
+  selectUsersTotalUsdEverywhere,
+  selectUsersTotalUsdLocked,
+} from "../../state/valueSelectors";
+import { ACTIONS_LIVE } from "../../lib/constants";
 
 const PoolsStatistics = (): JSX.Element => {
   const { t } = useTranslation();
-  const locked = useSelector(selectLocked());
-  const deposits = useSelector(selectDeposits());
+  const { chainId } = useWeb3React();
+  const usersTotalUsdLocked = useSelector(selectUsersTotalUsdLocked);
+  const usersTotalUsdEverywhere = useSelector(selectUsersTotalUsdEverywhere);
 
-  return (
-    <Statistics
-      statistics={[
-        {
-          header: t("pools.statistics.deposits.header"),
-          tooltip: t("pools.statistics.deposits.tooltip"),
-          value: deposits ? formatCurrency(Number(deposits.toString())) : null,
-        },
-        {
-          header: t("pools.statistics.locked.header"),
-          tooltip: t("pools.statistics.locked.tooltip"),
-          value: locked ? formatCurrency(Number(locked.toString())) : null,
-        },
-        // {
-        //   header: t("pools.statistics.rewards.header"),
-        //   tooltip: t("pools.statistics.rewards.tooltip"),
-        //   value: "$0.00",
-        // },
-      ]}
-    />
-  );
+  const statistics: StatisticType[] = [
+    {
+      header: t("pools.statistics.deposits.header"),
+      tooltip: t("pools.statistics.deposits.tooltip"),
+      value: usersTotalUsdEverywhere ? usersTotalUsdEverywhere.toUsdValue(1) : null,
+    },
+  ];
+
+  if (ACTIONS_LIVE || chainId !== 1)
+    statistics.push({
+      header: t("pools.statistics.locked.header"),
+      tooltip: t("pools.statistics.locked.tooltip"),
+      value: usersTotalUsdLocked ? usersTotalUsdLocked.toUsdValue(1) : null,
+    });
+
+  // statistics.push({
+  //   header: t("pools.statistics.rewards.header"),
+  //   tooltip: t("pools.statistics.rewards.tooltip"),
+  //   value: "$0.00",
+  // });
+
+  return <Statistics statistics={statistics} />;
 };
 
 export default PoolsStatistics;

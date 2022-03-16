@@ -14,7 +14,8 @@
       "docs": "docs",
       "blog": "blog",
       "newsletter": "newsletter",
-      "actions": "actions"
+      "actions": "actions",
+      "more": "more"
     }
   },
   "walletConnect": {
@@ -45,9 +46,11 @@
     "header": "Reactive Liquidity",
     "subHeader": "Maximize the power of your assets and start earning yield",
     "viewPools": "View Pools",
-    "unsupportedNetwork": "Unsupported Network",
     "changeNetwork": "Try on Testnet",
-    "connectWallet": "Connect Wallet"
+    "connectWallet": "Connect Wallet",
+    "stats": {
+      "tvl": "Total Value Locked"
+    }
   },
   "benefits": {
     "reactiveLiquidity": {
@@ -219,7 +222,7 @@
       "notEfficient": {
         "header": "Why isn’t DeFi capital efficient?",
         "paragraph1": "DeFi protocols today generally focus on fulfilling one specific function. This may include borrowing and lending, market orders, yield aggregation, etc. While many protocols fulfill specific needs in a capital efficient way, the broader DeFi ecosystem is left inefficient.",
-        "paragraph2": "This is because DeFi today is bounded by static or single-utility liquidity pools. Meaning, liquidity must be dedicated to only serving one function at a time. Every time a user deposits assets into a protocol they realize the opportunity cost of not having their assets allocated elsewhere. This is one of the reasons why yield aggregating protocols do not capture more total value locked (TVL). Every dollar increase in provided liquidity results in an increased realized opportunity cost.",
+        "paragraph2": "This is because DeFi today is bounded by static or single-utility liquidity pools. Meaning, liquidity must be dedicated to only serving one function at a time. Every time a user deposits assets into a protocol they realize the opportunity cost of not having their assets allocated elsewhere. This is one of the reasons why yield aggregating protocols do not capture more Total Value Locked (TVL). Every dollar increase in provided liquidity results in an increased realized opportunity cost.",
         "paragraph3": "Individuals often make the argument that if your assets are not earning yield you are losing money. While this statement might be true if the alternative is holding cash in a TradFi savings account, it is a fallacy when applied to DeFi. Deploying your assets to a yield farming protocol might actually result in a loss when compared to market returns. The correct argument is that if your assets are not earning yield at the right time you are losing money."
       },
       "earnYield": {
@@ -294,7 +297,7 @@
       "header": "Pools information",
       "tvl": {
         "header": "Platform TVL",
-        "tooltip": "The market capitalization of total assets held in Backd liquidity pools (total value locked)"
+        "tooltip": "The market capitalization of total assets held in Backd liquidity pools (Total Value Locked)"
       },
       "apy": {
         "header": "Average APY",
@@ -327,7 +330,7 @@
       "header": "Pool information",
       "tvl": {
         "header": "Pool TVL",
-        "tooltip": "The market capitalization of assets held in the pool (total value locked)"
+        "tooltip": "The market capitalization of assets held in the pool (Total Value Locked)"
       },
       "apy": {
         "header": "APY",
@@ -338,7 +341,7 @@
       },
       "strategy": {
         "header": "Strategy",
-        "tooltip": "Deposits into this pool are allocated to the 3CRV yield farming strategy. Strategy profits are subject to a performance fee of 20%. This fee is already deducted from the APR displayed.",
+        "tooltip": "Deposits into this pool are allocated to the 3CRV yield farming strategy. Strategy profits are subject to a performance fee of 0%. This fee is already deducted from the APR displayed.",
         "tooltipItemLabels": {
           "strategist": "Strategist Fee",
           "treasury": "Treasury Fee",
@@ -365,7 +368,7 @@
       },
       "tvl": {
         "header": "Pool TVL",
-        "tooltip": "The market capitalization of assets held in the pool (total value locked)"
+        "tooltip": "The market capitalization of assets held in the pool (Total Value Locked)"
       }
     },
     "tabs": {
@@ -375,7 +378,7 @@
           "labelMobile": "Enter amount to deposit",
           "labelDesktop": "Enter an amount of {{asset}} to deposit"
         },
-        "action": "Deposit and Stake"
+        "action": "Deposit"
       },
       "withdraw": {
         "tab": "Withdraw",
@@ -410,7 +413,7 @@
     "overview": "Use this screen to monitor your Actions. Actions are a set of predefined market triggers, that when occur, something is done on your behalf.",
     "deposits": {
       "header": "Your deposits",
-      "empty": "You do not have any existing Deposits...",
+      "empty": "You do not have any existing deposits...",
       "manage": "Manage deposits",
       "poolsSubheader": "Pools"
     },
@@ -420,8 +423,9 @@
       "header": "Register an Action",
       "nav": "Register an Action",
       "create": "Confirm Top-up Position",
-      "choose": "Choose the type of Action",
-      "overview": "Define the market triggers that will enable your action using this interface."
+      "choose": "Choose the type of Action:",
+      "overview": "Define the market triggers that will enable your action using this interface.",
+      "step": "STEP {{step}}"
     },
     "registered": {
       "header": "Registered Actions",
@@ -458,15 +462,15 @@
       "description": "Protect your loans from liquidation",
       "stages": {
         "loan": {
-          "header": "Select a loan to protect",
-          "subHeader": "Backd has detected the following loans on supported platforms associated with your current connected wallet:",
+          "header": "Select a loan to protect:",
+          "subHeader": "The following supported loans have been found:",
           "search": "Or, enter wallet address with a loan:",
           "enterAddress": "Enter the wallet address that the loan is associated with:",
           "notFound": "No loans associated with this address.",
           "alreadyExists": "A top-up action already exists for this loan"
         },
         "pool": {
-          "header": "Which pool do you want the top-up to come from?",
+          "header": "Select the pool you want the top-up to come from:",
           "noDepositsHeader": "To register an action you must deposit assets into a Backd pool",
           "subHeader": "Liquidity deposited into a Backd pool can be earmarked for top-up protection. You will earn yield and BKD rewards while your liquidity is in a Backd pool.",
           "incomplete": "Select a pool",
@@ -566,7 +570,7 @@
       }
     },
     "more": {
-      "label": "More coming soon"
+      "label": "More Actions coming soon"
     }
   },
   "claim": {
@@ -695,7 +699,8 @@
     "validation": {
       "positive": "Amount must be a positive number",
       "exceedsBalance": "Amount exceeds available balance",
-      "invalid": "Invalid number"
+      "invalid": "Invalid number",
+      "exceedsCap": "Amount exceeds deposit limit"
     },
     "approve": "Approve {{asset}}",
     "enter": "Enter amount"
@@ -708,7 +713,7 @@
     "back": "Back",
     "close": "Close",
     "moreInDocs": "Find out more in the docs",
-    "betaSnackbar": "Currently, all pools are in a shielded state. This allows for a maximum TVL of about $1m per pool.",
+    "betaSnackbar": "This pool currently has a deposit limit of {{limit}} {{asset}} per address.",
     "findOutMore": "Find out more.",
     "comingSoon": "Coming Soon",
     "overview": "Overview",
@@ -725,7 +730,8 @@
     "negativeNumber": "Negative numbers not supported",
     "transactionType": "Transaction type not supported",
     "unsupportedNetwork": "Network not supported",
-    "tryTestnet": "Backd is not yet live on mainnet. You can test it now on Kovan by switching networks."
+    "unsupportedNetworkBody": "This network is not currently supported, please switch to Ethereum Mainnet.",
+    "switchToMainnet": "Switch to Mainnet"
   },
   "liveHelp": {
     "buttons": {

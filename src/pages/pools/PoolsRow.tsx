@@ -8,8 +8,11 @@ import Asset from "../../components/Asset";
 import Button from "../../components/Button";
 import { GradientText } from "../../styles/GradientText";
 import { Pool } from "../../lib";
-import { formatPercent } from "../../lib/numeric";
-import { selectPoolDeposits, selectPoolTotalDeposits, selectPrice } from "../../state/selectors";
+import {
+  selectUsersPoolUnderlyingEverywhere,
+  selectProtocolPoolUnderlyingEverywhere,
+} from "../../state/valueSelectors";
+import { selectPrice } from "../../state/poolsListSlice";
 import Loader from "../../components/Loader";
 import { useDevice } from "../../app/hooks/use-device";
 
@@ -158,8 +161,8 @@ const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
   const { isDesktop } = useDevice();
 
   const price = useSelector(selectPrice(pool));
-  const totalDeposits = useSelector(selectPoolTotalDeposits(pool));
-  const deposits = useSelector(selectPoolDeposits(pool));
+  const totalDeposits = useSelector(selectProtocolPoolUnderlyingEverywhere(pool));
+  const deposits = useSelector(selectUsersPoolUnderlyingEverywhere(pool));
 
   return (
     <RowContainer>
@@ -174,9 +177,21 @@ const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
         <Data>
           <Asset token={pool.underlying} />
         </Data>
-        <Data hideOnSnapshot>{pool.apy ? <Apy>{formatPercent(pool.apy)}</Apy> : <Loader />}</Data>
         <Data hideOnSnapshot>
-          {price && totalDeposits ? totalDeposits.toCompactUsdValue(price) : <Loader />}
+          {pool.apy && pool.apy.toPercent ? (
+            <Apy id={`pool-row-${pool.lpToken.symbol.toLowerCase()}-apy`}>
+              {pool.apy.toPercent()}
+            </Apy>
+          ) : (
+            <Loader />
+          )}
+        </Data>
+        <Data id={`pool-row-${pool.lpToken.symbol.toLowerCase()}-tvl`} hideOnSnapshot>
+          {price && totalDeposits && totalDeposits.toCompactUsdValue ? (
+            totalDeposits.toCompactUsdValue(price)
+          ) : (
+            <Loader />
+          )}
         </Data>
         <DepositedData preview={preview}>
           {price && deposits ? deposits.toCompactUsdValue(price) : <Loader />}

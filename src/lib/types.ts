@@ -1,8 +1,7 @@
 import { TransactionReceipt } from "@ethersproject/providers";
 import fromEntries from "fromentries";
 import { providers, Signer } from "ethers";
-
-import { PlainScaledNumber, ScaledNumber } from "./scaled-number";
+import { PlainScaledNumber, ScaledNumber } from "scaled-number";
 
 export type Optional<T> = T | null;
 
@@ -13,19 +12,32 @@ export interface Token {
   symbol: string;
 }
 
-export interface Pool<Num = number> {
+export interface GenericPool<T> {
   address: string;
-  apy: Optional<Num>;
-  exchangeRate: Num;
-  feeDecreasePeriod: Num;
+  apy: Optional<T>;
+  exchangeRate: T;
+  feeDecreasePeriod: T;
   lpToken: Token;
-  maxWithdrawalFee: Num;
-  minWithdrawalFee: Num;
+  maxWithdrawalFee: T;
+  minWithdrawalFee: T;
   name: string;
   stakerVaultAddress: string;
-  totalAssets: Num;
+  totalAssets: T;
   underlying: Token;
+  depositCap: T;
+  harvestable: T;
+  strategyAddress: string;
+  strategyName: string;
 }
+
+export type Pool = GenericPool<ScaledNumber>;
+export type PlainPool = GenericPool<PlainScaledNumber>;
+
+export const fromPlainPool = (plainPool: PlainPool): Pool => {
+  return transformPool(plainPool, (plainScaledNumber: PlainScaledNumber) =>
+    ScaledNumber.fromPlain(plainScaledNumber)
+  );
+};
 
 interface GenericPosition<T> {
   protocol: string;
@@ -35,6 +47,7 @@ interface GenericPosition<T> {
   maxTopUp: T;
   priorityFee: T;
   maxGasPrice: T;
+  depositTokenBalance: T;
   actionToken: Address;
   depositToken: Address;
 }
@@ -74,6 +87,7 @@ export const toPlainPosition = (position: Position): PlainPosition => {
     maxTopUp: position.maxTopUp.toPlain(),
     maxGasPrice: position.maxGasPrice.toPlain(),
     priorityFee: position.priorityFee.toPlain(),
+    depositTokenBalance: position.depositTokenBalance.toPlain(),
   };
 };
 
@@ -85,6 +99,7 @@ export const fromPlainPosition = (position: PlainPosition): Position => {
     maxTopUp: ScaledNumber.fromPlain(position.maxTopUp),
     maxGasPrice: ScaledNumber.fromPlain(position.maxGasPrice),
     priorityFee: ScaledNumber.fromPlain(position.priorityFee),
+    depositTokenBalance: ScaledNumber.fromPlain(position.depositTokenBalance),
   };
 };
 
@@ -116,7 +131,7 @@ export const fromPlainActionFees = (actionFees: PlainActionFees): ActionFees => 
   };
 };
 
-export function positionFromPartial<T>(pool: Pool<T>, position: Partial<Position>): Position {
+export function positionFromPartial<T>(pool: Pool, position: Partial<Position>): Position {
   if (!position.protocol) throw Error("Missing protocol when creating position");
   if (!position.account) throw Error("Missing account when creating position");
   if (!position.threshold) throw Error("Missing threshold when creating position");
@@ -124,6 +139,8 @@ export function positionFromPartial<T>(pool: Pool<T>, position: Partial<Position
   if (!position.maxTopUp) throw Error("Missing max top-up when creating position");
   if (!position.maxGasPrice) throw Error("Missing max top-up when creating position");
   if (!position.priorityFee) throw Error("Missing priority fee when creating position");
+  if (!position.depositTokenBalance)
+    throw Error("Missing deposit token balance when creating position");
   return {
     protocol: position.protocol,
     account: position.account,
@@ -134,10 +151,11 @@ export function positionFromPartial<T>(pool: Pool<T>, position: Partial<Position
     maxGasPrice: position.maxGasPrice,
     actionToken: pool.underlying.address,
     depositToken: pool.lpToken.address,
+    depositTokenBalance: position.depositTokenBalance,
   };
 }
 
-export function transformPool<T, U>(pool: Pool<T>, f: (v: T) => U): Pool<U> {
+export function transformPool<T, U>(pool: GenericPool<T>, f: (v: T) => U): GenericPool<U> {
   return {
     ...pool,
     apy: pool.apy ? f(pool.apy) : null,
@@ -146,6 +164,8 @@ export function transformPool<T, U>(pool: Pool<T>, f: (v: T) => U): Pool<U> {
     maxWithdrawalFee: f(pool.maxWithdrawalFee),
     minWithdrawalFee: f(pool.minWithdrawalFee),
     feeDecreasePeriod: f(pool.feeDecreasePeriod),
+    depositCap: f(pool.depositCap),
+    harvestable: f(pool.harvestable),
   };
 }
 

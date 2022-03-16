@@ -38,7 +38,7 @@ describe("Default state", () => {
     cy.get("#content-header").contains("DAI pool");
   });
   it("Should have disabled button", () => {
-    cy.get("#action-button").contains("Deposit and Stake");
+    cy.get("#action-button").contains("Deposit");
     cy.get("#action-button").should("be.disabled");
   });
   it("Should have max button", () => {
@@ -49,13 +49,13 @@ describe("Default state", () => {
 describe("Deposit Validation", () => {
   it("Should error on 0", () => {
     cy.get("#amount-input").type("0");
-    cy.get("#input-label").should("have.css", "color", "rgb(244, 67, 54)");
+    cy.get("#input-label").should("have.css", "color", "rgb(244, 74, 61)");
     cy.get("#input-note").contains("Amount must be a positive number");
     cy.get("#amount-input").clear();
   });
   it("Should error on above amount", () => {
     cy.get("#amount-input").type("600");
-    cy.get("#input-label").should("have.css", "color", "rgb(244, 67, 54)");
+    cy.get("#input-label").should("have.css", "color", "rgb(244, 74, 61)");
     cy.get("#input-note").contains("Amount exceeds available balance");
     cy.get("#amount-input").clear();
   });
@@ -184,20 +184,22 @@ describe("Withdraw Tab", () => {
     cy.get("#input-button").contains("max");
   });
   it("Should load balance", () => {
-    cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains(".", { timeout: WEB3_TIMEOUT });
+    cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains("10", {
+      timeout: WEB3_TIMEOUT,
+    });
   });
 });
 
 describe("Withdraw Validation", () => {
   it("Should error on 0", () => {
     cy.get("#amount-input").type("0");
-    cy.get("#input-label").should("have.css", "color", "rgb(244, 67, 54)");
+    cy.get("#input-label").should("have.css", "color", "rgb(244, 74, 61)");
     cy.get("#input-note").contains("Amount must be a positive number");
     cy.get("#amount-input").clear();
   });
   it("Should error on above amount", () => {
     cy.get("#amount-input").type("1000000000000");
-    cy.get("#input-label").should("have.css", "color", "rgb(244, 67, 54)");
+    cy.get("#input-label").should("have.css", "color", "rgb(244, 74, 61)");
     cy.get("#input-note").contains("Amount exceeds available balance");
     cy.get("#amount-input").clear();
   });

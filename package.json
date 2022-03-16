@@ -10,7 +10,7 @@
     "percy": "percy exec -- cypress run"
   },
   "dependencies": {
-    "@backdfund/protocol": "^0.2.1",
+    "@backdfund/protocol": "^1.2.1",
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
     "@reduxjs/toolkit": "^1.7.1",
@@ -40,6 +40,7 @@
     "react-scripts": "^4.0.3",
     "redux": "^4.1.2",
     "redux-persist": "^6.0.0",
+    "scaled-number": "^1.0.0",
     "styled-components": "^5.3.3",
     "truffle-privatekey-provider": "^1.5.0",
     "ts-custom-error": "^3.2.0",

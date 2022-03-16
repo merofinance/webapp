@@ -4,11 +4,10 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 import { Position, Pool } from "../../lib/types";
-import { selectPrice } from "../../state/selectors";
 import TopupAction from "./register/topup/TopupAction";
 import { GradientText } from "../../styles/GradientText";
 import Loader from "../../components/Loader";
-import { selectPools } from "../../state/poolsListSlice";
+import { selectPrice, selectPools } from "../../state/poolsListSlice";
 
 const StyledRegisteredAction = styled.button`
   width: 100%;
@@ -57,7 +56,13 @@ const ExistingAction = ({ position }: Props): JSX.Element => {
     <>
       <StyledRegisteredAction id={`existing-action-${position.protocol.toLowerCase()}`}>
         <Value flex={5}>{t("actions.topup.label")}</Value>
-        <Value flex={3}>{price ? position.maxTopUp.toCompactUsdValue(price) : <Loader />}</Value>
+        <Value flex={3}>
+          {price && pool ? (
+            position.depositTokenBalance.mul(pool.exchangeRate).toCompactUsdValue(price)
+          ) : (
+            <Loader />
+          )}
+        </Value>
         <ViewButton
           id={`existing-action-${position.protocol.toLowerCase()}-view`}
           onClick={() => setOpen(true)}

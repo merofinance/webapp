@@ -1,6 +1,5 @@
 /* eslint-disable max-classes-per-file */
 import { CustomError } from "ts-custom-error";
-import { chainIds } from "../lib/constants";
 
 export interface ErrorState {
   message: string;
@@ -8,6 +7,7 @@ export interface ErrorState {
   hideContact?: boolean;
   hideButton?: boolean;
   redirectOnClose?: boolean;
+  switchToMainnetButton?: boolean;
 }
 
 export class BackdError extends CustomError {
@@ -27,6 +27,10 @@ export class BackdError extends CustomError {
     return false;
   }
 
+  get switchToMainnetButton(): boolean {
+    return true;
+  }
+
   formatMessage(): string {
     return this.message;
   }
@@ -38,12 +42,13 @@ export class BackdError extends CustomError {
       hideContact: this.hideContact,
       hideButton: this.hideButton,
       redirectOnClose: this.redirectOnClose,
+      switchToMainnetButton: this.switchToMainnetButton,
     };
   }
 }
 
 export class UnsupportedNetwork extends BackdError {
-  constructor(readonly chainId: number) {
+  constructor() {
     super("errors.unsupportedNetwork");
   }
 
@@ -63,17 +68,11 @@ export class UnsupportedNetwork extends BackdError {
     return true;
   }
 
+  get switchToMainnetButton(): boolean {
+    return true;
+  }
+
   formatMessage(): string {
-    let network = chainIds[this.chainId];
-    if (!network) {
-      network = `chain id ${this.chainId}`;
-    }
-
-    if (this.chainId === 1) return "errors.tryTestnet";
-
-    return (
-      `Please change network. You are currently using ${network}, which is not supported. ` +
-      "Backd currently supports Kovan and chain id 1337 for developement."
-    );
+    return "errors.unsupportedNetworkBody";
   }
 }

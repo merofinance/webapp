@@ -5,12 +5,10 @@ import { useSelector } from "react-redux";
 
 import ContentSection from "../../../../components/ContentSection";
 import Button from "../../../../components/Button";
-import { selectPool } from "../../../../state/selectors";
+import { selectUsersPoolLpUnlocked } from "../../../../state/valueSelectors";
+import { selectPool } from "../../../../state/poolsListSlice";
 import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
 import PoolDeposit from "../../../pool/PoolDeposit";
-import { useDevice } from "../../../../app/hooks/use-device";
-import { selectBalances } from "../../../../state/userSlice";
-import { ScaledNumber } from "../../../../lib/scaled-number";
 
 const Container = styled.div`
   position: relative;
@@ -41,27 +39,20 @@ const TopupPoolDeposit = (): JSX.Element => {
   const { t } = useTranslation();
   const { address, protocol, poolName } = useParams<"address" | "protocol" | "poolName">();
   const navigate = useNavigate();
-  const { isMobile } = useDevice();
   const pool = useSelector(selectPool(poolName));
-  const balances = useSelector(selectBalances);
+  const usersPoolLpUnlocked = useSelector(selectUsersPoolLpUnlocked(pool));
 
   if (!pool) {
     navigate("/");
     throw Error("Pool not found");
   }
 
-  const hasSufficientBalance = () => {
-    const lpBalance = balances[pool.lpToken.address];
-    if (!lpBalance) return false;
-    return lpBalance.gt(new ScaledNumber());
-  };
-
   return (
     <Container>
       <ContentSection
         header={t("actions.register.header")}
         subHeader={t("actions.topup.label")}
-        nav="3/4"
+        nav={t("actions.register.step", { step: "3/4" })}
       >
         <Header id="register-topup-pool-deposit">
           {t("actions.topup.stages.pool.deposit.header", { asset: pool.underlying.symbol })}
@@ -75,13 +66,13 @@ const TopupPoolDeposit = (): JSX.Element => {
             id="register-topup-pool-deposit-button"
             primary
             medium
-            width={isMobile ? "100%" : "44%"}
+            width="30rem"
             click={() => {
               if (address && protocol && poolName)
                 navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${poolName.toLowerCase()}`);
               else navigate(-1);
             }}
-            disabled={!pool || !hasSufficientBalance()}
+            disabled={!pool || !usersPoolLpUnlocked || usersPoolLpUnlocked.isZero()}
             hoverText={t("actions.topup.stages.pool.deposit.incomplete", {
               asset: pool?.underlying.symbol,
             })}

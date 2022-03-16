@@ -161,6 +161,7 @@ const Popup = ({
         {submit && (
           <ButtonContainer>
             <Button
+              wide
               id={`${id}-popup-cancel`}
               medium
               neutral
@@ -170,6 +171,7 @@ const Popup = ({
               {isMobile ? t("components.back") : t("components.cancel")}
             </Button>
             <Button
+              wide
               id={`${id}-popup-button`}
               primary
               destructive={descructive}

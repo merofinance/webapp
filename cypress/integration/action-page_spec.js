@@ -21,7 +21,7 @@ describe("Default state", () => {
     cy.get("#your-deposits-header").contains("Your deposits");
   });
   it("Should have no deposits", () => {
-    cy.get("#your-deposits-empty").contains("You do not have any existing Deposits...");
+    cy.get("#your-deposits-empty").contains("You do not have any existing deposits...");
   });
   it("Should have Overview Info Card", () => {
     cy.get("#overview-header").contains("Overview");
@@ -61,7 +61,7 @@ describe("Register Page", () => {
     cy.get("#your-deposits-header").contains("Your deposits");
   });
   it("Should have no deposits", () => {
-    cy.get("#your-deposits-empty").contains("You do not have any existing Deposits...");
+    cy.get("#your-deposits-empty").contains("You do not have any existing deposits...");
   });
   it("Should have Overview Description", () => {
     cy.get("#overview-description").contains(
@@ -271,7 +271,7 @@ describe("Pool Deposit", () => {
     cy.get("#your-deposits-header").contains("Your deposits");
   });
   it("Should have no deposits", () => {
-    cy.get("#your-deposits-empty").contains("You do not have any existing Deposits...");
+    cy.get("#your-deposits-empty").contains("You do not have any existing deposits...");
   });
   it("Should not show dai in info card", () => {
     cy.get("#your-deposits-dai").should("not.exist");

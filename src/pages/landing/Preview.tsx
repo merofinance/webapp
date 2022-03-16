@@ -12,7 +12,6 @@ import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import { Header2, Header4 } from "../../styles/Headers";
 import Loader from "../../components/Loader";
 import { AppDispatch } from "../../app/store";
-import { useIsLive } from "../../app/hooks/use-is-live";
 import { Optional } from "../../lib/types";
 
 const StyledPreview = styled.div`
@@ -29,7 +28,7 @@ const StyledPreview = styled.div`
   }
 `;
 
-const TableContainer = styled.div`
+const Container = styled.div`
   position: relative;
 
   width: 79%;
@@ -38,11 +37,7 @@ const TableContainer = styled.div`
   }
 `;
 
-const Table = styled.table`
-  width: 100%;
-`;
-
-const HeaderRow = styled.tr`
+const HeaderRow = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0 1.7rem;
@@ -57,7 +52,7 @@ const HeaderRow = styled.tr`
   }
 `;
 
-const Header = styled.th`
+const Header = styled.div`
   flex: 1;
   text-align: left;
   font-weight: 700;
@@ -71,7 +66,7 @@ const Header = styled.th`
   }
 `;
 
-const ChevronHeader = styled.th`
+const ChevronHeader = styled.div`
   flex: 1;
 
   @media (max-width: 600px) {
@@ -94,46 +89,39 @@ const Swirls = styled.img`
 const Preview = (): Optional<JSX.Element> => {
   const { t } = useTranslation();
   const backd = useBackd();
-  const { protocolLive } = useIsLive();
   const dispatch = useDispatch<AppDispatch>();
   const pools = useSelector(selectPools);
   const updated = useWeb3Updated();
 
   useEffect(() => {
     if (!backd) {
-      if (protocolLive) dispatch(fetchPreviewState());
+      dispatch(fetchPreviewState());
       return;
     }
     dispatch(fetchState(backd));
   }, [updated]);
 
-  if (!protocolLive) return null;
-
   return (
     <StyledPreview>
       <Header2>{t("pools.preview.header")}</Header2>
       <Header4>{t("pools.preview.subHeader")}</Header4>
-      <TableContainer>
+      <Container>
         <Swirls src={swirls} alt="decorative swirls" />
-        <Table>
-          <thead>
-            <HeaderRow>
-              <Header>{t("headers.asset")}</Header>
-              <Header>{t("headers.apy")}</Header>
-              <Header>{t("headers.tvl")}</Header>
-              <ChevronHeader />
-            </HeaderRow>
-          </thead>
-          {!pools && (
-            <>
-              <Loader row preview />
-              <Loader row preview />
-              <Loader row preview />
-            </>
-          )}
-          {pools && pools.map((pool: Pool) => <PoolsRow key={pool.name} preview pool={pool} />)}
-        </Table>
-      </TableContainer>
+        <HeaderRow>
+          <Header>{t("headers.asset")}</Header>
+          <Header>{t("headers.apy")}</Header>
+          <Header>{t("headers.tvl")}</Header>
+          <ChevronHeader />
+        </HeaderRow>
+        {!pools && (
+          <>
+            <Loader row preview />
+            <Loader row preview />
+            <Loader row preview />
+          </>
+        )}
+        {pools && pools.map((pool: Pool) => <PoolsRow key={pool.name} preview pool={pool} />)}
+      </Container>
     </StyledPreview>
   );
 };

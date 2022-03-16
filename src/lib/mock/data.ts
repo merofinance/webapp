@@ -1,12 +1,13 @@
 import { BigNumber, ContractReceipt, ContractTransaction } from "ethers";
+import { ScaledNumber } from "scaled-number";
+
 import { scale } from "../numeric";
-import { ScaledNumber } from "../scaled-number";
-import { Address, Pool, PlainPosition } from "../types";
+import { Address, PlainPosition, GenericPool } from "../types";
 
 export const masterAccount = "0xbacE8e7f276FD2Ee5ecE5C1df18BF381148862A6";
 
 // numbers are scaled to 10^18 to emulate contracst return values
-export const pools: Pool<BigNumber>[] = [
+export const pools: GenericPool<BigNumber>[] = [
   {
     name: "bkdDAI3CRV",
     apy: scale(237, 17),
@@ -29,6 +30,10 @@ export const pools: Pool<BigNumber>[] = [
     maxWithdrawalFee: scale(1, 18),
     minWithdrawalFee: scale(0, 18),
     feeDecreasePeriod: scale(10, 18),
+    depositCap: scale(10000, 18),
+    harvestable: scale(3, 18),
+    strategyAddress: "0x1F7EEe24524fbA780E018EDBfda0Ad4881321118",
+    strategyName: "Strategy Name",
   },
   {
     name: "bUSDC3CRV",
@@ -52,6 +57,10 @@ export const pools: Pool<BigNumber>[] = [
     maxWithdrawalFee: scale(1, 18),
     minWithdrawalFee: scale(0, 18),
     feeDecreasePeriod: scale(10, 18),
+    depositCap: scale(10000, 18),
+    harvestable: scale(3, 6),
+    strategyAddress: "0x1F7EEe24524fbA780E018EDBfda0Ad4881321118",
+    strategyName: "Strategy Name",
   },
   {
     name: "bkdethCRV",
@@ -75,6 +84,10 @@ export const pools: Pool<BigNumber>[] = [
     maxWithdrawalFee: scale(1, 18),
     minWithdrawalFee: scale(0, 18),
     feeDecreasePeriod: scale(10, 18),
+    depositCap: scale(10000, 18),
+    harvestable: scale(3, 18),
+    strategyAddress: "0x1F7EEe24524fbA780E018EDBfda0Ad4881321118",
+    strategyName: "Strategy Name",
   },
 ];
 
@@ -110,6 +123,7 @@ export const positions: PlainPosition[] = [
     maxGasPrice: ScaledNumber.fromUnscaled(50, 9).toPlain(),
     actionToken: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
     priorityFee: ScaledNumber.fromUnscaled(2, 9).toPlain(),
+    depositTokenBalance: ScaledNumber.fromUnscaled(4500).toPlain(),
     depositToken: "0x99A77926B3FB49619DC3A1DAc18565bcB5A98b93",
     ...positionKeys[0],
   },
@@ -118,6 +132,7 @@ export const positions: PlainPosition[] = [
     maxTopUp: ScaledNumber.fromUnscaled(50_000).toPlain(),
     priorityFee: ScaledNumber.fromUnscaled(2, 9).toPlain(),
     maxGasPrice: ScaledNumber.fromUnscaled(50, 9).toPlain(),
+    depositTokenBalance: ScaledNumber.fromUnscaled(4500).toPlain(),
     actionToken: "0x6b175474e89094c44da98b954eedeac495271d0f",
     depositToken: "0x25FF22De379B644BD5C2263404baC6FeE5a4b8de",
     ...positionKeys[1],

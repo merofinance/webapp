@@ -1,10 +1,10 @@
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import styled from "styled-components";
+import { ScaledNumber } from "scaled-number";
+
 import { useDevice } from "../../app/hooks/use-device";
 import Popup from "../../components/Popup";
 import { Pool } from "../../lib";
-import { ScaledNumber } from "../../lib/scaled-number";
 import { selectWithdrawalFee } from "../../state/userSlice";
 import InfoBlock from "../../components/InfoBlock";
 
@@ -31,9 +31,9 @@ const WithdrawalConfirmation = ({
   const feePercent = withdrawalFee ? `${withdrawalFee.mul(100).toCryptoString()}%` : "---";
   const fee = withdrawalFee ? withdrawalFee.mul(value).toCryptoString() : "---";
   const withdrawnAmount = withdrawalFee ? value.sub(value.mul(withdrawalFee)) : new ScaledNumber();
-  const maxWithdrawalFee = `${(pool.maxWithdrawalFee * 100).toString()}%`;
-  const minWithdrawalFee = `${(pool.minWithdrawalFee * 100).toString()}%`;
-  const days = (pool.feeDecreasePeriod * 10 ** 18) / 86400;
+  const maxWithdrawalFee = pool.maxWithdrawalFee.toPercent();
+  const minWithdrawalFee = pool.minWithdrawalFee.toPercent();
+  const days = pool.feeDecreasePeriod.toNumber() / 86400;
   const asset = pool.underlying.symbol;
 
   return (

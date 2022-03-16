@@ -1,16 +1,15 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import LaunchIcon from "@material-ui/icons/Launch";
 import { useTranslation } from "react-i18next";
+import { ScaledNumber } from "scaled-number";
 
 import AmountInput from "../../components/AmountInput";
 import ApproveThenAction from "../../components/ApproveThenAction";
-import { selectTokenBalance } from "../../state/userSlice";
 import { Token } from "../../lib/types";
-import { GradientLink } from "../../styles/GradientText";
 import { useDevice } from "../../app/hooks/use-device";
-import { ScaledNumber } from "../../lib/scaled-number";
+import { selectEthBalance } from "../../state/userSlice";
+import ExternalLink from "../../components/ExternalLink";
 
 const StyledUnstakeTokens = styled.div`
   width: 100%;
@@ -32,19 +31,6 @@ const Description = styled.div`
   }
 `;
 
-const MoreLink = styled(GradientLink)`
-  font-weight: 500;
-  letter-spacing: 0.46px;
-  cursor: pointer;
-
-  font-size: 1.8rem;
-  line-height: 2.6rem;
-  @media (max-width: 600px) {
-    font-size: 1.3rem;
-    line-height: 1.9rem;
-  }
-`;
-
 const Content = styled.div`
   width: 100%;
   display: grid;
@@ -63,7 +49,7 @@ interface Props {
 
 const UnstakeTokens = ({ token }: Props): JSX.Element => {
   const { t } = useTranslation();
-  const balance = useSelector(selectTokenBalance(token.address));
+  const balance = useSelector(selectEthBalance); // TODO This is not the correct balance
   const { isMobile } = useDevice();
 
   const [value, setValue] = useState("");
@@ -76,13 +62,9 @@ const UnstakeTokens = ({ token }: Props): JSX.Element => {
     <StyledUnstakeTokens>
       <Description>
         {t("stake.tabs.unstake.description")}{" "}
-        <MoreLink href="" target="_blank" rel="noopener noreferrer">
+        <ExternalLink large link="">
           {t("stake.tabs.unstake.more")}
-          <LaunchIcon
-            fontSize={isMobile ? "small" : "medium"}
-            style={{ fill: "var(--secondary)", transform: "translateY(2px)" }}
-          />
-        </MoreLink>
+        </ExternalLink>
       </Description>
       <Content>
         <AmountInput
@@ -92,7 +74,7 @@ const UnstakeTokens = ({ token }: Props): JSX.Element => {
           label={
             isMobile ? t("stake.tabs.unstake.inputMobile") : t("stake.tabs.unstake.inputDesktop")
           }
-          max={balance}
+          balance={balance}
           error=""
           symbol="DAI"
         />

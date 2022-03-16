@@ -1,14 +1,27 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ethers } from "ethers";
+import { ScaledNumber } from "scaled-number";
 
 import { AppThunk, RootState } from "../app/store";
 import { Pool } from "../lib";
 import { Backd } from "../lib/backd";
-import { Address, fromPlainBalances, Optional, Prices } from "../lib/types";
+import {
+  Address,
+  fromPlainBalances,
+  fromPlainPool,
+  Optional,
+  PlainPool,
+  Prices,
+} from "../lib/types";
 import { fetchLoans } from "./lendingSlice";
-import { INFURA_ID } from "../lib/constants";
+import { ACTIONS_LIVE, INFURA_ID } from "../lib/constants";
 import { createBackd } from "../lib/factory";
-import { fetchActionFees, fetchEstimatedGasUsage, fetchPositions } from "./positionsSlice";
+import {
+  fetchActionFees,
+  fetchEstimatedGasUsage,
+  fetchPositions,
+  setPositionsLoaded,
+} from "./positionsSlice";
 import {
   fetchAllowances,
   fetchBalances,
@@ -18,7 +31,7 @@ import {
 import poolMetadata from "../lib/data/pool-metadata";
 
 interface PoolsState {
-  pools: Pool[];
+  pools: PlainPool[];
   prices: Prices;
   loaded: boolean;
 }
@@ -75,7 +88,6 @@ export const poolsSlice = createSlice({
 export const fetchState =
   (backd: Backd): AppThunk =>
   (dispatch) => {
-    backd.currentAccount().then((address: Address) => dispatch(fetchLoans({ backd, address })));
     dispatch(fetchPools({ backd })).then((v) => {
       if (v.meta.requestStatus !== "fulfilled") return;
       const pools = v.payload as Pool[];
@@ -84,10 +96,16 @@ export const fetchState =
       dispatch(fetchAllowances({ backd, pools }));
       dispatch(fetchWithdrawalFees({ backd, pools }));
     });
-    dispatch(fetchPositions({ backd }));
-    dispatch(fetchEstimatedGasUsage({ backd }));
-    dispatch(fetchActionFees({ backd }));
-    dispatch(fetchGasBankBalance({ backd }));
+    const chainId = backd.getChainId();
+    if (ACTIONS_LIVE || chainId === 42) {
+      backd.currentAccount().then((address: Address) => dispatch(fetchLoans({ backd, address })));
+      dispatch(fetchPositions({ backd }));
+      dispatch(fetchEstimatedGasUsage({ backd }));
+      dispatch(fetchActionFees({ backd }));
+      dispatch(fetchGasBankBalance({ backd }));
+    } else {
+      dispatch(setPositionsLoaded());
+    }
   };
 
 export const fetchPreviewState = (): AppThunk => (dispatch) => {
@@ -104,10 +122,12 @@ export const selectPoolsLoaded = (state: RootState): boolean => state.pools.load
 
 export const selectPools = (state: RootState): Optional<Pool[]> => {
   if (!state.pools.loaded) return null;
-  return state.pools.pools.filter((pool: Pool) => {
-    if (!poolMetadata[pool.underlying.symbol]) return false;
-    return true;
-  });
+  return state.pools.pools
+    .map((plainPool: PlainPool) => fromPlainPool(plainPool))
+    .filter((pool: Pool) => {
+      if (!poolMetadata[pool.underlying.symbol]) return false;
+      return true;
+    });
 };
 
 export const selectDepositedPools = (state: RootState): Optional<Pool[]> => {
@@ -123,13 +143,36 @@ export const selectPrices = (state: RootState): Prices => state.pools.prices;
 
 export const selectEthPrice = (state: RootState): Optional<number> => state.pools.prices.ETH;
 
-export const selectEthPool = (state: RootState): Optional<Pool> =>
-  state.pools.pools.find((pool: Pool) => pool.underlying.symbol.toLowerCase() === "eth") || null;
-
-export const selectAverageApy = (state: RootState): Optional<number> => {
+export const selectEthPool = (state: RootState): Optional<Pool> => {
   const pools = selectPools(state);
   if (!pools) return null;
-  return pools.reduce((a: number, b: Pool) => a + (b.apy || 0), 0) / state.pools.pools.length;
+  return pools.find((pool: Pool) => pool.underlying.symbol.toLowerCase() === "eth") || null;
+};
+
+export function selectPool(poolName: string | undefined): (state: RootState) => Optional<Pool> {
+  return (state: RootState) => {
+    const pools = selectPools(state);
+    if (!poolName || !pools) return null;
+    return pools.find((p) => p.lpToken.symbol.toLowerCase() === poolName.toLowerCase()) || null;
+  };
+}
+
+export function selectPrice(pool: Optional<Pool>): (state: RootState) => Optional<number> {
+  return (state: RootState) => (pool ? state.pools.prices[pool.underlying.symbol] : null);
+}
+
+export const selectAverageApy = (state: RootState): Optional<ScaledNumber> => {
+  const pools = selectPools(state);
+  if (!pools) return null;
+  let poolCount = 0;
+  let total = new ScaledNumber();
+  for (let i = 0; i < pools.length; i++) {
+    const { apy } = pools[i];
+    if (!apy) return null;
+    total = total.add(apy);
+    poolCount++;
+  }
+  return total.div(poolCount);
 };
 
 export default poolsSlice.reducer;

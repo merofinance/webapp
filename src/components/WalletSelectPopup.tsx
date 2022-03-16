@@ -2,7 +2,6 @@ import { useWeb3React } from "@web3-react/core";
 
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
-import LaunchIcon from "@material-ui/icons/Launch";
 import { AbstractConnector } from "@web3-react/abstract-connector";
 import Web3 from "web3";
 import { ethers } from "ethers";
@@ -11,6 +10,7 @@ import { injectedConnector, walletConnectConnector, privateKeyConnector } from "
 import metamask from "../assets/wallets/metamask.svg";
 import walletConnect from "../assets/wallets/wallet-connect.svg";
 import Popup from "./Popup";
+import ExternalLink from "./ExternalLink";
 
 interface WalletOption {
   name: string;
@@ -50,32 +50,14 @@ const SubHeaderContainer = styled.div`
 
 const SubHeader = styled.div`
   font-weight: 400;
-  font-size: 1.6rem;
-  line-height: 2.4rem;
   letter-spacing: 0.15px;
   text-align: center;
   margin-right: 0.5rem;
 
-  @media (max-width: 600px) {
-    margin-bottom: 0.2rem;
-  }
-`;
-
-const Highlight = styled.a`
-  font-weight: 400;
   font-size: 1.6rem;
-  line-height: 2.4rem;
-  letter-spacing: 0.15px;
-  text-align: center;
-  cursor: pointer;
-  background: var(--gradient);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  > svg {
-    margin-left: 0.3rem;
-    transform: translateY(2px);
+  @media (max-width: 600px) {
+    font-size: 1.4rem;
+    margin-bottom: 0.2rem;
   }
 `;
 
@@ -165,15 +147,9 @@ const WalletSelectPopup = ({ show, close, setWallet }: Props): JSX.Element => {
     <Popup centerHeader show={show} close={() => close(false)} header={t("walletConnect.header")}>
       <SubHeaderContainer>
         <SubHeader>{t("walletConnect.newToEthereum")}</SubHeader>
-        <Highlight
-          id="wallet-select-link"
-          href="https://ethereum.org/en/wallets/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <ExternalLink large id="wallet-select-link" link="https://ethereum.org/en/wallets/">
           {t("walletConnect.aboutWallets")}
-          <LaunchIcon style={{ fill: "var(--secondary)" }} />
-        </Highlight>
+        </ExternalLink>
       </SubHeaderContainer>
 
       {walletOptions.map((option: WalletOption) => (

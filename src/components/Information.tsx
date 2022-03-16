@@ -158,7 +158,7 @@ const Information = ({ header, rows }: Props): JSX.Element => {
             <AccordionContainer open={open}>
               <AccordionContent>
                 {row.details.map((details: RowDetailType) => (
-                  <DetailItem>
+                  <DetailItem key={details.label}>
                     <DetailIcon src={details.icon} />
                     <DetailLabel href={details.link} target="_blank" rel="noopener noreferrer">
                       {details.label}
