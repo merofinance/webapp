@@ -8,9 +8,18 @@ export const privateKeyConnector = new PrivateKeyConnector({
 });
 
 export const supportedChainIds = [
-  1, // Mainet
-  42, // Kovan
-  1337, // Dev
+  ...Array.from(Array(1000).keys()),
+  1337,
+  42161,
+  43114,
+  8217,
+  42220,
+  42262,
+  32659,
+  1284,
+  4689,
+  10000,
+  333999,
 ];
 
 export const injectedConnector = new InjectedConnector({
