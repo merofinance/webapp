@@ -26,6 +26,7 @@ import {
   DEPOSIT_SLIPPAGE,
   ETH_DECIMALS,
   ETH_DUMMY_ADDRESS,
+  GAS_BUFFER,
   GWEI_DECIMALS,
   INFINITE_APPROVE_AMMOUNT,
   MILLISECONDS_PER_YEAR,
@@ -399,7 +400,7 @@ export class Web3Backd implements Backd {
         value,
       }
     );
-    const gasLimit = gasEstimate.mul(12).div(10);
+    const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
     return this.topupAction.register(position.account, protocol, depositAmount, record, {
       gasLimit,
       value,
@@ -418,7 +419,7 @@ export class Web3Backd implements Backd {
       utils.formatBytes32String(protocol),
       unstake
     );
-    const gasLimit = gasEstimate.mul(12).div(10);
+    const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
     return this.topupAction.resetPosition(account, utils.formatBytes32String(protocol), unstake, {
       gasLimit,
     });
@@ -460,7 +461,9 @@ export class Web3Backd implements Backd {
     amount: ScaledNumber
   ): Promise<ContractTransaction> {
     const tokenContract = Ierc20FullFactory.connect(token.address, this._provider);
-    return tokenContract.approve(spender, amount.value);
+    const gasEstimate = await tokenContract.estimateGas.approve(spender, amount.value);
+    const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
+    return tokenContract.approve(spender, amount.value, { gasLimit });
   }
 
   async deposit(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction> {
@@ -469,7 +472,18 @@ export class Web3Backd implements Backd {
     const minTokenAmount = amount
       .div(pool.exchangeRate)
       .mul(ScaledNumber.fromUnscaled(DEPOSIT_SLIPPAGE, amount.decimals));
-    return poolContract["deposit(uint256,uint256)"](amount.value, minTokenAmount.value, { value });
+    const gasEstimate = await poolContract.estimateGas["deposit(uint256,uint256)"](
+      amount.value,
+      minTokenAmount.value,
+      {
+        value,
+      }
+    );
+    const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
+    return poolContract["deposit(uint256,uint256)"](amount.value, minTokenAmount.value, {
+      value,
+      gasLimit,
+    });
   }
 
   async withdraw(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction> {
@@ -477,12 +491,21 @@ export class Web3Backd implements Backd {
     const minRedeemAmount = amount
       .mul(pool.exchangeRate)
       .mul(ScaledNumber.fromUnscaled(DEPOSIT_SLIPPAGE, amount.decimals));
-    return poolContract["redeem(uint256,uint256)"](amount.value, minRedeemAmount.value);
+    const gasEstimate = await poolContract.estimateGas["redeem(uint256,uint256)"](
+      amount.value,
+      minRedeemAmount.value
+    );
+    const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
+    return poolContract["redeem(uint256,uint256)"](amount.value, minRedeemAmount.value, {
+      gasLimit,
+    });
   }
 
   async unstake(vault: Address, amount: ScaledNumber): Promise<ContractTransaction> {
     const vaultContract = StakerVaultFactory.connect(vault, this._provider);
-    return vaultContract.unstake(amount.value);
+    const gasEstimate = await vaultContract.estimateGas.unstake(amount.value);
+    const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
+    return vaultContract.unstake(amount.value, { gasLimit });
   }
 
   async getBalance(address: string, account?: string): Promise<ScaledNumber> {
