@@ -21,6 +21,7 @@ import ContentSection from "../../components/ContentSection";
 import LiveHelp from "../../components/LiveHelp";
 import { Optional } from "../../lib/types";
 import BetaSnackbar from "../../components/BetaSnackbar";
+import { ACTIONS_LIVE } from "../../lib/constants";
 
 const StyledPoolPage = styled.div`
   position: relative;
@@ -132,7 +133,7 @@ const PoolPage = (): Optional<JSX.Element> => {
           />
           <PoolInformation pool={pool} />
           <LiveHelp />
-          {usersPoolLpUnlocked && !usersPoolLpUnlocked.isZero() && (
+          {ACTIONS_LIVE && usersPoolLpUnlocked && !usersPoolLpUnlocked.isZero() && (
             <ButtonContainer>
               <Button
                 id="create-topup-button"
