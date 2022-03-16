@@ -6,13 +6,12 @@ import styled from "styled-components";
 import { useWeb3React } from "@web3-react/core";
 
 import { AppDispatch } from "../app/store";
-import { clearError, selectError, setUnsupportedNetwork } from "../state/errorSlice";
+import { clearError, selectError } from "../state/errorSlice";
 import { GradientLink } from "../styles/GradientText";
 import { Paragraph } from "../styles/Headers";
 import Button from "./Button";
 import Popup from "./Popup";
 import { changeNetwork } from "../lib/web3";
-import { supportedChainIds } from "../app/web3";
 
 const Text = styled(Paragraph)`
   width: 100%;
