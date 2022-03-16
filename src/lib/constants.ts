@@ -18,6 +18,7 @@ export const MILLISECONDS_PER_YEAR = 365 * 24 * 60 * 60 * 1000;
 export const DATE_FORMAT = "mmm-d-yyyy";
 export const TOPUP_ACTION_ROUTE = "/actions/register/topup";
 export const DEPOSIT_SLIPPAGE = 0.94; // 6%
+export const GAS_BUFFER = 11; // This is 10%, we use it as BigNumber.mul(GAS_BUFFER).div(10)
 
 export const chainIds: Record<string, string> = {
   "1": "Mainnet",
