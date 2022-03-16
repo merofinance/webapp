@@ -469,12 +469,7 @@ export class Web3Backd implements Backd {
     const minTokenAmount = amount
       .div(pool.exchangeRate)
       .mul(ScaledNumber.fromUnscaled(DEPOSIT_SLIPPAGE, amount.decimals));
-    return poolContract["depositFor(address,uint256,uint256)"](
-      await this.currentAccount(),
-      amount.value,
-      minTokenAmount.value,
-      { value }
-    );
+    return poolContract["deposit(uint256,uint256)"](amount.value, minTokenAmount.value, { value });
   }
 
   async withdraw(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction> {
