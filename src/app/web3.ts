@@ -18,6 +18,7 @@ export const injectedConnector = new InjectedConnector({
 });
 
 export const walletConnectConnector = new WalletConnectConnector({
+  supportedChainIds,
   rpc: {
     1: `https://mainnet.infura.io/v3/${INFURA_ID}`,
     3: `https://ropsten.infura.io/v3/${INFURA_ID}`,
