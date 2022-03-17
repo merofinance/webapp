@@ -112,6 +112,7 @@ const ENSAvatar = styled.img`
   height: 25px;
   width: 25px;
   border-radius: 100px;
+  background: var(--sub);
 `;
 
 interface LoadingProps {
