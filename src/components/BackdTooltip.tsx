@@ -16,13 +16,13 @@ const Icon = styled.img`
   position: relative;
   cursor: pointer;
 
-  margin-left: 0.9rem;
-  margin-top: 0.2rem;
+  margin-left: 0.8rem;
+  margin-top: 1px;
   height: 1.2rem;
   @media (max-width: 600px) {
-    margin-top: 2.2px;
-    margin-left: 0.6rem;
-    height: 1rem;
+    margin-top: 2px;
+    margin-left: 0.5rem;
+    height: 0.9rem;
   }
 `;
 
