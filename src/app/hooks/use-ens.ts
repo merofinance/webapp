@@ -9,6 +9,7 @@ const useENS = (): { ensName: Optional<string>; ensAvatar: Optional<string> } =>
   const [ensAvatar, setENSAvatar] = useState<Optional<string>>(null);
 
   const resolveENS = async (): Promise<void> => {
+    setENSAvatar(null);
     if (!account) return;
     const provider = ethers.providers.getDefaultProvider();
     const ensName = await provider.lookupAddress(account);
@@ -16,9 +17,9 @@ const useENS = (): { ensName: Optional<string>; ensAvatar: Optional<string> } =>
     if (!ensName) return;
     const resolver = await provider.getResolver(ensName);
     if (!resolver) return;
-    const ensAvatar = await resolver.getAvatar();
-    if (!ensAvatar) return;
-    setENSAvatar(ensAvatar.url);
+    const avatar = await resolver.getAvatar();
+    if (!avatar) return;
+    setENSAvatar(avatar.url);
   };
 
   useEffect(() => {

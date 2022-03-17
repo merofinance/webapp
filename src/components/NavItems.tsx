@@ -25,6 +25,9 @@ const StyledNavItems = styled.ul`
 
   > div {
     margin: 0 3rem;
+    @media (max-width: 850px) {
+      margin: 0 2.3rem;
+    }
     @media (max-width: 600px) {
       margin: 0 1.5rem;
     }
