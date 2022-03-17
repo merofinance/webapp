@@ -12,12 +12,20 @@ import { pendingTransactionsCount } from "../state/transactionsSlice";
 import useWindowPosition from "../app/hooks/use-window-position";
 import useENS from "../app/hooks/use-ens";
 
+interface ConnectorProps {
+  connected: boolean;
+}
+
 const StyledConnectorDesktop = styled.div`
   display: flex;
   align-items: center;
 
   @media (max-width: 715px) {
     display: none;
+  }
+
+  @media only percy {
+    opacity: ${(props: ConnectorProps) => (props.connected ? 0 : 1)};
   }
 `;
 
@@ -72,10 +80,6 @@ const Button = styled.button`
     div {
       background-position: right center;
     }
-  }
-
-  @media only percy {
-    opacity: ${(props: ButtonProps) => (props.connected ? 0 : 1)};
   }
 `;
 
@@ -132,7 +136,7 @@ const ConnectorDesktop = ({ connect }: Props): JSX.Element => {
   const { ensName, ensAvatar } = useENS();
 
   return (
-    <StyledConnectorDesktop>
+    <StyledConnectorDesktop connected={active}>
       {chainId && chainId !== 1 && chainIds[chainId] && (
         <Network id="network-name">{chainIds[chainId]}</Network>
       )}
