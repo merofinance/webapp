@@ -23,7 +23,7 @@ import { UnsupportedNetwork } from "../app/errors";
 import { getPrices as getPricesFromBinance } from "./binance";
 import { getPrices as getPricesFromCoingecko } from "./coingecko";
 import {
-  DEPOSIT_SLIPPAGE,
+  SLIPPAGE_TOLERANCE,
   ETH_DECIMALS,
   ETH_DUMMY_ADDRESS,
   GAS_BUFFER,
@@ -81,7 +81,11 @@ export interface Backd {
   getPrices(symbol: string[]): Promise<Prices>;
   approve(token: Token, spender: Address, amount: ScaledNumber): Promise<ContractTransaction>;
   deposit(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction>;
-  withdraw(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction>;
+  withdraw(
+    pool: Pool,
+    amount: ScaledNumber,
+    withdrawalFee: ScaledNumber
+  ): Promise<ContractTransaction>;
   unstake(vaultAddress: Address, amount: ScaledNumber): Promise<ContractTransaction>;
 
   listSupportedProtocols(): Promise<string[]>;
@@ -471,7 +475,7 @@ export class Web3Backd implements Backd {
     const value = pool.underlying.address === ETH_DUMMY_ADDRESS ? amount.value : 0;
     const minTokenAmount = amount
       .div(pool.exchangeRate)
-      .mul(ScaledNumber.fromUnscaled(DEPOSIT_SLIPPAGE, amount.decimals));
+      .mul(ScaledNumber.fromUnscaled(SLIPPAGE_TOLERANCE, amount.decimals));
     const gasEstimate = await poolContract.estimateGas["deposit(uint256,uint256)"](
       amount.value,
       minTokenAmount.value,
@@ -486,11 +490,17 @@ export class Web3Backd implements Backd {
     });
   }
 
-  async withdraw(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction> {
+  async withdraw(
+    pool: Pool,
+    amount: ScaledNumber,
+    withdrawalFee: ScaledNumber
+  ): Promise<ContractTransaction> {
     const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
     const minRedeemAmount = amount
       .mul(pool.exchangeRate)
-      .mul(ScaledNumber.fromUnscaled(DEPOSIT_SLIPPAGE, amount.decimals));
+      .mul(ScaledNumber.fromUnscaled(1).sub(withdrawalFee))
+      .mul(ScaledNumber.fromUnscaled(SLIPPAGE_TOLERANCE, amount.decimals));
+    console.log(minRedeemAmount.toCryptoString());
     const gasEstimate = await poolContract.estimateGas["redeem(uint256,uint256)"](
       amount.value,
       minRedeemAmount.value
