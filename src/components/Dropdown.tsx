@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import arrow from "../assets/ui/accordion-chevron.svg";
 
@@ -48,9 +48,8 @@ const ExitEvent = styled.button`
   position: fixed;
   top: 0;
   left: 0;
-  width: 200vw;
-  height: 200vh;
-  transform: translate(-50%, -50%);
+  width: 99vw;
+  height: 99vh;
 `;
 
 interface OptionsProps {
@@ -102,7 +101,25 @@ interface Props {
 }
 
 const Dropdown = ({ id, label, options }: Props): JSX.Element => {
+  const exitRef = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
+  const [translation, setTranslation] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (!open) {
+      setTranslation({ x: 0, y: 0 });
+      return;
+    }
+    if (!exitRef || !exitRef.current || translation.x !== 0) return;
+    setTranslation({
+      x: exitRef.current.getBoundingClientRect().x,
+      y: exitRef.current.getBoundingClientRect().y,
+    });
+
+    return () => {
+      setTranslation({ x: 0, y: 0 });
+    };
+  }, [open]);
 
   return (
     <StyledDropdown>
@@ -112,7 +129,14 @@ const Dropdown = ({ id, label, options }: Props): JSX.Element => {
           <Arrow open={open} src={arrow} alt="Dropdown chevron" />
         </ArrowContainer>
       </DropdownButton>
-      {open && <ExitEvent id={`${id}-dropdown-exit-event`} onClick={() => setOpen(false)} />}
+      {open && (
+        <ExitEvent
+          ref={exitRef}
+          id={`${id}-dropdown-exit-event`}
+          onClick={() => setOpen(false)}
+          style={{ transform: `translate(-${translation.x}px, -${translation.y}px)` }}
+        />
+      )}
       <OptionsContainer show={open}>
         <Options id={`${id}-dropdown-options`}>
           {options.map((option: DropdownOptionType) => (
