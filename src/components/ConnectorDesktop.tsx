@@ -73,11 +73,11 @@ const Button = styled.button`
       background-position: right center;
     }
   }
-`;
 
-interface TextProps {
-  connected: boolean;
-}
+  @media only percy {
+    opacity: ${(props: ButtonProps) => (props.connected ? 0 : 1)};
+  }
+`;
 
 const ConnectorText = styled.div`
   display: flex;
@@ -96,10 +96,6 @@ const ConnectorText = styled.div`
   -webkit-text-fill-color: transparent;
   transition: background-position 0.5s;
   background-size: 200% auto;
-
-  @media only percy {
-    opacity: ${(props: TextProps) => (props.connected ? 0 : 1)};
-  }
 `;
 
 const IndicatorContainer = styled.div`
@@ -151,7 +147,7 @@ const ConnectorDesktop = ({ connect }: Props): JSX.Element => {
             <PulsingDot success={chainId === 1} />
           </IndicatorContainer>
         )}
-        <ConnectorText id="connector-address" connected={active}>
+        <ConnectorText id="connector-address">
           {ensAvatar && <ENSAvatar src={ensAvatar} />}
           {account ? ensName || shortenAddress(account, 8) : t("walletConnect.connectWallet")}
         </ConnectorText>
