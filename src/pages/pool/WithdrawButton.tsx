@@ -6,7 +6,7 @@ import { ScaledNumber } from "scaled-number";
 
 import Button from "../../components/Button";
 import { Pool } from "../../lib";
-import { unstake, withdraw } from "../../state/userSlice";
+import { selectWithdrawalFee, unstake, withdraw } from "../../state/userSlice";
 import { selectUsersPoolLpHeld, selectUsersPoolLpStaked } from "../../state/valueSelectors";
 import { useBackd } from "../../app/hooks/use-backd";
 import { AppDispatch } from "../../app/store";
@@ -35,6 +35,7 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
   const usersPoolLpStaked = useSelector(selectUsersPoolLpStaked(pool));
   const loading = useSelector(hasPendingTransaction("Withdraw"));
   const usersPoolLpHeld = useSelector(selectUsersPoolLpHeld(pool));
+  const withdrawalFee = useSelector(selectWithdrawalFee(pool));
 
   const [confirming, setConfirming] = useState(false);
 
@@ -49,8 +50,8 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
   }, [loading]);
 
   const executeWithdraw = (amount: ScaledNumber) => {
-    if (!backd || loading || !pool) return;
-    dispatch(withdraw({ backd, pool, amount }));
+    if (!backd || loading || !pool || !withdrawalFee) return;
+    dispatch(withdraw({ backd, pool, amount, withdrawalFee }));
   };
 
   const executeUnstake = () => {
