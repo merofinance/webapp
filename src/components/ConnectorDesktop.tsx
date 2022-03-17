@@ -84,7 +84,6 @@ const ConnectorText = styled.div`
   align-items: center;
   font-weight: 500;
   font-size: 1.5rem;
-  line-height: 1.4rem;
   letter-spacing: 0.46px;
   background: linear-gradient(
     to right,
