@@ -43,6 +43,10 @@ const TvlValue = styled(GradientText)`
   @media (max-width: 600px) {
     font-size: 3rem;
   }
+
+  @media only percy {
+    opacity: 0;
+  }
 `;
 
 const LoaderContainer = styled.div`
