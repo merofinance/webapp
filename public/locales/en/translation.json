@@ -353,8 +353,12 @@
         }
       },
       "withdrawalFees": {
-        "header": "Withdrawal Fee",
+        "header": "Withdrawal fee",
         "tooltip": "Withdrawal fees start at {{max}} and decrease linearly over time until they reach {{min}}. This takes {{days}} days"
+      },
+      "yourShare": {
+        "header": "Your pool share",
+        "tooltip": "The percentage of the pools total assets that you own"
       }
     },
     "statistics": {

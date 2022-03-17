@@ -9,6 +9,7 @@ import { Optional } from "../../lib/types";
 import etherscan from "../../assets/ui/etherscan.svg";
 import memo from "../../assets/ui/memo.svg";
 import { getEtherscanAddressLink } from "../../lib/web3";
+import { selectUsersPoolUnderlyingEverywhere } from "../../state/valueSelectors";
 
 interface Props {
   pool: Optional<Pool>;
@@ -17,6 +18,7 @@ interface Props {
 const PoolInformation = ({ pool }: Props): JSX.Element => {
   const { t } = useTranslation();
   const price = useSelector(selectPrice(pool));
+  const usersPoolUnderlyingEverywhere = useSelector(selectUsersPoolUnderlyingEverywhere(pool));
   const { chainId } = useWeb3React();
   const maxWithdrawalFee =
     pool && pool.maxWithdrawalFee.toPercent ? pool.maxWithdrawalFee.toPercent() : null;
@@ -59,6 +61,14 @@ const PoolInformation = ({ pool }: Props): JSX.Element => {
             days: days || "---",
           }),
           value: pool ? `${maxWithdrawalFee} → ${minWithdrawalFee}` : null,
+        },
+        {
+          label: t("pool.information.yourShare.header"),
+          tooltip: t("pool.information.yourShare.tooltip"),
+          value:
+            pool && usersPoolUnderlyingEverywhere
+              ? usersPoolUnderlyingEverywhere.div(pool.totalAssets).toPercent()
+              : null,
         },
         {
           label: t("pool.information.strategy.header"),
