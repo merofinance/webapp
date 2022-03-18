@@ -20,6 +20,8 @@ export const supportedChainIds = [
   4689,
   10000,
   333999,
+  1313161554,
+  1666600000,
 ];
 
 export const injectedConnector = new InjectedConnector({
