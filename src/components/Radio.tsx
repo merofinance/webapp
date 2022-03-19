@@ -30,6 +30,7 @@ const RadioOption = styled.button`
   border-radius: 14px;
 
   cursor: ${(props: OptionProps) => (props.disabled ? "auto" : "pointer")};
+  opacity: ${(props: OptionProps) => (props.disabled ? "0.5" : "1")};
   background-color: ${(props: OptionProps) =>
     !props.gradient ? "none" : props.active ? "rgba(197, 50, 249, 0.1)" : "transparent"};
   border: solid 1px
@@ -111,30 +112,33 @@ interface Props {
   active: string;
   setOption: (value: string) => void;
   gradient?: boolean;
+  hideDisabled?: boolean;
 }
 
-const Radio = ({ options, active, setOption, gradient }: Props): JSX.Element => {
+const Radio = ({ options, active, setOption, gradient, hideDisabled }: Props): JSX.Element => {
   return (
     <StyledRadio>
       <ActiveIndicator
         activeIndex={options.map((option: RadioOptionType) => option.value).indexOf(active)}
         gradient={gradient}
       />
-      {options.map((option: RadioOptionType) => (
-        <HoverFeedback key={option.label} text={option.disabledText}>
-          <RadioOption
-            id={`radio-option-${option.value}`}
-            onClick={() => setOption(option.value)}
-            active={option.value === active}
-            disabled={!!option.disabledText}
-            gradient={gradient}
-          >
-            <RadioText active={option.value === active} gradient={gradient}>
-              {option.label}
-            </RadioText>
-          </RadioOption>
-        </HoverFeedback>
-      ))}
+      {options
+        .filter((option: RadioOptionType) => (!hideDisabled ? true : !option.disabledText))
+        .map((option: RadioOptionType) => (
+          <HoverFeedback key={option.label} text={option.disabledText}>
+            <RadioOption
+              id={`radio-option-${option.value}`}
+              onClick={() => setOption(option.value)}
+              active={option.value === active}
+              disabled={!!option.disabledText}
+              gradient={gradient}
+            >
+              <RadioText active={option.value === active} gradient={gradient}>
+                {option.label}
+              </RadioText>
+            </RadioOption>
+          </HoverFeedback>
+        ))}
     </StyledRadio>
   );
 };
