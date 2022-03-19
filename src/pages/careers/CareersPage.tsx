@@ -29,6 +29,7 @@ const Positions = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 2rem;
+  margin-bottom: 10rem;
 `;
 
 const HeaderRow = styled.div`
