@@ -133,6 +133,9 @@ const CareersPage = (): JSX.Element => {
           .map((career: CareerType, index: number) => (
             <Career key={index} career={career} />
           ))}
+        <Paragraph style={{ marginTop: "5rem" }}>
+          Don't see a role for you but would like to apply? Drop us an email at: jobs@backd.fund
+        </Paragraph>
       </Positions>
     </StyledCareersPage>
   );
