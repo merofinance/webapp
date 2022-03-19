@@ -42,6 +42,9 @@ const HeaderRow = styled.div`
     div:nth-child(2) {
       display: none;
     }
+    div:nth-child(4) {
+      display: none;
+    }
   }
 `;
 
@@ -61,6 +64,10 @@ const PositionHeader = styled.div`
 
 const ChevronHeader = styled.div`
   width: 2.4rem;
+
+  @media (max-width: 600px) {
+    width: 0.4rem;
+  }
 `;
 
 const CareersPage = (): JSX.Element => {

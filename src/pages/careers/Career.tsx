@@ -30,6 +30,9 @@ const StyledCareer = styled.button`
     div:nth-child(2) {
       display: none;
     }
+    div:nth-child(4) {
+      display: none;
+    }
   }
 `;
 
