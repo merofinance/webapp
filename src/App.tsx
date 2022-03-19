@@ -20,6 +20,8 @@ import TopupLoan from "./pages/actions/register/topup/TopupLoan";
 import Layout from "./Layout";
 import BkdPage from "./pages/bkd/BkdPage";
 import { STAKING_LIVE } from "./lib/constants";
+import CareersPage from "./pages/careers/CareersPage";
+import CareerPage from "./pages/careers/CareerPage";
 
 const App = (): JSX.Element => {
   return (
@@ -49,6 +51,8 @@ const App = (): JSX.Element => {
             {STAKING_LIVE && <Route path="stake" element={<StakePage />} />}
             {STAKING_LIVE && <Route path="bkd" element={<BkdPage />} />}
             <Route path="litepaper" element={<LitepaperPage />} />
+            <Route path="careers" element={<CareersPage />} />
+            <Route path="career/:careerId" element={<CareerPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>
