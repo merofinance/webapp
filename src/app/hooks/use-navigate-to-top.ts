@@ -9,7 +9,7 @@ export const useNavigateToTop = (): ((to: string) => void) => {
   const navigate = useNavigate();
 
   const navigateToTop = (to: string) => {
-    navigate(to, { replace: true });
+    navigate(to);
     window.scrollTo(0, 0);
   };
 
