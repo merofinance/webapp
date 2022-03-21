@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
@@ -15,6 +14,7 @@ import {
 import { selectPrice } from "../../state/poolsListSlice";
 import Loader from "../../components/Loader";
 import { useDevice } from "../../app/hooks/use-device";
+import { useNavigateToTop } from "../../app/hooks/use-navigate-to-top";
 
 const RowContainer = styled.div`
   width: 100%;
@@ -157,7 +157,7 @@ interface Props {
 
 const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  const navigate = useNavigateToTop();
   const { isDesktop } = useDevice();
 
   const price = useSelector(selectPrice(pool));

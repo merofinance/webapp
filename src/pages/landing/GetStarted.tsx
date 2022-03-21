@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 
 import { Header2 } from "../../styles/Headers";
 import Button from "../../components/Button";
+import { useNavigateToTop } from "../../app/hooks/use-navigate-to-top";
 
 const StyledGetStarted = styled.div`
   width: 100%;
@@ -59,7 +59,7 @@ const Body = styled.p`
 
 const GetStarted = (): JSX.Element => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  const navigate = useNavigateToTop();
 
   return (
     <StyledGetStarted>

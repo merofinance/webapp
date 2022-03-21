@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { useWeb3React } from "@web3-react/core";
 
@@ -12,6 +12,7 @@ import { Paragraph } from "../styles/Headers";
 import Button from "./Button";
 import Popup from "./Popup";
 import { changeNetwork } from "../lib/web3";
+import { useNavigateToTop } from "../app/hooks/use-navigate-to-top";
 
 const Text = styled(Paragraph)`
   width: 100%;
@@ -39,7 +40,7 @@ const ErrorAlert = (): JSX.Element => {
   const error = useSelector(selectError);
   const dispatch: AppDispatch = useDispatch();
   const location = useLocation();
-  const navigate = useNavigate();
+  const navigate = useNavigateToTop();
 
   const handleClose = () => {
     dispatch(clearError());

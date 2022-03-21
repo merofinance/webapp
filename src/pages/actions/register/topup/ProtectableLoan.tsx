@@ -2,13 +2,13 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useWeb3React } from "@web3-react/core";
-import { useNavigate } from "react-router-dom";
 
 import Loader from "../../../../components/Loader";
 import { selectEthPrice } from "../../../../state/poolsListSlice";
 import Button from "../../../../components/Button";
 import { Loan } from "../../../../lib/types";
 import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
+import { useNavigateToTop } from "../../../../app/hooks/use-navigate-to-top";
 
 const StyledProtectableLoan = styled.div`
   width: 100%;
@@ -74,7 +74,7 @@ interface Props {
 const ProtectableLoan = ({ loan }: Props): JSX.Element => {
   const { t } = useTranslation();
   const { account } = useWeb3React();
-  const navigate = useNavigate();
+  const navigate = useNavigateToTop();
   const ethPrice = useSelector(selectEthPrice);
 
   return (

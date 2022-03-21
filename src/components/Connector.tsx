@@ -1,7 +1,8 @@
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useNavigateToTop } from "../app/hooks/use-navigate-to-top";
 import { useWeb3Updated } from "../app/hooks/use-web3-updated";
 import { AppDispatch } from "../app/store";
 import { injectedConnector } from "../app/web3";
@@ -20,7 +21,7 @@ const Connector = (): JSX.Element => {
   const connecting = useSelector(isConnecting);
   const [showingDetails, setShowingDetails] = useState(false);
   const [wallet, setWallet] = useState("walletConnect.wallets.metaMask");
-  const navigate = useNavigate();
+  const navigate = useNavigateToTop();
   const dispatch: AppDispatch = useDispatch();
 
   const inProtocolPage = PROTOCOL_PAGES.includes(location.pathname.split("/")[1]);

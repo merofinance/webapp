@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { useNavigateToTop } from "../../app/hooks/use-navigate-to-top";
 import Button from "../../components/Button";
 import Popup from "../../components/Popup";
 import { Optional } from "../../lib/types";
@@ -61,7 +62,7 @@ const Item = styled.li`
 
 const CareerPage = (): Optional<JSX.Element> => {
   const { careerId } = useParams<"careerId">();
-  const navigate = useNavigate();
+  const navigate = useNavigateToTop();
 
   const [applying, setApplying] = useState(false);
 

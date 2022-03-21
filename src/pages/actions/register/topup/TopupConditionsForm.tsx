@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import * as yup from "yup";
 import { FormikErrors, useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,6 +30,7 @@ import TopupInput from "./TopupInput";
 import TopupConfirmation from "./TopupConfirmation";
 import { selectEthBalance } from "../../../../state/userSlice";
 import { selectEstimatedGasUsage } from "../../../../state/positionsSlice";
+import { useNavigateToTop } from "../../../../app/hooks/use-navigate-to-top";
 
 export interface FormType {
   threshold: string;
@@ -123,7 +124,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const backd = useBackd();
-  const navigate = useNavigate();
+  const navigate = useNavigateToTop();
   const { isMobile } = useDevice();
   const { address, protocol, poolName } = useParams<"address" | "protocol" | "poolName">();
 

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
 import { useSelector } from "react-redux";
 
@@ -15,6 +14,7 @@ import { Loan, Optional, Position } from "../../../../lib/types";
 import { selectPositions } from "../../../../state/positionsSlice";
 import { RowOptionType } from "../../../../components/RowOption";
 import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
+import { useNavigateToTop } from "../../../../app/hooks/use-navigate-to-top";
 
 const Container = styled.div`
   position: relative;
@@ -55,7 +55,7 @@ const ButtonContainer = styled.div`
 
 const TopupLoan = (): JSX.Element => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  const navigate = useNavigateToTop();
   const { account } = useWeb3React();
   const loans = useSelector(selectLoans(account));
   const positions = useSelector(selectPositions);

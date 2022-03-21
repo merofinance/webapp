@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 
 import ContentSection from "../../../components/ContentSection";
 import Button from "../../../components/Button";
 import icon from "../../../assets/logo/white-logo.svg";
 import RowSelector from "../../../components/RowSelector";
 import zap from "../../../assets/benefits/zap.svg";
+import { useNavigateToTop } from "../../../app/hooks/use-navigate-to-top";
 
 const Header = styled.div`
   font-weight: 600;
@@ -84,7 +84,7 @@ const ButtonContainer = styled.div`
 
 const ActionRegisterIndex = (): JSX.Element => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  const navigate = useNavigateToTop();
   const [actionOption, setActionOption] = useState("");
 
   return (

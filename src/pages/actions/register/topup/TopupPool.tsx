@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import ContentSection from "../../../../components/ContentSection";
@@ -18,6 +18,7 @@ import {
   selectUsersPoolLpUnlocked,
   selectUsersTotalUsdUnlocked,
 } from "../../../../state/valueSelectors";
+import { useNavigateToTop } from "../../../../app/hooks/use-navigate-to-top";
 
 const Container = styled.div`
   position: relative;
@@ -54,7 +55,7 @@ const ButtonContainer = styled.div`
 const TopupPool = (): JSX.Element => {
   const { t } = useTranslation();
   const { address, protocol } = useParams<"address" | "protocol">();
-  const navigate = useNavigate();
+  const navigate = useNavigateToTop();
   const pools = useSelector(selectPools);
   const usersTotalUsdUnlocked = useSelector(selectUsersTotalUsdUnlocked);
   const [poolName, setPoolName] = useState("");

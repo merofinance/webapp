@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useNavigateToTop } from "../../app/hooks/use-navigate-to-top";
 import chevron from "../../assets/ui/chevron.svg";
 import { CareerType } from "./careers";
 
@@ -87,7 +87,7 @@ interface Props {
 }
 
 const Career = ({ career }: Props): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = useNavigateToTop();
 
   return (
     <StyledCareer onClick={() => navigate(`/career/${career.id}`)}>

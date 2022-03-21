@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 import { Header1, Header3 } from "../../styles/Headers";
 import { GradientText } from "../../styles/GradientText";
 import { selectProtocolTotalUsdEverywhere } from "../../state/valueSelectors";
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
+import { useNavigateToTop } from "../../app/hooks/use-navigate-to-top";
 
 const StyledHero = styled.div`
   width: 100%;
@@ -62,7 +62,7 @@ const ButtonContainer = styled.div`
 
 const Hero = (): JSX.Element => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  const navigate = useNavigateToTop();
   const totalDeposits = useSelector(selectProtocolTotalUsdEverywhere);
 
   return (
