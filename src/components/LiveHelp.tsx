@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import AccordionChevron from "./AccordionChevron";
 import logo from "../assets/logo/logo.svg";
@@ -20,6 +20,7 @@ import Button from "./Button";
 import { selectPositions } from "../state/positionsSlice";
 import { Optional, Position } from "../lib/types";
 import { GradientLink } from "../styles/GradientText";
+import { useNavigateToTop } from "../app/hooks/use-navigate-to-top";
 
 const Container = styled.div`
   position: relative;
@@ -193,7 +194,7 @@ const BackdHelper = styled.img`
 const LiveHelp = (): Optional<JSX.Element> => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigate = useNavigateToTop();
   const location = useLocation();
   const suggestions = useSelector(selectSuggestions);
   const implement = useSelector(selectActiveSuggestion);

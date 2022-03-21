@@ -1,13 +1,13 @@
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 import { ScaledNumber } from "scaled-number";
 
 import { useDevice } from "../../app/hooks/use-device";
+import { useNavigateToTop } from "../../app/hooks/use-navigate-to-top";
 import SummaryStatistics from "../../components/SummaryStatistics";
 
 const BkdSummary = (): JSX.Element => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  const navigate = useNavigateToTop();
   const { isMobile } = useDevice();
   const claimableFees = ScaledNumber.fromUnscaled(1243.34);
   const startApr = ScaledNumber.fromUnscaled(0.2345);

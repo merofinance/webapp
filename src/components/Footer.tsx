@@ -22,6 +22,11 @@ const linkLists: LinkListType[] = [
     links: [
       {
         internal: false,
+        label: "footer.community.links.careers",
+        link: "/careers",
+      },
+      {
+        internal: false,
         label: "footer.community.links.discord",
         link: "https://discord.gg/jpGvaFV3Rv",
       },

@@ -1,11 +1,11 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 
 import { Header2, Header4, Header5 } from "../../styles/Headers";
 import Radio, { RadioOptionType } from "../../components/Radio";
 import Button from "../../components/Button";
+import { useNavigateToTop } from "../../app/hooks/use-navigate-to-top";
 
 interface CardType {
   number: string;
@@ -157,7 +157,7 @@ const ButtonContainer = styled.div`
 
 const HowItWorks = (): JSX.Element => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  const navigate = useNavigateToTop();
   const [category, setCategory] = useState("protect");
 
   const categories: RadioOptionType[] = [

@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import Loader from "../../../../components/Loader";
 import { selectLoans } from "../../../../state/lendingSlice";
@@ -10,6 +10,7 @@ import Asset from "../../../../components/Asset";
 import { GradientText } from "../../../../styles/GradientText";
 import { Loan } from "../../../../lib/types";
 import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
+import { useNavigateToTop } from "../../../../app/hooks/use-navigate-to-top";
 
 const StyledActionSummary = styled.div`
   width: 100%;
@@ -86,7 +87,7 @@ const ChangePoolText = styled(GradientText)`
 const ActionSummary = (): JSX.Element => {
   const { t } = useTranslation();
   const { address, protocol, poolName } = useParams<"address" | "protocol" | "poolName">();
-  const navigate = useNavigate();
+  const navigate = useNavigateToTop();
   const ethPrice = useSelector(selectEthPrice);
   const pool = useSelector(selectPool(poolName));
   const loans = useSelector(selectLoans(address));

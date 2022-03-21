@@ -1,13 +1,13 @@
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 
 import ContentSection from "../../components/ContentSection";
 import { Position } from "../../lib/types";
 import { selectPositions } from "../../state/positionsSlice";
 import Button from "../../components/Button";
 import RegisteredAction from "./RegisteredAction";
+import { useNavigateToTop } from "../../app/hooks/use-navigate-to-top";
 
 const Empty = styled.div`
   letter-spacing: 0.46px;
@@ -34,7 +34,7 @@ const ButtonContainer = styled.div`
 const RegisteredActions = (): JSX.Element => {
   const { t } = useTranslation();
   const positions = useSelector(selectPositions) || [];
-  const navigate = useNavigate();
+  const navigate = useNavigateToTop();
 
   const hasPosition = positions.length > 0;
 

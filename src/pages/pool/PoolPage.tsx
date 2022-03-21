@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
@@ -22,6 +22,7 @@ import LiveHelp from "../../components/LiveHelp";
 import { Optional } from "../../lib/types";
 import BetaSnackbar from "../../components/BetaSnackbar";
 import { ACTIONS_LIVE } from "../../lib/constants";
+import { useNavigateToTop } from "../../app/hooks/use-navigate-to-top";
 
 const StyledPoolPage = styled.div`
   position: relative;
@@ -73,7 +74,7 @@ const ButtonContainer = styled.div`
 
 const PoolPage = (): Optional<JSX.Element> => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  const navigate = useNavigateToTop();
   const { poolName } = useParams<"poolName">();
   const backd = useBackd();
   const dispatch = useDispatch();
