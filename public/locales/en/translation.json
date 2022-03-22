@@ -59,7 +59,7 @@
     },
     "earnYield": {
       "header": "Earn Yield",
-      "description": "Earn interest on liquidity via yield-farming strategies."
+      "description": "Earn interest via yield-farming strategies."
     },
     "feeShare": {
       "header": "Fee Share",
