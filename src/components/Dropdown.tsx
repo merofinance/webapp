@@ -44,12 +44,17 @@ const Arrow = styled.img`
   transition: 0.3s transform;
 `;
 
+interface ExitEventProps {
+  open: boolean;
+}
+
 const ExitEvent = styled.button`
   position: fixed;
   top: 0;
   left: 0;
   width: 99vw;
   height: 99vh;
+  display: ${(props: ExitEventProps) => (props.open ? "flex" : "none")};
 `;
 
 interface OptionsProps {
@@ -106,10 +111,6 @@ const Dropdown = ({ id, label, options }: Props): JSX.Element => {
   const [translation, setTranslation] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    if (!open) {
-      setTranslation({ x: 0, y: 0 });
-      return;
-    }
     if (!exitRef || !exitRef.current || translation.x !== 0) return;
     setTranslation({
       x: exitRef.current.getBoundingClientRect().x,
@@ -129,14 +130,13 @@ const Dropdown = ({ id, label, options }: Props): JSX.Element => {
           <Arrow open={open} src={arrow} alt="Dropdown chevron" />
         </ArrowContainer>
       </DropdownButton>
-      {open && (
-        <ExitEvent
-          ref={exitRef}
-          id={`${id}-dropdown-exit-event`}
-          onClick={() => setOpen(false)}
-          style={{ transform: `translate(-${translation.x}px, -${translation.y}px)` }}
-        />
-      )}
+      <ExitEvent
+        open={open}
+        ref={exitRef}
+        id={`${id}-dropdown-exit-event`}
+        onClick={() => setOpen(false)}
+        style={{ transform: `translate(-${translation.x}px, -${translation.y}px)` }}
+      />
       <OptionsContainer show={open}>
         <Options id={`${id}-dropdown-options`}>
           {options.map((option: DropdownOptionType) => (
