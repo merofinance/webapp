@@ -1,11 +1,10 @@
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
-import { useDevice } from "../../app/hooks/use-device";
+// import { useDevice } from "../../app/hooks/use-device";
 import Accordion from "../../components/Accordion";
 import AccordionChevron from "../../components/AccordionChevron";
-import Asset from "../../components/Asset";
-import Button from "../../components/Button";
+// import Button from "../../components/Button";
 import { GradientText } from "../../styles/GradientText";
 import ClaimRow from "./ClaimRow";
 
@@ -31,15 +30,31 @@ const HeaderButton = styled.button`
   cursor: pointer;
 `;
 
-const AssetContainer = styled.div`
+const LabelContainer = styled.div`
   flex: 1;
+  display: flex;
+  align-items: center;
 `;
 
-const ClaimableContainer = styled.div`
-  flex: 1;
+const Icon = styled.img`
+  height: 100%;
 `;
 
-const Claimable = styled(GradientText)`
+const Label = styled.div`
+  font-weight: 700;
+  letter-spacing: 0.25px;
+  white-space: nowrap;
+  margin-left: 1.7rem;
+
+  font-size: 2.4rem;
+  @media (max-width: 600px) {
+    font-size: 1.4rem;
+    font-weight: 400;
+  }
+`;
+
+const Claimable = styled.div`
+  flex: 1;
   font-weight: 700;
   line-height: 2.7rem;
   letter-spacing: 0.15px;
@@ -50,8 +65,11 @@ const Claimable = styled(GradientText)`
   }
 `;
 
-const Apr = styled.div`
+const ApyContainer = styled.div`
   flex: 1;
+`;
+
+const Apr = styled(GradientText)`
   font-weight: 900;
   font-size: 1.8rem;
   line-height: 2rem;
@@ -63,7 +81,6 @@ const Apr = styled.div`
 `;
 
 const EndContainer = styled.div`
-  flex: 1.8;
   display: flex;
   justify-content: flex-end;
 
@@ -99,37 +116,32 @@ const Breakdown = styled.div`
 `;
 
 interface Props {
+  icon: string;
+  label: string;
   open: boolean;
   toggle: () => void;
   rows: string[];
 }
 
-const ClaimAccordion = ({ open, toggle, rows }: Props): JSX.Element => {
+const ClaimAccordion = ({ icon, label, open, toggle, rows }: Props): JSX.Element => {
   const { t } = useTranslation();
-  const { isMobile, isDesktop } = useDevice();
+  // const { isMobile, isDesktop } = useDevice();
 
   return (
     <Accordion
       header={
         <Header>
           <HeaderButton onClick={toggle} />
-          <AssetContainer>
-            <Asset
-              token={{
-                address: "skdfj",
-                name: "DAI",
-                symbol: "DAI",
-                decimals: 16,
-              }}
-              large
-            />
-          </AssetContainer>
-          <ClaimableContainer>
-            <Claimable>$430.00</Claimable>
-          </ClaimableContainer>
-          <Apr>5.2%</Apr>
+          <LabelContainer>
+            <Icon src={icon} alt={`${label} icon`} />
+            <Label>{label}</Label>
+          </LabelContainer>
+          <Claimable>$430.00</Claimable>
+          <ApyContainer>
+            <Apr>5.2%</Apr>
+          </ApyContainer>
           <EndContainer>
-            {isDesktop && (
+            {/* {isDesktop && (
               <Button background="#1c0c37" width="12rem" small={isMobile} primary={isMobile}>
                 {t("claim.buttons.claimAll")}
               </Button>
@@ -138,7 +150,7 @@ const ClaimAccordion = ({ open, toggle, rows }: Props): JSX.Element => {
               <Button primary width="18rem">
                 {t("claim.buttons.claimAllAndStake")}
               </Button>
-            )}
+            )} */}
             <AccordionChevron open={open} />
           </EndContainer>
         </Header>

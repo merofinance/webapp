@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { useDevice } from "../../app/hooks/use-device";
 import Asset from "../../components/Asset";
 import Button from "../../components/Button";
-import SplitButton from "../../components/SplitButton";
+// import SplitButton from "../../components/SplitButton";
 
 interface ClaimRowProps {
   index: number;
@@ -66,18 +66,6 @@ const ValueUsd = styled.div`
 const EndContainer = styled.div`
   display: flex;
   justify-content: flex-end;
-
-  @media (min-width: 601px) {
-    flex: 1.8;
-
-    button:first-child {
-      margin-right: 1.8rem;
-    }
-
-    button:last-child {
-      margin-right: 6rem;
-    }
-  }
 `;
 
 interface Props {
@@ -106,7 +94,10 @@ const ClaimRow = ({ index }: Props): JSX.Element => {
         <ValueUsd>{`=${ScaledNumber.fromUnscaled(18300000).toCompactUsdValue(1)}`}</ValueUsd>
       </ValueContainer>
       <EndContainer>
-        {isDesktop && (
+        <Button background="#100830" width="12rem" primary square={isMobile}>
+          {t("claim.buttons.claim")}
+        </Button>
+        {/* {isDesktop && (
           <>
             <Button background="#100830" width="12rem" primary={isMobile}>
               {t("claim.buttons.claim")}
@@ -115,8 +106,8 @@ const ClaimRow = ({ index }: Props): JSX.Element => {
               {t("claim.buttons.claimAndStake")}
             </Button>
           </>
-        )}
-        {isMobile && (
+        )} */}
+        {/* {isMobile && (
           <SplitButton
             buttons={[
               {
@@ -131,7 +122,7 @@ const ClaimRow = ({ index }: Props): JSX.Element => {
               },
             ]}
           />
-        )}
+        )} */}
       </EndContainer>
     </StyledClaimRow>
   );

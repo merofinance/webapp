@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
@@ -6,7 +7,10 @@ import Seo from "../../components/Seo";
 import ClaimSummary from "./ClaimSummary";
 import ClaimAccordion from "./ClaimAccordion";
 
-const claims: string[] = ["test-claim-01", "test-claim-02"];
+import poolsIcon from "../../assets/sections/pools.svg";
+import { selectLpGaugeEarned, selectTotalLpGaugeEarned } from "../../state/userSlice";
+import { selectPools } from "../../state/poolsListSlice";
+import { Pool } from "../../lib";
 
 const StyledPoolsPage = styled.div`
   width: 100%;
@@ -41,7 +45,9 @@ const Header = styled.div`
 `;
 
 const ButtonHeader = styled.div`
-  flex: 1.8;
+  width: 1.2rem;
+  margin-right: 1.6rem;
+  margin-left: 3.2rem;
   @media (max-width: 600px) {
     flex: 0.3;
   }
@@ -66,16 +72,11 @@ const Note = styled.a`
 const ClaimPage = (): JSX.Element => {
   const { t } = useTranslation();
 
-  const [openAccordions, setOpenAccordions] = useState<number[]>([0]);
+  const lpGaugeEarned = useSelector(selectLpGaugeEarned);
+  const totalLpGaugeEarned = useSelector(selectTotalLpGaugeEarned());
+  const pools = useSelector(selectPools);
 
-  const isOpen = (index: number): boolean => openAccordions.includes(index);
-
-  const toggle = (index: number): void => {
-    const _openAccordions = [...openAccordions];
-    if (isOpen(index)) _openAccordions.splice(openAccordions.indexOf(index), 1);
-    else _openAccordions.push(index);
-    setOpenAccordions(_openAccordions);
-  };
+  const [poolsOpen, setPoolsOpen] = useState(true);
 
   return (
     <StyledPoolsPage>
@@ -87,14 +88,19 @@ const ClaimPage = (): JSX.Element => {
         <Header hideMobile>{t("headers.apr")}</Header>
         <ButtonHeader />
       </Headers>
-      {claims.map((claim: string, index: number) => (
+      {totalLpGaugeEarned?.isZero() && (
         <ClaimAccordion
-          key={claim}
-          open={isOpen(index)}
-          toggle={() => toggle(index)}
-          rows={["test-row-01", "test-row-02", "test-row-03"]}
+          icon={poolsIcon}
+          label={t("claim.pools.header")}
+          open={poolsOpen}
+          toggle={() => setPoolsOpen(!poolsOpen)}
+          rows={
+            pools
+              ?.filter((pool: Pool) => !lpGaugeEarned[pool.address].isZero())
+              .map((pool: Pool) => lpGaugeEarned[pool.address]?.toString() ?? "") ?? []
+          }
         />
-      ))}
+      )}
       <Note href="https://google.com/" target="_blank" rel="noopener noreferrer">
         {t("claim.helpText")}
       </Note>

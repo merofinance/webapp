@@ -8,6 +8,7 @@ import {
   IERC20Full__factory as Ierc20FullFactory,
   IStrategy__factory as IStrategyFactory,
   LiquidityPool__factory as LiquidityPoolFactory,
+  LpGauge__factory,
   StakerVault__factory as StakerVaultFactory,
   TopUpActionFeeHandler__factory as TopUpActionFeeHandlerFactory,
   TopUpAction__factory as TopUpActionFactory,
@@ -43,6 +44,7 @@ import {
   Optional,
   PlainActionFees,
   PlainLoan,
+  PlainLpGaugeEarned,
   PlainPool,
   PlainPosition,
   PlainWithdrawalFees,
@@ -73,6 +75,7 @@ export interface Backd {
     unstake?: boolean
   ): Promise<ContractTransaction>;
   getBalance(address: Address, account?: Address): Promise<ScaledNumber>;
+  getLpGaugeEarned(pools: Pool[]): Promise<PlainLpGaugeEarned>;
   getBalances(addresses: Address[], account?: Address): Promise<Balances>;
   getGasBankBalance(): Promise<PlainScaledNumber>;
   getAllowance(token: Token, spender: Address, account?: string): Promise<ScaledNumber>;
@@ -261,6 +264,25 @@ export class Web3Backd implements Backd {
       strategyAddress,
       strategyName,
     };
+  }
+
+  async getLpGaugeEarned(pools: Pool[]): Promise<PlainLpGaugeEarned> {
+    const account = await this.currentAccount();
+    const promises = pools.map(async (pool: Pool) => {
+      const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
+      const stakerAddress = await poolContract.staker();
+      const staker = StakerVaultFactory.connect(stakerAddress, this._provider);
+      const lpGaugeAddress = await staker.getLpGauge();
+      const lpGauge = LpGauge__factory.connect(lpGaugeAddress, this._provider);
+      const earned = await lpGauge.claimableRewards(account);
+      return new ScaledNumber(earned).toPlain();
+    });
+    const earned = await Promise.all(promises);
+    return fromEntries(
+      pools.map((pool: Pool, index: number) => {
+        return [pool.address, earned[index]];
+      })
+    );
   }
 
   async getHarvestable(poolAddress: Address): Promise<BigNumber> {

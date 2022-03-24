@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PlainScaledNumber, ScaledNumber } from "scaled-number";
 
@@ -18,8 +19,11 @@ import {
   Token,
   PlainWithdrawalFees,
   fromPlainWithdrawalFees,
+  PlainLpGaugeEarned,
+  LpGaugeEarned,
+  fromPlainLpGaugeEarned,
 } from "../lib/types";
-import { fetchPool } from "./poolsListSlice";
+import { fetchPool, selectPools } from "./poolsListSlice";
 import { handleTransactionConfirmation } from "../lib/transactionsUtils";
 
 interface UserState {
@@ -28,6 +32,7 @@ interface UserState {
   allowances: PlainAllowances;
   withdrawalFees: PlainWithdrawalFees;
   connecting: boolean;
+  lpGaugeEarned: PlainLpGaugeEarned;
 }
 
 const initialState: UserState = {
@@ -36,6 +41,7 @@ const initialState: UserState = {
   allowances: {},
   withdrawalFees: {},
   connecting: false,
+  lpGaugeEarned: {},
 };
 
 export const fetchBalances = createAsyncThunk(
@@ -89,6 +95,13 @@ export const fetchWithdrawalFees = createAsyncThunk(
   }
 );
 
+export const fetchLpGaugeEarned = createAsyncThunk(
+  "user/fetchLpGaugeEarned",
+  async ({ backd, pools }: { backd: Backd; pools: Pool[] }) => {
+    return backd.getLpGaugeEarned(pools);
+  }
+);
+
 type ApproveArgs = { backd: Backd; token: Token; spender: Address; amount: ScaledNumber };
 type DepositArgs = { backd: Backd; pool: Pool; amount: ScaledNumber; stake: boolean };
 type WithdrawArgs = { backd: Backd; pool: Pool; amount: ScaledNumber; withdrawalFee: ScaledNumber };
@@ -129,6 +142,13 @@ export const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(fetchLpGaugeEarned.fulfilled, (state, action) => {
+      Object.entries(action.payload).forEach((earned) => {
+        // eslint-disable-next-line prefer-destructuring
+        state.lpGaugeEarned[earned[0]] = earned[1];
+      });
+    });
+
     builder.addCase(fetchBalances.fulfilled, (state, action) => {
       Object.entries(action.payload).forEach((tokenAddress) => {
         // eslint-disable-next-line prefer-destructuring
@@ -256,8 +276,25 @@ export function selectWithdrawalFee(pool: Optional<Pool>): Selector<Optional<Sca
   };
 }
 
-export function isConnecting(state: RootState): boolean {
+export const isConnecting = (state: RootState): boolean => {
   return state.user.connecting;
+};
+
+export const selectLpGaugeEarned = (state: RootState): LpGaugeEarned => {
+  return fromPlainLpGaugeEarned(state.user.lpGaugeEarned);
+};
+
+export function selectTotalLpGaugeEarned(): Selector<Optional<ScaledNumber>> {
+  return (state: RootState) => {
+    const pools = useSelector(selectPools);
+    if (!pools) return null;
+    const lpGaugeEarned = useSelector(selectLpGaugeEarned);
+    return pools?.reduce(
+      (a: ScaledNumber, b: Pool) =>
+        lpGaugeEarned[b.address] ? a.add(lpGaugeEarned[b.address]) : a,
+      new ScaledNumber()
+    );
+  };
 }
 
 export function selectPoolUnderlyingBalance(

@@ -22,6 +22,7 @@ import {
   ActionFees,
   toPlainActionFees,
   PlainPool,
+  PlainLpGaugeEarned,
 } from "../types";
 import { balances, makeContractTransaction, masterAccount, pools, positions, prices } from "./data";
 
@@ -90,6 +91,10 @@ export default class MockBackd implements Backd {
 
   getEstimatedGasUsage(): Promise<PlainScaledNumber> {
     return Promise.resolve(ScaledNumber.fromUnscaled(1000, GWEI_DECIMALS).toPlain());
+  }
+
+  async getLpGaugeEarned(pools: Pool[]): Promise<PlainLpGaugeEarned> {
+    return {};
   }
 
   async deposit(pool: Pool, amount: ScaledNumber, stake: boolean): Promise<ContractTransaction> {

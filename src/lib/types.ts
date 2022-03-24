@@ -217,6 +217,19 @@ export const fromPlainAllowances = (allowances: PlainAllowances): Allowances => 
   );
 };
 
+export type LpGaugeEarned = Record<string, ScaledNumber>;
+export type PlainLpGaugeEarned = Record<string, PlainScaledNumber>;
+
+export const toPlainLpGaugeEarned = (allowances: LpGaugeEarned): PlainLpGaugeEarned => {
+  return fromEntries(Object.entries(allowances).map(([key, value]) => [key, value.toPlain()]));
+};
+
+export const fromPlainLpGaugeEarned = (allowances: PlainLpGaugeEarned): LpGaugeEarned => {
+  return fromEntries(
+    Object.entries(allowances).map(([key, value]) => [key, ScaledNumber.fromPlain(value)])
+  );
+};
+
 export type Prices<Num = number> = Record<string, Optional<Num>>;
 export type AllowanceQuery = {
   spender: Address;

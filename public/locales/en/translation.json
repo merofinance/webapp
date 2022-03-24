@@ -587,7 +587,10 @@
       "claimAll": "Claim all",
       "claimAllAndStake": "Claim all & Stake"
     },
-    "pool": "{{asset}} pool",
+    "pools": {
+      "header": "Liquidity Pools",
+      "name": "{{asset}} pool"
+    },
     "breakdown": "Breakdown of claimable earnings:",
     "helpText": "Where are my pool rewards?"
   },
