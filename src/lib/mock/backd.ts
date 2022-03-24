@@ -92,7 +92,7 @@ export default class MockBackd implements Backd {
     return Promise.resolve(ScaledNumber.fromUnscaled(1000, GWEI_DECIMALS).toPlain());
   }
 
-  async deposit(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction> {
+  async deposit(pool: Pool, amount: ScaledNumber, stake: boolean): Promise<ContractTransaction> {
     const account = await this.currentAccount();
     return makeContractTransaction(pool.address, account);
   }

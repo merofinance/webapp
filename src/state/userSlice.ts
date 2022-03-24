@@ -90,7 +90,7 @@ export const fetchWithdrawalFees = createAsyncThunk(
 );
 
 type ApproveArgs = { backd: Backd; token: Token; spender: Address; amount: ScaledNumber };
-type DepositArgs = { backd: Backd; pool: Pool; amount: ScaledNumber };
+type DepositArgs = { backd: Backd; pool: Pool; amount: ScaledNumber; stake: boolean };
 type WithdrawArgs = { backd: Backd; pool: Pool; amount: ScaledNumber; withdrawalFee: ScaledNumber };
 type UnstakeArgs = { backd: Backd; pool: Pool; amount: ScaledNumber };
 
@@ -188,8 +188,8 @@ export const approve = createAsyncThunk(
 
 export const deposit = createAsyncThunk(
   "user/deposit",
-  async ({ backd, pool, amount }: DepositArgs, { dispatch }) => {
-    const tx = await backd.deposit(pool, amount);
+  async ({ backd, pool, amount, stake }: DepositArgs, { dispatch }) => {
+    const tx = await backd.deposit(pool, amount, stake);
     handleTransactionConfirmation(
       tx,
       { action: "Deposit", args: { pool, amount: amount.toPlain() } },

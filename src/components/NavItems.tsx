@@ -47,8 +47,21 @@ const NavItems = (): JSX.Element => {
 
   const navItems: NavItemType[] = [
     {
-      label: "header.tabs.pools",
-      link: "/pools",
+      label: "header.tabs.earn",
+      navItems: [
+        {
+          label: "header.tabs.pools",
+          link: "/pools",
+        },
+        {
+          label: "header.tabs.stake",
+          link: "/stake",
+        },
+        {
+          label: "header.tabs.bkd",
+          link: "/bkd",
+        },
+      ],
     },
     {
       label: "header.tabs.actions",
@@ -58,7 +71,6 @@ const NavItems = (): JSX.Element => {
     {
       label: "header.tabs.claim",
       link: "/claim",
-      comingSoon: true,
     },
     {
       label: "header.tabs.more",

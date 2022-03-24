@@ -32,7 +32,7 @@ const DepositButtons = ({ value, pool, complete, valid, stepsOnTop }: Props): JS
 
   const executeDeposit = () => {
     if (!backd || depositLoading || !pool) return;
-    dispatch(deposit({ backd, pool, amount: value }));
+    dispatch(deposit({ backd, pool, amount: value, stake: true }));
   };
 
   return pool ? (

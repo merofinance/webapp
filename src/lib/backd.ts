@@ -80,7 +80,7 @@ export interface Backd {
   getWithdrawalFees(pools: Pool[]): Promise<PlainWithdrawalFees>;
   getPrices(symbol: string[]): Promise<Prices>;
   approve(token: Token, spender: Address, amount: ScaledNumber): Promise<ContractTransaction>;
-  deposit(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction>;
+  deposit(pool: Pool, amount: ScaledNumber, stake: boolean): Promise<ContractTransaction>;
   withdraw(
     pool: Pool,
     amount: ScaledNumber,
@@ -470,12 +470,30 @@ export class Web3Backd implements Backd {
     return tokenContract.approve(spender, amount.value, { gasLimit });
   }
 
-  async deposit(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction> {
+  async deposit(pool: Pool, amount: ScaledNumber, stake: boolean): Promise<ContractTransaction> {
     const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
     const value = pool.underlying.address === ETH_DUMMY_ADDRESS ? amount.value : 0;
     const minTokenAmount = amount
       .div(pool.exchangeRate)
       .mul(ScaledNumber.fromUnscaled(SLIPPAGE_TOLERANCE, amount.decimals));
+
+    // If the deposited funds are to be staked
+    if (stake) {
+      const gasEstimate = await poolContract.estimateGas.depositAndStake(
+        amount.value,
+        minTokenAmount.value,
+        {
+          value,
+        }
+      );
+      const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
+      return poolContract.depositAndStake(amount.value, minTokenAmount.value, {
+        value,
+        gasLimit,
+      });
+    }
+
+    // If the deposited funds should not be staked
     const gasEstimate = await poolContract.estimateGas["deposit(uint256,uint256)"](
       amount.value,
       minTokenAmount.value,
