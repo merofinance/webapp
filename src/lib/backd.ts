@@ -275,10 +275,14 @@ export class Web3Backd implements Backd {
 
   async getWithdrawalFees(pools: Pool[]): Promise<PlainWithdrawalFees> {
     const account = await this.currentAccount();
-    const promises = pools.map((pool: Pool) => {
-      const poolFactory = LiquidityPoolFactory.connect(pool.address, this._provider);
-      const ONE = ScaledNumber.fromUnscaled(1, pool.underlying.decimals).value;
-      return poolFactory.getWithdrawalFee(account, ONE);
+    const promises = pools.map(async (pool: Pool) => {
+      const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
+      const meta = await poolContract.withdrawalFeeMetas(account);
+      return poolContract.getNewCurrentFees(
+        meta.timeToWait,
+        meta.lastActionTimestamp,
+        meta.feeRatio
+      );
     });
 
     const withdrawalFees = await Promise.all(promises);
@@ -518,13 +522,12 @@ export class Web3Backd implements Backd {
       .mul(pool.exchangeRate)
       .mul(ScaledNumber.fromUnscaled(1).sub(withdrawalFee))
       .mul(ScaledNumber.fromUnscaled(SLIPPAGE_TOLERANCE, amount.decimals));
-    console.log(minRedeemAmount.toCryptoString());
-    const gasEstimate = await poolContract.estimateGas["redeem(uint256,uint256)"](
+    const gasEstimate = await poolContract.estimateGas.unstakeAndRedeem(
       amount.value,
       minRedeemAmount.value
     );
     const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
-    return poolContract["redeem(uint256,uint256)"](amount.value, minRedeemAmount.value, {
+    return poolContract.unstakeAndRedeem(amount.value, minRedeemAmount.value, {
       gasLimit,
     });
   }

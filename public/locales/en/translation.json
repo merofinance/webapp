@@ -389,7 +389,7 @@
           "labelMobile": "Enter amount to withdraw",
           "labelDesktop": "Enter an amount of {{asset}} to withdraw"
         },
-        "action": "Withdraw {{asset}}",
+        "action": "Unstake and Withdraw {{asset}}",
         "confirmation": {
           "header": "Confirm withdrawal",
           "subHeader": "You are about to withdraw {{amount}} {{asset}} from the {{asset}} pool",
