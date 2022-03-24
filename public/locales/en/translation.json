@@ -787,11 +787,15 @@
     },
     "stake": {
       "title": "Stake LP Tokens & Earn Rewards",
-      "description": "Earn BKD token rewards for providing liquidity to AMMs for BKD pairs."
+      "description": "Earn BKD token rewards for providing liquidity to AMMs for BKD pairs"
     },
     "bkd": {
       "title": "Stake BKD & Earn Rewards",
       "description": "Earn rewards and protocol profits in addition to aggregated yield from yield farming strategies"
+    },
+    "careers": {
+      "title": "Backd Careers",
+      "description": "We are building an extraordinary team. Now hiring: Full Stack Engineer & Software Engineer Intern"
     }
   }
 }
