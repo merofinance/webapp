@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { useDevice } from "../../app/hooks/use-device";
 import Radio from "../../components/Radio";
+import Seo from "../../components/Seo";
 import { Header1, Header5, Paragraph } from "../../styles/Headers";
 import Career from "./Career";
 import { careers, CareerType, departments } from "./careers";
@@ -74,9 +76,11 @@ const ChevronHeader = styled.div`
 const CareersPage = (): JSX.Element => {
   const [filter, setFilter] = useState("");
   const { isMobile } = useDevice();
+  const { t } = useTranslation();
 
   return (
     <StyledCareersPage>
+      <Seo title={t("metadata.careers.title")} description={t("metadata.careers.description")} />
       <Header1>Backd Careers</Header1>
       <Paragraph>
         Backd is a yield aggregation and liquidity delegation protocol on Ethereum. Backd relies on
@@ -94,7 +98,7 @@ const CareersPage = (): JSX.Element => {
       </Paragraph>
       <Header>Why Backd?</Header>
       <Paragraph>
-        We are building an extroadinary team. We are also very friendly and easy to get along with.
+        We are building an extraordinary team. We are also very friendly and easy to get along with.
         We love to build cool products, ship fast and stay with the newest trends in DeFi. If you
         are passionate about DeFi, enjoy working with others and solving challenging engineering
         problems then this role could be a great fit.

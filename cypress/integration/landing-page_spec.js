@@ -23,16 +23,16 @@ describe("Nav Items", () => {
   });
   it("Should have more tab", () => {
     cy.get('[id="header.tabs.more-dropdown-label"]').contains("more");
-    cy.get('[id="header.tabs.more-dropdown-exit-event"]').should("not.exist");
+    cy.get('[id="header.tabs.more-dropdown-exit-event"]').should("not.be.visible");
     cy.get('[id="header.tabs.more-dropdown-button"]').click();
     cy.get('[id="header.tabs.more-dropdown-options"]').should("be.visible");
-    cy.get('[id="header.tabs.more-dropdown-exit-event"]').should("exist");
+    cy.get('[id="header.tabs.more-dropdown-exit-event"]').should("be.visible");
     cy.get('[id="header.tabs.more-dropdown-docs-option"]').contains("docs");
     cy.get('[id="header.tabs.more-dropdown-blog-option"]').contains("blog");
     cy.get('[id="header.tabs.more-dropdown-newsletter-option"]').contains("newsletter");
     cy.get('[id="header.tabs.more-dropdown-exit-event"]').click();
     cy.get('[id="header.tabs.more-dropdown-options"]').should("not.be.visible");
-    cy.get('[id="header.tabs.more-dropdown-exit-event"]').should("not.exist");
+    cy.get('[id="header.tabs.more-dropdown-exit-event"]').should("not.be.visible");
   });
 });
 
