@@ -1,3 +1,4 @@
+import { ScaledNumber } from "scaled-number";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -55,22 +56,6 @@ const ButtonHeader = styled.div`
   }
 `;
 
-const Note = styled.a`
-  align-self: flex-end;
-  margin-right: 0.5rem;
-  font-weight: 500;
-  line-height: 4.2rem;
-  letter-spacing: 0.25px;
-  cursor: pointer;
-
-  font-size: 1.4rem;
-  transform: translateY(-4.5rem);
-  @media (max-width: 600px) {
-    font-size: 1.2rem;
-    transform: translateY(-1.5rem);
-  }
-`;
-
 const ClaimPage = (): JSX.Element => {
   const { t } = useTranslation();
   const backd = useBackd();
@@ -114,16 +99,21 @@ const ClaimPage = (): JSX.Element => {
                   return true;
                 })
                 .map((pool: Pool) => {
-                  if (!lpGaugeEarned[pool.address]) return "";
-                  return lpGaugeEarned[pool.address].toString();
+                  const claimable = lpGaugeEarned[pool.address];
+                  if (!claimable)
+                    return {
+                      pool,
+                      claimable: new ScaledNumber(),
+                    };
+                  return {
+                    pool,
+                    claimable,
+                  };
                 })
             : null
         }
         apy={weightedAverageApy}
       />
-      <Note href="https://google.com/" target="_blank" rel="noopener noreferrer">
-        {t("claim.helpText")}
-      </Note>
     </StyledPoolsPage>
   );
 };

@@ -7,7 +7,7 @@ import Accordion from "../../components/Accordion";
 import AccordionChevron from "../../components/AccordionChevron";
 import Loader from "../../components/Loader";
 import { BKD_PRICE } from "../../lib/constants";
-import { Optional } from "../../lib/types";
+import { Optional, Pool } from "../../lib/types";
 // import Button from "../../components/Button";
 import { GradientText } from "../../styles/GradientText";
 import ClaimRow from "./ClaimRow";
@@ -119,12 +119,17 @@ const Breakdown = styled.div`
   }
 `;
 
+export interface ClaimRowType {
+  pool: Pool;
+  claimable: ScaledNumber;
+}
+
 interface Props {
   icon: string;
   label: string;
   open: boolean;
   toggle: () => void;
-  rows: Optional<string[]>;
+  rows: Optional<ClaimRowType[]>;
   claimable: Optional<ScaledNumber>;
   apy: Optional<ScaledNumber>;
 }
@@ -170,9 +175,16 @@ const ClaimAccordion = ({
       open={open}
     >
       <ContentContainer>
-        <Breakdown>{t("claim.breakdown")}</Breakdown>
+        {rows && rows.length > 0 && <Breakdown>{t("claim.breakdown")}</Breakdown>}
         {rows ? (
-          rows.map((row: string, index: number) => <ClaimRow key={row} index={index} />)
+          rows.map((row: ClaimRowType, index: number) => (
+            <ClaimRow
+              key={row.pool.address}
+              index={index}
+              pool={row.pool}
+              claimable={row.claimable}
+            />
+          ))
         ) : (
           <>
             <Loader row thin />

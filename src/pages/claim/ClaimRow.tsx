@@ -1,10 +1,15 @@
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import { ScaledNumber } from "scaled-number";
 import styled from "styled-components";
 
 import { useDevice } from "../../app/hooks/use-device";
 import Asset from "../../components/Asset";
 import Button from "../../components/Button";
+import Loader from "../../components/Loader";
+import { Pool } from "../../lib";
+import { BKD_PRICE } from "../../lib/constants";
+import { selectBkdToken } from "../../state/bkdSlice";
 // import SplitButton from "../../components/SplitButton";
 
 interface ClaimRowProps {
@@ -70,28 +75,25 @@ const EndContainer = styled.div`
 
 interface Props {
   index: number;
+  pool: Pool;
+  claimable: ScaledNumber;
 }
 
-const ClaimRow = ({ index }: Props): JSX.Element => {
+const ClaimRow = ({ index, pool, claimable }: Props): JSX.Element => {
   const { t } = useTranslation();
-  const { isMobile, isDesktop } = useDevice();
+  const { isMobile } = useDevice();
+  const bkd = useSelector(selectBkdToken);
 
   return (
     <StyledClaimRow index={index}>
-      <Label>{t("claim.pool", { asset: "DAI" })}</Label>
+      <Label>{t("claim.pools.name", { asset: pool.underlying.symbol })}</Label>
       <ValueContainer>
-        <Asset
-          token={{
-            address: "skdfj",
-            name: "DAI",
-            symbol: "DAI",
-            decimals: 16,
-          }}
-          hideIcon={isMobile}
-          value="1.8m"
-          small
-        />
-        <ValueUsd>{`=${ScaledNumber.fromUnscaled(18300000).toCompactUsdValue(1)}`}</ValueUsd>
+        {bkd ? (
+          <Asset token={bkd} hideIcon={isMobile} value={claimable.toCryptoString()} small />
+        ) : (
+          <Loader />
+        )}
+        <ValueUsd>{`=${claimable.toCompactUsdValue(BKD_PRICE)}`}</ValueUsd>
       </ValueContainer>
       <EndContainer>
         <Button background="#100830" width="12rem" primary square={isMobile}>
