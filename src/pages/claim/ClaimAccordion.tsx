@@ -87,10 +87,7 @@ const Apr = styled(GradientText)`
 const EndContainer = styled.div`
   display: flex;
   justify-content: flex-end;
-
-  button:first-child {
-    margin-right: 1.8rem;
-  }
+  width: 12rem;
 
   @media (max-width: 600px) {
     flex: 0.3;

@@ -11,6 +11,7 @@ import Loader from "../../components/Loader";
 import { Pool } from "../../lib";
 import { BKD_PRICE } from "../../lib/constants";
 import { claimRewards, selectBkdToken } from "../../state/bkdSlice";
+import { GradientText } from "../../styles/GradientText";
 // import SplitButton from "../../components/SplitButton";
 
 interface ClaimRowProps {
@@ -49,10 +50,7 @@ const Label = styled.div`
 const ValueContainer = styled.div`
   display: flex;
   align-items: center;
-
-  @media (min-width: 601px) {
-    flex: 2;
-  }
+  flex: 1;
 `;
 
 const ValueUsd = styled.div`
@@ -66,6 +64,21 @@ const ValueUsd = styled.div`
   @media (max-width: 600px) {
     font-size: 1.2rem;
     margin-left: 0.2rem;
+  }
+`;
+
+const ApyContainer = styled.div`
+  flex: 1;
+`;
+
+const Apr = styled(GradientText)`
+  font-weight: 900;
+  font-size: 1.8rem;
+  line-height: 2rem;
+  letter-spacing: 0.15px;
+
+  @media (max-width: 600px) {
+    display: none;
   }
 `;
 
@@ -99,6 +112,7 @@ const ClaimRow = ({ index, pool, claimable }: Props): JSX.Element => {
         )}
         <ValueUsd>{`=${claimable.toCompactUsdValue(BKD_PRICE)}`}</ValueUsd>
       </ValueContainer>
+      <ApyContainer>{pool.apy ? <Apr>{pool.apy.toPercent()}</Apr> : <Loader />}</ApyContainer>
       <EndContainer>
         <Button
           background="#100830"

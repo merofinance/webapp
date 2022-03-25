@@ -48,9 +48,7 @@ const Header = styled.div`
 `;
 
 const ButtonHeader = styled.div`
-  width: 1.2rem;
-  margin-right: 1.6rem;
-  margin-left: 3.2rem;
+  width: 12rem;
   @media (max-width: 600px) {
     flex: 0.3;
   }
