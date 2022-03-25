@@ -578,8 +578,11 @@
   },
   "claim": {
     "overview": {
-      "claimable": "claimable",
-      "deposits": "your total deposits"
+      "claimable": "Total claimable",
+      "claimableSubheader": "Excluding pool APY",
+      "daily": "Daily combined earnings",
+      "yearly": "{{amount}} yearly",
+      "deposits": "Your total deposits"
     },
     "buttons": {
       "claim": "Claim",
