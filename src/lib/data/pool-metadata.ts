@@ -26,7 +26,7 @@ interface PoolMetadata {
 const poolMetadata: Record<string, PoolMetadata> = {
   ETH: {
     icon: eth,
-    harvestableMultiplier: ScaledNumber.fromUnscaled("9.396551724"),
+    harvestableMultiplier: ScaledNumber.fromUnscaled("3.235294118"),
     deployment: {
       "1337": {
         time: new Date(0),
@@ -41,7 +41,7 @@ const poolMetadata: Record<string, PoolMetadata> = {
   },
   DAI: {
     icon: dai,
-    harvestableMultiplier: ScaledNumber.fromUnscaled("1.107981221"),
+    harvestableMultiplier: ScaledNumber.fromUnscaled("1.19865643"),
     deployment: {
       "1337": {
         time: new Date(0),
@@ -56,7 +56,7 @@ const poolMetadata: Record<string, PoolMetadata> = {
   },
   USDC: {
     icon: usdc,
-    harvestableMultiplier: ScaledNumber.fromUnscaled("1.107981221"),
+    harvestableMultiplier: ScaledNumber.fromUnscaled("1.19865643"),
     deployment: {
       "1337": {
         time: new Date(0),
