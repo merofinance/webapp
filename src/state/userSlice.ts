@@ -287,8 +287,8 @@ export const selectLpGaugeEarned = (state: RootState): LpGaugeEarned => {
 export function selectTotalLpGaugeEarned(): Selector<Optional<ScaledNumber>> {
   return (state: RootState) => {
     const pools = useSelector(selectPools);
-    if (!pools) return null;
     const lpGaugeEarned = useSelector(selectLpGaugeEarned);
+    if (!pools) return null;
     return pools?.reduce(
       (a: ScaledNumber, b: Pool) =>
         lpGaugeEarned[b.address] ? a.add(lpGaugeEarned[b.address]) : a,
