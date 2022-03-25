@@ -99,21 +99,28 @@ const ClaimPage = (): JSX.Element => {
         <Header hideMobile>{t("headers.apr")}</Header>
         <ButtonHeader />
       </Headers>
-      {totalLpGaugeEarned && !totalLpGaugeEarned.isZero() && (
-        <ClaimAccordion
-          icon={poolsIcon}
-          label={t("claim.pools.header")}
-          open={poolsOpen}
-          toggle={() => setPoolsOpen(!poolsOpen)}
-          claimable={totalLpGaugeEarned}
-          rows={
-            pools
-              ?.filter((pool: Pool) => !lpGaugeEarned[pool.address].isZero())
-              .map((pool: Pool) => lpGaugeEarned[pool.address]?.toString() ?? "") ?? []
-          }
-          apy={weightedAverageApy}
-        />
-      )}
+      <ClaimAccordion
+        icon={poolsIcon}
+        label={t("claim.pools.header")}
+        open={poolsOpen}
+        toggle={() => setPoolsOpen(!poolsOpen)}
+        claimable={totalLpGaugeEarned}
+        rows={
+          pools && lpGaugeEarned && !pools.some((pool: Pool) => !lpGaugeEarned[pool.address])
+            ? pools
+                .filter((pool: Pool) => {
+                  if (!lpGaugeEarned[pool.address]) return false;
+                  if (lpGaugeEarned[pool.address].isZero()) return false;
+                  return true;
+                })
+                .map((pool: Pool) => {
+                  if (!lpGaugeEarned[pool.address]) return "";
+                  return lpGaugeEarned[pool.address].toString();
+                })
+            : null
+        }
+        apy={weightedAverageApy}
+      />
       <Note href="https://google.com/" target="_blank" rel="noopener noreferrer">
         {t("claim.helpText")}
       </Note>

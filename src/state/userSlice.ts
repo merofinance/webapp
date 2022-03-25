@@ -289,11 +289,12 @@ export function selectTotalLpGaugeEarned(): Selector<Optional<ScaledNumber>> {
     const pools = useSelector(selectPools);
     const lpGaugeEarned = useSelector(selectLpGaugeEarned);
     if (!pools) return null;
-    return pools?.reduce(
-      (a: ScaledNumber, b: Pool) =>
-        lpGaugeEarned[b.address] ? a.add(lpGaugeEarned[b.address]) : a,
-      new ScaledNumber()
-    );
+    let total = new ScaledNumber();
+    for (let i = 0; i < pools.length; i++) {
+      if (!lpGaugeEarned[pools[i].address]) return null;
+      total = total.add(lpGaugeEarned[pools[i].address]);
+    }
+    return total;
   };
 }
 

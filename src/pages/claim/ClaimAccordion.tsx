@@ -124,8 +124,8 @@ interface Props {
   label: string;
   open: boolean;
   toggle: () => void;
-  rows: string[];
-  claimable: ScaledNumber;
+  rows: Optional<string[]>;
+  claimable: Optional<ScaledNumber>;
   apy: Optional<ScaledNumber>;
 }
 
@@ -150,7 +150,7 @@ const ClaimAccordion = ({
             <Icon src={icon} alt={`${label} icon`} />
             <Label>{label}</Label>
           </LabelContainer>
-          <Claimable>{claimable.toUsdValue(BKD_PRICE)}</Claimable>
+          <Claimable>{claimable ? claimable.toUsdValue(BKD_PRICE) : <Loader />}</Claimable>
           <ApyContainer>{apy ? <Apr>{apy.toPercent()}</Apr> : <Loader />}</ApyContainer>
           <EndContainer>
             {/* {isDesktop && (
@@ -171,9 +171,14 @@ const ClaimAccordion = ({
     >
       <ContentContainer>
         <Breakdown>{t("claim.breakdown")}</Breakdown>
-        {rows.map((row: string, index: number) => (
-          <ClaimRow key={row} index={index} />
-        ))}
+        {rows ? (
+          rows.map((row: string, index: number) => <ClaimRow key={row} index={index} />)
+        ) : (
+          <>
+            <Loader row thin />
+            <Loader row thin />
+          </>
+        )}
       </ContentContainer>
     </Accordion>
   );
