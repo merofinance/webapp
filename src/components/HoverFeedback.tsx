@@ -33,6 +33,7 @@ const HoverText = styled.div`
   font-weight: 500;
   font-size: 1rem;
   white-space: nowrap;
+  box-shadow: 1px 1px 20px 2px rgba(0, 0, 0, 0.25);
 `;
 
 interface Props {
