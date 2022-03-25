@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
@@ -9,8 +9,10 @@ import ClaimAccordion from "./ClaimAccordion";
 
 import poolsIcon from "../../assets/sections/pools.svg";
 import { selectLpGaugeEarned, selectTotalLpGaugeEarned } from "../../state/userSlice";
-import { selectPools } from "../../state/poolsListSlice";
+import { fetchState, selectPools } from "../../state/poolsListSlice";
 import { Pool } from "../../lib";
+import { useBackd } from "../../app/hooks/use-backd";
+import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 
 const StyledPoolsPage = styled.div`
   width: 100%;
@@ -71,12 +73,20 @@ const Note = styled.a`
 
 const ClaimPage = (): JSX.Element => {
   const { t } = useTranslation();
+  const backd = useBackd();
+  const dispatch = useDispatch();
+  const updated = useWeb3Updated();
 
   const lpGaugeEarned = useSelector(selectLpGaugeEarned);
   const totalLpGaugeEarned = useSelector(selectTotalLpGaugeEarned());
   const pools = useSelector(selectPools);
 
   const [poolsOpen, setPoolsOpen] = useState(true);
+
+  useEffect(() => {
+    if (!backd) return;
+    dispatch(fetchState(backd));
+  }, [updated]);
 
   return (
     <StyledPoolsPage>
@@ -88,12 +98,13 @@ const ClaimPage = (): JSX.Element => {
         <Header hideMobile>{t("headers.apr")}</Header>
         <ButtonHeader />
       </Headers>
-      {totalLpGaugeEarned?.isZero() && (
+      {totalLpGaugeEarned && !totalLpGaugeEarned.isZero() && (
         <ClaimAccordion
           icon={poolsIcon}
           label={t("claim.pools.header")}
           open={poolsOpen}
           toggle={() => setPoolsOpen(!poolsOpen)}
+          claimable={totalLpGaugeEarned}
           rows={
             pools
               ?.filter((pool: Pool) => !lpGaugeEarned[pool.address].isZero())

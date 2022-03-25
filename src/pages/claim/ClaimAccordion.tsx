@@ -1,9 +1,11 @@
 import { useTranslation } from "react-i18next";
+import { ScaledNumber } from "scaled-number";
 import styled from "styled-components";
 
 // import { useDevice } from "../../app/hooks/use-device";
 import Accordion from "../../components/Accordion";
 import AccordionChevron from "../../components/AccordionChevron";
+import { BKD_PRICE } from "../../lib/constants";
 // import Button from "../../components/Button";
 import { GradientText } from "../../styles/GradientText";
 import ClaimRow from "./ClaimRow";
@@ -121,9 +123,10 @@ interface Props {
   open: boolean;
   toggle: () => void;
   rows: string[];
+  claimable: ScaledNumber;
 }
 
-const ClaimAccordion = ({ icon, label, open, toggle, rows }: Props): JSX.Element => {
+const ClaimAccordion = ({ icon, label, open, toggle, rows, claimable }: Props): JSX.Element => {
   const { t } = useTranslation();
   // const { isMobile, isDesktop } = useDevice();
 
@@ -136,7 +139,7 @@ const ClaimAccordion = ({ icon, label, open, toggle, rows }: Props): JSX.Element
             <Icon src={icon} alt={`${label} icon`} />
             <Label>{label}</Label>
           </LabelContainer>
-          <Claimable>$430.00</Claimable>
+          <Claimable>{claimable.toUsdValue(BKD_PRICE)}</Claimable>
           <ApyContainer>
             <Apr>5.2%</Apr>
           </ApyContainer>
