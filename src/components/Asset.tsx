@@ -56,7 +56,7 @@ const Asset = ({ token, large, small, tiny, value, hideIcon }: Props): JSX.Eleme
   return (
     <StyledAsset>
       {!hideIcon && <Icon src={icon} alt={`${token.symbol} icon`} tiny={tiny} />}
-      <Label large={large} small={small} tiny={tiny}>{`${value || ""}${token.symbol}`}</Label>
+      <Label large={large} small={small} tiny={tiny}>{`${value || ""} ${token.symbol}`}</Label>
     </StyledAsset>
   );
 };
