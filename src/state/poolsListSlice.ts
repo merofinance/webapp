@@ -34,6 +34,7 @@ import {
   selectBalances,
 } from "./userSlice";
 import poolMetadata from "../lib/data/pool-metadata";
+import { fetchBkdToken } from "./bkdSlice";
 
 interface PoolsState {
   pools: PlainPool[];
@@ -104,6 +105,7 @@ export const fetchState =
         dispatch(fetchLpGaugeEarned({ backd, pools }));
       }
     });
+    dispatch(fetchBkdToken({ backd }));
     const chainId = backd.getChainId();
     if (ACTIONS_LIVE || chainId === 42) {
       backd.currentAccount().then((address: Address) => dispatch(fetchLoans({ backd, address })));

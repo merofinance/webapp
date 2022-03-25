@@ -93,6 +93,15 @@ export default class MockBackd implements Backd {
     return Promise.resolve(ScaledNumber.fromUnscaled(1000, GWEI_DECIMALS).toPlain());
   }
 
+  async getBkdToken(): Promise<Token> {
+    return {
+      address: "0x0000000000000000000000000000000000000000",
+      decimals: 18,
+      symbol: "BKD",
+      name: "Backd",
+    };
+  }
+
   async getLpGaugeEarned(pools: Pool[]): Promise<PlainLpGaugeEarned> {
     return {};
   }

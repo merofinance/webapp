@@ -1,6 +1,7 @@
 import {
   AddressProvider,
   AddressProvider__factory as AddressProviderFactory,
+  BkdToken__factory,
   BkdTriHopCvx__factory as BkdTriHopCvxFactory,
   Controller__factory as ControllerFactory,
   GasBank,
@@ -13,6 +14,7 @@ import {
   TopUpActionFeeHandler__factory as TopUpActionFeeHandlerFactory,
   TopUpAction__factory as TopUpActionFactory,
   Vault__factory as VaultFactory,
+  BkdToken__factory as BkdTokenFactory,
 } from "@backdfund/protocol";
 import contracts from "@backdfund/protocol/config/deployments/map.json";
 import { Controller } from "@backdfund/protocol/typechain/Controller";
@@ -82,6 +84,7 @@ export interface Backd {
   getAllowances(queries: AllowanceQuery[]): Promise<Record<string, Balances>>;
   getWithdrawalFees(pools: Pool[]): Promise<PlainWithdrawalFees>;
   getPrices(symbol: string[]): Promise<Prices>;
+  getBkdToken(): Promise<Token>;
   approve(token: Token, spender: Address, amount: ScaledNumber): Promise<ContractTransaction>;
   deposit(pool: Pool, amount: ScaledNumber, stake: boolean): Promise<ContractTransaction>;
   withdraw(
@@ -162,6 +165,27 @@ export class Web3Backd implements Backd {
       return signer.getAddress();
     }
     return Promise.resolve("");
+  }
+
+  async getBkdToken(): Promise<Token> {
+    const contracts = this.getContracts();
+    if (!contracts.BkdToken || contracts.BkdToken.length === 0) {
+      return {
+        address: ETH_DUMMY_ADDRESS,
+        decimals: ETH_DECIMALS,
+        symbol: "BKD",
+        name: "Backd Token",
+      };
+    }
+    const address = contracts.BkdToken[0];
+    const bkd = BkdTokenFactory.connect(address, this.provider);
+    const [decimals, symbol, name] = await Promise.all([bkd.decimals(), bkd.symbol(), bkd.name()]);
+    return {
+      address,
+      decimals,
+      symbol,
+      name,
+    };
   }
 
   async listPools(): Promise<PlainPool[]> {
