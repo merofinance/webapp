@@ -22,9 +22,11 @@ const StyledLoader = styled.div`
   );
   animation: ${animation} 2s infinite;
 
-  width: ${(props: Props) => (props.row || props.button ? "100%" : "9rem")};
+  width: ${(props: Props) => (props.row || props.button ? "100%" : props.large ? "16rem" : "9rem")};
   height: ${(props: Props) =>
-    props.row
+    props.large
+      ? "3.8rem"
+      : props.row
       ? props.thin
         ? "4.8rem"
         : props.preview
@@ -42,10 +44,11 @@ interface Props {
   preview?: boolean;
   button?: boolean;
   thin?: boolean;
+  large?: boolean;
 }
 
-const Loader = ({ row, preview, button, thin }: Props): JSX.Element => {
-  return <StyledLoader row={row} preview={preview} button={button} thin={thin} />;
+const Loader = ({ row, preview, button, thin, large }: Props): JSX.Element => {
+  return <StyledLoader row={row} preview={preview} button={button} thin={thin} large={large} />;
 };
 
 export default Loader;
