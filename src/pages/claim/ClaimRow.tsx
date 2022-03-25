@@ -1,7 +1,8 @@
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ScaledNumber } from "scaled-number";
 import styled from "styled-components";
+import { useBackd } from "../../app/hooks/use-backd";
 
 import { useDevice } from "../../app/hooks/use-device";
 import Asset from "../../components/Asset";
@@ -9,7 +10,7 @@ import Button from "../../components/Button";
 import Loader from "../../components/Loader";
 import { Pool } from "../../lib";
 import { BKD_PRICE } from "../../lib/constants";
-import { selectBkdToken } from "../../state/bkdSlice";
+import { claimRewards, selectBkdToken } from "../../state/bkdSlice";
 // import SplitButton from "../../components/SplitButton";
 
 interface ClaimRowProps {
@@ -81,7 +82,10 @@ interface Props {
 
 const ClaimRow = ({ index, pool, claimable }: Props): JSX.Element => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const backd = useBackd();
   const { isMobile } = useDevice();
+
   const bkd = useSelector(selectBkdToken);
 
   return (
@@ -96,7 +100,16 @@ const ClaimRow = ({ index, pool, claimable }: Props): JSX.Element => {
         <ValueUsd>{`=${claimable.toCompactUsdValue(BKD_PRICE)}`}</ValueUsd>
       </ValueContainer>
       <EndContainer>
-        <Button background="#100830" width="12rem" primary square={isMobile}>
+        <Button
+          background="#100830"
+          width="12rem"
+          primary
+          square={isMobile}
+          click={() => {
+            if (!backd) return;
+            dispatch(claimRewards({ backd, pool }));
+          }}
+        >
           {t("claim.buttons.claim")}
         </Button>
         {/* {isDesktop && (
