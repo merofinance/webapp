@@ -15,6 +15,7 @@ import {
   TopUpAction__factory as TopUpActionFactory,
   Vault__factory as VaultFactory,
   BkdToken__factory as BkdTokenFactory,
+  IRewardsGauge__factory as IRewardsGaugeFactory,
 } from "@backdfund/protocol";
 import contracts from "@backdfund/protocol/config/deployments/map.json";
 import { Controller } from "@backdfund/protocol/typechain/Controller";
@@ -93,6 +94,7 @@ export interface Backd {
     withdrawalFee: ScaledNumber
   ): Promise<ContractTransaction>;
   unstake(vaultAddress: Address, amount: ScaledNumber): Promise<ContractTransaction>;
+  claimRewards(gaugeAddress: Pool): Promise<ContractTransaction>;
 
   listSupportedProtocols(): Promise<string[]>;
 
@@ -290,13 +292,17 @@ export class Web3Backd implements Backd {
     };
   }
 
+  private async getLpGaugeAddress(poolAddress: Address): Promise<Address> {
+    const poolContract = LiquidityPoolFactory.connect(poolAddress, this._provider);
+    const stakerAddress = await poolContract.staker();
+    const staker = StakerVaultFactory.connect(stakerAddress, this._provider);
+    return staker.getLpGauge();
+  }
+
   async getLpGaugeEarned(pools: Pool[]): Promise<PlainLpGaugeEarned> {
     const account = await this.currentAccount();
     const promises = pools.map(async (pool: Pool) => {
-      const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
-      const stakerAddress = await poolContract.staker();
-      const staker = StakerVaultFactory.connect(stakerAddress, this._provider);
-      const lpGaugeAddress = await staker.getLpGauge();
+      const lpGaugeAddress = await this.getLpGaugeAddress(pool.address);
       const lpGauge = LpGauge__factory.connect(lpGaugeAddress, this._provider);
       const earned = await lpGauge.claimableRewards(account);
       return new ScaledNumber(earned).toPlain();
@@ -583,6 +589,15 @@ export class Web3Backd implements Backd {
     const gasEstimate = await vaultContract.estimateGas.unstake(amount.value);
     const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
     return vaultContract.unstake(amount.value, { gasLimit });
+  }
+
+  async claimRewards(pool: Pool): Promise<ContractTransaction> {
+    const account = await this.currentAccount();
+    const gaugeAddress = await this.getLpGaugeAddress(pool.address);
+    const gauge = IRewardsGaugeFactory.connect(gaugeAddress, this._provider);
+    const gasEstimate = await gauge.estimateGas.claimRewards(account);
+    const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
+    return gauge.claimRewards(account, { gasLimit });
   }
 
   async getBalance(address: string, account?: string): Promise<ScaledNumber> {
