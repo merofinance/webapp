@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ethers } from "ethers";
 import { ScaledNumber } from "scaled-number";
+import { useSelector } from "react-redux";
 
 import { AppThunk, RootState } from "../app/store";
 import { Pool } from "../lib";
@@ -11,6 +12,7 @@ import {
   fromPlainPool,
   Optional,
   PlainPool,
+  Position,
   Prices,
 } from "../lib/types";
 import { fetchLoans } from "./lendingSlice";
@@ -20,6 +22,7 @@ import {
   fetchActionFees,
   fetchEstimatedGasUsage,
   fetchPositions,
+  selectPositions,
   setPositionsLoaded,
 } from "./positionsSlice";
 import {
@@ -28,6 +31,7 @@ import {
   fetchGasBankBalance,
   fetchLpGaugeEarned,
   fetchWithdrawalFees,
+  selectBalances,
 } from "./userSlice";
 import poolMetadata from "../lib/data/pool-metadata";
 
@@ -178,5 +182,40 @@ export const selectAverageApy = (state: RootState): Optional<ScaledNumber> => {
   }
   return total.div(poolCount);
 };
+
+export function selectUserWeightedAverageApy(): (state: RootState) => Optional<ScaledNumber> {
+  return (state: RootState) => {
+    const pools = useSelector(selectPools);
+    const balances = useSelector(selectBalances);
+    const prices = useSelector(selectPrices);
+    const positions = useSelector(selectPositions);
+    if (!pools || !balances || !prices || !positions) return null;
+    let totalBalance = new ScaledNumber();
+    let totalApy = new ScaledNumber();
+    for (let i = 0; i < pools.length; i++) {
+      const { apy } = pools[i];
+      const price = prices[pools[i].underlying.symbol];
+      if (!apy || !price) return null;
+      const usersPoolLpHeld = balances[pools[i].lpToken.address];
+      const usersPoolLpStaked = balances[pools[i].stakerVaultAddress];
+      const poolPositions = positions
+        .filter((p) => p.actionToken === pools[i].underlying.address)
+        .map((position: Position) => position);
+      let usersPoolLpLocked = new ScaledNumber();
+      for (let i = 0; i < poolPositions.length; i++) {
+        usersPoolLpLocked = usersPoolLpLocked.add(
+          poolPositions[i].depositTokenBalance.mul(pools[i].exchangeRate)
+        );
+      }
+      if (!usersPoolLpHeld || !usersPoolLpStaked || !usersPoolLpLocked) return null;
+      const totalLpEverywhere = usersPoolLpHeld.add(usersPoolLpStaked).add(usersPoolLpLocked);
+      const totalUnderlying = totalLpEverywhere.mul(pools[i].exchangeRate);
+      const totalUsdValue = totalUnderlying.mul(price);
+      totalApy = totalApy.add(apy.mul(totalUsdValue));
+      totalBalance = totalBalance.add(totalUsdValue);
+    }
+    return totalApy.div(totalBalance);
+  };
+}
 
 export default poolsSlice.reducer;
