@@ -56,10 +56,12 @@ const NavItems = (): JSX.Element => {
         {
           label: "header.tabs.stake",
           link: "/stake",
+          comingSoon: !chainId || chainId !== 42,
         },
         {
           label: "header.tabs.bkd",
           link: "/bkd",
+          comingSoon: !chainId || chainId !== 42,
         },
       ],
     },
@@ -71,6 +73,7 @@ const NavItems = (): JSX.Element => {
     {
       label: "header.tabs.claim",
       link: "/claim",
+      comingSoon: !chainId || chainId !== 42,
     },
     {
       label: "header.tabs.more",
@@ -108,6 +111,7 @@ const NavItems = (): JSX.Element => {
               };
               return {
                 label: t(navItem.label),
+                disabledText: navItem.comingSoon ? t("components.comingSoon") : undefined,
                 action,
               };
             })}
