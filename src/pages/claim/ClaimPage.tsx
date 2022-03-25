@@ -79,7 +79,7 @@ const ClaimPage = (): JSX.Element => {
       <Headers>
         <Header>{t("headers.asset")}</Header>
         <Header>{t("headers.claimable")}</Header>
-        <Header hideMobile>{t("headers.apr")}</Header>
+        <Header hideMobile>{t("headers.apy")}</Header>
         <ButtonHeader />
       </Headers>
       <ClaimAccordion
