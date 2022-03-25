@@ -14,7 +14,7 @@ import {
   Prices,
 } from "../lib/types";
 import { fetchLoans } from "./lendingSlice";
-import { ACTIONS_LIVE, INFURA_ID } from "../lib/constants";
+import { ACTIONS_LIVE, INFURA_ID, STAKING_LIVE } from "../lib/constants";
 import { createBackd } from "../lib/factory";
 import {
   fetchActionFees,
@@ -26,6 +26,7 @@ import {
   fetchAllowances,
   fetchBalances,
   fetchGasBankBalance,
+  fetchLpGaugeEarned,
   fetchWithdrawalFees,
 } from "./userSlice";
 import poolMetadata from "../lib/data/pool-metadata";
@@ -95,6 +96,9 @@ export const fetchState =
       dispatch(fetchPrices({ backd, pools }));
       dispatch(fetchAllowances({ backd, pools }));
       dispatch(fetchWithdrawalFees({ backd, pools }));
+      if (STAKING_LIVE || chainId === 42) {
+        dispatch(fetchLpGaugeEarned({ backd, pools }));
+      }
     });
     const chainId = backd.getChainId();
     if (ACTIONS_LIVE || chainId === 42) {
