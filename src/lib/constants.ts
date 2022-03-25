@@ -19,6 +19,7 @@ export const DATE_FORMAT = "mmm-d-yyyy";
 export const TOPUP_ACTION_ROUTE = "/actions/register/topup";
 export const SLIPPAGE_TOLERANCE = 0.98; // 2%
 export const GAS_BUFFER = 11; // This is 10%, we use it as BigNumber.mul(GAS_BUFFER).div(10)
+export const BKD_PRICE = 3; // We'll need to udpate this to an oracle once the token launches
 
 export const chainIds: Record<string, string> = {
   "1": "Mainnet",
