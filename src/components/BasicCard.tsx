@@ -1,5 +1,7 @@
 import styled from "styled-components";
+import { Optional } from "../lib/types";
 import Button from "./Button";
+import Loader from "./Loader";
 
 interface BasicCardProps {
   primary?: boolean;
@@ -37,7 +39,6 @@ const Label = styled.div`
   line-height: 2rem;
   letter-spacing: 0.15px;
   color: var(--sub);
-  text-transform: capitalize;
 
   @media (max-width: 600px) {
   }
@@ -76,7 +77,7 @@ const ButtonContainer = styled.div`
 
 export interface BasicCardType {
   label: string;
-  value: string;
+  value: Optional<string>;
   subValue?: string;
   buttonText?: string;
   buttonAction?: () => void;
@@ -94,7 +95,7 @@ const BasicCard = ({
   return (
     <StyledBasicCard key={label} primary={primary}>
       <Label>{label}</Label>
-      <Number>{value}</Number>
+      <Number>{value ?? <Loader large />}</Number>
       {subValue && <SubValue>{subValue}</SubValue>}
       {buttonText && buttonAction && (
         <ButtonContainer>
