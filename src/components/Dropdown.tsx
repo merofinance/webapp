@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import arrow from "../assets/ui/accordion-chevron.svg";
+import HoverFeedback from "./HoverFeedback";
 
 export interface DropdownOptionType {
   label: string;
+  disabledText?: string;
   action: () => void;
 }
 
@@ -80,6 +82,10 @@ const Options = styled.div`
   min-width: 18rem;
 `;
 
+interface OptionProps {
+  disabled: boolean;
+}
+
 const Option = styled.button`
   padding: 0 1.4rem;
   height: 3.6rem;
@@ -90,12 +96,13 @@ const Option = styled.button`
   display: flex;
   align-items: center;
   text-transform: capitalize;
-  cursor: pointer;
+  cursor: ${(props: OptionProps) => (props.disabled ? "auto" : "pointer")};
+  opacity: ${(props: OptionProps) => (props.disabled ? "0.5" : "1")};
 
   background: #423b68;
   transition: all 0.3s;
   :hover {
-    background: #322b58;
+    background: ${(props: OptionProps) => (props.disabled ? "#423b68" : "#322b58")};
   }
 `;
 
@@ -140,16 +147,19 @@ const Dropdown = ({ id, label, options }: Props): JSX.Element => {
       <OptionsContainer show={open}>
         <Options id={`${id}-dropdown-options`}>
           {options.map((option: DropdownOptionType) => (
-            <Option
-              id={`${id}-dropdown-${option.label}-option`}
-              key={option.label}
-              onClick={() => {
-                option.action();
-                setOpen(false);
-              }}
-            >
-              {option.label}
-            </Option>
+            <HoverFeedback text={option.disabledText}>
+              <Option
+                id={`${id}-dropdown-${option.label}-option`}
+                key={option.label}
+                disabled={!!option.disabledText}
+                onClick={() => {
+                  option.action();
+                  setOpen(false);
+                }}
+              >
+                {option.label}
+              </Option>
+            </HoverFeedback>
           ))}
         </Options>
       </OptionsContainer>
