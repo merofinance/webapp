@@ -1,16 +1,10 @@
 import { ScaledNumber } from "scaled-number";
 
-import eth from "../../assets/tokens/eth.png";
-import usdc from "../../assets/tokens/usdc.png";
-import dai from "../../assets/tokens/dai.png";
-
 interface DeploymentMetadata {
   time: Date;
 }
 
 interface PoolMetadata {
-  icon: string;
-
   /*
    * We use the harvestable view for forecaseting APR for the next harvest.
    * But the harvestable view doesn't include appreciation in the Curve LP Token, and additional rewards.
@@ -24,8 +18,21 @@ interface PoolMetadata {
 }
 
 const poolMetadata: Record<string, PoolMetadata> = {
+  BKD: {
+    harvestableMultiplier: ScaledNumber.fromUnscaled("9.396551724"),
+    deployment: {
+      "1337": {
+        time: new Date(0),
+      },
+      "42": {
+        time: new Date(1643997600000),
+      },
+      "1": {
+        time: new Date(1647367666000),
+      },
+    },
+  },
   ETH: {
-    icon: eth,
     harvestableMultiplier: ScaledNumber.fromUnscaled("9.396551724"),
     deployment: {
       "1337": {
@@ -40,7 +47,6 @@ const poolMetadata: Record<string, PoolMetadata> = {
     },
   },
   DAI: {
-    icon: dai,
     harvestableMultiplier: ScaledNumber.fromUnscaled("1.107981221"),
     deployment: {
       "1337": {
@@ -55,7 +61,6 @@ const poolMetadata: Record<string, PoolMetadata> = {
     },
   },
   USDC: {
-    icon: usdc,
     harvestableMultiplier: ScaledNumber.fromUnscaled("1.107981221"),
     deployment: {
       "1337": {

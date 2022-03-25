@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Token } from "../lib/types";
-import poolMetadata from "../lib/data/pool-metadata";
+import tokenMetadata from "../lib/data/token-metadata";
 
 const StyledAsset = styled.div`
   display: flex;
@@ -51,7 +51,7 @@ interface Props {
 }
 
 const Asset = ({ token, large, small, tiny, value, hideIcon }: Props): JSX.Element => {
-  const { icon } = poolMetadata[token.symbol];
+  const { icon } = tokenMetadata[token.symbol];
 
   return (
     <StyledAsset>
