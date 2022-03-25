@@ -9,7 +9,7 @@ import ClaimAccordion from "./ClaimAccordion";
 
 import poolsIcon from "../../assets/sections/pools.svg";
 import { selectLpGaugeEarned, selectTotalLpGaugeEarned } from "../../state/userSlice";
-import { fetchState, selectPools } from "../../state/poolsListSlice";
+import { fetchState, selectPools, selectUserWeightedAverageApy } from "../../state/poolsListSlice";
 import { Pool } from "../../lib";
 import { useBackd } from "../../app/hooks/use-backd";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
@@ -80,6 +80,7 @@ const ClaimPage = (): JSX.Element => {
   const lpGaugeEarned = useSelector(selectLpGaugeEarned);
   const totalLpGaugeEarned = useSelector(selectTotalLpGaugeEarned());
   const pools = useSelector(selectPools);
+  const weightedAverageApy = useSelector(selectUserWeightedAverageApy());
 
   const [poolsOpen, setPoolsOpen] = useState(true);
 
@@ -110,6 +111,7 @@ const ClaimPage = (): JSX.Element => {
               ?.filter((pool: Pool) => !lpGaugeEarned[pool.address].isZero())
               .map((pool: Pool) => lpGaugeEarned[pool.address]?.toString() ?? "") ?? []
           }
+          apy={weightedAverageApy}
         />
       )}
       <Note href="https://google.com/" target="_blank" rel="noopener noreferrer">

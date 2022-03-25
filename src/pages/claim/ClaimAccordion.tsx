@@ -5,7 +5,9 @@ import styled from "styled-components";
 // import { useDevice } from "../../app/hooks/use-device";
 import Accordion from "../../components/Accordion";
 import AccordionChevron from "../../components/AccordionChevron";
+import Loader from "../../components/Loader";
 import { BKD_PRICE } from "../../lib/constants";
+import { Optional } from "../../lib/types";
 // import Button from "../../components/Button";
 import { GradientText } from "../../styles/GradientText";
 import ClaimRow from "./ClaimRow";
@@ -124,9 +126,18 @@ interface Props {
   toggle: () => void;
   rows: string[];
   claimable: ScaledNumber;
+  apy: Optional<ScaledNumber>;
 }
 
-const ClaimAccordion = ({ icon, label, open, toggle, rows, claimable }: Props): JSX.Element => {
+const ClaimAccordion = ({
+  icon,
+  label,
+  open,
+  toggle,
+  rows,
+  claimable,
+  apy,
+}: Props): JSX.Element => {
   const { t } = useTranslation();
   // const { isMobile, isDesktop } = useDevice();
 
@@ -140,9 +151,7 @@ const ClaimAccordion = ({ icon, label, open, toggle, rows, claimable }: Props): 
             <Label>{label}</Label>
           </LabelContainer>
           <Claimable>{claimable.toUsdValue(BKD_PRICE)}</Claimable>
-          <ApyContainer>
-            <Apr>5.2%</Apr>
-          </ApyContainer>
+          <ApyContainer>{apy ? <Apr>{apy.toPercent()}</Apr> : <Loader />}</ApyContainer>
           <EndContainer>
             {/* {isDesktop && (
               <Button background="#1c0c37" width="12rem" small={isMobile} primary={isMobile}>
