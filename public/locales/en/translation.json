@@ -696,7 +696,7 @@
     "apy": "APY",
     "tvl": "TVL",
     "deposits": "Your deposits",
-    "claimable": "Claimable (USD)",
+    "claimable": "Claimable",
     "staked": "Staked"
   },
   "amountInput": {
