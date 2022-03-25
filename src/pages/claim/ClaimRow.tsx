@@ -62,7 +62,7 @@ const ValueUsd = styled.div`
   opacity: 0.6;
 
   font-size: 1.8rem;
-  margin-left: 1.3rem;
+  margin-left: 1rem;
   @media (max-width: 600px) {
     font-size: 1.2rem;
     margin-left: 0.2rem;
