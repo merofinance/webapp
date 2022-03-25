@@ -2,7 +2,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { RootState } from "../app/store";
 import { Backd } from "../lib/backd";
-import { Optional, Token } from "../lib/types";
+import { handleTransactionConfirmation } from "../lib/transactionsUtils";
+import { Optional, Token, Pool } from "../lib/types";
+import { fetchLpGaugeEarned } from "./userSlice";
 
 interface BkdState {
   token: Optional<Token>;
@@ -29,6 +31,17 @@ export const bkdSlice = createSlice({
     });
   },
 });
+
+export const claimRewards = createAsyncThunk(
+  "bkd/claimRewards",
+  async ({ backd, pool }: { backd: Backd; pool: Pool }, { dispatch }) => {
+    const tx = await backd.claimRewards(pool);
+    handleTransactionConfirmation(tx, { action: "Claim Rewards", args: { pool } }, dispatch, [
+      fetchLpGaugeEarned({ backd, pools: [pool] }),
+    ]);
+    return tx.hash;
+  }
+);
 
 export const selectBkdToken = (state: RootState): Optional<Token> => state.bkd.token;
 
