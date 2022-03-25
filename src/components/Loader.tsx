@@ -24,7 +24,15 @@ const StyledLoader = styled.div`
 
   width: ${(props: Props) => (props.row || props.button ? "100%" : "9rem")};
   height: ${(props: Props) =>
-    props.row ? (props.preview ? "5.6rem" : "7.2rem") : props.button ? "4.6rem" : "2.1rem"};
+    props.row
+      ? props.thin
+        ? "4.8rem"
+        : props.preview
+        ? "5.6rem"
+        : "7.2rem"
+      : props.button
+      ? "4.6rem"
+      : "2.1rem"};
   border-radius: ${(props: Props) => (props.row ? "14px" : props.button ? "15px" : "3px")};
   margin-top: ${(props: Props) => (props.row ? "0.8rem" : "0")};
 `;
@@ -33,10 +41,11 @@ interface Props {
   row?: boolean;
   preview?: boolean;
   button?: boolean;
+  thin?: boolean;
 }
 
-const Loader = ({ row, preview, button }: Props): JSX.Element => {
-  return <StyledLoader row={row} preview={preview} button={button} />;
+const Loader = ({ row, preview, button, thin }: Props): JSX.Element => {
+  return <StyledLoader row={row} preview={preview} button={button} thin={thin} />;
 };
 
 export default Loader;
