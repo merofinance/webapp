@@ -26,7 +26,7 @@ interface PoolMetadata {
 const poolMetadata: Record<string, PoolMetadata> = {
   ETH: {
     icon: eth,
-    harvestableMultiplier: ScaledNumber.fromUnscaled("3.23529411"),
+    harvestableMultiplier: ScaledNumber.fromUnscaled("4.743801653"),
     deployment: {
       "1337": {
         time: new Date(0),
