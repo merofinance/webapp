@@ -1082,10 +1082,10 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
-"@backdfund/protocol@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@backdfund/protocol/-/protocol-1.2.1.tgz#ad2779f2200e92cbf96d56e48e638ffb2cb47499"
-  integrity sha512-BTji8cdR1/sm5C1B6t0jx0UbleWDWOZ7OY/UxXUc0EDDOFZLMzezbXpsAZcBS+Wu5rT08wLbs2Z+TO1Apij6yA==
+"@backdfund/protocol@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@backdfund/protocol/-/protocol-2.0.0.tgz#19fe7f617658d4f57b217019534d7c2ddb4accce"
+  integrity sha512-tPp+VWRVk8+64UC5MRyrTRnulUA4GsdokN2OB5n0pWAMEY4eQ+BeuShQnGIIJoE2Jq485e4s2yw8a7gBD0wt2A==
   dependencies:
     "@openzeppelin/contracts" "^4.5.0"
     "@openzeppelin/contracts-upgradeable" "^4.5.1"
