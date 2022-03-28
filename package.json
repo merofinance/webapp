@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "BROWSER=none craco start",
-    "build": "craco build",
-    "test": "craco test",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
     "cy:open": "cypress open",
     "percy": "percy exec -- cypress run"
   },
@@ -49,7 +49,6 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
-    "@craco/craco": "^6.4.3",
     "@percy/cli": "^1.0.0-beta.71",
     "@percy/cypress": "^3.1.1",
     "@testing-library/jest-dom": "^5.16.1",
