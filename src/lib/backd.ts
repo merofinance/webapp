@@ -12,10 +12,10 @@ import {
   TopUpActionFeeHandler__factory as TopUpActionFeeHandlerFactory,
   TopUpAction__factory as TopUpActionFactory,
   Vault__factory as VaultFactory,
+  Controller,
+  TopUpAction,
 } from "@backdfund/protocol";
 import contracts from "@backdfund/protocol/config/deployments/map.json";
-import { Controller } from "@backdfund/protocol/js/Controller";
-import { TopUpAction } from "@backdfund/protocol/js/TopUpAction";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
 import fromEntries from "fromentries";
 import { PlainScaledNumber, ScaledNumber } from "scaled-number";
