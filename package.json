@@ -3,14 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "BROWSER=none craco start",
-    "build": "craco build",
-    "test": "craco test",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
     "cy:open": "cypress open",
     "percy": "percy exec -- cypress run"
   },
   "dependencies": {
-    "@backdfund/protocol": "^1.2.1",
+    "@backdfund/protocol": "^2.0.0",
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
     "@reduxjs/toolkit": "^1.7.1",
@@ -49,7 +49,6 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
-    "@craco/craco": "^6.4.3",
     "@percy/cli": "^1.0.0-beta.71",
     "@percy/cypress": "^3.1.1",
     "@testing-library/jest-dom": "^5.16.1",
