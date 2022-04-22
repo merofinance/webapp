@@ -36,7 +36,7 @@
       "empty": "Your transactions will appear here...",
       "network": {
         "unknown": "Unknown Network",
-        "ethereum": "Ethereum Mainet",
+        "ethereum": "Ethereum Mainnet",
         "chainId": "Chain id {{id}}",
         "testnet": "Ethereum {{network}} Testnet"
       }
