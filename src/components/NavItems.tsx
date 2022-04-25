@@ -2,6 +2,7 @@ import { useWeb3React } from "@web3-react/core";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { DOCS_LINK, BLOG_LINK, NEWSLETTER_LINK } from "../lib/links";
 import Dropdown from "./Dropdown";
 
 import NavItem from "./NavItem";
@@ -65,15 +66,15 @@ const NavItems = (): JSX.Element => {
       navItems: [
         {
           label: "header.tabs.docs",
-          link: "https://docs.backd.fund/",
+          link: DOCS_LINK,
         },
         {
           label: "header.tabs.blog",
-          link: "https://backdfund.medium.com/",
+          link: BLOG_LINK,
         },
         {
           label: "header.tabs.newsletter",
-          link: "https://backd.substack.com/welcome",
+          link: NEWSLETTER_LINK,
         },
       ],
     },

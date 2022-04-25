@@ -8,6 +8,12 @@ import shield from "../../assets/benefits/shield.svg";
 import { GradientLink } from "../../styles/GradientText";
 import { Header5, Header6 } from "../../styles/Headers";
 import useWindowPosition from "../../app/hooks/use-window-position";
+import {
+  DOCS_ACTIONS_LINK,
+  DOCS_KEEPERS_LINK,
+  DOCS_POOLS_LINK,
+  DOCS_TOKENOMICS_LINK,
+} from "../../lib/links";
 
 interface BenfitsType {
   icon: string;
@@ -21,25 +27,25 @@ const benefits: BenfitsType[] = [
     icon: zap,
     header: "benefits.reactiveLiquidity.header",
     description: "benefits.reactiveLiquidity.description",
-    url: "https://docs.backd.fund/protocol-architecture/actions",
+    url: DOCS_ACTIONS_LINK,
   },
   {
     icon: plus,
     header: "benefits.earnYield.header",
     description: "benefits.earnYield.description",
-    url: "https://docs.backd.fund/protocol-architecture/pools",
+    url: DOCS_POOLS_LINK,
   },
   {
     icon: percent,
     header: "benefits.feeShare.header",
     description: "benefits.feeShare.description",
-    url: "https://docs.backd.fund/protocol-architecture/tokenomics",
+    url: DOCS_TOKENOMICS_LINK,
   },
   {
     icon: shield,
     header: "benefits.keepers.header",
     description: "benefits.keepers.description",
-    url: "https://docs.backd.fund/protocol-architecture/backd-keepers",
+    url: DOCS_KEEPERS_LINK,
   },
 ];
 

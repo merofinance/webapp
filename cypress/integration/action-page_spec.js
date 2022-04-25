@@ -34,7 +34,7 @@ describe("Default state", () => {
   it("Should have Overview Link", () => {
     cy.get("#overview-link")
       .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://docs.backd.fund/protocol-architecture/top-ups");
+      .should("have.attr", "href", "https://docs.backd.fund/protocol-architecture/actions/top-ups");
   });
   it("Should have no Protectable Loans", () => {
     cy.get("#protectable-loans-header").should("not.exist");
@@ -71,7 +71,7 @@ describe("Register Page", () => {
   it("Should have Overview Link", () => {
     cy.get("#overview-link")
       .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://docs.backd.fund/protocol-architecture/top-ups");
+      .should("have.attr", "href", "https://docs.backd.fund/protocol-architecture/actions/top-ups");
   });
   it("Should have Existing Actions Info Card", () => {
     cy.get("#existing-actions-header").contains("Existing Actions");
