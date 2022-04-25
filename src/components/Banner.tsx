@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
+import { BLOG_TESTNET_GUIDE_LINK } from "../lib/links";
 import { Optional } from "../lib/types";
 
 const StyledBanner = styled.div`
@@ -65,11 +66,7 @@ const Banner = (): Optional<JSX.Element> => {
         <Text>{t("banner.testnet.live")}</Text>
         <Text>
           {t("banner.testnet.connect")}
-          <Link
-            href="https://backdfund.medium.com/backd-testnet-guide-16540e09c46"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <Link href={BLOG_TESTNET_GUIDE_LINK} target="_blank" rel="noopener noreferrer">
             {t("banner.testnet.blogPost")}
           </Link>
         </Text>

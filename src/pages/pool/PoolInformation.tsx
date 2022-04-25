@@ -9,6 +9,7 @@ import { Optional } from "../../lib/types";
 import etherscan from "../../assets/ui/etherscan.svg";
 import memo from "../../assets/ui/memo.svg";
 import { getEtherscanAddressLink } from "../../lib/web3";
+import { DOCS_STRATEGIES_LINK } from "../../lib/links";
 
 interface Props {
   pool: Optional<Pool>;
@@ -88,7 +89,7 @@ const PoolInformation = ({ pool }: Props): JSX.Element => {
             {
               icon: memo,
               label: t("pool.information.strategy.details.readMore"),
-              link: "https://docs.backd.fund/protocol-architecture/pools/strategies",
+              link: DOCS_STRATEGIES_LINK,
             },
           ],
         },

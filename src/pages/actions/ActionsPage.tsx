@@ -13,7 +13,7 @@ import YourDeposits from "./YourDeposits";
 import { GradientLink } from "../../styles/GradientText";
 import ExistingActions from "./ExistingActions";
 import LiveHelp from "../../components/LiveHelp";
-import { DISCORD_LINK } from "../../lib/links";
+import { DISCORD_LINK, DOCS_TOPUPS_LINK } from "../../lib/links";
 
 const StyledActionsPage = styled.div`
   width: 100%;
@@ -89,7 +89,7 @@ const ActionsPage = (): JSX.Element => {
               ? t("actions.overview")
               : t("actions.register.overview")
           }
-          link="https://docs.backd.fund/protocol-architecture/top-ups"
+          link={DOCS_TOPUPS_LINK}
         />
         <YourDeposits />
         <ExistingActions />

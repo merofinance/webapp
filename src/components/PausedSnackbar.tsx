@@ -8,8 +8,6 @@ import { dismissPausedSnackbar, selectPausedSnackbarDismissed } from "../state/u
 import exit from "../assets/ui/snackbar-exit.svg";
 import { DISCORD_LINK, TWITTER_LINK } from "../lib/links";
 
-// Update the rest of the links
-
 const Border = styled.div`
   position: relative;
   padding: 2px;

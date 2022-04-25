@@ -5,6 +5,7 @@ import { Pool } from "../lib";
 import { dismissBetaSnackbar, selectBetaSnackbarDismissed } from "../state/uiSlice";
 import Snackbar from "./Snackbar";
 import { Optional } from "../lib/types";
+import { BLOG_LAUNCH_LINK } from "../lib/links";
 
 interface Props {
   pool: Optional<Pool>;
@@ -26,7 +27,7 @@ const BetaSnackbar = ({ pool }: Props): Optional<JSX.Element> => {
       })}
       link={{
         label: t("components.findOutMore"),
-        link: "https://blog.backd.fund/backd-is-live-c90e8dc08f34",
+        link: BLOG_LAUNCH_LINK,
       }}
     />
   );

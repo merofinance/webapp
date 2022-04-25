@@ -7,6 +7,7 @@ import Overview from "../../components/Overview";
 import BoostChart from "./BoostChart";
 import StakeBkd from "./StakeBkd";
 import BasicCard from "../../components/BasicCard";
+import { DOCS_PLATFORM_FEES_LINK } from "../../lib/links";
 
 const StyledBkdPage = styled.div`
   width: 100%;
@@ -67,11 +68,7 @@ const BkdPage = (): JSX.Element => {
       <BkdSummary />
       <Container>
         <InfoCards>
-          <Overview
-            defaultClosed
-            description={t("bkd.overview")}
-            link="https://docs.backd.fund/protocol-architecture/tokenomics/token-income"
-          />
+          <Overview defaultClosed description={t("bkd.overview")} link={DOCS_PLATFORM_FEES_LINK} />
           <div>
             <StakeBkd />
           </div>
