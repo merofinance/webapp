@@ -8,7 +8,6 @@ import { dismissPausedSnackbar, selectPausedSnackbarDismissed } from "../state/u
 import exit from "../assets/ui/snackbar-exit.svg";
 import { DISCORD_LINK, TWITTER_LINK } from "../lib/constants";
 
-// Add validation for deposits
 // Update the rest of the links
 // Also check strategy shutdown?
 
@@ -51,7 +50,6 @@ const Link = styled.a`
   font-weight: 500;
   letter-spacing: 0.15px;
   text-decoration: underline;
-  margin-left: 0.4rem;
 
   font-size: 1.6rem;
   line-height: 2.8rem;

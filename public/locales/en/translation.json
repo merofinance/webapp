@@ -701,7 +701,8 @@
       "positive": "Amount must be a positive number",
       "exceedsBalance": "Amount exceeds available balance",
       "invalid": "Invalid number",
-      "exceedsCap": "Amount exceeds deposit limit"
+      "exceedsCap": "Amount exceeds deposit limit",
+      "poolPaused": "Deposits are currently disabled. Please try again later"
     },
     "approve": "Approve {{asset}}",
     "enter": "Enter amount"
@@ -715,7 +716,7 @@
     "close": "Close",
     "moreInDocs": "Find out more in the docs",
     "betaSnackbar": "This pool currently has a deposit limit of {{limit}} {{asset}} per address.",
-    "pausedSnackbar": "Deposits into this pool are currently paused. You can withdraw your funds. This can be for a number of reasons. To find out more, head to our <0>Twitter</0> or <1>Discord</1>.",
+    "pausedSnackbar": "Deposits into this pool are currently paused. Funds can be withdrawn. This can be for a number of reasons. To find out more, head to our <0>Twitter</0> or <1>Discord</1>.",
     "findOutMore": "Find out more.",
     "comingSoon": "Coming Soon",
     "overview": "Overview",
