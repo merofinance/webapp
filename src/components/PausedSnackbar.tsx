@@ -6,7 +6,7 @@ import { Optional } from "../lib/types";
 import { Pool } from "../lib";
 import { dismissPausedSnackbar, selectPausedSnackbarDismissed } from "../state/uiSlice";
 import exit from "../assets/ui/snackbar-exit.svg";
-import { DISCORD_LINK, TWITTER_LINK } from "../lib/links";
+import { DISCORD_LINK } from "../lib/links";
 
 const Border = styled.div`
   position: relative;
@@ -86,9 +86,6 @@ const PausedSnackbar = ({ pool }: Props): Optional<JSX.Element> => {
       <StyledPausedSnackbar>
         <Text>
           <Trans i18nKey="components.pausedSnackbar">
-            <Link href={TWITTER_LINK} target="_blank" rel="noopener noreferrer">
-              {t("footer.community.links.twitter")}
-            </Link>
             <Link href={DISCORD_LINK} target="_blank" rel="noopener noreferrer">
               {t("footer.community.links.discord")}
             </Link>
