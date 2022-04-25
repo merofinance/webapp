@@ -21,8 +21,9 @@ import ContentSection from "../../components/ContentSection";
 import LiveHelp from "../../components/LiveHelp";
 import { Optional } from "../../lib/types";
 import BetaSnackbar from "../../components/BetaSnackbar";
-import { ACTIONS_LIVE } from "../../lib/constants";
+import { ACTIONS_LIVE, DOCS_LINK } from "../../lib/constants";
 import { useNavigateToTop } from "../../app/hooks/use-navigate-to-top";
+import PausedSnackbar from "../../components/PausedSnackbar";
 
 const StyledPoolPage = styled.div`
   position: relative;
@@ -101,6 +102,7 @@ const PoolPage = (): Optional<JSX.Element> => {
       />
       <BackButton />
       <BetaSnackbar pool={pool} />
+      <PausedSnackbar pool={pool} />
       <PoolPageContent>
         <ContentContainer>
           <Content>
@@ -130,7 +132,7 @@ const PoolPage = (): Optional<JSX.Element> => {
               asset: pool?.underlying.symbol || "---",
               strategy: pool?.strategyName || "---",
             })}
-            link="https://docs.backd.fund/"
+            link={DOCS_LINK}
           />
           <PoolInformation pool={pool} />
           <LiveHelp />
