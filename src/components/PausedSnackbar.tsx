@@ -74,7 +74,7 @@ const PausedSnackbar = ({ pool }: Props): Optional<JSX.Element> => {
   const dispatch = useDispatch();
   const dismissed = useSelector(selectPausedSnackbarDismissed);
 
-  // if (!pool || !pool.isPaused || dismissed) return null;
+  if (!pool || !pool.isPaused || dismissed) return null;
 
   return (
     <StyledPausedSnackbar>
