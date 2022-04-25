@@ -8,7 +8,7 @@ import {
   DISCORD_LINK,
   DOCS_LINK,
   GITHUB_LINK,
-  MEDIUM_LINK,
+  BLOG_LINK,
   TELEGRAM_LINK,
   TWITTER_LINK,
 } from "../lib/links";
@@ -71,7 +71,7 @@ const linkLists: LinkListType[] = [
       {
         internal: false,
         label: "footer.resources.links.blog",
-        link: MEDIUM_LINK,
+        link: BLOG_LINK,
       },
     ],
   },
