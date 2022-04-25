@@ -11,6 +11,8 @@ import {
   BLOG_LINK,
   TELEGRAM_LINK,
   TWITTER_LINK,
+  NEWSLETTER_LINK,
+  TELEGRAM_ANNOUNCEMENTS_LINK,
 } from "../lib/links";
 
 interface LinkType {
@@ -81,12 +83,12 @@ const linkLists: LinkListType[] = [
       {
         internal: false,
         label: "footer.updates.links.newsletter",
-        link: DOCS_LINK,
+        link: NEWSLETTER_LINK,
       },
       {
         internal: false,
         label: "footer.updates.links.telegram",
-        link: TELEGRAM_LINK,
+        link: TELEGRAM_ANNOUNCEMENTS_LINK,
       },
     ],
   },
