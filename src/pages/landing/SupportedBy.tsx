@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 import { Header2 } from "../../styles/Headers";
-import divergence from "../../assets/protocols/divergence.svg";
 import curve from "../../assets/protocols/curve.svg";
 import aave from "../../assets/protocols/aave.svg";
+import { VENDOR_AAVE_LINK, VENDOR_CURVE_LINK } from "../../lib/links";
 
 interface ProtocolType {
   name: string;
@@ -16,12 +16,12 @@ const protocols: ProtocolType[] = [
   {
     name: "Curve",
     image: curve,
-    link: "https://curve.fi/",
+    link: VENDOR_CURVE_LINK,
   },
   {
     name: "Aave",
     image: aave,
-    link: "http://aave.com/",
+    link: VENDOR_AAVE_LINK,
   },
 ];
 

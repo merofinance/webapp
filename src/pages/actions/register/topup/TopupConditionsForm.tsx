@@ -31,6 +31,7 @@ import TopupConfirmation from "./TopupConfirmation";
 import { selectEthBalance } from "../../../../state/userSlice";
 import { selectEstimatedGasUsage } from "../../../../state/positionsSlice";
 import { useNavigateToTop } from "../../../../app/hooks/use-navigate-to-top";
+import { DOCS_TOPUPS_LINK } from "../../../../lib/links";
 
 export interface FormType {
   threshold: string;
@@ -298,7 +299,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
               suggestion: suggestedSingleTopup(),
             }),
             button: t("liveHelp.suggestions.singleLow.button"),
-            link: "https://docs.backd.fund/protocol-architecture/actions/top-ups",
+            link: DOCS_TOPUPS_LINK,
           })
         );
         return;
@@ -336,7 +337,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
                     recommendedThreshold: RECOMMENDED_THRESHOLD,
                   }),
                   button: t("liveHelp.suggestions.thresholdLow.button"),
-                  link: "https://docs.backd.fund/protocol-architecture/actions/top-ups",
+                  link: DOCS_TOPUPS_LINK,
                 })
               );
             } else {
@@ -356,7 +357,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
                     recommendedThreshold: suggestedMaximumTreshold(),
                   }),
                   button: t("liveHelp.suggestions.thresholdHigh.button"),
-                  link: "https://docs.backd.fund/protocol-architecture/actions/top-ups",
+                  link: DOCS_TOPUPS_LINK,
                 })
               );
             } else {
