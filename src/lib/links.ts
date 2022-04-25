@@ -3,6 +3,7 @@ export const TWITTER_LINK = "https://twitter.com/backdfund";
 export const DISCORD_LINK = "https://discord.gg/jpGvaFV3Rv";
 export const GITHUB_LINK = "https://github.com/backdfund";
 export const TELEGRAM_LINK = "https://t.me/backdchat";
+export const TELEGRAM_ANNOUNCEMENTS_LINK = "https://t.me/backdfund";
 export const NEWSLETTER_LINK = "https://backd.substack.com/welcome";
 
 // Blogs
