@@ -6,6 +6,7 @@ import { Header2 } from "../../styles/Headers";
 import discord from "../../assets/socials/discord.svg";
 import twitter from "../../assets/socials/twitter.svg";
 import github from "../../assets/socials/github.svg";
+import { DISCORD_LINK, GITHUB_LINK, TWITTER_LINK } from "../../lib/constants";
 
 interface SocialType {
   label: string;
@@ -17,17 +18,17 @@ const socials: SocialType[] = [
   {
     label: "joinCommunity.socials.discord",
     icon: discord,
-    link: "https://discord.gg/jpGvaFV3Rv",
+    link: DISCORD_LINK,
   },
   {
     label: "joinCommunity.socials.twitter",
     icon: twitter,
-    link: "https://twitter.com/backdfund",
+    link: TWITTER_LINK,
   },
   {
     label: "joinCommunity.socials.github",
     icon: github,
-    link: "https://github.com/backdfund",
+    link: GITHUB_LINK,
   },
 ];
 

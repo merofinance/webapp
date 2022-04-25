@@ -13,6 +13,7 @@ import YourDeposits from "./YourDeposits";
 import { GradientLink } from "../../styles/GradientText";
 import ExistingActions from "./ExistingActions";
 import LiveHelp from "../../components/LiveHelp";
+import { DISCORD_LINK } from "../../lib/constants";
 
 const StyledActionsPage = styled.div`
   width: 100%;
@@ -95,11 +96,7 @@ const ActionsPage = (): JSX.Element => {
         <LiveHelp />
         {location.pathname === "/actions" && (
           <ProposeContainer>
-            <ProposeLink
-              href="https://discord.gg/jpGvaFV3Rv"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <ProposeLink href={DISCORD_LINK} target="_blank" rel="noopener noreferrer">
               {t("actions.propose")}
             </ProposeLink>
           </ProposeContainer>

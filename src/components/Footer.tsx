@@ -4,6 +4,14 @@ import { useTranslation } from "react-i18next";
 
 import logo from "../assets/logo/full-logo.svg";
 import LanguageSelector from "./LanguageSelector";
+import {
+  DISCORD_LINK,
+  DOCS_LINK,
+  GITHUB_LINK,
+  MEDIUM_LINK,
+  TELEGRAM_LINK,
+  TWITTER_LINK,
+} from "../lib/constants";
 
 interface LinkType {
   internal: boolean;
@@ -28,22 +36,22 @@ const linkLists: LinkListType[] = [
       {
         internal: false,
         label: "footer.community.links.discord",
-        link: "https://discord.gg/jpGvaFV3Rv",
+        link: DISCORD_LINK,
       },
       {
         internal: false,
         label: "footer.community.links.twitter",
-        link: "https://twitter.com/backdfund",
+        link: TWITTER_LINK,
       },
       {
         internal: false,
         label: "footer.community.links.github",
-        link: "https://github.com/backdfund",
+        link: GITHUB_LINK,
       },
       {
         internal: false,
         label: "footer.community.links.telegram",
-        link: "https://t.me/backdchat",
+        link: TELEGRAM_LINK,
       },
     ],
   },
@@ -58,12 +66,12 @@ const linkLists: LinkListType[] = [
       {
         internal: false,
         label: "footer.resources.links.docs",
-        link: "https://docs.backd.fund/",
+        link: DOCS_LINK,
       },
       {
         internal: false,
         label: "footer.resources.links.blog",
-        link: "https://backdfund.medium.com/",
+        link: MEDIUM_LINK,
       },
     ],
   },
@@ -73,12 +81,12 @@ const linkLists: LinkListType[] = [
       {
         internal: false,
         label: "footer.updates.links.newsletter",
-        link: "https://backd.substack.com/welcome",
+        link: DOCS_LINK,
       },
       {
         internal: false,
         label: "footer.updates.links.telegram",
-        link: "https://t.me/backdfund",
+        link: TELEGRAM_LINK,
       },
     ],
   },

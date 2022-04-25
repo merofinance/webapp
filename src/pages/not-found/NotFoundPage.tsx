@@ -4,7 +4,7 @@ import { Trans, useTranslation } from "react-i18next";
 
 import { GradientLink } from "../../styles/GradientText";
 import { useDevice } from "../../app/hooks/use-device";
-import { STAKING_LIVE } from "../../lib/constants";
+import { DISCORD_LINK, DOCS_LINK, STAKING_LIVE } from "../../lib/constants";
 
 const StyledNotFoundPage = styled.div`
   width: 100%;
@@ -113,7 +113,7 @@ const NotFoundPage = (): JSX.Element => {
         <Trans i18nKey="notFound.subHeader">
           <GetInTouch
             id="not-found-support"
-            href="https://discord.gg/jpGvaFV3Rv"
+            href={DISCORD_LINK}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -135,7 +135,7 @@ const NotFoundPage = (): JSX.Element => {
         )}
         <ExternalLink
           id="not-found-docs"
-          href="https://docs.backd.fund/"
+          href={DOCS_LINK}
           target="_blank"
           rel="noopener noreferrer"
         >

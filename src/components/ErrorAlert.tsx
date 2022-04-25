@@ -13,6 +13,7 @@ import Button from "./Button";
 import Popup from "./Popup";
 import { changeNetwork } from "../lib/web3";
 import { useNavigateToTop } from "../app/hooks/use-navigate-to-top";
+import { DISCORD_LINK } from "../lib/constants";
 
 const Text = styled(Paragraph)`
   width: 100%;
@@ -66,7 +67,7 @@ const ErrorAlert = (): JSX.Element => {
       {error.hideContact ? null : (
         <Text>
           {t("errors.support")}
-          <Link href="https://discord.gg/jpGvaFV3Rv" target="_blank" rel="noopener noreferrer">
+          <Link href={DISCORD_LINK} target="_blank" rel="noopener noreferrer">
             {t("footer.community.links.discord")}
           </Link>
         </Text>

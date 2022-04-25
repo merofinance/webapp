@@ -20,6 +20,15 @@ export const TOPUP_ACTION_ROUTE = "/actions/register/topup";
 export const SLIPPAGE_TOLERANCE = 0.98; // 2%
 export const GAS_BUFFER = 11; // This is 10%, we use it as BigNumber.mul(GAS_BUFFER).div(10)
 
+// Links
+export const TWITTER_LINK = "https://twitter.com/backdfund";
+export const DISCORD_LINK = "https://discord.gg/jpGvaFV3Rv";
+export const GITHUB_LINK = "https://github.com/backdfund";
+export const TELEGRAM_LINK = "https://t.me/backdchat";
+export const DOCS_LINK = "https://docs.backd.fund/";
+export const MEDIUM_LINK = "https://backdfund.medium.com/";
+export const NEWSLETTER_LINK = "https://backd.substack.com/welcome";
+
 export const chainIds: Record<string, string> = {
   "1": "Mainnet",
   "3": "Ropsten",

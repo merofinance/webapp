@@ -6,6 +6,7 @@ import Seo from "../../components/Seo";
 import capitalEfficiency from "../../assets/litepaper/capital-efficiency.png";
 import topUp from "../../assets/litepaper/top-up.png";
 import backdFlow from "../../assets/litepaper/backd-flow.png";
+import { DISCORD_LINK, DOCS_LINK } from "../../lib/constants";
 
 const StyledLitepaperPage = styled.div`
   display: flex;
@@ -118,7 +119,7 @@ const LitepaperPage = (): JSX.Element => {
       <Header>{t("litepaper.introduction.header")}</Header>
       <Paragraph>
         <Trans i18nKey="litepaper.introduction.paragraph1">
-          <Link href="https://docs.backd.fund/" target="_blank" rel="noopener noreferrer">
+          <Link href={DOCS_LINK} target="_blank" rel="noopener noreferrer">
             Backd
           </Link>
         </Trans>
@@ -162,7 +163,7 @@ const LitepaperPage = (): JSX.Element => {
       <Header>{t("litepaper.token.header")}</Header>
       <Paragraph>
         <Trans i18nKey="litepaper.token.paragraph1">
-          <Link href="https://docs.backd.fund/" target="_blank" rel="noopener noreferrer">
+          <Link href={DOCS_LINK} target="_blank" rel="noopener noreferrer">
             docs
           </Link>
         </Trans>
@@ -229,11 +230,7 @@ const LitepaperPage = (): JSX.Element => {
       </List>
       <Paragraph>
         <Trans i18nKey="litepaper.token.community.paragraph3">
-          <Link
-            href="https://discord.com/invite/jpGvaFV3Rv"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <Link href={DISCORD_LINK} target="_blank" rel="noopener noreferrer">
             discord channel
           </Link>
         </Trans>
