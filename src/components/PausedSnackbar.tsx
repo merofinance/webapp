@@ -8,14 +8,15 @@ import { dismissPausedSnackbar, selectPausedSnackbarDismissed } from "../state/u
 import exit from "../assets/ui/snackbar-exit.svg";
 import { DISCORD_LINK, TWITTER_LINK } from "../lib/constants";
 
-const StyledPausedSnackbar = styled.div`
-  width: 100%;
-  padding: 0.7rem 1.6rem;
+// Add validation for deposits
+// Update the rest of the links
+// Also check strategy shutdown?
+
+const Border = styled.div`
+  position: relative;
+  padding: 2px;
+  background: var(--gradient);
   border-radius: 1.4rem;
-  background-color: rgba(3, 184, 255, 0.2);
-  border: 2px solid var(--info);
-  display: flex;
-  justify-content: space-between;
 
   margin-bottom: 2.6rem;
   @media (max-width: 600px) {
@@ -23,8 +24,17 @@ const StyledPausedSnackbar = styled.div`
   }
 `;
 
+const StyledPausedSnackbar = styled.div`
+  width: 100%;
+  padding: 0.7rem 1.6rem;
+  border-radius: 1.4rem;
+  background: rgba(10, 6, 34, 0.8);
+  display: flex;
+  justify-content: space-between;
+`;
+
 const Text = styled.div`
-  color: var(--info);
+  color: white;
   font-weight: 500;
   letter-spacing: 0.15px;
 
@@ -37,7 +47,7 @@ const Text = styled.div`
 `;
 
 const Link = styled.a`
-  color: var(--info);
+  color: white;
   font-weight: 500;
   letter-spacing: 0.15px;
   text-decoration: underline;
@@ -77,21 +87,23 @@ const PausedSnackbar = ({ pool }: Props): Optional<JSX.Element> => {
   if (!pool || !pool.isPaused || dismissed) return null;
 
   return (
-    <StyledPausedSnackbar>
-      <Text>
-        <Trans i18nKey="components.pausedSnackbar">
-          <Link href={TWITTER_LINK} target="_blank" rel="noopener noreferrer">
-            {t("footer.community.links.twitter")}
-          </Link>
-          <Link href={DISCORD_LINK} target="_blank" rel="noopener noreferrer">
-            {t("footer.community.links.discord")}
-          </Link>
-        </Trans>
-      </Text>
-      <ExitButton onClick={() => dispatch(dismissPausedSnackbar())}>
-        <ExitIcon src={exit} />
-      </ExitButton>
-    </StyledPausedSnackbar>
+    <Border>
+      <StyledPausedSnackbar>
+        <Text>
+          <Trans i18nKey="components.pausedSnackbar">
+            <Link href={TWITTER_LINK} target="_blank" rel="noopener noreferrer">
+              {t("footer.community.links.twitter")}
+            </Link>
+            <Link href={DISCORD_LINK} target="_blank" rel="noopener noreferrer">
+              {t("footer.community.links.discord")}
+            </Link>
+          </Trans>
+        </Text>
+        <ExitButton onClick={() => dispatch(dismissPausedSnackbar())}>
+          <ExitIcon src={exit} />
+        </ExitButton>
+      </StyledPausedSnackbar>
+    </Border>
   );
 };
 
