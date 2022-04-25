@@ -199,6 +199,7 @@ export class Web3Backd implements Backd {
       depositCap,
       harvestable,
       vaultAddress,
+      isPaused,
     ] = await Promise.all([
       pool.name(),
       pool.getLpToken(),
@@ -211,6 +212,7 @@ export class Web3Backd implements Backd {
       pool.depositCap(),
       this.getHarvestable(address),
       pool.getVault(),
+      pool.isPaused(),
     ]);
 
     const vault = VaultFactory.connect(vaultAddress, this._provider);
@@ -260,6 +262,7 @@ export class Web3Backd implements Backd {
       harvestable: new ScaledNumber(harvestable, underlying.decimals).toPlain(),
       strategyAddress,
       strategyName,
+      isPaused,
     };
   }
 
