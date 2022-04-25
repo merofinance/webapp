@@ -13,7 +13,7 @@ import Button from "./Button";
 import Popup from "./Popup";
 import { changeNetwork } from "../lib/web3";
 import { useNavigateToTop } from "../app/hooks/use-navigate-to-top";
-import { DISCORD_LINK } from "../lib/constants";
+import { DISCORD_LINK } from "../lib/links";
 
 const Text = styled(Paragraph)`
   width: 100%;

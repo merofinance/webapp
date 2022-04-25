@@ -6,7 +6,7 @@ import { Header2 } from "../../styles/Headers";
 import discord from "../../assets/socials/discord.svg";
 import twitter from "../../assets/socials/twitter.svg";
 import github from "../../assets/socials/github.svg";
-import { DISCORD_LINK, GITHUB_LINK, TWITTER_LINK } from "../../lib/constants";
+import { DISCORD_LINK, GITHUB_LINK, TWITTER_LINK } from "../../lib/links";
 
 interface SocialType {
   label: string;

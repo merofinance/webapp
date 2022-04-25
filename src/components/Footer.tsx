@@ -11,7 +11,7 @@ import {
   MEDIUM_LINK,
   TELEGRAM_LINK,
   TWITTER_LINK,
-} from "../lib/constants";
+} from "../lib/links";
 
 interface LinkType {
   internal: boolean;

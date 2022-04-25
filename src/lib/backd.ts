@@ -262,7 +262,7 @@ export class Web3Backd implements Backd {
       harvestable: new ScaledNumber(harvestable, underlying.decimals).toPlain(),
       strategyAddress,
       strategyName,
-      isPaused,
+      isPaused: true,
     };
   }
 

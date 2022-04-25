@@ -6,7 +6,7 @@ import Seo from "../../components/Seo";
 import capitalEfficiency from "../../assets/litepaper/capital-efficiency.png";
 import topUp from "../../assets/litepaper/top-up.png";
 import backdFlow from "../../assets/litepaper/backd-flow.png";
-import { DISCORD_LINK, DOCS_LINK } from "../../lib/constants";
+import { DISCORD_LINK, DOCS_LINK } from "../../lib/links";
 
 const StyledLitepaperPage = styled.div`
   display: flex;

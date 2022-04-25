@@ -21,7 +21,8 @@ import ContentSection from "../../components/ContentSection";
 import LiveHelp from "../../components/LiveHelp";
 import { Optional } from "../../lib/types";
 import BetaSnackbar from "../../components/BetaSnackbar";
-import { ACTIONS_LIVE, DOCS_LINK } from "../../lib/constants";
+import { DOCS_LINK } from "../../lib/links";
+import { ACTIONS_LIVE } from "../../lib/constants";
 import { useNavigateToTop } from "../../app/hooks/use-navigate-to-top";
 import PausedSnackbar from "../../components/PausedSnackbar";
 

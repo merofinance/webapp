@@ -13,7 +13,7 @@ import YourDeposits from "./YourDeposits";
 import { GradientLink } from "../../styles/GradientText";
 import ExistingActions from "./ExistingActions";
 import LiveHelp from "../../components/LiveHelp";
-import { DISCORD_LINK } from "../../lib/constants";
+import { DISCORD_LINK } from "../../lib/links";
 
 const StyledActionsPage = styled.div`
   width: 100%;

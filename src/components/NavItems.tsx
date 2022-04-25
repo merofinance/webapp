@@ -2,7 +2,7 @@ import { useWeb3React } from "@web3-react/core";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { DOCS_LINK, MEDIUM_LINK, NEWSLETTER_LINK } from "../lib/constants";
+import { DOCS_LINK, MEDIUM_LINK, NEWSLETTER_LINK } from "../lib/links";
 import Dropdown from "./Dropdown";
 
 import NavItem from "./NavItem";

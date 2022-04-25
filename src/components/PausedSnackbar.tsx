@@ -6,10 +6,9 @@ import { Optional } from "../lib/types";
 import { Pool } from "../lib";
 import { dismissPausedSnackbar, selectPausedSnackbarDismissed } from "../state/uiSlice";
 import exit from "../assets/ui/snackbar-exit.svg";
-import { DISCORD_LINK, TWITTER_LINK } from "../lib/constants";
+import { DISCORD_LINK, TWITTER_LINK } from "../lib/links";
 
 // Update the rest of the links
-// Also check strategy shutdown?
 
 const Border = styled.div`
   position: relative;

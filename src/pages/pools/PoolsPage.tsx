@@ -15,7 +15,7 @@ import Overview from "../../components/Overview";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import LiveHelp from "../../components/LiveHelp";
 import Loader from "../../components/Loader";
-import { DOCS_LINK } from "../../lib/constants";
+import { DOCS_LINK } from "../../lib/links";
 
 const StyledPoolsPage = styled.div`
   width: 100%;
