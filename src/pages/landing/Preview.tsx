@@ -120,7 +120,11 @@ const Preview = (): Optional<JSX.Element> => {
             <Loader row preview />
           </>
         )}
-        {pools && pools.map((pool: Pool) => <PoolsRow key={pool.name} preview pool={pool} />)}
+        {pools &&
+          pools
+            .sort((a: Pool, b: Pool) => (a.apy && b.apy ? b.apy.toNumber() - a.apy.toNumber() : 0))
+            .slice(0, 5)
+            .map((pool: Pool) => <PoolsRow key={pool.name} preview pool={pool} />)}
       </Container>
     </StyledPreview>
   );
