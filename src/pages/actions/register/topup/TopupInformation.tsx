@@ -34,6 +34,10 @@ const Summary = styled.div`
     font-size: 1.4rem;
     margin-bottom: 1.8rem;
   }
+
+  @media only percy {
+    opacity: 0;
+  }
 `;
 
 const Label = styled.div`

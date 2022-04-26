@@ -1,23 +1,9 @@
-import { ApiPrices, convertPrices } from "./coingecko";
+import { getPrices } from "./coingecko";
 
-const samplePrices: ApiPrices = {
-  ethereum: {
-    usd: 1845.02,
-  },
-  "aave-dai": {
-    usd: 0.997199,
-  },
-};
-
-const geckoIdToSymbol: Record<string, string> = {
-  "aave-dai": "adai",
-  ethereum: "eth",
-};
-
-test("convertPrices restores symbols", () => {
-  const prices = convertPrices(["ETH", "aDAI"], "usd", geckoIdToSymbol, samplePrices);
-  expect(prices).toEqual({
-    ETH: samplePrices["ethereum"]["usd"],
-    aDAI: samplePrices["aave-dai"]["usd"],
-  });
+test("fetches prices from Coingecko", async () => {
+  const prices = await getPrices(["DAI", "USDC", "ETH"]);
+  expect(prices.DAI).toBeCloseTo(1, 0.01);
+  expect(prices.USDC).toBeCloseTo(1, 0.01);
+  expect(prices.ETH).toBeGreaterThan(2_000);
+  expect(prices.ETH).toBeLessThan(10_000);
 });
