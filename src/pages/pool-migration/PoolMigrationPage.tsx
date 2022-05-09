@@ -18,6 +18,10 @@ const StyledPoolMigrationPage = styled.div`
 
 const TextSection = styled.div`
   position: relative;
+`;
+
+const TextContent = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,27 +33,51 @@ const Background = styled.img`
   left: 50%;
   transform: translate(-50%);
   height: 184%;
+
+  @media (max-width: 600px) {
+    height: 180%;
+    left: auto;
+    right: -90%;
+    transform: none;
+  }
 `;
 
 const Header = styled.h1`
   font-weight: 700;
+  text-align: center;
+
   font-size: 3.8rem;
   margin-bottom: 1.7rem;
+  @media (max-width: 600px) {
+    font-size: 2.8rem;
+    margin-bottom: 1.2rem;
+  }
 `;
 
 const Description = styled.h3`
   font-weight: 500;
-  font-size: 2rem;
-  line-height: 2.8rem;
   max-width: 50rem;
   text-align: center;
+
+  font-size: 2rem;
+  line-height: 2.8rem;
   margin-bottom: 3.7rem;
+  @media (max-width: 600px) {
+    font-size: 1.4rem;
+    line-height: 1.8rem;
+    margin-bottom: 2.8rem;
+  }
 `;
 
 const Link = styled(GradientLink)`
   font-weight: 500;
+
   font-size: 2rem;
   line-height: 2.8rem;
+  @media (max-width: 600px) {
+    font-size: 1.4rem;
+    line-height: 1.8rem;
+  }
 `;
 
 const PoolMigrationPage = (): JSX.Element => {
@@ -60,25 +88,26 @@ const PoolMigrationPage = (): JSX.Element => {
     <StyledPoolMigrationPage>
       <TextSection>
         <Background src={bg} alt="Background" />
-
-        <Header>{t("poolMigration.header")}</Header>
-        <Description>
-          {t("poolMigration.details")}{" "}
-          <Link href="https://www.google.com/" target="_blank" rel="noopener noreferrer">
-            {t("components.moreInBlog")}
-            <LaunchIcon
-              fontSize={isMobile ? "small" : "medium"}
-              style={{
-                fill: "var(--secondary)",
-                transform: "translateY(2px)",
-                marginLeft: "3px",
-              }}
-            />
-          </Link>
-        </Description>
-        <Button square primary width="25rem">
-          {t("poolMigration.migrateAll")}
-        </Button>
+        <TextContent>
+          <Header>{t("poolMigration.header")}</Header>
+          <Description>
+            {t("poolMigration.details")}{" "}
+            <Link href="https://www.google.com/" target="_blank" rel="noopener noreferrer">
+              {t("components.moreInBlog")}
+              <LaunchIcon
+                fontSize={isMobile ? "small" : "medium"}
+                style={{
+                  fill: "var(--secondary)",
+                  transform: "translateY(2px)",
+                  marginLeft: "3px",
+                }}
+              />
+            </Link>
+          </Description>
+          <Button square={!isMobile} medium={isMobile} primary width="25rem">
+            {t("poolMigration.migrateAll")}
+          </Button>
+        </TextContent>
       </TextSection>
       <Migrations />
     </StyledPoolMigrationPage>

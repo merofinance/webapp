@@ -30,6 +30,17 @@ const StyledMigration = styled.div`
   :hover {
     background-color: #1a1438;
   }
+
+  @media (max-width: 1387px) {
+    > div:nth-child(3) {
+      display: none;
+    }
+  }
+  @media (max-width: 1076px) {
+    > div:nth-child(2) {
+      display: none;
+    }
+  }
 `;
 
 const Item = styled.div`

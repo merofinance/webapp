@@ -14,6 +14,10 @@ const StyledMigrations = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const Headers = styled.div`
@@ -21,6 +25,17 @@ const Headers = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0 1.7rem;
+
+  @media (max-width: 1387px) {
+    > div:nth-child(3) {
+      display: none;
+    }
+  }
+  @media (max-width: 1076px) {
+    > div:nth-child(2) {
+      display: none;
+    }
+  }
 `;
 
 const Header = styled.div`
