@@ -769,7 +769,10 @@
       "details": "Deposit into an uncapped pool below to get started.",
       "mobileDetails": "Deposit now to get started",
       "ctaText": "Migrate now"
-    }
+    },
+    "header": "Migrate your liquidity",
+    "details": "You’ll need to migjrate your liquidity to the new uncapped pools.",
+    "migrateAll": "Migrate all"
   },
   "metadata": {
     "landing": {
