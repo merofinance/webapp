@@ -4,13 +4,21 @@ import LaunchIcon from "@material-ui/icons/Launch";
 
 import bg from "../assets/illustrations/large-banner-bg.svg";
 import { GradientLink } from "../styles/GradientText";
+import { useDevice } from "../app/hooks/use-device";
 
 const Glow = styled.div`
   width: 100%;
-  padding: 1rem;
   border-radius: 1.8rem;
   background: linear-gradient(to right, rgba(197, 50, 249, 0.2), rgba(50, 178, 229, 0.2));
   margin-bottom: 2.4rem;
+
+  padding: 1rem;
+  @media (max-width: 940px) {
+    padding: 0.8rem;
+  }
+  @media (max-width: 600px) {
+    padding: 0.7rem;
+  }
 `;
 
 const Container = styled.div`
@@ -38,39 +46,95 @@ const Content = styled.div`
   position: relative;
   display: flex;
   width: 100%;
-  padding: 2.9rem;
   flex-direction: column;
   align-items: center;
+
+  padding: 2.9rem;
+  @media (max-width: 940px) {
+    padding: 2.3rem;
+  }
+  @media (max-width: 600px) {
+    padding: 1.6rem;
+  }
 `;
 
 const Header = styled.h3`
-  font-size: 3.6rem;
   font-weight: 700;
+
+  font-size: 3.6rem;
   margin-bottom: 2.2rem;
+  @media (max-width: 940px) {
+    font-size: 3rem;
+    margin-bottom: 1.8rem;
+  }
+  @media (max-width: 600px) {
+    font-size: 1.8rem;
+    margin-bottom: 1.4rem;
+  }
 `;
 
 const DetailsContainer = styled.div`
   display: flex;
+
   margin-bottom: 2.7rem;
+  @media (max-width: 940px) {
+    margin-bottom: 2.3rem;
+  }
+  @media (max-width: 868px) {
+    flex-direction: column;
+    align-items: center;
+  }
+  @media (max-width: 600px) {
+    margin-bottom: 2rem;
+  }
 `;
 
 const Details = styled.p`
-  font-size: 2rem;
   font-weight: 500;
+  text-align: center;
+
+  font-size: 2rem;
+  @media (max-width: 940px) {
+    font-size: 1.8rem;
+  }
+  @media (max-width: 600px) {
+    font-size: 1.4rem;
+  }
 `;
 
 const Link = styled(GradientLink)`
-  font-size: 2rem;
   font-weight: 500;
   margin-left: 0.4rem;
+
+  font-size: 2rem;
+  @media (max-width: 940px) {
+    font-size: 1.8rem;
+  }
+  @media (max-width: 868px) {
+    margin-top: 0.5rem;
+  }
+  @media (max-width: 600px) {
+    font-size: 1.4rem;
+    margin-top: 0.3rem;
+  }
 `;
 
 const Button = styled.button`
+  background: white;
+  cursor: pointer;
+
   width: 28.8rem;
   padding: 1.8rem 0;
   border-radius: 1.4rem;
-  background: white;
-  cursor: pointer;
+  @media (max-width: 940px) {
+    width: 22.8rem;
+    padding: 1.4rem 0;
+  }
+  @media (max-width: 600px) {
+    width: 18rem;
+    padding: 1.3rem 0;
+    border-radius: 1.2rem;
+  }
 
   :hover {
     span {
@@ -80,8 +144,12 @@ const Button = styled.button`
 `;
 
 const ButtonText = styled.span`
-  font-size: 1.5rem;
   font-weight: 600;
+
+  font-size: 1.5rem;
+  @media (max-width: 940px) {
+    font-size: 1.3rem;
+  }
 
   background: linear-gradient(
     to right,
@@ -106,6 +174,7 @@ interface Props {
 
 const LargeBanner = ({ header, details, link, ctaText, ctaAction }: Props): JSX.Element => {
   const { t } = useTranslation();
+  const { isMobile } = useDevice();
 
   return (
     <Glow>
@@ -118,7 +187,7 @@ const LargeBanner = ({ header, details, link, ctaText, ctaAction }: Props): JSX.
             <Link href={link} target="_blank" rel="noopener noreferrer">
               {t("components.moreInBlog")}
               <LaunchIcon
-                fontSize="medium"
+                fontSize={isMobile ? "small" : "medium"}
                 style={{
                   fill: "var(--secondary)",
                   transform: "translateY(2px)",

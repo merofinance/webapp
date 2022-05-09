@@ -766,7 +766,8 @@
   "poolMigration": {
     "banner": {
       "header": "Uncapped pools have launched!",
-      "details": "Deposit into an uncapped pools below to get started.",
+      "details": "Deposit into an uncapped pool below to get started.",
+      "mobileDetails": "Deposit now to get started",
       "ctaText": "Migrate now"
     }
   },

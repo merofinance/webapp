@@ -19,6 +19,7 @@ import Loader from "../../components/Loader";
 import { DOCS_LINK } from "../../lib/links";
 import { selectUsersValuesUsdEverywhere } from "../../state/valueSelectors";
 import LargeBanner from "../../components/LargeBanner";
+import { useDevice } from "../../app/hooks/use-device";
 
 const StyledPoolsPage = styled.div`
   width: 100%;
@@ -97,6 +98,7 @@ const PoolsPage = (): JSX.Element => {
   const pools = useSelector(selectPools);
   const updated = useWeb3Updated();
   const balances = useSelector(selectUsersValuesUsdEverywhere);
+  const { isMobile } = useDevice();
 
   useEffect(() => {
     if (!backd) return;
@@ -108,7 +110,9 @@ const PoolsPage = (): JSX.Element => {
       <Seo title={t("metadata.pools.title")} description={t("metadata.pools.description")} />
       <LargeBanner
         header={t("poolMigration.banner.header")}
-        details={t("poolMigration.banner.details")}
+        details={
+          isMobile ? t("poolMigration.banner.mobileDetails") : t("poolMigration.banner.details")
+        }
         link="https://www.google.com/"
         ctaText={t("poolMigration.banner.ctaText")}
         ctaAction={() => navigate("/pool-migration")}
