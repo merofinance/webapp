@@ -6,6 +6,7 @@ import { useDevice } from "../../app/hooks/use-device";
 import { GradientLink } from "../../styles/GradientText";
 import Button from "../../components/Button";
 import bg from "../../assets/illustrations/light-bg.svg";
+import Migrations from "./Migrations";
 
 const StyledPoolMigrationPage = styled.div`
   position: relative;
@@ -79,6 +80,7 @@ const PoolMigrationPage = (): JSX.Element => {
           {t("poolMigration.migrateAll")}
         </Button>
       </TextSection>
+      <Migrations />
     </StyledPoolMigrationPage>
   );
 };
