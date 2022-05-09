@@ -715,7 +715,7 @@
     "back": "Back",
     "close": "Close",
     "moreInDocs": "Find out more in the docs",
-    "moreInBlog": "Find out more on the blog.",
+    "moreInBlog": "Find out more on the blog",
     "betaSnackbar": "This pool currently has a deposit limit of {{limit}} {{asset}} per address.",
     "pausedSnackbar": "Deposits into this pool are currently paused. Funds can be withdrawn. This can be for a number of reasons. To find out more, head to our <0>Discord</0>.",
     "findOutMore": "Find out more.",
