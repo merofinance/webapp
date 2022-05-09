@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 import { useBackd } from "../../app/hooks/use-backd";
 import ContentSection from "../../components/ContentSection";
@@ -17,6 +18,7 @@ import LiveHelp from "../../components/LiveHelp";
 import Loader from "../../components/Loader";
 import { DOCS_LINK } from "../../lib/links";
 import { selectUsersValuesUsdEverywhere } from "../../state/valueSelectors";
+import LargeBanner from "../../components/LargeBanner";
 
 const StyledPoolsPage = styled.div`
   width: 100%;
@@ -89,6 +91,7 @@ const InfoCards = styled.div`
 
 const PoolsPage = (): JSX.Element => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const backd = useBackd();
   const dispatch = useDispatch();
   const pools = useSelector(selectPools);
@@ -103,6 +106,13 @@ const PoolsPage = (): JSX.Element => {
   return (
     <StyledPoolsPage>
       <Seo title={t("metadata.pools.title")} description={t("metadata.pools.description")} />
+      <LargeBanner
+        header={t("poolMigration.banner.header")}
+        details={t("poolMigration.banner.details")}
+        link="https://www.google.com/"
+        ctaText={t("poolMigration.banner.ctaText")}
+        ctaAction={() => navigate("/pool-migration")}
+      />
       <PoolsPageContent>
         <ContentContainer>
           <ContentSection header={t("pools.header")} statistics={<PoolsStatistics />}>
