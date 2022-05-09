@@ -715,6 +715,7 @@
     "back": "Back",
     "close": "Close",
     "moreInDocs": "Find out more in the docs",
+    "moreInBlog": "Find out more on the blog.",
     "betaSnackbar": "This pool currently has a deposit limit of {{limit}} {{asset}} per address.",
     "pausedSnackbar": "Deposits into this pool are currently paused. Funds can be withdrawn. This can be for a number of reasons. To find out more, head to our <0>Discord</0>.",
     "findOutMore": "Find out more.",
@@ -760,6 +761,13 @@
         "text": "I’ve noticed your {{protocol}} top-up Action is running low on funds. I suggest you delete that top-up Action and register a new one as soon as possible.",
         "button": "Delete action"
       }
+    }
+  },
+  "poolMigration": {
+    "banner": {
+      "header": "Uncapped pools have launched!",
+      "details": "Deposit into an uncapped pools below to get started.",
+      "ctaText": "Migrate now"
     }
   },
   "metadata": {
