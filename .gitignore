@@ -2,3 +2,4 @@
 /build
 localazy.keys.json
 data.json
+.DS_Store
