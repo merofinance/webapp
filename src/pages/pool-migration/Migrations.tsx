@@ -85,7 +85,7 @@ const Migrations = (): Optional<JSX.Element> => {
             <Loader row />
           </>
         )}
-        {pools && pools.map((pool: Pool) => <Migration pool={pool} />)}
+        {pools && pools.map((pool: Pool) => <Migration key={pool.address} pool={pool} />)}
       </Rows>
     </StyledMigrations>
   );
