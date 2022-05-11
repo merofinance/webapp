@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import LaunchIcon from "@material-ui/icons/Launch";
@@ -7,6 +8,7 @@ import { GradientLink } from "../../styles/GradientText";
 import Button from "../../components/Button";
 import bg from "../../assets/illustrations/light-bg.svg";
 import Migrations from "./Migrations";
+import MigrateAll from "./MigrateAll";
 
 const StyledPoolMigrationPage = styled.div`
   position: relative;
@@ -83,6 +85,7 @@ const Link = styled(GradientLink)`
 const PoolMigrationPage = (): JSX.Element => {
   const { isMobile } = useDevice();
   const { t } = useTranslation();
+  const [isMigrationOpen, setIsMigrationOpen] = useState(false);
 
   return (
     <StyledPoolMigrationPage>
@@ -104,12 +107,19 @@ const PoolMigrationPage = (): JSX.Element => {
               />
             </Link>
           </Description>
-          <Button square={!isMobile} medium={isMobile} primary width="25rem">
+          <Button
+            click={() => setIsMigrationOpen(true)}
+            square={!isMobile}
+            medium={isMobile}
+            primary
+            width="25rem"
+          >
             {t("poolMigration.migrateAll")}
           </Button>
         </TextContent>
       </TextSection>
       <Migrations />
+      <MigrateAll migrating={isMigrationOpen} close={() => setIsMigrationOpen(false)} />
     </StyledPoolMigrationPage>
   );
 };
