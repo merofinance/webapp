@@ -122,6 +122,11 @@ const PoolsPage = (): JSX.Element => {
             )}
             {pools &&
               pools
+                .filter((pool: Pool) => {
+                  if (!pool.isPaused) return true;
+                  if (!balances || !balances[pool.address]) return false;
+                  return !balances[pool.address].isZero();
+                })
                 .sort((a: Pool, b: Pool) =>
                   a.apy && b.apy ? b.apy.toNumber() - a.apy.toNumber() : 0
                 )
