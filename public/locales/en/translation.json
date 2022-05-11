@@ -775,7 +775,14 @@
     "migrateAll": "Migrate all",
     "migrate": "Migrate",
     "approve": "Approve",
-    "withdraw": "Withdraw"
+    "withdraw": "Withdraw",
+    "transactions": {
+      "header": "transactions",
+      "body": "Please complete this transaction within your wallet. For more information, reach out to our team in the <0>Discord</0>.",
+      "approveTooltip": "Approve the pool migration zap for spending your {{asset}}",
+      "migrate": "Migrate pools",
+      "migrateTooltip": "Migrate your liquidity to the new uncapped pools"
+    }
   },
   "metadata": {
     "landing": {
