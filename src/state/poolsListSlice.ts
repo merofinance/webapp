@@ -167,10 +167,13 @@ export const selectAverageApy = (state: RootState): Optional<ScaledNumber> => {
   let poolCount = 0;
   let total = new ScaledNumber();
   for (let i = 0; i < pools.length; i++) {
-    const { apy } = pools[i];
-    if (!apy) return null;
-    total = total.add(apy);
-    poolCount++;
+    const pool = pools[i];
+    if (!pool.isPaused) {
+      const { apy } = pool;
+      if (!apy) return null;
+      total = total.add(apy);
+      poolCount++;
+    }
   }
   return total.div(poolCount);
 };
