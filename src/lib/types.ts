@@ -28,6 +28,7 @@ export interface GenericPool<T> {
   harvestable: T;
   strategyAddress: string;
   strategyName: string;
+  isPaused: boolean;
 }
 
 export type Pool = GenericPool<ScaledNumber>;

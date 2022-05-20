@@ -3,7 +3,7 @@ import { Selector } from "reselect";
 import { ScaledNumber } from "scaled-number";
 
 import { RootState } from "../app/store";
-import { Optional, Pool } from "../lib/types";
+import { Optional, Pool, Position } from "../lib/types";
 import { selectPools, selectPrice, selectPrices } from "./poolsListSlice";
 import { selectPoolPositions, selectPositions } from "./positionsSlice";
 import { selectBalances } from "./userSlice";
@@ -26,6 +26,7 @@ import { selectBalances } from "./userSlice";
  * Options are:
  * - Pool: The value is within the given pool
  * - Total: The value is across all pools
+ * - Values: The value is a Record mapping from pool address to the values
  *
  * What:
  * The unit of the value.
@@ -131,6 +132,44 @@ export function selectUsersPoolUnderlyingEverywhere(
     return usersPoolLpEverywhere.mul(pool.exchangeRate);
   };
 }
+
+export const selectUsersValuesUsdEverywhere = (
+  state: RootState
+): Optional<Record<string, ScaledNumber>> => {
+  const values: Record<string, ScaledNumber> = {};
+  const pools = selectPools(state);
+  const prices = selectPrices(state);
+  const balances = selectBalances(state);
+  const positions = selectPositions(state);
+  if (!pools || !prices || !balances || !positions) return null;
+
+  // Looping through Pools and adding values
+  for (let i = 0; i < pools.length; i++) {
+    const pool = pools[i];
+    let total = new ScaledNumber();
+    const underlyingPrice = prices[pool.underlying.symbol];
+    if (!underlyingPrice) return null;
+
+    // Adding LP Staked
+    const usersPoolLpStaked = balances[pool.stakerVaultAddress];
+    if (!usersPoolLpStaked) return null;
+    total = total.add(usersPoolLpStaked);
+
+    // Adding LP Held
+    const usersPoolLpHeld = balances[pool.lpToken.address];
+    if (!usersPoolLpHeld) return null;
+    total = total.add(usersPoolLpHeld);
+
+    // Adding LP Locked
+    const locked = positions.filter((p: Position) => p.actionToken === pool.underlying.address);
+    for (let j = 0; j < locked.length; j++) {
+      total = total.add(locked[j].depositTokenBalance);
+    }
+
+    values[pool.address] = total.mul(pool.exchangeRate).mul(underlyingPrice);
+  }
+  return values;
+};
 
 export function selectUsersPoolUsdUnlocked(
   pool: Optional<Pool>

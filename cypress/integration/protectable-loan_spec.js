@@ -32,6 +32,9 @@ describe("Default state", () => {
       if (loc.pathname) expect(loc.pathname).to.eq("/actions");
     });
   });
+  it("Should show no deposits", () => {
+    cy.get("#your-deposits-empty", { timeout: WEB3_TIMEOUT }).should("exist");
+  });
   it("Should take snapshot", () => {
     percySnapshot();
   });

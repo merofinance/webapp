@@ -24,7 +24,7 @@ import {
   PlainPool,
   PlainLpGaugeEarned,
 } from "../types";
-import { balances, makeContractTransaction, masterAccount, pools, positions, prices } from "./data";
+import { balances, makeContractTransaction, masterAccount, pools, positions } from "./data";
 
 export default class MockBackd implements Backd {
   private allowances: Record<string, Balances> = {};

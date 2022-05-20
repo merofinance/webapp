@@ -54,12 +54,13 @@ const PoolDeposit = ({ pool, compact }: Props): JSX.Element => {
     : t("pool.tabs.deposit.input.labelDesktop", { asset: pool?.underlying.symbol || "---" });
 
   const error = () => {
-    if (!poolUnderlyingBalance) return "";
-    if (depositAmount && Number(depositAmount) <= 0) return t("amountInput.validation.positive");
+    if (!pool || !poolUnderlyingBalance || !depositAmount) return "";
+    if (pool.isPaused) return t("amountInput.validation.poolPaused");
+    if (Number(depositAmount) <= 0) return t("amountInput.validation.positive");
     try {
       const amount = ScaledNumber.fromUnscaled(depositAmount, pool?.underlying.decimals);
       if (amount.gt(poolUnderlyingBalance)) return t("amountInput.validation.exceedsBalance");
-      if (!pool || !usersPoolUnderlyingEverywhere) return "";
+      if (!usersPoolUnderlyingEverywhere) return "";
       if (
         !amount.isZero() &&
         !pool.depositCap.isZero() &&

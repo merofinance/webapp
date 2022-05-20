@@ -2,70 +2,49 @@ import { Prices } from "./types";
 
 const apiBaseURL = "https://api.coingecko.com/api/v3";
 
-type CoinsMapping = {
-  geckoIdToSymbol: Record<string, string>;
-  symbolToGeckoId: Record<string, string>;
-  initialized: boolean;
-};
-
 export type ApiPrices = Record<string, Record<string, number>>;
 
-type CoinInfo = { id: string; symbol: string; name: string };
+interface CoinInfo {
+  id: string;
+  symbol: string;
+  name: string;
+}
 
-const coinsMapping: CoinsMapping = {
-  geckoIdToSymbol: {},
-  symbolToGeckoId: {},
-  initialized: false,
+const getCoinId = (coinList: CoinInfo[], symbol: string): string => {
+  const coin = coinList.find((c) => c.symbol === symbol.toLowerCase());
+  if (!coin) throw new Error(`Coin ${symbol} not found`);
+  return coin.id;
 };
 
-// NOTE: this is static and is safe to cache
-export async function fetchCoinsMappings(): Promise<CoinsMapping> {
-  if (coinsMapping.initialized) {
-    return coinsMapping;
-  }
+const getCoinSymbol = (coinList: CoinInfo[], id: string): string => {
+  const coin = coinList.find((c) => c.id === id);
+  if (!coin) throw new Error(`Coin ${id} not found`);
+  return coin.symbol.toUpperCase();
+};
+
+const getCoinList = async (): Promise<CoinInfo[]> => {
   const url = `${apiBaseURL}/coins/list`;
   const response = await fetch(url);
-  const coinsList: CoinInfo[] = await response.json();
-  coinsList.forEach((coin) => {
-    coinsMapping.geckoIdToSymbol[coin.id] = coin.symbol;
-    coinsMapping.symbolToGeckoId[coin.symbol] = coin.id;
-  });
-  coinsMapping.initialized = true;
-  return coinsMapping;
-}
+  return response.json();
+};
 
-export function convertPrices(
+const fetchPrices = async (
   symbols: string[],
   quote: string,
-  geckoIdToSymbol: Record<string, string>,
-  apiPrices: ApiPrices
-): Prices {
-  const prices: Prices = {};
-
-  Object.entries(apiPrices).forEach((apiPrice) => {
-    const price = apiPrice[1][quote];
-    if (!price) throw new Error("Error retrieving price");
-    const rawSymbol = geckoIdToSymbol[apiPrice[0]];
-    const symbol = symbols.find((s) => s.toLowerCase() === rawSymbol);
-    if (!symbol) {
-      console.error(`received price for unexpected symbol ${rawSymbol}`);
-    } else {
-      prices[symbol] = price;
-    }
-  });
-
-  return prices;
-}
-
-export async function getPrices(symbols: string[], quote = "USD"): Promise<Prices> {
-  quote = quote.toLowerCase();
-
-  const { geckoIdToSymbol, symbolToGeckoId } = await fetchCoinsMappings();
-
-  const ids = symbols.map((symbol) => symbolToGeckoId[symbol.toLowerCase()]).join(",");
-  const url = `${apiBaseURL}/simple/price?ids=${ids}&vs_currencies=${quote}`;
+  coinList: CoinInfo[]
+): Promise<Prices> => {
+  const coinIds = symbols.map((s) => getCoinId(coinList, s));
+  const url = `${apiBaseURL}/simple/price?ids=${coinIds.join(",")}&vs_currencies=${quote}`;
   const response = await fetch(url);
-  const apiPrices: Record<string, Record<string, number>> = await response.json();
+  const apiPrices: ApiPrices = await response.json();
+  const prices: Prices = {};
+  coinIds.forEach((id) => {
+    prices[getCoinSymbol(coinList, id)] = apiPrices[id][quote];
+  });
+  return prices;
+};
 
-  return convertPrices(symbols, quote, geckoIdToSymbol, apiPrices);
-}
+export const getPrices = async (symbols: string[], quote = "USD"): Promise<Prices> => {
+  const coinList = await getCoinList();
+  return fetchPrices(symbols, quote.toLowerCase(), coinList);
+};

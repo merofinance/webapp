@@ -21,6 +21,7 @@ import { selectPositions } from "../state/positionsSlice";
 import { Optional, Position } from "../lib/types";
 import { GradientLink } from "../styles/GradientText";
 import { useNavigateToTop } from "../app/hooks/use-navigate-to-top";
+import { DOCS_TOPUPS_LINK } from "../lib/links";
 
 const Container = styled.div`
   position: relative;
@@ -228,7 +229,7 @@ const LiveHelp = (): Optional<JSX.Element> => {
               protocol: position.protocol,
             }),
             button: t("liveHelp.suggestions.topupPositionLow.button"),
-            link: "https://docs.backd.fund/protocol-architecture/actions/top-ups",
+            link: DOCS_TOPUPS_LINK,
           };
         })
       )

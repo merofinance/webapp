@@ -15,7 +15,8 @@ import Overview from "../../components/Overview";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import LiveHelp from "../../components/LiveHelp";
 import Loader from "../../components/Loader";
-import BetaSnackbar from "../../components/BetaSnackbar";
+import { DOCS_LINK } from "../../lib/links";
+import { selectUsersValuesUsdEverywhere } from "../../state/valueSelectors";
 
 const StyledPoolsPage = styled.div`
   width: 100%;
@@ -92,6 +93,7 @@ const PoolsPage = (): JSX.Element => {
   const dispatch = useDispatch();
   const pools = useSelector(selectPools);
   const updated = useWeb3Updated();
+  const balances = useSelector(selectUsersValuesUsdEverywhere);
 
   useEffect(() => {
     if (!backd) return;
@@ -118,11 +120,25 @@ const PoolsPage = (): JSX.Element => {
                 <Loader row />
               </>
             )}
-            {pools && pools.map((pool: Pool) => <PoolsRow key={pool.address} pool={pool} />)}
+            {pools &&
+              pools
+                .filter((pool: Pool) => {
+                  if (!pool.isPaused) return true;
+                  if (!balances || !balances[pool.address]) return false;
+                  return !balances[pool.address].isZero();
+                })
+                .sort((a: Pool, b: Pool) =>
+                  a.apy && b.apy ? b.apy.toNumber() - a.apy.toNumber() : 0
+                )
+                .sort((a: Pool, b: Pool) => {
+                  if (!balances || !balances[a.address] || !balances[b.address]) return 0;
+                  return balances[b.address].toNumber() - balances[a.address].toNumber();
+                })
+                .map((pool: Pool) => <PoolsRow key={pool.address} pool={pool} />)}
           </ContentSection>
         </ContentContainer>
         <InfoCards>
-          <Overview description={t("pools.overview")} link="https://docs.backd.fund/" />
+          <Overview description={t("pools.overview")} link={DOCS_LINK} />
           <PoolsInformation />
           <LiveHelp />
         </InfoCards>

@@ -1,7 +1,6 @@
 import {
   AddressProvider,
   AddressProvider__factory as AddressProviderFactory,
-  BkdToken__factory,
   BkdTriHopCvx__factory as BkdTriHopCvxFactory,
   Controller__factory as ControllerFactory,
   GasBank,
@@ -16,10 +15,10 @@ import {
   Vault__factory as VaultFactory,
   BkdToken__factory as BkdTokenFactory,
   IRewardsGauge__factory as IRewardsGaugeFactory,
+  Controller,
+  TopUpAction,
 } from "@backdfund/protocol";
 import contracts from "@backdfund/protocol/config/deployments/map.json";
-import { Controller } from "@backdfund/protocol/typechain/Controller";
-import { TopUpAction } from "@backdfund/protocol/typechain/TopUpAction";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
 import fromEntries from "fromentries";
 import { PlainScaledNumber, ScaledNumber } from "scaled-number";
@@ -228,6 +227,7 @@ export class Web3Backd implements Backd {
       depositCap,
       harvestable,
       vaultAddress,
+      isPaused,
     ] = await Promise.all([
       pool.name(),
       pool.getLpToken(),
@@ -240,6 +240,7 @@ export class Web3Backd implements Backd {
       pool.depositCap(),
       this.getHarvestable(address),
       pool.getVault(),
+      pool.isPaused(),
     ]);
 
     const vault = VaultFactory.connect(vaultAddress, this._provider);
@@ -289,6 +290,7 @@ export class Web3Backd implements Backd {
       harvestable: new ScaledNumber(harvestable, underlying.decimals).toPlain(),
       strategyAddress,
       strategyName,
+      isPaused,
     };
   }
 

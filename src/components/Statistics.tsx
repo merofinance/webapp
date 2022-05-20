@@ -24,11 +24,12 @@ const StyledStatistics = styled.div`
 `;
 
 const Statistic = styled.div`
-  width: 33%;
   display: flex;
   flex-direction: column;
 
+  width: 33%;
   @media (max-width: 600px) {
+    width: 100%;
     margin-bottom: 1.3rem;
   }
 `;

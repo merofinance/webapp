@@ -33,7 +33,7 @@ const poolMetadata: Record<string, PoolMetadata> = {
     },
   },
   ETH: {
-    harvestableMultiplier: ScaledNumber.fromUnscaled("9.396551724"),
+    harvestableMultiplier: ScaledNumber.fromUnscaled("4.743801653"),
     deployment: {
       "1337": {
         time: new Date(0),
@@ -47,7 +47,7 @@ const poolMetadata: Record<string, PoolMetadata> = {
     },
   },
   DAI: {
-    harvestableMultiplier: ScaledNumber.fromUnscaled("1.107981221"),
+    harvestableMultiplier: ScaledNumber.fromUnscaled("1.19865643"),
     deployment: {
       "1337": {
         time: new Date(0),
@@ -61,7 +61,7 @@ const poolMetadata: Record<string, PoolMetadata> = {
     },
   },
   USDC: {
-    harvestableMultiplier: ScaledNumber.fromUnscaled("1.107981221"),
+    harvestableMultiplier: ScaledNumber.fromUnscaled("1.19865643"),
     deployment: {
       "1337": {
         time: new Date(0),

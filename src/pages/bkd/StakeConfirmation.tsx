@@ -6,6 +6,7 @@ import ExternalLink from "../../components/ExternalLink";
 import Notice from "../../components/Notice";
 import Popup from "../../components/Popup";
 import BkdCalculator from "./BkdCalculator";
+import { DOCS_TOKENOMICS_LINK } from "../../lib/links";
 
 const Description = styled.div`
   width: 100%;
@@ -41,9 +42,7 @@ const StakeConfirmation = ({ show, close, amount }: Props): JSX.Element => {
       <Description>
         {t("bkd.stake.confirmation.description", { amount: amount.toCryptoString() })}
       </Description>
-      <ExternalLink link="https://docs.backd.fund/protocol-architecture/tokenomics">
-        {t("components.moreInDocs")}
-      </ExternalLink>
+      <ExternalLink link={DOCS_TOKENOMICS_LINK}>{t("components.moreInDocs")}</ExternalLink>
       <BkdCalculator amount={amount} />
       <Notice>{t("bkd.stake.confirmation.notice")}</Notice>
     </Popup>
