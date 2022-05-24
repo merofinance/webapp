@@ -220,7 +220,7 @@ export class Web3Backd implements Backd {
       this.getTokenInfo(lpTokenAddress),
       this.getTokenInfo(underlyingAddress),
       this.addressProvider.getStakerVault(lpTokenAddress),
-      vault.getStrategy(),
+      vaultAddress === ETH_DUMMY_ADDRESS ? Promise.resolve(ETH_DUMMY_ADDRESS) : vault.getStrategy(),
     ]);
 
     let strategyName = name;
@@ -269,6 +269,7 @@ export class Web3Backd implements Backd {
   async getHarvestable(poolAddress: Address): Promise<BigNumber> {
     const pool = LiquidityPoolFactory.connect(poolAddress, this._provider);
     const vaultAddress = await pool.getVault();
+    if (vaultAddress === ETH_DUMMY_ADDRESS) return BigNumber.from(0);
     const vault = VaultFactory.connect(vaultAddress, this._provider);
     const strategyAddress = await vault.getStrategy();
     if (strategyAddress === ETH_DUMMY_ADDRESS) return BigNumber.from(0);
