@@ -244,6 +244,7 @@ export class Web3Backd implements Backd {
       const exchangeRateAfterHarvest = balanceAfterHarvest.div(lpBalance);
       const unscaledApy = Number(exchangeRateAfterHarvest.toString()) ** compoundExponent - 1;
       if (unscaledApy >= 0) apy = ScaledNumber.fromUnscaled(unscaledApy).value;
+      else apy = ScaledNumber.fromUnscaled(Math.abs(unscaledApy)).value.mul(-1);
     }
 
     return {
