@@ -215,12 +215,14 @@ export class Web3Backd implements Backd {
       pool.isPaused(),
     ]);
 
+    const vaultShutdown = vaultAddress === ETH_DUMMY_ADDRESS;
+
     const vault = VaultFactory.connect(vaultAddress, this._provider);
     const [lpToken, underlying, stakerVaultAddress, strategyAddress] = await Promise.all([
       this.getTokenInfo(lpTokenAddress),
       this.getTokenInfo(underlyingAddress),
       this.addressProvider.getStakerVault(lpTokenAddress),
-      vaultAddress === ETH_DUMMY_ADDRESS ? Promise.resolve(ETH_DUMMY_ADDRESS) : vault.getStrategy(),
+      vaultShutdown ? Promise.resolve(ETH_DUMMY_ADDRESS) : vault.getStrategy(),
     ]);
 
     let strategyName = name;
@@ -242,7 +244,9 @@ export class Web3Backd implements Backd {
       );
       const balanceAfterHarvest = scaledTotalAssets.add(scaledHarvestable);
       const exchangeRateAfterHarvest = balanceAfterHarvest.div(lpBalance);
-      const unscaledApy = Number(exchangeRateAfterHarvest.toString()) ** compoundExponent - 1;
+      const unscaledApy = vaultShutdown
+        ? (1 - Number(exchangeRateAfterHarvest.toString())) * -1
+        : Number(exchangeRateAfterHarvest.toString()) ** compoundExponent - 1;
       if (unscaledApy >= 0) apy = ScaledNumber.fromUnscaled(unscaledApy).value;
       else apy = ScaledNumber.fromUnscaled(Math.abs(unscaledApy)).value.mul(-1);
     }
