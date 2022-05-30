@@ -147,7 +147,7 @@ const Dropdown = ({ id, label, options }: Props): JSX.Element => {
       <OptionsContainer show={open}>
         <Options id={`${id}-dropdown-options`}>
           {options.map((option: DropdownOptionType) => (
-            <HoverFeedback text={option.disabledText}>
+            <HoverFeedback key={option.label} text={option.disabledText}>
               <Option
                 id={`${id}-dropdown-${option.label}-option`}
                 key={option.label}
