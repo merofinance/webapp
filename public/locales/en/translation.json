@@ -595,7 +595,8 @@
       "name": "{{asset}} pool"
     },
     "breakdown": "Breakdown of claimable earnings:",
-    "helpText": "Where are my pool rewards?"
+    "helpText": "Where are my pool rewards?",
+    "empty": "Start earning by depositing into a <0>pool</0> or launching a <1>keeper</1>"
   },
   "stake": {
     "overview": {
