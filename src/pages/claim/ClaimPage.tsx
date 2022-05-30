@@ -2,8 +2,7 @@ import { ScaledNumber } from "scaled-number";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { Trans, useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import Seo from "../../components/Seo";
 import ClaimSummary from "./ClaimSummary";
@@ -16,50 +15,12 @@ import { Pool } from "../../lib";
 import { useBackd } from "../../app/hooks/use-backd";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import Loader from "../../components/Loader";
-import { GradientLink, GradientText } from "../../styles/GradientText";
-import { DOCS_KEEPERS_LINK } from "../../lib/links";
+import ClaimEmptyState from "./ClaimEmptyState";
 
 const StyledPoolsPage = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-`;
-
-const EmptyState = styled.div`
-  font-size: 2.8rem;
-  font-weight: 600;
-  letter-spacing: 0.25px;
-  margin: auto;
-
-  @media (max-width: 600px) {
-    font-size: 2rem;
-    text-align: center;
-  }
-`;
-
-const EmptyStateButton = styled.button`
-  background: var(--gradient);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  cursor: pointer;
-  font-size: 2.8rem;
-  font-weight: 600;
-  letter-spacing: 0.25px;
-
-  @media (max-width: 600px) {
-    font-size: 2rem;
-  }
-`;
-
-const EmptyStateLink = styled(GradientLink)`
-  font-size: 2.8rem;
-  font-weight: 600;
-  letter-spacing: 0.25px;
-
-  @media (max-width: 600px) {
-    font-size: 2rem;
-  }
 `;
 
 const Headers = styled.div`
@@ -100,7 +61,6 @@ const ClaimPage = (): JSX.Element => {
   const backd = useBackd();
   const dispatch = useDispatch();
   const updated = useWeb3Updated();
-  const navigate = useNavigate();
 
   const lpGaugeEarned = useSelector(selectLpGaugeEarned);
   const totalLpGaugeEarned = useSelector(selectTotalLpGaugeEarned());
@@ -114,7 +74,8 @@ const ClaimPage = (): JSX.Element => {
     dispatch(fetchState(backd));
   }, [updated]);
 
-  const hasLoaded = pools && lpGaugeEarned;
+  const hasLoaded =
+    pools && lpGaugeEarned && !pools.some((pool: Pool) => !lpGaugeEarned[pool.address]);
 
   const hasLpEarned = pools?.some(
     (pool: Pool) => lpGaugeEarned[pool.address] && !lpGaugeEarned[pool.address].isZero()
@@ -135,18 +96,7 @@ const ClaimPage = (): JSX.Element => {
       )}
       {hasLoaded && (
         <>
-          {!hasAnyEarned && (
-            <EmptyState>
-              <Trans i18nKey="claim.empty">
-                <EmptyStateButton type="button" onClick={() => navigate("/pools")}>
-                  pool
-                </EmptyStateButton>
-                <EmptyStateLink href={DOCS_KEEPERS_LINK} target="_blank" rel="noopener noreferrer">
-                  keeper
-                </EmptyStateLink>
-              </Trans>
-            </EmptyState>
-          )}
+          {!hasAnyEarned && <ClaimEmptyState />}
           {hasLpEarned && (
             <>
               <Headers>
