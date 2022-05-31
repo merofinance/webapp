@@ -1,21 +1,19 @@
-import { ScaledNumber } from "scaled-number";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 import Seo from "../../components/Seo";
 import ClaimSummary from "./ClaimSummary";
-import ClaimAccordion from "./ClaimAccordion";
 
-import poolsIcon from "../../assets/sections/pools.svg";
-import { selectLpGaugeEarned, selectTotalLpGaugeEarned } from "../../state/userSlice";
-import { fetchState, selectPools, selectUserWeightedAverageApy } from "../../state/poolsListSlice";
+import { selectLpGaugeEarned } from "../../state/userSlice";
+import { fetchState, selectPools } from "../../state/poolsListSlice";
 import { Pool } from "../../lib";
 import { useBackd } from "../../app/hooks/use-backd";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import Loader from "../../components/Loader";
 import ClaimEmptyState from "./ClaimEmptyState";
+import ClaimLpRewards from "./ClaimLpRewards";
 
 const StyledPoolsPage = styled.div`
   width: 100%;
@@ -63,11 +61,7 @@ const ClaimPage = (): JSX.Element => {
   const updated = useWeb3Updated();
 
   const lpGaugeEarned = useSelector(selectLpGaugeEarned);
-  const totalLpGaugeEarned = useSelector(selectTotalLpGaugeEarned());
   const pools = useSelector(selectPools);
-  const weightedAverageApy = useSelector(selectUserWeightedAverageApy());
-
-  const [poolsOpen, setPoolsOpen] = useState(true);
 
   useEffect(() => {
     if (!backd) return;
@@ -97,42 +91,15 @@ const ClaimPage = (): JSX.Element => {
       {hasLoaded && (
         <>
           {!hasAnyEarned && <ClaimEmptyState />}
-          {hasLpEarned && (
-            <>
-              <Headers>
-                <Header>{t("headers.asset")}</Header>
-                <Header>{t("headers.claimable")}</Header>
-                <Header hideMobile>{t("headers.apy")}</Header>
-                <ButtonHeader />
-              </Headers>
-              <ClaimAccordion
-                icon={poolsIcon}
-                label={t("claim.pools.header")}
-                open={poolsOpen}
-                toggle={() => setPoolsOpen(!poolsOpen)}
-                claimable={totalLpGaugeEarned}
-                rows={pools
-                  .filter((pool: Pool) => {
-                    if (!lpGaugeEarned[pool.address]) return false;
-                    if (lpGaugeEarned[pool.address].isZero()) return false;
-                    return true;
-                  })
-                  .map((pool: Pool) => {
-                    const claimable = lpGaugeEarned[pool.address];
-                    if (!claimable)
-                      return {
-                        pool,
-                        claimable: new ScaledNumber(),
-                      };
-                    return {
-                      pool,
-                      claimable,
-                    };
-                  })}
-                apy={weightedAverageApy}
-              />
-            </>
+          {hasAnyEarned && (
+            <Headers>
+              <Header>{t("headers.asset")}</Header>
+              <Header>{t("headers.claimable")}</Header>
+              <Header hideMobile>{t("headers.apy")}</Header>
+              <ButtonHeader />
+            </Headers>
           )}
+          {hasLpEarned && <ClaimLpRewards />}
         </>
       )}
     </StyledPoolsPage>
