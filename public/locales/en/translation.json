@@ -776,6 +776,7 @@
     "migrate": "Migrate",
     "approve": "Approve",
     "withdraw": "Withdraw",
+    "empty": "You have no funds to migrate!",
     "transactions": {
       "header": "transactions",
       "body": "Please complete this transaction within your wallet. For more information, reach out to our team in the <0>Discord</0>.",

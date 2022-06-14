@@ -1,13 +1,15 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+
 import { useBackd } from "../../app/hooks/use-backd";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import Loader from "../../components/Loader";
 import { Optional, Pool } from "../../lib/types";
-import { fetchState, selectPools } from "../../state/poolsListSlice";
-import { selectUsersValuesUsdEverywhere } from "../../state/valueSelectors";
+import { fetchState } from "../../state/poolsListSlice";
+import { GradientText } from "../../styles/GradientText";
 import Migration from "./Migration";
 
 const StyledMigrations = styled.div`
@@ -57,44 +59,68 @@ const Rows = styled.div`
   flex-direction: column;
 `;
 
-const Migrations = (): Optional<JSX.Element> => {
+const EmptyText = styled.div`
+  font-size: 5.4rem;
+  font-weight: 700;
+  text-align: center;
+`;
+
+const LinkButton = styled.button`
+  cursor: pointer;
+  margin-top: 3rem;
+`;
+
+const LinkText = styled(GradientText)`
+  font-size: 2.6rem;
+  font-weight: 500;
+`;
+
+interface Props {
+  pools: Optional<Pool[]>;
+}
+
+const Migrations = ({ pools }: Props): Optional<JSX.Element> => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const backd = useBackd();
   const updated = useWeb3Updated();
-  const pools = useSelector(selectPools);
-  const balances = useSelector(selectUsersValuesUsdEverywhere);
 
   useEffect(() => {
     if (!backd) return;
     dispatch(fetchState(backd));
   }, [updated]);
 
-  const hasLoaded = pools && balances;
-  const depositedPools = hasLoaded
-    ? pools.filter((pool: Pool) => !balances[pool.address].isZero())
-    : [];
-
   return (
     <StyledMigrations>
-      <Headers>
-        <Header>{t("headers.asset")}</Header>
-        <Header>{t("headers.apy")}</Header>
-        <Header>{t("headers.tvl")}</Header>
-        <Header>{t("headers.deposits")}</Header>
-        <HeaderEnd />
-      </Headers>
+      {(!pools || (pools && pools.length > 0)) && (
+        <Headers>
+          <Header>{t("headers.asset")}</Header>
+          <Header>{t("headers.apy")}</Header>
+          <Header>{t("headers.tvl")}</Header>
+          <Header>{t("headers.deposits")}</Header>
+          <HeaderEnd />
+        </Headers>
+      )}
       <Rows>
-        {!hasLoaded && (
+        {!pools && (
           <>
             <Loader row />
             <Loader row />
             <Loader row />
           </>
         )}
-        {hasLoaded &&
-          depositedPools.length > 0 &&
-          depositedPools.map((pool: Pool) => <Migration key={pool.address} pool={pool} />)}
+        {pools &&
+          pools.length > 0 &&
+          pools.map((pool: Pool) => <Migration key={pool.address} pool={pool} />)}
+        {pools && pools.length === 0 && (
+          <>
+            <EmptyText>{t("poolMigration.empty")}</EmptyText>
+            <LinkButton onClick={() => navigate("/pools")}>
+              <LinkText>{t("landingPage.viewPools")}</LinkText>
+            </LinkButton>
+          </>
+        )}
       </Rows>
     </StyledMigrations>
   );

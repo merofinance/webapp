@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import LaunchIcon from "@material-ui/icons/Launch";
+import { useSelector } from "react-redux";
 
 import { useDevice } from "../../app/hooks/use-device";
 import { GradientLink } from "../../styles/GradientText";
@@ -9,6 +10,10 @@ import Button from "../../components/Button";
 import bg from "../../assets/illustrations/light-bg.svg";
 import Migrations from "./Migrations";
 import MigrateAll from "./MigrateAll";
+import { selectUsersValuesUsdEverywhere } from "../../state/valueSelectors";
+import { selectPools } from "../../state/poolsListSlice";
+import { Pool } from "../../lib";
+import Loader from "../../components/Loader";
 
 const StyledPoolMigrationPage = styled.div`
   position: relative;
@@ -82,10 +87,21 @@ const Link = styled(GradientLink)`
   }
 `;
 
+const ButtonContainer = styled.div`
+  width: 25rem;
+`;
+
 const PoolMigrationPage = (): JSX.Element => {
   const { isMobile } = useDevice();
   const { t } = useTranslation();
   const [isMigrationOpen, setIsMigrationOpen] = useState(false);
+  const pools = useSelector(selectPools);
+  const balances = useSelector(selectUsersValuesUsdEverywhere);
+
+  const hasLoaded = pools && balances;
+  const depositedPools = hasLoaded
+    ? pools.filter((pool: Pool) => !balances[pool.address].isZero())
+    : null;
 
   return (
     <StyledPoolMigrationPage>
@@ -107,18 +123,25 @@ const PoolMigrationPage = (): JSX.Element => {
               />
             </Link>
           </Description>
-          <Button
-            click={() => setIsMigrationOpen(true)}
-            square={!isMobile}
-            medium={isMobile}
-            primary
-            width="25rem"
-          >
-            {t("poolMigration.migrateAll")}
-          </Button>
+          {!hasLoaded && (
+            <ButtonContainer>
+              <Loader row />
+            </ButtonContainer>
+          )}
+          {hasLoaded && depositedPools && depositedPools.length > 0 && (
+            <Button
+              click={() => setIsMigrationOpen(true)}
+              square={!isMobile}
+              medium={isMobile}
+              primary
+              width="25rem"
+            >
+              {t("poolMigration.migrateAll")}
+            </Button>
+          )}
         </TextContent>
       </TextSection>
-      <Migrations />
+      <Migrations pools={depositedPools} />
       <MigrateAll migrating={isMigrationOpen} close={() => setIsMigrationOpen(false)} />
     </StyledPoolMigrationPage>
   );
