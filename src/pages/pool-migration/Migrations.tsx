@@ -7,6 +7,7 @@ import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import Loader from "../../components/Loader";
 import { Optional, Pool } from "../../lib/types";
 import { fetchState, selectPools } from "../../state/poolsListSlice";
+import { selectUsersValuesUsdEverywhere } from "../../state/valueSelectors";
 import Migration from "./Migration";
 
 const StyledMigrations = styled.div`
@@ -62,11 +63,17 @@ const Migrations = (): Optional<JSX.Element> => {
   const backd = useBackd();
   const updated = useWeb3Updated();
   const pools = useSelector(selectPools);
+  const balances = useSelector(selectUsersValuesUsdEverywhere);
 
   useEffect(() => {
     if (!backd) return;
     dispatch(fetchState(backd));
   }, [updated]);
+
+  const hasLoaded = pools && balances;
+  const depositedPools = hasLoaded
+    ? pools.filter((pool: Pool) => !balances[pool.address].isZero())
+    : [];
 
   return (
     <StyledMigrations>
@@ -78,14 +85,16 @@ const Migrations = (): Optional<JSX.Element> => {
         <HeaderEnd />
       </Headers>
       <Rows>
-        {!pools && (
+        {!hasLoaded && (
           <>
             <Loader row />
             <Loader row />
             <Loader row />
           </>
         )}
-        {pools && pools.map((pool: Pool) => <Migration key={pool.address} pool={pool} />)}
+        {hasLoaded &&
+          depositedPools.length > 0 &&
+          depositedPools.map((pool: Pool) => <Migration key={pool.address} pool={pool} />)}
       </Rows>
     </StyledMigrations>
   );
