@@ -123,7 +123,13 @@ const Migration = ({ pool }: Props): JSX.Element => {
         <Button primary medium width="13rem">
           {t("poolMigration.approve")}
         </Button>
-        <Button primary medium width="13rem">
+        <Button
+          disabled
+          primary
+          medium
+          width="13rem"
+          hoverText={t("poolMigration.transactions.approveTooltip", { asset: pool.lpToken.symbol })}
+        >
           {t("poolMigration.migrate")}
         </Button>
       </Buttons>
