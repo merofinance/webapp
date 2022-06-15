@@ -594,6 +594,9 @@
       "header": "Liquidity Pools",
       "name": "{{asset}} pool"
     },
+    "keeper": {
+      "header": "Keeper Rewards"
+    },
     "breakdown": "Breakdown of claimable earnings:",
     "helpText": "Where are my pool rewards?",
     "empty": "Start earning by depositing into a <0>pool</0> or launching a <1>keeper</1>"

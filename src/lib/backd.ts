@@ -15,8 +15,11 @@ import {
   Vault__factory as VaultFactory,
   BkdToken__factory as BkdTokenFactory,
   IRewardsGauge__factory as IRewardsGaugeFactory,
+  InflationManager__factory as InflationManagerFactory,
+  KeeperGauge__factory as KeeperGaugeFactory,
   Controller,
   TopUpAction,
+  InflationManager,
 } from "@backdfund/protocol";
 import contracts from "@backdfund/protocol/config/deployments/map.json";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
@@ -46,7 +49,7 @@ import {
   Optional,
   PlainActionFees,
   PlainLoan,
-  PlainLpGaugeEarned,
+  PlainEarned,
   PlainPool,
   PlainPosition,
   PlainWithdrawalFees,
@@ -77,7 +80,8 @@ export interface Backd {
     unstake?: boolean
   ): Promise<ContractTransaction>;
   getBalance(address: Address, account?: Address): Promise<ScaledNumber>;
-  getLpGaugeEarned(pools: Pool[]): Promise<PlainLpGaugeEarned>;
+  getLpGaugeEarned(pools: Pool[]): Promise<PlainEarned>;
+  getKeeperGaugeEarned(pools: Pool[]): Promise<PlainEarned>;
   getBalances(addresses: Address[], account?: Address): Promise<Balances>;
   getGasBankBalance(): Promise<PlainScaledNumber>;
   getAllowance(token: Token, spender: Address, account?: string): Promise<ScaledNumber>;
@@ -110,6 +114,8 @@ export class Web3Backd implements Backd {
 
   private gasBank: GasBank | undefined;
 
+  private inflationManager: InflationManager | undefined;
+
   private chainId: number;
 
   constructor(private _provider: Signer | providers.Provider, private options: BackdOptions) {
@@ -128,6 +134,12 @@ export class Web3Backd implements Backd {
       contracts.AddressProvider[0], // eslint-disable-line dot-notation
       _provider
     );
+
+    if (contracts.InflationManager && contracts.InflationManager.length > 0)
+      this.inflationManager = InflationManagerFactory.connect(
+        contracts.InflationManager[0], // eslint-disable-line dot-notation
+        _provider
+      );
   }
 
   get topupActionAddress(): Optional<string> {
@@ -306,12 +318,35 @@ export class Web3Backd implements Backd {
     return staker.getLpGauge();
   }
 
-  async getLpGaugeEarned(pools: Pool[]): Promise<PlainLpGaugeEarned> {
+  private async getKeeperGaugeAddress(poolAddress: Address): Promise<Optional<Address>> {
+    if (!this.inflationManager) return null;
+    return this.inflationManager.getKeeperGaugeForPool(poolAddress);
+  }
+
+  async getLpGaugeEarned(pools: Pool[]): Promise<PlainEarned> {
     const account = await this.currentAccount();
     const promises = pools.map(async (pool: Pool) => {
       const lpGaugeAddress = await this.getLpGaugeAddress(pool.address);
       const lpGauge = LpGauge__factory.connect(lpGaugeAddress, this._provider);
       const earned = await lpGauge.claimableRewards(account);
+      return new ScaledNumber(earned).toPlain();
+    });
+    const earned = await Promise.all(promises);
+    return fromEntries(
+      pools.map((pool: Pool, index: number) => {
+        return [pool.address, earned[index]];
+      })
+    );
+  }
+
+  async getKeeperGaugeEarned(pools: Pool[]): Promise<PlainEarned> {
+    if (!this.inflationManager) return {};
+    const account = await this.currentAccount();
+    const promises = pools.map(async (pool: Pool) => {
+      const keeperGaugeAddress = await this.getKeeperGaugeAddress(pool.address);
+      if (!keeperGaugeAddress) return new ScaledNumber().toPlain();
+      const keeperGauge = KeeperGaugeFactory.connect(keeperGaugeAddress, this._provider);
+      const earned = await keeperGauge.claimableRewards(account);
       return new ScaledNumber(earned).toPlain();
     });
     const earned = await Promise.all(promises);

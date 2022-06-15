@@ -6,7 +6,12 @@ import { useTranslation } from "react-i18next";
 import Seo from "../../components/Seo";
 import ClaimSummary from "./ClaimSummary";
 
-import { selectLpGaugeEarned } from "../../state/userSlice";
+import {
+  selectKeeperGaugeEarned,
+  selectLpGaugeEarned,
+  selectTotalKeeperGaugeEarned,
+  selectTotalLpGaugeEarned,
+} from "../../state/userSlice";
 import { fetchState, selectPools } from "../../state/poolsListSlice";
 import { Pool } from "../../lib";
 import { useBackd } from "../../app/hooks/use-backd";
@@ -14,6 +19,7 @@ import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import Loader from "../../components/Loader";
 import ClaimEmptyState from "./ClaimEmptyState";
 import ClaimLpRewards from "./ClaimLpRewards";
+import ClaimKeeperRewards from "./ClaimKeeperRewards";
 
 const StyledPoolsPage = styled.div`
   width: 100%;
@@ -61,6 +67,9 @@ const ClaimPage = (): JSX.Element => {
   const updated = useWeb3Updated();
 
   const lpGaugeEarned = useSelector(selectLpGaugeEarned);
+  const keeperGaugeEarned = useSelector(selectKeeperGaugeEarned);
+  const totalKeeperGaugeEarned = useSelector(selectTotalKeeperGaugeEarned());
+  const totalLpGaugeEarned = useSelector(selectTotalLpGaugeEarned());
   const pools = useSelector(selectPools);
 
   useEffect(() => {
@@ -69,13 +78,16 @@ const ClaimPage = (): JSX.Element => {
   }, [updated]);
 
   const hasLoaded =
-    pools && lpGaugeEarned && !pools.some((pool: Pool) => !lpGaugeEarned[pool.address]);
+    pools &&
+    lpGaugeEarned &&
+    keeperGaugeEarned &&
+    !pools.some((pool: Pool) => !lpGaugeEarned[pool.address]) &&
+    !pools.some((pool: Pool) => !keeperGaugeEarned[pool.address]);
 
-  const hasLpEarned = pools?.some(
-    (pool: Pool) => lpGaugeEarned[pool.address] && !lpGaugeEarned[pool.address].isZero()
-  );
+  const hasLpEarned = totalLpGaugeEarned && !totalLpGaugeEarned.isZero();
+  const hasKeeperEarned = totalKeeperGaugeEarned && !totalKeeperGaugeEarned.isZero();
 
-  const hasAnyEarned = hasLpEarned;
+  const hasAnyEarned = hasLpEarned || hasKeeperEarned;
 
   return (
     <StyledPoolsPage>
@@ -100,6 +112,7 @@ const ClaimPage = (): JSX.Element => {
             </Headers>
           )}
           {hasLpEarned && <ClaimLpRewards />}
+          {hasKeeperEarned && <ClaimKeeperRewards />}
         </>
       )}
     </StyledPoolsPage>

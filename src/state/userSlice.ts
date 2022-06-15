@@ -19,9 +19,9 @@ import {
   Token,
   PlainWithdrawalFees,
   fromPlainWithdrawalFees,
-  PlainLpGaugeEarned,
-  LpGaugeEarned,
-  fromPlainLpGaugeEarned,
+  PlainEarned,
+  Earned,
+  fromPlainEarned,
 } from "../lib/types";
 import { fetchPool, selectPools } from "./poolsListSlice";
 import { handleTransactionConfirmation } from "../lib/transactionsUtils";
@@ -32,7 +32,8 @@ interface UserState {
   allowances: PlainAllowances;
   withdrawalFees: PlainWithdrawalFees;
   connecting: boolean;
-  lpGaugeEarned: PlainLpGaugeEarned;
+  lpGaugeEarned: PlainEarned;
+  keeperGaugeEarned: PlainEarned;
 }
 
 const initialState: UserState = {
@@ -42,6 +43,7 @@ const initialState: UserState = {
   withdrawalFees: {},
   connecting: false,
   lpGaugeEarned: {},
+  keeperGaugeEarned: {},
 };
 
 export const fetchBalances = createAsyncThunk(
@@ -102,6 +104,13 @@ export const fetchLpGaugeEarned = createAsyncThunk(
   }
 );
 
+export const fetchKeeperGaugeEarned = createAsyncThunk(
+  "user/fetchKeeperGaugeEarned",
+  async ({ backd, pools }: { backd: Backd; pools: Pool[] }) => {
+    return backd.getKeeperGaugeEarned(pools);
+  }
+);
+
 type ApproveArgs = { backd: Backd; token: Token; spender: Address; amount: ScaledNumber };
 type DepositArgs = { backd: Backd; pool: Pool; amount: ScaledNumber; stake: boolean };
 type WithdrawArgs = { backd: Backd; pool: Pool; amount: ScaledNumber; withdrawalFee: ScaledNumber };
@@ -146,6 +155,12 @@ export const userSlice = createSlice({
       Object.entries(action.payload).forEach((earned) => {
         // eslint-disable-next-line prefer-destructuring
         state.lpGaugeEarned[earned[0]] = earned[1];
+      });
+    });
+    builder.addCase(fetchKeeperGaugeEarned.fulfilled, (state, action) => {
+      Object.entries(action.payload).forEach((earned) => {
+        // eslint-disable-next-line prefer-destructuring
+        state.keeperGaugeEarned[earned[0]] = earned[1];
       });
     });
 
@@ -280,8 +295,12 @@ export const isConnecting = (state: RootState): boolean => {
   return state.user.connecting;
 };
 
-export const selectLpGaugeEarned = (state: RootState): LpGaugeEarned => {
-  return fromPlainLpGaugeEarned(state.user.lpGaugeEarned);
+export const selectLpGaugeEarned = (state: RootState): Earned => {
+  return fromPlainEarned(state.user.lpGaugeEarned);
+};
+
+export const selectKeeperGaugeEarned = (state: RootState): Earned => {
+  return fromPlainEarned(state.user.keeperGaugeEarned);
 };
 
 export function selectTotalLpGaugeEarned(): Selector<Optional<ScaledNumber>> {
@@ -293,6 +312,20 @@ export function selectTotalLpGaugeEarned(): Selector<Optional<ScaledNumber>> {
     for (let i = 0; i < pools.length; i++) {
       if (!lpGaugeEarned[pools[i].address]) return null;
       total = total.add(lpGaugeEarned[pools[i].address]);
+    }
+    return total;
+  };
+}
+
+export function selectTotalKeeperGaugeEarned(): Selector<Optional<ScaledNumber>> {
+  return (state: RootState) => {
+    const pools = useSelector(selectPools);
+    const keeperGaugeEarned = useSelector(selectKeeperGaugeEarned);
+    if (!pools) return null;
+    let total = new ScaledNumber();
+    for (let i = 0; i < pools.length; i++) {
+      if (!keeperGaugeEarned[pools[i].address]) return null;
+      total = total.add(keeperGaugeEarned[pools[i].address]);
     }
     return total;
   };

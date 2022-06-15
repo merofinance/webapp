@@ -128,7 +128,7 @@ interface Props {
   toggle: () => void;
   rows: Optional<ClaimRowType[]>;
   claimable: Optional<ScaledNumber>;
-  apy: Optional<ScaledNumber>;
+  apy?: Optional<ScaledNumber>;
 }
 
 const ClaimAccordion = ({
@@ -153,7 +153,9 @@ const ClaimAccordion = ({
             <Label>{label}</Label>
           </LabelContainer>
           <Claimable>{claimable ? claimable.toUsdValue(BKD_PRICE) : <Loader />}</Claimable>
-          <ApyContainer>{apy ? <Apr>{apy.toPercent()}</Apr> : <Loader />}</ApyContainer>
+          <ApyContainer>
+            {apy === undefined ? <div /> : apy ? <Apr>{apy.toPercent()}</Apr> : <Loader />}
+          </ApyContainer>
           <EndContainer>
             {/* {isDesktop && (
               <Button background="#1c0c37" width="12rem" small={isMobile} primary={isMobile}>

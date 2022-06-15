@@ -29,6 +29,7 @@ import {
   fetchAllowances,
   fetchBalances,
   fetchGasBankBalance,
+  fetchKeeperGaugeEarned,
   fetchLpGaugeEarned,
   fetchWithdrawalFees,
   selectBalances,
@@ -103,6 +104,7 @@ export const fetchState =
       dispatch(fetchWithdrawalFees({ backd, pools }));
       if (STAKING_LIVE || chainId === 42) {
         dispatch(fetchLpGaugeEarned({ backd, pools }));
+        dispatch(fetchKeeperGaugeEarned({ backd, pools }));
       }
     });
     dispatch(fetchBkdToken({ backd }));

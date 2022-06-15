@@ -218,14 +218,14 @@ export const fromPlainAllowances = (allowances: PlainAllowances): Allowances => 
   );
 };
 
-export type LpGaugeEarned = Record<string, ScaledNumber>;
-export type PlainLpGaugeEarned = Record<string, PlainScaledNumber>;
+export type Earned = Record<string, ScaledNumber>;
+export type PlainEarned = Record<string, PlainScaledNumber>;
 
-export const toPlainLpGaugeEarned = (allowances: LpGaugeEarned): PlainLpGaugeEarned => {
+export const toPlainEarned = (allowances: Earned): PlainEarned => {
   return fromEntries(Object.entries(allowances).map(([key, value]) => [key, value.toPlain()]));
 };
 
-export const fromPlainLpGaugeEarned = (allowances: PlainLpGaugeEarned): LpGaugeEarned => {
+export const fromPlainEarned = (allowances: PlainEarned): Earned => {
   return fromEntries(
     Object.entries(allowances).map(([key, value]) => [key, ScaledNumber.fromPlain(value)])
   );

@@ -6,8 +6,8 @@ import { useTranslation } from "react-i18next";
 import { Optional } from "../../lib/types";
 import ClaimAccordion from "./ClaimAccordion";
 import keepersIcon from "../../assets/sections/keepers.svg";
-import { selectLpGaugeEarned, selectTotalLpGaugeEarned } from "../../state/userSlice";
-import { fetchState, selectPools, selectUserWeightedAverageApy } from "../../state/poolsListSlice";
+import { selectKeeperGaugeEarned, selectTotalKeeperGaugeEarned } from "../../state/userSlice";
+import { fetchState, selectPools } from "../../state/poolsListSlice";
 import { Pool } from "../../lib";
 import { useBackd } from "../../app/hooks/use-backd";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
@@ -18,10 +18,9 @@ const ClaimKeeperRewards = (): Optional<JSX.Element> => {
   const dispatch = useDispatch();
   const updated = useWeb3Updated();
 
-  const lpGaugeEarned = useSelector(selectLpGaugeEarned);
-  const totalLpGaugeEarned = useSelector(selectTotalLpGaugeEarned());
+  const keeperGaugeEarned = useSelector(selectKeeperGaugeEarned);
+  const totalKeeperGaugeEarned = useSelector(selectTotalKeeperGaugeEarned());
   const pools = useSelector(selectPools);
-  const weightedAverageApy = useSelector(selectUserWeightedAverageApy());
 
   const [poolsOpen, setPoolsOpen] = useState(true);
 
@@ -35,18 +34,18 @@ const ClaimKeeperRewards = (): Optional<JSX.Element> => {
   return (
     <ClaimAccordion
       icon={keepersIcon}
-      label={t("claim.pools.header")}
+      label={t("claim.keeper.header")}
       open={poolsOpen}
       toggle={() => setPoolsOpen(!poolsOpen)}
-      claimable={totalLpGaugeEarned}
+      claimable={totalKeeperGaugeEarned}
       rows={pools
         .filter((pool: Pool) => {
-          if (!lpGaugeEarned[pool.address]) return false;
-          if (lpGaugeEarned[pool.address].isZero()) return false;
+          if (!keeperGaugeEarned[pool.address]) return false;
+          if (keeperGaugeEarned[pool.address].isZero()) return false;
           return true;
         })
         .map((pool: Pool) => {
-          const claimable = lpGaugeEarned[pool.address];
+          const claimable = keeperGaugeEarned[pool.address];
           if (!claimable)
             return {
               pool,
@@ -57,7 +56,6 @@ const ClaimKeeperRewards = (): Optional<JSX.Element> => {
             claimable,
           };
         })}
-      apy={weightedAverageApy}
     />
   );
 };

@@ -22,7 +22,7 @@ import {
   ActionFees,
   toPlainActionFees,
   PlainPool,
-  PlainLpGaugeEarned,
+  PlainEarned,
 } from "../types";
 import { balances, makeContractTransaction, masterAccount, pools, positions } from "./data";
 
@@ -102,7 +102,11 @@ export default class MockBackd implements Backd {
     };
   }
 
-  async getLpGaugeEarned(pools: Pool[]): Promise<PlainLpGaugeEarned> {
+  async getLpGaugeEarned(pools: Pool[]): Promise<PlainEarned> {
+    return {};
+  }
+
+  async getKeeperGaugeEarned(pools: Pool[]): Promise<PlainEarned> {
     return {};
   }
 
