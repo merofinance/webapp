@@ -29,3 +29,6 @@ export const DOCS_STRATEGIES_LINK =
 // Vendor
 export const VENDOR_CURVE_LINK = "https://curve.fi/";
 export const VENDOR_AAVE_LINK = "http://aave.com/";
+
+// External
+export const CODE_ARENA_PROTOCOL_AUDIT = "https://code4rena.com/reports/2022-04-backd/";
