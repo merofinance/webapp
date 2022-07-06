@@ -87,8 +87,8 @@ const linkLists: LinkListType[] = [
           },
           {
             internal: false,
-            label: "footer.resources.links.audits.code4rena",
-            link: CODE_ARENA_PROTOCOL_AUDIT,
+            label: "footer.resources.links.audits.stela",
+            link: "/media/backd-stela-labs-audit-report.pdf",
           },
         ],
       },
