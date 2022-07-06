@@ -53,7 +53,7 @@ const AccordionContent = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   margin-top: 0rem;
 `;
 
