@@ -2,7 +2,7 @@ import { useWeb3React } from "@web3-react/core";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { DOCS_LINK, BLOG_LINK, NEWSLETTER_LINK } from "../lib/links";
+import { DOCS_LINK, BLOG_LINK, NEWSLETTER_LINK, DISCORD_LINK, TWITTER_LINK } from "../lib/links";
 import Dropdown from "./Dropdown";
 
 import NavItem from "./NavItem";
@@ -75,6 +75,14 @@ const NavItems = (): JSX.Element => {
         {
           label: "header.tabs.newsletter",
           link: NEWSLETTER_LINK,
+        },
+        {
+          label: "footer.community.links.discord",
+          link: DISCORD_LINK,
+        },
+        {
+          label: "footer.community.links.twitter",
+          link: TWITTER_LINK,
         },
       ],
     },
