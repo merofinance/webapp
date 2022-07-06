@@ -13,17 +13,19 @@ import {
   TWITTER_LINK,
   NEWSLETTER_LINK,
   TELEGRAM_ANNOUNCEMENTS_LINK,
+  CODE_ARENA_PROTOCOL_AUDIT,
 } from "../lib/links";
+import FooterSubMenu from "./FooterSubMenu";
 
-interface LinkType {
+export interface LinkType {
   internal: boolean;
   label: string;
   link: string;
 }
 
-interface LinkListType {
+export interface LinkListType {
   header: string;
-  links: LinkType[];
+  links: (LinkType | LinkListType)[];
 }
 
 const linkLists: LinkListType[] = [
@@ -74,6 +76,21 @@ const linkLists: LinkListType[] = [
         internal: false,
         label: "footer.resources.links.blog",
         link: BLOG_LINK,
+      },
+      {
+        header: "footer.resources.links.audits.header",
+        links: [
+          {
+            internal: false,
+            label: "footer.resources.links.audits.code4rena",
+            link: CODE_ARENA_PROTOCOL_AUDIT,
+          },
+          {
+            internal: false,
+            label: "footer.resources.links.audits.stela",
+            link: "/media/backd-stela-labs-audit-report.pdf",
+          },
+        ],
       },
     ],
   },
@@ -167,12 +184,18 @@ const Footer = (): JSX.Element => {
       {linkLists.map((linkList: LinkListType) => (
         <LinkList key={linkList.header}>
           <LinkHeader>{t(linkList.header)}</LinkHeader>
-          {linkList.links.map((link: LinkType) =>
-            link.internal ? (
-              <InternalLink id={link.label} key={link.label} to={link.link}>
-                {t(link.label)}
-              </InternalLink>
-            ) : (
+          {linkList.links.map((link: LinkType | LinkListType) => {
+            if ("links" in link) {
+              return <FooterSubMenu linkList={link} />;
+            }
+            if (link.internal) {
+              return (
+                <InternalLink id={link.label} key={link.label} to={link.link}>
+                  {t(link.label)}
+                </InternalLink>
+              );
+            }
+            return (
               <ExternalLink
                 id={link.label}
                 key={link.label}
@@ -182,8 +205,8 @@ const Footer = (): JSX.Element => {
               >
                 {t(link.label)}
               </ExternalLink>
-            )
-          )}
+            );
+          })}
         </LinkList>
       ))}
       <LanguageSelector />

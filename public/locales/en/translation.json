@@ -185,7 +185,12 @@
       "links": {
         "litepaper": "Litepaper",
         "docs": "Docs",
-        "blog": "Blog"
+        "blog": "Blog",
+        "audits": {
+          "header": "Audits",
+          "code4rena": "Code4rena",
+          "stela": "Stela Labs"
+        }
       }
     },
     "updates": {
