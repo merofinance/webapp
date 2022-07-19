@@ -188,7 +188,8 @@
         "blog": "Blog",
         "audits": {
           "header": "Audits",
-          "code4rena": "Code4rena",
+          "code4renaProtocol": "Code4rena Protocol",
+          "code4arenaTokenomics": "Code4rena Tokenomics",
           "stela": "Stela Labs"
         }
       }

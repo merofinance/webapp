@@ -14,6 +14,7 @@ import {
   NEWSLETTER_LINK,
   TELEGRAM_ANNOUNCEMENTS_LINK,
   CODE_ARENA_PROTOCOL_AUDIT,
+  CODE_ARENA_PROTOCOL_AUDIT_TOKENOMICS,
 } from "../lib/links";
 import FooterSubMenu from "./FooterSubMenu";
 
@@ -82,8 +83,13 @@ const linkLists: LinkListType[] = [
         links: [
           {
             internal: false,
-            label: "footer.resources.links.audits.code4rena",
+            label: "footer.resources.links.audits.code4renaProtocol",
             link: CODE_ARENA_PROTOCOL_AUDIT,
+          },
+          {
+            internal: false,
+            label: "footer.resources.links.audits.code4arenaTokenomics",
+            link: CODE_ARENA_PROTOCOL_AUDIT_TOKENOMICS,
           },
           {
             internal: false,
