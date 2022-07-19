@@ -32,3 +32,4 @@ export const VENDOR_AAVE_LINK = "http://aave.com/";
 
 // External
 export const CODE_ARENA_PROTOCOL_AUDIT = "https://code4rena.com/reports/2022-04-backd/";
+export const CODE_ARENA_PROTOCOL_AUDIT_TOKENOMICS = "https://code4rena.com/reports/2022-05-backd/";

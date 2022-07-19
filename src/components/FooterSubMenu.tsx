@@ -46,7 +46,7 @@ const AccordionContainer = styled.div`
   transition: max-height 0.2s ease-out;
   overflow: hidden;
 
-  max-height: ${(props: OpenProps) => (props.open ? "5rem" : "0")};
+  max-height: ${(props: OpenProps) => (props.open ? "7.5rem" : "0")};
 `;
 
 const AccordionContent = styled.div`
