@@ -4,7 +4,7 @@ describe("Post test actions", () => {
   it("Should Innitialise Web3", () => {
     initWeb3("/pools");
     cy.get('[id="walletConnect.wallets.metaMask"]').click();
-    cy.get("#pool-row-merodai", { timeout: WEB3_TIMEOUT }).click();
+    cy.get("#pool-row-bkddai", { timeout: WEB3_TIMEOUT }).click();
   });
   it("Should withdraw DAI", () => {
     cy.get('[id="pool.tabs.withdraw.tab"]').click();
