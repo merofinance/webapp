@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-import logo from "../assets/logo/logo.svg";
+import logo from "../assets/logo/full-logo.svg";
 import Connector from "./Connector";
 import NavItems from "./NavItems";
 import useWindowPosition from "../app/hooks/use-window-position";
