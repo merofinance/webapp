@@ -777,7 +777,7 @@
       "ctaText": "Migrate now"
     },
     "header": "Migrate your liquidity",
-    "details": "You’ll need to migjrate your liquidity to the new uncapped pools.",
+    "details": "You’ll need to migrate your liquidity to the new uncapped pools.",
     "migrateAll": "Migrate all",
     "migrate": "Migrate",
     "approve": "Approve",
