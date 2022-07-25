@@ -1,11 +1,11 @@
 import { providers, Signer } from "ethers";
-import { Backd, BackdOptions, Web3Backd } from "./backd";
-import { MockBackd } from "./mock";
+import { Mero, MeroOptions, Web3Mero } from "./mero";
+import { MockMero } from "./mock";
 import MockSigner from "./mock/signer";
 
-export function createBackd(signer: Signer | providers.Provider, options: BackdOptions): Backd {
+export function createMero(signer: Signer | providers.Provider, options: MeroOptions): Mero {
   if (signer instanceof MockSigner) {
-    return new MockBackd();
+    return new MockMero();
   }
-  return new Web3Backd(signer, options);
+  return new Web3Mero(signer, options);
 }

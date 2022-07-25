@@ -10,7 +10,7 @@ export interface ErrorState {
   switchToMainnetButton?: boolean;
 }
 
-export class BackdError extends CustomError {
+export class MeroError extends CustomError {
   get title(): string {
     return "errors.header";
   }
@@ -47,7 +47,7 @@ export class BackdError extends CustomError {
   }
 }
 
-export class UnsupportedNetwork extends BackdError {
+export class UnsupportedNetwork extends MeroError {
   constructor() {
     super("errors.unsupportedNetwork");
   }

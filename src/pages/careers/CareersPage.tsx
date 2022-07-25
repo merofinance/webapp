@@ -81,9 +81,9 @@ const CareersPage = (): JSX.Element => {
   return (
     <StyledCareersPage>
       <Seo title={t("metadata.careers.title")} description={t("metadata.careers.description")} />
-      <Header1>Backd Careers</Header1>
+      <Header1>Mero Careers</Header1>
       <Paragraph>
-        Backd is a yield aggregation and liquidity delegation protocol on Ethereum. Backd relies on
+        Mero is a yield aggregation and liquidity delegation protocol on Ethereum. Mero relies on
         different yield-generating strategies, which allocate liquidity to various protocols in
         order to generate competitive returns. Additionally, liquidity providers are able to specify
         a set of market conditions on which part of their liquidity will get automatically delegated
@@ -92,18 +92,18 @@ const CareersPage = (): JSX.Element => {
       <Paragraph>
         While Decentralized Finance (DeFi) offers a lot of potential for building capital efficient
         products, often times capital is not used efficiently. Furthermore, automation of workflows
-        is still rather limited in DeFi. Backd aims to solve that. By offering a suite of actions,
-        which empower users to automate how their funds should be used, Backd enables users to earn
+        is still rather limited in DeFi. Mero aims to solve that. By offering a suite of actions,
+        which empower users to automate how their funds should be used, Mero enables users to earn
         yield on their capital until funds are needed elsewhere.
       </Paragraph>
-      <Header>Why Backd?</Header>
+      <Header>Why Mero?</Header>
       <Paragraph>
         We are building an extraordinary team. We are also very friendly and easy to get along with.
         We love to build cool products, ship fast and stay with the newest trends in DeFi. If you
         are passionate about DeFi, enjoy working with others and solving challenging engineering
         problems then this role could be a great fit.
       </Paragraph>
-      <Header>Open positions at Backd</Header>
+      <Header>Open positions at Mero</Header>
       <Positions>
         <Radio
           hideDisabled={isMobile}
@@ -138,7 +138,7 @@ const CareersPage = (): JSX.Element => {
             <Career key={index} career={career} />
           ))}
         <Paragraph style={{ marginTop: "5rem" }}>
-          Don't see a role for you but would like to apply? Drop us an email at: jobs@backd.fund
+          Don't see a role for you but would like to apply? Drop us an email at: jobs@mero.finance
         </Paragraph>
       </Positions>
     </StyledCareersPage>

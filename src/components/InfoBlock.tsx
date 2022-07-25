@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import BackdTooltip, { TooltipItemType } from "./BackdTooltip";
+import MeroTooltip, { TooltipItemType } from "./MeroTooltip";
 
 export interface InfoBlockRow {
   label: string;
@@ -77,7 +77,7 @@ const InfoBlock = ({ sections }: Props): JSX.Element => {
             <Row key={row.label}>
               <Label>
                 {row.label}
-                {row.tooltip && <BackdTooltip items={row.tooltipItems}>{row.tooltip}</BackdTooltip>}
+                {row.tooltip && <MeroTooltip items={row.tooltipItems}>{row.tooltip}</MeroTooltip>}
               </Label>
               {typeof row.value === "string" ? (
                 <Label id={row.valueId} hideOnSnapshot>

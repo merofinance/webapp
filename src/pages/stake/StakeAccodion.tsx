@@ -161,7 +161,7 @@ const StakeAccordion = ({ open, toggle }: Props): JSX.Element => {
           </ClaimableContainer>
           <Apr>5.2%</Apr>
           <ValueContainer>
-            <ValueToken>40 BKD</ValueToken>
+            <ValueToken>40 MERO</ValueToken>
             <ValueUsd>{`${
               isDesktop ? "=$3200.93" : ScaledNumber.fromUnscaled(3200.93).toCompactUsdValue(1)
             }`}</ValueUsd>

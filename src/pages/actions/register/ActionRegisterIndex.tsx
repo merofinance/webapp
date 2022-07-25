@@ -50,7 +50,7 @@ const NoteContainer = styled.div`
   }
 `;
 
-const BackdIcon = styled.img`
+const MeroIcon = styled.img`
   margin-right: 1rem;
 
   width: 2.2rem;
@@ -121,7 +121,7 @@ const ActionRegisterIndex = (): JSX.Element => {
         setValue={(value: string) => setActionOption(value)}
       />
       <NoteContainer>
-        <BackdIcon src={icon} />
+        <MeroIcon src={icon} />
         <Note id="top-up-note">{t("actions.more.label")}</Note>
       </NoteContainer>
       <ButtonContainer>

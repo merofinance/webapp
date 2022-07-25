@@ -8,7 +8,7 @@ import Button from "../../components/Button";
 import { Pool } from "../../lib";
 import { selectWithdrawalFee, unstake, withdraw } from "../../state/userSlice";
 import { selectUsersPoolLpHeld, selectUsersPoolLpStaked } from "../../state/valueSelectors";
-import { useBackd } from "../../app/hooks/use-backd";
+import { useMero } from "../../app/hooks/use-mero";
 import { AppDispatch } from "../../app/store";
 import { hasPendingTransaction } from "../../state/transactionsSlice";
 import Loader from "../../components/Loader";
@@ -31,7 +31,7 @@ interface Props {
 const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element => {
   const { t } = useTranslation();
   const dispatch: AppDispatch = useDispatch();
-  const backd = useBackd();
+  const mero = useMero();
   const usersPoolLpStaked = useSelector(selectUsersPoolLpStaked(pool));
   const loading = useSelector(hasPendingTransaction("Withdraw"));
   const usersPoolLpHeld = useSelector(selectUsersPoolLpHeld(pool));
@@ -50,13 +50,13 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
   }, [loading]);
 
   const executeWithdraw = (amount: ScaledNumber) => {
-    if (!backd || loading || !pool || !withdrawalFee) return;
-    dispatch(withdraw({ backd, pool, amount, withdrawalFee }));
+    if (!mero || loading || !pool || !withdrawalFee) return;
+    dispatch(withdraw({ mero, pool, amount, withdrawalFee }));
   };
 
   const executeUnstake = () => {
-    if (!backd || loading || !usersPoolLpStaked || !pool) return;
-    dispatch(unstake({ backd, pool, amount: usersPoolLpStaked }));
+    if (!mero || loading || !usersPoolLpStaked || !pool) return;
+    dispatch(unstake({ mero, pool, amount: usersPoolLpStaked }));
   };
 
   const submit = () => {

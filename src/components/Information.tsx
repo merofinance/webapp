@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { GradientLink } from "../styles/GradientText";
 import InfoCard from "./InfoCard";
-import BackdTooltip, { TooltipItemType } from "./BackdTooltip";
+import MeroTooltip, { TooltipItemType } from "./MeroTooltip";
 import arrow from "../assets/ui/arrow.svg";
 import Loader from "./Loader";
 import { Optional } from "../lib/types";
@@ -147,7 +147,7 @@ const Information = ({ header, rows }: Props): JSX.Element => {
           <InformationHeader isAccordion={!!row.details} onClick={() => setOpen(!open)}>
             <LabelContainer>
               <Label>{row.label || <Loader />}</Label>
-              <BackdTooltip items={row.tooltipItems}>{row.tooltip}</BackdTooltip>
+              <MeroTooltip items={row.tooltipItems}>{row.tooltip}</MeroTooltip>
             </LabelContainer>
             <ValueContainer>
               <Value>{row.value || <Loader />}</Value>

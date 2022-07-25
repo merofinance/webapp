@@ -44,7 +44,7 @@ const LineChart = ({ chartData, chartLabels }: Props): JSX.Element => {
   const chart = useRef<ChartJS>(null);
   const [gradient, setGradient] = useState<CanvasGradient>();
   const [fill, setFill] = useState<CanvasGradient>();
-  const stkBkd = 430;
+  const stkMero = 430;
 
   const startDate = new Date();
   startDate.setDate(new Date().getDate() - 100);
@@ -175,7 +175,7 @@ const LineChart = ({ chartData, chartLabels }: Props): JSX.Element => {
   return (
     <StyledLineChart>
       <Chart ref={chart} type="line" data={data} options={options} />
-      <ProgressIndicator percent={stkBkd / 1000} />
+      <ProgressIndicator percent={stkMero / 1000} />
     </StyledLineChart>
   );
 };

@@ -17,7 +17,7 @@ const StyledAmountSlider = styled.div`
   margin-top: 1.8rem;
 `;
 
-const BackdSlider = withStyles({
+const MeroSlider = withStyles({
   root: {
     color: "#52af77",
     height: 8,
@@ -75,7 +75,7 @@ const AmountSlider = ({ value, max, setValue }: Props): JSX.Element => {
 
   return (
     <StyledAmountSlider>
-      <BackdSlider
+      <MeroSlider
         marks
         defaultValue={0}
         step={25}

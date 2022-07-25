@@ -56,7 +56,7 @@ const SubHeader = styled.div`
   }
 `;
 
-const BackdHelper = styled.img`
+const MeroHelper = styled.img`
   left: -1rem;
   top: -1rem;
   position: absolute;
@@ -92,7 +92,7 @@ const ProtectableLoans = (): Optional<JSX.Element> => {
       {protectableLoans.map((loan: Loan) => (
         <ProtectableLoan key={loan.protocol} loan={loan} />
       ))}
-      <BackdHelper src={logo} />
+      <MeroHelper src={logo} />
     </StyledProtectableLoans>
   );
 };
