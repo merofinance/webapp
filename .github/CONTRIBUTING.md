@@ -1,6 +1,6 @@
 # Contribution Guide
 
-Hi and welcome to the Backd Website contribution guide!  
+Hi and welcome to the Mero Website contribution guide!  
 Thanks for considering to contribute! :tada:
 
 ## Found a Bug

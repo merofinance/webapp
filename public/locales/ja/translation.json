@@ -14,12 +14,12 @@
     "testnet": {
       "blogPost": "ブログ記事",
       "connect": "ウォレットを接続して始める、またはブログを読む",
-      "live": "🎉 Backdは現在、Kovan Testnetにあがっています！"
+      "live": "🎉 Meroは現在、Kovan Testnetにあがっています！"
     }
   },
   "benefits": {
     "avoidLiquidation": {
-      "description": "Backdに預け入れられ、予備の担保とされた流動性資産は担保の補充が必要とされた際に自動的に移動されます。",
+      "description": "Meroに預け入れられ、予備の担保とされた流動性資産は担保の補充が必要とされた際に自動的に移動されます。",
       "header": "清算を回避する"
     },
     "earnYield": {
@@ -68,13 +68,13 @@
     "positionCreation": "ポジションの作成に失敗しました。",
     "support": "しばらくしてからもう一度お試しください。エラーが続く場合は、以下にご連絡ください。",
     "transactionType": "取り扱いのない取引です。",
-    "tryTestnet": "Backdはまだメインネットでの実用はされておりません。ネットワークを切り替えて、Kovanでテスト利用していただくことは可能です。",
+    "tryTestnet": "Meroはまだメインネットでの実用はされておりません。ネットワークを切り替えて、Kovanでテスト利用していただくことは可能です。",
     "unsupportedNetwork": "対応していないネットワークです。",
     "wrongNetwork": "誤ったネットワークが選択されています。開発ネットワークをご利用ください。"
   },
   "footer": {
     "community": {
-      "header": "Backdのコミュニティへに参加",
+      "header": "Meroのコミュニティへに参加",
       "links": {
         "discord": "Discord",
         "github": "GitHub",
@@ -110,15 +110,15 @@
         "header": "AMMでの指値注文"
       },
       "nfts": {
-        "description": "特異な要件を持つNFTの指値を定めると、価格が希望額内に下がると購入アクションが実行され、流動資産がBackdのイールドプールから削除されるようになります。",
+        "description": "特異な要件を持つNFTの指値を定めると、価格が希望額内に下がると購入アクションが実行され、流動資産がMeroのイールドプールから削除されるようになります。",
         "header": "NFTの指値"
       },
       "propose": {
-        "description": "アクションは、BackdのDAO(データアクセスオブジェクト)を介して追加することができます。Backdのコミュニティに参加して、新しいアクションをご提案ください！",
+        "description": "アクションは、MeroのDAO(データアクセスオブジェクト)を介して追加することができます。Meroのコミュニティに参加して、新しいアクションをご提案ください！",
         "header": "お客様のご提案をお待ちしております"
       },
       "uniswap": {
-        "description": "Backdキーパーは、価格が定義された範囲外になったことを検出して流動資産をBackdのイールドプールに移し、価格が範囲内に戻ると流動資産をUniswapに戻します。",
+        "description": "Meroキーパーは、価格が定義された範囲外になったことを検出して流動資産をMeroのイールドプールに移し、価格が範囲内に戻ると流動資産をUniswapに戻します。",
         "header": "Uniswap V3  - LP管理 -"
       }
     },
@@ -136,7 +136,7 @@
       "docs": "ドキュメント",
       "newsletter": "メルマガ",
       "pools": "プール",
-      "stake": "BKDへの出資"
+      "stake": "MEROへの出資"
     }
   },
   "headers": {
@@ -153,12 +153,12 @@
       "earnAndProtect": {
         "cards": {
           "claim": {
-            "description": "いつでも、持ち高の登録解除・更新・LPトークンのお引き出し・Backdの報酬の請求を行うことが可能です。",
+            "description": "いつでも、持ち高の登録解除・更新・LPトークンのお引き出し・Meroの報酬の請求を行うことが可能です。",
             "header": "お引き出しはいつでも可能",
             "number": "04"
           },
           "deposit": {
-            "description": "資金をBackdの流動資産プールに預け入れ、プールのLPトークンを受け取ります。",
+            "description": "資金をMeroの流動資産プールに預け入れ、プールのLPトークンを受け取ります。",
             "header": "流動資産の入金",
             "number": "01"
           },
@@ -168,7 +168,7 @@
             "number": "03"
           },
           "register": {
-            "description": "オンチェーンのCompoundローンまたはAaveローンを登録して担保の上積みを受け取り、プールのLPトークンに出資してBackdの報酬を得ます。",
+            "description": "オンチェーンのCompoundローンまたはAaveローンを登録して担保の上積みを受け取り、プールのLPトークンに出資してMeroの報酬を得ます。",
             "header": "オンチェーンのローンを登録する",
             "number": "02"
           }
@@ -178,12 +178,12 @@
       "earnYield": {
         "cards": {
           "claim": {
-            "description": "LPトークンの出資はいつでもご解約いただけます。また、Backdの報酬もいつでもご請求いただけます。",
+            "description": "LPトークンの出資はいつでもご解約いただけます。また、Meroの報酬もいつでもご請求いただけます。",
             "header": "お引き出しはいつでも可能",
             "number": "04"
           },
           "deposit": {
-            "description": "Backdの流動資産プールに資金を預け入ることで、プールのLPトークンを受け取ります。",
+            "description": "Meroの流動資産プールに資金を預け入ることで、プールのLPトークンを受け取ります。",
             "header": "流動資産の入金",
             "number": "01"
           },
@@ -193,7 +193,7 @@
             "number": "02"
           },
           "stake": {
-            "description": "Backdの報酬を受け取るためにプールのLPトークンを出資する.",
+            "description": "Meroの報酬を受け取るためにプールのLPトークンを出資する.",
             "header": "利益獲得のための預け入れ",
             "number": "03"
           }
@@ -217,7 +217,7 @@
     "changeNetwork": "テストネットで試す",
     "connectWallet": "ウォレットと接続",
     "header": "リアクティブ流動資産",
-    "subHeader": "お客様の資産を最大限活用し、Backdの流動性プールで利回りを稼ぎ始めましょう。",
+    "subHeader": "お客様の資産を最大限活用し、Meroの流動性プールで利回りを稼ぎ始めましょう。",
     "unsupportedNetwork": "対応していないネットワークです。",
     "viewPools": "プールを見る"
   },
@@ -353,14 +353,14 @@
       "header": "プールについて\n",
       "revenue": {
         "header": "収入",
-        "tooltip": "Backd プロトコルによる手数料収益の合計金額"
+        "tooltip": "Mero プロトコルによる手数料収益の合計金額"
       },
       "tvl": {
         "header": "プラットフォーム預り資産",
-        "tooltip": "Backdの流動性プールに保有されている総資産の時価総額(預かり資産)"
+        "tooltip": "Meroの流動性プールに保有されている総資産の時価総額(預かり資産)"
       }
     },
-    "overview": "Backd の単一資産プールは、戦略全体で利回りを集約します。資産を預け入れたのち、保証されている担保融資プロトコルの清算から保護するために、補充ポジションを登録します。",
+    "overview": "Mero の単一資産プールは、戦略全体で利回りを集約します。資産を預け入れたのち、保証されている担保融資プロトコルの清算から保護するために、補充ポジションを登録します。",
     "preview": {
       "header": "イールドファーミング",
       "subHeader": "今すぐ利回りを稼ぎ始める"
@@ -368,7 +368,7 @@
     "statistics": {
       "deposits": {
         "header": "お客様の預金",
-        "tooltip": "Backdの流動性プールに保有されている資産の時価"
+        "tooltip": "Meroの流動性プールに保有されている資産の時価"
       },
       "locked": {
         "header": "アクションでロックされた資産\n",
@@ -388,18 +388,18 @@
     "tabs": {
       "stake": {
         "action": "預金して投資",
-        "description": "BKDを出資するとプラットフォーム収益のx％のシェアを獲得でき、bkdDAIトークンによるお客様へのお支払いが行われます。",
+        "description": "MEROを出資するとプラットフォーム収益のx％のシェアを獲得でき、meroDAIトークンによるお客様へのお支払いが行われます。",
         "header": "出資",
-        "inputDesktop": "出資するBKDの金額をご入力ください。",
-        "inputMobile": "出資するBKDの金額",
+        "inputDesktop": "出資するMEROの金額をご入力ください。",
+        "inputMobile": "出資するMEROの金額",
         "more": "続ける"
       },
       "unstake": {
         "action": "解約して出金",
-        "description": "BKDを出資するとプラットフォーム収益のx％のシェアを獲得でき、BKDDAIトークンによるお客様へのお支払いが行われます。",
+        "description": "MEROを出資するとプラットフォーム収益のx％のシェアを獲得でき、MERODAIトークンによるお客様へのお支払いが行われます。",
         "header": "出資を解約",
-        "inputDesktop": "解約するBKDの金額をご入力ください。",
-        "inputMobile": "解約するBKDの金額",
+        "inputDesktop": "解約するMEROの金額をご入力ください。",
+        "inputMobile": "解約するMEROの金額",
         "more": "続行"
       }
     }

@@ -5,7 +5,7 @@ import { ScaledNumber } from "scaled-number";
 
 import { Pool } from "../../lib";
 import { deposit } from "../../state/userSlice";
-import { useBackd } from "../../app/hooks/use-backd";
+import { useMero } from "../../app/hooks/use-mero";
 import { AppDispatch } from "../../app/store";
 import ApproveThenAction from "../../components/ApproveThenAction";
 import { hasPendingTransaction } from "../../state/transactionsSlice";
@@ -23,7 +23,7 @@ interface Props {
 const DepositButtons = ({ value, pool, complete, valid, stepsOnTop }: Props): JSX.Element => {
   const { t } = useTranslation();
   const dispatch: AppDispatch = useDispatch();
-  const backd = useBackd();
+  const mero = useMero();
   const depositLoading = useSelector(hasPendingTransaction("Deposit"));
 
   useEffect(() => {
@@ -31,8 +31,8 @@ const DepositButtons = ({ value, pool, complete, valid, stepsOnTop }: Props): JS
   }, [depositLoading]);
 
   const executeDeposit = () => {
-    if (!backd || depositLoading || !pool) return;
-    dispatch(deposit({ backd, pool, amount: value }));
+    if (!mero || depositLoading || !pool) return;
+    dispatch(deposit({ mero, pool, amount: value }));
   };
 
   return pool ? (

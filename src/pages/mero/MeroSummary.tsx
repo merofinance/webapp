@@ -5,7 +5,7 @@ import { useDevice } from "../../app/hooks/use-device";
 import { useNavigateToTop } from "../../app/hooks/use-navigate-to-top";
 import SummaryStatistics from "../../components/SummaryStatistics";
 
-const BkdSummary = (): JSX.Element => {
+const MeroSummary = (): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigateToTop();
   const { isMobile } = useDevice();
@@ -17,20 +17,22 @@ const BkdSummary = (): JSX.Element => {
     <SummaryStatistics
       statistics={[
         {
-          label: isMobile ? t("bkd.cards.claimable.headerMobile") : t("bkd.cards.claimable.header"),
+          label: isMobile
+            ? t("mero.cards.claimable.headerMobile")
+            : t("mero.cards.claimable.header"),
           value: claimableFees.toUsdValue(1),
           buttonText: claimableFees.isZero() ? undefined : t("claim.buttons.claim"),
           buttonAction: () => navigate("/claim"),
         },
         {
           primary: true,
-          label: t("bkd.cards.apr.header"),
+          label: t("mero.cards.apr.header"),
           value: `${startApr.toPercent()} - ${endApr.toPercent()}`,
-          subValue: t("bkd.cards.apr.description"),
+          subValue: t("mero.cards.apr.description"),
         },
         {
-          label: t("bkd.cards.stake.header"),
-          value: "312.34 BKD",
+          label: t("mero.cards.stake.header"),
+          value: "312.34 MERO",
           subValue: "$65,530.34",
         },
       ]}
@@ -38,4 +40,4 @@ const BkdSummary = (): JSX.Element => {
   );
 };
 
-export default BkdSummary;
+export default MeroSummary;

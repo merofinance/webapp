@@ -11,7 +11,7 @@ import PoolDeposit from "./PoolDeposit";
 import PoolWithdraw from "./PoolWithdraw";
 import PoolInformation from "./PoolInformation";
 import Overview from "../../components/Overview";
-import { useBackd } from "../../app/hooks/use-backd";
+import { useMero } from "../../app/hooks/use-mero";
 import { selectPool, fetchState, selectPoolsLoaded } from "../../state/poolsListSlice";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import BackButton from "../../components/BackButton";
@@ -78,7 +78,7 @@ const PoolPage = (): Optional<JSX.Element> => {
   const { t } = useTranslation();
   const navigate = useNavigateToTop();
   const { poolName } = useParams<"poolName">();
-  const backd = useBackd();
+  const mero = useMero();
   const dispatch = useDispatch();
   const updated = useWeb3Updated();
   const pool = useSelector(selectPool(poolName));
@@ -86,8 +86,8 @@ const PoolPage = (): Optional<JSX.Element> => {
   const usersPoolLpUnlocked = useSelector(selectUsersPoolLpUnlocked(pool));
 
   useEffect(() => {
-    if (!backd) return;
-    dispatch(fetchState(backd));
+    if (!mero) return;
+    dispatch(fetchState(mero));
   }, [updated]);
 
   if (!pool && poolsLoaded) {

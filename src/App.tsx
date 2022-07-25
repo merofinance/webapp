@@ -18,7 +18,7 @@ import TopupConditions from "./pages/actions/register/topup/TopupConditions";
 import TopupPool from "./pages/actions/register/topup/TopupPool";
 import TopupLoan from "./pages/actions/register/topup/TopupLoan";
 import Layout from "./Layout";
-import BkdPage from "./pages/bkd/BkdPage";
+import MeroPage from "./pages/mero/MeroPage";
 import { STAKING_LIVE } from "./lib/constants";
 import CareersPage from "./pages/careers/CareersPage";
 import CareerPage from "./pages/careers/CareerPage";
@@ -49,7 +49,7 @@ const App = (): JSX.Element => {
             </Route>
             {STAKING_LIVE && <Route path="claim" element={<ClaimPage />} />}
             {STAKING_LIVE && <Route path="stake" element={<StakePage />} />}
-            {STAKING_LIVE && <Route path="bkd" element={<BkdPage />} />}
+            {STAKING_LIVE && <Route path="mero" element={<MeroPage />} />}
             <Route path="litepaper" element={<LitepaperPage />} />
             <Route path="careers" element={<CareersPage />} />
             <Route path="career/:careerId" element={<CareerPage />} />

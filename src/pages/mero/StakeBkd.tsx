@@ -11,7 +11,7 @@ import ContentSection from "../../components/ContentSection";
 import Tabs from "../../components/Tabs";
 import { Optional } from "../../lib/types";
 import { selectPools } from "../../state/poolsListSlice";
-import BkdCalculator from "./BkdCalculator";
+import MeroCalculator from "./MeroCalculator";
 import StakeConfirmation from "./StakeConfirmation";
 import UnstakeQueue from "./UnstakeQueue";
 
@@ -45,7 +45,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const StakeBkd = (): Optional<JSX.Element> => {
+const StakeMero = (): Optional<JSX.Element> => {
   const { t } = useTranslation();
   const [amount, setAmount] = useState("");
   const [confirming, setConfirming] = useState(false);
@@ -54,15 +54,15 @@ const StakeBkd = (): Optional<JSX.Element> => {
   if (!pools) return null; // TODO Remove
 
   const STAKING_CONTRACT = pools[0].address;
-  const BKD = pools[0].underlying;
-  const BKD_BALANCE = ScaledNumber.fromUnscaled(245.123456);
+  const MERO = pools[0].underlying;
+  const MERO_BALANCE = ScaledNumber.fromUnscaled(245.123456);
   const LOADING = false;
 
   const error = () => {
     if (amount && Number(amount) <= 0) return t("amountInput.validation.positive");
     try {
       const amount_ = ScaledNumber.fromUnscaled(amount);
-      if (amount_.gt(BKD_BALANCE)) return t("amountInput.validation.exceedsBalance");
+      if (amount_.gt(MERO_BALANCE)) return t("amountInput.validation.exceedsBalance");
       return "";
     } catch {
       return t("amountInput.validation.invalid");
@@ -70,11 +70,11 @@ const StakeBkd = (): Optional<JSX.Element> => {
   };
 
   return (
-    <ContentSection noContentPadding header={t("bkd.stake.header")}>
+    <ContentSection noContentPadding header={t("mero.stake.header")}>
       <Tabs
         tabs={[
           {
-            label: "bkd.stake.tab",
+            label: "mero.stake.tab",
             content: (
               <>
                 <Content>
@@ -83,26 +83,26 @@ const StakeBkd = (): Optional<JSX.Element> => {
                       noSlider
                       value={amount}
                       setValue={(v: string) => setAmount(v)}
-                      label={t("bkd.stake.input")}
-                      balance={BKD_BALANCE}
+                      label={t("mero.stake.input")}
+                      balance={MERO_BALANCE}
                       error={error()}
-                      symbol="bkd"
+                      symbol="mero"
                     />
                     <ButtonContainer>
                       <ApproveThenAction
                         oneButton
-                        label={t("bkd.stake.header")}
+                        label={t("mero.stake.header")}
                         action={() => setConfirming(true)}
                         value={ScaledNumber.fromUnscaled(amount)}
                         loading={LOADING}
                         disabled={!!error()}
-                        token={BKD}
+                        token={MERO}
                         contract={STAKING_CONTRACT}
                       />
                     </ButtonContainer>
                   </InputContainer>
                   {amount && !error() && (
-                    <BkdCalculator amount={ScaledNumber.fromUnscaled(amount)} />
+                    <MeroCalculator amount={ScaledNumber.fromUnscaled(amount)} />
                   )}
                 </Content>
                 <StakeConfirmation
@@ -114,7 +114,7 @@ const StakeBkd = (): Optional<JSX.Element> => {
             ),
           },
           {
-            label: "bkd.unstake.tab",
+            label: "mero.unstake.tab",
             content: (
               <>
                 <Content>
@@ -123,19 +123,19 @@ const StakeBkd = (): Optional<JSX.Element> => {
                       noSlider
                       value={amount}
                       setValue={(v: string) => setAmount(v)}
-                      label={t("bkd.unstake.input")}
-                      balance={BKD_BALANCE}
+                      label={t("mero.unstake.input")}
+                      balance={MERO_BALANCE}
                       error={error()}
-                      symbol="bkd"
+                      symbol="mero"
                     />
                     <ButtonContainer>
                       <Button primary medium wide click={() => console.log("todo")}>
-                        {t("bkd.unstake.button")}
+                        {t("mero.unstake.button")}
                       </Button>
                     </ButtonContainer>
                   </InputContainer>
                   {amount && !error() && (
-                    <BkdCalculator withdraw amount={ScaledNumber.fromUnscaled(amount)} />
+                    <MeroCalculator withdraw amount={ScaledNumber.fromUnscaled(amount)} />
                   )}
                   <UnstakeQueue />
                 </Content>
@@ -153,4 +153,4 @@ const StakeBkd = (): Optional<JSX.Element> => {
   );
 };
 
-export default StakeBkd;
+export default StakeMero;

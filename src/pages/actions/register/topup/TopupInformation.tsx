@@ -5,7 +5,7 @@ import { useWeb3React } from "@web3-react/core";
 import { BigNumber } from "ethers";
 import { ScaledNumber } from "scaled-number";
 
-import BackdTooltip from "../../../../components/BackdTooltip";
+import MeroTooltip from "../../../../components/MeroTooltip";
 import { shortenAddress } from "../../../../lib/text";
 import { Optional, Pool, Position } from "../../../../lib/types";
 import { useDevice } from "../../../../app/hooks/use-device";
@@ -197,7 +197,7 @@ const TopupInformation = ({ position, pool, value }: Props): JSX.Element => {
           <InfoRow>
             <InfoLabel>
               {t("actions.gasBank.topupAmount")}
-              <BackdTooltip info>{t("actions.gasBank.topupAmountTooltip")}</BackdTooltip>
+              <MeroTooltip info>{t("actions.gasBank.topupAmountTooltip")}</MeroTooltip>
             </InfoLabel>
             <InfoLabel>
               {value ? `${new ScaledNumber(value).toCryptoString()} ETH` : <Loader />}

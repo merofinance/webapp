@@ -2,14 +2,14 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 import Seo from "../../components/Seo";
-import BkdSummary from "./BkdSummary";
+import MeroSummary from "./MeroSummary";
 import Overview from "../../components/Overview";
 import BoostChart from "./BoostChart";
-import StakeBkd from "./StakeBkd";
+import StakeMero from "./StakeMero";
 import BasicCard from "../../components/BasicCard";
 import { DOCS_PLATFORM_FEES_LINK } from "../../lib/links";
 
-const StyledBkdPage = styled.div`
+const StyledMeroPage = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -59,38 +59,38 @@ const InfoCards = styled.div`
   }
 `;
 
-const BkdPage = (): JSX.Element => {
+const MeroPage = (): JSX.Element => {
   const { t } = useTranslation();
 
   return (
-    <StyledBkdPage>
-      <Seo title={t("metadata.bkd.title")} description={t("metadata.bkd.description")} />
-      <BkdSummary />
+    <StyledMeroPage>
+      <Seo title={t("metadata.mero.title")} description={t("metadata.mero.description")} />
+      <MeroSummary />
       <Container>
         <InfoCards>
-          <Overview defaultClosed description={t("bkd.overview")} link={DOCS_PLATFORM_FEES_LINK} />
+          <Overview defaultClosed description={t("mero.overview")} link={DOCS_PLATFORM_FEES_LINK} />
           <div>
-            <StakeBkd />
+            <StakeMero />
           </div>
         </InfoCards>
         <Content>
           <BoostChart />
           <StatContainer>
             <BasicCard
-              label={t("bkd.statistics.stkbkd.header")}
-              value="312.34 stkBKD"
-              subValue="= 1000 BKD"
+              label={t("mero.statistics.stkmero.header")}
+              value="312.34 stkMERO"
+              subValue="= 1000 MERO"
             />
             <BasicCard
-              label={t("bkd.statistics.boost.header")}
+              label={t("mero.statistics.boost.header")}
               value="2.6x"
-              subValue={t("bkd.statistics.boost.subHeader")}
+              subValue={t("mero.statistics.boost.subHeader")}
             />
           </StatContainer>
         </Content>
       </Container>
-    </StyledBkdPage>
+    </StyledMeroPage>
   );
 };
 
-export default BkdPage;
+export default MeroPage;

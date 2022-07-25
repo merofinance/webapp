@@ -184,7 +184,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const BackdHelper = styled.img`
+const MeroHelper = styled.img`
   left: -1rem;
   top: -1rem;
   position: absolute;
@@ -289,7 +289,7 @@ const LiveHelp = (): Optional<JSX.Element> => {
           ))}
         </Content>
       </StyledLiveHelp>
-      <BackdHelper src={logo} />
+      <MeroHelper src={logo} />
     </Container>
   );
 };

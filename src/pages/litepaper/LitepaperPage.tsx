@@ -5,7 +5,7 @@ import { Header1, Header2, Header5, Paragraph } from "../../styles/Headers";
 import Seo from "../../components/Seo";
 import capitalEfficiency from "../../assets/litepaper/capital-efficiency.png";
 import topUp from "../../assets/litepaper/top-up.png";
-import backdFlow from "../../assets/litepaper/backd-flow.png";
+import meroFlow from "../../assets/litepaper/mero-flow.png";
 import {
   DISCORD_LINK,
   DOCS_CONTRIBUTIONS_LINK,
@@ -125,7 +125,7 @@ const LitepaperPage = (): JSX.Element => {
       <Paragraph>
         <Trans i18nKey="litepaper.introduction.paragraph1">
           <Link href={DOCS_LINK} target="_blank" rel="noopener noreferrer">
-            Backd
+            Mero
           </Link>
         </Trans>
       </Paragraph>
@@ -156,7 +156,7 @@ const LitepaperPage = (): JSX.Element => {
       <Image src={topUp} alt="Top-up Action Diagram" />
       <Paragraph>{t("litepaper.action.what.paragraph2")}</Paragraph>
       <Paragraph>{t("litepaper.action.what.paragraph3")}</Paragraph>
-      <Image src={backdFlow} alt="Backd Flow Diagram" />
+      <Image src={meroFlow} alt="Mero Flow Diagram" />
 
       <Header>{t("litepaper.fees.header")}</Header>
       <Paragraph>{t("litepaper.fees.paragraph1")}</Paragraph>

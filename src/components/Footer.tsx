@@ -94,7 +94,7 @@ const linkLists: LinkListType[] = [
           {
             internal: false,
             label: "footer.resources.links.audits.stela",
-            link: "/media/backd-stela-labs-audit-report.pdf",
+            link: "/media/mero-stela-labs-audit-report.pdf",
           },
         ],
       },
@@ -185,7 +185,7 @@ const Footer = (): JSX.Element => {
 
   return (
     <StyledFooter>
-      <Logo src={logo} alt="Backd logo" />
+      <Logo src={logo} alt="Mero logo" />
       <div />
       {linkLists.map((linkList: LinkListType) => (
         <LinkList key={linkList.header}>

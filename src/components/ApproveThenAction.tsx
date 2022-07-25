@@ -7,7 +7,7 @@ import { ScaledNumber } from "scaled-number";
 import Button from "./Button";
 import tick from "../assets/ui/tick.svg";
 import { Token } from "../lib/types";
-import { useBackd } from "../app/hooks/use-backd";
+import { useMero } from "../app/hooks/use-mero";
 import { approve, selectAllowance } from "../state/userSlice";
 import { hasPendingTransaction } from "../state/transactionsSlice";
 import { INFINITE_APPROVE_AMMOUNT } from "../lib/constants";
@@ -125,7 +125,7 @@ const ApproveThenAction = ({
 }: Props): JSX.Element => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const backd = useBackd();
+  const mero = useMero();
   const approvedAmount = useSelector(selectAllowance(token.address, contract));
   const approveLoading = useSelector(hasPendingTransaction("Approve"));
   const [persistApprove, setPersistApprove] = useState(false);
@@ -135,14 +135,14 @@ const ApproveThenAction = ({
   hoverText = hoverText || t("amountInput.enter");
 
   const executeApprove = () => {
-    if (!backd || approved || approveLoading) return;
+    if (!mero || approved || approveLoading) return;
     setPersistApprove(true);
     dispatch(
       approve({
         token,
         spender: contract,
         amount: ScaledNumber.fromUnscaled(INFINITE_APPROVE_AMMOUNT),
-        backd,
+        mero,
       })
     );
   };

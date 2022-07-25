@@ -5,7 +5,7 @@ import { ScaledNumber } from "scaled-number";
 import ExternalLink from "../../components/ExternalLink";
 import Notice from "../../components/Notice";
 import Popup from "../../components/Popup";
-import BkdCalculator from "./BkdCalculator";
+import MeroCalculator from "./MeroCalculator";
 import { DOCS_TOKENOMICS_LINK } from "../../lib/links";
 
 const Description = styled.div`
@@ -35,16 +35,16 @@ const StakeConfirmation = ({ show, close, amount }: Props): JSX.Element => {
     <Popup
       show={show}
       close={close}
-      header={t("bkd.stake.confirmation.header")}
+      header={t("mero.stake.confirmation.header")}
       submit={() => console.log("TODO")}
-      confirmationText={t("bkd.stake.confirmation.action")}
+      confirmationText={t("mero.stake.confirmation.action")}
     >
       <Description>
-        {t("bkd.stake.confirmation.description", { amount: amount.toCryptoString() })}
+        {t("mero.stake.confirmation.description", { amount: amount.toCryptoString() })}
       </Description>
       <ExternalLink link={DOCS_TOKENOMICS_LINK}>{t("components.moreInDocs")}</ExternalLink>
-      <BkdCalculator amount={amount} />
-      <Notice>{t("bkd.stake.confirmation.notice")}</Notice>
+      <MeroCalculator amount={amount} />
+      <Notice>{t("mero.stake.confirmation.notice")}</Notice>
     </Popup>
   );
 };

@@ -24,7 +24,7 @@ interface Props {
   withdraw?: boolean;
 }
 
-const BkdCalculator = ({ amount, withdraw }: Props): JSX.Element => {
+const MeroCalculator = ({ amount, withdraw }: Props): JSX.Element => {
   const { t } = useTranslation();
   const { isMobile } = useDevice();
   const hasStaked = true; // TODO
@@ -32,14 +32,14 @@ const BkdCalculator = ({ amount, withdraw }: Props): JSX.Element => {
   const infoBlockRows: InfoBlockRow[] = [
     {
       label: isMobile
-        ? t("bkd.stake.calculator.earnings.labelMobile")
-        : t("bkd.stake.calculator.earnings.label"),
-      tooltip: t("bkd.stake.calculator.earnings.tooltip"),
+        ? t("mero.stake.calculator.earnings.labelMobile")
+        : t("mero.stake.calculator.earnings.label"),
+      tooltip: t("mero.stake.calculator.earnings.tooltip"),
       value: <>{hasStaked && <SubLabel>$23.32 → </SubLabel>}32.23</>,
     },
     {
-      label: t("bkd.stake.calculator.boost.label"),
-      tooltip: t("bkd.stake.calculator.boost.tooltip"),
+      label: t("mero.stake.calculator.boost.label"),
+      tooltip: t("mero.stake.calculator.boost.tooltip"),
       value: <>{hasStaked && <SubLabel>2.6x → </SubLabel>}2.4x</>,
     },
   ];
@@ -47,13 +47,13 @@ const BkdCalculator = ({ amount, withdraw }: Props): JSX.Element => {
   if (!withdraw)
     infoBlockRows.push({
       label: isMobile
-        ? t("bkd.stake.calculator.full.labelMobile")
-        : t("bkd.stake.calculator.full.label"),
-      tooltip: t("bkd.stake.calculator.full.tooltip"),
+        ? t("mero.stake.calculator.full.labelMobile")
+        : t("mero.stake.calculator.full.label"),
+      tooltip: t("mero.stake.calculator.full.tooltip"),
       value: <> {hasStaked && !isMobile && <SubLabel>Oct-23-2022 → </SubLabel>}Jan-01-2023 </>,
     });
 
   return <InfoBlock sections={[infoBlockRows]} />;
 };
 
-export default BkdCalculator;
+export default MeroCalculator;

@@ -22,9 +22,9 @@
   </p>
 </div>
 
-# Backd Website
+# Mero Website
 
-Welcome to the repository for the Backd Website - a React project implementing Web3 which allows users to interract with the Backd Protocol.  
+Welcome to the repository for the Mero Website - a React project implementing Web3 which allows users to interract with the Mero Protocol.  
 If you are interested in contributing, please check out our [Contribution Guide](https://github.com/merofinance/webapp/blob/master/.github/CONTRIBUTING.md)
 
 ## Development
@@ -65,6 +65,6 @@ The following command can be used to run the automation tests:
 This runs Cypress in open mode so you can view the tests suites and see them run.  
 See the [Cypress docs](https://docs.cypress.io/guides/overview/why-cypress) for more information.
 
-**Do not enter the private key of your main Ethereum wallet anywhere into Backd, Cypress, or your terminal. If you want to test using a private key, please create a new wallet that only holds Kovan ETH. No Backd employee will ever ask you for your private key and you should never share this with anyone.**
+**Do not enter the private key of your main Ethereum wallet anywhere into Mero, Cypress, or your terminal. If you want to test using a private key, please create a new wallet that only holds Kovan ETH. No Mero employee will ever ask you for your private key and you should never share this with anyone.**
 
 We have some specs that make calls to the Kovan testnet. For these tests we initialise a Web3 connection using a private key that is set as an environment variable. When running in the pipeline this is pulled from the GitHub secrets, but when running locally you will need to set this yourself. To set the environment variable you can use: `export CYPRESS_PRIVATE_KEY={{my_cool_private_key}}`. For the tests to pass you will need to have enough Kovan ETH on the wallet to cover the gas costs, and around 20 DAI. You can get DAI from [this faucet](https://testnet.aave.com/faucet).

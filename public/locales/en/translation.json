@@ -1,7 +1,7 @@
 {
   "banner": {
     "testnet": {
-      "live": "🎉 Backd is now live on Kovan Testnet.",
+      "live": "🎉 Mero is now live on Kovan Testnet.",
       "connect": "Connect your wallet to begin or read",
       "blogPost": "the blog post"
     }
@@ -10,7 +10,7 @@
     "tabs": {
       "claim": "claim",
       "pools": "pools",
-      "stake": "stake BKD",
+      "stake": "stake MERO",
       "docs": "docs",
       "blog": "blog",
       "newsletter": "newsletter",
@@ -82,7 +82,7 @@
           "deposit": {
             "number": "01",
             "header": "Deposit Liquidity",
-            "description": "Deposit funds into Backd liquidity pools and receive pool LP tokens."
+            "description": "Deposit funds into Mero liquidity pools and receive pool LP tokens."
           },
           "earn": {
             "number": "02",
@@ -92,12 +92,12 @@
           "stake": {
             "number": "03",
             "header": "Stake to Earn Rewards",
-            "description": "Stake your pool LP tokens to receive Backd rewards."
+            "description": "Stake your pool LP tokens to receive Mero rewards."
           },
           "claim": {
             "number": "04",
             "header": "Unstake Any Time",
-            "description": "Unstake your LP tokens or claim your Backd rewards at any time."
+            "description": "Unstake your LP tokens or claim your Mero rewards at any time."
           }
         }
       },
@@ -107,7 +107,7 @@
           "deposit": {
             "number": "01",
             "header": "Deposit Liquidity",
-            "description": "Deposit funds into Backd liquidity pools and receive pool LP tokens."
+            "description": "Deposit funds into Mero liquidity pools and receive pool LP tokens."
           },
           "register": {
             "number": "02",
@@ -122,7 +122,7 @@
           "claim": {
             "number": "04",
             "header": "Unstake Any Time",
-            "description": "Unregister or update a position, withdraw LP tokens or claim Backd rewards at any time."
+            "description": "Unregister or update a position, withdraw LP tokens or claim Mero rewards at any time."
           }
         }
       }
@@ -134,7 +134,7 @@
     "actions": {
       "uniswap": {
         "header": "Uniswap V3 LP Management",
-        "description": "Backd Keepers detect when the price has moved outside of your defined range and move the liquidity into Backd’s yield pools. Once the price is back within range, Keepers move your liquidity back into Uniswap."
+        "description": "Mero Keepers detect when the price has moved outside of your defined range and move the liquidity into Mero’s yield pools. Once the price is back within range, Keepers move your liquidity back into Uniswap."
       },
       "limitOrders": {
         "header": "AMM Limit Orders",
@@ -146,11 +146,11 @@
       },
       "nfts": {
         "header": "Limit Orders for NFTs",
-        "description": "Create a limit order for an NFT with a specific set of rarity traits. Once the price drops within your desired amount, a purchase Action is executed and liquidity is removed from Backd’s yield pools."
+        "description": "Create a limit order for an NFT with a specific set of rarity traits. Once the price drops within your desired amount, a purchase Action is executed and liquidity is removed from Mero’s yield pools."
       },
       "propose": {
         "header": "Propose your own",
-        "description": "Actions can be added through the Backd DAO. Join the Backd community and propose a new action!"
+        "description": "Actions can be added through the Mero DAO. Join the Mero community and propose a new action!"
       }
     }
   },
@@ -217,10 +217,10 @@
     }
   },
   "litepaper": {
-    "header": "Backd Litepaper",
+    "header": "Mero Litepaper",
     "introduction": {
       "header": "Introduction",
-      "paragraph1": " <0>Backd</0> is a trustless and interest generating protocol that automates asset efficiency through yield aggregation and customizable liquidity delegation. The Backd protocol’s reactive liquidity pools empower DeFi users through the realization of greater asset utility, efficient aggregation of yield, and mitigation of opportunity cost."
+      "paragraph1": " <0>Mero</0> is a trustless and interest generating protocol that automates asset efficiency through yield aggregation and customizable liquidity delegation. The Mero protocol’s reactive liquidity pools empower DeFi users through the realization of greater asset utility, efficient aggregation of yield, and mitigation of opportunity cost."
     },
     "capitalEfficiency": {
       "header": "Capital efficiency in DeFi today",
@@ -240,26 +240,26 @@
     },
     "reactiveLiquidity": {
       "header": "Reactive liquidity",
-      "paragraph1": "Backd eliminates this aforementioned capital inefficiency through the deployment of novel multi-utility liquidity pools. Until now, yield farming protocols have focused on solving opportunity cost by trying to increase yield. However yield is not a solution to opportunity cost, it is compensation.",
-      "paragraph2": "Backd effectively mitigates opportunity cost and thus increases capital efficiency by changing the nature or utility of provided liquidity itself. Unlike normal yield-farming protocols, where provided liquidity will remain static until the user withdraws it, liquidity deposited into Backd can autonomously react to market conditions or user defined variables. Specifically, users can add customizable actions to their provided liquidity. Adding an action allows users to earn yield until their assets are more efficient elsewhere. At which point, the Backd protocol will automatically delegate your liquidity to where it is needed.",
-      "paragraph3": "Backd generates yield from both yield-farming strategies and actions. Every time an action occurs on Backd, a small action fee is charged and paid out to Backd liquidity providers. It is important to note that registering an action to your Backd liquidity is optional. Actions are solely an additional utility layer, empowering liquidity providers to do more with their deposits. Because Backd is able to capture yield beyond strategy profits, it can be an optimal option for users only looking to farm yield and not to make their liquidity reactive."
+      "paragraph1": "Mero eliminates this aforementioned capital inefficiency through the deployment of novel multi-utility liquidity pools. Until now, yield farming protocols have focused on solving opportunity cost by trying to increase yield. However yield is not a solution to opportunity cost, it is compensation.",
+      "paragraph2": "Mero effectively mitigates opportunity cost and thus increases capital efficiency by changing the nature or utility of provided liquidity itself. Unlike normal yield-farming protocols, where provided liquidity will remain static until the user withdraws it, liquidity deposited into Mero can autonomously react to market conditions or user defined variables. Specifically, users can add customizable actions to their provided liquidity. Adding an action allows users to earn yield until their assets are more efficient elsewhere. At which point, the Mero protocol will automatically delegate your liquidity to where it is needed.",
+      "paragraph3": "Mero generates yield from both yield-farming strategies and actions. Every time an action occurs on Mero, a small action fee is charged and paid out to Mero liquidity providers. It is important to note that registering an action to your Mero liquidity is optional. Actions are solely an additional utility layer, empowering liquidity providers to do more with their deposits. Because Mero is able to capture yield beyond strategy profits, it can be an optimal option for users only looking to farm yield and not to make their liquidity reactive."
     },
     "action": {
       "header": "Action 01: Top-up Positions",
-      "paragraph1": "The first action that Backd will support, which will be available at launch, is collateral top ups. Support for more actions will be added in the future. The core protocol architecture of Backd is designed in a way that makes adding new actions, strategies, or supported protocols (for actions) easy. This allows Backd to perpetually increase yield and utility for LPs as DeFi evolves.",
+      "paragraph1": "The first action that Mero will support, which will be available at launch, is collateral top ups. Support for more actions will be added in the future. The core protocol architecture of Mero is designed in a way that makes adding new actions, strategies, or supported protocols (for actions) easy. This allows Mero to perpetually increase yield and utility for LPs as DeFi evolves.",
       "what": {
         "header": "What is a Top-up Position?",
-        "paragraph1": "A top-up is the act of depositing additional collateral in order to increase the health factor of your loan or mitigate liquidation risk. Backd liquidity providers can use their Backd LP tokens to register Top-up Positions. This creates back up collateral or what you could call interest earning liquidation protection. When a user registers a Top-up Position they must specify how much of their Backd liquidity should be shifted and at what health factor a top-up should occur. After registering a Top-up Position the Backd user’s liquidity will continue to be allocated to yield-farming strategies until it is needed.",
-        "paragraph2": "Backd’s Top-up Positions increase collateral efficiency by enabling any borrower on supported protocols (Backd will support Aave v2 & Compound loans at launch) to earn yield with their collateral. Furthermore this also enables borrowers to increase leverage by depositing less collateral and hedge liquidation risk by automatically posting extra collateral when needed.",
-        "paragraph3": "Backd creates an infrastructure that enables the combination of on-chain actions, off-chain keepers that react to market events, and yield-farming. This unique combination lends itself to a multitude of actions and integration with many protocols. Backd not only makes liquidity more efficient, but also makes other protocols safer and smarter."
+        "paragraph1": "A top-up is the act of depositing additional collateral in order to increase the health factor of your loan or mitigate liquidation risk. Mero liquidity providers can use their Mero LP tokens to register Top-up Positions. This creates back up collateral or what you could call interest earning liquidation protection. When a user registers a Top-up Position they must specify how much of their Mero liquidity should be shifted and at what health factor a top-up should occur. After registering a Top-up Position the Mero user’s liquidity will continue to be allocated to yield-farming strategies until it is needed.",
+        "paragraph2": "Mero’s Top-up Positions increase collateral efficiency by enabling any borrower on supported protocols (Mero will support Aave v2 & Compound loans at launch) to earn yield with their collateral. Furthermore this also enables borrowers to increase leverage by depositing less collateral and hedge liquidation risk by automatically posting extra collateral when needed.",
+        "paragraph3": "Mero creates an infrastructure that enables the combination of on-chain actions, off-chain keepers that react to market events, and yield-farming. This unique combination lends itself to a multitude of actions and integration with many protocols. Mero not only makes liquidity more efficient, but also makes other protocols safer and smarter."
       }
     },
     "fees": {
       "header": "Platform fees",
-      "paragraph1": "The protocol architecture that facilitates Backd’s reactive liquidity creates the framework for a fee generating powerhouse. The Backd protocols platform fees can be broken up into two main categories (actions and strategies).",
+      "paragraph1": "The protocol architecture that facilitates Mero’s reactive liquidity creates the framework for a fee generating powerhouse. The Mero protocols platform fees can be broken up into two main categories (actions and strategies).",
       "action": {
         "header": "Action fees",
-        "paragraph1": "Every time an action is executed, a fee is collected in the form of LP tokens. Part of that fee is sent directly to liquidity providers which in turn compounds yield, while a portion is paid to the keeper that executes an action. Action fees create yield diversified from traditional strategies. For example, Backd collateral top up fees will generate higher returns during periods of market volatility (because more loans will need to be topped up)."
+        "paragraph1": "Every time an action is executed, a fee is collected in the form of LP tokens. Part of that fee is sent directly to liquidity providers which in turn compounds yield, while a portion is paid to the keeper that executes an action. Action fees create yield diversified from traditional strategies. For example, Mero collateral top up fees will generate higher returns during periods of market volatility (because more loans will need to be topped up)."
       },
       "strategies": {
         "header": "Strategies",
@@ -267,9 +267,9 @@
       }
     },
     "token": {
-      "header": "The Backd governance token",
-      "paragraph1": "The Backd governance token distribution is designed to incentive participation among three core protocol stakeholders (liquidity providers, AMM liquidity providers, and Keepers). The majority of the token supply will be distributed to these stakeholders. More information regarding Backd tokenecomics can be found in the <0>docs</0>.",
-      "paragraph2": "The Backd governance token is the native ERC-20 token of the Backd protocol. Token holders can lock their tokens to participate in protocol governance. Additionally, locked Backd governance tokens receive a share of the protocol fees or revenue. This share of protocol fees or revenue will be determined by the locking period that the Backd governance token holder selects.",
+      "header": "The Mero governance token",
+      "paragraph1": "The Mero governance token distribution is designed to incentive participation among three core protocol stakeholders (liquidity providers, AMM liquidity providers, and Keepers). The majority of the token supply will be distributed to these stakeholders. More information regarding Mero tokenecomics can be found in the <0>docs</0>.",
+      "paragraph2": "The Mero governance token is the native ERC-20 token of the Mero protocol. Token holders can lock their tokens to participate in protocol governance. Additionally, locked Mero governance tokens receive a share of the protocol fees or revenue. This share of protocol fees or revenue will be determined by the locking period that the Mero governance token holder selects.",
       "paragraph3": "Protocol governance will be executed on-chain and can include (but is not limited to):",
       "governance": {
         "actions": "Add new actions",
@@ -279,8 +279,8 @@
         "reserve": "Control the community reserve fund"
       },
       "community": {
-        "header": "The Backd community",
-        "paragraph1": "The Backd protocol will ultimately (through the launch of the Backd DAO) be controlled by the community. Backd’s reactive liquidity creates unique opportunities for community contributions that do not involve on-chain governance.",
+        "header": "The Mero community",
+        "paragraph1": "The Mero protocol will ultimately (through the launch of the Mero DAO) be controlled by the community. Mero’s reactive liquidity creates unique opportunities for community contributions that do not involve on-chain governance.",
         "paragraph2": "Contributions can include (but are not limited to):",
         "contributions": {
           "strategy": "Strategy submissions",
@@ -288,7 +288,7 @@
           "general": "General <0>contributions</0>",
           "investment": "Cookbook <0>recipes</0>"
         },
-        "paragraph3": "If you are interested in becoming a Backd contributor, chat with us in our contributions <0>discord channel</0>!"
+        "paragraph3": "If you are interested in becoming a Mero contributor, chat with us in our contributions <0>discord channel</0>!"
       }
     }
   },
@@ -298,13 +298,13 @@
       "subHeader": "Begin earning yield immediately"
     },
     "header": "All pools",
-    "overview": "Backd’s single-asset pools aggregate yield across strategies. Add utility and autonomy to your liquidity with actions.",
+    "overview": "Mero’s single-asset pools aggregate yield across strategies. Add utility and autonomy to your liquidity with actions.",
     "deposit": "deposit",
     "information": {
       "header": "Pools information",
       "tvl": {
         "header": "Platform TVL",
-        "tooltip": "The market capitalization of total assets held in Backd liquidity pools (Total Value Locked)"
+        "tooltip": "The market capitalization of total assets held in Mero liquidity pools (Total Value Locked)"
       },
       "apy": {
         "header": "Average APY",
@@ -312,13 +312,13 @@
       },
       "revenue": {
         "header": "Revenue",
-        "tooltip": "The total value of fees generated by the Backd protocol"
+        "tooltip": "The total value of fees generated by the Mero protocol"
       }
     },
     "statistics": {
       "deposits": {
         "header": "Your deposits",
-        "tooltip": "The current value of your assets held in Backd liquidity pools"
+        "tooltip": "The current value of your assets held in Mero liquidity pools"
       },
       "locked": {
         "header": "Allocated to Actions",
@@ -478,8 +478,8 @@
         },
         "pool": {
           "header": "Select the pool you want the top-up to come from:",
-          "noDepositsHeader": "To register an action you must deposit assets into a Backd pool",
-          "subHeader": "Liquidity deposited into a Backd pool can be earmarked for top-up protection. You will earn yield and BKD rewards while your liquidity is in a Backd pool.",
+          "noDepositsHeader": "To register an action you must deposit assets into a Mero pool",
+          "subHeader": "Liquidity deposited into a Mero pool can be earmarked for top-up protection. You will earn yield and MERO rewards while your liquidity is in a Mero pool.",
           "incomplete": "Select a pool",
           "deposit": {
             "header": "Enter an amount of {{asset}} to deposit",
@@ -499,11 +499,11 @@
             "label": "Action trigger fee",
             "value": "{{percent}} of single top-up",
             "tooltip": {
-              "header": "When an Action is triggered a small fee is paid to Backd LPs, Keepers and BKD stakers.",
+              "header": "When an Action is triggered a small fee is paid to Mero LPs, Keepers and MERO stakers.",
               "itemLabels": {
-                "lps": "Backd LPs",
+                "lps": "Mero LPs",
                 "keepers": "Keepers",
-                "stakers": "BKD stakers"
+                "stakers": "MERO stakers"
               }
             }
           }
@@ -603,46 +603,46 @@
     "tabs": {
       "stake": {
         "header": "stake",
-        "description": "Stake BKD and earn a share in x% of platform revenue, paid out in bkdDAI tokens.",
+        "description": "Stake MERO and earn a share in x% of platform revenue, paid out in meroDAI tokens.",
         "more": "More",
-        "inputDesktop": "Enter an amount of BKD to stake",
-        "inputMobile": "Amount of BKD to stake",
+        "inputDesktop": "Enter an amount of MERO to stake",
+        "inputMobile": "Amount of MERO to stake",
         "action": "Deposit and Stake"
       },
       "unstake": {
         "header": "unstake",
-        "description": "Stake BKD and earn a share in x% of platform revenue, paid out in bkdDAI tokens.",
+        "description": "Stake MERO and earn a share in x% of platform revenue, paid out in meroDAI tokens.",
         "more": "More",
-        "inputDesktop": "Enter an amount of BKD to unstake",
-        "inputMobile": "Amount of BKD to unstake",
+        "inputDesktop": "Enter an amount of MERO to unstake",
+        "inputMobile": "Amount of MERO to unstake",
         "action": "Unstake and Withdraw"
       }
     }
   },
-  "bkd": {
-    "overview": "Stake BKD to earn a share of platform fees and gain voting weight - which can be used to vote to determine which pools receive BKD inflation.",
+  "mero": {
+    "overview": "Stake MERO to earn a share of platform fees and gain voting weight - which can be used to vote to determine which pools receive MERO inflation.",
     "cards": {
       "claimable": {
         "header": "Claimable platform fees",
         "headerMobile": "Claimable"
       },
       "apr": {
-        "header": "Staked BKD APR",
+        "header": "Staked MERO APR",
         "description": "Stake for 12 months to achieve max boost"
       },
       "stake": {
-        "header": "Staked BKD"
+        "header": "Staked MERO"
       }
     },
     "stake": {
-      "header": "Stake BKD",
+      "header": "Stake MERO",
       "tab": "stake",
-      "input": "Amount of BKD to stake",
+      "input": "Amount of MERO to stake",
       "calculator": {
         "earnings": {
           "label": "Estimated daily earnings",
           "labelMobile": "Daily earnings",
-          "tooltip": "Estimated daily earnings based on your share of vwBKD and current daily platform revenue."
+          "tooltip": "Estimated daily earnings based on your share of vwMERO and current daily platform revenue."
         },
         "boost": {
           "label": "Boost",
@@ -655,19 +655,19 @@
         }
       },
       "confirmation": {
-        "header": "Confirm stake BKD",
-        "description": "You are about to stake {{ammount}} BKD. You will immediately begin earning platform fees, it will take 12 months to reach maximum boost (5x). Unstaking BKD takes two months, during this period you will continue to earn platform fees and can continue to vote.",
-        "notice": "NOTICE: It takes two months to unstake BKD",
+        "header": "Confirm stake MERO",
+        "description": "You are about to stake {{ammount}} MERO. You will immediately begin earning platform fees, it will take 12 months to reach maximum boost (5x). Unstaking MERO takes two months, during this period you will continue to earn platform fees and can continue to vote.",
+        "notice": "NOTICE: It takes two months to unstake MERO",
         "action": "Confirm & Stake"
       }
     },
     "unstake": {
-      "header": "Unstake BKD",
+      "header": "Unstake MERO",
       "tab": "unstake",
-      "input": "Amount of BKD to unstake",
+      "input": "Amount of MERO to unstake",
       "button": "Begin unstake queue",
       "queue": {
-        "header": "Your unstaking BKD",
+        "header": "Your unstaking MERO",
         "headers": {
           "amount": "Amount",
           "remaining": "Time remaining"
@@ -678,12 +678,12 @@
       },
       "confirmation": {
         "header": "Confirm unstake",
-        "description": "You are about to stake {{bkdAmount}} BKD. It will take {{monthsRemaining}} months to reach maximum boost (5x) but you will immediately begin earning platform fees and gain the ability to vote in the BKD inflation."
+        "description": "You are about to stake {{meroAmount}} MERO. It will take {{monthsRemaining}} months to reach maximum boost (5x) but you will immediately begin earning platform fees and gain the ability to vote in the MERO inflation."
       }
     },
     "statistics": {
-      "stkbkd": {
-        "header": "stkBKD balance"
+      "stkmero": {
+        "header": "stkMERO balance"
       },
       "boost": {
         "header": "Current boost",
@@ -770,39 +770,39 @@
   },
   "metadata": {
     "landing": {
-      "title": "Backd - Liquidity Made Reactive",
+      "title": "Mero - Liquidity Made Reactive",
       "description": "The DeFi protocol for increasing the yield and utility of your crypto assets with reactive liquidity"
     },
     "actions": {
-      "title": "Backd Actions",
+      "title": "Mero Actions",
       "description": "Create Actions to automate your liquidity to where it is needed most"
     },
     "claim": {
       "title": "Claim Rewards & Yield",
-      "description": "Claim rewards from Backd yield farming strategies and collateral top up fees"
+      "description": "Claim rewards from Mero yield farming strategies and collateral top up fees"
     },
     "litepaper": {
-      "title": "Backd Litepaper",
-      "description": "How Backd combines actions (e.g. Aave v2 & Compound liquidation protection) with yield-farming (Curve & Convex)"
+      "title": "Mero Litepaper",
+      "description": "How Mero combines actions (e.g. Aave v2 & Compound liquidation protection) with yield-farming (Curve & Convex)"
     },
     "pool": {
       "title": "{{asset}} Pool",
       "description": "Deposit {{asset}} to farm yield and register LP tokens for actions such as liquidation protection (Aave v2 & Compound)"
     },
     "pools": {
-      "title": "Backd Pools",
+      "title": "Mero Pools",
       "description": "Earn yield and governance tokens while executing other acitons such as collateral top ups (Aave v2 & Compound)"
     },
     "stake": {
       "title": "Stake LP Tokens & Earn Rewards",
-      "description": "Earn BKD token rewards for providing liquidity to AMMs for BKD pairs"
+      "description": "Earn MERO token rewards for providing liquidity to AMMs for MERO pairs"
     },
-    "bkd": {
-      "title": "Stake BKD & Earn Rewards",
+    "mero": {
+      "title": "Stake MERO & Earn Rewards",
       "description": "Earn rewards and protocol profits in addition to aggregated yield from yield farming strategies"
     },
     "careers": {
-      "title": "Backd Careers",
+      "title": "Mero Careers",
       "description": "We are building an extraordinary team. Now hiring: Full Stack Engineer & Software Engineer Intern"
     }
   }

@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
-import { useBackd } from "../../../../app/hooks/use-backd";
+import { useMero } from "../../../../app/hooks/use-mero";
 import BasicInput from "../../../../components/BasicInput";
 import { spinAnimation } from "../../../../styles/animations/SpinAnimation";
 import pending from "../../../../assets/ui/status/pending.svg";
@@ -78,7 +78,7 @@ interface Props {
 const LoanSearch = ({ value, setValue, hasExistingLoans }: Props): JSX.Element => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
-  const backd = useBackd();
+  const mero = useMero();
   const { account } = useWeb3React();
   const ethPrice = useSelector(selectEthPrice);
   const positions = useSelector(selectPositions);
@@ -96,9 +96,9 @@ const LoanSearch = ({ value, setValue, hasExistingLoans }: Props): JSX.Element =
     );
 
   const getLoans = async (newaddress: string) => {
-    if (!backd || !ethers.utils.isAddress(newaddress)) return;
+    if (!mero || !ethers.utils.isAddress(newaddress)) return;
     setLoading(true);
-    await dispatch(fetchLoans({ backd, address: newaddress }));
+    await dispatch(fetchLoans({ mero, address: newaddress }));
     setRetrieved(true);
     setLoading(false);
   };

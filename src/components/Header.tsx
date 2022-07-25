@@ -64,7 +64,7 @@ const Header = (): JSX.Element => {
     <StyledHeader isSticky={windowPosition > 40}>
       <Content>
         <Link to="/">
-          <Logo src={logo} alt="Backd logo" />
+          <Logo src={logo} alt="Mero logo" />
         </Link>
         <NavItems />
         <Connector />

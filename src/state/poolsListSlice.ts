@@ -4,7 +4,7 @@ import { ScaledNumber } from "scaled-number";
 
 import { AppThunk, RootState } from "../app/store";
 import { Pool } from "../lib";
-import { Backd } from "../lib/backd";
+import { Mero } from "../lib/mero";
 import {
   Address,
   fromPlainBalances,
@@ -15,7 +15,7 @@ import {
 } from "../lib/types";
 import { fetchLoans } from "./lendingSlice";
 import { ACTIONS_LIVE, INFURA_ID } from "../lib/constants";
-import { createBackd } from "../lib/factory";
+import { createMero } from "../lib/factory";
 import {
   fetchActionFees,
   fetchEstimatedGasUsage,
@@ -44,20 +44,20 @@ const initialState: PoolsState = {
 
 export const fetchPool = createAsyncThunk(
   "pool/fetch",
-  async ({ backd, poolAddress }: { backd: Backd; poolAddress: string }) => {
-    return backd.getPoolInfo(poolAddress);
+  async ({ mero, poolAddress }: { mero: Mero; poolAddress: string }) => {
+    return mero.getPoolInfo(poolAddress);
   }
 );
 
 export const fetchPrices = createAsyncThunk(
   "pool/fetch-prices",
-  async ({ backd, pools }: { backd: Backd; pools: Pool[] }) => {
-    return backd.getPrices(pools.map((p) => p.underlying.symbol));
+  async ({ mero, pools }: { mero: Mero; pools: Pool[] }) => {
+    return mero.getPrices(pools.map((p) => p.underlying.symbol));
   }
 );
 
-export const fetchPools = createAsyncThunk("pool/fetch-all", ({ backd }: { backd: Backd }) =>
-  backd.listPools()
+export const fetchPools = createAsyncThunk("pool/fetch-all", ({ mero }: { mero: Mero }) =>
+  mero.listPools()
 );
 
 export const poolsSlice = createSlice({
@@ -86,23 +86,23 @@ export const poolsSlice = createSlice({
 });
 
 export const fetchState =
-  (backd: Backd): AppThunk =>
+  (mero: Mero): AppThunk =>
   (dispatch) => {
-    dispatch(fetchPools({ backd })).then((v) => {
+    dispatch(fetchPools({ mero })).then((v) => {
       if (v.meta.requestStatus !== "fulfilled") return;
       const pools = v.payload as Pool[];
-      dispatch(fetchBalances({ backd, pools }));
-      dispatch(fetchPrices({ backd, pools }));
-      dispatch(fetchAllowances({ backd, pools }));
-      dispatch(fetchWithdrawalFees({ backd, pools }));
+      dispatch(fetchBalances({ mero, pools }));
+      dispatch(fetchPrices({ mero, pools }));
+      dispatch(fetchAllowances({ mero, pools }));
+      dispatch(fetchWithdrawalFees({ mero, pools }));
     });
-    const chainId = backd.getChainId();
+    const chainId = mero.getChainId();
     if (ACTIONS_LIVE || chainId === 42) {
-      backd.currentAccount().then((address: Address) => dispatch(fetchLoans({ backd, address })));
-      dispatch(fetchPositions({ backd }));
-      dispatch(fetchEstimatedGasUsage({ backd }));
-      dispatch(fetchActionFees({ backd }));
-      dispatch(fetchGasBankBalance({ backd }));
+      mero.currentAccount().then((address: Address) => dispatch(fetchLoans({ mero, address })));
+      dispatch(fetchPositions({ mero }));
+      dispatch(fetchEstimatedGasUsage({ mero }));
+      dispatch(fetchActionFees({ mero }));
+      dispatch(fetchGasBankBalance({ mero }));
     } else {
       dispatch(setPositionsLoaded());
     }
@@ -110,11 +110,11 @@ export const fetchState =
 
 export const fetchPreviewState = (): AppThunk => (dispatch) => {
   const provider = new ethers.providers.InfuraProvider(1, INFURA_ID);
-  const backd = createBackd(provider, { chainId: 1 });
-  dispatch(fetchPools({ backd })).then((v) => {
+  const mero = createMero(provider, { chainId: 1 });
+  dispatch(fetchPools({ mero })).then((v) => {
     if (v.meta.requestStatus !== "fulfilled") return;
     const pools = v.payload as Pool[];
-    dispatch(fetchPrices({ backd, pools }));
+    dispatch(fetchPrices({ mero, pools }));
   });
 };
 

@@ -4,7 +4,7 @@ import { PlainScaledNumber, ScaledNumber } from "scaled-number";
 
 import { RootState } from "../app/store";
 import { Pool } from "../lib";
-import { Backd } from "../lib/backd";
+import { Mero } from "../lib/mero";
 import {
   fromPlainPosition,
   Position,
@@ -32,18 +32,18 @@ const initialState: PositionsState = {
   estimatedGasUsage: null,
 };
 
-export const fetchPositions = createAsyncThunk("positions/fetch", ({ backd }: { backd: Backd }) =>
-  backd.getPositions()
+export const fetchPositions = createAsyncThunk("positions/fetch", ({ mero }: { mero: Mero }) =>
+  mero.getPositions()
 );
 
 export const fetchEstimatedGasUsage = createAsyncThunk(
   "positions/fetch-estimated-gas-usage",
-  ({ backd }: { backd: Backd }) => backd.getEstimatedGasUsage()
+  ({ mero }: { mero: Mero }) => mero.getEstimatedGasUsage()
 );
 
 export const fetchActionFees = createAsyncThunk(
   "positions/fetch-action-fees",
-  ({ backd }: { backd: Backd }) => backd.getActionFees()
+  ({ mero }: { mero: Mero }) => mero.getActionFees()
 );
 
 export const positionsSlice = createSlice({
@@ -70,22 +70,22 @@ export const positionsSlice = createSlice({
 
 export const { setPositionsLoaded } = positionsSlice.actions;
 
-type RegisterArgs = { backd: Backd; pool: Pool; position: Position; value: BigNumber };
-type RemoveArgs = { backd: Backd; pool: Pool; position: Position };
+type RegisterArgs = { mero: Mero; pool: Pool; position: Position; value: BigNumber };
+type RemoveArgs = { mero: Mero; pool: Pool; position: Position };
 
 export const registerPosition = createAsyncThunk(
   "positions/register",
-  async ({ backd, pool, position, value }: RegisterArgs, { dispatch }) => {
-    const tx = await backd.registerPosition(pool, position, value);
+  async ({ mero, pool, position, value }: RegisterArgs, { dispatch }) => {
+    const tx = await mero.registerPosition(pool, position, value);
     handleTransactionConfirmation(
       tx,
       { action: "Register", args: { plainPosition: toPlainPosition(position) } },
       dispatch,
       [
-        fetchPositions({ backd }),
-        fetchBalances({ backd, pools: [pool] }),
-        fetchAllowances({ backd, pools: [pool] }),
-        fetchGasBankBalance({ backd }),
+        fetchPositions({ mero }),
+        fetchBalances({ mero, pools: [pool] }),
+        fetchAllowances({ mero, pools: [pool] }),
+        fetchGasBankBalance({ mero }),
       ]
     );
     return tx.hash;
@@ -94,17 +94,17 @@ export const registerPosition = createAsyncThunk(
 
 export const removePosition = createAsyncThunk(
   "positions/remove",
-  async ({ backd, pool, position }: RemoveArgs, { dispatch }) => {
-    const tx = await backd.removePosition(position.account, position.protocol);
+  async ({ mero, pool, position }: RemoveArgs, { dispatch }) => {
+    const tx = await mero.removePosition(position.account, position.protocol);
     handleTransactionConfirmation(
       tx,
       { action: "Remove", args: { plainPosition: toPlainPosition(position) } },
       dispatch,
       [
-        fetchPositions({ backd }),
-        fetchBalances({ backd, pools: [pool] }),
-        fetchAllowances({ backd, pools: [pool] }),
-        fetchGasBankBalance({ backd }),
+        fetchPositions({ mero }),
+        fetchBalances({ mero, pools: [pool] }),
+        fetchAllowances({ mero, pools: [pool] }),
+        fetchGasBankBalance({ mero }),
       ]
     );
     return tx.hash;

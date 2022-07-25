@@ -215,7 +215,7 @@ describe("Pool Selection", () => {
   });
   it("Should have header", () => {
     cy.get("#register-topup-pool-header").contains(
-      "To register an action you must deposit assets into a Backd pool"
+      "To register an action you must deposit assets into a Mero pool"
     );
   });
   it("Should have DAI Pool", () => {
@@ -241,7 +241,7 @@ describe("Pool Selection", () => {
     cy.location().should((loc) => {
       if (loc.pathname)
         expect(loc.pathname).to.eq(
-          "/actions/register/topup/deposit/bkddai/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
+          "/actions/register/topup/deposit/merodai/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave"
         );
     });
   });
@@ -305,7 +305,7 @@ describe("Pool Deposit", () => {
     cy.location().should((loc) => {
       if (loc.pathname)
         expect(loc.pathname).to.eq(
-          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/bkddai"
+          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/merodai"
         );
     });
   });
@@ -342,7 +342,7 @@ describe("Conditions Page", () => {
     cy.location().should((loc) => {
       if (loc.pathname)
         expect(loc.pathname).to.eq(
-          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/bkddai"
+          "/actions/register/topup/0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D/Aave/merodai"
         );
     });
   });

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { BigNumber } from "ethers";
 
-import { useBackd } from "../../../../app/hooks/use-backd";
+import { useMero } from "../../../../app/hooks/use-mero";
 import { AppDispatch } from "../../../../app/store";
 import Popup from "../../../../components/Popup";
 import { registerPosition } from "../../../../state/positionsSlice";
@@ -30,7 +30,7 @@ const TopupConfirmation = ({
 }: Props): JSX.Element => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
-  const backd = useBackd();
+  const mero = useMero();
   const loading = useSelector(hasPendingTransaction("Register"));
   const [initialised, setInitialised] = useState(false);
 
@@ -46,8 +46,8 @@ const TopupConfirmation = ({
   }, [loading]);
 
   const executeRegister = () => {
-    if (!backd || loading || !value) return;
-    dispatch(registerPosition({ position, pool, backd, value }));
+    if (!mero || loading || !value) return;
+    dispatch(registerPosition({ position, pool, mero, value }));
   };
 
   return (

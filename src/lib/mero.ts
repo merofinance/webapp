@@ -53,11 +53,11 @@ import {
   toPlainActionFees,
 } from "./types";
 
-export type BackdOptions = {
+export type MeroOptions = {
   chainId: number;
 };
 
-export interface Backd {
+export interface Mero {
   getChainId(): number;
   currentAccount(): Promise<Address>;
   listPools(): Promise<PlainPool[]>;
@@ -94,7 +94,7 @@ export interface Backd {
   topupActionAddress: Optional<string>;
 }
 
-export class Web3Backd implements Backd {
+export class Web3Mero implements Mero {
   private controller: Controller;
 
   private topupAction: TopUpAction | undefined;
@@ -105,7 +105,7 @@ export class Web3Backd implements Backd {
 
   private chainId: number;
 
-  constructor(private _provider: Signer | providers.Provider, private options: BackdOptions) {
+  constructor(private _provider: Signer | providers.Provider, private options: MeroOptions) {
     this.chainId = options.chainId;
     const contracts = this.getContracts();
 

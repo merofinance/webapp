@@ -9,7 +9,7 @@ export const masterAccount = "0xbacE8e7f276FD2Ee5ecE5C1df18BF381148862A6";
 // numbers are scaled to 10^18 to emulate contracst return values
 export const pools: GenericPool<BigNumber>[] = [
   {
-    name: "bkdDAI3CRV",
+    name: "meroDAI3CRV",
     apy: scale(237, 17),
     totalAssets: scale(84180923),
     address: "0xC265707cb6Fa41b51F899000bF248A257eFB52aB",
@@ -23,8 +23,8 @@ export const pools: GenericPool<BigNumber>[] = [
     },
     lpToken: {
       address: "0x25FF22De379B644BD5C2263404baC6FeE5a4b8de",
-      name: "Backd DAI",
-      symbol: "bkdDAI",
+      name: "Mero DAI",
+      symbol: "meroDAI",
       decimals: 18,
     },
     maxWithdrawalFee: scale(1, 18),
@@ -51,7 +51,7 @@ export const pools: GenericPool<BigNumber>[] = [
     },
     lpToken: {
       address: "0x99A77926B3FB49619DC3A1DAc18565bcB5A98b93",
-      name: "Backd USDC",
+      name: "Mero USDC",
       symbol: "bUSDC",
       decimals: 18,
     },
@@ -65,7 +65,7 @@ export const pools: GenericPool<BigNumber>[] = [
     isPaused: false,
   },
   {
-    name: "bkdethCRV",
+    name: "meroethCRV",
     apy: scale(218, 17),
     totalAssets: scale(19738),
     address: "0xCa0cF7A135AC852a4d5591dC48e93e5F67425cB9",
@@ -78,7 +78,7 @@ export const pools: GenericPool<BigNumber>[] = [
       address: "0x0000000000000000000000000000000000000000",
     },
     lpToken: {
-      name: "Backd ETH",
+      name: "Mero ETH",
       symbol: "ETH",
       decimals: 18,
       address: "0xa09021117e4f31B83140Ae16b44F634c8624b625",
@@ -101,9 +101,9 @@ export const prices: Record<string, BigNumber> = {
 };
 
 export const balances: Record<string, BigNumber> = {
-  [pools[0].lpToken.address]: scale(250_000, 18), // 250,000 bkdDAI
+  [pools[0].lpToken.address]: scale(250_000, 18), // 250,000 meroDAI
   [pools[0].underlying.address]: scale(120_000, 18), // 120,000 DAI
-  [pools[2].lpToken.address]: scale(48, 18), // 48 bkdeth
+  [pools[2].lpToken.address]: scale(48, 18), // 48 meroeth
 };
 
 const positionKeys = [

@@ -25,8 +25,8 @@ export const careers: CareerType[] = [
     type: "Full-time",
     location: "Remote",
     responsibilities: [
-      "Develop off-chain components used for Backd",
-      "Develop frontends, including Backd main UI as well as external and internal tools",
+      "Develop off-chain components used for Mero",
+      "Develop frontends, including Mero main UI as well as external and internal tools",
       "Help with smart contract development and testing",
     ],
     requirements: [
@@ -50,8 +50,8 @@ export const careers: CareerType[] = [
     type: "Internship",
     location: "Remote",
     responsibilities: [
-      "Develop off-chain components used for Backd",
-      "Develop frontends, including Backd main UI as well as external and internal tools",
+      "Develop off-chain components used for Mero",
+      "Develop frontends, including Mero main UI as well as external and internal tools",
       "Help with smart contract development and testing",
     ],
     requirements: ["Strong interest in blockchain systems and DeFi"],

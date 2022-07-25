@@ -20,7 +20,7 @@ const StyledPopup = styled.div`
   justify-content: center;
   align-items: center;
   background-color: rgba(5, 1, 32, 0.5);
-  backdrop-filter: blur(10px);
+  merorop-filter: blur(10px);
 
   display: ${(props: StyledPopupProps) => (props.show ? "flex" : "none")};
 `;

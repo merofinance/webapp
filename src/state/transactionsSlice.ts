@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, Selector } from "../app/store";
-import { Backd } from "../lib/backd";
+import { Mero } from "../lib/mero";
 import { parseTransactionReceipt, TransactionConfirmation, TransactionInfo } from "../lib/types";
 
 interface TransactionsState {
@@ -13,8 +13,8 @@ const initialState: TransactionsState = {
 
 export const fetchPendingTransactions = createAsyncThunk(
   "transactions/fetchPending",
-  async ({ backd, hashes }: { backd: Backd; hashes: string[] }) => {
-    const txs = await Promise.all(hashes.map((hash) => backd.provider.waitForTransaction(hash)));
+  async ({ mero, hashes }: { mero: Mero; hashes: string[] }) => {
+    const txs = await Promise.all(hashes.map((hash) => mero.provider.waitForTransaction(hash)));
     return txs.map((tx) => parseTransactionReceipt(tx));
   }
 );

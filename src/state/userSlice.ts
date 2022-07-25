@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PlainScaledNumber, ScaledNumber } from "scaled-number";
 
 import { RootState, Selector } from "../app/store";
-import { Backd } from "../lib/backd";
+import { Mero } from "../lib/mero";
 import { ETH_DUMMY_ADDRESS } from "../lib/constants";
 import {
   Address,
@@ -40,27 +40,27 @@ const initialState: UserState = {
 
 export const fetchBalances = createAsyncThunk(
   "user/fetchBalances",
-  async ({ backd, pools }: { backd: Backd; pools: Pool[] }) => {
+  async ({ mero, pools }: { mero: Mero; pools: Pool[] }) => {
     const allTokens = pools.flatMap((p) => [
       p.lpToken.address,
       p.underlying.address,
       p.stakerVaultAddress,
     ]);
-    const balances = await backd.getBalances(allTokens);
+    const balances = await mero.getBalances(allTokens);
     return toPlainBalances(balances);
   }
 );
 
 export const fetchGasBankBalance = createAsyncThunk(
   "user/fetchGasBankBalance",
-  async ({ backd }: { backd: Backd }) => {
-    return backd.getGasBankBalance();
+  async ({ mero }: { mero: Mero }) => {
+    return mero.getGasBankBalance();
   }
 );
 
 export const fetchAllowances = createAsyncThunk(
   "user/fetchAllowances",
-  async ({ backd, pools }: { backd: Backd; pools: Pool[] }) => {
+  async ({ mero, pools }: { mero: Mero; pools: Pool[] }) => {
     const queries: AllowanceQuery[] = pools
       .flatMap((pool) => [
         {
@@ -68,31 +68,31 @@ export const fetchAllowances = createAsyncThunk(
           token: pool.underlying,
         },
         {
-          spender: backd.topupActionAddress || "",
+          spender: mero.topupActionAddress || "",
           token: pool.lpToken,
         },
         {
-          spender: backd.topupActionAddress || "",
+          spender: mero.topupActionAddress || "",
           token: { address: pool.stakerVaultAddress, decimals: pool.underlying.decimals },
         },
       ])
       .filter((a: AllowanceQuery) => !!a.spender);
-    const allowances = await backd.getAllowances(queries);
+    const allowances = await mero.getAllowances(queries);
     return toPlainAllowances(allowances);
   }
 );
 
 export const fetchWithdrawalFees = createAsyncThunk(
   "user/fetchWithdrawalFees",
-  async ({ backd, pools }: { backd: Backd; pools: Pool[] }) => {
-    return backd.getWithdrawalFees(pools);
+  async ({ mero, pools }: { mero: Mero; pools: Pool[] }) => {
+    return mero.getWithdrawalFees(pools);
   }
 );
 
-type ApproveArgs = { backd: Backd; token: Token; spender: Address; amount: ScaledNumber };
-type DepositArgs = { backd: Backd; pool: Pool; amount: ScaledNumber };
-type WithdrawArgs = { backd: Backd; pool: Pool; amount: ScaledNumber; withdrawalFee: ScaledNumber };
-type UnstakeArgs = { backd: Backd; pool: Pool; amount: ScaledNumber };
+type ApproveArgs = { mero: Mero; token: Token; spender: Address; amount: ScaledNumber };
+type DepositArgs = { mero: Mero; pool: Pool; amount: ScaledNumber };
+type WithdrawArgs = { mero: Mero; pool: Pool; amount: ScaledNumber; withdrawalFee: ScaledNumber };
+type UnstakeArgs = { mero: Mero; pool: Pool; amount: ScaledNumber };
 
 export const userSlice = createSlice({
   name: "user",
@@ -174,8 +174,8 @@ export const { setAllowance, decreaseAllowance, setConnecting } = userSlice.acti
 
 export const approve = createAsyncThunk(
   "user/approve",
-  async ({ backd, token, spender, amount }: ApproveArgs, { dispatch }) => {
-    const tx = await backd.approve(token, spender, amount);
+  async ({ mero, token, spender, amount }: ApproveArgs, { dispatch }) => {
+    const tx = await mero.approve(token, spender, amount);
     handleTransactionConfirmation(
       tx,
       { action: "Approve", args: { spender, amount: amount.toPlain(), token } },
@@ -188,16 +188,16 @@ export const approve = createAsyncThunk(
 
 export const deposit = createAsyncThunk(
   "user/deposit",
-  async ({ backd, pool, amount }: DepositArgs, { dispatch }) => {
-    const tx = await backd.deposit(pool, amount);
+  async ({ mero, pool, amount }: DepositArgs, { dispatch }) => {
+    const tx = await mero.deposit(pool, amount);
     handleTransactionConfirmation(
       tx,
       { action: "Deposit", args: { pool, amount: amount.toPlain() } },
       dispatch,
       [
-        fetchBalances({ backd, pools: [pool] }),
-        fetchPool({ backd, poolAddress: pool.address }),
-        fetchWithdrawalFees({ backd, pools: [pool] }),
+        fetchBalances({ mero, pools: [pool] }),
+        fetchPool({ mero, poolAddress: pool.address }),
+        fetchWithdrawalFees({ mero, pools: [pool] }),
         decreaseAllowance({
           token: pool.underlying,
           spender: pool.address,
@@ -211,13 +211,13 @@ export const deposit = createAsyncThunk(
 
 export const withdraw = createAsyncThunk(
   "user/withdraw",
-  async ({ backd, pool, amount, withdrawalFee }: WithdrawArgs, { dispatch }) => {
-    const tx = await backd.withdraw(pool, amount, withdrawalFee);
+  async ({ mero, pool, amount, withdrawalFee }: WithdrawArgs, { dispatch }) => {
+    const tx = await mero.withdraw(pool, amount, withdrawalFee);
     handleTransactionConfirmation(
       tx,
       { action: "Withdraw", args: { pool, amount: amount.toPlain() } },
       dispatch,
-      [fetchBalances({ backd, pools: [pool] }), fetchPool({ backd, poolAddress: pool.address })]
+      [fetchBalances({ mero, pools: [pool] }), fetchPool({ mero, poolAddress: pool.address })]
     );
     return tx.hash;
   }
@@ -225,13 +225,13 @@ export const withdraw = createAsyncThunk(
 
 export const unstake = createAsyncThunk(
   "user/unstake",
-  async ({ backd, pool, amount }: UnstakeArgs, { dispatch }) => {
-    const tx = await backd.unstake(pool.stakerVaultAddress, amount);
+  async ({ mero, pool, amount }: UnstakeArgs, { dispatch }) => {
+    const tx = await mero.unstake(pool.stakerVaultAddress, amount);
     handleTransactionConfirmation(
       tx,
       { action: "Unstake", args: { pool, amount: amount.toPlain() } },
       dispatch,
-      [fetchBalances({ backd, pools: [pool] })]
+      [fetchBalances({ mero, pools: [pool] })]
     );
     return tx.hash;
   }
@@ -297,15 +297,15 @@ export function selectAllowance(token: string, contract: string): Selector<Optio
 }
 
 export function selectToupAllowance(
-  backd: Backd | undefined,
+  mero: Mero | undefined,
   pool: Pool
 ): Selector<Optional<ScaledNumber>> {
   return (state: RootState) => {
-    if (!backd || !backd.topupActionAddress) return null;
+    if (!mero || !mero.topupActionAddress) return null;
     const plainLpTokenAllowance =
-      state.user.allowances[pool.lpToken.address]?.[backd.topupActionAddress];
+      state.user.allowances[pool.lpToken.address]?.[mero.topupActionAddress];
     const plainVaultAllowance =
-      state.user.allowances[pool.stakerVaultAddress]?.[backd.topupActionAddress];
+      state.user.allowances[pool.stakerVaultAddress]?.[mero.topupActionAddress];
     if (!plainLpTokenAllowance || !plainVaultAllowance) return null;
     const lpTokenAllowance = ScaledNumber.fromPlain(plainLpTokenAllowance);
     const vaultAllowance = ScaledNumber.fromPlain(plainVaultAllowance);

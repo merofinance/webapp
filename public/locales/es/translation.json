@@ -14,12 +14,12 @@
     "testnet": {
       "blogPost": "el blog post",
       "connect": "Conecta tu cartera para empezar o lea",
-      "live": "🎉 Backd está disponible en Kovan Testnet."
+      "live": "🎉 Mero está disponible en Kovan Testnet."
     }
   },
   "benefits": {
     "avoidLiquidation": {
-      "description": "La liquidez depositada y marcada como colateral de back-up en Backd será transformada automaticamente cuando sea necesario realizar top-ups de colateral",
+      "description": "La liquidez depositada y marcada como colateral de back-up en Mero será transformada automaticamente cuando sea necesario realizar top-ups de colateral",
       "header": "Evitar Liquidación"
     },
     "earnYield": {
@@ -68,7 +68,7 @@
     "positionCreation": "Position creation failed",
     "support": "Please try again in a moment. If the error persists, you can contact us on",
     "transactionType": "Transaction type not supported",
-    "tryTestnet": "Backd is not yet live on Mainnet. You can test it now on Kovan by switching networks.",
+    "tryTestnet": "Mero is not yet live on Mainnet. You can test it now on Kovan by switching networks.",
     "unsupportedNetwork": "Network not supported",
     "wrongNetwork": "Wrong network selected, please use a development network"
   },
@@ -110,15 +110,15 @@
         "header": "AMM Limit Orders"
       },
       "nfts": {
-        "description": "Create a limit order for an NFT with a specific set of rarity traits. Once the price drops within your desired amount, a purchase Action is executed and liquidity is removed from Backd’s yield pools.",
+        "description": "Create a limit order for an NFT with a specific set of rarity traits. Once the price drops within your desired amount, a purchase Action is executed and liquidity is removed from Mero’s yield pools.",
         "header": "Limit Orders for NFTs"
       },
       "propose": {
-        "description": "Actions can be added through the Backd DAO. Join the Backd community and propose a new action!",
+        "description": "Actions can be added through the Mero DAO. Join the Mero community and propose a new action!",
         "header": "Propose your own"
       },
       "uniswap": {
-        "description": "Backd Keepers detect when the price has moved outside of your defined range and move the liquidity into Backd’s yield pools. Once the price is back within range, Keepers move your liquidity back into Uniswap.",
+        "description": "Mero Keepers detect when the price has moved outside of your defined range and move the liquidity into Mero’s yield pools. Once the price is back within range, Keepers move your liquidity back into Uniswap.",
         "header": "Uniswap V3 LP Management"
       }
     },
@@ -136,7 +136,7 @@
       "docs": "docs",
       "newsletter": "newsletter",
       "pools": "fondos",
-      "stake": "deposita BKD"
+      "stake": "deposita MERO"
     }
   },
   "headers": {
@@ -153,12 +153,12 @@
       "earnAndProtect": {
         "cards": {
           "claim": {
-            "description": "Actualiza o anula una posición, retira tokens de LP o hac claim de las recompensas de Backd en cualquier momento",
+            "description": "Actualiza o anula una posición, retira tokens de LP o hac claim de las recompensas de Mero en cualquier momento",
             "header": "Retira en cualquier momento",
             "number": "04"
           },
           "deposit": {
-            "description": "Deposit funds into Backd liquidity pools and receive pool LP tokens ",
+            "description": "Deposit funds into Mero liquidity pools and receive pool LP tokens ",
             "header": "Deposita liquidez y empieza a obtener rendimiento",
             "number": "01"
           },
@@ -168,7 +168,7 @@
             "number": "03"
           },
           "register": {
-            "description": "Registra prestamos on-chain de Compound o Aave v2 para recibir top-ups de colateral y depositar tus tokens de LP para obtener recompensas de Backd",
+            "description": "Registra prestamos on-chain de Compound o Aave v2 para recibir top-ups de colateral y depositar tus tokens de LP para obtener recompensas de Mero",
             "header": "Registra prestamos on-chain",
             "number": "02"
           }
@@ -178,12 +178,12 @@
       "earnYield": {
         "cards": {
           "claim": {
-            "description": "Retira en cualquier momento y reclamana tus recompensas de Backd en cualquier momento",
+            "description": "Retira en cualquier momento y reclamana tus recompensas de Mero en cualquier momento",
             "header": "Retira en cualquier momento",
             "number": "04"
           },
           "deposit": {
-            "description": "Deposita fondos en los fondos de liquidez de Backd y recibe tokens de LP",
+            "description": "Deposita fondos en los fondos de liquidez de Mero y recibe tokens de LP",
             "header": "Deposita liquidez",
             "number": "01"
           },
@@ -193,7 +193,7 @@
             "number": "02"
           },
           "stake": {
-            "description": "Deposita tus tokens de LP para recibir recompensas de Backd",
+            "description": "Deposita tus tokens de LP para recibir recompensas de Mero",
             "header": "Deposita para obtener recompensas",
             "number": "03"
           }
@@ -294,14 +294,14 @@
       "header": "Pools Information",
       "revenue": {
         "header": "Revenue",
-        "tooltip": "The total value of fees generated by the Backd protocol"
+        "tooltip": "The total value of fees generated by the Mero protocol"
       },
       "tvl": {
         "header": "Platform TVL",
-        "tooltip": "The market capitalization of total assets held in Backd liquidity pools (total value locked)"
+        "tooltip": "The market capitalization of total assets held in Mero liquidity pools (total value locked)"
       }
     },
-    "overview": "Backd’s single-asset pools aggregate yield across strategies. After depositing an asset, register a top-up position to protect from liquidation on supported collateralized lending protocols.",
+    "overview": "Mero’s single-asset pools aggregate yield across strategies. After depositing an asset, register a top-up position to protect from liquidation on supported collateralized lending protocols.",
     "preview": {
       "header": "yield farming",
       "subHeader": "Begin earning yield immediately"
@@ -309,7 +309,7 @@
     "statistics": {
       "deposits": {
         "header": "Your deposits",
-        "tooltip": "The current value of your assets held in Backd liquidity pools"
+        "tooltip": "The current value of your assets held in Mero liquidity pools"
       },
       "rewards": {
         "header": "Rewards accrued",
@@ -325,18 +325,18 @@
     "tabs": {
       "stake": {
         "action": "Deposit and Stake",
-        "description": "Stake BKD and earn a share in x% of platform revenue, paid out in bkdDAI tokens.",
+        "description": "Stake MERO and earn a share in x% of platform revenue, paid out in meroDAI tokens.",
         "header": "stake",
-        "inputDesktop": "Enter an amount of BKD to stake",
-        "inputMobile": "Amount of BKD to stake",
+        "inputDesktop": "Enter an amount of MERO to stake",
+        "inputMobile": "Amount of MERO to stake",
         "more": "More"
       },
       "unstake": {
         "action": "Unstake and Withdraw",
-        "description": "Stake BKD and earn a share in x% of platform revenue, paid out in bkdDAI tokens.",
+        "description": "Stake MERO and earn a share in x% of platform revenue, paid out in meroDAI tokens.",
         "header": "unstake",
-        "inputDesktop": "Enter an amount of BKD to unstake",
-        "inputMobile": "Amount of BKD to unstake",
+        "inputDesktop": "Enter an amount of MERO to unstake",
+        "inputMobile": "Amount of MERO to unstake",
         "more": "More"
       }
     }

@@ -100,7 +100,7 @@ const Card = styled.div`
   padding: 2.4rem 1.6rem;
   display: flex;
   flex-direction: column;
-  backdrop-filter: blur(8px);
+  merorop-filter: blur(8px);
   padding-bottom: 5.3rem;
 
   @media (max-width: 713px) {
