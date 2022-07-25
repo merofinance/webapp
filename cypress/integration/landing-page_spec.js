@@ -40,19 +40,19 @@ describe("Benefits", () => {
   it("Should have Avoid Liquidation Benefit", () => {
     cy.get('[id="benefits.reactiveLiquidity.header"] > a')
       .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://docs.backd.fund/protocol-architecture/actions");
+      .should("have.attr", "href", "https://docs.mero.finance/protocol-architecture/actions");
   });
 
   it("Should have Earn Yield Benefit", () => {
     cy.get('[id="benefits.earnYield.header"] > a')
       .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://docs.backd.fund/protocol-architecture/pools");
+      .should("have.attr", "href", "https://docs.mero.finance/protocol-architecture/pools");
   });
 
   it("Should have Fee Share Benefit", () => {
     cy.get('[id="benefits.feeShare.header"] > a')
       .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://docs.backd.fund/protocol-architecture/tokenomics");
+      .should("have.attr", "href", "https://docs.mero.finance/protocol-architecture/tokenomics");
   });
 });
 
@@ -97,13 +97,13 @@ describe("Join The Community", () => {
   it("Should have Twitter Link", () => {
     cy.get('[id="joinCommunity.socials.twitter"]')
       .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://twitter.com/backdfund");
+      .should("have.attr", "href", "https://twitter.com/merofinance");
   });
 
   it("Should have Telegram Link", () => {
     cy.get('[id="joinCommunity.socials.github"]')
       .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://github.com/backdfund");
+      .should("have.attr", "href", "https://github.com/merofinance");
   });
 });
 
@@ -154,13 +154,13 @@ describe("Footer", () => {
   it("Should have Twitter Link", () => {
     cy.get('[id="footer.community.links.twitter"]')
       .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://twitter.com/backdfund");
+      .should("have.attr", "href", "https://twitter.com/merofinance");
   });
 
   it("Should have GitHub Link", () => {
     cy.get('[id="footer.community.links.github"]')
       .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://github.com/backdfund");
+      .should("have.attr", "href", "https://github.com/merofinance");
   });
 
   it("Should have Telegram Chat Link", () => {
@@ -180,13 +180,13 @@ describe("Footer", () => {
   it("Should have Docs Link", () => {
     cy.get('[id="footer.resources.links.docs"]')
       .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://docs.backd.fund/");
+      .should("have.attr", "href", "https://docs.mero.finance/");
   });
 
   it("Should have Blog Link", () => {
     cy.get('[id="footer.resources.links.blog"]')
       .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://backdfund.medium.com/");
+      .should("have.attr", "href", "https://merofinance.medium.com/");
   });
 
   it("Should have Newsletter Link", () => {
@@ -198,6 +198,6 @@ describe("Footer", () => {
   it("Should have Telegram Announcements Link", () => {
     cy.get('[id="footer.updates.links.telegram"]')
       .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://t.me/backdfund");
+      .should("have.attr", "href", "https://t.me/merofinance");
   });
 });

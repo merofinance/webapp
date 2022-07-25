@@ -70,6 +70,6 @@ jobs:
       - name: Installing Dependencies
         run: yarn
       - name: run cypress
-        run: CYPRESS_baseUrl=https://backd.fund/ npx cypress run
+        run: CYPRESS_baseUrl=https://mero.finance/ npx cypress run
         env:
           CYPRESS_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}

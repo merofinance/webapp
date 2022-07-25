@@ -46,7 +46,7 @@ describe("Overview", () => {
   it("Should should have overview link", () => {
     cy.get("#overview-link")
       .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://docs.backd.fund/");
+      .should("have.attr", "href", "https://docs.mero.finance/");
   });
 });
 

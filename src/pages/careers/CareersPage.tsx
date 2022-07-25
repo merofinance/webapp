@@ -138,7 +138,7 @@ const CareersPage = (): JSX.Element => {
             <Career key={index} career={career} />
           ))}
         <Paragraph style={{ marginTop: "5rem" }}>
-          Don't see a role for you but would like to apply? Drop us an email at: jobs@backd.fund
+          Don't see a role for you but would like to apply? Drop us an email at: jobs@mero.finance
         </Paragraph>
       </Positions>
     </StyledCareersPage>

@@ -1,30 +1,30 @@
 // Socials
-export const TWITTER_LINK = "https://twitter.com/backdfund";
+export const TWITTER_LINK = "https://twitter.com/merofinance";
 export const DISCORD_LINK = "https://discord.gg/jpGvaFV3Rv";
-export const GITHUB_LINK = "https://github.com/backdfund";
+export const GITHUB_LINK = "https://github.com/merofinance";
 export const TELEGRAM_LINK = "https://t.me/backdchat";
-export const TELEGRAM_ANNOUNCEMENTS_LINK = "https://t.me/backdfund";
+export const TELEGRAM_ANNOUNCEMENTS_LINK = "https://t.me/merofinance";
 export const NEWSLETTER_LINK = "https://backd.substack.com/welcome";
 
 // Blogs
-export const BLOG_LINK = "https://backdfund.medium.com/";
+export const BLOG_LINK = "https://merofinance.medium.com/";
 export const BLOG_TESTNET_GUIDE_LINK =
-  "https://backdfund.medium.com/backd-testnet-guide-16540e09c46";
-export const BLOG_LAUNCH_LINK = "https://blog.backd.fund/backd-is-live-c90e8dc08f34";
+  "https://merofinance.medium.com/backd-testnet-guide-16540e09c46";
+export const BLOG_LAUNCH_LINK = "https://blog.mero.finance/backd-is-live-c90e8dc08f34";
 
 // Docs
-export const DOCS_LINK = "https://docs.backd.fund/";
-export const DOCS_TOPUPS_LINK = "https://docs.backd.fund/protocol-architecture/actions/top-ups";
+export const DOCS_LINK = "https://docs.mero.finance/";
+export const DOCS_TOPUPS_LINK = "https://docs.mero.finance/protocol-architecture/actions/top-ups";
 export const DOCS_PLATFORM_FEES_LINK =
-  "https://docs.backd.fund/protocol-architecture/tokenomics/token-income";
-export const DOCS_TOKENOMICS_LINK = "https://docs.backd.fund/protocol-architecture/tokenomics";
-export const DOCS_ACTIONS_LINK = "https://docs.backd.fund/protocol-architecture/actions";
-export const DOCS_POOLS_LINK = "https://docs.backd.fund/protocol-architecture/pools";
-export const DOCS_KEEPERS_LINK = "https://docs.backd.fund/protocol-architecture/backd-keepers";
-export const DOCS_CONTRIBUTIONS_LINK = "https://docs.backd.fund/resources/contributions";
-export const DOCS_COOKBOOK_LINK = "https://docs.backd.fund/resources/cookbook";
+  "https://docs.mero.finance/protocol-architecture/tokenomics/token-income";
+export const DOCS_TOKENOMICS_LINK = "https://docs.mero.finance/protocol-architecture/tokenomics";
+export const DOCS_ACTIONS_LINK = "https://docs.mero.finance/protocol-architecture/actions";
+export const DOCS_POOLS_LINK = "https://docs.mero.finance/protocol-architecture/pools";
+export const DOCS_KEEPERS_LINK = "https://docs.mero.finance/protocol-architecture/backd-keepers";
+export const DOCS_CONTRIBUTIONS_LINK = "https://docs.mero.finance/resources/contributions";
+export const DOCS_COOKBOOK_LINK = "https://docs.mero.finance/resources/cookbook";
 export const DOCS_STRATEGIES_LINK =
-  "https://docs.backd.fund/protocol-architecture/pools/strategies";
+  "https://docs.mero.finance/protocol-architecture/pools/strategies";
 
 // Vendor
 export const VENDOR_CURVE_LINK = "https://curve.fi/";

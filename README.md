@@ -1,14 +1,14 @@
 <div align="center">
   <br>
-	<a href="https://backd.fund/"><img src="public/favicon/android-chrome-512x512.png" width="200"></a>
+	<a href="https://mero.finance/"><img src="public/favicon/android-chrome-512x512.png" width="200"></a>
   <br>
   <br>
   <p>
-    <a href="https://github.com/backdfund/webapp/graphs/contributors">
-        <img src="https://img.shields.io/github/contributors/backdfund/webapp?style=flat-square" alt="GitHub contributors" />
+    <a href="https://github.com/merofinance/webapp/graphs/contributors">
+        <img src="https://img.shields.io/github/contributors/merofinance/webapp?style=flat-square" alt="GitHub contributors" />
     </a>
-    <a href="https://github.com/backdfund/webapp/commits/">
-    	<img src="https://img.shields.io/github/commit-activity/m/backdfund/webapp?style=flat-square" alt="GitHub commit-activity" />
+    <a href="https://github.com/merofinance/webapp/commits/">
+    	<img src="https://img.shields.io/github/commit-activity/m/merofinance/webapp?style=flat-square" alt="GitHub commit-activity" />
     </a>
     <a href="https://gitmoji.dev">
         <img src="https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square" alt="Gitmoji" >
@@ -25,7 +25,7 @@
 # Backd Website
 
 Welcome to the repository for the Backd Website - a React project implementing Web3 which allows users to interract with the Backd Protocol.  
-If you are interested in contributing, please check out our [Contribution Guide](https://github.com/backdfund/webapp/blob/master/.github/CONTRIBUTING.md)
+If you are interested in contributing, please check out our [Contribution Guide](https://github.com/merofinance/webapp/blob/master/.github/CONTRIBUTING.md)
 
 ## Development
 
