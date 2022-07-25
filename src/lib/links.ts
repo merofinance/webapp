@@ -4,7 +4,7 @@ export const DISCORD_LINK = "https://discord.gg/jpGvaFV3Rv";
 export const GITHUB_LINK = "https://github.com/merofinance";
 export const TELEGRAM_LINK = "https://t.me/merofinance";
 export const TELEGRAM_ANNOUNCEMENTS_LINK = "https://t.me/meroannouncements";
-export const NEWSLETTER_LINK = "https://backd.substack.com/welcome";
+export const NEWSLETTER_LINK = "https://mero.substack.com/welcome";
 
 // Blogs
 export const BLOG_LINK = "https://merofinance.medium.com/";
