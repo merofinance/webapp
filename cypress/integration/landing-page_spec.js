@@ -192,7 +192,7 @@ describe("Footer", () => {
   it("Should have Newsletter Link", () => {
     cy.get('[id="footer.updates.links.newsletter"]')
       .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://mero.substack.com/welcome");
+      .should("have.attr", "href", "https://merofinance.substack.com/welcome");
   });
 
   it("Should have Telegram Announcements Link", () => {
