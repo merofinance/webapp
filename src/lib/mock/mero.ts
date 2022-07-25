@@ -3,7 +3,7 @@ import fromEntries from "fromentries";
 import { PlainScaledNumber, ScaledNumber } from "scaled-number";
 
 import { Pool } from "..";
-import { Backd } from "../backd";
+import { Mero } from "../mero";
 import { GWEI_DECIMALS } from "../constants";
 import {
   Address,
@@ -25,7 +25,7 @@ import {
 } from "../types";
 import { balances, makeContractTransaction, masterAccount, pools, positions } from "./data";
 
-export default class MockBackd implements Backd {
+export default class MockMero implements Mero {
   private allowances: Record<string, Balances> = {};
 
   get provider(): providers.Provider {
