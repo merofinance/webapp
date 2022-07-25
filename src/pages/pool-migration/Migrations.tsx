@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import { useBackd } from "../../app/hooks/use-backd";
+import { useMero } from "../../app/hooks/use-mero";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import Loader from "../../components/Loader";
 import { Optional, Pool } from "../../lib/types";
@@ -83,12 +83,12 @@ const Migrations = ({ pools }: Props): Optional<JSX.Element> => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const backd = useBackd();
+  const mero = useMero();
   const updated = useWeb3Updated();
 
   useEffect(() => {
-    if (!backd) return;
-    dispatch(fetchState(backd));
+    if (!mero) return;
+    dispatch(fetchState(mero));
   }, [updated]);
 
   return (
