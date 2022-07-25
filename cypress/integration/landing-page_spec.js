@@ -198,6 +198,6 @@ describe("Footer", () => {
   it("Should have Telegram Announcements Link", () => {
     cy.get('[id="footer.updates.links.telegram"]')
       .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://t.me/merofinance");
+      .should("have.attr", "href", "https://t.me/meroannouncements");
   });
 });
