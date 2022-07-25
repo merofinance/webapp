@@ -117,12 +117,12 @@ const IconGlass = styled.div`
   border-radius: 13px;
   overflow: hidden;
   transition: transform 0.1s ease-out;
-  merorop-filter: blur(5px);
+  backdrop-filter: blur(5px);
 
   @media (max-width: 600px) {
     top: ${(props: IconGlassProps) => (props.top ? "0rem" : "0.7rem")};
     left: calc(50% + ${(props: IconGlassProps) => (props.right ? "0.3rem" : "-2.7rem")});
-    merorop-filter: blur(3px);
+    backdrop-filter: blur(3px);
     width: 3rem;
     height: 3rem;
     border-radius: 8px;
