@@ -14,12 +14,12 @@
     "testnet": {
       "blogPost": "a postagem do blog",
       "connect": "Conecte a sua carteira para começar ou ler",
-      "live": "🎉 Backd está agora ao vivo na Kovan Testnet."
+      "live": "🎉 Mero está agora ao vivo na Kovan Testnet."
     }
   },
   "benefits": {
     "avoidLiquidation": {
-      "description": "A liquidez depositada em Backd e marcada como garantia colateral será automaticamente transferida quando necessário para colateralizar Top-ups.",
+      "description": "A liquidez depositada em Mero e marcada como garantia colateral será automaticamente transferida quando necessário para colateralizar Top-ups.",
       "header": "Evite a liquidação"
     },
     "earnYield": {
@@ -68,7 +68,7 @@
     "positionCreation": "Erro ao criar posição",
     "support": "Por favor, tente novamente dentro de momentos. Se o erro persistir, você pode entrar em contato connosco em",
     "transactionType": "O tipo de transação não é suportada",
-    "tryTestnet": "Backd ainda não está ativo na mainnet. Você pode testá-lo agora no Kovan trocando de rede.",
+    "tryTestnet": "Mero ainda não está ativo na mainnet. Você pode testá-lo agora no Kovan trocando de rede.",
     "unsupportedNetwork": "Rede não suportada",
     "wrongNetwork": "Rede errada selecionada, use uma rede de desenvolvimento"
   },
@@ -110,15 +110,15 @@
         "header": "Ordens limite AMM"
       },
       "nfts": {
-        "description": "Crie uma ordem de limite para um NFT com um conjunto específico de características de raridade. Uma vez que o preço cai dentro do valor desejado, uma ação de compra é executada e a liquidez é removida dos pools de rendimento do Backd.",
+        "description": "Crie uma ordem de limite para um NFT com um conjunto específico de características de raridade. Uma vez que o preço cai dentro do valor desejado, uma ação de compra é executada e a liquidez é removida dos pools de rendimento do Mero.",
         "header": "Ordens Limite para NFTs"
       },
       "propose": {
-        "description": "As ações podem ser adicionadas por meio do Backd DAO. Junte-se à comunidade Backd e proponha uma nova ação!",
+        "description": "As ações podem ser adicionadas por meio do Mero DAO. Junte-se à comunidade Mero e proponha uma nova ação!",
         "header": "Proponha o seu próprio"
       },
       "uniswap": {
-        "description": "Os Keepers de Backd  detectam quando o preço se moveu para fora do seu intervalo definido e movem a liquidez para os pools de rendimento do Backd. Assim que o preço estiver de volta ao intervalo, os Keepers movem sua liquidez de volta para o Uniswap.",
+        "description": "Os Keepers de Mero  detectam quando o preço se moveu para fora do seu intervalo definido e movem a liquidez para os pools de rendimento do Mero. Assim que o preço estiver de volta ao intervalo, os Keepers movem sua liquidez de volta para o Uniswap.",
         "header": "Gerenciamento de LP Uniswap V3"
       }
     },
@@ -136,7 +136,7 @@
       "docs": "Documentos",
       "newsletter": "Newsletter",
       "pools": "pools",
-      "stake": "stake BKD"
+      "stake": "stake MERO"
     }
   },
   "headers": {
@@ -153,12 +153,12 @@
       "earnAndProtect": {
         "cards": {
           "claim": {
-            "description": "Cancele o registo ou atualize uma posição, retire tokens LP ou reivindique recompensas Backd a qualquer momento.",
+            "description": "Cancele o registo ou atualize uma posição, retire tokens LP ou reivindique recompensas Mero a qualquer momento.",
             "header": "Desfaça o stake a qualquer momento",
             "number": "04"
           },
           "deposit": {
-            "description": "Deposite fundos em pools de liquidez Backd e receba pool LP tokens.",
+            "description": "Deposite fundos em pools de liquidez Mero e receba pool LP tokens.",
             "header": "Deposite liquidez",
             "number": "01"
           },
@@ -168,7 +168,7 @@
             "number": "03"
           },
           "register": {
-            "description": "Registe empréstimos Compound ou Aave v2 na cadeia para receber top-ups colaterais e stake os seus pool LP tokens para ganhar recompensas em Backd.",
+            "description": "Registe empréstimos Compound ou Aave v2 na cadeia para receber top-ups colaterais e stake os seus pool LP tokens para ganhar recompensas em Mero.",
             "header": "Registar empréstimo na cadeia",
             "number": "02"
           }
@@ -178,12 +178,12 @@
       "earnYield": {
         "cards": {
           "claim": {
-            "description": "Unstake os seus tokens LP ou reivindique suas recompensas Backd a qualquer momento.",
+            "description": "Unstake os seus tokens LP ou reivindique suas recompensas Mero a qualquer momento.",
             "header": "Desfaça o stake a qualquer momento",
             "number": "04"
           },
           "deposit": {
-            "description": "Deposite fundos em pools de liquidez Backd e receba pool LP tokens.",
+            "description": "Deposite fundos em pools de liquidez Mero e receba pool LP tokens.",
             "header": "Deposite liquidez ",
             "number": "01"
           },
@@ -193,7 +193,7 @@
             "number": "02"
           },
           "stake": {
-            "description": "De stake nos seus tokens LP da pool para receber recompensas do Backd.",
+            "description": "De stake nos seus tokens LP da pool para receber recompensas do Mero.",
             "header": "Stake para ganhar recompensas",
             "number": "03"
           }
@@ -217,7 +217,7 @@
     "changeNetwork": "Experimente no Testnet",
     "connectWallet": "Conectar carteira",
     "header": "Liquidez reativa",
-    "subHeader": "Maximize o poder de seus ativos e comece a ganhar rendimento com as pools de liquidez do Backd.",
+    "subHeader": "Maximize o poder de seus ativos e comece a ganhar rendimento com as pools de liquidez do Mero.",
     "unsupportedNetwork": "Rede sem suporte",
     "viewPools": "Ver Pools"
   },
@@ -342,14 +342,14 @@
       "header": "Informações sobre Pools",
       "revenue": {
         "header": "Receita",
-        "tooltip": "O valor total das taxas geradas pelo protocolo de Backd"
+        "tooltip": "O valor total das taxas geradas pelo protocolo de Mero"
       },
       "tvl": {
         "header": "Plataforma TVL",
-        "tooltip": "A capitalização de mercado do total de ativos mantidos em pools de liquidez Backd (valor total bloqueado)"
+        "tooltip": "A capitalização de mercado do total de ativos mantidos em pools de liquidez Mero (valor total bloqueado)"
       }
     },
-    "overview": "Os pools de ativos únicos (single-asset) da Backd agregam rendimentos em todas as estratégias. Depois de depositar um ativo, registre uma ação para automatizar sua liquidez para onde ela é mais necessária.",
+    "overview": "Os pools de ativos únicos (single-asset) da Mero agregam rendimentos em todas as estratégias. Depois de depositar um ativo, registre uma ação para automatizar sua liquidez para onde ela é mais necessária.",
     "preview": {
       "header": "yield farming",
       "subHeader": "Comece a ganhar rendimento imediatamente"
@@ -357,7 +357,7 @@
     "statistics": {
       "deposits": {
         "header": "Seus depósitos",
-        "tooltip": "O valor atual de seus ativos mantidos em pools de liquidez de Backd"
+        "tooltip": "O valor atual de seus ativos mantidos em pools de liquidez de Mero"
       },
       "locked": {
         "header": "Ações bloqueadas",
@@ -377,18 +377,18 @@
     "tabs": {
       "stake": {
         "action": "Deposite e Stake",
-        "description": "Stake no BKD e ganhe uma participação em x% da receita da plataforma, paga em tokens BKDDAi.",
+        "description": "Stake no MERO e ganhe uma participação em x% da receita da plataforma, paga em tokens MERODAi.",
         "header": "stake",
-        "inputDesktop": "Insira uma quantia de BKD para Stake",
-        "inputMobile": "Quantidade de BKD para stake",
+        "inputDesktop": "Insira uma quantia de MERO para Stake",
+        "inputMobile": "Quantidade de MERO para stake",
         "more": "Mais"
       },
       "unstake": {
         "action": "Unstake e retirar",
-        "description": "Dê stake em BKD e ganhe uma participação em x% da receita da plataforma, paga em tokens BKDDAi.",
+        "description": "Dê stake em MERO e ganhe uma participação em x% da receita da plataforma, paga em tokens MERODAi.",
         "header": "unstake",
-        "inputDesktop": "Insira uma quantidade de BKD para unstake",
-        "inputMobile": "Quantidade de BKD a ser unstake",
+        "inputDesktop": "Insira uma quantidade de MERO para unstake",
+        "inputMobile": "Quantidade de MERO a ser unstake",
         "more": "Mais"
       }
     }

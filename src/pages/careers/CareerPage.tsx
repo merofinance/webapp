@@ -119,7 +119,7 @@ const CareerPage = (): Optional<JSX.Element> => {
         show={applying}
         close={() => setApplying(false)}
         header="How to apply"
-        body="Please send us an email with your CV and a link to your GitHub to: jobs@backd.fund"
+        body="Please send us an email with your CV and a link to your GitHub to: jobs@mero.finance"
       />
     </StyledCareerPage>
   );

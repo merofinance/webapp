@@ -8,7 +8,7 @@ describe("Innitial Load", () => {
 
 describe("Page Content", () => {
   it("Should have header", () => {
-    cy.get("h1").contains("Backd Litepaper");
+    cy.get("h1").contains("Mero Litepaper");
   });
 });
 

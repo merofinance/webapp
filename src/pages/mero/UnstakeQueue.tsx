@@ -77,33 +77,33 @@ const UnstakeQueue = (): JSX.Element => {
 
   return (
     <StyledUnstakeQueue>
-      <Header>{t("bkd.unstake.queue.header")}</Header>
+      <Header>{t("mero.unstake.queue.header")}</Header>
       <Headers>
-        <HeaderText>{t("bkd.unstake.queue.headers.amount")}</HeaderText>
-        <HeaderText>{t("bkd.unstake.queue.headers.remaining")}</HeaderText>
+        <HeaderText>{t("mero.unstake.queue.headers.amount")}</HeaderText>
+        <HeaderText>{t("mero.unstake.queue.headers.remaining")}</HeaderText>
         <HeaderText />
       </Headers>
       <Row>
-        <RowItem>300 BKD</RowItem>
+        <RowItem>300 MERO</RowItem>
         <RowItem>30d 12h 23m</RowItem>
         <RowItem>
           <Button
             primary
             small
             disabled
-            hoverText={t("bkd.unstake.queue.pending")}
+            hoverText={t("mero.unstake.queue.pending")}
             click={() => console.log("todo")}
           >
-            {isMobile ? t("bkd.unstake.queue.claimMobile") : t("bkd.unstake.queue.claim")}
+            {isMobile ? t("mero.unstake.queue.claimMobile") : t("mero.unstake.queue.claim")}
           </Button>
         </RowItem>
       </Row>
       <Row>
-        <RowItem>1,345 BKD</RowItem>
+        <RowItem>1,345 MERO</RowItem>
         <RowItem>-</RowItem>
         <RowItem>
           <Button primary small click={() => console.log("todo")}>
-            {isMobile ? t("bkd.unstake.queue.claimMobile") : t("bkd.unstake.queue.claim")}
+            {isMobile ? t("mero.unstake.queue.claimMobile") : t("mero.unstake.queue.claim")}
           </Button>
         </RowItem>
       </Row>

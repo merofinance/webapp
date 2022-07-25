@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BigNumber, ethers } from "ethers";
 import { ScaledNumber } from "scaled-number";
 
-import { useBackd } from "../../../../app/hooks/use-backd";
+import { useMero } from "../../../../app/hooks/use-mero";
 import { selectUsersPoolUnderlyingUnlocked } from "../../../../state/valueSelectors";
 import ApproveThenAction from "../../../../components/ApproveThenAction";
 import { useDevice } from "../../../../app/hooks/use-device";
@@ -124,7 +124,7 @@ const ButtonContainer = styled.div`
 const TopupConditionsForm = (): Optional<JSX.Element> => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const backd = useBackd();
+  const mero = useMero();
   const navigate = useNavigateToTop();
   const { isMobile } = useDevice();
   const { address, protocol, poolName } = useParams<"address" | "protocol" | "poolName">();
@@ -213,7 +213,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
     return null;
   }
 
-  if (!backd) return null;
+  if (!mero) return null;
 
   const buttonHoverText = () => {
     if (!formik.values.threshold) return t("actions.topup.fields.threshold.hover");
@@ -426,7 +426,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
             loading={loading}
             disabled={!formik.dirty || !formik.isValid || loading}
             token={pool.lpToken}
-            contract={backd.topupActionAddress || ""}
+            contract={mero.topupActionAddress || ""}
             hoverText={buttonHoverText()}
           />
         </ButtonContainer>

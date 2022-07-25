@@ -54,7 +54,7 @@ describe("External Links", () => {
   it("Should Have Docs Link", () => {
     cy.get("#not-found-docs")
       .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://docs.backd.fund/");
+      .should("have.attr", "href", "https://docs.mero.finance/");
   });
 });
 

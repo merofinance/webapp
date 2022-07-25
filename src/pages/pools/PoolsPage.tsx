@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
-import { useBackd } from "../../app/hooks/use-backd";
+import { useMero } from "../../app/hooks/use-mero";
 import ContentSection from "../../components/ContentSection";
 import { fetchState, selectPools } from "../../state/poolsListSlice";
 import { Pool } from "../../lib";
@@ -89,15 +89,15 @@ const InfoCards = styled.div`
 
 const PoolsPage = (): JSX.Element => {
   const { t } = useTranslation();
-  const backd = useBackd();
+  const mero = useMero();
   const dispatch = useDispatch();
   const pools = useSelector(selectPools);
   const updated = useWeb3Updated();
   const balances = useSelector(selectUsersValuesUsdEverywhere);
 
   useEffect(() => {
-    if (!backd) return;
-    dispatch(fetchState(backd));
+    if (!mero) return;
+    dispatch(fetchState(mero));
   }, [updated]);
 
   return (

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-import logo from "../assets/logo/logo.svg";
+import logo from "../assets/logo/full-logo.svg";
 import Connector from "./Connector";
 import NavItems from "./NavItems";
 import useWindowPosition from "../app/hooks/use-window-position";
@@ -64,7 +64,7 @@ const Header = (): JSX.Element => {
     <StyledHeader isSticky={windowPosition > 40}>
       <Content>
         <Link to="/">
-          <Logo src={logo} alt="Backd logo" />
+          <Logo src={logo} alt="Mero logo" />
         </Link>
         <NavItems />
         <Connector />

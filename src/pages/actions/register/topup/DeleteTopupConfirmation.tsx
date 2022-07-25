@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
-import { useBackd } from "../../../../app/hooks/use-backd";
+import { useMero } from "../../../../app/hooks/use-mero";
 import { AppDispatch } from "../../../../app/store";
 import Popup from "../../../../components/Popup";
 import { Position, Pool, TransactionInfo, fromPlainPosition } from "../../../../lib/types";
@@ -19,7 +19,7 @@ interface Props {
 
 const DeleteTopupConfirmation = ({ show, close, position, pool, complete }: Props): JSX.Element => {
   const { t } = useTranslation();
-  const backd = useBackd();
+  const mero = useMero();
   const dispatch = useDispatch<AppDispatch>();
   const [initialised, setInitialised] = useState(false);
   const pendingTx = useSelector(selectTransactions);
@@ -44,8 +44,8 @@ const DeleteTopupConfirmation = ({ show, close, position, pool, complete }: Prop
   }, [loading]);
 
   const handleRemovePosition = () => {
-    if (!backd) return;
-    dispatch(removePosition({ backd, pool, position }));
+    if (!mero) return;
+    dispatch(removePosition({ mero, pool, position }));
   };
 
   return (

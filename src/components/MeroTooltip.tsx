@@ -60,7 +60,7 @@ interface Props {
   info?: boolean;
 }
 
-const BackdTooltip = ({ children, items, info }: Props): JSX.Element => {
+const MeroTooltip = ({ children, items, info }: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
   const { isMobile } = useDevice();
 
@@ -127,4 +127,4 @@ const BackdTooltip = ({ children, items, info }: Props): JSX.Element => {
   );
 };
 
-export default BackdTooltip;
+export default MeroTooltip;

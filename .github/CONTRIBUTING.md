@@ -1,6 +1,6 @@
 # Contribution Guide
 
-Hi and welcome to the Backd Website contribution guide!  
+Hi and welcome to the Mero Website contribution guide!  
 Thanks for considering to contribute! :tada:
 
 ## Found a Bug
@@ -18,9 +18,9 @@ If it improves the site for visitors, assign it the `enhancement` tag, or if it 
 
 ## Issues
 
-There are a bunch of [open issues](https://github.com/backdfund/webapp/issues) that would be great if you could help with.  
+There are a bunch of [open issues](https://github.com/merofinance/webapp/issues) that would be great if you could help with.  
 Feel free to work on any issue that isn't already assigned to someone.  
-Issues that are tagged with [good first issue](https://github.com/backdfund/webapp/labels/good%20first%20issue) are the best place to start.
+Issues that are tagged with [good first issue](https://github.com/merofinance/webapp/labels/good%20first%20issue) are the best place to start.
 
 ## Development Workflow
 

@@ -11,11 +11,11 @@ import { useMock } from "./app/config";
 import { AppDispatch } from "./app/store";
 import Header from "./components/Header";
 import { ErrorBoundary } from "./components/ErrorBoundary";
-import { createBackd } from "./lib/factory";
+import { createMero } from "./lib/factory";
 import MockSigner from "./lib/mock/signer";
 import Footer from "./components/Footer";
 import ErrorAlert from "./components/ErrorAlert";
-import { BackdError } from "./app/errors";
+import { MeroError } from "./app/errors";
 
 const Background = styled.div`
   background: radial-gradient(rgba(11, 3, 60, 0.2), rgba(10, 5, 38, 0.3));
@@ -62,7 +62,7 @@ const Layout = (): JSX.Element => {
         (window as any).ethereum.currentProvider,
         "any"
       );
-      return createBackd(provider.getSigner(), { chainId: 42 });
+      return createMero(provider.getSigner(), { chainId: 42 });
     }
 
     // Standard handling for users
@@ -70,9 +70,9 @@ const Layout = (): JSX.Element => {
     const signer = useMock ? new MockSigner() : provider.getSigner();
     const options = { chainId: parseInt(rawProvider.chainId, 16) };
     try {
-      return createBackd(signer, options);
+      return createMero(signer, options);
     } catch (e: any) {
-      const error = e instanceof BackdError ? e.toErrorState() : { message: e.message };
+      const error = e instanceof MeroError ? e.toErrorState() : { message: e.message };
       dispatch(setError(error));
     }
   };

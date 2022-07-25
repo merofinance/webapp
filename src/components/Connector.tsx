@@ -12,7 +12,7 @@ import ConnectorDesktop from "./ConnectorDesktop";
 import ConnectorMobile from "./ConnectorMobile";
 import WalletSelectPopup from "./WalletSelectPopup";
 
-const PROTOCOL_PAGES = ["pools", "pool", "actions", "bkd", "claim", "stake"];
+const PROTOCOL_PAGES = ["pools", "pool", "actions", "mero", "claim", "stake"];
 
 const Connector = (): JSX.Element => {
   const { active, activate } = useWeb3React();

@@ -1,8 +1,6 @@
 const isEnglish = () => {
   cy.get("h1").contains("Reactive Liquidity");
-  cy.get("h3").contains(
-    "Maximize the power of your assets and start earning yield"
-  );
+  cy.get("h3").contains("Maximize the power of your assets and start earning yield");
   cy.get("#how-it-works-2").contains("Protect & Earn");
 };
 
@@ -15,7 +13,7 @@ const isChinese = () => {
 const isJapanese = () => {
   cy.get("h1").contains("リアクティブ流動資産");
   cy.get("h3").contains(
-    "お客様の資産を最大限活用し、Backdの流動性プールで利回りを稼ぎ始めましょう。"
+    "お客様の資産を最大限活用し、Meroの流動性プールで利回りを稼ぎ始めましょう。"
   );
   cy.get("#how-it-works-2").contains("安全に稼ぐ");
 };
@@ -39,7 +37,7 @@ const isFrench = () => {
 const isPortuguese = () => {
   cy.get("h1").contains("Liquidez reativa");
   cy.get("h3").contains(
-    "Maximize o poder de seus ativos e comece a ganhar rendimento com as pools de liquidez do Backd."
+    "Maximize o poder de seus ativos e comece a ganhar rendimento com as pools de liquidez do Mero."
   );
   cy.get("#how-it-works-2").contains("Proteja e ganhe");
 };
@@ -47,7 +45,7 @@ const isPortuguese = () => {
 const isRussian = () => {
   cy.get("h1").contains("Реактивная ликвидность");
   cy.get("h3").contains(
-    "Максимизируйте мощность своих активов и начните получать прибыль с помощью пулов ликвидности Backd."
+    "Максимизируйте мощность своих активов и начните получать прибыль с помощью пулов ликвидности Mero."
   );
   cy.get("#how-it-works-2").contains("Защитите и Заработайте");
 };

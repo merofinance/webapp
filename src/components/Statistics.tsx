@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Optional } from "../lib/types";
-import BackdTooltip from "./BackdTooltip";
+import MeroTooltip from "./MeroTooltip";
 import Loader from "./Loader";
 
 export interface StatisticType {
@@ -106,7 +106,7 @@ const Statistics = ({ statistics }: Props): JSX.Element => {
         <Statistic key={statistic.header}>
           <HeaderContaner>
             <Header>{statistic.header}</Header>
-            <BackdTooltip>{statistic.tooltip}</BackdTooltip>
+            <MeroTooltip>{statistic.tooltip}</MeroTooltip>
           </HeaderContaner>
           <ValueContainer>
             <Value>{statistic.value ? statistic.value : <Loader />}</Value>
