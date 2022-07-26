@@ -10,7 +10,7 @@ export const NEWSLETTER_LINK = "https://merofinance.substack.com/welcome";
 export const BLOG_LINK = "https://merofinance.medium.com/";
 export const BLOG_TESTNET_GUIDE_LINK =
   "https://merofinance.medium.com/backd-testnet-guide-16540e09c46";
-export const BLOG_LAUNCH_LINK = "https://blog.mero.finance/backd-is-live-c90e8dc08f34";
+export const BLOG_LAUNCH_LINK = "https://merofinance.medium.com/backd-is-live-c90e8dc08f34";
 
 // Docs
 export const DOCS_LINK = "https://docs.mero.finance/";
