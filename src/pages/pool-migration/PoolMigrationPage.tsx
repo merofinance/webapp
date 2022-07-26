@@ -39,10 +39,10 @@ const Background = styled.img`
   bottom: 0;
   left: 50%;
   transform: translate(-50%);
-  height: 184%;
+  height: 235%;
 
   @media (max-width: 600px) {
-    height: 180%;
+    height: 230%;
     left: auto;
     right: -90%;
     transform: none;
