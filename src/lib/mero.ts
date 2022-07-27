@@ -30,6 +30,7 @@ import {
   GWEI_DECIMALS,
   INFINITE_APPROVE_AMMOUNT,
   MILLISECONDS_PER_YEAR,
+  oldPools,
 } from "./constants";
 import poolMetadata from "./data/pool-metadata";
 import { lendingProviders } from "./lending-protocols";
@@ -61,6 +62,7 @@ export interface Mero {
   getChainId(): number;
   currentAccount(): Promise<Address>;
   listPools(): Promise<PlainPool[]>;
+  listOldPools(): Promise<PlainPool[]>;
   getPoolInfo(address: Address): Promise<PlainPool>;
   getLoanPosition(protocol: LendingProtocol, address?: Address): Promise<Optional<PlainLoan>>;
   getPositions(): Promise<PlainPosition[]>;
@@ -163,6 +165,12 @@ export class Web3Mero implements Mero {
 
   async listPools(): Promise<PlainPool[]> {
     const markets = await this.addressProvider.allPools();
+    console.log(markets);
+    return Promise.all(markets.map((v: any) => this.getPoolInfo(v)));
+  }
+
+  async listOldPools(): Promise<PlainPool[]> {
+    const markets = oldPools[this.chainId];
     return Promise.all(markets.map((v: any) => this.getPoolInfo(v)));
   }
 
