@@ -10,12 +10,12 @@ import Button from "../../components/Button";
 import bg from "../../assets/illustrations/light-bg.svg";
 import Migrations from "./Migrations";
 import MigrateAll from "./MigrateAll";
-import { selectUsersValuesUsdEverywhere } from "../../state/valueSelectors";
 import { fetchState, selectOldPools } from "../../state/poolsListSlice";
 import { Pool } from "../../lib";
 import Loader from "../../components/Loader";
 import { useMero } from "../../app/hooks/use-mero";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
+import { selectBalances } from "../../state/userSlice";
 
 const StyledPoolMigrationPage = styled.div`
   position: relative;
@@ -101,11 +101,15 @@ const PoolMigrationPage = (): JSX.Element => {
   const dispatch = useDispatch();
   const [isMigrationOpen, setIsMigrationOpen] = useState(false);
   const pools = useSelector(selectOldPools);
-  const balances = useSelector(selectUsersValuesUsdEverywhere);
+  const balances = useSelector(selectBalances);
 
   const hasLoaded = pools && balances;
   const depositedPools = hasLoaded
-    ? pools.filter((pool: Pool) => !balances[pool.address].isZero())
+    ? pools.filter((pool: Pool) => {
+        const lpBalance = balances[pool.lpToken.address];
+        const stakedBalance = balances[pool.stakerVaultAddress];
+        return (lpBalance && !lpBalance.isZero()) || (stakedBalance && !stakedBalance.isZero());
+      })
     : null;
 
   useEffect(() => {

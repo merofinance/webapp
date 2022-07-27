@@ -49,3 +49,8 @@ export const oldPools: Record<string, string[]> = {
     "0xB18Ca6102A307207034E0F6b1a51386516E1b71d",
   ],
 };
+
+export const oldAddressProviders: Record<string, string> = {
+  "1": "0x139c15e21b0f6e43Fc397faCe5De5b7D5ae6874a",
+  "42": "0xFCf9099D09dBf9498Ad356006C95bDb988022e7E",
+};
