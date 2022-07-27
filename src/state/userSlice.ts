@@ -19,7 +19,7 @@ import {
   PlainWithdrawalFees,
   fromPlainWithdrawalFees,
 } from "../lib/types";
-import { fetchPool } from "./poolsListSlice";
+import { fetchPool, selectOldPools } from "./poolsListSlice";
 import { handleTransactionConfirmation } from "../lib/transactionsUtils";
 
 interface UserState {
@@ -259,6 +259,18 @@ export function selectWithdrawalFee(pool: Optional<Pool>): Selector<Optional<Sca
 export function isConnecting(state: RootState): boolean {
   return state.user.connecting;
 }
+
+export const selectHasOldDeposits = (state: RootState): Optional<boolean> => {
+  const pools = selectOldPools(state);
+  const balances = selectBalances(state);
+  if (!pools || !balances) return null;
+
+  return pools.some((pool: Pool) => {
+    const lpBalance = balances[pool.lpToken.address];
+    const stakedBalance = balances[pool.stakerVaultAddress];
+    return (lpBalance && !lpBalance.isZero()) || (stakedBalance && !stakedBalance.isZero());
+  });
+};
 
 export function selectPoolUnderlyingBalance(
   pool: Optional<Pool>
