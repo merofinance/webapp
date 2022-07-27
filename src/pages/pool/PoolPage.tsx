@@ -20,7 +20,6 @@ import PoolStatistics from "./PoolStatistics";
 import ContentSection from "../../components/ContentSection";
 import LiveHelp from "../../components/LiveHelp";
 import { Optional } from "../../lib/types";
-import BetaSnackbar from "../../components/BetaSnackbar";
 import { DOCS_LINK } from "../../lib/links";
 import { ACTIONS_LIVE } from "../../lib/constants";
 import { useNavigateToTop } from "../../app/hooks/use-navigate-to-top";
@@ -102,7 +101,6 @@ const PoolPage = (): Optional<JSX.Element> => {
         description={t("metadata.pool.description", { asset: pool?.underlying.symbol || "---" })}
       />
       <BackButton />
-      <BetaSnackbar pool={pool} />
       <PausedSnackbar pool={pool} />
       <PoolPageContent>
         <ContentContainer>

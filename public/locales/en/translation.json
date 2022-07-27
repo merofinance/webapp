@@ -707,7 +707,6 @@
       "positive": "Amount must be a positive number",
       "exceedsBalance": "Amount exceeds available balance",
       "invalid": "Invalid number",
-      "exceedsCap": "Amount exceeds deposit limit",
       "poolPaused": "Deposits are currently disabled. Please try again later"
     },
     "approve": "Approve {{asset}}",

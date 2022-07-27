@@ -61,12 +61,6 @@ const PoolDeposit = ({ pool, compact }: Props): JSX.Element => {
       const amount = ScaledNumber.fromUnscaled(depositAmount, pool?.underlying.decimals);
       if (amount.gt(poolUnderlyingBalance)) return t("amountInput.validation.exceedsBalance");
       if (!usersPoolUnderlyingEverywhere) return "";
-      if (
-        !amount.isZero() &&
-        !pool.depositCap.isZero() &&
-        amount.gt(pool.depositCap.sub(usersPoolUnderlyingEverywhere))
-      )
-        return t("amountInput.validation.exceedsCap");
       return "";
     } catch {
       return t("amountInput.validation.invalid");
@@ -81,11 +75,7 @@ const PoolDeposit = ({ pool, compact }: Props): JSX.Element => {
         setValue={(v: string) => setDepositAmount(v)}
         label={inputLabel}
         balance={poolUnderlyingBalance}
-        max={
-          poolUnderlyingBalance && pool && usersPoolUnderlyingEverywhere
-            ? poolUnderlyingBalance.min(pool.depositCap.sub(usersPoolUnderlyingEverywhere))
-            : undefined
-        }
+        max={poolUnderlyingBalance && pool ? poolUnderlyingBalance : undefined}
         error={error()}
         symbol={pool?.underlying.symbol || "---"}
       />
