@@ -20,6 +20,7 @@ import { DOCS_LINK } from "../../lib/links";
 import { selectUsersValuesUsdEverywhere } from "../../state/valueSelectors";
 import LargeBanner from "../../components/LargeBanner";
 import { useDevice } from "../../app/hooks/use-device";
+import { selectHasOldDeposits } from "../../state/userSlice";
 
 const StyledPoolsPage = styled.div`
   width: 100%;
@@ -98,6 +99,7 @@ const PoolsPage = (): JSX.Element => {
   const pools = useSelector(selectPools);
   const updated = useWeb3Updated();
   const balances = useSelector(selectUsersValuesUsdEverywhere);
+  const hasOldDeposits = useSelector(selectHasOldDeposits);
   const { isMobile } = useDevice();
 
   useEffect(() => {
@@ -108,15 +110,17 @@ const PoolsPage = (): JSX.Element => {
   return (
     <StyledPoolsPage>
       <Seo title={t("metadata.pools.title")} description={t("metadata.pools.description")} />
-      <LargeBanner
-        header={t("poolMigration.banner.header")}
-        details={
-          isMobile ? t("poolMigration.banner.mobileDetails") : t("poolMigration.banner.details")
-        }
-        link="https://www.google.com/"
-        ctaText={t("poolMigration.banner.ctaText")}
-        ctaAction={() => navigate("/pool-migration")}
-      />
+      {hasOldDeposits && (
+        <LargeBanner
+          header={t("poolMigration.banner.header")}
+          details={
+            isMobile ? t("poolMigration.banner.mobileDetails") : t("poolMigration.banner.details")
+          }
+          link="https://www.google.com/"
+          ctaText={t("poolMigration.banner.ctaText")}
+          ctaAction={() => navigate("/pool-migration")}
+        />
+      )}
       <PoolsPageContent>
         <ContentContainer>
           <ContentSection header={t("pools.header")} statistics={<PoolsStatistics />}>
