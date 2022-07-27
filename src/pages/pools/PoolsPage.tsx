@@ -116,7 +116,7 @@ const PoolsPage = (): JSX.Element => {
           details={
             isMobile ? t("poolMigration.banner.mobileDetails") : t("poolMigration.banner.details")
           }
-          link="https://www.google.com/"
+          link="https://merofinance.medium.com/c20f4c96108e"
           ctaText={t("poolMigration.banner.ctaText")}
           ctaAction={() => navigate("/pool-migration")}
         />
