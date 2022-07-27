@@ -190,9 +190,9 @@ const Footer = (): JSX.Element => {
       {linkLists.map((linkList: LinkListType) => (
         <LinkList key={linkList.header}>
           <LinkHeader>{t(linkList.header)}</LinkHeader>
-          {linkList.links.map((link: LinkType | LinkListType) => {
+          {linkList.links.map((link: LinkType | LinkListType, index: number) => {
             if ("links" in link) {
-              return <FooterSubMenu linkList={link} />;
+              return <FooterSubMenu key={index} linkList={link} />;
             }
             if (link.internal) {
               return (
