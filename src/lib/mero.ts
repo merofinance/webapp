@@ -165,7 +165,6 @@ export class Web3Mero implements Mero {
 
   async listPools(): Promise<PlainPool[]> {
     const markets = await this.addressProvider.allPools();
-    console.log(markets);
     return Promise.all(markets.map((v: any) => this.getPoolInfo(v)));
   }
 
@@ -514,7 +513,6 @@ export class Web3Mero implements Mero {
       .mul(pool.exchangeRate)
       .mul(ScaledNumber.fromUnscaled(1).sub(withdrawalFee))
       .mul(ScaledNumber.fromUnscaled(SLIPPAGE_TOLERANCE, amount.decimals));
-    console.log(minRedeemAmount.toCryptoString());
     const gasEstimate = await poolContract.estimateGas["redeem(uint256,uint256)"](
       amount.value,
       minRedeemAmount.value
