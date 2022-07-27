@@ -32,14 +32,18 @@ import poolMetadata from "../lib/data/pool-metadata";
 
 interface PoolsState {
   pools: PlainPool[];
+  oldPools: PlainPool[];
   prices: Prices;
   loaded: boolean;
+  oldLoaded: boolean;
 }
 
 const initialState: PoolsState = {
   pools: [],
+  oldPools: [],
   loaded: false,
   prices: {},
+  oldLoaded: false,
 };
 
 export const fetchPool = createAsyncThunk(
@@ -60,6 +64,10 @@ export const fetchPools = createAsyncThunk("pool/fetch-all", ({ mero }: { mero: 
   mero.listPools()
 );
 
+export const fetchOldPools = createAsyncThunk("pool/fetch-all-old", ({ mero }: { mero: Mero }) =>
+  mero.listOldPools()
+);
+
 export const poolsSlice = createSlice({
   name: "pools",
   initialState,
@@ -68,6 +76,11 @@ export const poolsSlice = createSlice({
     builder.addCase(fetchPools.fulfilled, (state, action) => {
       state.pools = action.payload;
       state.loaded = true;
+    });
+
+    builder.addCase(fetchOldPools.fulfilled, (state, action) => {
+      state.oldPools = action.payload;
+      state.oldLoaded = true;
     });
 
     builder.addCase(fetchPool.fulfilled, (state, action) => {
@@ -117,6 +130,17 @@ export const fetchPreviewState = (): AppThunk => (dispatch) => {
     dispatch(fetchPrices({ mero, pools }));
   });
 };
+
+export const fetchOldState =
+  (mero: Mero): AppThunk =>
+  (dispatch) => {
+    dispatch(fetchOldPools({ mero })).then((v) => {
+      if (v.meta.requestStatus !== "fulfilled") return;
+      const pools = v.payload as Pool[];
+      dispatch(fetchBalances({ mero, pools }));
+      dispatch(fetchPrices({ mero, pools }));
+    });
+  };
 
 export const selectPoolsLoaded = (state: RootState): boolean => state.pools.loaded;
 

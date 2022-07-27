@@ -48,6 +48,14 @@ export default class MockMero implements Mero {
     );
   }
 
+  listOldPools(): Promise<PlainPool[]> {
+    return Promise.resolve(
+      pools.map((pool) =>
+        transformPool(pool, (v: Optional<BigNumber> | undefined) => new ScaledNumber(v).toPlain())
+      )
+    );
+  }
+
   getPoolInfo(address: Address): Promise<PlainPool> {
     const pool = pools.find((pool) => pool.address === address);
     if (!pool) throw Error("No pool found for address");
