@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import LaunchIcon from "@material-ui/icons/Launch";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useDevice } from "../../app/hooks/use-device";
 import { GradientLink } from "../../styles/GradientText";
@@ -11,9 +11,11 @@ import bg from "../../assets/illustrations/light-bg.svg";
 import Migrations from "./Migrations";
 import MigrateAll from "./MigrateAll";
 import { selectUsersValuesUsdEverywhere } from "../../state/valueSelectors";
-import { selectPools } from "../../state/poolsListSlice";
+import { fetchState, selectOldPools } from "../../state/poolsListSlice";
 import { Pool } from "../../lib";
 import Loader from "../../components/Loader";
+import { useMero } from "../../app/hooks/use-mero";
+import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 
 const StyledPoolMigrationPage = styled.div`
   position: relative;
@@ -94,14 +96,22 @@ const ButtonContainer = styled.div`
 const PoolMigrationPage = (): JSX.Element => {
   const { isMobile } = useDevice();
   const { t } = useTranslation();
+  const mero = useMero();
+  const updated = useWeb3Updated();
+  const dispatch = useDispatch();
   const [isMigrationOpen, setIsMigrationOpen] = useState(false);
-  const pools = useSelector(selectPools);
+  const pools = useSelector(selectOldPools);
   const balances = useSelector(selectUsersValuesUsdEverywhere);
 
   const hasLoaded = pools && balances;
   const depositedPools = hasLoaded
     ? pools.filter((pool: Pool) => !balances[pool.address].isZero())
     : null;
+
+  useEffect(() => {
+    if (!mero) return;
+    dispatch(fetchState(mero));
+  }, [updated]);
 
   return (
     <StyledPoolMigrationPage>

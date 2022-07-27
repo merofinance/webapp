@@ -101,6 +101,14 @@ export const poolsSlice = createSlice({
 export const fetchState =
   (mero: Mero): AppThunk =>
   (dispatch) => {
+    dispatch(fetchOldPools({ mero })).then((v) => {
+      if (v.meta.requestStatus !== "fulfilled") return;
+      const pools = v.payload as Pool[];
+      dispatch(fetchBalances({ mero, pools }));
+      dispatch(fetchPrices({ mero, pools }));
+      dispatch(fetchAllowances({ mero, pools }));
+      dispatch(fetchWithdrawalFees({ mero, pools }));
+    });
     dispatch(fetchPools({ mero })).then((v) => {
       if (v.meta.requestStatus !== "fulfilled") return;
       const pools = v.payload as Pool[];
@@ -131,22 +139,21 @@ export const fetchPreviewState = (): AppThunk => (dispatch) => {
   });
 };
 
-export const fetchOldState =
-  (mero: Mero): AppThunk =>
-  (dispatch) => {
-    dispatch(fetchOldPools({ mero })).then((v) => {
-      if (v.meta.requestStatus !== "fulfilled") return;
-      const pools = v.payload as Pool[];
-      dispatch(fetchBalances({ mero, pools }));
-      dispatch(fetchPrices({ mero, pools }));
-    });
-  };
-
 export const selectPoolsLoaded = (state: RootState): boolean => state.pools.loaded;
 
 export const selectPools = (state: RootState): Optional<Pool[]> => {
   if (!state.pools.loaded) return null;
   return state.pools.pools
+    .map((plainPool: PlainPool) => fromPlainPool(plainPool))
+    .filter((pool: Pool) => {
+      if (!poolMetadata[pool.underlying.symbol]) return false;
+      return true;
+    });
+};
+
+export const selectOldPools = (state: RootState): Optional<Pool[]> => {
+  if (!state.pools.oldLoaded) return null;
+  return state.pools.oldPools
     .map((plainPool: PlainPool) => fromPlainPool(plainPool))
     .filter((pool: Pool) => {
       if (!poolMetadata[pool.underlying.symbol]) return false;
