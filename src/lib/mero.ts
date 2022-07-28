@@ -260,9 +260,7 @@ export class Web3Mero implements Mero {
         MILLISECONDS_PER_YEAR / (new Date().getTime() - deployedtime.getTime());
       const scaledTotalAssets = new ScaledNumber(totalAssets, underlying.decimals);
       const lpBalance = scaledTotalAssets.div(new ScaledNumber(exchangeRate));
-      const scaledHarvestable = new ScaledNumber(harvestable, underlying.decimals).mul(
-        poolMetadata[underlying.symbol].harvestableMultiplier
-      );
+      const scaledHarvestable = new ScaledNumber(harvestable, underlying.decimals);
       const balanceAfterHarvest = scaledTotalAssets.add(scaledHarvestable);
       const exchangeRateAfterHarvest = balanceAfterHarvest.div(lpBalance);
       const unscaledApy = vaultShutdown
