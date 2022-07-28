@@ -10,7 +10,6 @@ import { formatTransactionInfo } from "../lib/transactionsUtils";
 import { TransactionInfo } from "../lib/types";
 import { getEtherscanTransactionLink } from "../lib/web3";
 import { clearTransactions, selectTransactions } from "../state/transactionsSlice";
-import { spinAnimation } from "../styles/animations/SpinAnimation";
 import { GradientText } from "../styles/GradientText";
 import Status, { StatusType } from "./Status";
 
