@@ -304,6 +304,10 @@ export function selectDepositAllowance(pool: Pool): Selector<Optional<ScaledNumb
   };
 }
 
+export function selectAllowances(state: RootState): PlainAllowances {
+  return state.user.allowances;
+}
+
 export function selectAllowance(
   token: string,
   contract: string | undefined
