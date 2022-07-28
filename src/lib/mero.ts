@@ -10,10 +10,12 @@ import {
   LiquidityPool__factory as LiquidityPoolFactory,
   StakerVault__factory as StakerVaultFactory,
   TopUpActionFeeHandler__factory as TopUpActionFeeHandlerFactory,
+  PoolMigrationZap__factory as PoolMigrationZapFactory,
   TopUpAction__factory as TopUpActionFactory,
   Vault__factory as VaultFactory,
   Controller,
   TopUpAction,
+  PoolMigrationZap,
 } from "@merofinance/protocol";
 import contracts from "@merofinance/protocol/config/deployments/map.json";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
@@ -61,6 +63,7 @@ export type MeroOptions = {
 
 export interface Mero {
   getChainId(): number;
+  getPoolMigrationZapAddres(): string;
   currentAccount(): Promise<Address>;
   listPools(): Promise<PlainPool[]>;
   listOldPools(): Promise<PlainPool[]>;
@@ -84,6 +87,8 @@ export interface Mero {
   getPrices(symbol: string[]): Promise<Prices>;
   approve(token: Token, spender: Address, amount: ScaledNumber): Promise<ContractTransaction>;
   deposit(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction>;
+  migrate(poolAddress: string): Promise<ContractTransaction>;
+  migrateAll(poolAddresses: string[]): Promise<ContractTransaction>;
   withdraw(
     pool: Pool,
     amount: ScaledNumber,
@@ -106,6 +111,8 @@ export class Web3Mero implements Mero {
 
   private gasBank: GasBank | undefined;
 
+  private poolMigrationZap: PoolMigrationZap;
+
   private chainId: number;
 
   constructor(private _provider: Signer | providers.Provider, private options: MeroOptions) {
@@ -114,6 +121,10 @@ export class Web3Mero implements Mero {
 
     // eslint-disable-next-line dot-notation
     this.controller = ControllerFactory.connect(contracts.Controller[0], _provider);
+    this.poolMigrationZap = PoolMigrationZapFactory.connect(
+      contracts.PoolMigrationZap[0], // eslint-disable-line dot-notation
+      _provider
+    );
     // eslint-disable-next-line dot-notation
     if (contracts.TopUpAction && contracts.TopUpAction.length > 0)
       this.topupAction = TopUpActionFactory.connect(contracts.TopUpAction[0], _provider);
@@ -154,6 +165,10 @@ export class Web3Mero implements Mero {
 
   getChainId(): number {
     return this.chainId;
+  }
+
+  getPoolMigrationZapAddres(): string {
+    return this.poolMigrationZap.address;
   }
 
   currentAccount(): Promise<string> {
@@ -556,6 +571,22 @@ export class Web3Mero implements Mero {
     const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
     return poolContract["deposit(uint256,uint256)"](amount.value, minTokenAmount.value, {
       value,
+      gasLimit,
+    });
+  }
+
+  async migrate(poolAddress: string): Promise<ContractTransaction> {
+    const gasEstimate = await this.poolMigrationZap.estimateGas.migrate(poolAddress);
+    const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
+    return this.poolMigrationZap.migrate(poolAddress, {
+      gasLimit,
+    });
+  }
+
+  async migrateAll(poolAddresses: string[]): Promise<ContractTransaction> {
+    const gasEstimate = await this.poolMigrationZap.estimateGas.migrateAll(poolAddresses);
+    const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
+    return this.poolMigrationZap.migrateAll(poolAddresses, {
       gasLimit,
     });
   }

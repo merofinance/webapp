@@ -36,6 +36,10 @@ export default class MockMero implements Mero {
     return 1;
   }
 
+  getPoolMigrationZapAddres(): string {
+    return "0x38d6f612D116dBc1411E977A5D77E02bBae58e63";
+  }
+
   currentAccount(): Promise<Address> {
     return Promise.resolve(masterAccount);
   }
@@ -130,6 +134,16 @@ export default class MockMero implements Mero {
     }
     this.allowances[token.address][spender] = amount;
     return makeContractTransaction(token.address, account);
+  }
+
+  async migrate(poolAddress: string): Promise<ContractTransaction> {
+    const account = await this.currentAccount();
+    return makeContractTransaction(poolAddress, account);
+  }
+
+  async migrateAll(poolAddresses: string[]): Promise<ContractTransaction> {
+    const account = await this.currentAccount();
+    return makeContractTransaction(poolAddresses[0], account);
   }
 
   async getBalances(pools: Address[], account?: Address): Promise<Balances> {
