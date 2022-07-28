@@ -103,7 +103,7 @@ const PoolMigrationPage = (): JSX.Element => {
   const pools = useSelector(selectOldPools);
   const balances = useSelector(selectBalances);
 
-  const hasLoaded = pools && balances;
+  const hasLoaded = pools && balances && balances[pools[0].lpToken.address];
   const depositedPools = hasLoaded
     ? pools.filter((pool: Pool) => {
         const lpBalance = balances[pool.lpToken.address];
