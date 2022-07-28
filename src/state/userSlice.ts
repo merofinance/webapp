@@ -46,7 +46,6 @@ export const fetchBalances = createAsyncThunk(
       p.underlying.address,
       p.stakerVaultAddress,
     ]);
-    console.log(allTokens);
     const balances = await mero.getBalances(allTokens);
     return toPlainBalances(balances);
   }
