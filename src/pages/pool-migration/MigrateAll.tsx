@@ -121,28 +121,26 @@ const MigrateAll = ({ migrating, close }: Props): Optional<JSX.Element> => {
         <InfoBlock
           sections={[
             [
-              ...(depositedPools
-                ? depositedPools.map((pool: Pool) => {
-                    return {
-                      label: t("amountInput.approve", { asset: pool.lpToken.symbol }),
-                      tooltip: t("poolMigration.transactions.approveTooltip", {
-                        asset: pool.lpToken.symbol,
-                      }),
-                      value: (
-                        <Status
-                          large
-                          status={
-                            isApproved(pool)
-                              ? StatusType.SUCCESS
-                              : activePool && activePool.address === pool.address && approveLoading
-                              ? StatusType.PENDING
-                              : StatusType.EMPTY
-                          }
-                        />
-                      ),
-                    };
-                  })
-                : []),
+              ...(depositedPools?.map((pool: Pool) => {
+                return {
+                  label: t("amountInput.approve", { asset: pool.lpToken.symbol }),
+                  tooltip: t("poolMigration.transactions.approveTooltip", {
+                    asset: pool.lpToken.symbol,
+                  }),
+                  value: (
+                    <Status
+                      large
+                      status={
+                        isApproved(pool)
+                          ? StatusType.SUCCESS
+                          : activePool && activePool.address === pool.address && approveLoading
+                          ? StatusType.PENDING
+                          : StatusType.EMPTY
+                      }
+                    />
+                  ),
+                };
+              }) || []),
               {
                 label: t("poolMigration.transactions.migrate"),
                 tooltip: t("poolMigration.transactions.migrateTooltip"),
