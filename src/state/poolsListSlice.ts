@@ -82,6 +82,19 @@ export const migrate = createAsyncThunk(
   }
 );
 
+type MigrateAllArgs = { mero: Mero; poolAddresses: string[] };
+
+export const migrateAll = createAsyncThunk(
+  "pool/migrate-all",
+  async ({ mero, poolAddresses }: MigrateAllArgs, { dispatch }) => {
+    const tx = await mero.migrateAll(poolAddresses);
+    handleTransactionConfirmation(tx, { action: "MigrateAll", args: { poolAddresses } }, dispatch, [
+      fetchState(mero),
+    ]);
+    return tx.hash;
+  }
+);
+
 export const poolsSlice = createSlice({
   name: "pools",
   initialState,

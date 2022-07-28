@@ -76,6 +76,9 @@ export const formatTransactionInfo = (txDescription: TransactionDescription): st
     case "Migrate": {
       return shortenAddress(txDescription.args?.poolAddress, 8);
     }
+    case "MigrateAll": {
+      return `${txDescription.args?.poolAddresses.length} Pools`;
+    }
     default:
       throw Error("errors.transactionType");
   }
