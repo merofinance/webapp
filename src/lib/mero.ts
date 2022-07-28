@@ -561,7 +561,7 @@ export class Web3Mero implements Mero {
     const minTokenAmount = amount
       .div(pool.exchangeRate)
       .mul(ScaledNumber.fromUnscaled(SLIPPAGE_TOLERANCE, amount.decimals));
-    const gasEstimate = await poolContract.estimateGas["deposit(uint256,uint256)"](
+    const gasEstimate = await poolContract.estimateGas.depositAndStake(
       amount.value,
       minTokenAmount.value,
       {
@@ -569,7 +569,7 @@ export class Web3Mero implements Mero {
       }
     );
     const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
-    return poolContract["deposit(uint256,uint256)"](amount.value, minTokenAmount.value, {
+    return poolContract.depositAndStake(amount.value, minTokenAmount.value, {
       value,
       gasLimit,
     });
@@ -601,12 +601,12 @@ export class Web3Mero implements Mero {
       .mul(pool.exchangeRate)
       .mul(ScaledNumber.fromUnscaled(1).sub(withdrawalFee))
       .mul(ScaledNumber.fromUnscaled(SLIPPAGE_TOLERANCE, amount.decimals));
-    const gasEstimate = await poolContract.estimateGas["redeem(uint256,uint256)"](
+    const gasEstimate = await poolContract.estimateGas.unstakeAndRedeem(
       amount.value,
       minRedeemAmount.value
     );
     const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
-    return poolContract["redeem(uint256,uint256)"](amount.value, minRedeemAmount.value, {
+    return poolContract.unstakeAndRedeem(amount.value, minRedeemAmount.value, {
       gasLimit,
     });
   }
