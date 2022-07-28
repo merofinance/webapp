@@ -29,6 +29,7 @@ import {
   fetchWithdrawalFees,
 } from "./userSlice";
 import poolMetadata from "../lib/data/pool-metadata";
+import { handleTransactionConfirmation } from "../lib/transactionsUtils";
 
 interface PoolsState {
   pools: PlainPool[];
@@ -66,6 +67,19 @@ export const fetchPools = createAsyncThunk("pool/fetch-all", ({ mero }: { mero: 
 
 export const fetchOldPools = createAsyncThunk("pool/fetch-all-old", ({ mero }: { mero: Mero }) =>
   mero.listOldPools()
+);
+
+type MigrateArgs = { mero: Mero; poolAddress: string };
+
+export const migrate = createAsyncThunk(
+  "pool/migrate",
+  async ({ mero, poolAddress }: MigrateArgs, { dispatch }) => {
+    const tx = await mero.migrate(poolAddress);
+    handleTransactionConfirmation(tx, { action: "Migrate", args: { poolAddress } }, dispatch, [
+      fetchState(mero),
+    ]);
+    return tx.hash;
+  }
 );
 
 export const poolsSlice = createSlice({
