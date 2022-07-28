@@ -1,10 +1,19 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { Trans, useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { ScaledNumber } from "scaled-number";
 import styled from "styled-components";
+import { useMero } from "../../app/hooks/use-mero";
 import InfoBlock from "../../components/InfoBlock";
 import Popup from "../../components/Popup";
 import Status, { StatusType } from "../../components/Status";
+import { Pool } from "../../lib";
+import { Optional } from "../../lib/types";
+import { INFINITE_APPROVE_AMMOUNT } from "../../lib/constants";
 import { DISCORD_LINK } from "../../lib/links";
+import { migrateAll, selectOldPools } from "../../state/poolsListSlice";
+import { hasPendingTransaction } from "../../state/transactionsSlice";
+import { approve, selectAllowances, selectBalances } from "../../state/userSlice";
 import { GradientLink } from "../../styles/GradientText";
 
 const StyledMigrateAll = styled.div`
@@ -35,16 +44,71 @@ interface Props {
   close: () => void;
 }
 
-const MigrateAll = ({ migrating, close }: Props): JSX.Element => {
+const MigrateAll = ({ migrating, close }: Props): Optional<JSX.Element> => {
   const { t } = useTranslation();
-  const [step, setStep] = useState(1);
-  const TOTAL_STEPS = 4; // TODO
+  const mero = useMero();
+  const dispatch = useDispatch();
+
+  const pools = useSelector(selectOldPools);
+  const balances = useSelector(selectBalances);
+  const allowances = useSelector(selectAllowances);
+  const approveLoading = useSelector(hasPendingTransaction("Approve"));
+  const migrateAllLoading = useSelector(hasPendingTransaction("MigrateAll"));
+
+  const hasLoaded = pools && balances;
+
+  const depositedPools = hasLoaded
+    ? pools.filter((pool: Pool) => {
+        const lpBalance = balances[pool.lpToken.address];
+        const stakedBalance = balances[pool.stakerVaultAddress];
+        return (lpBalance && !lpBalance.isZero()) || (stakedBalance && !stakedBalance.isZero());
+      })
+    : null;
+
+  const TOTAL_STEPS = depositedPools ? depositedPools.length + 1 : 1;
+
+  const isApproved = (pool: Pool): boolean => {
+    if (!mero) return false;
+    const plainAllowance = allowances[pool.lpToken.address]?.[mero.getPoolMigrationZapAddres()];
+    if (!plainAllowance) return false;
+    return !ScaledNumber.fromPlain(plainAllowance).isZero();
+  };
+
+  const poolsApproved = depositedPools
+    ? depositedPools.filter((pool: Pool) => isApproved(pool)).length
+    : null;
+
+  const activePool =
+    depositedPools && poolsApproved !== null ? depositedPools[poolsApproved] : null;
+
+  const allPoolsApproved = depositedPools ? poolsApproved === depositedPools.length : false;
+
+  useEffect(() => {
+    if (!mero || !depositedPools || !migrating) return;
+    if (!allPoolsApproved && activePool) {
+      dispatch(
+        approve({
+          token: activePool.lpToken,
+          spender: mero.getPoolMigrationZapAddres(),
+          amount: ScaledNumber.fromUnscaled(INFINITE_APPROVE_AMMOUNT),
+          mero,
+        })
+      );
+    }
+    if (allPoolsApproved) {
+      dispatch(
+        migrateAll({ mero, poolAddresses: depositedPools.map((pool: Pool) => pool.address) })
+      );
+    }
+  }, [poolsApproved, TOTAL_STEPS, migrating]);
+
+  if (depositedPools && depositedPools.length === 0) return null;
 
   return (
     <Popup
       show={migrating}
       close={close}
-      header={`${step}/${TOTAL_STEPS} ${t("poolMigration.transactions.header")}`}
+      header={`${poolsApproved || 0 + 1}/${TOTAL_STEPS} ${t("poolMigration.transactions.header")}`}
     >
       <StyledMigrateAll>
         <Body>
@@ -57,25 +121,37 @@ const MigrateAll = ({ migrating, close }: Props): JSX.Element => {
         <InfoBlock
           sections={[
             [
-              {
-                label: t("amountInput.approve", { asset: "bkdDAI" }),
-                tooltip: t("poolMigration.transactions.approveTooltip", { asset: "bkdDAI" }),
-                value: <Status large status={StatusType.SUCCESS} />,
-              },
-              {
-                label: t("amountInput.approve", { asset: "bkdUSDC" }),
-                tooltip: t("poolMigration.transactions.approveTooltip", { asset: "bkdUSDC" }),
-                value: <Status large status={StatusType.PENDING} />,
-              },
-              {
-                label: t("amountInput.approve", { asset: "bkdETH" }),
-                tooltip: t("poolMigration.transactions.approveTooltip", { asset: "bkdETH" }),
-                value: <Status large status={StatusType.EMPTY} />,
-              },
+              ...(depositedPools
+                ? depositedPools.map((pool: Pool) => {
+                    return {
+                      label: t("amountInput.approve", { asset: pool.lpToken.symbol }),
+                      tooltip: t("poolMigration.transactions.approveTooltip", {
+                        asset: pool.lpToken.symbol,
+                      }),
+                      value: (
+                        <Status
+                          large
+                          status={
+                            isApproved(pool)
+                              ? StatusType.SUCCESS
+                              : activePool && activePool.address === pool.address && approveLoading
+                              ? StatusType.PENDING
+                              : StatusType.EMPTY
+                          }
+                        />
+                      ),
+                    };
+                  })
+                : []),
               {
                 label: t("poolMigration.transactions.migrate"),
                 tooltip: t("poolMigration.transactions.migrateTooltip"),
-                value: <Status large status={StatusType.EMPTY} />,
+                value: (
+                  <Status
+                    large
+                    status={migrateAllLoading ? StatusType.PENDING : StatusType.EMPTY}
+                  />
+                ),
               },
             ],
           ]}
