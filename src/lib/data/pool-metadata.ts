@@ -59,3 +59,48 @@ const poolMetadata: Record<string, PoolMetadata> = {
 };
 
 export default poolMetadata;
+
+export const oldPoolMetadata: Record<string, PoolMetadata> = {
+  ETH: {
+    icon: eth,
+    deployment: {
+      "1337": {
+        time: new Date(0),
+      },
+      "42": {
+        time: new Date(1643997600000),
+      },
+      "1": {
+        time: new Date(1647367666000),
+      },
+    },
+  },
+  DAI: {
+    icon: dai,
+    deployment: {
+      "1337": {
+        time: new Date(0),
+      },
+      "42": {
+        time: new Date(1643997600000),
+      },
+      "1": {
+        time: new Date(1647432774000),
+      },
+    },
+  },
+  USDC: {
+    icon: usdc,
+    deployment: {
+      "1337": {
+        time: new Date(0),
+      },
+      "42": {
+        time: new Date(1643997600000),
+      },
+      "1": {
+        time: new Date(1647360920000),
+      },
+    },
+  },
+};

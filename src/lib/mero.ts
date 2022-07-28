@@ -35,7 +35,7 @@ import {
   oldPools,
   oldAddressProviders,
 } from "./constants";
-import poolMetadata from "./data/pool-metadata";
+import poolMetadata, { oldPoolMetadata } from "./data/pool-metadata";
 import { lendingProviders } from "./lending-protocols";
 import { makeContractTransaction, positions as mockPositions } from "./mock/data";
 import {
@@ -312,7 +312,7 @@ export class Web3Mero implements Mero {
     ]);
 
     let apy = null;
-    const metadata = poolMetadata[underlying.symbol];
+    const metadata = oldPoolMetadata[underlying.symbol];
     if (metadata && metadata.deployment[this.chainId.toString()]) {
       const deployedtime = metadata.deployment[this.chainId.toString()].time;
       const compoundExponent =
