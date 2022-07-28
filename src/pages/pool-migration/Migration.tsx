@@ -1,4 +1,5 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { ScaledNumber } from "scaled-number";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
@@ -11,7 +12,11 @@ import {
   selectUsersPoolUnderlyingEverywhere,
   selectProtocolPoolUnderlyingEverywhere,
 } from "../../state/valueSelectors";
-import { selectPrice } from "../../state/poolsListSlice";
+import { migrate, selectPrice } from "../../state/poolsListSlice";
+import { useMero } from "../../app/hooks/use-mero";
+import { approve, selectAllowance } from "../../state/userSlice";
+import { hasPendingTransaction } from "../../state/transactionsSlice";
+import { INFINITE_APPROVE_AMMOUNT } from "../../lib/constants";
 
 const StyledMigration = styled.div`
   width: 100%;
@@ -98,9 +103,36 @@ interface Props {
 
 const Migration = ({ pool }: Props): JSX.Element => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const mero = useMero();
   const price = useSelector(selectPrice(pool));
   const totalDeposits = useSelector(selectProtocolPoolUnderlyingEverywhere(pool));
   const deposits = useSelector(selectUsersPoolUnderlyingEverywhere(pool));
+  const approvedAmount = useSelector(
+    selectAllowance(pool.lpToken.address, mero?.getPoolMigrationZapAddres())
+  );
+
+  const approveLoading = useSelector(hasPendingTransaction("Approve"));
+  const migrationLoading = useSelector(hasPendingTransaction("Migrate"));
+
+  const approved = !!approvedAmount && !approvedAmount.isZero();
+
+  const executeApprove = () => {
+    if (!mero || approved || approveLoading) return;
+    dispatch(
+      approve({
+        token: pool.lpToken,
+        spender: mero.getPoolMigrationZapAddres(),
+        amount: ScaledNumber.fromUnscaled(INFINITE_APPROVE_AMMOUNT),
+        mero,
+      })
+    );
+  };
+
+  const executeMigrate = () => {
+    if (!mero || migrationLoading) return;
+    dispatch(migrate({ poolAddress: pool.address, mero }));
+  };
 
   return (
     <StyledMigration>
@@ -120,15 +152,24 @@ const Migration = ({ pool }: Props): JSX.Element => {
         <Button borderless medium width="13rem">
           {t("poolMigration.withdraw")}
         </Button>
-        <Button primary medium width="13rem">
-          {t("poolMigration.approve")}
-        </Button>
         <Button
-          disabled
           primary
           medium
           width="13rem"
+          loading={approveLoading}
+          complete={approved}
+          click={() => executeApprove()}
+        >
+          {t("poolMigration.approve")}
+        </Button>
+        <Button
+          primary
+          medium
+          width="13rem"
+          disabled={!approved}
+          loading={migrationLoading}
           hoverText={t("poolMigration.transactions.approveTooltip", { asset: pool.lpToken.symbol })}
+          click={() => executeMigrate()}
         >
           {t("poolMigration.migrate")}
         </Button>
