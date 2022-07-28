@@ -75,6 +75,10 @@ export const fetchAllowances = createAsyncThunk(
           spender: mero.topupActionAddress || "",
           token: { address: pool.stakerVaultAddress, decimals: pool.underlying.decimals },
         },
+        {
+          spender: mero.getPoolMigrationZapAddres(),
+          token: pool.lpToken,
+        },
       ])
       .filter((a: AllowanceQuery) => !!a.spender);
     const allowances = await mero.getAllowances(queries);
@@ -300,8 +304,12 @@ export function selectDepositAllowance(pool: Pool): Selector<Optional<ScaledNumb
   };
 }
 
-export function selectAllowance(token: string, contract: string): Selector<Optional<ScaledNumber>> {
+export function selectAllowance(
+  token: string,
+  contract: string | undefined
+): Selector<Optional<ScaledNumber>> {
   return (state: RootState) => {
+    if (!contract) return null;
     const plainAllowance = state.user.allowances[token]?.[contract];
     if (!plainAllowance) return null;
     return ScaledNumber.fromPlain(plainAllowance);
