@@ -2243,10 +2243,10 @@
     prop-types "^15.7.2"
     react-is "^16.8.0 || ^17.0.0"
 
-"@merofinance/protocol@^0.9.0":
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/@merofinance/protocol/-/protocol-0.9.0.tgz#5c0d35498d9bbac85afc5fe7ade9ee8750e038f9"
-  integrity sha512-cC1ctrync6Mu1+VPBtff6e6zMuRGUOc6BAglHWnYZeYjtl25H0RN+aF4KqCjRaI0CGe1aAT7ZOCVNFLmU4pq8w==
+"@merofinance/protocol@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@merofinance/protocol/-/protocol-1.0.0.tgz#40c57e7e038c083b7ea03289c829c2519a111861"
+  integrity sha512-JJp1HrOEsKH6NdBq8rpLI3uZotIBUX/xQSbekx2dNcMHM+LZtHugaWdObWtHK38wDmqMvNwDJgzI8csfPjD6MA==
   dependencies:
     "@openzeppelin/contracts" "^4.5.0"
     "@openzeppelin/contracts-upgradeable" "^4.5.1"
