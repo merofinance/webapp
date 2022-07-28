@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 import { Header1, Header3 } from "../../styles/Headers";
 import { GradientText } from "../../styles/GradientText";
-import { selectProtocolTotalUsdEverywhere } from "../../state/valueSelectors";
+import { selectProtocolsTotalUsdEverywhere } from "../../state/valueSelectors";
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
 import { useNavigateToTop } from "../../app/hooks/use-navigate-to-top";
@@ -63,7 +63,7 @@ const ButtonContainer = styled.div`
 const Hero = (): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigateToTop();
-  const totalDeposits = useSelector(selectProtocolTotalUsdEverywhere);
+  const totalDeposits = useSelector(selectProtocolsTotalUsdEverywhere);
 
   return (
     <StyledHero>

@@ -4,7 +4,7 @@ import { ScaledNumber } from "scaled-number";
 
 import { RootState } from "../app/store";
 import { Optional, Pool, Position } from "../lib/types";
-import { selectPools, selectPrice, selectPrices } from "./poolsListSlice";
+import { selectOldPools, selectPools, selectPrice, selectPrices } from "./poolsListSlice";
 import { selectPoolPositions, selectPositions } from "./positionsSlice";
 import { selectBalances } from "./userSlice";
 
@@ -20,6 +20,7 @@ import { selectBalances } from "./userSlice";
  * Options are:
  * - Users: The value owned by the user
  * - Protocol: The value owned by all users
+ * - Protocols: The value owned by all users including old contracts
  *
  * Domain:
  * The domain of the value.
@@ -261,6 +262,25 @@ export const selectProtocolTotalUsdEverywhere = (state: RootState): Optional<Sca
     const price = prices[pools[i].underlying.symbol];
     if (!price || !pools[i].totalAssets.mul) return null;
     total = total.add(pools[i].totalAssets.mul(price));
+  }
+  return total;
+};
+
+export const selectProtocolsTotalUsdEverywhere = (state: RootState): Optional<ScaledNumber> => {
+  const pools = selectPools(state);
+  const oldPools = selectOldPools(state);
+  const prices = selectPrices(state);
+  if (!pools || !prices || !oldPools) return null;
+  let total = new ScaledNumber();
+  for (let i = 0; i < pools.length; i++) {
+    const price = prices[pools[i].underlying.symbol];
+    if (!price || !pools[i].totalAssets.mul) return null;
+    total = total.add(pools[i].totalAssets.mul(price));
+  }
+  for (let i = 0; i < oldPools.length; i++) {
+    const price = prices[oldPools[i].underlying.symbol];
+    if (!price || !oldPools[i].totalAssets.mul) return null;
+    total = total.add(oldPools[i].totalAssets.mul(price));
   }
   return total;
 };
