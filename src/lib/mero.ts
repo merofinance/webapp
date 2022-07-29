@@ -38,6 +38,7 @@ import {
 import poolMetadata, { oldPoolMetadata } from "./data/pool-metadata";
 import { lendingProviders } from "./lending-protocols";
 import { makeContractTransaction, positions as mockPositions } from "./mock/data";
+import { encodeAddress } from "./text";
 import {
   ActionFees,
   Address,
@@ -464,6 +465,7 @@ export class Web3Mero implements Mero {
     const rawExchangeRate = await poolContract.exchangeRate();
     const protocol = utils.formatBytes32String(position.protocol);
     const depositAmount = position.maxTopUp.value.mul(rawExchangeRate).div(scale);
+    const account = encodeAddress(position.account);
 
     const record = {
       threshold: position.threshold.value,
@@ -479,7 +481,7 @@ export class Web3Mero implements Mero {
     };
 
     const gasEstimate = await this.topupAction.estimateGas.register(
-      position.account,
+      account,
       protocol,
       depositAmount,
       record,
@@ -488,7 +490,7 @@ export class Web3Mero implements Mero {
       }
     );
     const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
-    return this.topupAction.register(position.account, protocol, depositAmount, record, {
+    return this.topupAction.register(account, protocol, depositAmount, record, {
       gasLimit,
       value,
     });
