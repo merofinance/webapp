@@ -157,6 +157,7 @@ export const fetchState =
 export const fetchPreviewState = (): AppThunk => (dispatch) => {
   const provider = new ethers.providers.InfuraProvider(1, INFURA_ID);
   const mero = createMero(provider, { chainId: 1 });
+  dispatch(fetchOldPools({ mero }));
   dispatch(fetchPools({ mero })).then((v) => {
     if (v.meta.requestStatus !== "fulfilled") return;
     const pools = v.payload as Pool[];
