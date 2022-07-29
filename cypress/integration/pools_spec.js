@@ -52,15 +52,15 @@ describe("Overview", () => {
 
 describe("Pools", () => {
   it("Should load Pools", () => {
-    cy.get("#pool-row-bkddai", { timeout: WEB3_TIMEOUT }).should("be.visible");
+    cy.get("#pool-row-merodai", { timeout: WEB3_TIMEOUT }).should("be.visible");
   });
   it("Should snapshot page", () => {
     percySnapshot();
   });
   it("Should navigate to Pool", () => {
-    cy.get("#pool-row-bkddai").click();
+    cy.get("#pool-row-merodai").click();
     cy.location().should((loc) => {
-      if (loc.pathname) expect(loc.pathname).to.eq("/pool/bkdDAI");
+      if (loc.pathname) expect(loc.pathname).to.eq("/pool/meroDAI");
     });
   });
   it("Should navigate back to pools", () => {

@@ -4,7 +4,7 @@ describe("Page Load", () => {
   it("Should Innitialise Web3", () => {
     initWeb3("/pools");
     cy.get('[id="walletConnect.wallets.metaMask"]').click();
-    cy.get("#pool-row-bkdeth", { timeout: WEB3_TIMEOUT }).click();
+    cy.get("#pool-row-meroeth", { timeout: WEB3_TIMEOUT }).click();
   });
 });
 
@@ -21,9 +21,9 @@ describe("Innitial Data", () => {
     });
   });
   it("Should navigate to DAI Pool", () => {
-    cy.get("#pool-row-bkddai").click();
+    cy.get("#pool-row-merodai").click();
     cy.location().should((loc) => {
-      if (loc.pathname) expect(loc.pathname).to.eq("/pool/bkdDAI");
+      if (loc.pathname) expect(loc.pathname).to.eq("/pool/meroDAI");
     });
   });
   it("Should load DAI balance", () => {
