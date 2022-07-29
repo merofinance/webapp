@@ -69,7 +69,7 @@ const MigrateAll = ({ migrating, close }: Props): Optional<JSX.Element> => {
 
   const isApproved = (pool: Pool): boolean => {
     if (!mero) return false;
-    const plainAllowance = allowances[pool.lpToken.address]?.[mero.getPoolMigrationZapAddres()];
+    const plainAllowance = allowances[pool.lpToken.address]?.[mero.poolMigrationZapAddres];
     if (!plainAllowance) return false;
     return !ScaledNumber.fromPlain(plainAllowance).isZero();
   };
@@ -89,7 +89,7 @@ const MigrateAll = ({ migrating, close }: Props): Optional<JSX.Element> => {
       dispatch(
         approve({
           token: activePool.lpToken,
-          spender: mero.getPoolMigrationZapAddres(),
+          spender: mero.poolMigrationZapAddres,
           amount: ScaledNumber.fromUnscaled(INFINITE_APPROVE_AMMOUNT),
           mero,
         })

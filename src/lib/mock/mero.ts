@@ -36,10 +36,6 @@ export default class MockMero implements Mero {
     return 1;
   }
 
-  getPoolMigrationZapAddres(): string {
-    return "0x38d6f612D116dBc1411E977A5D77E02bBae58e63";
-  }
-
   currentAccount(): Promise<Address> {
     return Promise.resolve(masterAccount);
   }
@@ -170,6 +166,10 @@ export default class MockMero implements Mero {
   }
 
   get topupActionAddress(): string {
+    return "0x38d6f612D116dBc1411E977A5D77E02bBae58e63";
+  }
+
+  get poolMigrationZapAddres(): string {
     return "0x38d6f612D116dBc1411E977A5D77E02bBae58e63";
   }
 

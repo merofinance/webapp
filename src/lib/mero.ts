@@ -63,7 +63,6 @@ export type MeroOptions = {
 
 export interface Mero {
   getChainId(): number;
-  getPoolMigrationZapAddres(): string;
   currentAccount(): Promise<Address>;
   listPools(): Promise<PlainPool[]>;
   listOldPools(): Promise<PlainPool[]>;
@@ -100,6 +99,7 @@ export interface Mero {
 
   provider: providers.Provider;
   topupActionAddress: Optional<string>;
+  poolMigrationZapAddres: string;
 }
 
 export class Web3Mero implements Mero {
@@ -141,6 +141,10 @@ export class Web3Mero implements Mero {
     return this.topupAction ? this.topupAction.address : null;
   }
 
+  get poolMigrationZapAddres(): string {
+    return this.poolMigrationZap.address;
+  }
+
   get provider(): providers.Provider {
     const provider = this._provider;
     if (provider instanceof Signer) {
@@ -165,10 +169,6 @@ export class Web3Mero implements Mero {
 
   getChainId(): number {
     return this.chainId;
-  }
-
-  getPoolMigrationZapAddres(): string {
-    return this.poolMigrationZap.address;
   }
 
   currentAccount(): Promise<string> {
