@@ -425,7 +425,12 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
             value={ScaledNumber.fromUnscaled(formik.values.maxTopUp, pool.underlying.decimals)}
             loading={loading}
             disabled={!formik.dirty || !formik.isValid || loading}
-            token={pool.lpToken}
+            token={{
+              name: `Staked ${pool.lpToken.symbol}`,
+              symbol: `Staked ${pool.lpToken.symbol}`,
+              decimals: pool.underlying.decimals,
+              address: pool.stakerVaultAddress,
+            }}
             contract={mero.topupActionAddress || ""}
             hoverText={buttonHoverText()}
           />
