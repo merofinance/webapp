@@ -459,12 +459,7 @@ export class Web3Mero implements Mero {
   ): Promise<ContractTransaction> {
     if (!this.topupAction) return makeContractTransaction("", "");
 
-    const { decimals } = pool.underlying;
-    const scale = BigNumber.from(10).pow(decimals);
-    const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
-    const rawExchangeRate = await poolContract.exchangeRate();
     const protocol = utils.formatBytes32String(position.protocol);
-    const depositAmount = position.maxTopUp.value.mul(rawExchangeRate).div(scale);
     const account = encodeAddress(position.account);
 
     const record = {
@@ -480,17 +475,11 @@ export class Web3Mero implements Mero {
       extra: utils.formatBytes32String("false"),
     };
 
-    const gasEstimate = await this.topupAction.estimateGas.register(
-      account,
-      protocol,
-      depositAmount,
-      record,
-      {
-        value,
-      }
-    );
+    const gasEstimate = await this.topupAction.estimateGas.register(account, protocol, 0, record, {
+      value,
+    });
     const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
-    return this.topupAction.register(account, protocol, depositAmount, record, {
+    return this.topupAction.register(account, protocol, 0, record, {
       gasLimit,
       value,
     });
@@ -504,14 +493,19 @@ export class Web3Mero implements Mero {
     if (!this.topupAction) return makeContractTransaction("", "");
 
     const gasEstimate = await this.topupAction.estimateGas.resetPosition(
-      account,
+      encodeAddress(account),
       utils.formatBytes32String(protocol),
       unstake
     );
     const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
-    return this.topupAction.resetPosition(account, utils.formatBytes32String(protocol), unstake, {
-      gasLimit,
-    });
+    return this.topupAction.resetPosition(
+      encodeAddress(account),
+      utils.formatBytes32String(protocol),
+      unstake,
+      {
+        gasLimit,
+      }
+    );
   }
 
   async getAllowance(
