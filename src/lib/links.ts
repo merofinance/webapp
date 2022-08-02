@@ -8,23 +8,21 @@ export const NEWSLETTER_LINK = "https://merofinance.substack.com/welcome";
 
 // Blogs
 export const BLOG_LINK = "https://merofinance.medium.com/";
-export const BLOG_TESTNET_GUIDE_LINK =
-  "https://merofinance.medium.com/backd-testnet-guide-16540e09c46";
-export const BLOG_LAUNCH_LINK = "https://blog.mero.finance/backd-is-live-c90e8dc08f34";
+export const BLOG_TESTNET_GUIDE_LINK = `${BLOG_LINK}backd-testnet-guide-16540e09c46`;
+export const BLOG_LAUNCH_LINK = `${BLOG_LINK}backd-is-live-c90e8dc08f34`;
+export const BLOG_UNCAPPED_POOLS_LINK = `${BLOG_LINK}pools-are-uncapped-migrate-your-liquidity-c20f4c96108e`;
 
 // Docs
 export const DOCS_LINK = "https://docs.mero.finance/";
-export const DOCS_TOPUPS_LINK = "https://docs.mero.finance/protocol-architecture/actions/top-ups";
-export const DOCS_PLATFORM_FEES_LINK =
-  "https://docs.mero.finance/protocol-architecture/tokenomics/token-income";
-export const DOCS_TOKENOMICS_LINK = "https://docs.mero.finance/protocol-architecture/tokenomics";
-export const DOCS_ACTIONS_LINK = "https://docs.mero.finance/protocol-architecture/actions";
-export const DOCS_POOLS_LINK = "https://docs.mero.finance/protocol-architecture/pools";
-export const DOCS_KEEPERS_LINK = "https://docs.mero.finance/protocol-architecture/backd-keepers";
-export const DOCS_CONTRIBUTIONS_LINK = "https://docs.mero.finance/resources/contributions";
-export const DOCS_COOKBOOK_LINK = "https://docs.mero.finance/resources/cookbook";
-export const DOCS_STRATEGIES_LINK =
-  "https://docs.mero.finance/protocol-architecture/pools/strategies";
+export const DOCS_TOPUPS_LINK = `${DOCS_LINK}protocol-architecture/actions/top-ups`;
+export const DOCS_PLATFORM_FEES_LINK = `${DOCS_LINK}protocol-architecture/tokenomics/token-income`;
+export const DOCS_TOKENOMICS_LINK = `${DOCS_LINK}protocol-architecture/tokenomics`;
+export const DOCS_ACTIONS_LINK = `${DOCS_LINK}protocol-architecture/actions`;
+export const DOCS_POOLS_LINK = `${DOCS_LINK}protocol-architecture/pools`;
+export const DOCS_KEEPERS_LINK = `${DOCS_LINK}protocol-architecture/backd-keepers`;
+export const DOCS_CONTRIBUTIONS_LINK = `${DOCS_LINK}resources/contributions`;
+export const DOCS_COOKBOOK_LINK = `${DOCS_LINK}resources/cookbook`;
+export const DOCS_STRATEGIES_LINK = `${DOCS_LINK}protocol-architecture/pools/strategies`;
 
 // Vendor
 export const VENDOR_CURVE_LINK = "https://curve.fi/";
