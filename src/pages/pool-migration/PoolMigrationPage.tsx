@@ -16,6 +16,7 @@ import Loader from "../../components/Loader";
 import { useMero } from "../../app/hooks/use-mero";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import { selectBalances } from "../../state/userSlice";
+import { BLOG_UNCAPPED_POOLS_LINK } from "../../lib/links";
 
 const StyledPoolMigrationPage = styled.div`
   position: relative;
@@ -125,7 +126,7 @@ const PoolMigrationPage = (): JSX.Element => {
           <Header>{t("poolMigration.header")}</Header>
           <Description>
             {t("poolMigration.details")}{" "}
-            <Link href="https://www.google.com/" target="_blank" rel="noopener noreferrer">
+            <Link href={BLOG_UNCAPPED_POOLS_LINK} target="_blank" rel="noopener noreferrer">
               {t("components.moreInBlog")}
               <LaunchIcon
                 fontSize={isMobile ? "small" : "medium"}
