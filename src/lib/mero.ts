@@ -321,7 +321,10 @@ export class Web3Mero implements Mero {
       const scaledTotalAssets = new ScaledNumber(totalAssets, underlying.decimals);
       const lpBalance = scaledTotalAssets.div(new ScaledNumber(exchangeRate));
       const exchangeRateAfterHarvest = scaledTotalAssets.div(lpBalance);
-      const unscaledApy = Number(exchangeRateAfterHarvest.toString()) ** compoundExponent - 1;
+      const vaultShutdown = underlying.address === ETH_DUMMY_ADDRESS;
+      const unscaledApy = vaultShutdown
+        ? (1 - Number(exchangeRateAfterHarvest.toString())) * -1
+        : Number(exchangeRateAfterHarvest.toString()) ** compoundExponent - 1;
       if (unscaledApy >= 0) apy = ScaledNumber.fromUnscaled(unscaledApy).value;
       else apy = ScaledNumber.fromUnscaled(Math.abs(unscaledApy)).value.mul(-1);
     }
