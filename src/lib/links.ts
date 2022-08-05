@@ -10,6 +10,7 @@ export const NEWSLETTER_LINK = "https://merofinance.substack.com/welcome";
 export const BLOG_LINK = "https://merofinance.medium.com/";
 export const BLOG_TESTNET_GUIDE_LINK = `${BLOG_LINK}backd-testnet-guide-16540e09c46`;
 export const BLOG_LAUNCH_LINK = `${BLOG_LINK}backd-is-live-c90e8dc08f34`;
+export const BLOG_UNCAPPED_POOLS_LINK = `${BLOG_LINK}pools-are-uncapped-migrate-your-liquidity-c20f4c96108e`;
 
 // Docs
 export const DOCS_LINK = "https://docs.mero.finance/";
