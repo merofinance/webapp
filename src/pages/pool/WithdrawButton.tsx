@@ -7,7 +7,7 @@ import { ScaledNumber } from "scaled-number";
 import Button from "../../components/Button";
 import { Pool } from "../../lib";
 import { selectWithdrawalFee, withdraw } from "../../state/userSlice";
-import { selectUsersPoolUnderlyingUnlocked } from "../../state/valueSelectors";
+import { selectUsersPoolLpUnlocked } from "../../state/valueSelectors";
 import { useMero } from "../../app/hooks/use-mero";
 import { AppDispatch } from "../../app/store";
 import { hasPendingTransaction } from "../../state/transactionsSlice";
@@ -34,7 +34,7 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
   const mero = useMero();
   const loading = useSelector(hasPendingTransaction("Withdraw"));
   const withdrawalFee = useSelector(selectWithdrawalFee(pool));
-  const usersPoolUnderlyingUnlocked = useSelector(selectUsersPoolUnderlyingUnlocked(pool));
+  const usersPoolLpUnlocked = useSelector(selectUsersPoolLpUnlocked(pool));
 
   const [confirming, setConfirming] = useState(false);
 
@@ -49,17 +49,17 @@ const WithdrawalButton = ({ value, pool, complete, valid }: Props): JSX.Element 
   }, [loading]);
 
   const submit = () => {
-    if (!valid || !usersPoolUnderlyingUnlocked || !pool || !mero || !withdrawalFee) return;
+    if (!valid || !usersPoolLpUnlocked || !pool || !mero || !withdrawalFee) return;
     const lpValue = value.div(pool.exchangeRate);
 
     // If the amount the user is withdrawing is 99.9% of their total, then withdraw their total
     // This is to avoid the situation where a user withdraws all their tokens other than 0.00000001 DAI from a rounding error
-    const isMaxWithdrawal = usersPoolUnderlyingUnlocked
+    const isMaxWithdrawal = usersPoolLpUnlocked
       .sub(lpValue)
-      .div(usersPoolUnderlyingUnlocked)
+      .div(usersPoolLpUnlocked)
       .lte(ScaledNumber.fromUnscaled(0.001, lpValue.decimals));
 
-    const amount = isMaxWithdrawal ? usersPoolUnderlyingUnlocked : lpValue;
+    const amount = isMaxWithdrawal ? usersPoolLpUnlocked : lpValue;
     dispatch(withdraw({ mero, pool, amount, withdrawalFee }));
   };
 
