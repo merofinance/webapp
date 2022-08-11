@@ -25,7 +25,8 @@
     "aboutWallets": "Find out about wallets",
     "wallets": {
       "metaMask": "MetaMask",
-      "walletConnect": "WalletConnect"
+      "walletConnect": "WalletConnect",
+      "unstoppableDomains": "Unstoppable Domains"
     },
     "details": {
       "header": "Account",
