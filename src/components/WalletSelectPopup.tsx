@@ -14,6 +14,7 @@ import {
 } from "../app/web3";
 import metamask from "../assets/wallets/metamask.svg";
 import walletConnect from "../assets/wallets/wallet-connect.svg";
+import unstoppableDomains from "../assets/wallets/unstoppable-domains.svg";
 import Popup from "./Popup";
 import ExternalLink from "./ExternalLink";
 
@@ -42,7 +43,7 @@ const walletOptions: WalletOption[] = [
   },
   {
     name: "walletConnect.wallets.unstoppableDomains",
-    icon: walletConnect,
+    icon: unstoppableDomains,
     leftColor: "#0D67FE",
     rightColor: "#09C9FF",
     connector: unstoppableDomainsConnector,
