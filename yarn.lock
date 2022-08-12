@@ -2243,7 +2243,7 @@
     prop-types "^15.7.2"
     react-is "^16.8.0 || ^17.0.0"
 
-"@merofinance/protocol@^1.2.1":
+"@merofinance/protocol@^1.1.0":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@merofinance/protocol/-/protocol-1.2.1.tgz#c7fb2c98411affa1b463f2ecd855f13ea5a5642a"
   integrity sha512-7xtRtF8tmiuHMeyr8E6aq6bR2v0gTDnyt0qClvGOJGOpJ0Of9zbl+HTwsmhalrYIIIxYBa9U+3oXklBUoAE7tw==
