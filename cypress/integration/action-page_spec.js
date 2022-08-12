@@ -21,7 +21,9 @@ describe("Default state", () => {
     cy.get("#your-deposits-header").contains("Your deposits");
   });
   it("Should have no deposits", () => {
-    cy.get("#your-deposits-empty").contains("You do not have any existing deposits...");
+    cy.get("#your-deposits-empty", { timeout: WEB3_TIMEOUT }).contains(
+      "You do not have any existing deposits..."
+    );
   });
   it("Should have Overview Info Card", () => {
     cy.get("#overview-header").contains("Overview");
@@ -255,9 +257,7 @@ describe("Pool Deposit", () => {
     cy.get("#register-topup-pool-deposit").contains("Enter an amount of DAI to deposit");
   });
   it("Should load DAI balance", () => {
-    cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains(".", {
-      timeout: WEB3_TIMEOUT,
-    });
+    cy.get("#available-amount-loader").should("not.exist", { timeout: WEB3_TIMEOUT });
   });
   it("Should take snapshot", () => {
     percySnapshot();
