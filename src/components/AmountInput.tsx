@@ -63,7 +63,7 @@ const AmountInput = ({
             amount: balance.toCryptoString(),
           })} ${symbol.toUpperCase()}`
         ) : (
-          <Loader />
+          <Loader id="available-amount-loader" />
         )}
       </Available>
       <Input

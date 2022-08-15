@@ -1,5 +1,3 @@
-import { ScaledNumber } from "scaled-number";
-
 import eth from "../../assets/tokens/eth.png";
 import usdc from "../../assets/tokens/usdc.png";
 import dai from "../../assets/tokens/dai.png";
@@ -24,7 +22,7 @@ const poolMetadata: Record<string, PoolMetadata> = {
         time: new Date(1659017112000),
       },
       "1": {
-        time: new Date(1656006112000),
+        time: new Date(1657452475000),
       },
     },
   },
@@ -38,7 +36,7 @@ const poolMetadata: Record<string, PoolMetadata> = {
         time: new Date(1659016212000),
       },
       "1": {
-        time: new Date(1659326212000),
+        time: new Date(1660267475000),
       },
     },
   },
@@ -52,7 +50,7 @@ const poolMetadata: Record<string, PoolMetadata> = {
         time: new Date(1659016932000),
       },
       "1": {
-        time: new Date(1659326212000),
+        time: new Date(1660212475000),
       },
     },
   },
