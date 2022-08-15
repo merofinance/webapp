@@ -1,6 +1,7 @@
 import eth from "../../assets/tokens/eth.png";
 import usdc from "../../assets/tokens/usdc.png";
 import dai from "../../assets/tokens/dai.png";
+import usdt from "../../assets/tokens/usdt.png";
 
 interface DeploymentMetadata {
   time: Date;
@@ -51,6 +52,20 @@ const poolMetadata: Record<string, PoolMetadata> = {
       },
       "1": {
         time: new Date(1660212475000),
+      },
+    },
+  },
+  USDT: {
+    icon: usdt,
+    deployment: {
+      "1337": {
+        time: new Date(0),
+      },
+      "42": {
+        time: new Date(1659016932000),
+      },
+      "1": {
+        time: new Date(1660568583000),
       },
     },
   },
