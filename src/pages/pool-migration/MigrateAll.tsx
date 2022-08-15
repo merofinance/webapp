@@ -95,7 +95,7 @@ const MigrateAll = ({ migrating, close }: Props): Optional<JSX.Element> => {
         })
       );
     }
-    if (allPoolsApproved) {
+    if (allPoolsApproved && depositedPools.length > 0) {
       dispatch(
         migrateAll({ mero, poolAddresses: depositedPools.map((pool: Pool) => pool.address) })
       );
