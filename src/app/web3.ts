@@ -43,6 +43,10 @@ export const walletConnectConnector = new WalletConnectConnector({
 });
 
 export const unstoppableDomainsConnector = new UAuthConnector({
+  clientID: "82a859bc-97fb-4ba4-b9a8-6f8e4003f4e1",
+  redirectUri: "https://mero.finance/",
+  postLogoutRedirectUri: "https://mero.finance/",
+
   // Scope must include openid and wallet
   scope: "openid wallet",
 
