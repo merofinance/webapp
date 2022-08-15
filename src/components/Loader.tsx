@@ -33,10 +33,11 @@ interface Props {
   row?: boolean;
   preview?: boolean;
   button?: boolean;
+  id?: string;
 }
 
-const Loader = ({ row, preview, button }: Props): JSX.Element => {
-  return <StyledLoader row={row} preview={preview} button={button} />;
+const Loader = ({ row, preview, button, id }: Props): JSX.Element => {
+  return <StyledLoader id={id} row={row} preview={preview} button={button} />;
 };
 
 export default Loader;

@@ -385,7 +385,7 @@
           "labelMobile": "Enter amount to deposit",
           "labelDesktop": "Enter an amount of {{asset}} to deposit"
         },
-        "action": "Deposit"
+        "action": "Deposit & Stake"
       },
       "withdraw": {
         "tab": "Withdraw",
@@ -393,7 +393,7 @@
           "labelMobile": "Enter amount to withdraw",
           "labelDesktop": "Enter an amount of {{asset}} to withdraw"
         },
-        "action": "Withdraw {{asset}}",
+        "action": "Unstake & Withdraw {{asset}}",
         "confirmation": {
           "header": "Confirm withdrawal",
           "subHeader": "You are about to withdraw {{amount}} {{asset}} from the {{asset}} pool",
@@ -707,7 +707,6 @@
       "positive": "Amount must be a positive number",
       "exceedsBalance": "Amount exceeds available balance",
       "invalid": "Invalid number",
-      "exceedsCap": "Amount exceeds deposit limit",
       "poolPaused": "Deposits are currently disabled. Please try again later"
     },
     "approve": "Approve {{asset}}",
@@ -721,6 +720,7 @@
     "back": "Back",
     "close": "Close",
     "moreInDocs": "Find out more in the docs",
+    "moreInBlog": "Find out more on the blog",
     "betaSnackbar": "This pool currently has a deposit limit of {{limit}} {{asset}} per address.",
     "pausedSnackbar": "Deposits into this pool are currently paused. Funds can be withdrawn. This can be for a number of reasons. To find out more, head to our <0>Discord</0>.",
     "findOutMore": "Find out more.",
@@ -766,6 +766,28 @@
         "text": "I’ve noticed your {{protocol}} top-up Action is running low on funds. I suggest you delete that top-up Action and register a new one as soon as possible.",
         "button": "Delete action"
       }
+    }
+  },
+  "poolMigration": {
+    "banner": {
+      "header": "Uncapped pools have launched!",
+      "details": "Deposit into an uncapped pool below to get started.",
+      "mobileDetails": "Deposit now to get started",
+      "ctaText": "Migrate now"
+    },
+    "header": "Migrate your liquidity",
+    "details": "You’ll need to migrate your liquidity to the new uncapped pools.",
+    "migrateAll": "Migrate all",
+    "migrate": "Migrate",
+    "approve": "Approve",
+    "withdraw": "Withdraw",
+    "empty": "You have no funds to migrate!",
+    "transactions": {
+      "header": "transactions",
+      "body": "Please complete this transaction within your wallet. For more information, reach out to our team in the <0>Discord</0>.",
+      "approveTooltip": "Approve the pool migration zap for spending your {{asset}}",
+      "migrate": "Migrate pools",
+      "migrateTooltip": "Migrate your liquidity to the new uncapped pools"
     }
   },
   "metadata": {

@@ -19,7 +19,7 @@ import {
   PlainWithdrawalFees,
   fromPlainWithdrawalFees,
 } from "../lib/types";
-import { fetchPool } from "./poolsListSlice";
+import { fetchPool, selectOldPools } from "./poolsListSlice";
 import { handleTransactionConfirmation } from "../lib/transactionsUtils";
 
 interface UserState {
@@ -74,6 +74,10 @@ export const fetchAllowances = createAsyncThunk(
         {
           spender: mero.topupActionAddress || "",
           token: { address: pool.stakerVaultAddress, decimals: pool.underlying.decimals },
+        },
+        {
+          spender: mero.poolMigrationZapAddres,
+          token: pool.lpToken,
         },
       ])
       .filter((a: AllowanceQuery) => !!a.spender);
@@ -260,6 +264,18 @@ export function isConnecting(state: RootState): boolean {
   return state.user.connecting;
 }
 
+export const selectHasOldDeposits = (state: RootState): Optional<boolean> => {
+  const pools = selectOldPools(state);
+  const balances = selectBalances(state);
+  if (!pools || !balances) return null;
+
+  return pools.some((pool: Pool) => {
+    const lpBalance = balances[pool.lpToken.address];
+    const stakedBalance = balances[pool.stakerVaultAddress];
+    return (lpBalance && !lpBalance.isZero()) || (stakedBalance && !stakedBalance.isZero());
+  });
+};
+
 export function selectPoolUnderlyingBalance(
   pool: Optional<Pool>
 ): Selector<Optional<ScaledNumber>> {
@@ -288,8 +304,16 @@ export function selectDepositAllowance(pool: Pool): Selector<Optional<ScaledNumb
   };
 }
 
-export function selectAllowance(token: string, contract: string): Selector<Optional<ScaledNumber>> {
+export function selectAllowances(state: RootState): PlainAllowances {
+  return state.user.allowances;
+}
+
+export function selectAllowance(
+  token: string,
+  contract: string | undefined
+): Selector<Optional<ScaledNumber>> {
   return (state: RootState) => {
+    if (!contract) return null;
     const plainAllowance = state.user.allowances[token]?.[contract];
     if (!plainAllowance) return null;
     return ScaledNumber.fromPlain(plainAllowance);

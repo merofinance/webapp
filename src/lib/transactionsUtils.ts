@@ -73,6 +73,12 @@ export const formatTransactionInfo = (txDescription: TransactionDescription): st
       const position: Position = fromPlainPosition(txDescription.args?.plainPosition);
       return `${shortenAddress(position.account, 8)} ${position.protocol}`;
     }
+    case "Migrate": {
+      return shortenAddress(txDescription.args?.poolAddress, 8);
+    }
+    case "MigrateAll": {
+      return `${txDescription.args?.poolAddresses.length} Pools`;
+    }
     default:
       throw Error("errors.transactionType");
   }

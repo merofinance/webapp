@@ -48,6 +48,14 @@ export default class MockMero implements Mero {
     );
   }
 
+  listOldPools(): Promise<PlainPool[]> {
+    return Promise.resolve(
+      pools.map((pool) =>
+        transformPool(pool, (v: Optional<BigNumber> | undefined) => new ScaledNumber(v).toPlain())
+      )
+    );
+  }
+
   getPoolInfo(address: Address): Promise<PlainPool> {
     const pool = pools.find((pool) => pool.address === address);
     if (!pool) throw Error("No pool found for address");
@@ -124,6 +132,16 @@ export default class MockMero implements Mero {
     return makeContractTransaction(token.address, account);
   }
 
+  async migrate(poolAddress: string): Promise<ContractTransaction> {
+    const account = await this.currentAccount();
+    return makeContractTransaction(poolAddress, account);
+  }
+
+  async migrateAll(poolAddresses: string[]): Promise<ContractTransaction> {
+    const account = await this.currentAccount();
+    return makeContractTransaction(poolAddresses[0], account);
+  }
+
   async getBalances(pools: Address[], account?: Address): Promise<Balances> {
     const balances = await Promise.all(pools.map((p) => this.getBalance(p, account)));
     return fromEntries(pools.map((p, i) => [p, balances[i]]));
@@ -148,6 +166,10 @@ export default class MockMero implements Mero {
   }
 
   get topupActionAddress(): string {
+    return "0x38d6f612D116dBc1411E977A5D77E02bBae58e63";
+  }
+
+  get poolMigrationZapAddres(): string {
     return "0x38d6f612D116dBc1411E977A5D77E02bBae58e63";
   }
 

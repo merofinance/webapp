@@ -22,6 +22,7 @@ interface ButtonProps {
   width?: string;
   destructive?: boolean;
   neutral?: boolean;
+  borderless?: boolean;
 }
 
 const StyledButton = styled.button`
@@ -67,10 +68,12 @@ const StyledButton = styled.button`
   /* Background and animations  */
   transition: background-position 0.5s;
   background-size: 200% auto;
-  border: ${(props: ButtonProps) => (props.primary ? "0" : "1px")} solid transparent;
+  border: ${(props: ButtonProps) => (props.primary || props.borderless ? "0" : "1px")} solid
+    transparent;
   background-origin: border-box;
   background-clip: padding-box, border-box;
   background-image: ${(props: ButtonProps) => {
+    if (props.borderless) return "transparent";
     if (props.disabled) return "linear-gradient(#535068, #535068)";
     if (props.destructive) return "linear-gradient(var(--error), var(--error))";
     if (props.complete) return "linear-gradient(#16C784, #16C784)";
@@ -229,6 +232,7 @@ interface Props {
   destructive?: boolean;
   neutral?: boolean;
   id?: string;
+  borderless?: boolean;
 }
 
 const Button = (props: Props): JSX.Element => {
@@ -261,6 +265,7 @@ const Button = (props: Props): JSX.Element => {
         width={props.width}
         destructive={props.destructive}
         neutral={props.neutral}
+        borderless={props.borderless}
         onClick={() => {
           if (props.loading || pending || props.disabled || !props.click) return;
           if (props.loading !== undefined) setPending(true);

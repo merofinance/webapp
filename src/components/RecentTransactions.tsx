@@ -6,15 +6,12 @@ import styled from "styled-components";
 import { useWeb3Updated } from "../app/hooks/use-web3-updated";
 import { AppDispatch } from "../app/store";
 import externalLink from "../assets/ui/gradient-external-link.svg";
-import failure from "../assets/ui/status/failure.svg";
-import pending from "../assets/ui/status/pending.svg";
-import success from "../assets/ui/status/success.svg";
 import { formatTransactionInfo } from "../lib/transactionsUtils";
 import { TransactionInfo } from "../lib/types";
 import { getEtherscanTransactionLink } from "../lib/web3";
 import { clearTransactions, selectTransactions } from "../state/transactionsSlice";
-import { spinAnimation } from "../styles/animations/SpinAnimation";
 import { GradientText } from "../styles/GradientText";
+import Status, { StatusType } from "./Status";
 
 const StyledRecentTransactions = styled.div`
   width: calc(100% + 3.2rem);
@@ -64,15 +61,6 @@ const Transaction = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 0.7rem 0;
-`;
-
-interface StatusProps {
-  pending: boolean;
-}
-
-const Status = styled.img`
-  height: 1.4rem;
-  animation: ${(props: StatusProps) => (props.pending ? spinAnimation : "none")} 1s linear infinite;
 `;
 
 const Type = styled.div`
@@ -133,8 +121,13 @@ const RecentTransactions = (): JSX.Element => {
         {transactions.slice(0, 4).map((tx: TransactionInfo) => (
           <Transaction key={tx.hash}>
             <Status
-              src={tx.confirmations === 0 ? pending : tx.status === 1 ? success : failure}
-              pending={tx.confirmations === 0}
+              status={
+                tx.confirmations === 0
+                  ? StatusType.PENDING
+                  : tx.status === 1
+                  ? StatusType.SUCCESS
+                  : StatusType.FAILURE
+              }
             />
             <Type>{tx.description.action}</Type>
             <Details>{formatTransactionInfo(tx.description)}</Details>

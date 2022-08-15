@@ -36,3 +36,21 @@ export const etherscanUrls: Record<string, string> = {
   "42": "https://kovan.etherscan.io/",
   "1337": "https://etherscan.io/", // NOTE: only here to have some dummy URL in dev
 };
+
+export const oldPools: Record<string, string[]> = {
+  "1": [
+    "0x2C681E62De119DdCC8bb7E78D7eB92D6C88BcAFe",
+    "0xdAe9AE3064340C8519b663d17e70C3D6912C79Fd",
+    "0xdA83E512e2D675B8De524a6d21c86254dC7d47B6",
+  ],
+  "42": [
+    "0x5E7655a55927DE870B9625e0844c288DE944fc7E",
+    "0x1Ef49351b5D2d7BF151F5cFE55e9CdA97aAd4CE4",
+    "0xB18Ca6102A307207034E0F6b1a51386516E1b71d",
+  ],
+};
+
+export const oldAddressProviders: Record<string, string> = {
+  "1": "0x139c15e21b0f6e43Fc397faCe5De5b7D5ae6874a",
+  "42": "0xFCf9099D09dBf9498Ad356006C95bDb988022e7E",
+};

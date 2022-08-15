@@ -1,7 +1,7 @@
 import {
   AddressProvider,
   AddressProvider__factory as AddressProviderFactory,
-  BkdTriHopCvx__factory as BkdTriHopCvxFactory,
+  MeroTriHopCvx__factory as MeroTriHopCvxFactory,
   Controller__factory as ControllerFactory,
   GasBank,
   GasBank__factory as GasBankFactory,
@@ -10,12 +10,14 @@ import {
   LiquidityPool__factory as LiquidityPoolFactory,
   StakerVault__factory as StakerVaultFactory,
   TopUpActionFeeHandler__factory as TopUpActionFeeHandlerFactory,
+  PoolMigrationZap__factory as PoolMigrationZapFactory,
   TopUpAction__factory as TopUpActionFactory,
   Vault__factory as VaultFactory,
   Controller,
   TopUpAction,
-} from "@backdfund/protocol";
-import contracts from "@backdfund/protocol/config/deployments/map.json";
+  PoolMigrationZap,
+} from "@merofinance/protocol";
+import contracts from "@merofinance/protocol/config/deployments/map.json";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
 import fromEntries from "fromentries";
 import { PlainScaledNumber, ScaledNumber } from "scaled-number";
@@ -30,10 +32,13 @@ import {
   GWEI_DECIMALS,
   INFINITE_APPROVE_AMMOUNT,
   MILLISECONDS_PER_YEAR,
+  oldPools,
+  oldAddressProviders,
 } from "./constants";
-import poolMetadata from "./data/pool-metadata";
+import poolMetadata, { oldPoolMetadata } from "./data/pool-metadata";
 import { lendingProviders } from "./lending-protocols";
 import { makeContractTransaction, positions as mockPositions } from "./mock/data";
+import { encodeAddress } from "./text";
 import {
   ActionFees,
   Address,
@@ -61,6 +66,7 @@ export interface Mero {
   getChainId(): number;
   currentAccount(): Promise<Address>;
   listPools(): Promise<PlainPool[]>;
+  listOldPools(): Promise<PlainPool[]>;
   getPoolInfo(address: Address): Promise<PlainPool>;
   getLoanPosition(protocol: LendingProtocol, address?: Address): Promise<Optional<PlainLoan>>;
   getPositions(): Promise<PlainPosition[]>;
@@ -81,6 +87,8 @@ export interface Mero {
   getPrices(symbol: string[]): Promise<Prices>;
   approve(token: Token, spender: Address, amount: ScaledNumber): Promise<ContractTransaction>;
   deposit(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction>;
+  migrate(poolAddress: string): Promise<ContractTransaction>;
+  migrateAll(poolAddresses: string[]): Promise<ContractTransaction>;
   withdraw(
     pool: Pool,
     amount: ScaledNumber,
@@ -92,6 +100,7 @@ export interface Mero {
 
   provider: providers.Provider;
   topupActionAddress: Optional<string>;
+  poolMigrationZapAddres: string;
 }
 
 export class Web3Mero implements Mero {
@@ -103,6 +112,8 @@ export class Web3Mero implements Mero {
 
   private gasBank: GasBank | undefined;
 
+  private poolMigrationZap: PoolMigrationZap;
+
   private chainId: number;
 
   constructor(private _provider: Signer | providers.Provider, private options: MeroOptions) {
@@ -111,6 +122,10 @@ export class Web3Mero implements Mero {
 
     // eslint-disable-next-line dot-notation
     this.controller = ControllerFactory.connect(contracts.Controller[0], _provider);
+    this.poolMigrationZap = PoolMigrationZapFactory.connect(
+      contracts.PoolMigrationZap[0], // eslint-disable-line dot-notation
+      _provider
+    );
     // eslint-disable-next-line dot-notation
     if (contracts.TopUpAction && contracts.TopUpAction.length > 0)
       this.topupAction = TopUpActionFactory.connect(contracts.TopUpAction[0], _provider);
@@ -125,6 +140,10 @@ export class Web3Mero implements Mero {
 
   get topupActionAddress(): Optional<string> {
     return this.topupAction ? this.topupAction.address : null;
+  }
+
+  get poolMigrationZapAddres(): string {
+    return this.poolMigrationZap.address;
   }
 
   get provider(): providers.Provider {
@@ -166,6 +185,11 @@ export class Web3Mero implements Mero {
     return Promise.all(markets.map((v: any) => this.getPoolInfo(v)));
   }
 
+  async listOldPools(): Promise<PlainPool[]> {
+    const markets = oldPools[this.chainId];
+    return Promise.all(markets.map((v: any) => this.getOldPoolInfo(v)));
+  }
+
   async getTokenInfo(tokenAddress: Address): Promise<Token> {
     if (tokenAddress === ETH_DUMMY_ADDRESS) {
       return { address: tokenAddress, name: "Ether", symbol: "ETH", decimals: ETH_DECIMALS };
@@ -196,7 +220,6 @@ export class Web3Mero implements Mero {
       maxWithdrawalFee,
       minWithdrawalFee,
       feeDecreasePeriod,
-      depositCap,
       harvestable,
       vaultAddress,
       isPaused,
@@ -206,12 +229,11 @@ export class Web3Mero implements Mero {
       pool.getUnderlying(),
       pool.totalUnderlying(),
       pool.exchangeRate(),
-      pool.getMaxWithdrawalFee(),
-      pool.getMinWithdrawalFee(),
-      pool.getWithdrawalFeeDecreasePeriod(),
-      pool.depositCap(),
+      pool.maxWithdrawalFee(),
+      pool.minWithdrawalFee(),
+      pool.withdrawalFeeDecreasePeriod(),
       this.getHarvestable(address),
-      pool.getVault(),
+      pool.vault(),
       pool.isPaused(),
     ]);
 
@@ -222,12 +244,12 @@ export class Web3Mero implements Mero {
       this.getTokenInfo(lpTokenAddress),
       this.getTokenInfo(underlyingAddress),
       this.addressProvider.getStakerVault(lpTokenAddress),
-      vaultShutdown ? Promise.resolve(ETH_DUMMY_ADDRESS) : vault.getStrategy(),
+      vaultShutdown ? Promise.resolve(ETH_DUMMY_ADDRESS) : vault.strategy(),
     ]);
 
     let strategyName = name;
     if (strategyAddress !== ETH_DUMMY_ADDRESS) {
-      const strategy = BkdTriHopCvxFactory.connect(strategyAddress, this._provider);
+      const strategy = MeroTriHopCvxFactory.connect(strategyAddress, this._provider);
       strategyName = await strategy.name();
     }
 
@@ -239,9 +261,7 @@ export class Web3Mero implements Mero {
         MILLISECONDS_PER_YEAR / (new Date().getTime() - deployedtime.getTime());
       const scaledTotalAssets = new ScaledNumber(totalAssets, underlying.decimals);
       const lpBalance = scaledTotalAssets.div(new ScaledNumber(exchangeRate));
-      const scaledHarvestable = new ScaledNumber(harvestable, underlying.decimals).mul(
-        poolMetadata[underlying.symbol].harvestableMultiplier
-      );
+      const scaledHarvestable = new ScaledNumber(harvestable, underlying.decimals);
       const balanceAfterHarvest = scaledTotalAssets.add(scaledHarvestable);
       const exchangeRateAfterHarvest = balanceAfterHarvest.div(lpBalance);
       const unscaledApy = vaultShutdown
@@ -263,7 +283,6 @@ export class Web3Mero implements Mero {
       maxWithdrawalFee: new ScaledNumber(maxWithdrawalFee).toPlain(),
       minWithdrawalFee: new ScaledNumber(minWithdrawalFee).toPlain(),
       feeDecreasePeriod: new ScaledNumber(feeDecreasePeriod, 0).toPlain(),
-      depositCap: new ScaledNumber(depositCap, underlying.decimals).toPlain(),
       harvestable: new ScaledNumber(harvestable, underlying.decimals).toPlain(),
       strategyAddress,
       strategyName,
@@ -271,12 +290,70 @@ export class Web3Mero implements Mero {
     };
   }
 
+  async getOldPoolInfo(address: Address): Promise<PlainPool> {
+    const pool = LiquidityPoolFactory.connect(address, this._provider);
+    const [name, lpTokenAddress, underlyingAddress, totalAssets, exchangeRate, isPaused] =
+      await Promise.all([
+        pool.name(),
+        pool.getLpToken(),
+        pool.getUnderlying(),
+        pool.totalUnderlying(),
+        pool.exchangeRate(),
+        pool.isPaused(),
+      ]);
+
+    const oldAddressProvider = AddressProviderFactory.connect(
+      oldAddressProviders[this.chainId], // eslint-disable-line dot-notation
+      this.provider
+    );
+    const [lpToken, underlying, stakerVaultAddress] = await Promise.all([
+      this.getTokenInfo(lpTokenAddress),
+      this.getTokenInfo(underlyingAddress),
+      oldAddressProvider.getStakerVault(lpTokenAddress),
+    ]);
+
+    let apy = null;
+    const metadata = oldPoolMetadata[underlying.symbol];
+    if (metadata && metadata.deployment[this.chainId.toString()]) {
+      const deployedtime = metadata.deployment[this.chainId.toString()].time;
+      const compoundExponent =
+        MILLISECONDS_PER_YEAR / (new Date().getTime() - deployedtime.getTime());
+      const scaledTotalAssets = new ScaledNumber(totalAssets, underlying.decimals);
+      const lpBalance = scaledTotalAssets.div(new ScaledNumber(exchangeRate));
+      const exchangeRateAfterHarvest = scaledTotalAssets.div(lpBalance);
+      const vaultShutdown = underlying.address === ETH_DUMMY_ADDRESS;
+      const unscaledApy = vaultShutdown
+        ? (1 - Number(exchangeRateAfterHarvest.toString())) * -1
+        : Number(exchangeRateAfterHarvest.toString()) ** compoundExponent - 1;
+      if (unscaledApy >= 0) apy = ScaledNumber.fromUnscaled(unscaledApy).value;
+      else apy = ScaledNumber.fromUnscaled(Math.abs(unscaledApy)).value.mul(-1);
+    }
+
+    return {
+      name,
+      underlying,
+      lpToken,
+      apy: apy ? new ScaledNumber(apy).toPlain() : null,
+      address,
+      totalAssets: new ScaledNumber(totalAssets, underlying.decimals).toPlain(),
+      exchangeRate: new ScaledNumber(exchangeRate).toPlain(),
+      stakerVaultAddress,
+      maxWithdrawalFee: ScaledNumber.fromUnscaled(0).toPlain(),
+      minWithdrawalFee: ScaledNumber.fromUnscaled(0).toPlain(),
+      feeDecreasePeriod: ScaledNumber.fromUnscaled(0, 0).toPlain(),
+      harvestable: ScaledNumber.fromUnscaled(0, underlying.decimals).toPlain(),
+      strategyAddress: "",
+      strategyName: "",
+      isPaused,
+    };
+  }
+
   async getHarvestable(poolAddress: Address): Promise<BigNumber> {
     const pool = LiquidityPoolFactory.connect(poolAddress, this._provider);
-    const vaultAddress = await pool.getVault();
+    const vaultAddress = await pool.vault();
     if (vaultAddress === ETH_DUMMY_ADDRESS) return BigNumber.from(0);
     const vault = VaultFactory.connect(vaultAddress, this._provider);
-    const strategyAddress = await vault.getStrategy();
+    const strategyAddress = await vault.strategy();
     if (strategyAddress === ETH_DUMMY_ADDRESS) return BigNumber.from(0);
     const strategy = IStrategyFactory.connect(strategyAddress, this._provider);
     return strategy.harvestable();
@@ -321,13 +398,13 @@ export class Web3Mero implements Mero {
         treasuryFraction: new ScaledNumber().toPlain(),
         lpFraction: new ScaledNumber().toPlain(),
       };
-    const feeHandlerAddress = await this.topupAction.getFeeHandler();
+    const feeHandlerAddress = await this.topupAction.feeHandler();
     const feeHandler = TopUpActionFeeHandlerFactory.connect(feeHandlerAddress, this._provider);
 
     const [totalBn, keeperFractionBn, treasuryFractionBn] = await Promise.all([
-      this.topupAction.getActionFee(),
-      feeHandler.getKeeperFeeFraction(),
-      feeHandler.getTreasuryFeeFraction(),
+      this.topupAction.actionFee(),
+      feeHandler.keeperFeeFraction(),
+      feeHandler.treasuryFeeFraction(),
     ]);
     const total = new ScaledNumber(totalBn);
     const keeperFraction = new ScaledNumber(keeperFractionBn).mul(total);
@@ -375,7 +452,7 @@ export class Web3Mero implements Mero {
 
   async getEstimatedGasUsage(): Promise<PlainScaledNumber> {
     if (!this.topupAction) return new ScaledNumber().toPlain();
-    return new ScaledNumber(await this.topupAction.getEstimatedGasUsage(), GWEI_DECIMALS).toPlain();
+    return new ScaledNumber(await this.topupAction.estimatedGasUsage(), GWEI_DECIMALS).toPlain();
   }
 
   async registerPosition(
@@ -385,12 +462,8 @@ export class Web3Mero implements Mero {
   ): Promise<ContractTransaction> {
     if (!this.topupAction) return makeContractTransaction("", "");
 
-    const { decimals } = pool.underlying;
-    const scale = BigNumber.from(10).pow(decimals);
-    const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
-    const rawExchangeRate = await poolContract.exchangeRate();
     const protocol = utils.formatBytes32String(position.protocol);
-    const depositAmount = position.maxTopUp.value.mul(rawExchangeRate).div(scale);
+    const account = encodeAddress(position.account);
 
     const record = {
       threshold: position.threshold.value,
@@ -401,20 +474,15 @@ export class Web3Mero implements Mero {
       singleTopUpAmount: position.singleTopUp.value,
       totalTopUpAmount: position.maxTopUp.value,
       depositTokenBalance: ScaledNumber.fromUnscaled(0).value,
-      repayDebt: false,
+      registeredAt: Date.now(),
+      extra: utils.formatBytes32String("false"),
     };
 
-    const gasEstimate = await this.topupAction.estimateGas.register(
-      position.account,
-      protocol,
-      depositAmount,
-      record,
-      {
-        value,
-      }
-    );
+    const gasEstimate = await this.topupAction.estimateGas.register(account, protocol, 0, record, {
+      value,
+    });
     const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
-    return this.topupAction.register(position.account, protocol, depositAmount, record, {
+    return this.topupAction.register(account, protocol, 0, record, {
       gasLimit,
       value,
     });
@@ -428,14 +496,19 @@ export class Web3Mero implements Mero {
     if (!this.topupAction) return makeContractTransaction("", "");
 
     const gasEstimate = await this.topupAction.estimateGas.resetPosition(
-      account,
+      encodeAddress(account),
       utils.formatBytes32String(protocol),
       unstake
     );
     const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
-    return this.topupAction.resetPosition(account, utils.formatBytes32String(protocol), unstake, {
-      gasLimit,
-    });
+    return this.topupAction.resetPosition(
+      encodeAddress(account),
+      utils.formatBytes32String(protocol),
+      unstake,
+      {
+        gasLimit,
+      }
+    );
   }
 
   async getAllowance(
@@ -485,7 +558,7 @@ export class Web3Mero implements Mero {
     const minTokenAmount = amount
       .div(pool.exchangeRate)
       .mul(ScaledNumber.fromUnscaled(SLIPPAGE_TOLERANCE, amount.decimals));
-    const gasEstimate = await poolContract.estimateGas["deposit(uint256,uint256)"](
+    const gasEstimate = await poolContract.estimateGas.depositAndStake(
       amount.value,
       minTokenAmount.value,
       {
@@ -493,8 +566,24 @@ export class Web3Mero implements Mero {
       }
     );
     const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
-    return poolContract["deposit(uint256,uint256)"](amount.value, minTokenAmount.value, {
+    return poolContract.depositAndStake(amount.value, minTokenAmount.value, {
       value,
+      gasLimit,
+    });
+  }
+
+  async migrate(poolAddress: string): Promise<ContractTransaction> {
+    const gasEstimate = await this.poolMigrationZap.estimateGas.migrate(poolAddress);
+    const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
+    return this.poolMigrationZap.migrate(poolAddress, {
+      gasLimit,
+    });
+  }
+
+  async migrateAll(poolAddresses: string[]): Promise<ContractTransaction> {
+    const gasEstimate = await this.poolMigrationZap.estimateGas.migrateAll(poolAddresses);
+    const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
+    return this.poolMigrationZap.migrateAll(poolAddresses, {
       gasLimit,
     });
   }
@@ -509,13 +598,12 @@ export class Web3Mero implements Mero {
       .mul(pool.exchangeRate)
       .mul(ScaledNumber.fromUnscaled(1).sub(withdrawalFee))
       .mul(ScaledNumber.fromUnscaled(SLIPPAGE_TOLERANCE, amount.decimals));
-    console.log(minRedeemAmount.toCryptoString());
-    const gasEstimate = await poolContract.estimateGas["redeem(uint256,uint256)"](
+    const gasEstimate = await poolContract.estimateGas.unstakeAndRedeem(
       amount.value,
       minRedeemAmount.value
     );
     const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
-    return poolContract["redeem(uint256,uint256)"](amount.value, minRedeemAmount.value, {
+    return poolContract.unstakeAndRedeem(amount.value, minRedeemAmount.value, {
       gasLimit,
     });
   }

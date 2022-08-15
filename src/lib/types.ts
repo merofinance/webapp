@@ -24,7 +24,6 @@ export interface GenericPool<T> {
   stakerVaultAddress: string;
   totalAssets: T;
   underlying: Token;
-  depositCap: T;
   harvestable: T;
   strategyAddress: string;
   strategyName: string;
@@ -165,7 +164,6 @@ export function transformPool<T, U>(pool: GenericPool<T>, f: (v: T) => U): Gener
     maxWithdrawalFee: f(pool.maxWithdrawalFee),
     minWithdrawalFee: f(pool.minWithdrawalFee),
     feeDecreasePeriod: f(pool.feeDecreasePeriod),
-    depositCap: f(pool.depositCap),
     harvestable: f(pool.harvestable),
   };
 }

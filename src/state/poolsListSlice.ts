@@ -29,17 +29,22 @@ import {
   fetchWithdrawalFees,
 } from "./userSlice";
 import poolMetadata from "../lib/data/pool-metadata";
+import { handleTransactionConfirmation } from "../lib/transactionsUtils";
 
 interface PoolsState {
   pools: PlainPool[];
+  oldPools: PlainPool[];
   prices: Prices;
   loaded: boolean;
+  oldLoaded: boolean;
 }
 
 const initialState: PoolsState = {
   pools: [],
+  oldPools: [],
   loaded: false,
   prices: {},
+  oldLoaded: false,
 };
 
 export const fetchPool = createAsyncThunk(
@@ -60,6 +65,36 @@ export const fetchPools = createAsyncThunk("pool/fetch-all", ({ mero }: { mero: 
   mero.listPools()
 );
 
+export const fetchOldPools = createAsyncThunk("pool/fetch-all-old", ({ mero }: { mero: Mero }) =>
+  mero.listOldPools()
+);
+
+type MigrateArgs = { mero: Mero; poolAddress: string };
+
+export const migrate = createAsyncThunk(
+  "pool/migrate",
+  async ({ mero, poolAddress }: MigrateArgs, { dispatch }) => {
+    const tx = await mero.migrate(poolAddress);
+    handleTransactionConfirmation(tx, { action: "Migrate", args: { poolAddress } }, dispatch, [
+      fetchState(mero),
+    ]);
+    return tx.hash;
+  }
+);
+
+type MigrateAllArgs = { mero: Mero; poolAddresses: string[] };
+
+export const migrateAll = createAsyncThunk(
+  "pool/migrate-all",
+  async ({ mero, poolAddresses }: MigrateAllArgs, { dispatch }) => {
+    const tx = await mero.migrateAll(poolAddresses);
+    handleTransactionConfirmation(tx, { action: "MigrateAll", args: { poolAddresses } }, dispatch, [
+      fetchState(mero),
+    ]);
+    return tx.hash;
+  }
+);
+
 export const poolsSlice = createSlice({
   name: "pools",
   initialState,
@@ -68,6 +103,11 @@ export const poolsSlice = createSlice({
     builder.addCase(fetchPools.fulfilled, (state, action) => {
       state.pools = action.payload;
       state.loaded = true;
+    });
+
+    builder.addCase(fetchOldPools.fulfilled, (state, action) => {
+      state.oldPools = action.payload;
+      state.oldLoaded = true;
     });
 
     builder.addCase(fetchPool.fulfilled, (state, action) => {
@@ -88,6 +128,12 @@ export const poolsSlice = createSlice({
 export const fetchState =
   (mero: Mero): AppThunk =>
   (dispatch) => {
+    dispatch(fetchOldPools({ mero })).then((v) => {
+      if (v.meta.requestStatus !== "fulfilled") return;
+      const pools = v.payload as Pool[];
+      dispatch(fetchBalances({ mero, pools }));
+      dispatch(fetchAllowances({ mero, pools }));
+    });
     dispatch(fetchPools({ mero })).then((v) => {
       if (v.meta.requestStatus !== "fulfilled") return;
       const pools = v.payload as Pool[];
@@ -111,6 +157,7 @@ export const fetchState =
 export const fetchPreviewState = (): AppThunk => (dispatch) => {
   const provider = new ethers.providers.InfuraProvider(1, INFURA_ID);
   const mero = createMero(provider, { chainId: 1 });
+  dispatch(fetchOldPools({ mero }));
   dispatch(fetchPools({ mero })).then((v) => {
     if (v.meta.requestStatus !== "fulfilled") return;
     const pools = v.payload as Pool[];
@@ -130,12 +177,30 @@ export const selectPools = (state: RootState): Optional<Pool[]> => {
     });
 };
 
+export const selectOldPools = (state: RootState): Optional<Pool[]> => {
+  if (!state.pools.oldLoaded) return null;
+  return state.pools.oldPools
+    .map((plainPool: PlainPool) => fromPlainPool(plainPool))
+    .filter((pool: Pool) => {
+      if (!poolMetadata[pool.underlying.symbol]) return false;
+      return true;
+    });
+};
+
 export const selectDepositedPools = (state: RootState): Optional<Pool[]> => {
   const pools = selectPools(state);
   if (!pools) return null;
-  if (pools.some((pool: Pool) => !state.user.balances[pool.lpToken.address])) return null;
+  if (
+    pools.some(
+      (pool: Pool) =>
+        !state.user.balances[pool.lpToken.address] || !state.user.balances[pool.stakerVaultAddress]
+    )
+  )
+    return null;
   return pools.filter(
-    (pool: Pool) => !fromPlainBalances(state.user.balances)[pool.lpToken.address]?.isZero()
+    (pool: Pool) =>
+      !fromPlainBalances(state.user.balances)[pool.lpToken.address]?.isZero() ||
+      !fromPlainBalances(state.user.balances)[pool.stakerVaultAddress]?.isZero()
   );
 };
 

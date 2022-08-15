@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 import { useMero } from "../../app/hooks/use-mero";
 import ContentSection from "../../components/ContentSection";
@@ -17,6 +18,9 @@ import LiveHelp from "../../components/LiveHelp";
 import Loader from "../../components/Loader";
 import { DOCS_LINK } from "../../lib/links";
 import { selectUsersValuesUsdEverywhere } from "../../state/valueSelectors";
+import LargeBanner from "../../components/LargeBanner";
+import { useDevice } from "../../app/hooks/use-device";
+import { selectHasOldDeposits } from "../../state/userSlice";
 
 const StyledPoolsPage = styled.div`
   width: 100%;
@@ -89,11 +93,14 @@ const InfoCards = styled.div`
 
 const PoolsPage = (): JSX.Element => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const mero = useMero();
   const dispatch = useDispatch();
   const pools = useSelector(selectPools);
   const updated = useWeb3Updated();
   const balances = useSelector(selectUsersValuesUsdEverywhere);
+  const hasOldDeposits = useSelector(selectHasOldDeposits);
+  const { isMobile } = useDevice();
 
   useEffect(() => {
     if (!mero) return;
@@ -103,6 +110,17 @@ const PoolsPage = (): JSX.Element => {
   return (
     <StyledPoolsPage>
       <Seo title={t("metadata.pools.title")} description={t("metadata.pools.description")} />
+      {hasOldDeposits && (
+        <LargeBanner
+          header={t("poolMigration.banner.header")}
+          details={
+            isMobile ? t("poolMigration.banner.mobileDetails") : t("poolMigration.banner.details")
+          }
+          link="https://merofinance.medium.com/c20f4c96108e"
+          ctaText={t("poolMigration.banner.ctaText")}
+          ctaAction={() => navigate("/pool-migration")}
+        />
+      )}
       <PoolsPageContent>
         <ContentContainer>
           <ContentSection header={t("pools.header")} statistics={<PoolsStatistics />}>
