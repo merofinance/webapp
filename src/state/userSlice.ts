@@ -95,6 +95,7 @@ export const fetchWithdrawalFees = createAsyncThunk(
 
 type ApproveArgs = { mero: Mero; token: Token; spender: Address; amount: ScaledNumber };
 type DepositArgs = { mero: Mero; pool: Pool; amount: ScaledNumber };
+type OldWithdrawArgs = { mero: Mero; pool: Pool; amount: ScaledNumber };
 type WithdrawArgs = { mero: Mero; pool: Pool; amount: ScaledNumber; withdrawalFee: ScaledNumber };
 type UnstakeArgs = { mero: Mero; pool: Pool; amount: ScaledNumber };
 
@@ -208,6 +209,20 @@ export const deposit = createAsyncThunk(
           amount: amount.toPlain(),
         }),
       ]
+    );
+    return tx.hash;
+  }
+);
+
+export const oldWithdraw = createAsyncThunk(
+  "user/oldwithdraw",
+  async ({ mero, pool, amount }: OldWithdrawArgs, { dispatch }) => {
+    const tx = await mero.oldWithdraw(pool, amount);
+    handleTransactionConfirmation(
+      tx,
+      { action: "Withdraw", args: { pool, amount: amount.toPlain() } },
+      dispatch,
+      [fetchBalances({ mero, pools: [pool] }), fetchPool({ mero, poolAddress: pool.address })]
     );
     return tx.hash;
   }

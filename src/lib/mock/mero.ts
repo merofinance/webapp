@@ -105,6 +105,11 @@ export default class MockMero implements Mero {
     return makeContractTransaction(pool.address, account);
   }
 
+  async oldWithdraw(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction> {
+    const account = await this.currentAccount();
+    return makeContractTransaction(pool.address, account);
+  }
+
   async withdraw(
     pool: Pool,
     amount: ScaledNumber,
