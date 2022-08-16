@@ -89,6 +89,7 @@ export interface Mero {
   deposit(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction>;
   migrate(poolAddress: string): Promise<ContractTransaction>;
   migrateAll(poolAddresses: string[]): Promise<ContractTransaction>;
+  oldWithdraw(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction>;
   withdraw(
     pool: Pool,
     amount: ScaledNumber,
@@ -584,6 +585,15 @@ export class Web3Mero implements Mero {
     const gasEstimate = await this.poolMigrationZap.estimateGas.migrateAll(poolAddresses);
     const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
     return this.poolMigrationZap.migrateAll(poolAddresses, {
+      gasLimit,
+    });
+  }
+
+  async oldWithdraw(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction> {
+    const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
+    const gasEstimate = await poolContract.estimateGas["redeem(uint256)"](amount.value);
+    const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
+    return poolContract["redeem(uint256)"](amount.value, {
       gasLimit,
     });
   }
