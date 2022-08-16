@@ -35,7 +35,7 @@ import {
   oldPools,
   oldAddressProviders,
 } from "./constants";
-import poolMetadata, { oldPoolMetadata } from "./data/pool-metadata";
+import poolMetadata, { oldPoolApys } from "./data/pool-metadata";
 import { lendingProviders } from "./lending-protocols";
 import { makeContractTransaction, positions as mockPositions } from "./mock/data";
 import { encodeAddress } from "./text";
@@ -313,28 +313,13 @@ export class Web3Mero implements Mero {
       oldAddressProvider.getStakerVault(lpTokenAddress),
     ]);
 
-    let apy = null;
-    const metadata = oldPoolMetadata[underlying.symbol];
-    if (metadata && metadata.deployment[this.chainId.toString()]) {
-      const deployedtime = metadata.deployment[this.chainId.toString()].time;
-      const compoundExponent =
-        MILLISECONDS_PER_YEAR / (new Date().getTime() - deployedtime.getTime());
-      const scaledTotalAssets = new ScaledNumber(totalAssets, underlying.decimals);
-      const lpBalance = scaledTotalAssets.div(new ScaledNumber(exchangeRate));
-      const exchangeRateAfterHarvest = scaledTotalAssets.div(lpBalance);
-      const vaultShutdown = underlying.address === ETH_DUMMY_ADDRESS;
-      const unscaledApy = vaultShutdown
-        ? (1 - Number(exchangeRateAfterHarvest.toString())) * -1
-        : Number(exchangeRateAfterHarvest.toString()) ** compoundExponent - 1;
-      if (unscaledApy >= 0) apy = ScaledNumber.fromUnscaled(unscaledApy).value;
-      else apy = ScaledNumber.fromUnscaled(Math.abs(unscaledApy)).value.mul(-1);
-    }
+    const apy = oldPoolApys[pool.address].toPlain();
 
     return {
       name,
       underlying,
       lpToken,
-      apy: apy ? new ScaledNumber(apy).toPlain() : null,
+      apy,
       address,
       totalAssets: new ScaledNumber(totalAssets, underlying.decimals).toPlain(),
       exchangeRate: new ScaledNumber(exchangeRate).toPlain(),

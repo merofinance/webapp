@@ -1,3 +1,5 @@
+import { ScaledNumber } from "scaled-number";
+
 import eth from "../../assets/tokens/eth.png";
 import usdc from "../../assets/tokens/usdc.png";
 import dai from "../../assets/tokens/dai.png";
@@ -73,47 +75,8 @@ const poolMetadata: Record<string, PoolMetadata> = {
 
 export default poolMetadata;
 
-export const oldPoolMetadata: Record<string, PoolMetadata> = {
-  ETH: {
-    icon: eth,
-    deployment: {
-      "1337": {
-        time: new Date(0),
-      },
-      "42": {
-        time: new Date(1643997600000),
-      },
-      "1": {
-        time: new Date(1647367666000),
-      },
-    },
-  },
-  DAI: {
-    icon: dai,
-    deployment: {
-      "1337": {
-        time: new Date(0),
-      },
-      "42": {
-        time: new Date(1643997600000),
-      },
-      "1": {
-        time: new Date(1647432774000),
-      },
-    },
-  },
-  USDC: {
-    icon: usdc,
-    deployment: {
-      "1337": {
-        time: new Date(0),
-      },
-      "42": {
-        time: new Date(1643997600000),
-      },
-      "1": {
-        time: new Date(1647360920000),
-      },
-    },
-  },
+export const oldPoolApys: Record<string, ScaledNumber> = {
+  "0x2C681E62De119DdCC8bb7E78D7eB92D6C88BcAFe": ScaledNumber.fromUnscaled(0.0966),
+  "0xdAe9AE3064340C8519b663d17e70C3D6912C79Fd": ScaledNumber.fromUnscaled(-0.0396),
+  "0xdA83E512e2D675B8De524a6d21c86254dC7d47B6": ScaledNumber.fromUnscaled(0.1008),
 };
