@@ -22,6 +22,7 @@ import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from
 import fromEntries from "fromentries";
 import { PlainScaledNumber, ScaledNumber } from "scaled-number";
 import { UnsupportedNetwork } from "../app/errors";
+import { Apy, getApys } from "./apys";
 import { getPrices as getPricesFromBinance } from "./binance";
 import { getPrices as getPricesFromCoingecko } from "./coingecko";
 import {
@@ -31,11 +32,10 @@ import {
   GAS_BUFFER,
   GWEI_DECIMALS,
   INFINITE_APPROVE_AMMOUNT,
-  MILLISECONDS_PER_YEAR,
   oldPools,
   oldAddressProviders,
 } from "./constants";
-import poolMetadata, { oldPoolApys } from "./data/pool-metadata";
+import { oldPoolApys } from "./data/pool-metadata";
 import { lendingProviders } from "./lending-protocols";
 import { makeContractTransaction, positions as mockPositions } from "./mock/data";
 import { encodeAddress } from "./text";
@@ -182,8 +182,8 @@ export class Web3Mero implements Mero {
   }
 
   async listPools(): Promise<PlainPool[]> {
-    const markets = await this.addressProvider.allPools();
-    return Promise.all(markets.map((v: any) => this.getPoolInfo(v)));
+    const [markets, apys] = await Promise.all([this.addressProvider.allPools(), getApys()]);
+    return Promise.all(markets.map((v: any) => this.getPoolInfo(v, apys)));
   }
 
   async listOldPools(): Promise<PlainPool[]> {
@@ -210,7 +210,8 @@ export class Web3Mero implements Mero {
     return token.decimals();
   }
 
-  async getPoolInfo(address: Address): Promise<PlainPool> {
+  async getPoolInfo(address: Address, apys?: Apy[]): Promise<PlainPool> {
+    if (!apys) apys = await getApys();
     const pool = LiquidityPoolFactory.connect(address, this._provider);
     const [
       name,
@@ -254,29 +255,13 @@ export class Web3Mero implements Mero {
       strategyName = await strategy.name();
     }
 
-    let apy = null;
-    const metadata = poolMetadata[underlying.symbol];
-    if (metadata && metadata.deployment[this.chainId.toString()]) {
-      const deployedtime = metadata.deployment[this.chainId.toString()].time;
-      const compoundExponent =
-        MILLISECONDS_PER_YEAR / (new Date().getTime() - deployedtime.getTime());
-      const scaledTotalAssets = new ScaledNumber(totalAssets, underlying.decimals);
-      const lpBalance = scaledTotalAssets.div(new ScaledNumber(exchangeRate));
-      const scaledHarvestable = new ScaledNumber(harvestable, underlying.decimals);
-      const balanceAfterHarvest = scaledTotalAssets.add(scaledHarvestable);
-      const exchangeRateAfterHarvest = balanceAfterHarvest.div(lpBalance);
-      const unscaledApy = vaultShutdown
-        ? (1 - Number(exchangeRateAfterHarvest.toString())) * -1
-        : Number(exchangeRateAfterHarvest.toString()) ** compoundExponent - 1;
-      if (unscaledApy >= 0) apy = ScaledNumber.fromUnscaled(unscaledApy).value;
-      else apy = ScaledNumber.fromUnscaled(Math.abs(unscaledApy)).value.mul(-1);
-    }
+    const apy = (apys.find((apy: Apy) => apy.pool === address)?.apy || 0) / 100;
 
     return {
       name,
       underlying,
       lpToken,
-      apy: apy ? new ScaledNumber(apy).toPlain() : null,
+      apy: apy ? ScaledNumber.fromUnscaled(apy).toPlain() : null,
       address,
       totalAssets: new ScaledNumber(totalAssets, underlying.decimals).toPlain(),
       exchangeRate: new ScaledNumber(exchangeRate).toPlain(),
