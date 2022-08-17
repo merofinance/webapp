@@ -8,7 +8,7 @@ describe("Post test actions", () => {
   });
   it("Should withdraw DAI", () => {
     cy.get('[id="pool.tabs.withdraw.tab"]').click();
-    cy.wait(30_000);
+    cy.wait(WEB3_TIMEOUT);
     cy.get("#available-amount", { timeout: WEB3_TIMEOUT }).contains("DAI", {
       timeout: WEB3_TIMEOUT,
     });
@@ -30,12 +30,12 @@ describe("Post test actions", () => {
     cy.get("#connection-details-popup-exit").click();
   });
   it("Should wait for transactions to finish", () => {
-    cy.wait(60_000);
+    cy.wait(WEB3_TIMEOUT * 2);
   });
   it("Should return Crypto", () => {
     returnCrypto();
   });
   it("Should wait for crypto to send", () => {
-    cy.wait(120_000);
+    cy.wait(WEB3_TIMEOUT * 4);
   });
 });

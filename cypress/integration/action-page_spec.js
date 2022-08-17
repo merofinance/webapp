@@ -292,7 +292,9 @@ describe("Pool Deposit", () => {
     cy.get("#action-button").click();
   });
   it("Should disable button", () => {
-    cy.get("#action-button", { timeout: WEB3_TIMEOUT }).should("be.disabled");
+    cy.get("#action-button", { timeout: WEB3_TIMEOUT }).should("be.disabled", {
+      timeout: WEB3_TIMEOUT,
+    });
   });
   it("Should show deposit in info card", () => {
     cy.get("#your-deposits-dai", { timeout: WEB3_TIMEOUT }).should("exist");
@@ -566,7 +568,7 @@ describe("Top-up Position Confirmation", () => {
   });
   it("Should Confirm", () => {
     cy.get("#register-topup-confirmation-popup-button").should("be.enabled");
-    cy.wait(10_000);
+    cy.wait(WEB3_TIMEOUT);
     cy.get("#register-topup-confirmation-popup-button").click();
   });
   it("Should disable button", () => {

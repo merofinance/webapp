@@ -234,7 +234,7 @@ describe("Withdraw Input Methods", () => {
 
 describe("Withdraw", () => {
   it("Should input value", () => {
-    cy.wait(30_000);
+    cy.wait(WEB3_TIMEOUT);
     cy.get("#input-button").click();
   });
   it("Should open withdrawal confirmation", () => {
