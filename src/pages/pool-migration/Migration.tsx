@@ -11,10 +11,11 @@ import { GradientText } from "../../styles/GradientText";
 import {
   selectUsersPoolUnderlyingEverywhere,
   selectProtocolPoolUnderlyingEverywhere,
+  selectUsersPoolLpHeld,
 } from "../../state/valueSelectors";
 import { migrate, selectPrice } from "../../state/poolsListSlice";
 import { useMero } from "../../app/hooks/use-mero";
-import { approve, selectAllowance } from "../../state/userSlice";
+import { approve, oldWithdraw, selectAllowance } from "../../state/userSlice";
 import { hasPendingTransaction } from "../../state/transactionsSlice";
 import { INFINITE_APPROVE_AMMOUNT } from "../../lib/constants";
 
@@ -111,11 +112,18 @@ const Migration = ({ pool }: Props): JSX.Element => {
   const approvedAmount = useSelector(
     selectAllowance(pool.lpToken.address, mero?.poolMigrationZapAddres)
   );
+  const usersPoolLpHeld = useSelector(selectUsersPoolLpHeld(pool));
 
   const approveLoading = useSelector(hasPendingTransaction("Approve"));
   const migrationLoading = useSelector(hasPendingTransaction("Migrate"));
+  const withdrawLoading = useSelector(hasPendingTransaction("Withdraw"));
 
   const approved = !!approvedAmount && !approvedAmount.isZero();
+
+  const executeWithdrawal = () => {
+    if (!usersPoolLpHeld || !pool || !mero) return;
+    dispatch(oldWithdraw({ mero, pool, amount: usersPoolLpHeld }));
+  };
 
   const executeApprove = () => {
     if (!mero || approved || approveLoading) return;
@@ -149,7 +157,13 @@ const Migration = ({ pool }: Props): JSX.Element => {
         <Data>{price && deposits ? deposits.toCompactUsdValue(price) : <Loader />}</Data>
       </Item>
       <Buttons>
-        <Button borderless medium width="13rem">
+        <Button
+          borderless
+          medium
+          width="13rem"
+          click={() => executeWithdrawal()}
+          loading={withdrawLoading}
+        >
           {t("poolMigration.withdraw")}
         </Button>
         <Button

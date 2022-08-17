@@ -11,7 +11,7 @@ import {
   removePosition,
 } from "./positionsSlice";
 import { fetchPendingTransactions } from "./transactionsSlice";
-import { deposit, fetchAllowances, fetchBalances, withdraw } from "./userSlice";
+import { deposit, fetchAllowances, fetchBalances, oldWithdraw, withdraw } from "./userSlice";
 
 const IGNORED_ERRORS: string[] = [
   "This request is not supported because your node is running with state pruning. Run with --pruning=archive.",
@@ -54,6 +54,7 @@ export const errorSlice = createSlice({
     builder.addCase(fetchPools.rejected, handleError);
     builder.addCase(deposit.rejected, handleError);
     builder.addCase(withdraw.rejected, handleError);
+    builder.addCase(oldWithdraw.rejected, handleError);
     builder.addCase(fetchPositions.rejected, handleError);
     builder.addCase(fetchEstimatedGasUsage.rejected, handleError);
     builder.addCase(registerPosition.rejected, handleError);
