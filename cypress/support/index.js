@@ -4,7 +4,7 @@ import PrivateKeyProvider from "truffle-privatekey-provider";
 import Web3 from "web3";
 import abi from "./erc20-abi.json";
 
-export const WEB3_TIMEOUT = 40_000;
+export const WEB3_TIMEOUT = 40000;
 
 const ADDRESS = "0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D";
 const DAI = "0xff795577d9ac8bd7d90ee22b6c1703490b6512fd";
