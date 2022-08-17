@@ -10,9 +10,9 @@ const ADDRESS = "0x3Dd5A5BBE1204dE8c5dED228a27fA942e439eA7D";
 const DAI = "0xff795577d9ac8bd7d90ee22b6c1703490b6512fd";
 
 export const percySnapshot = () => {
-  // This delay is to give time for animations to finish before taking screenshots
-  // We had some flakiness before from animations still being in progress
-  cy.wait(2000);
+  // This delay is to give time for Web3 interactions to finish before taking a snapshot.
+  // We had some flakiness before from this.
+  cy.wait(WEB3_TIMEOUT);
   cy.percySnapshot();
 };
 
