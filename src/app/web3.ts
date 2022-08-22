@@ -1,5 +1,6 @@
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
+import { UAuthConnector } from "@uauth/web3-react";
 import { PrivateKeyConnector } from "../lib/private-key-connector";
 import { INFURA_ID } from "../lib/constants";
 
@@ -39,4 +40,16 @@ export const walletConnectConnector = new WalletConnectConnector({
     1337: ``,
   },
   qrcode: true,
+});
+
+export const unstoppableDomainsConnector = new UAuthConnector({
+  clientID: "82a859bc-97fb-4ba4-b9a8-6f8e4003f4e1",
+  redirectUri: "https://mero.finance/",
+  postLogoutRedirectUri: "https://mero.finance/",
+
+  // Scope must include openid and wallet
+  scope: "openid wallet",
+
+  // Injected and walletconnect connectors are required.
+  connectors: { injected: injectedConnector, walletconnect: walletConnectConnector },
 });

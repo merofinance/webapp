@@ -6,9 +6,15 @@ import { AbstractConnector } from "@web3-react/abstract-connector";
 import Web3 from "web3";
 import { ethers } from "ethers";
 
-import { injectedConnector, walletConnectConnector, privateKeyConnector } from "../app/web3";
+import {
+  injectedConnector,
+  walletConnectConnector,
+  privateKeyConnector,
+  unstoppableDomainsConnector,
+} from "../app/web3";
 import metamask from "../assets/wallets/metamask.svg";
 import walletConnect from "../assets/wallets/wallet-connect.svg";
+import unstoppableDomains from "../assets/wallets/unstoppable-domains.svg";
 import Popup from "./Popup";
 import ExternalLink from "./ExternalLink";
 
@@ -34,6 +40,13 @@ const walletOptions: WalletOption[] = [
     leftColor: "#8400FE",
     rightColor: "#0C00FE",
     connector: walletConnectConnector,
+  },
+  {
+    name: "walletConnect.wallets.unstoppableDomains",
+    icon: unstoppableDomains,
+    leftColor: "#0D67FE",
+    rightColor: "#09C9FF",
+    connector: unstoppableDomainsConnector,
   },
 ];
 
