@@ -44,8 +44,8 @@ const walletOptions: WalletOption[] = [
   {
     name: "walletConnect.wallets.unstoppableDomains",
     icon: unstoppableDomains,
-    leftColor: "#0D67FE",
-    rightColor: "#09C9FF",
+    leftColor: "#09C9FF",
+    rightColor: "#0D67FE",
     connector: unstoppableDomainsConnector,
   },
 ];
