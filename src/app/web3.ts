@@ -23,6 +23,8 @@ export const supportedChainIds = [
   333999,
   1313161554,
   1666600000,
+  43114,
+  43113,
 ];
 
 export const injectedConnector = new InjectedConnector({
