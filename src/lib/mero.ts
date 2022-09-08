@@ -339,15 +339,12 @@ export class Web3Mero implements Mero {
     });
 
     const withdrawalFees = await Promise.all(promises);
-    console.log(withdrawalFees.map((fee: BigNumber) => fee.toString()));
 
     return fromEntries(
       pools.map((pool: Pool, index: number) => {
         const ONE = ScaledNumber.fromUnscaled(1, pool.underlying.decimals);
         const withdrawalFee = new ScaledNumber(withdrawalFees[index], pool.underlying.decimals);
-        console.log(withdrawalFee.toCryptoString());
         const percent = withdrawalFee.div(ONE);
-        console.log(percent.toCryptoString());
         return [pool.address, percent.toPlain()];
       })
     );
