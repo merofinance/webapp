@@ -488,6 +488,12 @@ describe("Conditions Page", () => {
     cy.get("#register-topup-maxgasprice-input").clear();
     cy.get("#register-topup-maxgasprice-input").focus();
     cy.get("#register-topup-maxgasprice-input").type("0");
+    cy.get("#register-topup-maxgasprice-error").contains("Must be positive number");
+  });
+  it("Should show greater than priority fee error", () => {
+    cy.get("#register-topup-maxgasprice-input").clear();
+    cy.get("#register-topup-maxgasprice-input").focus();
+    cy.get("#register-topup-maxgasprice-input").type("1");
     cy.get("#register-topup-maxgasprice-error").contains(
       "The maximum gas price must be greater than the priority fee"
     );
@@ -578,7 +584,7 @@ describe("Top-up Position Confirmation", () => {
     cy.get("#topup-information-threshold").contains("2");
     cy.get("#topup-information-single-topup").contains("100");
     cy.get("#topup-information-max-topup").contains("300");
-    cy.get("#topup-information-max-gas").contains("2");
+    cy.get("#topup-information-max-gas").contains("3");
   });
   it("Should take snapshot", () => {
     percySnapshot();
@@ -655,7 +661,7 @@ describe("Existing Topup View", () => {
     cy.get("#topup-information-threshold").contains("2");
     cy.get("#topup-information-single-topup").contains("100");
     cy.get("#topup-information-max-topup").contains("300");
-    cy.get("#topup-information-max-gas").contains("2");
+    cy.get("#topup-information-max-gas").contains("3");
   });
   it("Should have delete button", () => {
     cy.get("#delete-action-button").contains("Delete Top-up Position");
