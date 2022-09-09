@@ -488,7 +488,19 @@ describe("Conditions Page", () => {
     cy.get("#register-topup-maxgasprice-input").clear();
     cy.get("#register-topup-maxgasprice-input").focus();
     cy.get("#register-topup-maxgasprice-input").type("0");
-    cy.get("#register-topup-maxgasprice-error").contains("Must be positive number");
+    cy.get("#register-topup-maxgasprice-error").contains(
+      "The maximum gas price must be greater than the priority fee"
+    );
+  });
+  it("Should show gas error when less than priority fee", () => {
+    cy.get("#register-topup-priorityfee-input").clear();
+    cy.get("#register-topup-priorityfee-input").type("0");
+    cy.get("#register-topup-maxgasprice-input").clear();
+    cy.get("#register-topup-maxgasprice-input").focus();
+    cy.get("#register-topup-maxgasprice-input").type("1");
+    cy.get("#register-topup-maxgasprice-error").contains(
+      "The maximum gas price must be at least 2 Gwei"
+    );
   });
   it("Should show Live Help on high gas", () => {
     cy.get("#register-topup-maxgasprice-input").clear();
@@ -513,9 +525,14 @@ describe("Conditions Page", () => {
   });
   it("Should enter gas", () => {
     cy.get("#register-topup-maxgasprice-input").clear();
-    cy.get("#register-topup-maxgasprice-input").type("2");
+    cy.get("#register-topup-maxgasprice-input").type("4");
     cy.get("#register-topup-maxgasprice-error").should("not.exist");
     cy.get("#register-topup-maxtopup-error").should("not.exist");
+  });
+  it("Should enter priority fee", () => {
+    cy.get("#register-topup-priorityfee-input").clear();
+    cy.get("#register-topup-priorityfee-input").type("3");
+    cy.get("#register-topup-priorityfee-error").should("not.exist");
   });
   it("Should have disabled confirmation button", () => {
     cy.get("#action-button").should("be.disabled");

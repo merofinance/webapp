@@ -173,6 +173,8 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
     if (!pool || !usersPoolUnderlyingUnlocked) return errors;
     const single = ScaledNumber.fromUnscaled(values.singleTopUp, pool.underlying.decimals);
     const max = ScaledNumber.fromUnscaled(values.maxTopUp, pool.underlying.decimals);
+    const maxGasPrice = ScaledNumber.fromUnscaled(values.maxGasPrice, 9);
+    const priorityFee = ScaledNumber.fromUnscaled(values.priorityFee, 9);
 
     // Validating Maximum Top-up is Greater than Single
     if (values.maxTopUp && single.gt(max)) {
@@ -189,6 +191,16 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
     if (ethNeeded && ethBalance && ethNeeded.gt(ethBalance.value)) {
       const needed = new ScaledNumber(ethNeeded).toCryptoString();
       errors.maxGasPrice = t("actions.topup.fields.gas.notEnoughEth", { needed });
+    }
+
+    // Validating that max gas price is above the minimum
+    if (values.maxGasPrice && maxGasPrice.lt(ScaledNumber.fromUnscaled(2, 9))) {
+      errors.maxGasPrice = t("actions.topup.fields.gas.maxFeeTooLow");
+    }
+
+    // Validating that max gas price is above the priority fee
+    if (values.maxGasPrice && maxGasPrice.lte(priorityFee)) {
+      errors.maxGasPrice = t("actions.topup.fields.gas.maxFeeGTPriorityFee");
     }
 
     return errors;
