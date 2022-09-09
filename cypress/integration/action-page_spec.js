@@ -584,7 +584,7 @@ describe("Top-up Position Confirmation", () => {
     cy.get("#topup-information-threshold").contains("2");
     cy.get("#topup-information-single-topup").contains("100");
     cy.get("#topup-information-max-topup").contains("300");
-    cy.get("#topup-information-max-gas").contains("3");
+    cy.get("#topup-information-max-gas").contains("4");
   });
   it("Should take snapshot", () => {
     percySnapshot();
@@ -661,7 +661,7 @@ describe("Existing Topup View", () => {
     cy.get("#topup-information-threshold").contains("2");
     cy.get("#topup-information-single-topup").contains("100");
     cy.get("#topup-information-max-topup").contains("300");
-    cy.get("#topup-information-max-gas").contains("3");
+    cy.get("#topup-information-max-gas").contains("4");
   });
   it("Should have delete button", () => {
     cy.get("#delete-action-button").contains("Delete Top-up Position");
