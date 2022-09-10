@@ -573,7 +573,9 @@
           "required": "Max gas price required",
           "invalid": "Invalid number",
           "positive": "Must be positive number",
-          "notEnoughEth": "Not enough ETH in wallet to cover gas, {{needed}} ETH needed"
+          "notEnoughEth": "Not enough ETH in wallet to cover gas, {{needed}} ETH needed",
+          "maxFeeTooLow": "The maximum gas price must be at least 2 Gwei",
+          "maxFeeGTPriorityFee": "The maximum gas price must be greater than the priority fee"
         }
       }
     },
