@@ -332,20 +332,35 @@ export class Web3Mero implements Mero {
 
   async getWithdrawalFees(pools: Pool[]): Promise<PlainWithdrawalFees> {
     const account = await this.currentAccount();
+
+    interface WithdrawalFeeMeta {
+      timeToWait: BigNumber;
+      feeRatio: BigNumber;
+      lastActionTimestamp: BigNumber;
+    }
+
     const promises = pools.map((pool: Pool) => {
-      const poolFactory = LiquidityPoolFactory.connect(pool.address, this._provider);
-      const ONE = ScaledNumber.fromUnscaled(1, pool.underlying.decimals).value;
-      return poolFactory.getWithdrawalFee(account, ONE);
+      const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
+      return poolContract.withdrawalFeeMetas(account);
     });
 
-    const withdrawalFees = await Promise.all(promises);
+    const withdrawalFeeMetas: WithdrawalFeeMeta[] = await Promise.all(promises);
 
     return fromEntries(
       pools.map((pool: Pool, index: number) => {
-        const ONE = ScaledNumber.fromUnscaled(1, pool.underlying.decimals);
-        const withdrawalFee = new ScaledNumber(withdrawalFees[index], pool.underlying.decimals);
-        const percent = withdrawalFee.div(ONE);
-        return [pool.address, percent.toPlain()];
+        const { timeToWait, feeRatio, lastActionTimestamp } = withdrawalFeeMetas[index];
+        const now = Math.floor(Date.now() / 1000);
+        const start = Number(lastActionTimestamp.toString());
+        const elapsed = now - start;
+        const delay = Number(timeToWait.toString());
+        const ratio = Number(feeRatio.toString());
+        const minFee = pool.minWithdrawalFee.toNumber();
+        if (elapsed >= delay || minFee > ratio) {
+          return [pool.address, pool.minWithdrawalFee.toPlain()];
+        }
+        const withdrawalFee = ratio - (ratio - minFee) * (elapsed / delay);
+        const fee = ScaledNumber.fromPlain({ value: withdrawalFee.toString(), decimals: 18 });
+        return [pool.address, fee.toPlain()];
       })
     );
   }

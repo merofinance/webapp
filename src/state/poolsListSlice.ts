@@ -136,7 +136,7 @@ export const fetchState =
     });
     dispatch(fetchPools({ mero })).then((v) => {
       if (v.meta.requestStatus !== "fulfilled") return;
-      const pools = v.payload as Pool[];
+      const pools = (v.payload as PlainPool[]).map(fromPlainPool);
       dispatch(fetchBalances({ mero, pools }));
       dispatch(fetchPrices({ mero, pools }));
       dispatch(fetchAllowances({ mero, pools }));
