@@ -11,8 +11,7 @@ import { spinAnimation } from "../styles/animations/SpinAnimation";
 import { pendingTransactionsCount } from "../state/transactionsSlice";
 import useWindowPosition from "../app/hooks/use-window-position";
 import useENS from "../app/hooks/use-ens";
-import useUnstopabbleDomain from "../app/hooks/use-unstoppable-domain";
-import { unstoppableDomainsConnector } from "../app/web3";
+import { selectUnstoppableDomain } from "../state/userSlice";
 
 interface ConnectorProps {
   connected: boolean;
@@ -136,7 +135,7 @@ const ConnectorDesktop = ({ connect }: Props): JSX.Element => {
   const windowPosition = useWindowPosition();
   const loading = useSelector(pendingTransactionsCount) > 0;
   const { ensName, ensAvatar } = useENS();
-  const unstoppableDomain = useUnstopabbleDomain();
+  const unstoppableDomain = useSelector(selectUnstoppableDomain);
 
   const displayName = () => {
     if (!account) return t("walletConnect.connectWallet");

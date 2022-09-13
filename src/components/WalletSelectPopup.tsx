@@ -1,4 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
+import { useDispatch } from "react-redux";
 
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
@@ -17,6 +18,7 @@ import walletConnect from "../assets/wallets/wallet-connect.svg";
 import unstoppableDomains from "../assets/wallets/unstoppable-domains.svg";
 import Popup from "./Popup";
 import ExternalLink from "./ExternalLink";
+import { selectUnstoppableDomain } from "../state/userSlice";
 
 interface WalletOption {
   name: string;
@@ -140,7 +142,8 @@ interface Props {
 }
 
 const WalletSelectPopup = ({ show, close, setWallet }: Props): JSX.Element => {
-  const { chainId, activate } = useWeb3React();
+  const dispatch = useDispatch();
+  const { activate } = useWeb3React();
   const { t } = useTranslation();
 
   const connect = async (connector: AbstractConnector, walletName: string) => {
@@ -151,6 +154,10 @@ const WalletSelectPopup = ({ show, close, setWallet }: Props): JSX.Element => {
       await activate(privateKeyConnector);
     } else {
       await activate(connector);
+      if (connector === unstoppableDomainsConnector) {
+        const user = (connector as any).uauth.user();
+        dispatch(selectUnstoppableDomain(user.sub));
+      }
     }
     setWallet(walletName);
     close(true);

@@ -28,6 +28,7 @@ interface UserState {
   allowances: PlainAllowances;
   withdrawalFees: PlainWithdrawalFees;
   connecting: boolean;
+  unstoppableDomain: Optional<string>;
 }
 
 const initialState: UserState = {
@@ -36,6 +37,7 @@ const initialState: UserState = {
   allowances: {},
   withdrawalFees: {},
   connecting: false,
+  unstoppableDomain: null,
 };
 
 export const fetchBalances = createAsyncThunk(
@@ -103,6 +105,9 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    setUnstopppableDomain: (state, action: PayloadAction<Optional<string>>) => {
+      state.unstoppableDomain = action.payload;
+    },
     setConnecting: (state, action: PayloadAction<boolean>) => {
       state.connecting = action.payload;
     },
@@ -321,6 +326,10 @@ export function selectDepositAllowance(pool: Pool): Selector<Optional<ScaledNumb
 
 export function selectAllowances(state: RootState): PlainAllowances {
   return state.user.allowances;
+}
+
+export function selectUnstoppableDomain(state: RootState): Optional<string> {
+  return state.user.unstoppableDomain;
 }
 
 export function selectAllowance(
