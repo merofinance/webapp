@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import PoolsRow from "../pools/PoolsRow";
 import swirls from "../../assets/background/swirls.svg";
 import { useMero } from "../../app/hooks/use-mero";
-import { fetchPreviewState, fetchState, selectPools } from "../../state/poolsListSlice";
+import { fetchState, selectPools } from "../../state/poolsListSlice";
 import { Pool } from "../../lib";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import { Header2, Header4 } from "../../styles/Headers";
@@ -94,10 +94,7 @@ const Preview = (): Optional<JSX.Element> => {
   const updated = useWeb3Updated();
 
   useEffect(() => {
-    if (!mero) {
-      dispatch(fetchPreviewState());
-      return;
-    }
+    if (!mero) return;
     dispatch(fetchState(mero));
   }, [updated]);
 

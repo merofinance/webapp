@@ -6,6 +6,7 @@ import { useNavigateToTop } from "../app/hooks/use-navigate-to-top";
 import { useWeb3Updated } from "../app/hooks/use-web3-updated";
 import { AppDispatch } from "../app/store";
 import { injectedConnector } from "../app/web3";
+import { fetchPreviewState } from "../state/poolsListSlice";
 import { isConnecting, setConnecting } from "../state/userSlice";
 import ConnectionDetails from "./ConnectionDetails";
 import ConnectorDesktop from "./ConnectorDesktop";
@@ -28,8 +29,12 @@ const Connector = (): JSX.Element => {
 
   const autoConnect = async () => {
     const authorized = await injectedConnector.isAuthorized();
-    if (!active && authorized) {
-      await activate(injectedConnector);
+    if (!active) {
+      if (authorized) {
+        await activate(injectedConnector);
+      } else {
+        dispatch(fetchPreviewState());
+      }
     }
   };
 
