@@ -174,7 +174,7 @@ export default class MockMero implements Mero {
     return "0x38d6f612D116dBc1411E977A5D77E02bBae58e63";
   }
 
-  get poolMigrationZapAddres(): string {
+  get poolMigrationZapAddress(): string {
     return "0x38d6f612D116dBc1411E977A5D77E02bBae58e63";
   }
 

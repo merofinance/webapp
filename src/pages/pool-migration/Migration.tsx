@@ -110,7 +110,7 @@ const Migration = ({ pool }: Props): JSX.Element => {
   const totalDeposits = useSelector(selectProtocolPoolUnderlyingEverywhere(pool));
   const deposits = useSelector(selectUsersPoolUnderlyingEverywhere(pool));
   const approvedAmount = useSelector(
-    selectAllowance(pool.lpToken.address, mero?.poolMigrationZapAddres)
+    selectAllowance(pool.lpToken.address, mero?.poolMigrationZapAddress || undefined)
   );
   const usersPoolLpHeld = useSelector(selectUsersPoolLpHeld(pool));
 
@@ -126,11 +126,11 @@ const Migration = ({ pool }: Props): JSX.Element => {
   };
 
   const executeApprove = () => {
-    if (!mero || approved || approveLoading) return;
+    if (!mero || !mero.poolMigrationZapAddress || approved || approveLoading) return;
     dispatch(
       approve({
         token: pool.lpToken,
-        spender: mero.poolMigrationZapAddres,
+        spender: mero.poolMigrationZapAddress,
         amount: ScaledNumber.fromUnscaled(INFINITE_APPROVE_AMMOUNT),
         mero,
       })

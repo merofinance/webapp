@@ -269,6 +269,7 @@ export const selectProtocolTotalUsdEverywhere = (state: RootState): Optional<Sca
 export const selectProtocolsTotalUsdEverywhere = (state: RootState): Optional<ScaledNumber> => {
   const pools = selectPools(state);
   const oldPools = selectOldPools(state);
+  console.log("old pools", oldPools);
   const prices = selectPrices(state);
   if (!pools || !prices || !oldPools) return null;
   let total = new ScaledNumber();
