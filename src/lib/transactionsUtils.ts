@@ -95,6 +95,8 @@ export const getExplorerLink = ({
       return `https://ropsten.etherscan.io/tx/${hash}`;
     case 42:
       return `https://kovan.etherscan.io/tx/${hash}`;
+    case 5:
+      return `https://goerli.etherscan.io/tx/${hash}`;
     default:
       return `https://etherscan.io/tx/${hash}`;
   }
