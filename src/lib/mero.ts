@@ -274,6 +274,7 @@ export class Web3Mero implements Mero {
   }
 
   async getStrategyInfo(address: Address, underlyingSymbol: string): Promise<StrategyInfo | null> {
+    if (address === ETH_DUMMY_ADDRESS) return null;
     const strategy = MeroTriHopCvxFactory.connect(address, this._provider);
     const name = await strategy.name();
 
