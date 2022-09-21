@@ -129,7 +129,7 @@ const PoolPage = (): Optional<JSX.Element> => {
           <Overview
             description={t("pool.overview", {
               asset: pool?.underlying.symbol || "---",
-              strategy: pool?.strategyInfo?.name || "---",
+              strategy: pool ? (pool.strategyInfo ? pool.strategyInfo.name : pool.name) : "---",
             })}
             link={DOCS_LINK}
           />
