@@ -31,8 +31,7 @@ export const pools: GenericPool<BigNumber>[] = [
     minWithdrawalFee: scale(0, 18),
     feeDecreasePeriod: scale(10, 18),
     harvestable: scale(3, 18),
-    strategyAddress: "0x1F7EEe24524fbA780E018EDBfda0Ad4881321118",
-    strategyName: "Strategy Name",
+    strategyInfo: null,
     isPaused: false,
   },
   {
@@ -58,8 +57,7 @@ export const pools: GenericPool<BigNumber>[] = [
     minWithdrawalFee: scale(0, 18),
     feeDecreasePeriod: scale(10, 18),
     harvestable: scale(3, 6),
-    strategyAddress: "0x1F7EEe24524fbA780E018EDBfda0Ad4881321118",
-    strategyName: "Strategy Name",
+    strategyInfo: null,
     isPaused: false,
   },
   {
@@ -85,8 +83,7 @@ export const pools: GenericPool<BigNumber>[] = [
     minWithdrawalFee: scale(0, 18),
     feeDecreasePeriod: scale(10, 18),
     harvestable: scale(3, 18),
-    strategyAddress: "0x1F7EEe24524fbA780E018EDBfda0Ad4881321118",
-    strategyName: "Strategy Name",
+    strategyInfo: null,
     isPaused: false,
   },
 ];

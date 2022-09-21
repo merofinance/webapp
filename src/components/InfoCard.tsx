@@ -30,7 +30,7 @@ const StyledInfoCard = styled.div`
   @media (max-width: 1220px) {
     padding: 1.6rem;
     max-height: ${(props: StyleProps) => {
-      if (props.open) return props.maxHeight || "25rem";
+      if (props.open) return props.maxHeight || "40rem";
       return "4.8rem";
     }};
   }

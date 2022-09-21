@@ -12,6 +12,12 @@ export interface Token {
   symbol: string;
 }
 
+export interface StrategyInfo {
+  address: string;
+  name: string;
+  description: string;
+}
+
 export interface GenericPool<T> {
   address: string;
   apy: Optional<T>;
@@ -25,8 +31,7 @@ export interface GenericPool<T> {
   totalAssets: T;
   underlying: Token;
   harvestable: T;
-  strategyAddress: string;
-  strategyName: string;
+  strategyInfo: Optional<StrategyInfo>;
   isPaused: boolean;
 }
 

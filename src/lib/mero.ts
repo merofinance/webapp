@@ -3,6 +3,7 @@ import {
   AddressProvider__factory as AddressProviderFactory,
   MeroTriHopCvx__factory as MeroTriHopCvxFactory,
   Controller__factory as ControllerFactory,
+  ICurveSwap__factory as CurveFactory,
   GasBank,
   GasBank__factory as GasBankFactory,
   IERC20Full__factory as Ierc20FullFactory,
@@ -54,6 +55,7 @@ import {
   Pool,
   Position,
   Prices,
+  StrategyInfo,
   Token,
   toPlainActionFees,
 } from "./types";
@@ -249,11 +251,7 @@ export class Web3Mero implements Mero {
       vaultShutdown ? Promise.resolve(ETH_DUMMY_ADDRESS) : vault.strategy(),
     ]);
 
-    let strategyName = name;
-    if (strategyAddress !== ETH_DUMMY_ADDRESS) {
-      const strategy = MeroTriHopCvxFactory.connect(strategyAddress, this._provider);
-      strategyName = await strategy.name();
-    }
+    const strategyInfo = await this.getStrategyInfo(strategyAddress, underlying.symbol);
 
     const apy = (apys.find((apy: Apy) => apy.pool === address)?.apy || 0) / 100;
 
@@ -270,10 +268,57 @@ export class Web3Mero implements Mero {
       minWithdrawalFee: new ScaledNumber(minWithdrawalFee).toPlain(),
       feeDecreasePeriod: new ScaledNumber(feeDecreasePeriod, 0).toPlain(),
       harvestable: new ScaledNumber(harvestable, underlying.decimals).toPlain(),
-      strategyAddress,
-      strategyName,
+      strategyInfo,
       isPaused,
     };
+  }
+
+  async getStrategyInfo(address: Address, underlyingSymbol: string): Promise<StrategyInfo | null> {
+    if (address === ETH_DUMMY_ADDRESS) return null;
+    const strategy = MeroTriHopCvxFactory.connect(address, this._provider);
+    const name = await strategy.name();
+
+    // Handling the TriHop strategy
+    if (name === "MeroTriHopCvx") {
+      const [curvePoolAddress, curveIndex] = await Promise.all([
+        strategy.curvePool(),
+        strategy.curveIndex(),
+      ]);
+      const curvePool = CurveFactory.connect(curvePoolAddress, this._provider);
+      const [hopTokenAddress, tokenAddress] = await Promise.all([
+        curvePool.coins(curveIndex),
+        curvePool.coins(BigNumber.from(1).sub(curveIndex)),
+      ]);
+      const hopToken = Ierc20FullFactory.connect(hopTokenAddress, this._provider);
+      const token = Ierc20FullFactory.connect(tokenAddress, this._provider);
+      const [hopTokenSymbol, tokenSymbol] = await Promise.all([hopToken.symbol(), token.symbol()]);
+      const description = `Deposits ${underlyingSymbol} as single sided liquidity to mint ${hopTokenSymbol}. Then deposits ${hopTokenSymbol} into the Curve ${tokenSymbol}-${hopTokenSymbol} Pool. Then stakes the LP Token in Convex Finance to earn CRV & CVX rewards which are sold for ${underlyingSymbol} and deposited back into the pool.`;
+      return {
+        name,
+        address,
+        description,
+      };
+    }
+
+    // Handling the Bi and ETH strategy
+    if (name === "MeroBiCvx" || name === "MeroEthCvx") {
+      const [curvePoolAddress, curveIndex] = await Promise.all([
+        strategy.curvePool(),
+        strategy.curveIndex(),
+      ]);
+      const curvePool = CurveFactory.connect(curvePoolAddress, this._provider);
+      const tokenAddress = await curvePool.coins(BigNumber.from(1).sub(curveIndex));
+      const token = Ierc20FullFactory.connect(tokenAddress, this._provider);
+      const tokenSymbol = await token.symbol();
+      const description = `Deposits ${underlyingSymbol} into the Curve ${tokenSymbol}-${underlyingSymbol} Pool. Then stakes the LP Token in Convex Finance to earn CRV & CVX rewards which are sold for ${underlyingSymbol} and deposited back into the pool.`;
+      return {
+        name,
+        address,
+        description,
+      };
+    }
+
+    return null;
   }
 
   async getOldPoolInfo(address: Address): Promise<PlainPool> {
@@ -313,8 +358,7 @@ export class Web3Mero implements Mero {
       minWithdrawalFee: ScaledNumber.fromUnscaled(0).toPlain(),
       feeDecreasePeriod: ScaledNumber.fromUnscaled(0, 0).toPlain(),
       harvestable: ScaledNumber.fromUnscaled(0, underlying.decimals).toPlain(),
-      strategyAddress: "",
-      strategyName: "",
+      strategyInfo: null,
       isPaused,
     };
   }
