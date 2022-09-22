@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { DUMMY_ETH_ADDRESS, INFURA_ID } from "./constants";
+import { DUMMY_ETH_ADDRESS } from "./constants";
 import { createMero } from "./factory";
 import { Web3Mero } from "./mero";
 
