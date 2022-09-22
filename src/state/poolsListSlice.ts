@@ -57,7 +57,7 @@ export const fetchPool = createAsyncThunk(
 export const fetchPrices = createAsyncThunk(
   "pool/fetch-prices",
   async ({ mero, pools }: { mero: Mero; pools: Pool[] }) => {
-    return mero.getPrices(pools.map((p) => p.underlying.symbol));
+    return mero.getPrices(pools.map((p) => p.underlying));
   }
 );
 

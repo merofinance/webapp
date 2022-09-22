@@ -5,7 +5,8 @@ export const STAKING_LIVE = false;
 export const ACTIONS_LIVE = false;
 
 // Variables
-export const ETH_DUMMY_ADDRESS = "0x0000000000000000000000000000000000000000";
+export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+export const DUMMY_ETH_ADDRESS = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
 export const ETH_DECIMALS = 18;
 export const GWEI_DECIMALS = 9;
 export const INFINITE_APPROVE_AMMOUNT = 10 ** 10;

@@ -3,7 +3,7 @@ import { PlainScaledNumber, ScaledNumber } from "scaled-number";
 
 import { RootState, Selector } from "../app/store";
 import { Mero } from "../lib/mero";
-import { ETH_DUMMY_ADDRESS } from "../lib/constants";
+import { ZERO_ADDRESS } from "../lib/constants";
 import {
   Address,
   AllowanceQuery,
@@ -122,7 +122,7 @@ export const userSlice = createSlice({
     ) => {
       const { spender, token, amount } = action.payload;
       // NOTE: we do not want to touch "allowances" from Eth based pools
-      if (token.address === ETH_DUMMY_ADDRESS) return;
+      if (token.address === ZERO_ADDRESS) return;
       const plainAllowance = state.allowances[token.address][spender];
       if (!plainAllowance) return;
 
@@ -260,7 +260,7 @@ export const selectBalances = (state: RootState): Balances =>
   fromPlainBalances(state.user.balances);
 
 export const selectEthBalance = (state: RootState): Optional<ScaledNumber> => {
-  const balance = state.user.balances[ETH_DUMMY_ADDRESS];
+  const balance = state.user.balances[ZERO_ADDRESS];
   return balance ? ScaledNumber.fromPlain(balance) : null;
 };
 
