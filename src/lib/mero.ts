@@ -679,6 +679,19 @@ export class Web3Mero implements Mero {
   }
 
   async getPricesFromOracle(tokens: Token[]): Promise<Prices> {
+    // Oracle doesn't exist on testnet. Just returning some dummy values.
+    if (this.chainId !== 1) {
+      const result: Prices = {};
+      tokens.forEach((token, i) => {
+        if (token.address === ZERO_ADDRESS) {
+          result[token.symbol] = 1_300;
+        } else {
+          result[token.symbol] = 1;
+        }
+      });
+      return result;
+    }
+
     const contracts = this.getContracts();
     if (!contracts.ChainlinkOracleProvider || contracts.ChainlinkOracleProvider.length === 0) {
       throw new Error(`failed to fetch prices`);
