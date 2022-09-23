@@ -152,8 +152,8 @@ export default class MockMero implements Mero {
     return fromEntries(pools.map((p, i) => [p, balances[i]]));
   }
 
-  getPrices(symbols: string[]): Promise<Prices> {
-    return Promise.resolve(fromEntries(symbols.map((symbol) => [symbol, 3])));
+  getPrices(tokens: Token[]): Promise<Prices> {
+    return Promise.resolve(fromEntries(tokens.map((token) => [token.symbol, 3])));
   }
 
   getPositions(): Promise<PlainPosition[]> {

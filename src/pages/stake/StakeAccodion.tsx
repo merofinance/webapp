@@ -7,7 +7,7 @@ import { GradientText } from "../../styles/GradientText";
 import Tabs from "../../components/Tabs";
 import StakeTokens from "./StakeTokens";
 import { Token } from "../../lib/types";
-import { ETH_DUMMY_ADDRESS } from "../../lib/constants";
+import { ZERO_ADDRESS } from "../../lib/constants";
 import UnstakeTokens from "./UnstakeTokens";
 import AccordionChevron from "../../components/AccordionChevron";
 import { useDevice } from "../../app/hooks/use-device";
@@ -142,7 +142,7 @@ const StakeAccordion = ({ open, toggle }: Props): JSX.Element => {
   const { isDesktop } = useDevice();
 
   const token: Token = {
-    address: ETH_DUMMY_ADDRESS,
+    address: ZERO_ADDRESS,
     name: "DAI",
     symbol: "DAI",
     decimals: 16,

@@ -3,10 +3,12 @@ import {
   AddressProvider__factory as AddressProviderFactory,
   MeroTriHopCvx__factory as MeroTriHopCvxFactory,
   Controller__factory as ControllerFactory,
+  ICurveSwap__factory as CurveFactory,
   GasBank,
   GasBank__factory as GasBankFactory,
   IERC20Full__factory as Ierc20FullFactory,
   IStrategy__factory as IStrategyFactory,
+  IChainlinkOracleProvider__factory as OracleProviderFactory,
   LiquidityPool__factory as LiquidityPoolFactory,
   StakerVault__factory as StakerVaultFactory,
   TopUpActionFeeHandler__factory as TopUpActionFeeHandlerFactory,
@@ -23,17 +25,17 @@ import fromEntries from "fromentries";
 import { PlainScaledNumber, ScaledNumber } from "scaled-number";
 import { UnsupportedNetwork } from "../app/errors";
 import { Apy, getApys } from "./apys";
-import { getPrices as getPricesFromBinance } from "./binance";
 import { getPrices as getPricesFromCoingecko } from "./coingecko";
 import {
   SLIPPAGE_TOLERANCE,
   ETH_DECIMALS,
-  ETH_DUMMY_ADDRESS,
+  ZERO_ADDRESS,
   GAS_BUFFER,
   GWEI_DECIMALS,
   INFINITE_APPROVE_AMMOUNT,
   oldPools,
   oldAddressProviders,
+  DUMMY_ETH_ADDRESS,
 } from "./constants";
 import { oldPoolApys } from "./data/pool-metadata";
 import { lendingProviders } from "./lending-protocols";
@@ -54,6 +56,7 @@ import {
   Pool,
   Position,
   Prices,
+  StrategyInfo,
   Token,
   toPlainActionFees,
 } from "./types";
@@ -84,7 +87,7 @@ export interface Mero {
   getAllowance(token: Token, spender: Address, account?: string): Promise<ScaledNumber>;
   getAllowances(queries: AllowanceQuery[]): Promise<Record<string, Balances>>;
   getWithdrawalFees(pools: Pool[]): Promise<PlainWithdrawalFees>;
-  getPrices(symbol: string[]): Promise<Prices>;
+  getPrices(symbol: Token[]): Promise<Prices>;
   approve(token: Token, spender: Address, amount: ScaledNumber): Promise<ContractTransaction>;
   deposit(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction>;
   migrate(poolAddress: string): Promise<ContractTransaction>;
@@ -198,7 +201,7 @@ export class Web3Mero implements Mero {
   }
 
   async getTokenInfo(tokenAddress: Address): Promise<Token> {
-    if (tokenAddress === ETH_DUMMY_ADDRESS) {
+    if (tokenAddress === ZERO_ADDRESS) {
       return { address: tokenAddress, name: "Ether", symbol: "ETH", decimals: ETH_DECIMALS };
     }
     const token = Ierc20FullFactory.connect(tokenAddress, this._provider);
@@ -211,7 +214,7 @@ export class Web3Mero implements Mero {
   }
 
   async getTokenDecimals(tokenAddress: Address): Promise<number> {
-    if (tokenAddress === ETH_DUMMY_ADDRESS) return ETH_DECIMALS;
+    if (tokenAddress === ZERO_ADDRESS) return ETH_DECIMALS;
     const token = Ierc20FullFactory.connect(tokenAddress, this._provider);
     return token.decimals();
   }
@@ -245,21 +248,17 @@ export class Web3Mero implements Mero {
       pool.isPaused(),
     ]);
 
-    const vaultShutdown = vaultAddress === ETH_DUMMY_ADDRESS;
+    const vaultShutdown = vaultAddress === ZERO_ADDRESS;
 
     const vault = VaultFactory.connect(vaultAddress, this._provider);
     const [lpToken, underlying, stakerVaultAddress, strategyAddress] = await Promise.all([
       this.getTokenInfo(lpTokenAddress),
       this.getTokenInfo(underlyingAddress),
       this.addressProvider.getStakerVault(lpTokenAddress),
-      vaultShutdown ? Promise.resolve(ETH_DUMMY_ADDRESS) : vault.strategy(),
+      vaultShutdown ? Promise.resolve(ZERO_ADDRESS) : vault.strategy(),
     ]);
 
-    let strategyName = name;
-    if (strategyAddress !== ETH_DUMMY_ADDRESS) {
-      const strategy = MeroTriHopCvxFactory.connect(strategyAddress, this._provider);
-      strategyName = await strategy.name();
-    }
+    const strategyInfo = await this.getStrategyInfo(strategyAddress, underlying.symbol);
 
     const apy = (apys.find((apy: Apy) => apy.pool === address)?.apy || 0) / 100;
 
@@ -276,10 +275,57 @@ export class Web3Mero implements Mero {
       minWithdrawalFee: new ScaledNumber(minWithdrawalFee).toPlain(),
       feeDecreasePeriod: new ScaledNumber(feeDecreasePeriod, 0).toPlain(),
       harvestable: new ScaledNumber(harvestable, underlying.decimals).toPlain(),
-      strategyAddress,
-      strategyName,
+      strategyInfo,
       isPaused,
     };
+  }
+
+  async getStrategyInfo(address: Address, underlyingSymbol: string): Promise<StrategyInfo | null> {
+    if (address === ZERO_ADDRESS) return null;
+    const strategy = MeroTriHopCvxFactory.connect(address, this._provider);
+    const name = await strategy.name();
+
+    // Handling the TriHop strategy
+    if (name === "MeroTriHopCvx") {
+      const [curvePoolAddress, curveIndex] = await Promise.all([
+        strategy.curvePool(),
+        strategy.curveIndex(),
+      ]);
+      const curvePool = CurveFactory.connect(curvePoolAddress, this._provider);
+      const [hopTokenAddress, tokenAddress] = await Promise.all([
+        curvePool.coins(curveIndex),
+        curvePool.coins(BigNumber.from(1).sub(curveIndex)),
+      ]);
+      const hopToken = Ierc20FullFactory.connect(hopTokenAddress, this._provider);
+      const token = Ierc20FullFactory.connect(tokenAddress, this._provider);
+      const [hopTokenSymbol, tokenSymbol] = await Promise.all([hopToken.symbol(), token.symbol()]);
+      const description = `Deposits ${underlyingSymbol} as single sided liquidity to mint ${hopTokenSymbol}. Then deposits ${hopTokenSymbol} into the Curve ${tokenSymbol}-${hopTokenSymbol} Pool. Then stakes the LP Token in Convex Finance to earn CRV & CVX rewards which are sold for ${underlyingSymbol} and deposited back into the pool.`;
+      return {
+        name,
+        address,
+        description,
+      };
+    }
+
+    // Handling the Bi and ETH strategy
+    if (name === "MeroBiCvx" || name === "MeroEthCvx") {
+      const [curvePoolAddress, curveIndex] = await Promise.all([
+        strategy.curvePool(),
+        strategy.curveIndex(),
+      ]);
+      const curvePool = CurveFactory.connect(curvePoolAddress, this._provider);
+      const tokenAddress = await curvePool.coins(BigNumber.from(1).sub(curveIndex));
+      const token = Ierc20FullFactory.connect(tokenAddress, this._provider);
+      const tokenSymbol = await token.symbol();
+      const description = `Deposits ${underlyingSymbol} into the Curve ${tokenSymbol}-${underlyingSymbol} Pool. Then stakes the LP Token in Convex Finance to earn CRV & CVX rewards which are sold for ${underlyingSymbol} and deposited back into the pool.`;
+      return {
+        name,
+        address,
+        description,
+      };
+    }
+
+    return null;
   }
 
   async getOldPoolInfo(address: Address): Promise<PlainPool> {
@@ -319,8 +365,7 @@ export class Web3Mero implements Mero {
       minWithdrawalFee: ScaledNumber.fromUnscaled(0).toPlain(),
       feeDecreasePeriod: ScaledNumber.fromUnscaled(0, 0).toPlain(),
       harvestable: ScaledNumber.fromUnscaled(0, underlying.decimals).toPlain(),
-      strategyAddress: "",
-      strategyName: "",
+      strategyInfo: null,
       isPaused,
     };
   }
@@ -328,10 +373,10 @@ export class Web3Mero implements Mero {
   async getHarvestable(poolAddress: Address): Promise<BigNumber> {
     const pool = LiquidityPoolFactory.connect(poolAddress, this._provider);
     const vaultAddress = await pool.vault();
-    if (vaultAddress === ETH_DUMMY_ADDRESS) return BigNumber.from(0);
+    if (vaultAddress === ZERO_ADDRESS) return BigNumber.from(0);
     const vault = VaultFactory.connect(vaultAddress, this._provider);
     const strategyAddress = await vault.strategy();
-    if (strategyAddress === ETH_DUMMY_ADDRESS) return BigNumber.from(0);
+    if (strategyAddress === ZERO_ADDRESS) return BigNumber.from(0);
     const strategy = IStrategyFactory.connect(strategyAddress, this._provider);
     return strategy.harvestable();
   }
@@ -511,7 +556,7 @@ export class Web3Mero implements Mero {
     if (!account) {
       account = await this.currentAccount();
     }
-    if (token.address === ETH_DUMMY_ADDRESS) {
+    if (token.address === ZERO_ADDRESS) {
       return ScaledNumber.fromUnscaled(INFINITE_APPROVE_AMMOUNT);
     }
     const tokenContract = Ierc20FullFactory.connect(token.address, this._provider);
@@ -546,7 +591,7 @@ export class Web3Mero implements Mero {
 
   async deposit(pool: Pool, amount: ScaledNumber): Promise<ContractTransaction> {
     const poolContract = LiquidityPoolFactory.connect(pool.address, this._provider);
-    const value = pool.underlying.address === ETH_DUMMY_ADDRESS ? amount.value : 0;
+    const value = pool.underlying.address === ZERO_ADDRESS ? amount.value : 0;
     const minTokenAmount = amount
       .div(pool.exchangeRate)
       .mul(ScaledNumber.fromUnscaled(SLIPPAGE_TOLERANCE, amount.decimals));
@@ -618,7 +663,7 @@ export class Web3Mero implements Mero {
     if (!account) {
       account = await this.currentAccount();
     }
-    if (address === ETH_DUMMY_ADDRESS) {
+    if (address === ZERO_ADDRESS) {
       return new ScaledNumber(await this.provider.getBalance(account));
     }
     const token = Ierc20FullFactory.connect(address, this._provider);
@@ -641,12 +686,47 @@ export class Web3Mero implements Mero {
     return new ScaledNumber(balance).toPlain();
   }
 
-  async getPrices(symbols: string[]): Promise<Prices> {
-    return getPricesFromCoingecko(symbols)
-      .catch((_e) => getPricesFromBinance(symbols))
+  async getPricesFromOracle(tokens: Token[]): Promise<Prices> {
+    // Oracle doesn't exist on testnet. Just returning some dummy values.
+    if (this.chainId !== 1) {
+      const result: Prices = {};
+      tokens.forEach((token, i) => {
+        if (token.address === ZERO_ADDRESS) {
+          result[token.symbol] = 1_300;
+        } else {
+          result[token.symbol] = 1;
+        }
+      });
+      return result;
+    }
+
+    const contracts = this.getContracts();
+    if (!contracts.ChainlinkOracleProvider || contracts.ChainlinkOracleProvider.length === 0) {
+      throw new Error(`failed to fetch prices`);
+    }
+    const address = contracts.ChainlinkOracleProvider[0];
+    const oracleProvider = OracleProviderFactory.connect(address, this._provider);
+    const prices = await Promise.all(
+      tokens.map((token) => {
+        // Chailink wants this address instead of the zero address for ETH
+        const address = token.address === ZERO_ADDRESS ? DUMMY_ETH_ADDRESS : token.address;
+        return oracleProvider.getPriceUSD(address);
+      })
+    );
+    const result: Prices = {};
+    tokens.forEach((token, i) => {
+      result[token.symbol] = new ScaledNumber(prices[i], 18).toNumber();
+    });
+    return result;
+  }
+
+  async getPrices(tokens: Token[]): Promise<Prices> {
+    const prices = await getPricesFromCoingecko(tokens.map((t) => t.symbol))
+      .catch((_e) => this.getPricesFromOracle(tokens))
       .catch((e) => {
         throw new Error(`failed to fetch prices: ${e.message}`);
       });
+    return prices;
   }
 
   async listSupportedProtocols(): Promise<string[]> {
