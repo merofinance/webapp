@@ -4,10 +4,32 @@ const apiBaseURL = "https://api.coingecko.com/api/v3";
 
 export type ApiPrices = Record<string, Record<string, number>>;
 
+const coinList: CoinInfo[] = [
+  {
+    id: "usd-coin",
+    symbol: "usdc",
+  },
+  {
+    id: "tether",
+    symbol: "usdt",
+  },
+  {
+    id: "dai",
+    symbol: "dai",
+  },
+  {
+    id: "ethereum",
+    symbol: "eth",
+  },
+  {
+    id: "frax",
+    symbol: "frax",
+  },
+];
+
 interface CoinInfo {
   id: string;
   symbol: string;
-  name: string;
 }
 
 const getCoinId = (coinList: CoinInfo[], symbol: string): string => {
@@ -22,17 +44,7 @@ const getCoinSymbol = (coinList: CoinInfo[], id: string): string => {
   return coin.symbol.toUpperCase();
 };
 
-const getCoinList = async (): Promise<CoinInfo[]> => {
-  const url = `${apiBaseURL}/coins/list`;
-  const response = await fetch(url);
-  return response.json();
-};
-
-const fetchPrices = async (
-  symbols: string[],
-  quote: string,
-  coinList: CoinInfo[]
-): Promise<Prices> => {
+const fetchPrices = async (symbols: string[], quote: string): Promise<Prices> => {
   const coinIds = symbols.map((s) => getCoinId(coinList, s));
   const url = `${apiBaseURL}/simple/price?ids=${coinIds.join(",")}&vs_currencies=${quote}`;
   const response = await fetch(url);
@@ -45,6 +57,5 @@ const fetchPrices = async (
 };
 
 export const getPrices = async (symbols: string[], quote = "USD"): Promise<Prices> => {
-  const coinList = await getCoinList();
-  return fetchPrices(symbols, quote.toLowerCase(), coinList);
+  return fetchPrices(symbols, quote.toLowerCase());
 };
