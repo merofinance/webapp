@@ -54,7 +54,7 @@ const NavItems = (): JSX.Element => {
     {
       label: "header.tabs.actions",
       link: "/actions",
-      comingSoon: !chainId || chainId !== 42,
+      comingSoon: !chainId || (chainId !== 42 && chainId !== 5),
     },
     {
       label: "header.tabs.claim",

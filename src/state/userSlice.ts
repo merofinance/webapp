@@ -76,7 +76,7 @@ export const fetchAllowances = createAsyncThunk(
           token: { address: pool.stakerVaultAddress, decimals: pool.underlying.decimals },
         },
         {
-          spender: mero.poolMigrationZapAddres,
+          spender: mero.poolMigrationZapAddress || "",
           token: pool.lpToken,
         },
       ])

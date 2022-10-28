@@ -68,8 +68,8 @@ const MigrateAll = ({ migrating, close }: Props): Optional<JSX.Element> => {
   const TOTAL_STEPS = depositedPools ? depositedPools.length + 1 : 1;
 
   const isApproved = (pool: Pool): boolean => {
-    if (!mero) return false;
-    const plainAllowance = allowances[pool.lpToken.address]?.[mero.poolMigrationZapAddres];
+    if (!mero || !mero.poolMigrationZapAddress) return false;
+    const plainAllowance = allowances[pool.lpToken.address]?.[mero.poolMigrationZapAddress];
     if (!plainAllowance) return false;
     return !ScaledNumber.fromPlain(plainAllowance).isZero();
   };
@@ -85,11 +85,12 @@ const MigrateAll = ({ migrating, close }: Props): Optional<JSX.Element> => {
 
   useEffect(() => {
     if (!mero || !depositedPools || !migrating) return;
-    if (!allPoolsApproved && activePool) {
+
+    if (!allPoolsApproved && mero.poolMigrationZapAddress && activePool) {
       dispatch(
         approve({
           token: activePool.lpToken,
-          spender: mero.poolMigrationZapAddres,
+          spender: mero.poolMigrationZapAddress,
           amount: ScaledNumber.fromUnscaled(INFINITE_APPROVE_AMMOUNT),
           mero,
         })

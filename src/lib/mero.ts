@@ -104,7 +104,7 @@ export interface Mero {
 
   provider: providers.Provider;
   topupActionAddress: Optional<string>;
-  poolMigrationZapAddres: string;
+  poolMigrationZapAddress: Optional<string>;
 }
 
 export class Web3Mero implements Mero {
@@ -116,7 +116,7 @@ export class Web3Mero implements Mero {
 
   private gasBank: GasBank | undefined;
 
-  private poolMigrationZap: PoolMigrationZap;
+  private poolMigrationZap: PoolMigrationZap | undefined;
 
   private chainId: number;
 
@@ -126,10 +126,14 @@ export class Web3Mero implements Mero {
 
     // eslint-disable-next-line dot-notation
     this.controller = ControllerFactory.connect(contracts.Controller[0], _provider);
-    this.poolMigrationZap = PoolMigrationZapFactory.connect(
-      contracts.PoolMigrationZap[0], // eslint-disable-line dot-notation
-      _provider
-    );
+
+    if (contracts.PoolMigrationZap && contracts.PoolMigrationZap.length > 0) {
+      this.poolMigrationZap = PoolMigrationZapFactory.connect(
+        contracts.PoolMigrationZap[0], // eslint-disable-line dot-notation
+        _provider
+      );
+    }
+
     // eslint-disable-next-line dot-notation
     if (contracts.TopUpAction && contracts.TopUpAction.length > 0)
       this.topupAction = TopUpActionFactory.connect(contracts.TopUpAction[0], _provider);
@@ -146,8 +150,8 @@ export class Web3Mero implements Mero {
     return this.topupAction ? this.topupAction.address : null;
   }
 
-  get poolMigrationZapAddres(): string {
-    return this.poolMigrationZap.address;
+  get poolMigrationZapAddress(): Optional<string> {
+    return this.poolMigrationZap ? this.poolMigrationZap.address : null;
   }
 
   get provider(): providers.Provider {
@@ -163,6 +167,8 @@ export class Web3Mero implements Mero {
     switch (this.chainId) {
       case 42:
         return contracts["42"];
+      case 5:
+        return contracts["5"];
       case 1337:
         return contracts["1337"];
       case 1:
@@ -190,7 +196,7 @@ export class Web3Mero implements Mero {
   }
 
   async listOldPools(): Promise<PlainPool[]> {
-    const markets = oldPools[this.chainId];
+    const markets = oldPools[this.chainId] || [];
     return Promise.all(markets.map((v: any) => this.getOldPoolInfo(v)));
   }
 
@@ -604,6 +610,7 @@ export class Web3Mero implements Mero {
   }
 
   async migrate(poolAddress: string): Promise<ContractTransaction> {
+    if (!this.poolMigrationZap) return makeContractTransaction("", "");
     const gasEstimate = await this.poolMigrationZap.estimateGas.migrate(poolAddress);
     const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
     return this.poolMigrationZap.migrate(poolAddress, {
@@ -612,6 +619,7 @@ export class Web3Mero implements Mero {
   }
 
   async migrateAll(poolAddresses: string[]): Promise<ContractTransaction> {
+    if (!this.poolMigrationZap) return makeContractTransaction("", "");
     const gasEstimate = await this.poolMigrationZap.estimateGas.migrateAll(poolAddresses);
     const gasLimit = gasEstimate.mul(GAS_BUFFER).div(10);
     return this.poolMigrationZap.migrateAll(poolAddresses, {
