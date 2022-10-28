@@ -22,24 +22,8 @@ jobs:
         run: yarn
       - name: Building App
         run: yarn run build
-  cypress_test:
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Increase Watchers
-        run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-      - name: Installing Dependencies
-        run: yarn
-      - name: Starting Server
-        run: yarn start & npx wait-on http://localhost:3000
-      - name: Run Cypress with Percy
-        run: yarn run percy
-        env:
-          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
-          CYPRESS_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
   deploy:
-    needs: [unit_test, build, cypress_test]
+    needs: [unit_test, build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -61,17 +45,3 @@ jobs:
         run: npm i -g @localazy/cli
       - name: Upload Translations
         run: localazy upload -w ${{ secrets.LOCALAZY_WRITE_KEY }} -r ${{ secrets.LOCALAZY_READ_KEY }}
-  e2e:
-    needs: deploy
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Increase Watchers
-        run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-      - name: Installing Dependencies
-        run: yarn
-      - name: run cypress
-        run: CYPRESS_baseUrl=https://mero.finance/ npx cypress run
-        env:
-          CYPRESS_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
