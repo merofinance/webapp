@@ -1,13 +1,12 @@
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
 
 import { Header1, Header3 } from "../../styles/Headers";
 import { GradientText } from "../../styles/GradientText";
-import { selectProtocolsTotalUsdEverywhere } from "../../state/valueSelectors";
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
 import { useNavigateToTop } from "../../app/hooks/use-navigate-to-top";
+import useTvl from "../../app/hooks/use-tvl";
 
 const StyledHero = styled.div`
   width: 100%;
@@ -63,15 +62,15 @@ const ButtonContainer = styled.div`
 const Hero = (): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigateToTop();
-  const totalDeposits = useSelector(selectProtocolsTotalUsdEverywhere);
+  const tvl = useTvl();
 
   return (
     <StyledHero>
       <Header1>{t("landingPage.header")}</Header1>
       <Header3>{t("landingPage.subHeader")}</Header3>
       <TvlHeader>{t("landingPage.stats.tvl")}</TvlHeader>
-      {totalDeposits ? (
-        <TvlValue id="hero-statistics-tvl">{totalDeposits.toCompactUsdValue(1)}</TvlValue>
+      {tvl ? (
+        <TvlValue id="hero-statistics-tvl">{tvl.toCompactUsdValue(1)}</TvlValue>
       ) : (
         <LoaderContainer>
           <Loader button />
