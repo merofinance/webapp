@@ -17,9 +17,14 @@ const useEarned = (pool: Optional<Pool>): Optional<ScaledNumber> => {
     const { provider } = library;
     const contract = LiquidityPool__factory.connect(pool.address, provider);
 
-    // Getting total deposited
     const depositFilter = contract.filters.Deposit(account);
-    const deposits = await contract.queryFilter(depositFilter);
+    const withdrawFilter = contract.filters.Redeem(account);
+    const [deposits, withdrawals] = await Promise.all([
+      contract.queryFilter(depositFilter),
+      contract.queryFilter(withdrawFilter),
+    ]);
+
+    // Getting total deposited
     let deposited = new ScaledNumber();
     deposits.forEach((deposit) => {
       deposited = deposited.add(
@@ -28,8 +33,6 @@ const useEarned = (pool: Optional<Pool>): Optional<ScaledNumber> => {
     });
 
     // Getting total withdrawn
-    const withdrawFilter = contract.filters.Redeem(account);
-    const withdrawals = await contract.queryFilter(withdrawFilter);
     let withdrawn = new ScaledNumber();
     withdrawals.forEach((withdrawal) => {
       withdrawn = withdrawn.add(
