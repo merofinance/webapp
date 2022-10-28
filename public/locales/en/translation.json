@@ -370,13 +370,13 @@
         "header": "Your deposits",
         "tooltip": "The current value of your assets held in the pool"
       },
+      "earned": {
+        "header": "Earned",
+        "tooltip": "The amount of the asset you have earned over the lifetime of the pool"
+      },
       "locked": {
         "header": "Allocated to Actions",
         "tooltip": "The current value of your assets that are allocated to Actions. Assets allocated to Actions still earn yield"
-      },
-      "tvl": {
-        "header": "Pool TVL",
-        "tooltip": "The market capitalization of assets held in the pool (Total Value Locked)"
       }
     },
     "tabs": {

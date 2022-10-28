@@ -6,11 +6,11 @@ import Statistics, { StatisticType } from "../../components/Statistics";
 import { Optional, Pool } from "../../lib/types";
 import {
   selectUsersPoolUnderlyingEverywhere,
-  selectProtocolPoolUnderlyingEverywhere,
   selectUsersPoolUnderlyingLocked,
 } from "../../state/valueSelectors";
 import { selectPrice } from "../../state/poolsListSlice";
 import { ACTIONS_LIVE } from "../../lib/constants";
+import useEarned from "../../app/hooks/use-earned";
 
 interface Props {
   pool: Optional<Pool>;
@@ -22,7 +22,7 @@ const PoolStatistics = ({ pool }: Props): JSX.Element => {
   const price = useSelector(selectPrice(pool));
   const locked = useSelector(selectUsersPoolUnderlyingLocked(pool));
   const deposits = useSelector(selectUsersPoolUnderlyingEverywhere(pool));
-  const totalDeposits = useSelector(selectProtocolPoolUnderlyingEverywhere(pool));
+  const earned = useEarned(pool);
 
   const statistics: StatisticType[] = [
     {
@@ -36,6 +36,16 @@ const PoolStatistics = ({ pool }: Props): JSX.Element => {
     },
   ];
 
+  statistics.push({
+    header: t("pool.statistics.earned.header"),
+    tooltip: t("pool.statistics.earned.tooltip"),
+    value:
+      pool && earned && earned.toCryptoString
+        ? `${earned.toCryptoString()} ${pool.underlying.symbol}`
+        : null,
+    usd: price && earned && earned.toUsdValue ? earned.toUsdValue(price) : null,
+  });
+
   if (ACTIONS_LIVE || chainId !== 1)
     statistics.push({
       header: t("pool.statistics.locked.header"),
@@ -46,17 +56,6 @@ const PoolStatistics = ({ pool }: Props): JSX.Element => {
           : null,
       usd: price && locked && locked.toUsdValue ? locked.toUsdValue(price) : null,
     });
-
-  statistics.push({
-    header: t("pool.statistics.tvl.header"),
-    tooltip: t("pool.statistics.tvl.tooltip"),
-    value:
-      pool && totalDeposits && totalDeposits.toCryptoString
-        ? `${totalDeposits.toCryptoString()} ${pool.underlying.symbol}`
-        : null,
-    usd:
-      price && totalDeposits && totalDeposits.toUsdValue ? totalDeposits.toUsdValue(price) : null,
-  });
 
   return <Statistics statistics={statistics} />;
 };
