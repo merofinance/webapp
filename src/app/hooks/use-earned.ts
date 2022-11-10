@@ -1,4 +1,4 @@
-import { LiquidityPool__factory } from "@merofinance/protocol";
+import { LiquidityPool__factory, LpToken__factory } from "@merofinance/protocol";
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -14,33 +14,58 @@ const useEarned = (pool: Optional<Pool>): Optional<ScaledNumber> => {
 
   const updateEarend = async () => {
     if (!account || !library || !pool || !withdrawable) return;
-    const { provider } = library;
-    const contract = LiquidityPool__factory.connect(pool.address, provider);
 
-    const depositFilter = contract.filters.Deposit(account);
-    const withdrawFilter = contract.filters.Redeem(account);
-    const [deposits, withdrawals] = await Promise.all([
-      contract.queryFilter(depositFilter),
-      contract.queryFilter(withdrawFilter),
+    const { provider } = library;
+    const poolContract = LiquidityPool__factory.connect(pool.address, provider);
+    const lpContract = LpToken__factory.connect(pool.lpToken.address, provider);
+
+    const [deposits, depositFors, withdrawals, transferOuts, transferIns] = await Promise.all([
+      poolContract.queryFilter(poolContract.filters.Deposit(account)),
+      poolContract.queryFilter(poolContract.filters.DepositFor(null, account)),
+      poolContract.queryFilter(poolContract.filters.Redeem(account)),
+      lpContract.queryFilter(lpContract.filters.Transfer(account, null)),
+      lpContract.queryFilter(lpContract.filters.Transfer(null, account)),
     ]);
 
+    // Getting total transfered in
+    const totalTransferedIn = transferIns.reduce((acc, event) => {
+      return acc.add(new ScaledNumber(event.args.value, pool.lpToken.decimals));
+    }, ScaledNumber.fromUnscaled(0, pool.lpToken.decimals));
+    console.log("totalTransferedIn", totalTransferedIn.toCryptoString());
+
+    // Getting total transfered out
+    const totalTransferedOut = transferOuts.reduce((acc, event) => {
+      return acc.add(new ScaledNumber(event.args.value, pool.lpToken.decimals));
+    }, ScaledNumber.fromUnscaled(0, pool.lpToken.decimals));
+    console.log("totalTransferedOut", totalTransferedOut.toCryptoString());
+
     // Getting total deposited
-    let deposited = new ScaledNumber();
-    deposits.forEach((deposit) => {
-      deposited = deposited.add(
-        new ScaledNumber(deposit.args.depositAmount, pool.underlying.decimals)
-      );
-    });
+    const totalDeposited = deposits.reduce((acc, event) => {
+      return acc.add(new ScaledNumber(event.args.depositAmount, pool.lpToken.decimals));
+    }, ScaledNumber.fromUnscaled(0, pool.lpToken.decimals));
+    console.log("totalDeposited", totalDeposited.toCryptoString());
+
+    // Getting total deposited for
+    const totalDepositedFor = depositFors.reduce((acc, event) => {
+      return acc.add(new ScaledNumber(event.args.depositAmount, pool.lpToken.decimals));
+    }, ScaledNumber.fromUnscaled(0, pool.lpToken.decimals));
+
+    console.log("Total deposited for", totalDepositedFor.toCryptoString());
 
     // Getting total withdrawn
-    let withdrawn = new ScaledNumber();
-    withdrawals.forEach((withdrawal) => {
-      withdrawn = withdrawn.add(
-        new ScaledNumber(withdrawal.args.redeemAmount, pool.underlying.decimals)
-      );
-    });
+    const totalWithdrawn = withdrawals.reduce((acc, event) => {
+      return acc.add(new ScaledNumber(event.args.redeemAmount, pool.lpToken.decimals));
+    }, ScaledNumber.fromUnscaled(0, pool.lpToken.decimals));
+    console.log("totalWithdrawn", totalWithdrawn.toCryptoString());
 
-    setEarned(withdrawn.add(withdrawable).sub(deposited));
+    setEarned(
+      totalWithdrawn
+        .add(withdrawable)
+        .sub(totalDeposited)
+        .sub(totalDepositedFor)
+        .sub(totalTransferedIn)
+        .add(totalTransferedOut)
+    );
   };
 
   const hasWithdrawable = !!withdrawable;
