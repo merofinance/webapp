@@ -2,7 +2,6 @@ import { BigNumber } from "ethers";
 
 // Feature toggles
 export const STAKING_LIVE = false;
-export const ACTIONS_LIVE = false;
 
 // Variables
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
