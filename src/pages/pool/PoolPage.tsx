@@ -21,7 +21,6 @@ import ContentSection from "../../components/ContentSection";
 import LiveHelp from "../../components/LiveHelp";
 import { Optional } from "../../lib/types";
 import { DOCS_LINK } from "../../lib/links";
-import { ACTIONS_LIVE } from "../../lib/constants";
 import { useNavigateToTop } from "../../app/hooks/use-navigate-to-top";
 import PausedSnackbar from "../../components/PausedSnackbar";
 
@@ -135,7 +134,7 @@ const PoolPage = (): Optional<JSX.Element> => {
           />
           <PoolInformation pool={pool} />
           <LiveHelp />
-          {ACTIONS_LIVE && usersPoolLpUnlocked && !usersPoolLpUnlocked.isZero() && (
+          {usersPoolLpUnlocked && !usersPoolLpUnlocked.isZero() && (
             <ButtonContainer>
               <Button
                 id="create-topup-button"

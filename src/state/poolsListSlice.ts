@@ -14,7 +14,7 @@ import {
   Prices,
 } from "../lib/types";
 import { fetchLoans } from "./lendingSlice";
-import { ACTIONS_LIVE, INFURA_ID } from "../lib/constants";
+import { INFURA_ID } from "../lib/constants";
 import { createMero } from "../lib/factory";
 import {
   fetchActionFees,
@@ -142,16 +142,11 @@ export const fetchState =
       dispatch(fetchAllowances({ mero, pools }));
       dispatch(fetchWithdrawalFees({ mero, pools }));
     });
-    const chainId = mero.getChainId();
-    if (ACTIONS_LIVE || chainId === 42) {
-      mero.currentAccount().then((address: Address) => dispatch(fetchLoans({ mero, address })));
-      dispatch(fetchPositions({ mero }));
-      dispatch(fetchEstimatedGasUsage({ mero }));
-      dispatch(fetchActionFees({ mero }));
-      dispatch(fetchGasBankBalance({ mero }));
-    } else {
-      dispatch(setPositionsLoaded());
-    }
+    mero.currentAccount().then((address: Address) => dispatch(fetchLoans({ mero, address })));
+    dispatch(fetchPositions({ mero }));
+    dispatch(fetchEstimatedGasUsage({ mero }));
+    dispatch(fetchActionFees({ mero }));
+    dispatch(fetchGasBankBalance({ mero }));
   };
 
 export const fetchPreviewState = (): AppThunk => (dispatch) => {
