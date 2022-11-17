@@ -512,7 +512,7 @@ export class Web3Mero implements Mero {
       totalTopUpAmount: position.maxTopUp.value,
       depositTokenBalance: ScaledNumber.fromUnscaled(0).value,
       registeredAt: Date.now(),
-      extra: utils.formatBytes32String("false"),
+      extra: utils.defaultAbiCoder.encode(["bool"], [false]),
     };
 
     const gasEstimate = await this.topupAction.estimateGas.register(account, protocol, 0, record, {
