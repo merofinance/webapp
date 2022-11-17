@@ -528,7 +528,7 @@ export class Web3Mero implements Mero {
   async removePosition(
     account: Address,
     protocol: string,
-    unstake = true
+    unstake = false
   ): Promise<ContractTransaction> {
     if (!this.topupAction) return makeContractTransaction("", "");
 
