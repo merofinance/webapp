@@ -473,7 +473,7 @@ export class Web3Mero implements Mero {
       protocol: ethers.utils.parseBytes32String(rawPosition.protocol),
       actionToken: positionInfo.actionToken,
       depositToken: positionInfo.depositToken,
-      account: rawPosition.account,
+      account: rawPosition.account.substring(0, 42),
       threshold: new ScaledNumber(positionInfo.threshold).toPlain(),
       singleTopUp: new ScaledNumber(positionInfo.singleTopUpAmount, actionTokenDecimals).toPlain(),
       maxTopUp: new ScaledNumber(positionInfo.totalTopUpAmount, actionTokenDecimals).toPlain(),
