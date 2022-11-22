@@ -1,7 +1,7 @@
 import { Contract, Signer } from "ethers";
 import { Provider } from "@ethersproject/providers";
 
-const ADDRESS = "0xE0fBa4Fc209b4948668006B2bE61711b7f465bAe";
+const ADDRESS = "0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9";
 
 export class LendingPoolFactory {
   static connect(signerOrProvider: Signer | Provider): Contract {

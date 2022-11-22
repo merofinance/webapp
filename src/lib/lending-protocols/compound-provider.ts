@@ -22,7 +22,7 @@ export class CompoundProvider implements LendingProtocolProvider {
     const accountData = data.accounts[0];
     const collateral = ScaledNumber.fromUnscaled(accountData.total_collateral_value_in_eth.value);
     const debt = ScaledNumber.fromUnscaled(accountData.total_borrow_value_in_eth.value);
-    return Promise.resolve({
+    return {
       protocol: LendingProtocol.Compound,
       totalCollateralETH: collateral.toPlain(),
       totalDebtETH: debt.toPlain(),
@@ -33,6 +33,6 @@ export class CompoundProvider implements LendingProtocolProvider {
         : collateral.div(debt).gt(ScaledNumber.fromUnscaled(100))
         ? ScaledNumber.fromUnscaled(100).toPlain()
         : collateral.div(debt).toPlain(),
-    });
+    };
   }
 }

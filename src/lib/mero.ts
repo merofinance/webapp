@@ -473,7 +473,7 @@ export class Web3Mero implements Mero {
       protocol: ethers.utils.parseBytes32String(rawPosition.protocol),
       actionToken: positionInfo.actionToken,
       depositToken: positionInfo.depositToken,
-      account: rawPosition.account,
+      account: rawPosition.account.substring(0, 42),
       threshold: new ScaledNumber(positionInfo.threshold).toPlain(),
       singleTopUp: new ScaledNumber(positionInfo.singleTopUpAmount, actionTokenDecimals).toPlain(),
       maxTopUp: new ScaledNumber(positionInfo.totalTopUpAmount, actionTokenDecimals).toPlain(),
@@ -512,7 +512,7 @@ export class Web3Mero implements Mero {
       totalTopUpAmount: position.maxTopUp.value,
       depositTokenBalance: ScaledNumber.fromUnscaled(0).value,
       registeredAt: Date.now(),
-      extra: utils.formatBytes32String("false"),
+      extra: utils.defaultAbiCoder.encode(["bool"], [false]),
     };
 
     const gasEstimate = await this.topupAction.estimateGas.register(account, protocol, 0, record, {
@@ -528,7 +528,7 @@ export class Web3Mero implements Mero {
   async removePosition(
     account: Address,
     protocol: string,
-    unstake = true
+    unstake = false
   ): Promise<ContractTransaction> {
     if (!this.topupAction) return makeContractTransaction("", "");
 

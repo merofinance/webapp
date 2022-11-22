@@ -1,4 +1,3 @@
-import { useWeb3React } from "@web3-react/core";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -44,7 +43,6 @@ const StyledNavItems = styled.ul`
 const NavItems = (): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { chainId } = useWeb3React();
 
   const navItems: NavItemType[] = [
     {
@@ -54,7 +52,6 @@ const NavItems = (): JSX.Element => {
     {
       label: "header.tabs.actions",
       link: "/actions",
-      comingSoon: !chainId || (chainId !== 42 && chainId !== 5),
     },
     {
       label: "header.tabs.claim",
