@@ -839,19 +839,19 @@
     "readMore": "Read more in <0>our docs</0>.",
     "suggestions": {
       "thresholdLow": {
-        "text": "I noticed you have entered a threshold top-up of {{threshold}}. This is very close to liquidation and in times of market volatility I suggest at least {{recommendedThreshold}} or more.",
+        "text": "I noticed you have entered a threshold of {{threshold}}. This is very close to liquidation and in times of market volatility I suggest at least {{recommendedThreshold}} or more.",
         "button": "Increase threshold"
       },
       "thresholdHigh": {
-        "text": "This will trigger immediately because the health factor you have entered exceeds the current health factor of the loan. I suggest you decrease the Health Factor of the top-up to {{recommendedThreshold}}.",
+        "text": "This will trigger immediately because the health factor you have entered exceeds the current health factor of the loan. I suggest you decrease the Health Factor to {{recommendedThreshold}}.",
         "button": "Decrease threshold"
       },
       "singleLow": {
-        "text": "Your max gas cost per top-up is {{maxGas}} ({{ethAmount}} ETH), however the amount per top-up is only {{single}} ({{underlyingAmount}} {{underlyingSymbol}}). I recommend increasing the single top-up to {{suggestion}} {{underlyingSymbol}} for more efficient top-ups.",
-        "button": "Increase top-up"
+        "text": "Your max gas cost is {{maxGas}} ({{ethAmount}} ETH), however the single amount is only {{single}} ({{underlyingAmount}} {{underlyingSymbol}}). I recommend increasing the single amount to {{suggestion}} {{underlyingSymbol}} for more efficient actions.",
+        "button": "Increase single amount"
       },
       "topupPositionLow": {
-        "text": "I’ve noticed your {{protocol}} top-up Action is running low on funds. I suggest you delete that top-up Action and register a new one as soon as possible.",
+        "text": "I’ve noticed your {{protocol}} Action is running low on funds. I suggest you delete that Action and register a new one as soon as possible.",
         "button": "Delete action"
       }
     }
