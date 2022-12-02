@@ -7,7 +7,6 @@ import ContentSection from "../../../../components/ContentSection";
 import Button from "../../../../components/Button";
 import { selectUsersPoolLpUnlocked } from "../../../../state/valueSelectors";
 import { selectPool } from "../../../../state/poolsListSlice";
-import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
 import PoolDeposit from "../../../pool/PoolDeposit";
 
 const Container = styled.div`
@@ -35,7 +34,12 @@ const ButtonContainer = styled.div`
   margin-top: 6rem;
 `;
 
-const TopupPoolDeposit = (): JSX.Element => {
+interface Props {
+  actionType: string;
+  nextRouteBase: string;
+}
+
+const TopupPoolDeposit = ({ actionType, nextRouteBase }: Props): JSX.Element => {
   const { t } = useTranslation();
   const { address, protocol, poolName } = useParams<"address" | "protocol" | "poolName">();
   const navigate = useNavigate();
@@ -51,29 +55,31 @@ const TopupPoolDeposit = (): JSX.Element => {
     <Container>
       <ContentSection
         header={t("actions.register.header")}
-        subHeader={t("actions.topup.label")}
+        subHeader={t(`actions.${actionType}.header`)}
         nav={t("actions.register.step", { step: "3/4" })}
       >
         <Header id="register-topup-pool-deposit">
-          {t("actions.topup.stages.pool.deposit.header", { asset: pool.underlying.symbol })}
+          {t(`actions.${actionType}.stages.pool.deposit.header`, { asset: pool.underlying.symbol })}
         </Header>
         <SubHeader>
-          {t("actions.topup.stages.pool.deposit.subHeader", { asset: pool.underlying.symbol })}
+          {t(`actions.${actionType}.stages.pool.deposit.subHeader`, {
+            asset: pool.underlying.symbol,
+          })}
         </SubHeader>
         <PoolDeposit compact pool={pool} />
         <ButtonContainer>
           <Button
-            id="register-topup-pool-deposit-button"
+            id={`register-${actionType}-pool-deposit-button`}
             primary
             medium
             width="30rem"
             click={() => {
               if (address && protocol && poolName)
-                navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${poolName.toLowerCase()}`);
+                navigate(`${nextRouteBase}/${address}/${protocol}/${poolName.toLowerCase()}`);
               else navigate(-1);
             }}
             disabled={!pool || !usersPoolLpUnlocked || usersPoolLpUnlocked.isZero()}
-            hoverText={t("actions.topup.stages.pool.deposit.incomplete", {
+            hoverText={t(`actions.${actionType}.stages.pool.deposit.incomplete`, {
               asset: pool?.underlying.symbol,
             })}
           >

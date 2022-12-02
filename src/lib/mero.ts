@@ -483,6 +483,7 @@ export class Web3Mero implements Mero {
         positionInfo.depositTokenBalance,
         depositTokenDecimals
       ).toPlain(),
+      debtRepayment: utils.defaultAbiCoder.decode(["bool"], positionInfo.extra)[0],
     };
     return position;
   }
@@ -512,7 +513,7 @@ export class Web3Mero implements Mero {
       totalTopUpAmount: position.maxTopUp.value,
       depositTokenBalance: ScaledNumber.fromUnscaled(0).value,
       registeredAt: Date.now(),
-      extra: utils.defaultAbiCoder.encode(["bool"], [false]),
+      extra: utils.defaultAbiCoder.encode(["bool"], [position.debtRepayment]),
     };
 
     const gasEstimate = await this.topupAction.estimateGas.register(account, protocol, 0, record, {

@@ -11,7 +11,7 @@ import { selectPool, selectPools } from "../../../../state/poolsListSlice";
 import { Pool } from "../../../../lib";
 import Asset from "../../../../components/Asset";
 import { RowOptionType } from "../../../../components/RowOption";
-import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
+import { DEBT_REPAYMENT_ACTION_ROUTE } from "../../../../lib/constants";
 import TopupPoolDeposits from "./TopupPoolDeposits";
 import TopupPoolTvl from "./TopupPoolTvl";
 import {
@@ -52,7 +52,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const TopupPool = (): JSX.Element => {
+const DebtRepaymentPool = (): JSX.Element => {
   const { t } = useTranslation();
   const { address, protocol } = useParams<"address" | "protocol">();
   const navigate = useNavigateToTop();
@@ -95,15 +95,15 @@ const TopupPool = (): JSX.Element => {
     <Container>
       <ContentSection
         header={t("actions.register.header")}
-        subHeader={t("actions.topup.header")}
+        subHeader={t("actions.debtRepayment.header")}
         nav={t("actions.register.step", { step: "3/4" })}
       >
         <Header id="register-topup-pool-header">
           {hasDeposits
-            ? t("actions.topup.stages.pool.header")
-            : t("actions.topup.stages.pool.noDepositsHeader")}
+            ? t("actions.debtRepayment.stages.pool.header")
+            : t("actions.debtRepayment.stages.pool.noDepositsHeader")}
         </Header>
-        {!hasDeposits && <SubHeader>{t("actions.topup.stages.pool.subHeader")}</SubHeader>}
+        {!hasDeposits && <SubHeader>{t("actions.debtRepayment.stages.pool.subHeader")}</SubHeader>}
         <RowSelector
           value={poolName}
           setValue={(value: string) => setPoolName(value)}
@@ -117,11 +117,13 @@ const TopupPool = (): JSX.Element => {
             width="30rem"
             click={() => {
               if (usersPoolLpUnlocked && usersPoolLpUnlocked?.isZero())
-                navigate(`${TOPUP_ACTION_ROUTE}/deposit/${poolName}/${address}/${protocol}`);
-              else navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}/${poolName}`);
+                navigate(
+                  `${DEBT_REPAYMENT_ACTION_ROUTE}/deposit/${poolName}/${address}/${protocol}`
+                );
+              else navigate(`${DEBT_REPAYMENT_ACTION_ROUTE}/${address}/${protocol}/${poolName}`);
             }}
             disabled={!pool}
-            hoverText={t("actions.topup.stages.pool.incomplete")}
+            hoverText={t("actions.debtRepayment.stages.pool.incomplete")}
           >
             {t("components.continue")}
           </Button>
@@ -131,4 +133,4 @@ const TopupPool = (): JSX.Element => {
   );
 };
 
-export default TopupPool;
+export default DebtRepaymentPool;

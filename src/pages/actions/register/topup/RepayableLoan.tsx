@@ -7,10 +7,10 @@ import Loader from "../../../../components/Loader";
 import { selectEthPrice } from "../../../../state/poolsListSlice";
 import Button from "../../../../components/Button";
 import { Loan } from "../../../../lib/types";
-import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
+import { DEBT_REPAYMENT_ACTION_ROUTE } from "../../../../lib/constants";
 import { useNavigateToTop } from "../../../../app/hooks/use-navigate-to-top";
 
-const StyledProtectableLoan = styled.div`
+const StyledRepayableLoan = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -71,14 +71,14 @@ interface Props {
   loan: Loan;
 }
 
-const ProtectableLoan = ({ loan }: Props): JSX.Element => {
+const RepayableLoan = ({ loan }: Props): JSX.Element => {
   const { t } = useTranslation();
   const { account } = useWeb3React();
   const navigate = useNavigateToTop();
   const ethPrice = useSelector(selectEthPrice);
 
   return (
-    <StyledProtectableLoan id={`${loan.protocol.toLowerCase()}-protectable-loan`}>
+    <StyledRepayableLoan id={`${loan.protocol.toLowerCase()}-repayable-loan`}>
       <Column>
         <Header>{t("actions.suggestions.topup.labels.protocol")}</Header>
         <Value>{loan.protocol}</Value>
@@ -101,16 +101,16 @@ const ProtectableLoan = ({ loan }: Props): JSX.Element => {
       </Column>
       <Column>
         <Button
-          id={`${loan.protocol.toLowerCase()}-protectable-loan-button`}
+          id={`${loan.protocol.toLowerCase()}-repayable-loan-button`}
           medium
           background="#3A3550"
-          click={() => navigate(`${TOPUP_ACTION_ROUTE}/${account}/${loan.protocol}`)}
+          click={() => navigate(`${DEBT_REPAYMENT_ACTION_ROUTE}/${account}/${loan.protocol}`)}
         >
-          {t("actions.suggestions.topup.registerCollateralTopup")}
+          {t("actions.suggestions.topup.registerDebtRepayment")}
         </Button>
       </Column>
-    </StyledProtectableLoan>
+    </StyledRepayableLoan>
   );
 };
 
-export default ProtectableLoan;
+export default RepayableLoan;

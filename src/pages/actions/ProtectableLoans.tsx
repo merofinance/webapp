@@ -10,6 +10,7 @@ import { Loan, Optional, Position } from "../../lib/types";
 import { selectLoans } from "../../state/lendingSlice";
 import { selectPositions } from "../../state/positionsSlice";
 import ProtectableLoan from "./register/topup/ProtectableLoan";
+import RepayableLoan from "./register/topup/RepayableLoan";
 
 const StyledProtectableLoans = styled.div`
   position: relative;
@@ -79,7 +80,15 @@ const ProtectableLoans = (): Optional<JSX.Element> => {
       !positions.some((position: Position) => position.protocol === loan.protocol)
   );
 
-  if (protectableLoans.length === 0) return null;
+  const repayableLoans = loans.filter(
+    (loan: Loan) =>
+      loan.totalDebtETH?.isZero &&
+      !loan.totalDebtETH.isZero() &&
+      positions &&
+      !positions.some((position: Position) => position.protocol === loan.protocol)
+  );
+
+  if (protectableLoans.length === 0 && repayableLoans.length === 0) return null;
 
   return (
     <StyledProtectableLoans>
@@ -91,6 +100,9 @@ const ProtectableLoans = (): Optional<JSX.Element> => {
       <SubHeader>{t("actions.suggestions.topup.subHeader")}</SubHeader>
       {protectableLoans.map((loan: Loan) => (
         <ProtectableLoan key={loan.protocol} loan={loan} />
+      ))}
+      {repayableLoans.map((loan: Loan) => (
+        <RepayableLoan key={loan.protocol} loan={loan} />
       ))}
       <MeroHelper src={logo} />
     </StyledProtectableLoans>

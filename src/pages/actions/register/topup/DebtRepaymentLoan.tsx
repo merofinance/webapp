@@ -13,6 +13,7 @@ import LoanSearch from "./LoanSearch";
 import { Loan, Optional, Position } from "../../../../lib/types";
 import { selectPositions } from "../../../../state/positionsSlice";
 import { RowOptionType } from "../../../../components/RowOption";
+import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
 import { useNavigateToTop } from "../../../../app/hooks/use-navigate-to-top";
 
 const Container = styled.div`
@@ -52,12 +53,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-interface Props {
-  actionType: string;
-  nextRouteBase: string;
-}
-
-const TopupLoan = ({ actionType, nextRouteBase }: Props): JSX.Element => {
+const TopupLoan = (): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigateToTop();
   const { account } = useWeb3React();
@@ -108,7 +104,7 @@ const TopupLoan = ({ actionType, nextRouteBase }: Props): JSX.Element => {
     <Container>
       <ContentSection
         header={t("actions.register.header")}
-        subHeader={t(`actions.${actionType}.header`)}
+        subHeader={t("actions.topup.header")}
         nav={t("actions.register.step", { step: "2/4" })}
       >
         {hasLoans && (
@@ -140,7 +136,7 @@ const TopupLoan = ({ actionType, nextRouteBase }: Props): JSX.Element => {
             medium
             disabled={!address}
             width="30rem"
-            click={() => navigate(`${nextRouteBase}/${address}/${protocol}`)}
+            click={() => navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`)}
             hoverText={t("actions.topup.stages.loan.header")}
           >
             {t("components.continue")}

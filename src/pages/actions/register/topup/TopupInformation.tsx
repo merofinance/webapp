@@ -97,14 +97,16 @@ const TopupInformation = ({ position, pool, value }: Props): JSX.Element => {
   const { chainId } = useWeb3React();
   const { isMobile } = useDevice();
 
+  const actionType = position.debtRepayment ? "debtRepayment" : "topup";
+
   return (
     <StyledTopupInformation>
       <Summary>
-        {t("actions.topup.stages.confirmation.summaryStart")}
+        {t(`actions.${actionType}.stages.confirmation.summaryStart`)}
         <ExternalLink large link={getEtherscanAddressLink(chainId, position.account)}>
           {shortenAddress(position.account, isMobile ? 10 : 26)}
         </ExternalLink>
-        {t("actions.topup.stages.confirmation.summaryEnd", {
+        {t(`actions.${actionType}.stages.confirmation.summaryEnd`, {
           threshold: position.threshold,
           single: position.singleTopUp,
           asset: pool.underlying.symbol,
@@ -117,14 +119,14 @@ const TopupInformation = ({ position, pool, value }: Props): JSX.Element => {
         sections={[
           [
             {
-              label: t("actions.topup.fields.protocol.label"),
-              tooltip: t("actions.topup.fields.protocol.tooltip"),
+              label: t(`actions.${actionType}.fields.protocol.label`),
+              tooltip: t(`actions.${actionType}.fields.protocol.tooltip`),
               value: position.protocol,
               valueId: "topup-information-protocol",
             },
             {
-              label: t("actions.topup.fields.address.label"),
-              tooltip: t("actions.topup.fields.address.tooltip"),
+              label: t(`actions.${actionType}.fields.address.label`),
+              tooltip: t(`actions.${actionType}.fields.address.tooltip`),
               value: (
                 <ExternalLink large link={getEtherscanAddressLink(chainId, position.account)}>
                   {shortenAddress(position.account, 8)}
@@ -132,51 +134,55 @@ const TopupInformation = ({ position, pool, value }: Props): JSX.Element => {
               ),
             },
             {
-              label: t("actions.topup.fields.threshold.label"),
-              tooltip: t("actions.topup.fields.threshold.tooltip"),
+              label: t(`actions.${actionType}.fields.threshold.label`),
+              tooltip: t(`actions.${actionType}.fields.threshold.tooltip`),
               value: position.threshold.toString(),
               valueId: "topup-information-threshold",
             },
             {
-              label: t("actions.topup.fields.single.label"),
-              tooltip: t("actions.topup.fields.single.tooltip"),
+              label: t(`actions.${actionType}.fields.single.label`),
+              tooltip: t(`actions.${actionType}.fields.single.tooltip`),
               value: `${position.singleTopUp.toCryptoString()} ${pool.underlying.symbol}`,
               valueId: "topup-information-single-topup",
             },
             {
-              label: t("actions.topup.fields.max.label"),
-              tooltip: t("actions.topup.fields.max.tooltip"),
+              label: t(`actions.${actionType}.fields.max.label`),
+              tooltip: t(`actions.${actionType}.fields.max.tooltip`),
               value: `${position.maxTopUp.toCryptoString()} ${pool.underlying.symbol}`,
               valueId: "topup-information-max-topup",
             },
             {
-              label: t("actions.topup.fields.priority.label"),
-              tooltip: t("actions.topup.fields.priority.tooltip"),
+              label: t(`actions.${actionType}.fields.priority.label`),
+              tooltip: t(`actions.${actionType}.fields.priority.tooltip`),
               value: `${position.priorityFee.toCryptoString()} Gwei`,
               valueId: "topup-information-priority-fee",
             },
             {
-              label: t("actions.topup.fields.gas.label"),
-              tooltip: t("actions.topup.fields.gas.tooltip"),
+              label: t(`actions.${actionType}.fields.gas.label`),
+              tooltip: t(`actions.${actionType}.fields.gas.tooltip`),
               value: `${position.maxGasPrice.toCryptoString()} Gwei`,
               valueId: "topup-information-max-gas",
             },
           ],
           [
             {
-              label: t("actions.topup.stages.confirmation.fees.label"),
-              tooltip: t("actions.topup.stages.confirmation.fees.tooltip.header"),
+              label: t(`actions.${actionType}.stages.confirmation.fees.label`),
+              tooltip: t(`actions.${actionType}.stages.confirmation.fees.tooltip.header`),
               tooltipItems: [
                 {
-                  label: t("actions.topup.stages.confirmation.fees.tooltip.itemLabels.lps"),
+                  label: t(`actions.topup.${actionType}.confirmation.fees.tooltip.itemLabels.lps`),
                   value: actionFees ? actionFees.lpFraction.toPercent() : "--%",
                 },
                 {
-                  label: t("actions.topup.stages.confirmation.fees.tooltip.itemLabels.keepers"),
+                  label: t(
+                    `actions.${actionType}.stages.confirmation.fees.tooltip.itemLabels.keepers`
+                  ),
                   value: actionFees ? actionFees.keeperFraction.toPercent() : "--%",
                 },
                 {
-                  label: t("actions.topup.stages.confirmation.fees.tooltip.itemLabels.stakers"),
+                  label: t(
+                    `actions.${actionType}.stages.confirmation.fees.tooltip.itemLabels.stakers`
+                  ),
                   value: actionFees ? actionFees.treasuryFraction.toPercent() : "--%",
                 },
               ],
@@ -184,7 +190,7 @@ const TopupInformation = ({ position, pool, value }: Props): JSX.Element => {
                 ? actionFees
                   ? actionFees.total.toPercent()
                   : "--%"
-                : t("actions.topup.stages.confirmation.fees.value", {
+                : t(`actions.${actionType}.stages.confirmation.fees.value`, {
                     percent: actionFees ? actionFees.total.toPercent() : "--%",
                   }),
               valueId: "topup-information-action-fees",

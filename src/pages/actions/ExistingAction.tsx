@@ -55,7 +55,7 @@ const ExistingAction = ({ position }: Props): JSX.Element => {
   return (
     <>
       <StyledRegisteredAction id={`existing-action-${position.protocol.toLowerCase()}`}>
-        <Value flex={5}>{t("actions.topup.label")}</Value>
+        <Value flex={5}>{t("actions.topup.header")}</Value>
         <Value flex={3}>
           {price && pool ? (
             position.depositTokenBalance.mul(pool.exchangeRate).toCompactUsdValue(price)

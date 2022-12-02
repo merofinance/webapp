@@ -55,6 +55,7 @@ interface GenericPosition<T> {
   depositTokenBalance: T;
   actionToken: Address;
   depositToken: Address;
+  debtRepayment: boolean;
 }
 
 export type Position = GenericPosition<ScaledNumber>;
@@ -146,6 +147,7 @@ export function positionFromPartial<T>(pool: Pool, position: Partial<Position>):
   if (!position.priorityFee) throw Error("Missing priority fee when creating position");
   if (!position.depositTokenBalance)
     throw Error("Missing deposit token balance when creating position");
+  if (!position.debtRepayment) throw Error("Missing debt repayment when creating position");
   return {
     protocol: position.protocol,
     account: position.account,
@@ -157,6 +159,7 @@ export function positionFromPartial<T>(pool: Pool, position: Partial<Position>):
     actionToken: pool.underlying.address,
     depositToken: pool.lpToken.address,
     depositTokenBalance: position.depositTokenBalance,
+    debtRepayment: position.debtRepayment,
   };
 }
 
