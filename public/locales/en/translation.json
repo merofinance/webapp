@@ -461,8 +461,7 @@
           "totalLoan": "Loan amount",
           "pool": "Protecting with"
         },
-        "registerCollateralTopup": "Register Collateral Top-up",
-        "registerDebtRepayment": "Register Debt Repayment"
+        "registerCollateralTopup": "Register Action"
       }
     },
     "gasBank": {
