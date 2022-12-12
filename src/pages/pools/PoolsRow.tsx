@@ -186,16 +186,26 @@ const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
             <Loader />
           )}
         </Data>
-        <Data id={`pool-row-${pool.lpToken.symbol.toLowerCase()}-tvl`} hideOnSnapshot>
-          {price && totalDeposits && totalDeposits.toCompactUsdValue ? (
-            totalDeposits.toCompactUsdValue(price)
-          ) : (
-            <Loader />
-          )}
-        </Data>
-        <DepositedData preview={preview}>
-          {price && deposits ? deposits.toCompactUsdValue(price) : <Loader />}
-        </DepositedData>
+        {preview && (
+          <Data id={`pool-row-${pool.lpToken.symbol.toLowerCase()}-tvl`} hideOnSnapshot>
+            {pool.totalAssets.toCompactUsdValue(1)}
+          </Data>
+        )}
+        {!preview && (
+          <Data id={`pool-row-${pool.lpToken.symbol.toLowerCase()}-tvl`} hideOnSnapshot>
+            {price && totalDeposits && totalDeposits.toCompactUsdValue ? (
+              totalDeposits.toCompactUsdValue(price)
+            ) : (
+              <Loader />
+            )}
+          </Data>
+        )}
+        {!preview && (
+          <DepositedData>
+            {price && deposits ? deposits.toCompactUsdValue(price) : <Loader />}
+          </DepositedData>
+        )}
+
         <ChevronData preview={preview}>
           <Chevron src={chevron} alt="right arrow" />
         </ChevronData>
