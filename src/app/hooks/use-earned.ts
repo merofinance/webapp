@@ -19,9 +19,8 @@ const useEarned = (pool: Optional<Pool>): Optional<ScaledNumber> => {
     const poolContract = LiquidityPool__factory.connect(pool.address, provider);
     const lpContract = LpToken__factory.connect(pool.lpToken.address, provider);
 
-    const [deposits, depositFors, withdrawals, transferOuts, transferIns] = await Promise.all([
+    const [deposits, withdrawals, transferOuts, transferIns] = await Promise.all([
       poolContract.queryFilter(poolContract.filters.Deposit(account)),
-      poolContract.queryFilter(poolContract.filters.DepositFor(null, account)),
       poolContract.queryFilter(poolContract.filters.Redeem(account)),
       lpContract.queryFilter(lpContract.filters.Transfer(account, null)),
       lpContract.queryFilter(lpContract.filters.Transfer(null, account)),
@@ -45,13 +44,6 @@ const useEarned = (pool: Optional<Pool>): Optional<ScaledNumber> => {
     }, ScaledNumber.fromUnscaled(0, pool.lpToken.decimals));
     console.log("totalDeposited", totalDeposited.toCryptoString());
 
-    // Getting total deposited for
-    const totalDepositedFor = depositFors.reduce((acc, event) => {
-      return acc.add(new ScaledNumber(event.args.depositAmount, pool.lpToken.decimals));
-    }, ScaledNumber.fromUnscaled(0, pool.lpToken.decimals));
-
-    console.log("Total deposited for", totalDepositedFor.toCryptoString());
-
     // Getting total withdrawn
     const totalWithdrawn = withdrawals.reduce((acc, event) => {
       return acc.add(new ScaledNumber(event.args.redeemAmount, pool.lpToken.decimals));
@@ -62,7 +54,6 @@ const useEarned = (pool: Optional<Pool>): Optional<ScaledNumber> => {
       totalWithdrawn
         .add(withdrawable)
         .sub(totalDeposited)
-        .sub(totalDepositedFor)
         .sub(totalTransferedIn)
         .add(totalTransferedOut)
     );
