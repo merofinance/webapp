@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ethers } from "ethers";
 import { ScaledNumber } from "scaled-number";
 
 import { AppThunk, RootState } from "../app/store";
@@ -14,22 +13,15 @@ import {
   Prices,
 } from "../lib/types";
 import { fetchLoans } from "./lendingSlice";
-import { INFURA_ID } from "../lib/constants";
-import { createMero } from "../lib/factory";
-import {
-  fetchActionFees,
-  fetchEstimatedGasUsage,
-  fetchPositions,
-  setPositionsLoaded,
-} from "./positionsSlice";
+import { fetchActionFees, fetchEstimatedGasUsage, fetchPositions } from "./positionsSlice";
 import {
   fetchAllowances,
   fetchBalances,
   fetchGasBankBalance,
   fetchWithdrawalFees,
 } from "./userSlice";
-import poolMetadata from "../lib/data/pool-metadata";
 import { handleTransactionConfirmation } from "../lib/transactionsUtils";
+import POOL_METADATA from "../lib/data/pool-metadata";
 
 interface PoolsState {
   pools: PlainPool[];
@@ -149,17 +141,6 @@ export const fetchState =
     dispatch(fetchGasBankBalance({ mero }));
   };
 
-export const fetchPreviewState = (): AppThunk => (dispatch) => {
-  const provider = new ethers.providers.InfuraProvider(1, INFURA_ID);
-  const mero = createMero(provider, { chainId: 1 });
-  dispatch(fetchOldPools({ mero }));
-  dispatch(fetchPools({ mero })).then((v) => {
-    if (v.meta.requestStatus !== "fulfilled") return;
-    const pools = v.payload as Pool[];
-    dispatch(fetchPrices({ mero, pools }));
-  });
-};
-
 export const selectPoolsLoaded = (state: RootState): boolean => state.pools.loaded;
 
 export const selectPools = (state: RootState): Optional<Pool[]> => {
@@ -167,7 +148,7 @@ export const selectPools = (state: RootState): Optional<Pool[]> => {
   return state.pools.pools
     .map((plainPool: PlainPool) => fromPlainPool(plainPool))
     .filter((pool: Pool) => {
-      if (!poolMetadata[pool.underlying.symbol]) return false;
+      if (!POOL_METADATA.find((m) => m.symbol === pool.underlying.symbol)) return false;
       return true;
     });
 };
@@ -177,7 +158,7 @@ export const selectOldPools = (state: RootState): Optional<Pool[]> => {
   return state.pools.oldPools
     .map((plainPool: PlainPool) => fromPlainPool(plainPool))
     .filter((pool: Pool) => {
-      if (!poolMetadata[pool.underlying.symbol]) return false;
+      if (!POOL_METADATA.find((m) => m.symbol === pool.underlying.symbol)) return false;
       return true;
     });
 };
