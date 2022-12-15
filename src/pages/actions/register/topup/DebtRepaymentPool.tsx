@@ -19,6 +19,7 @@ import {
   selectUsersTotalUsdUnlocked,
 } from "../../../../state/valueSelectors";
 import { useNavigateToTop } from "../../../../app/hooks/use-navigate-to-top";
+import { selectLoans } from "../../../../state/lendingSlice";
 
 const Container = styled.div`
   position: relative;
@@ -61,34 +62,38 @@ const DebtRepaymentPool = (): JSX.Element => {
   const [poolName, setPoolName] = useState("");
   const pool = useSelector(selectPool(poolName));
   const usersPoolLpUnlocked = useSelector(selectUsersPoolLpUnlocked(pool));
+  const loans = useSelector(selectLoans(address));
+  const protocolLoan = loans?.find((loan) => loan.protocol === protocol);
 
   const hasDeposits = !usersTotalUsdUnlocked?.isZero();
 
   const options: RowOptionType[] = pools
-    ? pools.map((pool: Pool) => {
-        return {
-          value: pool.lpToken.symbol.toLowerCase(),
-          id: `${pool.underlying.symbol.toLowerCase()}-pool-option`,
-          columns: [
-            {
-              label: t("headers.asset"),
-              value: <Asset tiny token={pool.underlying} />,
-            },
-            {
-              label: t("headers.deposits"),
-              value: <TopupPoolDeposits pool={pool} />,
-            },
-            {
-              label: t("headers.apy"),
-              value: pool.apy ? pool.apy.toPercent() : null,
-            },
-            {
-              label: t("headers.tvl"),
-              value: <TopupPoolTvl pool={pool} />,
-            },
-          ],
-        };
-      })
+    ? pools
+        .filter((pool) => protocolLoan?.borrowedTokens.includes(pool.underlying.symbol))
+        .map((pool: Pool) => {
+          return {
+            value: pool.lpToken.symbol.toLowerCase(),
+            id: `${pool.underlying.symbol.toLowerCase()}-pool-option`,
+            columns: [
+              {
+                label: t("headers.asset"),
+                value: <Asset tiny token={pool.underlying} />,
+              },
+              {
+                label: t("headers.deposits"),
+                value: <TopupPoolDeposits pool={pool} />,
+              },
+              {
+                label: t("headers.apy"),
+                value: pool.apy ? pool.apy.toPercent() : null,
+              },
+              {
+                label: t("headers.tvl"),
+                value: <TopupPoolTvl pool={pool} />,
+              },
+            ],
+          };
+        })
     : [];
 
   return (

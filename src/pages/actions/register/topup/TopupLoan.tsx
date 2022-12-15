@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import ContentSection from "../../../../components/ContentSection";
 import Button from "../../../../components/Button";
 import RowSelector from "../../../../components/RowSelector";
-import { selectEthPrice } from "../../../../state/poolsListSlice";
+import { selectEthPrice, selectPools } from "../../../../state/poolsListSlice";
 import { selectLoans } from "../../../../state/lendingSlice";
 import LoanSearch from "./LoanSearch";
 import { Loan, Optional, Position } from "../../../../lib/types";
@@ -64,6 +64,7 @@ const TopupLoan = ({ actionType, nextRouteBase }: Props): JSX.Element => {
   const loans = useSelector(selectLoans(account));
   const positions = useSelector(selectPositions);
   const ethPrice = useSelector(selectEthPrice);
+  const pools = useSelector(selectPools);
   const [protocol, setProtocol] = useState("");
   const [address, setAddress] = useState<Optional<string> | undefined>("");
 
@@ -73,10 +74,19 @@ const TopupLoan = ({ actionType, nextRouteBase }: Props): JSX.Element => {
       (position: Position) => position.protocol === loan.protocol && position.account === account
     );
 
-  const isAccountsLoan = address === account;
-  const hasLoans = loans.length > 0;
+  const usableLoans = loans.filter((loan: Loan) => {
+    if (actionType === "topup") return true;
+    return (
+      loan.borrowedTokens.filter((borrowedToken) => {
+        return pools?.find((pool) => pool.underlying.symbol === borrowedToken);
+      }).length > 0
+    );
+  });
 
-  const options: RowOptionType[] = loans
+  const isAccountsLoan = address === account;
+  const hasLoans = usableLoans.length > 0;
+
+  const options: RowOptionType[] = usableLoans
     .filter((loan: Loan) => loan.healthFactor.toCryptoString)
     .map((loan: Loan) => {
       return {

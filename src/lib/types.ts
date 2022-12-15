@@ -80,6 +80,7 @@ interface GenericLoan<T> {
   availableBorrowsETH: T;
   currentLiquidationThreshold: T;
   healthFactor: T;
+  borrowedTokens: string[];
 }
 export type Loan = GenericLoan<ScaledNumber>;
 export type PlainLoan = GenericLoan<PlainScaledNumber>;
