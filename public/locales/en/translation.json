@@ -478,6 +478,7 @@
           "noDepositsHeader": "To register an action you must deposit assets into a Mero pool",
           "subHeader": "Liquidity deposited into a Mero pool can be earmarked for debt repayment. You will earn yield while your liquidity is in a Mero pool.",
           "incomplete": "Select a pool",
+          "noDebt": "You don't have any debt on this loan in {{asset}}",
           "deposit": {
             "header": "Enter an amount of {{asset}} to deposit",
             "subHeader": "This {{asset}} can be used for debt repayment if triggered by user defined conditions.",

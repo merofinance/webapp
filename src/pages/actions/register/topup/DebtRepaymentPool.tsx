@@ -67,33 +67,41 @@ const DebtRepaymentPool = (): JSX.Element => {
 
   const hasDeposits = !usersTotalUsdUnlocked?.isZero();
 
+  const hasNoDebt = (symbol: string) => {
+    if (!protocolLoan) return false;
+    return !protocolLoan.borrowedTokens.includes(symbol);
+  };
+
   const options: RowOptionType[] = pools
-    ? pools
-        .filter((pool) => protocolLoan?.borrowedTokens.includes(pool.underlying.symbol))
-        .map((pool: Pool) => {
-          return {
-            value: pool.lpToken.symbol.toLowerCase(),
-            id: `${pool.underlying.symbol.toLowerCase()}-pool-option`,
-            columns: [
-              {
-                label: t("headers.asset"),
-                value: <Asset tiny token={pool.underlying} />,
-              },
-              {
-                label: t("headers.deposits"),
-                value: <TopupPoolDeposits pool={pool} />,
-              },
-              {
-                label: t("headers.apy"),
-                value: pool.apy ? pool.apy.toPercent() : null,
-              },
-              {
-                label: t("headers.tvl"),
-                value: <TopupPoolTvl pool={pool} />,
-              },
-            ],
-          };
-        })
+    ? pools.map((pool: Pool) => {
+        return {
+          value: pool.lpToken.symbol.toLowerCase(),
+          id: `${pool.underlying.symbol.toLowerCase()}-pool-option`,
+          disabledText: hasNoDebt(pool.underlying.symbol)
+            ? t("actions.debtRepayment.stages.pool.noDebt", {
+                asset: pool.underlying.symbol,
+              })
+            : "",
+          columns: [
+            {
+              label: t("headers.asset"),
+              value: <Asset tiny token={pool.underlying} />,
+            },
+            {
+              label: t("headers.deposits"),
+              value: <TopupPoolDeposits pool={pool} />,
+            },
+            {
+              label: t("headers.apy"),
+              value: pool.apy ? pool.apy.toPercent() : null,
+            },
+            {
+              label: t("headers.tvl"),
+              value: <TopupPoolTvl pool={pool} />,
+            },
+          ],
+        };
+      })
     : [];
 
   return (
