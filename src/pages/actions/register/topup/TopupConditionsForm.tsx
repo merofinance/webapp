@@ -121,7 +121,11 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const TopupConditionsForm = (): Optional<JSX.Element> => {
+interface Props {
+  actionType: string;
+}
+
+const TopupConditionsForm = ({ actionType }: Props): Optional<JSX.Element> => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const mero = useMero();
@@ -228,11 +232,11 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
   if (!mero) return null;
 
   const buttonHoverText = () => {
-    if (!formik.values.threshold) return t("actions.topup.fields.threshold.hover");
-    if (!formik.values.singleTopUp) return t("actions.topup.fields.single.hover");
-    if (!formik.values.maxTopUp) return t("actions.topup.fields.max.hover");
-    if (!formik.values.priorityFee) return t("actions.topup.fields.priority.hover");
-    if (!formik.values.maxGasPrice) return t("actions.topup.fields.gas.hover");
+    if (!formik.values.threshold) return t(`actions.${actionType}.fields.threshold.hover`);
+    if (!formik.values.singleTopUp) return t(`actions.${actionType}.fields.single.hover`);
+    if (!formik.values.maxTopUp) return t(`actions.${actionType}.fields.max.hover`);
+    if (!formik.values.priorityFee) return t(`actions.${actionType}.fields.priority.hover`);
+    if (!formik.values.maxGasPrice) return t(`actions.${actionType}.fields.gas.hover`);
     return "";
   };
 
@@ -247,6 +251,7 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
     actionToken: pool.underlying.address,
     depositToken: pool.lpToken.address,
     depositTokenBalance: ScaledNumber.fromUnscaled(0),
+    debtRepayment: actionType === "debtRepayment",
   };
 
   const suggestedMaximumTreshold = () => {
@@ -326,10 +331,10 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
         <TopupInput
           label={
             isMobile
-              ? t("actions.topup.fields.threshold.label")
-              : t("actions.topup.fields.threshold.question")
+              ? t(`actions.${actionType}.fields.threshold.label`)
+              : t(`actions.${actionType}.fields.threshold.question`)
           }
-          tooltip={t("actions.topup.fields.threshold.tooltip")}
+          tooltip={t(`actions.${actionType}.fields.threshold.tooltip`)}
           type="number"
           name="threshold"
           formik={formik}
@@ -380,23 +385,10 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
         <TopupInput
           label={
             isMobile
-              ? t("actions.topup.fields.single.label")
-              : t("actions.topup.fields.single.question")
+              ? t(`actions.${actionType}.fields.max.label`)
+              : t(`actions.${actionType}.fields.max.question`)
           }
-          tooltip={t("actions.topup.fields.single.tooltip")}
-          type="number"
-          name="singleTopUp"
-          formik={formik}
-          placeholder={`2,000 ${pool.underlying.symbol}`}
-          onBlur={() => {
-            singleMinimumSuggestion();
-          }}
-        />
-        <TopupInput
-          label={
-            isMobile ? t("actions.topup.fields.max.label") : t("actions.topup.fields.max.question")
-          }
-          tooltip={t("actions.topup.fields.max.tooltip")}
+          tooltip={t(`actions.${actionType}.fields.max.tooltip`)}
           type="number"
           name="maxTopUp"
           formik={formik}
@@ -408,10 +400,25 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
         <TopupInput
           label={
             isMobile
-              ? t("actions.topup.fields.priority.label")
-              : t("actions.topup.fields.priority.question")
+              ? t(`actions.${actionType}.fields.single.label`)
+              : t(`actions.${actionType}.fields.single.question`)
           }
-          tooltip={t("actions.topup.fields.priority.tooltip")}
+          tooltip={t(`actions.${actionType}.fields.single.tooltip`)}
+          type="number"
+          name="singleTopUp"
+          formik={formik}
+          placeholder={`2,000 ${pool.underlying.symbol}`}
+          onBlur={() => {
+            singleMinimumSuggestion();
+          }}
+        />
+        <TopupInput
+          label={
+            isMobile
+              ? t(`actions.${actionType}.fields.priority.label`)
+              : t(`actions.${actionType}.fields.priority.question`)
+          }
+          tooltip={t(`actions.${actionType}.fields.priority.tooltip`)}
           type="number"
           name="priorityFee"
           formik={formik}
@@ -419,9 +426,11 @@ const TopupConditionsForm = (): Optional<JSX.Element> => {
         />
         <TopupInput
           label={
-            isMobile ? t("actions.topup.fields.gas.label") : t("actions.topup.fields.gas.question")
+            isMobile
+              ? t(`actions.${actionType}.fields.gas.label`)
+              : t(`actions.${actionType}.fields.gas.question`)
           }
-          tooltip={t("actions.topup.fields.gas.tooltip")}
+          tooltip={t(`actions.${actionType}.fields.gas.tooltip`)}
           type="number"
           name="maxGasPrice"
           formik={formik}

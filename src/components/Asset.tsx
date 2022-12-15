@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Token } from "../lib/types";
-import poolMetadata from "../lib/data/pool-metadata";
+import POOL_METADATA from "../lib/data/pool-metadata";
 
 const StyledAsset = styled.div`
   display: flex;
@@ -51,11 +51,15 @@ interface Props {
 }
 
 const Asset = ({ token, large, small, tiny, value, hideIcon }: Props): JSX.Element => {
-  const { icon } = poolMetadata[token.symbol];
+  const metadata = POOL_METADATA.find((pool) => pool.symbol === token.symbol);
+
+  if (!metadata) {
+    throw new Error(`No metadata found for ${token.symbol}`);
+  }
 
   return (
     <StyledAsset>
-      {!hideIcon && <Icon src={icon} alt={`${token.symbol} icon`} tiny={tiny} />}
+      {!hideIcon && <Icon src={metadata.icon} alt={`${token.symbol} icon`} tiny={tiny} />}
       <Label large={large} small={small} tiny={tiny}>{`${value || ""}${token.symbol}`}</Label>
     </StyledAsset>
   );

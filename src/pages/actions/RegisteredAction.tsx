@@ -137,7 +137,7 @@ const RegisteredAction = ({ position }: Props): JSX.Element => {
       >
         <Column>
           <Header>{t("actions.registered.columns.type")}</Header>
-          <Value>{t("actions.topup.label")}</Value>
+          <Value>{t("actions.topup.header")}</Value>
         </Column>
         <Column>
           <Header>{t("actions.registered.columns.locked")}</Header>

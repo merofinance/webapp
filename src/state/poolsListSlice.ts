@@ -16,20 +16,15 @@ import {
 import { fetchLoans } from "./lendingSlice";
 import { INFURA_ID } from "../lib/constants";
 import { createMero } from "../lib/factory";
-import {
-  fetchActionFees,
-  fetchEstimatedGasUsage,
-  fetchPositions,
-  setPositionsLoaded,
-} from "./positionsSlice";
+import { fetchActionFees, fetchEstimatedGasUsage, fetchPositions } from "./positionsSlice";
 import {
   fetchAllowances,
   fetchBalances,
   fetchGasBankBalance,
   fetchWithdrawalFees,
 } from "./userSlice";
-import poolMetadata from "../lib/data/pool-metadata";
 import { handleTransactionConfirmation } from "../lib/transactionsUtils";
+import POOL_METADATA from "../lib/data/pool-metadata";
 
 interface PoolsState {
   pools: PlainPool[];
@@ -167,7 +162,7 @@ export const selectPools = (state: RootState): Optional<Pool[]> => {
   return state.pools.pools
     .map((plainPool: PlainPool) => fromPlainPool(plainPool))
     .filter((pool: Pool) => {
-      if (!poolMetadata[pool.underlying.symbol]) return false;
+      if (!POOL_METADATA.find((m) => m.symbol === pool.underlying.symbol)) return false;
       return true;
     });
 };
@@ -177,7 +172,7 @@ export const selectOldPools = (state: RootState): Optional<Pool[]> => {
   return state.pools.oldPools
     .map((plainPool: PlainPool) => fromPlainPool(plainPool))
     .filter((pool: Pool) => {
-      if (!poolMetadata[pool.underlying.symbol]) return false;
+      if (!POOL_METADATA.find((m) => m.symbol === pool.underlying.symbol)) return false;
       return true;
     });
 };

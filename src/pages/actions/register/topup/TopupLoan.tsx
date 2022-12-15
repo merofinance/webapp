@@ -7,13 +7,12 @@ import { useSelector } from "react-redux";
 import ContentSection from "../../../../components/ContentSection";
 import Button from "../../../../components/Button";
 import RowSelector from "../../../../components/RowSelector";
-import { selectEthPrice } from "../../../../state/poolsListSlice";
+import { selectEthPrice, selectPools } from "../../../../state/poolsListSlice";
 import { selectLoans } from "../../../../state/lendingSlice";
 import LoanSearch from "./LoanSearch";
 import { Loan, Optional, Position } from "../../../../lib/types";
 import { selectPositions } from "../../../../state/positionsSlice";
 import { RowOptionType } from "../../../../components/RowOption";
-import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
 import { useNavigateToTop } from "../../../../app/hooks/use-navigate-to-top";
 
 const Container = styled.div`
@@ -53,13 +52,19 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const TopupLoan = (): JSX.Element => {
+interface Props {
+  actionType: string;
+  nextRouteBase: string;
+}
+
+const TopupLoan = ({ actionType, nextRouteBase }: Props): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigateToTop();
   const { account } = useWeb3React();
   const loans = useSelector(selectLoans(account));
   const positions = useSelector(selectPositions);
   const ethPrice = useSelector(selectEthPrice);
+  const pools = useSelector(selectPools);
   const [protocol, setProtocol] = useState("");
   const [address, setAddress] = useState<Optional<string> | undefined>("");
 
@@ -68,6 +73,15 @@ const TopupLoan = (): JSX.Element => {
     positions.some(
       (position: Position) => position.protocol === loan.protocol && position.account === account
     );
+
+  const hasNoDebt = (loan: Loan) => {
+    if (actionType === "topup") return false;
+    return (
+      loan.borrowedTokens.filter((borrowedToken) => {
+        return pools?.find((pool) => pool.underlying.symbol === borrowedToken);
+      }).length === 0
+    );
+  };
 
   const isAccountsLoan = address === account;
   const hasLoans = loans.length > 0;
@@ -78,7 +92,11 @@ const TopupLoan = (): JSX.Element => {
       return {
         id: `${loan.protocol.toLowerCase()}-option`,
         value: loan.protocol,
-        disabledText: positionExists(loan) ? t("actions.topup.stages.loan.alreadyExists") : "",
+        disabledText: positionExists(loan)
+          ? t("actions.topup.stages.loan.alreadyExists")
+          : hasNoDebt(loan)
+          ? t("actions.topup.stages.loan.noDebt")
+          : "",
         columns: [
           {
             label: t("actions.suggestions.topup.labels.protocol"),
@@ -104,7 +122,7 @@ const TopupLoan = (): JSX.Element => {
     <Container>
       <ContentSection
         header={t("actions.register.header")}
-        subHeader={t("actions.topup.label")}
+        subHeader={t(`actions.${actionType}.header`)}
         nav={t("actions.register.step", { step: "2/4" })}
       >
         {hasLoans && (
@@ -128,6 +146,7 @@ const TopupLoan = (): JSX.Element => {
             setAddress(newAddress);
           }}
           hasExistingLoans={hasLoans}
+          actionType={actionType}
         />
         <ButtonContainer>
           <Button
@@ -136,7 +155,7 @@ const TopupLoan = (): JSX.Element => {
             medium
             disabled={!address}
             width="30rem"
-            click={() => navigate(`${TOPUP_ACTION_ROUTE}/${address}/${protocol}`)}
+            click={() => navigate(`${nextRouteBase}/${address}/${protocol}`)}
             hoverText={t("actions.topup.stages.loan.header")}
           >
             {t("components.continue")}

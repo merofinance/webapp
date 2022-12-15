@@ -19,10 +19,11 @@ import TopupPool from "./pages/actions/register/topup/TopupPool";
 import TopupLoan from "./pages/actions/register/topup/TopupLoan";
 import Layout from "./Layout";
 import MeroPage from "./pages/mero/MeroPage";
-import { STAKING_LIVE } from "./lib/constants";
+import { DEBT_REPAYMENT_ACTION_ROUTE, STAKING_LIVE, TOPUP_ACTION_ROUTE } from "./lib/constants";
 import CareersPage from "./pages/careers/CareersPage";
 import CareerPage from "./pages/careers/CareerPage";
 import PoolMigrationPage from "./pages/pool-migration/PoolMigrationPage";
+import DebtRepaymentPool from "./pages/actions/register/topup/DebtRepaymentPool";
 
 const App = (): JSX.Element => {
   return (
@@ -37,13 +38,46 @@ const App = (): JSX.Element => {
               <Route path="register" element={<ActionRegister />}>
                 <Route index element={<ActionRegisterIndex />} />
                 <Route path="topup" element={<RegisterTopup />}>
-                  <Route index element={<TopupLoan />} />
+                  <Route
+                    index
+                    element={<TopupLoan actionType="topup" nextRouteBase={TOPUP_ACTION_ROUTE} />}
+                  />
                   <Route
                     path="deposit/:poolName/:address/:protocol"
-                    element={<TopupPoolDeposit />}
+                    element={
+                      <TopupPoolDeposit actionType="topup" nextRouteBase={TOPUP_ACTION_ROUTE} />
+                    }
                   />
-                  <Route path=":address/:protocol/:poolName" element={<TopupConditions />} />
+                  <Route
+                    path=":address/:protocol/:poolName"
+                    element={<TopupConditions actionType="topup" />}
+                  />
                   <Route path=":address/:protocol" element={<TopupPool />} />
+                </Route>
+                <Route path="debt-repayment" element={<RegisterTopup />}>
+                  <Route
+                    index
+                    element={
+                      <TopupLoan
+                        actionType="debtRepayment"
+                        nextRouteBase={DEBT_REPAYMENT_ACTION_ROUTE}
+                      />
+                    }
+                  />
+                  <Route
+                    path="deposit/:poolName/:address/:protocol"
+                    element={
+                      <TopupPoolDeposit
+                        actionType="debtRepayment"
+                        nextRouteBase={DEBT_REPAYMENT_ACTION_ROUTE}
+                      />
+                    }
+                  />
+                  <Route
+                    path=":address/:protocol/:poolName"
+                    element={<TopupConditions actionType="debtRepayment" />}
+                  />
+                  <Route path=":address/:protocol" element={<DebtRepaymentPool />} />
                 </Route>
               </Route>
               <Route index element={<ActionsIndex />} />

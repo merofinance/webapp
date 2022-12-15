@@ -1,8 +1,9 @@
-import { providers, Signer } from "ethers";
+import { Contract, providers, Signer } from "ethers";
 import { ScaledNumber } from "scaled-number";
 
 import { Address, LendingProtocol, LendingProtocolProvider, Optional, PlainLoan } from "../types";
 import { LendingPoolFactory } from "../contracts/aave/LendingPool";
+import POOL_METADATA from "../data/pool-metadata";
 
 export class AaveProvider implements LendingProtocolProvider {
   async getPosition(
@@ -10,11 +11,31 @@ export class AaveProvider implements LendingProtocolProvider {
     provider: Signer | providers.Provider
   ): Promise<Optional<PlainLoan>> {
     try {
-      const account = address;
       const lendingPoolContract = LendingPoolFactory.connect(provider);
-      const userAccountData = await lendingPoolContract.getUserAccountData(account);
+      const userAccountData = await lendingPoolContract.getUserAccountData(address);
 
       if (new ScaledNumber(userAccountData.totalCollateralETH).isZero()) return null;
+
+      const borrowedData = await Promise.all(
+        POOL_METADATA.map(async (metadata) => {
+          const abi = ["function balanceOf(address owner) external view returns (uint256)"];
+          const stableToken = new Contract(metadata.aaveStableDebtToken, abi, provider);
+          const variableToken = new Contract(metadata.aaveVariableDebtToken, abi, provider);
+          const [stableBalance, variableBalance] = await Promise.all([
+            stableToken.balanceOf(address),
+            variableToken.balanceOf(address),
+          ]);
+          return {
+            symbol: metadata.symbol,
+            stableBalance: new ScaledNumber(stableBalance),
+            variableBalance: new ScaledNumber(variableBalance),
+          };
+        })
+      );
+
+      const borrowedTokens = borrowedData
+        .filter((data) => !data.stableBalance.isZero() || !data.variableBalance.isZero())
+        .map((data) => data.symbol);
 
       return {
         protocol: LendingProtocol.Aave,
@@ -29,6 +50,7 @@ export class AaveProvider implements LendingProtocolProvider {
         )
           ? ScaledNumber.fromUnscaled(100).toPlain()
           : new ScaledNumber(userAccountData.healthFactor).toPlain(),
+        borrowedTokens,
       };
     } catch {
       return null;

@@ -122,6 +122,7 @@ export const positions: PlainPosition[] = [
     priorityFee: ScaledNumber.fromUnscaled(2, 9).toPlain(),
     depositTokenBalance: ScaledNumber.fromUnscaled(4500).toPlain(),
     depositToken: "0x99A77926B3FB49619DC3A1DAc18565bcB5A98b93",
+    debtRepayment: false,
     ...positionKeys[0],
   },
   {
@@ -132,6 +133,7 @@ export const positions: PlainPosition[] = [
     depositTokenBalance: ScaledNumber.fromUnscaled(4500).toPlain(),
     actionToken: "0x6b175474e89094c44da98b954eedeac495271d0f",
     depositToken: "0x25FF22De379B644BD5C2263404baC6FeE5a4b8de",
+    debtRepayment: false,
     ...positionKeys[1],
   },
 ];

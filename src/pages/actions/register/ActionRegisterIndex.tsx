@@ -7,6 +7,7 @@ import Button from "../../../components/Button";
 import icon from "../../../assets/logo/white-logo.svg";
 import RowSelector from "../../../components/RowSelector";
 import zap from "../../../assets/benefits/zap.svg";
+import shield from "../../../assets/benefits/shield.svg";
 import { useNavigateToTop } from "../../../app/hooks/use-navigate-to-top";
 
 const Header = styled.div`
@@ -101,17 +102,37 @@ const ActionRegisterIndex = (): JSX.Element => {
             value: "topup",
             columns: [
               {
-                label: "Action",
+                label: t("actions.headers.action"),
                 value: (
                   <ActionContainer>
                     <ActionIcon src={zap} alt="Action icon" />
-                    <ActionValue>Top-up</ActionValue>
+                    <ActionValue>{t("actions.topup.header")}</ActionValue>
                   </ActionContainer>
                 ),
               },
               {
-                label: "Description",
+                label: t("actions.headers.description"),
                 value: t("actions.topup.description"),
+                large: true,
+              },
+            ],
+          },
+          {
+            id: "action-debt-repayment-option",
+            value: "debt-repayment",
+            columns: [
+              {
+                label: t("actions.headers.action"),
+                value: (
+                  <ActionContainer>
+                    <ActionIcon src={shield} alt="Action icon" />
+                    <ActionValue>{t("actions.debtRepayment.header")}</ActionValue>
+                  </ActionContainer>
+                ),
+              },
+              {
+                label: t("actions.headers.description"),
+                value: t("actions.debtRepayment.description"),
                 large: true,
               },
             ],

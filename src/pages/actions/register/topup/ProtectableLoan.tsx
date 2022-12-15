@@ -7,7 +7,6 @@ import Loader from "../../../../components/Loader";
 import { selectEthPrice } from "../../../../state/poolsListSlice";
 import Button from "../../../../components/Button";
 import { Loan } from "../../../../lib/types";
-import { TOPUP_ACTION_ROUTE } from "../../../../lib/constants";
 import { useNavigateToTop } from "../../../../app/hooks/use-navigate-to-top";
 
 const StyledProtectableLoan = styled.div`
@@ -19,6 +18,17 @@ const StyledProtectableLoan = styled.div`
   border-radius: 1.4rem;
   padding: 1.3rem 1.4rem;
   margin-top: 1rem;
+
+  > div:last-child {
+    align-items: flex-end;
+    flex: 0.5;
+  }
+
+  @media (max-width: 600px) {
+    > div:last-child {
+      flex: 1;
+    }
+  }
 `;
 
 interface ColumnProps {
@@ -104,9 +114,9 @@ const ProtectableLoan = ({ loan }: Props): JSX.Element => {
           id={`${loan.protocol.toLowerCase()}-protectable-loan-button`}
           medium
           background="#3A3550"
-          click={() => navigate(`${TOPUP_ACTION_ROUTE}/${account}/${loan.protocol}`)}
+          click={() => navigate("/actions/register")}
         >
-          {t("actions.suggestions.topup.register")}
+          {t("actions.suggestions.topup.registerCollateralTopup")}
         </Button>
       </Column>
     </StyledProtectableLoan>

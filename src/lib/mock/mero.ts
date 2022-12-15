@@ -72,6 +72,7 @@ export default class MockMero implements Mero {
       availableBorrowsETH: new ScaledNumber().toPlain(),
       currentLiquidationThreshold: new ScaledNumber().toPlain(),
       healthFactor: new ScaledNumber().toPlain(),
+      borrowedTokens: [],
     });
   }
 
