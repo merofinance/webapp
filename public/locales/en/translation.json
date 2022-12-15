@@ -559,7 +559,8 @@
           "search": "Or, enter wallet address with a loan:",
           "enterAddress": "Enter the wallet address that the loan is associated with:",
           "notFound": "No loans associated with this address.",
-          "alreadyExists": "A action already exists for this loan"
+          "alreadyExists": "A action already exists for this loan",
+          "noDebt": "You don't have any debt on this loan in a supported token"
         },
         "pool": {
           "header": "Select the pool you want the top-up to come from:",

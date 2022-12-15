@@ -74,25 +74,29 @@ const TopupLoan = ({ actionType, nextRouteBase }: Props): JSX.Element => {
       (position: Position) => position.protocol === loan.protocol && position.account === account
     );
 
-  const usableLoans = loans.filter((loan: Loan) => {
-    if (actionType === "topup") return true;
+  const hasNoDebt = (loan: Loan) => {
+    if (actionType === "topup") return false;
     return (
       loan.borrowedTokens.filter((borrowedToken) => {
         return pools?.find((pool) => pool.underlying.symbol === borrowedToken);
-      }).length > 0
+      }).length === 0
     );
-  });
+  };
 
   const isAccountsLoan = address === account;
-  const hasLoans = usableLoans.length > 0;
+  const hasLoans = loans.length > 0;
 
-  const options: RowOptionType[] = usableLoans
+  const options: RowOptionType[] = loans
     .filter((loan: Loan) => loan.healthFactor.toCryptoString)
     .map((loan: Loan) => {
       return {
         id: `${loan.protocol.toLowerCase()}-option`,
         value: loan.protocol,
-        disabledText: positionExists(loan) ? t("actions.topup.stages.loan.alreadyExists") : "",
+        disabledText: positionExists(loan)
+          ? t("actions.topup.stages.loan.alreadyExists")
+          : hasNoDebt(loan)
+          ? t("actions.topup.stages.loan.noDebt")
+          : "",
         columns: [
           {
             label: t("actions.suggestions.topup.labels.protocol"),
@@ -142,6 +146,7 @@ const TopupLoan = ({ actionType, nextRouteBase }: Props): JSX.Element => {
             setAddress(newAddress);
           }}
           hasExistingLoans={hasLoans}
+          actionType={actionType}
         />
         <ButtonContainer>
           <Button
