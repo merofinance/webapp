@@ -37,7 +37,7 @@ export const lendingSlice = createSlice({
 
 export const fromPlainLoan = (plainLoan: PlainLoan): Loan => {
   return {
-    protocol: plainLoan.protocol,
+    ...plainLoan,
     totalCollateralETH: ScaledNumber.fromPlain(plainLoan.totalCollateralETH),
     totalDebtETH: ScaledNumber.fromPlain(plainLoan.totalDebtETH),
     availableBorrowsETH: ScaledNumber.fromPlain(plainLoan.availableBorrowsETH),

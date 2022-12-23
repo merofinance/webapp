@@ -10,7 +10,7 @@ import BasicInput from "../../../../components/BasicInput";
 import { spinAnimation } from "../../../../styles/animations/SpinAnimation";
 import pending from "../../../../assets/ui/status/pending.svg";
 import RowSelector from "../../../../components/RowSelector";
-import { selectEthPrice } from "../../../../state/poolsListSlice";
+import { selectEthPrice, selectPools } from "../../../../state/poolsListSlice";
 import { Loan, Position } from "../../../../lib/types";
 import { fetchLoans, selectLoans } from "../../../../state/lendingSlice";
 import { RowOptionType } from "../../../../components/RowOption";
@@ -73,15 +73,17 @@ interface Props {
   value: string;
   setValue: (value: string, newAddress: string) => void;
   hasExistingLoans: boolean;
+  actionType: string;
 }
 
-const LoanSearch = ({ value, setValue, hasExistingLoans }: Props): JSX.Element => {
+const LoanSearch = ({ value, setValue, hasExistingLoans, actionType }: Props): JSX.Element => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const mero = useMero();
   const { account } = useWeb3React();
   const ethPrice = useSelector(selectEthPrice);
   const positions = useSelector(selectPositions);
+  const pools = useSelector(selectPools);
   const [address, setAddress] = useState("");
   const [loading, setLoading] = useState(false);
   const loans = useSelector(selectLoans(address));
@@ -95,6 +97,16 @@ const LoanSearch = ({ value, setValue, hasExistingLoans }: Props): JSX.Element =
       (position: Position) => position.protocol === loan.protocol && position.account === account
     );
 
+  const hasNoDebt = (loan: Loan) => {
+    if (actionType === "topup") return false;
+    if (!pools) return false;
+    return (
+      loan.borrowedTokens.filter((borrowedToken) => {
+        return pools.find((pool) => pool.underlying.symbol === borrowedToken);
+      }).length === 0
+    );
+  };
+
   const getLoans = async (newaddress: string) => {
     if (!mero || !ethers.utils.isAddress(newaddress)) return;
     setLoading(true);
@@ -107,7 +119,11 @@ const LoanSearch = ({ value, setValue, hasExistingLoans }: Props): JSX.Element =
     return {
       id: `loan-search-row-${loan.protocol.toLowerCase()}`,
       value: loan.protocol,
-      disabledText: positionExists(loan) ? t("actions.topup.stages.loan.alreadyExists") : "",
+      disabledText: positionExists(loan)
+        ? t("actions.topup.stages.loan.alreadyExists")
+        : hasNoDebt(loan)
+        ? t("actions.topup.stages.loan.noDebt")
+        : "",
       columns: [
         {
           label: t("actions.suggestions.topup.labels.protocol"),

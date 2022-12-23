@@ -34,22 +34,26 @@ const SubHeader = styled.div`
   }
 `;
 
-const TopupConditions = (): JSX.Element => {
+interface Props {
+  actionType: string;
+}
+
+const TopupConditions = ({ actionType }: Props): JSX.Element => {
   const { t } = useTranslation();
 
   return (
     <Container>
       <ContentSection
         header={t("actions.register.header")}
-        subHeader={t("actions.topup.label")}
+        subHeader={t(`actions.${actionType}.header`)}
         nav={t("actions.register.step", { step: "4/4" })}
       >
         <ActionSummary />
         <Header id="register-topup-conditions-header">
-          {t("actions.topup.stages.conditions.header")}
+          {t(`actions.${actionType}.stages.conditions.header`)}
         </Header>
-        <SubHeader>{t("actions.topup.stages.conditions.subHeader")}</SubHeader>
-        <TopupConditionsForm />
+        <SubHeader>{t(`actions.${actionType}.stages.conditions.subHeader`)}</SubHeader>
+        <TopupConditionsForm actionType={actionType} />
       </ContentSection>
     </Container>
   );

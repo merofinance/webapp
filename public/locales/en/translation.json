@@ -246,12 +246,12 @@
       "paragraph3": "Mero generates yield from both yield-farming strategies and actions. Every time an action occurs on Mero, a small action fee is charged and paid out to Mero liquidity providers. It is important to note that registering an action to your Mero liquidity is optional. Actions are solely an additional utility layer, empowering liquidity providers to do more with their deposits. Because Mero is able to capture yield beyond strategy profits, it can be an optimal option for users only looking to farm yield and not to make their liquidity reactive."
     },
     "action": {
-      "header": "Action 01: Top-up Positions",
+      "header": "Action 01: Collateral Top-ups",
       "paragraph1": "The first action that Mero will support, which will be available at launch, is collateral top ups. Support for more actions will be added in the future. The core protocol architecture of Mero is designed in a way that makes adding new actions, strategies, or supported protocols (for actions) easy. This allows Mero to perpetually increase yield and utility for LPs as DeFi evolves.",
       "what": {
-        "header": "What is a Top-up Position?",
-        "paragraph1": "A top-up is the act of depositing additional collateral in order to increase the health factor of your loan or mitigate liquidation risk. Mero liquidity providers can use their Mero LP tokens to register Top-up Positions. This creates back up collateral or what you could call interest earning liquidation protection. When a user registers a Top-up Position they must specify how much of their Mero liquidity should be shifted and at what health factor a top-up should occur. After registering a Top-up Position the Mero user’s liquidity will continue to be allocated to yield-farming strategies until it is needed.",
-        "paragraph2": "Mero’s Top-up Positions increase collateral efficiency by enabling any borrower on supported protocols (Mero will support Aave v2 & Compound loans at launch) to earn yield with their collateral. Furthermore this also enables borrowers to increase leverage by depositing less collateral and hedge liquidation risk by automatically posting extra collateral when needed.",
+        "header": "What is a Collateral Top-up?",
+        "paragraph1": "A top-up is the act of depositing additional collateral in order to increase the health factor of your loan or mitigate liquidation risk. Mero liquidity providers can use their Mero LP tokens to register Collateral Top-up Positions. This creates back up collateral or what you could call interest earning liquidation protection. When a user registers a Collateral Top-up Position they must specify how much of their Mero liquidity should be shifted and at what health factor a top-up should occur. After registering a Collateral Top-up Position the Mero user’s liquidity will continue to be allocated to yield-farming strategies until it is needed.",
+        "paragraph2": "Mero’s Collateral Top-up Position increase collateral efficiency by enabling any borrower on supported protocols (Mero will support Aave v2 & Compound loans at launch) to earn yield with their collateral. Furthermore this also enables borrowers to increase leverage by depositing less collateral and hedge liquidation risk by automatically posting extra collateral when needed.",
         "paragraph3": "Mero creates an infrastructure that enables the combination of on-chain actions, off-chain keepers that react to market events, and yield-farming. This unique combination lends itself to a multitude of actions and integration with many protocols. Mero not only makes liquidity more efficient, but also makes other protocols safer and smarter."
       }
     },
@@ -418,6 +418,10 @@
     }
   },
   "actions": {
+    "headers": {
+      "action": "Action",
+      "description": "Description"
+    },
     "overview": "Use this screen to monitor your Actions. Actions are a set of predefined market triggers, that when occur, something is done on your behalf.",
     "deposits": {
       "header": "Your deposits",
@@ -430,7 +434,7 @@
       "button": "Register an Action",
       "header": "Register an Action",
       "nav": "Register an Action",
-      "create": "Confirm Top-up Position",
+      "create": "Create Action",
       "choose": "Choose the type of Action:",
       "overview": "Define the market triggers that will enable your action using this interface.",
       "step": "STEP {{step}}"
@@ -449,7 +453,7 @@
       "topup": {
         "header": "I have found a protectable loan!",
         "headerMobile": "I found a protectable loan!",
-        "subHeader": "The wallet you have connected has a loan that you can create a Top-up Position for.",
+        "subHeader": "The wallet you have connected has a loan that you can create an Action for.",
         "labels": {
           "protocol": "Protocol",
           "healthFactor": "Health factor",
@@ -457,7 +461,7 @@
           "totalLoan": "Loan amount",
           "pool": "Protecting with"
         },
-        "register": "Register Top-up Position"
+        "registerCollateralTopup": "Register Action"
       }
     },
     "gasBank": {
@@ -465,9 +469,90 @@
       "topupAmount": "Gas Bank top-up amount",
       "topupAmountTooltip": "The amount of ETH send to the Gas Bank to cover the gas cost of executing the transactions. Unspend ETH will be refunded to your wallet."
     },
+    "debtRepayment": {
+      "header": "Debt repayment",
+      "description": "Repay borrowed assets when close to liquidation",
+      "stages": {
+        "pool": {
+          "header": "Select the pool you want the debt repayment to come from:",
+          "noDepositsHeader": "To register an action you must deposit assets into a Mero pool",
+          "subHeader": "Liquidity deposited into a Mero pool can be earmarked for debt repayment. You will earn yield while your liquidity is in a Mero pool.",
+          "incomplete": "Select a pool",
+          "noDebt": "You don't have any debt on this loan in {{asset}}",
+          "deposit": {
+            "header": "Enter an amount of {{asset}} to deposit",
+            "subHeader": "This {{asset}} can be used for debt repayment if triggered by user defined conditions.",
+            "incomplete": "Deposit {{asset}} to continue"
+          }
+        },
+        "conditions": {
+          "header": "Enter debt repayment conditions",
+          "subHeader": "Define the specific market triggers that determine when a Debt Repayment will activate."
+        },
+        "confirmation": {
+          "header": "Confirm Debt Repayment",
+          "summaryStart": "When the collateralization of",
+          "summaryEnd": "drops below {{threshold}}, {{single}} {{asset}} ({{singleUsd}}) will be repaid on the loan. This will be repeated each time the collateralization ratio drops below {{threshold}}, until a total of {{max}} {{asset}} ({{maxUsd}}) is repaid.",
+          "fees": {
+            "label": "Action trigger fee",
+            "value": "{{percent}} of single debt repayment",
+            "tooltip": {
+              "header": "When an Action is triggered a small fee is paid to Mero LPs, Keepers and MERO stakers.",
+              "itemLabels": {
+                "lps": "Mero LPs",
+                "keepers": "Keepers",
+                "stakers": "MERO stakers"
+              }
+            }
+          }
+        }
+      },
+      "fields": {
+        "protocol": {
+          "label": "Protocol",
+          "tooltip": "The lending protocol on which the user is borrowing funds (currently compatible with Aave v2 and Compound)",
+          "hover": "Select protocol"
+        },
+        "address": {
+          "label": "Address",
+          "tooltip": "The address of the owner of the position to repay debt (e.g. if Alice is the borrower on Aave v2 that should be repaid then this would be Alice’s address)",
+          "hover": "Enter address"
+        },
+        "threshold": {
+          "label": "Threshold",
+          "question": "What health factor do you want the debt repayment Action to trigger at?",
+          "tooltip": "The health factor threshold a debt repayment should occur at",
+          "hover": "Enter threshold"
+        },
+        "single": {
+          "label": "Single repayment",
+          "question": "How much would you like to repay per debt repayment?",
+          "tooltip": "Amount of a single debt repayment increment (e.g. debt repayment increments of 2,500 DAI)",
+          "hover": "Enter single repayment"
+        },
+        "max": {
+          "label": "Max repayment",
+          "question": "What would you like the total debt repayment amount to be?",
+          "tooltip": "Maximum debt repayment amount (value of your liquidity allocated for debt repayments)",
+          "hover": "Enter max repayment"
+        },
+        "priority": {
+          "label": "Priority fee",
+          "question": "What priority fee should be used for your debt repayment?",
+          "tooltip": "An additional fee paid to Ethereum miners to prioritise your transaction and have it completed quicker. 3 Gwei is a suitable amount.",
+          "hover": "Enter priority fee"
+        },
+        "gas": {
+          "label": "Max gas price",
+          "question": "What is the maximum gas price to pay per debt repayment?",
+          "tooltip": "The maximum gas price used when paying for each debt repayment. Value is in Gwei units. If value is too low, then your debt repayment may not execute in time which could result in liquidation. A value of at least 200 Gwei is recommended.",
+          "hover": "Enter max gas price"
+        }
+      }
+    },
     "topup": {
-      "label": "Top-up Position",
-      "description": "Protect your loans from liquidation",
+      "header": "Collateral top-up",
+      "description": "Top-up collateral when close to liquidation",
       "stages": {
         "loan": {
           "header": "Select a loan to protect:",
@@ -475,12 +560,13 @@
           "search": "Or, enter wallet address with a loan:",
           "enterAddress": "Enter the wallet address that the loan is associated with:",
           "notFound": "No loans associated with this address.",
-          "alreadyExists": "A top-up action already exists for this loan"
+          "alreadyExists": "A action already exists for this loan",
+          "noDebt": "You don't have any debt on this loan in a supported token"
         },
         "pool": {
           "header": "Select the pool you want the top-up to come from:",
           "noDepositsHeader": "To register an action you must deposit assets into a Mero pool",
-          "subHeader": "Liquidity deposited into a Mero pool can be earmarked for top-up protection. You will earn yield and MERO rewards while your liquidity is in a Mero pool.",
+          "subHeader": "Liquidity deposited into a Mero pool can be earmarked for top-up protection. You will earn yield while your liquidity is in a Mero pool.",
           "incomplete": "Select a pool",
           "deposit": {
             "header": "Enter an amount of {{asset}} to deposit",
@@ -490,10 +576,10 @@
         },
         "conditions": {
           "header": "Enter top-up conditions",
-          "subHeader": "Define the specific market triggers that determine when a Top-up Position will activate."
+          "subHeader": "Define the specific market triggers that determine when a Collateral Top-up will activate."
         },
         "confirmation": {
-          "header": "Confirm Top-up Position",
+          "header": "Confirm Collateral Top-up",
           "summaryStart": "When the collateralization of",
           "summaryEnd": "drops below {{threshold}}, it will be topped up with {{single}} {{asset}} ({{singleUsd}}). This will be repeated each time the collateralization ratio drops below {{threshold}}, until a total of {{max}} {{asset}} ({{maxUsd}}) is topped up.",
           "fees": {
@@ -511,8 +597,8 @@
         }
       },
       "delete": {
-        "header": "Delete Top-up Position",
-        "body": "Deleting this Top-up Position will remove automated collateral top-ups of {{asset}} on {{protocol}}. {{max}} {{asset}} will be unstaked and can be withdrawn after removing the position.",
+        "header": "Delete Collateral Top-up",
+        "body": "Deleting this Collateral Top-up Position will remove automated collateral top-ups of {{asset}} on {{protocol}}. {{max}} {{asset}} will be unstaked and can be withdrawn after removing the position.",
         "cancel": "Do not delete"
       },
       "fields": {
@@ -542,17 +628,17 @@
           "question": "How much would you like to transfer per single top-up?",
           "tooltip": "Amount of a single top-up increment (e.g. top-up increments of 2,500 DAI)",
           "hover": "Enter single top-up",
-          "required": "Single top-up is required",
+          "required": "Single amount is required",
           "invalid": "Invalid number",
           "positive": "Must be positive number",
-          "lessThanMax": "Must be less than max top-up"
+          "lessThanMax": "Must be less than max amount"
         },
         "max": {
           "label": "Max top-up",
           "question": "What would you like the total top-up amount to be?",
           "tooltip": "Maximum top-up amount (value of your liquidity allocated for top-ups)",
           "hover": "Enter max top-up",
-          "required": "Max top-up required",
+          "required": "Max amount required",
           "invalid": "Invalid number",
           "positive": "Must be positive number",
           "exceedsBalance": "Exceeds deposited balance"
@@ -754,19 +840,19 @@
     "readMore": "Read more in <0>our docs</0>.",
     "suggestions": {
       "thresholdLow": {
-        "text": "I noticed you have entered a threshold top-up of {{threshold}}. This is very close to liquidation and in times of market volatility I suggest at least {{recommendedThreshold}} or more.",
+        "text": "I noticed you have entered a threshold of {{threshold}}. This is very close to liquidation and in times of market volatility I suggest at least {{recommendedThreshold}} or more.",
         "button": "Increase threshold"
       },
       "thresholdHigh": {
-        "text": "This will trigger immediately because the health factor you have entered exceeds the current health factor of the loan. I suggest you decrease the Health Factor of the top-up to {{recommendedThreshold}}.",
+        "text": "This will trigger immediately because the health factor you have entered exceeds the current health factor of the loan. I suggest you decrease the Health Factor to {{recommendedThreshold}}.",
         "button": "Decrease threshold"
       },
       "singleLow": {
-        "text": "Your max gas cost per top-up is {{maxGas}} ({{ethAmount}} ETH), however the amount per top-up is only {{single}} ({{underlyingAmount}} {{underlyingSymbol}}). I recommend increasing the single top-up to {{suggestion}} {{underlyingSymbol}} for more efficient top-ups.",
-        "button": "Increase top-up"
+        "text": "Your max gas cost is {{maxGas}} ({{ethAmount}} ETH), however the single amount is only {{single}} ({{underlyingAmount}} {{underlyingSymbol}}). I recommend increasing the single amount to {{suggestion}} {{underlyingSymbol}} for more efficient actions.",
+        "button": "Increase single amount"
       },
       "topupPositionLow": {
-        "text": "I’ve noticed your {{protocol}} top-up Action is running low on funds. I suggest you delete that top-up Action and register a new one as soon as possible.",
+        "text": "I’ve noticed your {{protocol}} Action is running low on funds. I suggest you delete that Action and register a new one as soon as possible.",
         "button": "Delete action"
       }
     }

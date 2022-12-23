@@ -55,7 +55,9 @@ const TopupConfirmation = ({
       id="register-topup-confirmation"
       show={show}
       close={close}
-      header={t("actions.topup.stages.confirmation.header")}
+      header={t(
+        `actions.${position.debtRepayment ? "debtRepayment" : "topup"}.stages.confirmation.header`
+      )}
       submit={() => executeRegister()}
       loading={loading}
     >

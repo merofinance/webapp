@@ -71,7 +71,7 @@ const TopupAction = ({ show, close, position, pool }: Props): JSX.Element => {
         id="topup-action"
         show={show && !deleting}
         close={close}
-        header={t("actions.topup.label")}
+        header={t("actions.topup.header")}
       >
         <TopupInformation position={position} pool={pool} />
         <DeleteButton id="delete-action-button" onClick={() => setDeleting(true)}>
