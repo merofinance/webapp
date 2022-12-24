@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ethers } from "ethers";
 import { ScaledNumber } from "scaled-number";
 
 import { AppThunk, RootState } from "../app/store";
@@ -14,8 +13,6 @@ import {
   Prices,
 } from "../lib/types";
 import { fetchLoans } from "./lendingSlice";
-import { INFURA_ID } from "../lib/constants";
-import { createMero } from "../lib/factory";
 import { fetchActionFees, fetchEstimatedGasUsage, fetchPositions } from "./positionsSlice";
 import {
   fetchAllowances,
@@ -143,17 +140,6 @@ export const fetchState =
     dispatch(fetchActionFees({ mero }));
     dispatch(fetchGasBankBalance({ mero }));
   };
-
-export const fetchPreviewState = (): AppThunk => (dispatch) => {
-  const provider = new ethers.providers.InfuraProvider(1, INFURA_ID);
-  const mero = createMero(provider, { chainId: 1 });
-  dispatch(fetchOldPools({ mero }));
-  dispatch(fetchPools({ mero })).then((v) => {
-    if (v.meta.requestStatus !== "fulfilled") return;
-    const pools = v.payload as Pool[];
-    dispatch(fetchPrices({ mero, pools }));
-  });
-};
 
 export const selectPoolsLoaded = (state: RootState): boolean => state.pools.loaded;
 

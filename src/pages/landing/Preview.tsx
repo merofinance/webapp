@@ -1,18 +1,19 @@
 import { useEffect } from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import PoolsRow from "../pools/PoolsRow";
 import swirls from "../../assets/background/swirls.svg";
 import { useMero } from "../../app/hooks/use-mero";
-import { fetchState, selectPools } from "../../state/poolsListSlice";
+import { fetchState } from "../../state/poolsListSlice";
 import { Pool } from "../../lib";
 import { useWeb3Updated } from "../../app/hooks/use-web3-updated";
 import { Header2, Header4 } from "../../styles/Headers";
 import Loader from "../../components/Loader";
 import { AppDispatch } from "../../app/store";
 import { Optional } from "../../lib/types";
+import usePoolsPreview from "../../app/hooks/use-pools-preview";
 
 const StyledPreview = styled.div`
   position: relative;
@@ -90,7 +91,7 @@ const Preview = (): Optional<JSX.Element> => {
   const { t } = useTranslation();
   const mero = useMero();
   const dispatch = useDispatch<AppDispatch>();
-  const pools = useSelector(selectPools);
+  const pools = usePoolsPreview();
   const updated = useWeb3Updated();
 
   useEffect(() => {
