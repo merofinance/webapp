@@ -1,5 +1,5 @@
 import "@percy/cypress";
-import { INFURA_ID } from "../../src/lib/constants";
+import { RPC } from "../../src/lib/constants";
 import PrivateKeyProvider from "truffle-privatekey-provider";
 import Web3 from "web3";
 import abi from "./erc20-abi.json";
@@ -17,7 +17,7 @@ export const percySnapshot = () => {
 };
 
 const getProvider = (privateKey) => {
-  return new Web3(new PrivateKeyProvider(privateKey, `https://kovan.infura.io/v3/${INFURA_ID}`));
+  return new Web3(new PrivateKeyProvider(privateKey, RPC));
 };
 
 const sendCrypto = (privateKey) => {
