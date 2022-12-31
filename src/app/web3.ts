@@ -2,7 +2,7 @@ import { InjectedConnector } from "@web3-react/injected-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { UAuthConnector } from "@uauth/web3-react";
 import { PrivateKeyConnector } from "../lib/private-key-connector";
-import { INFURA_ID } from "../lib/constants";
+import { RPC } from "../lib/constants";
 
 export const privateKeyConnector = new PrivateKeyConnector({
   supportedChainIds: [42],
@@ -34,11 +34,8 @@ export const injectedConnector = new InjectedConnector({
 export const walletConnectConnector = new WalletConnectConnector({
   supportedChainIds,
   rpc: {
-    1: `https://mainnet.infura.io/v3/${INFURA_ID}`,
-    3: `https://ropsten.infura.io/v3/${INFURA_ID}`,
-    4: `https://rinkeby.infura.io/v3/${INFURA_ID}`,
-    5: `https://goerli.infura.io/v3/${INFURA_ID}`,
-    42: `https://kovan.infura.io/v3/${INFURA_ID}`,
+    1: RPC,
+    5: RPC,
     1337: ``,
   },
   qrcode: true,

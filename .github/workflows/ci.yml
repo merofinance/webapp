@@ -4,7 +4,7 @@ jobs:
   unit_test:
     runs-on: ubuntu-latest
     env:
-      TEST_INFURA_ID: ${{ secrets.WEB3_INFURA_PROJECT_ID }}
+      TEST_LLAMA_NODES_ID: ${{ secrets.LLAMA_NODES_PROJECT_ID }}
     steps:
       - uses: actions/checkout@v2
       - name: Installing Dependencies
