@@ -1,3 +1,4 @@
+import { ethers } from "ethers";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
@@ -59,6 +60,33 @@ const ButtonContainer = styled.div`
   }
 `;
 
+const meow = async () => {
+  const rpc = "http://127.0.0.1:5001/backd-ffbef/us-central1/rpc";
+  // const rpc = "https://eth.llamarpc.com/rpc/0184e2d7-9ceb-4ede-41e9-5a4420d8f6a6";
+  const provider = new ethers.providers.JsonRpcProvider(rpc);
+  const blockNumber = await provider.getBlockNumber();
+  console.log(blockNumber);
+};
+
+const woof = async () => {
+  const LLAMA_NODES_KEY = "0184e2d7-9ceb-4ede-41e9-5a4420d8f6a6";
+  const LLAMA_RPC_URL = `https://eth.llamarpc.com/rpc/${LLAMA_NODES_KEY}`;
+  const res = await fetch(LLAMA_RPC_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      jsonrpc: "2.0",
+      method: "eth_blockNumber",
+      params: [],
+      id: 1,
+    }),
+  });
+  const { result } = await res.json();
+  console.log(result);
+};
+
 const Hero = (): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigateToTop();
@@ -77,7 +105,7 @@ const Hero = (): JSX.Element => {
         </LoaderContainer>
       )}
       <ButtonContainer>
-        <Button primary large click={() => navigate("/pools")}>
+        <Button primary large click={() => meow()}>
           {t("landingPage.viewPools")}
         </Button>
       </ButtonContainer>
