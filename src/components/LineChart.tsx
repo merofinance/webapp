@@ -6,15 +6,18 @@ import { useDevice } from "../app/hooks/use-device";
 
 ChartJS.register(...registerables);
 
+interface ChartProps {
+  backgroundColor?: string;
+}
+
 const StyledLineChart = styled.div`
   position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(13, 8, 42, 1);
+  background-color: ${(props: ChartProps) => props.backgroundColor || "transparent"};
   border-radius: 14px;
-  padding-left: 1rem;
 
   height: 21.7rem;
   @media (max-width: 1220px) {
@@ -37,9 +40,20 @@ const ProgressIndicator = styled.div`
 interface Props {
   chartData: number[];
   chartLabels: string[];
+  dataLabel: string;
+  showIndicator?: boolean;
+  unit?: string;
+  backgroundColor?: string;
 }
 
-const LineChart = ({ chartData, chartLabels }: Props): JSX.Element => {
+const LineChart = ({
+  chartData,
+  chartLabels,
+  showIndicator,
+  unit,
+  backgroundColor,
+  dataLabel,
+}: Props): JSX.Element => {
   const { isMobile } = useDevice();
   const chart = useRef<ChartJS>(null);
   const [gradient, setGradient] = useState<CanvasGradient>();
@@ -71,12 +85,6 @@ const LineChart = ({ chartData, chartLabels }: Props): JSX.Element => {
     );
     fill_.addColorStop(0, "rgba(50, 178, 229, 0.15)");
     fill_.addColorStop(1, "rgba(50, 178, 229, 0)");
-    // fill_.addColorStop(0, "#C532F9");
-    // fill_.addColorStop(0.48, "#C532F9");
-    // fill_.addColorStop(0.49, "green");
-    // fill_.addColorStop(0.5, "green");
-    // fill_.addColorStop(0.51, "#32B2E5");
-    // fill_.addColorStop(1, "#32B2E5");
     setFill(fill_);
   };
 
@@ -139,12 +147,15 @@ const LineChart = ({ chartData, chartLabels }: Props): JSX.Element => {
 
           stepSize: 1,
           callback: (value: any) => {
-            return `${value}x`;
+            return `${value}${unit || ""}`;
           },
         },
       },
       x: {
-        display: false,
+        display: true,
+        grid: {
+          display: false,
+        },
       },
     },
   };
@@ -154,7 +165,7 @@ const LineChart = ({ chartData, chartLabels }: Props): JSX.Element => {
     color: "red",
     datasets: [
       {
-        label: "Boost",
+        label: dataLabel,
         data: chartData,
         backgroundColor: gradient,
         radius: isMobile ? 2 : 3,
@@ -173,9 +184,9 @@ const LineChart = ({ chartData, chartLabels }: Props): JSX.Element => {
   endDate.setDate(endDate.getDate() - 100 + 365);
 
   return (
-    <StyledLineChart>
+    <StyledLineChart backgroundColor={backgroundColor}>
       <Chart ref={chart} type="line" data={data} options={options} />
-      <ProgressIndicator percent={stkMero / 1000} />
+      {showIndicator && <ProgressIndicator percent={stkMero / 1000} />}
     </StyledLineChart>
   );
 };

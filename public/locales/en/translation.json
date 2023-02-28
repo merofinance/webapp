@@ -342,7 +342,7 @@
       },
       "apy": {
         "header": "APY",
-        "tooltip": "The current annual percent yield earned by pool LPs"
+        "tooltip": "The current annual percent yield earned by pool LPs. This is the average APY over the past 60 days"
       },
       "lp": {
         "tooltip": "The current exchange rate of {{lpToken}} to {{underlying}}. {{underlying}}={{lpToken}}*{{exchangeRate}}"

@@ -45,7 +45,14 @@ const BoostChart = (): JSX.Element => {
 
   return (
     <StyledBoostChart>
-      <LineChart chartData={data} chartLabels={labels} />
+      <LineChart
+        dataLabel="Boost"
+        showIndicator
+        chartData={data}
+        chartLabels={labels}
+        unit="x"
+        backgroundColor="rgba(13, 8, 42, 1)"
+      />
       <EndDate>{dateFormat(endDate, DATE_FORMAT)}</EndDate>
     </StyledBoostChart>
   );
