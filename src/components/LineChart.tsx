@@ -87,12 +87,6 @@ const LineChart = ({
     );
     fill_.addColorStop(0, "rgba(50, 178, 229, 0.15)");
     fill_.addColorStop(1, "rgba(50, 178, 229, 0)");
-    // fill_.addColorStop(0, "#C532F9");
-    // fill_.addColorStop(0.48, "#C532F9");
-    // fill_.addColorStop(0.49, "green");
-    // fill_.addColorStop(0.5, "green");
-    // fill_.addColorStop(0.51, "#32B2E5");
-    // fill_.addColorStop(1, "#32B2E5");
     setFill(fill_);
   };
 
