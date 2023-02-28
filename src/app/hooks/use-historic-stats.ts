@@ -14,7 +14,7 @@ interface HistoricStat {
 }
 
 const useHistoricStats = (poolSymbol: string | null): HistoricStat[] | null => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
 
   const fetchData = async () => {
     if (!poolSymbol) return null;
