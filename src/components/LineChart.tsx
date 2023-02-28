@@ -6,15 +6,18 @@ import { useDevice } from "../app/hooks/use-device";
 
 ChartJS.register(...registerables);
 
+interface ChartProps {
+  backgroundColor?: string;
+}
+
 const StyledLineChart = styled.div`
   position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(13, 8, 42, 1);
+  background-color: ${(props: ChartProps) => props.backgroundColor || "transparent"};
   border-radius: 14px;
-  padding-left: 1rem;
 
   height: 21.7rem;
   @media (max-width: 1220px) {
@@ -37,9 +40,18 @@ const ProgressIndicator = styled.div`
 interface Props {
   chartData: number[];
   chartLabels: string[];
+  showIndicator?: boolean;
+  unit?: string;
+  backgroundColor?: string;
 }
 
-const LineChart = ({ chartData, chartLabels }: Props): JSX.Element => {
+const LineChart = ({
+  chartData,
+  chartLabels,
+  showIndicator,
+  unit,
+  backgroundColor,
+}: Props): JSX.Element => {
   const { isMobile } = useDevice();
   const chart = useRef<ChartJS>(null);
   const [gradient, setGradient] = useState<CanvasGradient>();
@@ -139,12 +151,15 @@ const LineChart = ({ chartData, chartLabels }: Props): JSX.Element => {
 
           stepSize: 1,
           callback: (value: any) => {
-            return `${value}x`;
+            return `${value}${unit || ""}`;
           },
         },
       },
       x: {
-        display: false,
+        display: true,
+        grid: {
+          display: false,
+        },
       },
     },
   };
@@ -173,9 +188,9 @@ const LineChart = ({ chartData, chartLabels }: Props): JSX.Element => {
   endDate.setDate(endDate.getDate() - 100 + 365);
 
   return (
-    <StyledLineChart>
+    <StyledLineChart backgroundColor={backgroundColor}>
       <Chart ref={chart} type="line" data={data} options={options} />
-      <ProgressIndicator percent={stkMero / 1000} />
+      {showIndicator && <ProgressIndicator percent={stkMero / 1000} />}
     </StyledLineChart>
   );
 };
