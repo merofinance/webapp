@@ -13,7 +13,7 @@ interface Props {
   labels: string[];
 }
 
-const InfoChart = ({ header, data, labels }: Props) => {
+const InfoChart = ({ header, data, labels }: Props): JSX.Element => {
   return (
     <InfoCard header={header}>
       <StyledInfoChart>

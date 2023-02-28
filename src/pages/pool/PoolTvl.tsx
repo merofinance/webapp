@@ -3,12 +3,13 @@ import dateFormat from "dateformat";
 import useHistoricStats from "../../app/hooks/use-historic-stats";
 import InfoChart from "../../components/InfoChart";
 import { Pool } from "../../lib";
+import { Optional } from "../../lib/types";
 
 interface Props {
   pool: Pool | null;
 }
 
-const PoolTvl = ({ pool }: Props) => {
+const PoolTvl = ({ pool }: Props): Optional<JSX.Element> => {
   const stats = useHistoricStats(pool ? pool.underlying.symbol : null);
 
   if (!stats) return null;
