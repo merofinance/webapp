@@ -23,6 +23,7 @@ import { Optional } from "../../lib/types";
 import { DOCS_LINK } from "../../lib/links";
 import { useNavigateToTop } from "../../app/hooks/use-navigate-to-top";
 import PausedSnackbar from "../../components/PausedSnackbar";
+import PoolApy from "./PoolApy";
 
 const StyledPoolPage = styled.div`
   position: relative;
@@ -133,6 +134,7 @@ const PoolPage = (): Optional<JSX.Element> => {
             link={DOCS_LINK}
           />
           <PoolInformation pool={pool} />
+          <PoolApy pool={pool} />
           <LiveHelp />
           {usersPoolLpUnlocked && !usersPoolLpUnlocked.isZero() && (
             <ButtonContainer>
