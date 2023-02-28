@@ -54,8 +54,6 @@ const LineChart = ({
   backgroundColor,
   dataLabel,
 }: Props): JSX.Element => {
-  console.log(chartData);
-  console.log(chartLabels);
   const { isMobile } = useDevice();
   const chart = useRef<ChartJS>(null);
   const [gradient, setGradient] = useState<CanvasGradient>();
