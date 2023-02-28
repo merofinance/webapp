@@ -40,6 +40,7 @@ const ProgressIndicator = styled.div`
 interface Props {
   chartData: number[];
   chartLabels: string[];
+  dataLabel: string;
   showIndicator?: boolean;
   unit?: string;
   backgroundColor?: string;
@@ -51,7 +52,10 @@ const LineChart = ({
   showIndicator,
   unit,
   backgroundColor,
+  dataLabel,
 }: Props): JSX.Element => {
+  console.log(chartData);
+  console.log(chartLabels);
   const { isMobile } = useDevice();
   const chart = useRef<ChartJS>(null);
   const [gradient, setGradient] = useState<CanvasGradient>();
@@ -169,7 +173,7 @@ const LineChart = ({
     color: "red",
     datasets: [
       {
-        label: "Boost",
+        label: dataLabel,
         data: chartData,
         backgroundColor: gradient,
         radius: isMobile ? 2 : 3,

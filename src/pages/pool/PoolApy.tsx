@@ -16,12 +16,12 @@ const PoolApy = ({ pool }: Props): Optional<JSX.Element> => {
 
   const cutoffDate = new Date();
   cutoffDate.setMonth(cutoffDate.getMonth() - 3);
-  const recentStats = stats?.filter((stat) => stat.date > cutoffDate);
+  const recentStats = stats.filter((stat) => stat.date > cutoffDate);
 
   const data = recentStats.map((stat) => stat.apy);
   const labels = recentStats.map((stat) => dateFormat(stat.date, "d mmm"));
 
-  return <InfoChart header="Historic APY" data={data} labels={labels} />;
+  return <InfoChart header="Historic APY" data={data} labels={labels} dataLabel="APY" />;
 };
 
 export default PoolApy;

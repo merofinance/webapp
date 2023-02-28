@@ -46,6 +46,7 @@ const BoostChart = (): JSX.Element => {
   return (
     <StyledBoostChart>
       <LineChart
+        dataLabel="Boost"
         showIndicator
         chartData={data}
         chartLabels={labels}

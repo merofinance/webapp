@@ -21,7 +21,7 @@ const PoolTvl = ({ pool }: Props): Optional<JSX.Element> => {
   const data = recentStats.map((stat) => stat.tvlUsd);
   const labels = recentStats.map((stat) => dateFormat(stat.date, "d mmm"));
 
-  return <InfoChart header="Historic TVL" data={data} labels={labels} />;
+  return <InfoChart header="Historic TVL" data={data} labels={labels} dataLabel="TVL" />;
 };
 
 export default PoolTvl;
