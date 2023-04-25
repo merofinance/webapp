@@ -111,7 +111,7 @@ const TermsOfServicePage = (): JSX.Element => {
           Privacy Policy
         </Link>
         , incorporated herein by reference. If the User does not want to agree to these Terms of
-        Use, the{" "}
+        Service, the{" "}
         <Link href="/privacy-policy" target="_blank" rel="noopener noreferrer">
           Privacy Policy
         </Link>
@@ -393,7 +393,7 @@ const TermsOfServicePage = (): JSX.Element => {
             Violate the legal rights (including the rights of publicity and privacy) of others or
             contain any material that could give rise to any civil or criminal liability under
             applicable laws or regulations or that otherwise may be in conflict with these Terms of
-            Use and our{" "}
+            Service and our{" "}
             <Link href="/privacy-policy" target="_blank" rel="noopener noreferrer">
               Privacy Policy
             </Link>
@@ -874,7 +874,7 @@ const TermsOfServicePage = (): JSX.Element => {
       <Header>Limitation on Time to File Claims.</Header>
       <Paragraph>
         ANY CAUSE OF ACTION OR CLAIM THE USER MAY HAVE ARISING OUT OF OR RELATING TO THESE TERMS OF
-        USE OR ITS USE OF THE WEBSITE MUST BE COMMENCED WITHIN ONE (1) YEAR AFTER THE CAUSE OF
+        SERVICE OR ITS USE OF THE WEBSITE MUST BE COMMENCED WITHIN ONE (1) YEAR AFTER THE CAUSE OF
         ACTION ACCRUES; OTHERWISE, SUCH CAUSE OF ACTION OR CLAIM IS PERMANENTLY BARRED.
       </Paragraph>
       <Header>Waiver & Severability.</Header>
