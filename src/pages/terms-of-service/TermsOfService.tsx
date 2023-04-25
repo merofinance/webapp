@@ -86,13 +86,13 @@ const TermsOfServicePage = (): JSX.Element => {
         CONTRACT; OR (C) ARE PROHIBITED FROM ACCESSING OR USING THIS WEBSITE OR ANY OF THIS
         WEBSITE’S FUNCTIONALITIES BY THESE TERMS OR BY APPLICABLE LAW.
       </Paragraph>
-      <Header>Acceptance of These Terms of Use.</Header>
+      <Header>Acceptance of These Terms of Service.</Header>
       <Paragraph>
-        These terms of use are entered into by and between you (“you” or the “User”) and Reactive
-        Labs, a Cayman Islands registered company (the “Company,” “we,” “our,” or “us”). The
-        following terms and conditions, together with any documents they expressly incorporate by
-        reference (collectively, these “Terms of Use” or this “Agreement”), govern the User’s access
-        to and use of{" "}
+        These terms of service are entered into by and between you (“you” or the “User”) and
+        Reactive Labs, a Cayman Islands registered company (the “Company,” “we,” “our,” or “us”).
+        The following terms and conditions, together with any documents they expressly incorporate
+        by reference (collectively, these “Terms of Service” or this “Agreement”), govern the User’s
+        access to and use of{" "}
         <Link href={MAIN_LINK} target="_blank" rel="noreferrer">
           https://mero.finance/
         </Link>{" "}
@@ -104,9 +104,9 @@ const TermsOfServicePage = (): JSX.Element => {
         sub-pages, the “Website”).
       </Paragraph>
       <Paragraph>
-        The User must read these Terms of Use carefully before using the Website (including the
+        The User must read these Terms of Service carefully before using the Website (including the
         Interface). By using the Website or the Interface, the User accepts and agrees to be bound
-        and abide by these Terms of Use and our{" "}
+        and abide by these Terms of Service and our{" "}
         <Link href="/privacy-policy" target="_blank" rel="noopener noreferrer">
           Privacy Policy
         </Link>
@@ -207,7 +207,7 @@ const TermsOfServicePage = (): JSX.Element => {
         <Item>
           <Paragraph>
             Ensuring that all persons who access the Website or the Services through the User’s
-            internet connection are aware of these Terms of Use and comply with them.
+            internet connection are aware of these Terms of Service and comply with them.
           </Paragraph>
         </Item>
       </List>
@@ -251,13 +251,13 @@ const TermsOfServicePage = (): JSX.Element => {
       <Paragraph>
         We have the right to block any IP address from accessing the Website at any time in our sole
         discretion for any or no reason, including if, in our opinion, the User or that identity has
-        violated any provision of these Terms of Use.
+        violated any provision of these Terms of Service.
       </Paragraph>
       <Header>Prohibited Uses.</Header>
       <Paragraph>
         The User may access or use the Website and the Services only for lawful purposes and in
-        accordance with these Terms of Use. The User agrees not to use or access the Website or the
-        Services:
+        accordance with these Terms of Service. The User agrees not to use or access the Website or
+        the Services:
       </Paragraph>
       <List>
         <Item>
@@ -356,7 +356,7 @@ const TermsOfServicePage = (): JSX.Element => {
         <Item>
           <Paragraph>
             Use any manual process to copy any of the material on the Website, or for any other
-            purpose not expressly authorized in these Terms of Use, without our prior written
+            purpose not expressly authorized in these Terms of Service, without our prior written
             consent.
           </Paragraph>
         </Item>
@@ -426,7 +426,7 @@ const TermsOfServicePage = (): JSX.Element => {
         <Item>
           <Paragraph>
             Terminate or suspend your access to all or part of the Website for any or no reason,
-            including without limitation, any violation of these Terms of Use.
+            including without limitation, any violation of these Terms of Service.
           </Paragraph>
         </Item>
       </List>
@@ -454,19 +454,20 @@ const TermsOfServicePage = (): JSX.Element => {
         interactions with any blockchain underlying the Services or reliance on the information or
         content presented on the Website.
       </Paragraph>
-      <Header>Changes to These Terms of Use.</Header>
+      <Header>Changes to These Terms of Service.</Header>
       <Paragraph>
-        We may revise and update these Terms of Use from time to time in our sole discretion. All
-        changes are effective immediately when we post them and apply to all access to and use of
-        the Website thereafter. However, any changes to the dispute resolution provisions set out in
-        the Section entitled Governing Law & Jurisdiction below will not apply to any disputes for
-        which the parties have actual notice before the date the change is posted on the Website.
+        We may revise and update these Terms of Service from time to time in our sole discretion.
+        All changes are effective immediately when we post them and apply to all access to and use
+        of the Website thereafter. However, any changes to the dispute resolution provisions set out
+        in the Section entitled Governing Law & Jurisdiction below will not apply to any disputes
+        for which the parties have actual notice before the date the change is posted on the
+        Website.
       </Paragraph>
       <Paragraph>
         The User’s continued use of the Website or the Services following the posting of revised
-        Terms of Use means that the User accepts and agrees to the changes. The User is expected to
-        check this page each time it accesses this Website or the Interface, so it is aware of any
-        changes as they are binding on the User.
+        Terms of Service means that the User accepts and agrees to the changes. The User is expected
+        to check this page each time it accesses this Website or the Interface, so it is aware of
+        any changes as they are binding on the User.
       </Paragraph>
       <Header>Intellectual Property Rights.</Header>
       <Paragraph>
@@ -529,20 +530,20 @@ const TermsOfServicePage = (): JSX.Element => {
       </Paragraph>
       <Paragraph>
         If the User prints, copies, modifies, downloads, or otherwise uses or provides any other
-        person with access to any part of the Website in breach of these Terms of Use, the User’s
-        right to access the Website will stop immediately and the User must, at our option, return
-        or destroy any copies of the materials the User has made. No right, title, or interest in or
-        to the Website or any content on the Website is transferred to the User, and all rights not
-        expressly granted are reserved by the Company.
+        person with access to any part of the Website in breach of these Terms of Service, the
+        User’s right to access the Website will stop immediately and the User must, at our option,
+        return or destroy any copies of the materials the User has made. No right, title, or
+        interest in or to the Website or any content on the Website is transferred to the User, and
+        all rights not expressly granted are reserved by the Company.
       </Paragraph>
       <Paragraph>
-        Notwithstanding anything to the contrary in these Terms of Use, the User may freely use any
-        open-sourced materials up to the limits provided, but in accordance with any requirements
-        placed, by those materials’ open-source licenses.
+        Notwithstanding anything to the contrary in these Terms of Service, the User may freely use
+        any open-sourced materials up to the limits provided, but in accordance with any
+        requirements placed, by those materials’ open-source licenses.
       </Paragraph>
       <Paragraph>
-        Any use of the Website not expressly permitted by these Terms of Use is a breach of these
-        Terms of Use and may violate copyright, trademark, and other laws.
+        Any use of the Website not expressly permitted by these Terms of Service is a breach of
+        these Terms of Service and may violate copyright, trademark, and other laws.
       </Paragraph>
       <Header>Trademarks.</Header>
       <Paragraph>
@@ -806,8 +807,8 @@ const TermsOfServicePage = (): JSX.Element => {
       </Paragraph>
       <Header>No Fiduciary Duties.</Header>
       <Paragraph>
-        These Terms of Use, and the provision of the Website and the Services, are not intended to
-        create any fiduciary duties between us and the User or any third party. The Company never
+        These Terms of Service, and the provision of the Website and the Services, are not intended
+        to create any fiduciary duties between us and the User or any third party. The Company never
         takes possession, custody, control, ownership, or management of any digital assets or other
         property transmitted via the Interface. To the fullest extent permissible by law, the User
         agrees that neither the User’s use of the Website or the Services causes us or any
@@ -838,21 +839,21 @@ const TermsOfServicePage = (): JSX.Element => {
         employees, contractors, agents, licensors, suppliers, successors, and assigns from and
         against any claims, liabilities, damages, judgments, awards, losses, costs, expenses, or
         fees (including reasonable attorneys’ fees) arising out of or relating to: (1) the User’s
-        violation of these Terms of Use; (2) the User’s use of the Website, the Services, or the
+        violation of these Terms of Service; (2) the User’s use of the Website, the Services, or the
         Protocol, including, but not limited to, the User’s interactions with the Interface or other
         features which incorporate the Services, use of or reliance on the Website’s content,
-        services, and products other than as expressly authorized in these Terms of Use; (3) the
+        services, and products other than as expressly authorized in these Terms of Service; (3) the
         User’s use or reliance on of any information obtained from the Website; or (4) any other
         party’s access and use of the Website or Services with the User’s assistance or by using any
         device or account that the User owns or controls.
       </Paragraph>
       <Header>Governing Law & Jurisdiction.</Header>
       <Paragraph>
-        All matters relating to the Website and these Terms of Use, and any dispute or claim arising
-        therefrom or related thereto (in each case, including non-contractual disputes or claims),
-        shall be governed by and construed in accordance with the laws of the state of New York
-        without giving effect to any choice or conflict of law provision or rule (whether of the
-        state of New York or any other jurisdiction).
+        All matters relating to the Website and these Terms of Service, and any dispute or claim
+        arising therefrom or related thereto (in each case, including non-contractual disputes or
+        claims), shall be governed by and construed in accordance with the laws of the state of New
+        York without giving effect to any choice or conflict of law provision or rule (whether of
+        the state of New York or any other jurisdiction).
       </Paragraph>
       <Header>Arbitration; Class Arbitration Waiver.</Header>
       <Paragraph>
@@ -863,8 +864,8 @@ const TermsOfServicePage = (): JSX.Element => {
         American Arbitration Association under its Rules of Arbitration. The tribunal shall have the
         power to rule on any challenge to its own jurisdiction or to the validity or enforceability
         of any portion of the agreement to arbitrate. The parties agree to arbitrate solely on an
-        individual basis, and that these Terms of Use do not permit class arbitration or any claims
-        brought as a plaintiff or class member in any class or representative arbitration
+        individual basis, and that these Terms of Service do not permit class arbitration or any
+        claims brought as a plaintiff or class member in any class or representative arbitration
         proceeding. The arbitral tribunal may not consolidate more than one person’s claims and may
         not otherwise preside over any form of a representative or class proceeding. In the event
         the prohibition on class arbitration is deemed invalid or unenforceable, then its remaining
@@ -878,20 +879,20 @@ const TermsOfServicePage = (): JSX.Element => {
       </Paragraph>
       <Header>Waiver & Severability.</Header>
       <Paragraph>
-        No waiver by the Company of any term or condition set out in these Terms of Use shall be
+        No waiver by the Company of any term or condition set out in these Terms of Service shall be
         deemed a further or continuing waiver of such term or condition or a waiver of any other
         term or condition, and any failure of the Company to assert a right or provision under these
-        Terms of Use shall not constitute a waiver of such right or provision.
+        Terms of Service shall not constitute a waiver of such right or provision.
       </Paragraph>
       <Paragraph>
-        If any provision of these Terms of Use is held by a court or other tribunal of competent
+        If any provision of these Terms of Service is held by a court or other tribunal of competent
         jurisdiction to be invalid, illegal, or unenforceable for any reason, such provision shall
         be eliminated or limited to the minimum extent such that the remaining provisions of these
-        Terms of Use will continue in full force and effect.
+        Terms of Service will continue in full force and effect.
       </Paragraph>
       <Header>Entire Agreement.</Header>
       <Paragraph>
-        These Terms of Use, the{" "}
+        These Terms of Service, the{" "}
         <Link href="/privacy-policy" target="_blank" rel="noopener noreferrer">
           Privacy Policy
         </Link>
