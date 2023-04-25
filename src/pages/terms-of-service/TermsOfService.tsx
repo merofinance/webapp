@@ -63,7 +63,7 @@ const TermsOfServicePage = (): JSX.Element => {
     <StyledTermsOfServicePage>
       <Seo title="Mero Terms of Service" description="The Terms of Service for Mero" />
       <Header1>Mero - Terms of Service</Header1>
-      <Paragraph>Last Modified: 08/03/2023</Paragraph>
+      <Paragraph>Last Modified: 25/04/2023</Paragraph>
       <Paragraph>
         MERO IS A DEFI BLOCKCHAIN PROTOCOL. BEFORE INTERACTING WITH THE MERO PROTOCOL OR ANY OF THE
         SERVICES ASSOCIATED WITH MERO, YOU SHOULD KNOW, UNDERSTAND AND ACCEPT THE RISKS ASSOCIATED

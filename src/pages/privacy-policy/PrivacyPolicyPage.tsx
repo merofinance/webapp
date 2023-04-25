@@ -131,7 +131,7 @@ const PrivacyPolicyPage = (): JSX.Element => {
         with Mero’s smart contracts in a trustless and permissionless way.
       </Paragraph>
       <SubHeader>Changes to the privacy notice and your duty to inform us of changes</SubHeader>
-      <Paragraph>This version was last updated on 10/03/2023.</Paragraph>
+      <Paragraph>This version was last updated on 25/04/2023.</Paragraph>
       <Paragraph>
         It is important that the personal data we hold about you is accurate and current. Please
         keep us informed if your personal data changes during your relationship with us.
