@@ -49,19 +49,6 @@ const Item = styled.li`
   }
 `;
 
-const Bold = styled.span`
-  font-weight: 700;
-  font-size: 1.6rem;
-  line-height: 2.4rem;
-  letter-spacing: 0.15px;
-  margin-bottom: 1rem;
-
-  @media (max-width: 600px) {
-    font-size: 1.2rem;
-    line-height: 1.8rem;
-  }
-`;
-
 const Link = styled.a`
   font-weight: 400;
   letter-spacing: 0.15px;
@@ -76,11 +63,11 @@ const Link = styled.a`
   }
 `;
 
-const PrivacyPolicyPage = () => {
+const PrivacyPolicyPage = (): JSX.Element => {
   return (
     <StyledPrivacyPolicyPage>
       <Seo title="Mero Privacy Policy" description="The privacy policy for Mero" />
-      <Header1>Mero Privacy Policy</Header1>
+      <Header1>Mero - Privacy Policy</Header1>
       <Header>Introduction</Header>
       <Paragraph>
         We respect your privacy and are committed to protecting your personal data. This privacy
