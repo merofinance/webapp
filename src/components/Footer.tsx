@@ -79,6 +79,16 @@ const linkLists: LinkListType[] = [
         link: BLOG_LINK,
       },
       {
+        internal: true,
+        label: "footer.resources.links.privacyPolicy",
+        link: "/privacy-policy",
+      },
+      {
+        internal: true,
+        label: "footer.resources.links.termsOfService",
+        link: "/tos",
+      },
+      {
         header: "footer.resources.links.audits.header",
         links: [
           {

@@ -187,6 +187,8 @@
         "litepaper": "Litepaper",
         "docs": "Docs",
         "blog": "Blog",
+        "privacyPolicy": "Privacy Policy",
+        "termsOfService": "Terms of Service",
         "audits": {
           "header": "Audits",
           "code4renaProtocol": "C4 Protocol",

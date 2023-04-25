@@ -1,3 +1,6 @@
+// Main
+export const MAIN_LINK = "https://mero.finance";
+
 // Socials
 export const TWITTER_LINK = "https://twitter.com/merofinance";
 export const DISCORD_LINK = "https://discord.gg/jpGvaFV3Rv";
