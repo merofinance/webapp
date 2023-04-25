@@ -25,6 +25,7 @@ import CareerPage from "./pages/careers/CareerPage";
 import PoolMigrationPage from "./pages/pool-migration/PoolMigrationPage";
 import DebtRepaymentPool from "./pages/actions/register/topup/DebtRepaymentPool";
 import PrivacyPolicyPage from "./pages/privacy-policy/PrivacyPolicyPage";
+import TermsOfServicePage from "./pages/terms-of-service/TermsOfService";
 
 const App = (): JSX.Element => {
   return (
@@ -88,6 +89,7 @@ const App = (): JSX.Element => {
             {STAKING_LIVE && <Route path="mero" element={<MeroPage />} />}
             <Route path="litepaper" element={<LitepaperPage />} />
             <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
+            <Route path="tos" element={<TermsOfServicePage />} />
             <Route path="pool-migration" element={<PoolMigrationPage />} />
             <Route path="careers" element={<CareersPage />} />
             <Route path="career/:careerId" element={<CareerPage />} />
