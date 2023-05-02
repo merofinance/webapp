@@ -99,12 +99,6 @@ describe("Join The Community", () => {
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://twitter.com/merofinance");
   });
-
-  it("Should have Telegram Link", () => {
-    cy.get('[id="joinCommunity.socials.github"]')
-      .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://github.com/merofinance");
-  });
 });
 
 describe("Statistics", () => {
@@ -163,12 +157,6 @@ describe("Footer", () => {
       .should("have.attr", "href", "https://github.com/merofinance");
   });
 
-  it("Should have Telegram Chat Link", () => {
-    cy.get('[id="footer.community.links.telegram"]')
-      .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://t.me/merofinance");
-  });
-
   it("Should have Litepaper Link", () => {
     cy.get('[id="footer.resources.links.litepaper"]').click();
     cy.location().should((loc) => {
@@ -193,11 +181,5 @@ describe("Footer", () => {
     cy.get('[id="footer.updates.links.newsletter"]')
       .should("have.attr", "target", "_blank")
       .should("have.attr", "href", "https://merofinance.substack.com/welcome");
-  });
-
-  it("Should have Telegram Announcements Link", () => {
-    cy.get('[id="footer.updates.links.telegram"]')
-      .should("have.attr", "target", "_blank")
-      .should("have.attr", "href", "https://t.me/meroannouncements");
   });
 });
