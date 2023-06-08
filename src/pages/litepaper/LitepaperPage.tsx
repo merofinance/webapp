@@ -6,12 +6,7 @@ import Seo from "../../components/Seo";
 import capitalEfficiency from "../../assets/litepaper/capital-efficiency.png";
 import topUp from "../../assets/litepaper/top-up.png";
 import meroFlow from "../../assets/litepaper/mero-flow.png";
-import {
-  DISCORD_LINK,
-  DOCS_CONTRIBUTIONS_LINK,
-  DOCS_COOKBOOK_LINK,
-  DOCS_LINK,
-} from "../../lib/links";
+import { DISCORD_LINK, DOCS_LINK } from "../../lib/links";
 
 const StyledLitepaperPage = styled.div`
   display: flex;
@@ -207,22 +202,10 @@ const LitepaperPage = (): JSX.Element => {
           <Paragraph>{t("litepaper.token.community.contributions.keeper")}</Paragraph>
         </Item>
         <Item>
-          <Paragraph>
-            <Trans i18nKey="litepaper.token.community.contributions.general">
-              <Link href={DOCS_CONTRIBUTIONS_LINK} target="_blank" rel="noopener noreferrer">
-                contributions
-              </Link>
-            </Trans>
-          </Paragraph>
+          <Paragraph>{t("litepaper.token.community.contributions.general")}</Paragraph>
         </Item>
         <Item>
-          <Paragraph>
-            <Trans i18nKey="litepaper.token.community.contributions.investment">
-              <Link href={DOCS_COOKBOOK_LINK} target="_blank" rel="noopener noreferrer">
-                strategies
-              </Link>
-            </Trans>
-          </Paragraph>
+          <Paragraph>{t("litepaper.token.community.contributions.investment")}</Paragraph>
         </Item>
       </List>
       <Paragraph>
