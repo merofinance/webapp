@@ -22,8 +22,6 @@ export const DOCS_TOKENOMICS_LINK = `${DOCS_LINK}protocol-architecture/tokenomic
 export const DOCS_ACTIONS_LINK = `${DOCS_LINK}protocol-architecture/actions`;
 export const DOCS_POOLS_LINK = `${DOCS_LINK}protocol-architecture/pools`;
 export const DOCS_KEEPERS_LINK = `${DOCS_LINK}protocol-architecture/backd-keepers`;
-export const DOCS_CONTRIBUTIONS_LINK = `${DOCS_LINK}resources/contributions`;
-export const DOCS_COOKBOOK_LINK = `${DOCS_LINK}resources/cookbook`;
 export const DOCS_STRATEGIES_LINK = `${DOCS_LINK}protocol-architecture/pools/strategies`;
 
 // Vendor
