@@ -3,34 +3,38 @@ import { ScaledNumber } from "scaled-number";
 
 import { Address, LendingProtocol, LendingProtocolProvider, Optional, PlainLoan } from "../types";
 import { LendingPoolFactory } from "../contracts/aave/LendingPool";
-import POOL_METADATA from "../data/pool-metadata";
+import POOL_METADATA, { PoolMetadata } from "../data/pool-metadata";
 
 export class AaveProvider implements LendingProtocolProvider {
   async getPosition(
     address: Address,
-    provider: Signer | providers.Provider
+    provider: Signer | providers.Provider,
+    chainId: number
   ): Promise<Optional<PlainLoan>> {
     try {
-      const lendingPoolContract = LendingPoolFactory.connect(provider);
+      const lendingPoolContract = LendingPoolFactory.connect(provider, chainId);
       const userAccountData = await lendingPoolContract.getUserAccountData(address);
 
       if (new ScaledNumber(userAccountData.totalCollateralETH).isZero()) return null;
 
       const borrowedData = await Promise.all(
-        POOL_METADATA.map(async (metadata) => {
-          const abi = ["function balanceOf(address owner) external view returns (uint256)"];
-          const stableToken = new Contract(metadata.aaveStableDebtToken, abi, provider);
-          const variableToken = new Contract(metadata.aaveVariableDebtToken, abi, provider);
-          const [stableBalance, variableBalance] = await Promise.all([
-            stableToken.balanceOf(address),
-            variableToken.balanceOf(address),
-          ]);
-          return {
-            symbol: metadata.symbol,
-            stableBalance: new ScaledNumber(stableBalance),
-            variableBalance: new ScaledNumber(variableBalance),
-          };
-        })
+        POOL_METADATA.filter((metadata: PoolMetadata) => metadata.chainSpecificData[chainId]).map(
+          async (metadata) => {
+            const abi = ["function balanceOf(address owner) external view returns (uint256)"];
+            const chainData = metadata.chainSpecificData[chainId];
+            const stableToken = new Contract(chainData.aaveStableDebtToken, abi, provider);
+            const variableToken = new Contract(chainData.aaveVariableDebtToken, abi, provider);
+            const [stableBalance, variableBalance] = await Promise.all([
+              stableToken.balanceOf(address),
+              variableToken.balanceOf(address),
+            ]);
+            return {
+              symbol: metadata.symbol,
+              stableBalance: new ScaledNumber(stableBalance),
+              variableBalance: new ScaledNumber(variableBalance),
+            };
+          }
+        )
       );
 
       const borrowedTokens = borrowedData

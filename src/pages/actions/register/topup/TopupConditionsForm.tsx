@@ -7,6 +7,7 @@ import { FormikErrors, useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { BigNumber, ethers } from "ethers";
 import { ScaledNumber } from "scaled-number";
+import { useWeb3React } from "@web3-react/core";
 
 import { useMero } from "../../../../app/hooks/use-mero";
 import { selectUsersPoolUnderlyingUnlocked } from "../../../../state/valueSelectors";
@@ -17,6 +18,7 @@ import {
   GWEI_DECIMALS,
   RECOMMENDED_THRESHOLD,
   TOPUP_ACTION_ROUTE,
+  chainSpecificCopy,
 } from "../../../../lib/constants";
 import {
   addSuggestion,
@@ -132,6 +134,7 @@ const TopupConditionsForm = ({ actionType }: Props): Optional<JSX.Element> => {
   const navigate = useNavigateToTop();
   const { isMobile } = useDevice();
   const { address, protocol, poolName } = useParams<"address" | "protocol" | "poolName">();
+  const { chainId } = useWeb3React();
 
   const pool = useSelector(selectPool(poolName));
   const underlyingPrice = useSelector(selectPrice(pool));
@@ -194,7 +197,8 @@ const TopupConditionsForm = ({ actionType }: Props): Optional<JSX.Element> => {
     const ethNeeded = ethValue();
     if (ethNeeded && ethBalance && ethNeeded.gt(ethBalance.value)) {
       const needed = new ScaledNumber(ethNeeded).toCryptoString();
-      errors.maxGasPrice = t("actions.topup.fields.gas.notEnoughEth", { needed });
+      const nativeToken = chainId ? chainSpecificCopy[chainId].nativeToken : "---";
+      errors.maxGasPrice = t("actions.topup.fields.gas.notEnoughEth", { needed, nativeToken });
     }
 
     // Validating that max gas price is above the minimum
@@ -304,6 +308,7 @@ const TopupConditionsForm = ({ actionType }: Props): Optional<JSX.Element> => {
       const gasCost = new ScaledNumber(estimatedGasUsage.value.mul(max.value));
       const gasCostUsd = gasCost.mul(ethPrice);
       if (singleTopupUsd.mul(0.25).lte(gasCostUsd)) {
+        const nativeToken = chainId ? chainSpecificCopy[chainId].nativeToken : "---";
         dispatch(
           addSuggestion({
             type: SuggestionType.SINGLE_LOW,
@@ -314,6 +319,7 @@ const TopupConditionsForm = ({ actionType }: Props): Optional<JSX.Element> => {
               underlyingAmount: single.toCryptoString(),
               underlyingSymbol: pool.underlying.symbol,
               suggestion: suggestedSingleTopup(),
+              nativeToken,
             }),
             button: t("liveHelp.suggestions.singleLow.button"),
             link: DOCS_TOPUPS_LINK,
@@ -418,11 +424,15 @@ const TopupConditionsForm = ({ actionType }: Props): Optional<JSX.Element> => {
               ? t(`actions.${actionType}.fields.priority.label`)
               : t(`actions.${actionType}.fields.priority.question`)
           }
-          tooltip={t(`actions.${actionType}.fields.priority.tooltip`)}
+          tooltip={t(`actions.${actionType}.fields.priority.tooltip`, {
+            priorityFee: chainId ? chainSpecificCopy[chainId].priorityFee : "--",
+          })}
           type="number"
           name="priorityFee"
           formik={formik}
-          placeholder="3 Gwei"
+          placeholder={t("actions.topup.fields.priority.placeholder", {
+            priorityFee: chainId ? chainSpecificCopy[chainId].priorityFee : "--",
+          })}
         />
         <TopupInput
           label={
@@ -430,11 +440,15 @@ const TopupConditionsForm = ({ actionType }: Props): Optional<JSX.Element> => {
               ? t(`actions.${actionType}.fields.gas.label`)
               : t(`actions.${actionType}.fields.gas.question`)
           }
-          tooltip={t(`actions.${actionType}.fields.gas.tooltip`)}
+          tooltip={t(`actions.${actionType}.fields.gas.tooltip`, {
+            maximumGas: chainId ? chainSpecificCopy[chainId].maximumGas : "--",
+          })}
           type="number"
           name="maxGasPrice"
           formik={formik}
-          placeholder="200 Gwei"
+          placeholder={t("actions.topup.fields.gas.placeholder", {
+            maximumGas: chainId ? chainSpecificCopy[chainId].maximumGas : "--",
+          })}
           onBlur={() => {
             singleMinimumSuggestion();
           }}
