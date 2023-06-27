@@ -23,7 +23,7 @@ import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from
 import fromEntries from "fromentries";
 import { PlainScaledNumber, ScaledNumber } from "scaled-number";
 
-import contracts from "./data/contracts";
+import contracts from "@merofinance/protocol/config/deployments/map.json";
 import { UnsupportedNetwork } from "../app/errors";
 import { Apy, getApys } from "./apys";
 import { getPrices as getPricesFromCoingecko } from "./coingecko";
