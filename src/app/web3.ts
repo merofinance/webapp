@@ -5,7 +5,7 @@ import { PrivateKeyConnector } from "../lib/private-key-connector";
 import { RPC } from "../lib/constants";
 
 export const privateKeyConnector = new PrivateKeyConnector({
-  supportedChainIds: [42],
+  supportedChainIds: [42, 137],
 });
 
 export const supportedChainIds = [
