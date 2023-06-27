@@ -1,4 +1,5 @@
 import { BigNumber } from "ethers";
+import { Token } from "./types";
 
 // Feature toggles
 export const STAKING_LIVE = false;
@@ -6,6 +7,12 @@ export const STAKING_LIVE = false;
 // Variables
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 export const DUMMY_ETH_ADDRESS = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
+export const ETH_TOKEN: Token = {
+  address: ZERO_ADDRESS,
+  decimals: 18,
+  name: "Ether",
+  symbol: "ETH",
+};
 export const ETH_DECIMALS = 18;
 export const GWEI_DECIMALS = 9;
 export const INFINITE_APPROVE_AMMOUNT = 10 ** 10;
@@ -27,6 +34,7 @@ export const chainIds: Record<string, string> = {
   "4": "Rinkeby",
   "5": "Goerli",
   "42": "Kovan",
+  "137": "Polygon",
 };
 
 export const etherscanUrls: Record<string, string> = {
@@ -36,6 +44,7 @@ export const etherscanUrls: Record<string, string> = {
   "5": "https://goerli.etherscan.io/",
   "42": "https://kovan.etherscan.io/",
   "1337": "https://etherscan.io/", // NOTE: only here to have some dummy URL in dev
+  "137": "https://polygonscan.com/",
 };
 
 export const oldPools: Record<string, string[]> = {
@@ -54,4 +63,23 @@ export const oldPools: Record<string, string[]> = {
 export const oldAddressProviders: Record<string, string> = {
   "1": "0x139c15e21b0f6e43Fc397faCe5De5b7D5ae6874a",
   "42": "0xFCf9099D09dBf9498Ad356006C95bDb988022e7E",
+};
+
+interface ChainSpecificCopy {
+  nativeToken: string;
+  priorityFee: string;
+  maximumGas: string;
+}
+
+export const chainSpecificCopy: Record<number, ChainSpecificCopy> = {
+  1: {
+    nativeToken: "ETH",
+    priorityFee: "3",
+    maximumGas: "200",
+  },
+  137: {
+    nativeToken: "MATIC",
+    priorityFee: "50",
+    maximumGas: "2,000",
+  },
 };
