@@ -30,7 +30,6 @@ export interface GenericPool<T> {
   stakerVaultAddress: string;
   totalAssets: T;
   underlying: Token;
-  harvestable: T;
   strategyInfo: Optional<StrategyInfo>;
   isPaused: boolean;
 }
@@ -42,6 +41,10 @@ export const fromPlainPool = (plainPool: PlainPool): Pool => {
   return transformPool(plainPool, (plainScaledNumber: PlainScaledNumber) =>
     ScaledNumber.fromPlain(plainScaledNumber)
   );
+};
+
+export const toPlainPool = (pool: Pool): PlainPool => {
+  return transformPool(pool, (scaledNumber: ScaledNumber) => scaledNumber.toPlain());
 };
 
 interface GenericPosition<T> {
@@ -69,7 +72,8 @@ export enum LendingProtocol {
 export interface LendingProtocolProvider {
   getPosition(
     address: Address,
-    provider: Signer | providers.Provider
+    provider: Signer | providers.Provider,
+    chainId: number
   ): Promise<Optional<PlainLoan>>;
 }
 
@@ -173,7 +177,6 @@ export function transformPool<T, U>(pool: GenericPool<T>, f: (v: T) => U): Gener
     maxWithdrawalFee: f(pool.maxWithdrawalFee),
     minWithdrawalFee: f(pool.minWithdrawalFee),
     feeDecreasePeriod: f(pool.feeDecreasePeriod),
-    harvestable: f(pool.harvestable),
   };
 }
 

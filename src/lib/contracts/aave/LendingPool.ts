@@ -1,11 +1,15 @@
 import { Contract, Signer } from "ethers";
 import { Provider } from "@ethersproject/providers";
 
-const ADDRESS = "0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9";
+const ADDRESS: Record<number, string> = {
+  1: "0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9",
+  137: "0x8dFf5E27EA6b7AC08EbFdf9eB090F32ee9a30fcf",
+};
 
 export class LendingPoolFactory {
-  static connect(signerOrProvider: Signer | Provider): Contract {
-    return new Contract(ADDRESS, _abi, signerOrProvider);
+  static connect(signerOrProvider: Signer | Provider, chainId: number): Contract {
+    const address = ADDRESS[chainId];
+    return new Contract(address, _abi, signerOrProvider);
   }
 }
 

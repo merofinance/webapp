@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import { Optional } from "../../lib/types";
 
 const useENS = (): { ensName: Optional<string>; ensAvatar: Optional<string> } => {
-  const { account, library } = useWeb3React();
+  const { account, library, chainId } = useWeb3React();
   const [ensName, setENSName] = useState<Optional<string>>(null);
   const [ensAvatar, setENSAvatar] = useState<Optional<string>>(null);
 
   const resolveENS = async (): Promise<void> => {
+    if (chainId === 137) return;
     setENSAvatar(null);
     if (!account) return;
     const ensName = await library.provider.lookupAddress(account);

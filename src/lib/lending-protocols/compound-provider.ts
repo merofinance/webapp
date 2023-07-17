@@ -43,7 +43,8 @@ interface AccountData {
 export class CompoundProvider implements LendingProtocolProvider {
   async getPosition(
     address: Address,
-    provider: Signer | providers.Provider
+    provider: Signer | providers.Provider,
+    chainId: number
   ): Promise<Optional<PlainLoan>> {
     const COMPOUND_API = "https://api.compound.finance/api/v2/account";
     const account = address;

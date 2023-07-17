@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ScaledNumber } from "scaled-number";
-import POOL_METADATA from "../../lib/data/pool-metadata";
+import POOL_METADATA, { PoolMetadata } from "../../lib/data/pool-metadata";
 import { Optional, Pool } from "../../lib/types";
 
 interface DataResponse {
@@ -18,14 +18,16 @@ const usePoolsPreview = (): Optional<Pool[]> => {
   const [pools, setPools] = useState<Optional<Pool[]>>(null);
 
   const fetchPools = async () => {
-    const queries = POOL_METADATA.map(async (data) => {
-      const response = await fetch(`https://yields.llama.fi/chart/${data.id}`);
-      const json = await response.json();
-      return {
-        symbol: data.symbol,
-        ...json.data.slice(-1)[0],
-      };
-    });
+    const queries = POOL_METADATA.filter((metadata: PoolMetadata) => metadata.id).map(
+      async (data) => {
+        const response = await fetch(`https://yields.llama.fi/chart/${data.id}`);
+        const json = await response.json();
+        return {
+          symbol: data.symbol,
+          ...json.data.slice(-1)[0],
+        };
+      }
+    );
     const response = await Promise.all(queries);
     const pools_: Pool[] = response.map((poolResponse: DataResponse) => {
       const pool_: Pool = {
@@ -50,7 +52,6 @@ const usePoolsPreview = (): Optional<Pool[]> => {
           name: "",
           symbol: poolResponse.symbol,
         },
-        harvestable: ScaledNumber.fromUnscaled(1),
         strategyInfo: null,
         isPaused: false,
       };

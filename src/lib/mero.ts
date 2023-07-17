@@ -19,10 +19,11 @@ import {
   TopUpAction,
   PoolMigrationZap,
 } from "@merofinance/protocol";
-import contracts from "@merofinance/protocol/config/deployments/map.json";
 import { BigNumber, ContractTransaction, ethers, providers, Signer, utils } from "ethers";
 import fromEntries from "fromentries";
 import { PlainScaledNumber, ScaledNumber } from "scaled-number";
+
+import contracts from "@merofinance/protocol/config/deployments/map.json";
 import { UnsupportedNetwork } from "../app/errors";
 import { Apy, getApys } from "./apys";
 import { getPrices as getPricesFromCoingecko } from "./coingecko";
@@ -71,7 +72,11 @@ export interface Mero {
   listPools(): Promise<PlainPool[]>;
   listOldPools(): Promise<PlainPool[]>;
   getPoolInfo(address: Address): Promise<PlainPool>;
-  getLoanPosition(protocol: LendingProtocol, address?: Address): Promise<Optional<PlainLoan>>;
+  getLoanPosition(
+    protocol: LendingProtocol,
+    chainId: number,
+    address?: Address
+  ): Promise<Optional<PlainLoan>>;
   getPositions(): Promise<PlainPosition[]>;
   getActionFees(): Promise<PlainActionFees>;
   getEstimatedGasUsage(): Promise<PlainScaledNumber>;
@@ -173,6 +178,8 @@ export class Web3Mero implements Mero {
         return contracts["1337"];
       case 1:
         return contracts["1"];
+      case 137:
+        return contracts["137"];
       default:
         throw new UnsupportedNetwork();
     }
@@ -231,7 +238,6 @@ export class Web3Mero implements Mero {
       maxWithdrawalFee,
       minWithdrawalFee,
       feeDecreasePeriod,
-      harvestable,
       vaultAddress,
       isPaused,
     ] = await Promise.all([
@@ -243,7 +249,6 @@ export class Web3Mero implements Mero {
       pool.maxWithdrawalFee(),
       pool.minWithdrawalFee(),
       pool.withdrawalFeeDecreasePeriod(),
-      this.getHarvestable(address),
       pool.vault(),
       pool.isPaused(),
     ]);
@@ -274,7 +279,6 @@ export class Web3Mero implements Mero {
       maxWithdrawalFee: new ScaledNumber(maxWithdrawalFee).toPlain(),
       minWithdrawalFee: new ScaledNumber(minWithdrawalFee).toPlain(),
       feeDecreasePeriod: new ScaledNumber(feeDecreasePeriod, 0).toPlain(),
-      harvestable: new ScaledNumber(harvestable, underlying.decimals).toPlain(),
       strategyInfo,
       isPaused,
     };
@@ -364,21 +368,9 @@ export class Web3Mero implements Mero {
       maxWithdrawalFee: ScaledNumber.fromUnscaled(0).toPlain(),
       minWithdrawalFee: ScaledNumber.fromUnscaled(0).toPlain(),
       feeDecreasePeriod: ScaledNumber.fromUnscaled(0, 0).toPlain(),
-      harvestable: ScaledNumber.fromUnscaled(0, underlying.decimals).toPlain(),
       strategyInfo: null,
       isPaused,
     };
-  }
-
-  async getHarvestable(poolAddress: Address): Promise<BigNumber> {
-    const pool = LiquidityPoolFactory.connect(poolAddress, this._provider);
-    const vaultAddress = await pool.vault();
-    if (vaultAddress === ZERO_ADDRESS) return BigNumber.from(0);
-    const vault = VaultFactory.connect(vaultAddress, this._provider);
-    const strategyAddress = await vault.strategy();
-    if (strategyAddress === ZERO_ADDRESS) return BigNumber.from(0);
-    const strategy = IStrategyFactory.connect(strategyAddress, this._provider);
-    return strategy.harvestable();
   }
 
   async getWithdrawalFees(pools: Pool[]): Promise<PlainWithdrawalFees> {
@@ -416,8 +408,12 @@ export class Web3Mero implements Mero {
     );
   }
 
-  async getLoanPosition(protocol: LendingProtocol, address: Address): Promise<Optional<PlainLoan>> {
-    return lendingProviders[protocol].getPosition(address, this._provider);
+  async getLoanPosition(
+    protocol: LendingProtocol,
+    chainId: number,
+    address: Address
+  ): Promise<Optional<PlainLoan>> {
+    return lendingProviders[protocol].getPosition(address, this._provider, chainId);
   }
 
   async getPositions(): Promise<PlainPosition[]> {

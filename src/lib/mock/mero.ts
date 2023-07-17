@@ -64,7 +64,11 @@ export default class MockMero implements Mero {
     );
   }
 
-  getLoanPosition(protocol: LendingProtocol, address?: Address): Promise<Optional<PlainLoan>> {
+  getLoanPosition(
+    protocol: LendingProtocol,
+    chainId: number,
+    address?: Address
+  ): Promise<Optional<PlainLoan>> {
     return Promise.resolve({
       protocol: LendingProtocol.Aave,
       totalCollateralETH: new ScaledNumber().toPlain(),

@@ -15,6 +15,7 @@ import { selectPrice } from "../../../../state/poolsListSlice";
 import Loader from "../../../../components/Loader";
 import InfoBlock from "../../../../components/InfoBlock";
 import ExternalLink from "../../../../components/ExternalLink";
+import { chainSpecificCopy } from "../../../../lib/constants";
 
 const StyledTopupInformation = styled.div`
   width: 100%;
@@ -153,13 +154,17 @@ const TopupInformation = ({ position, pool, value }: Props): JSX.Element => {
             },
             {
               label: t(`actions.${actionType}.fields.priority.label`),
-              tooltip: t(`actions.${actionType}.fields.priority.tooltip`),
+              tooltip: t(`actions.${actionType}.fields.priority.tooltip`, {
+                priorityFee: chainId ? chainSpecificCopy[chainId].priorityFee : "--",
+              }),
               value: `${position.priorityFee.toCryptoString()} Gwei`,
               valueId: "topup-information-priority-fee",
             },
             {
               label: t(`actions.${actionType}.fields.gas.label`),
-              tooltip: t(`actions.${actionType}.fields.gas.tooltip`),
+              tooltip: t(`actions.${actionType}.fields.gas.tooltip`, {
+                maximumGas: chainId ? chainSpecificCopy[chainId].maximumGas : "--",
+              }),
               value: `${position.maxGasPrice.toCryptoString()} Gwei`,
               valueId: "topup-information-max-gas",
             },
@@ -203,10 +208,20 @@ const TopupInformation = ({ position, pool, value }: Props): JSX.Element => {
           <InfoRow>
             <InfoLabel>
               {t("actions.gasBank.topupAmount")}
-              <MeroTooltip info>{t("actions.gasBank.topupAmountTooltip")}</MeroTooltip>
+              <MeroTooltip info>
+                {t("actions.gasBank.topupAmountTooltip", {
+                  nativeToken: chainId ? chainSpecificCopy[chainId].nativeToken : "---",
+                })}
+              </MeroTooltip>
             </InfoLabel>
             <InfoLabel>
-              {value ? `${new ScaledNumber(value).toCryptoString()} ETH` : <Loader />}
+              {value ? (
+                `${new ScaledNumber(value).toCryptoString()} ${
+                  chainId ? chainSpecificCopy[chainId].nativeToken : "---"
+                }`
+              ) : (
+                <Loader />
+              )}
             </InfoLabel>
           </InfoRow>
         </InfoSection>

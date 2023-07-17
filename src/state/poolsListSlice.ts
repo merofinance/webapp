@@ -22,6 +22,7 @@ import {
 } from "./userSlice";
 import { handleTransactionConfirmation } from "../lib/transactionsUtils";
 import POOL_METADATA from "../lib/data/pool-metadata";
+import { ETH_TOKEN } from "../lib/constants";
 
 interface PoolsState {
   pools: PlainPool[];
@@ -49,7 +50,7 @@ export const fetchPool = createAsyncThunk(
 export const fetchPrices = createAsyncThunk(
   "pool/fetch-prices",
   async ({ mero, pools }: { mero: Mero; pools: Pool[] }) => {
-    return mero.getPrices(pools.map((p) => p.underlying));
+    return mero.getPrices([...pools.map((p) => p.underlying), ETH_TOKEN]);
   }
 );
 

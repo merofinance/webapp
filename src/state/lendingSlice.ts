@@ -16,10 +16,14 @@ const initialState: LendingState = {
 export const fetchLoans = createAsyncThunk(
   "lending/fetch-loans",
   async ({ mero, address }: { mero: Mero; address: Address }) => {
-    const loans: Optional<PlainLoan>[] = await Promise.all([
-      mero.getLoanPosition(LendingProtocol.Aave, address),
-      mero.getLoanPosition(LendingProtocol.Compound, address),
-    ]);
+    const chainId = mero.getChainId();
+    const loans = [];
+
+    loans.push(await mero.getLoanPosition(LendingProtocol.Aave, chainId, address));
+    if (chainId === 1) {
+      loans.push(await mero.getLoanPosition(LendingProtocol.Compound, chainId, address));
+    }
+
     return { address, loans: loans.filter((loan: Optional<PlainLoan>) => loan) as PlainLoan[] };
   }
 );
