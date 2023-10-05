@@ -27,6 +27,7 @@ export const TOPUP_ACTION_ROUTE = "/actions/register/topup";
 export const DEBT_REPAYMENT_ACTION_ROUTE = "/actions/register/debt-repayment";
 export const SLIPPAGE_TOLERANCE = 0.98; // 2%
 export const GAS_BUFFER = 11; // This is 10%, we use it as BigNumber.mul(GAS_BUFFER).div(10)
+export const PROTOCOL_PAGES = ["pools", "pool", "actions", "mero", "claim", "stake"];
 
 export const chainIds: Record<string, string> = {
   "1": "Mainnet",
