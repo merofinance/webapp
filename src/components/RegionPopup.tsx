@@ -13,12 +13,60 @@ interface CountryData {
 }
 const BLOCKED_COUNTRIES: CountryData[] = [
   {
-    code: "GB",
     name: "United Kingdom",
+    code: "GB",
   },
   {
-    code: "US",
     name: "United States",
+    code: "US",
+  },
+  {
+    name: "Belarus",
+    code: "BY",
+  },
+  {
+    name: "Burma",
+    code: "MM",
+  },
+  {
+    name: "China",
+    code: "CN",
+  },
+  {
+    name: "Cuba",
+    code: "CU",
+  },
+  {
+    name: "Congo",
+    code: "CD",
+  },
+  {
+    name: "Iran",
+    code: "IR",
+  },
+  {
+    name: "Iraq",
+    code: "IQ",
+  },
+  {
+    name: "Liberia",
+    code: "LR",
+  },
+  {
+    name: "North Korea",
+    code: "KP",
+  },
+  {
+    name: "Sudan",
+    code: "SD",
+  },
+  {
+    name: "Syria",
+    code: "SY",
+  },
+  {
+    name: "Zimbabwe",
+    code: "ZW",
   },
 ];
 
@@ -43,7 +91,7 @@ const RegionPopup = (): JSX.Element | null => {
       show={blocked && !hasDeposits && inProtocolPage}
       close={() => navigate("/")}
       header="Unsupported Region"
-      body={`Mero access currently not granted to residents of ${countryName}`}
+      body={`Mero access is currently not granted to residents of ${countryName}`}
     />
   );
 };
