@@ -23,6 +23,7 @@
   },
   "include": [
     "src",
-    "node_modules/@backdfund"
+    "node_modules/@backdfund",
+    "typings/**/*"
   ]
 }

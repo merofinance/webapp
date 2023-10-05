@@ -40,7 +40,7 @@ interface PopupContainerProps {
 
 const PopupContainer = styled.div`
   position: relative;
-  width: ${(props: PopupContainerProps) => (props.small ? "31.1rem" : "55.4rem")};
+  width: ${(props: PopupContainerProps) => (props.small ? "31.1rem" : "56rem")};
   padding: ${(props: PopupContainerProps) =>
     props.small ? "2.1rem 1.6rem 2.1rem 1.6rem" : "3.7rem 1.6rem 2.3rem 1.6rem"};
   border-radius: 1.4rem;
