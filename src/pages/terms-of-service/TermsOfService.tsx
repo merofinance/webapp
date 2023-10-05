@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Header1, Header2, Header5, Paragraph } from "../../styles/Headers";
+import { Header1, Header5, Paragraph } from "../../styles/Headers";
 import Seo from "../../components/Seo";
 import { MAIN_LINK } from "../../lib/links";
 
@@ -278,9 +278,9 @@ const TermsOfServicePage = (): JSX.Element => {
           <Paragraph>
             If they are a citizen of or otherwise accessing the Website from the nations of Belarus,
             Burma, China, Cuba, Democratic Republic of Congo, Iran, Iraq, Liberia, North Korea,
-            Sudan, Syria, and Zimbabwe, or if the User is otherwise listed as a Specially Designated
-            National by the United States Office of Foreign Asset Control (“OFAC”) (collectively,
-            “Prohibited Jurisdictions”).
+            Sudan, Syria, UK, and Zimbabwe, or if the User is otherwise listed as a Specially
+            Designated National by the United States Office of Foreign Asset Control (“OFAC”)
+            (collectively, “Prohibited Jurisdictions”).
           </Paragraph>
         </Item>
         <Item>
