@@ -1,7 +1,7 @@
-import styled from "styled-components";
 import useGeoLocation from "react-ipgeolocation";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 import { selectUsersTotalUsdEverywhere } from "../state/valueSelectors";
 import Popup from "./Popup";
@@ -76,6 +76,12 @@ const RegionPopup = (): JSX.Element | null => {
   const deposited = useSelector(selectUsersTotalUsdEverywhere);
   const location = useLocation();
   const ipLocation = useGeoLocation();
+
+  const country = ipLocation?.country ?? null;
+
+  useEffect(() => {
+    if (country) alert(country);
+  }, [country]);
 
   if (!ipLocation) return null;
 
