@@ -36,12 +36,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-      - name: Use OpenSSL Legacy Provider
-        run: export NODE_OPTIONS=--openssl-legacy-provider
       - name: Installing Dependencies
         run: yarn
       - name: Building App
-        run: yarn run build
+        run: export NODE_OPTIONS=--openssl-legacy-provider && yarn run build
       - name: Deploy to Preview Channel
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
