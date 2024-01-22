@@ -141,7 +141,8 @@ const PoolsPage = (): JSX.Element => {
             {pools &&
               pools
                 .filter((pool: Pool) => {
-                  if (!pool.isPaused) return true;
+                  const paused = pool.isPaused || pool.isShutdown;
+                  if (!paused) return true;
                   if (!balances || !balances[pool.address]) return false;
                   return !balances[pool.address].isZero();
                 })

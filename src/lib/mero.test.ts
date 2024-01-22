@@ -3,9 +3,9 @@ import { DUMMY_ETH_ADDRESS } from "./constants";
 import { createMero } from "./factory";
 import { Web3Mero } from "./mero";
 
-const llamaId = process.env.TEST_LLAMA_NODES_ID;
-if (!llamaId) throw new Error("TEST_LLAMA_NODES_ID not given");
-const rpc = `https://eth.llamarpc.com/rpc/${llamaId}`;
+const infuraId = process.env.WEB3_INFURA_PROJECT_ID;
+if (!infuraId) throw new Error("WEB3_INFURA_PROJECT_ID not given");
+const rpc = `https://mainnet.infura.io/v3/${infuraId}`;
 const provider = new ethers.providers.JsonRpcProvider(rpc);
 const mero = createMero(provider, { chainId: 1 }) as Web3Mero;
 

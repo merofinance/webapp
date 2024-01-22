@@ -56,6 +56,7 @@ const PoolDeposit = ({ pool, compact }: Props): JSX.Element => {
   const error = () => {
     if (!pool || !poolUnderlyingBalance || !depositAmount) return "";
     if (pool.isPaused) return t("amountInput.validation.poolPaused");
+    if (pool.isShutdown) return t("amountInput.validation.poolPaused");
     if (Number(depositAmount) <= 0) return t("amountInput.validation.positive");
     try {
       const amount = ScaledNumber.fromUnscaled(depositAmount, pool?.underlying.decimals);

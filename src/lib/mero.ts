@@ -240,6 +240,7 @@ export class Web3Mero implements Mero {
       feeDecreasePeriod,
       vaultAddress,
       isPaused,
+      isShutdown,
     ] = await Promise.all([
       pool.name(),
       pool.getLpToken(),
@@ -251,6 +252,7 @@ export class Web3Mero implements Mero {
       pool.withdrawalFeeDecreasePeriod(),
       pool.vault(),
       pool.isPaused(),
+      pool.isShutdown(),
     ]);
 
     const vaultShutdown = vaultAddress === ZERO_ADDRESS;
@@ -281,6 +283,7 @@ export class Web3Mero implements Mero {
       feeDecreasePeriod: new ScaledNumber(feeDecreasePeriod, 0).toPlain(),
       strategyInfo,
       isPaused,
+      isShutdown,
     };
   }
 
@@ -370,6 +373,7 @@ export class Web3Mero implements Mero {
       feeDecreasePeriod: ScaledNumber.fromUnscaled(0, 0).toPlain(),
       strategyInfo: null,
       isPaused,
+      isShutdown: false,
     };
   }
 

@@ -54,6 +54,7 @@ const usePoolsPreview = (): Optional<Pool[]> => {
         },
         strategyInfo: null,
         isPaused: false,
+        isShutdown: false,
       };
       return pool_;
     });

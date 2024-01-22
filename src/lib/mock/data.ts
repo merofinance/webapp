@@ -32,6 +32,7 @@ export const pools: GenericPool<BigNumber>[] = [
     feeDecreasePeriod: scale(10, 18),
     strategyInfo: null,
     isPaused: false,
+    isShutdown: false,
   },
   {
     name: "bUSDC3CRV",
@@ -57,6 +58,7 @@ export const pools: GenericPool<BigNumber>[] = [
     feeDecreasePeriod: scale(10, 18),
     strategyInfo: null,
     isPaused: false,
+    isShutdown: false,
   },
   {
     name: "meroethCRV",
@@ -82,6 +84,7 @@ export const pools: GenericPool<BigNumber>[] = [
     feeDecreasePeriod: scale(10, 18),
     strategyInfo: null,
     isPaused: false,
+    isShutdown: false,
   },
 ];
 

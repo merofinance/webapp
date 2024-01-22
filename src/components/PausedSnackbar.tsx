@@ -79,7 +79,9 @@ const PausedSnackbar = ({ pool }: Props): Optional<JSX.Element> => {
   const dispatch = useDispatch();
   const dismissed = useSelector(selectPausedSnackbarDismissed);
 
-  if (!pool || !pool.isPaused || dismissed) return null;
+  const paused = pool && (pool.isPaused || pool.isShutdown);
+
+  if (!paused || dismissed) return null;
 
   return (
     <Border>
