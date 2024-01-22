@@ -32,6 +32,7 @@ export interface GenericPool<T> {
   underlying: Token;
   strategyInfo: Optional<StrategyInfo>;
   isPaused: boolean;
+  isShutdown: boolean;
 }
 
 export type Pool = GenericPool<ScaledNumber>;
