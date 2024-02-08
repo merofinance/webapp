@@ -1,10 +1,8 @@
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { useTranslation } from "react-i18next";
 
 import chevron from "../../assets/ui/chevron.svg";
 import Asset from "../../components/Asset";
-import Button from "../../components/Button";
 import { GradientText } from "../../styles/GradientText";
 import { Pool } from "../../lib";
 import {
@@ -136,27 +134,12 @@ const Chevron = styled.img`
   width: 2.4rem;
 `;
 
-const ButtonContainer = styled.div`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-
-  display: ${(props: RowProps) => (props.preview ? "flex" : "none")};
-
-  right: 1.7rem;
-  @media (max-width: 600px) {
-    display: none;
-    right: 1.6rem;
-  }
-`;
-
 interface Props {
   pool: Pool;
   preview?: boolean;
 }
 
 const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
-  const { t } = useTranslation();
   const navigate = useNavigateToTop();
   const { isDesktop } = useDevice();
 
@@ -211,11 +194,6 @@ const PoolsRow = ({ pool, preview }: Props): JSX.Element => {
         </ChevronData>
         <Data right preview={preview} />
       </Row>
-      <ButtonContainer preview={preview}>
-        <Button background="var(--row-bg)" click={() => navigate(`/pool/${pool.lpToken.symbol}`)}>
-          {t("pools.deposit")}
-        </Button>
-      </ButtonContainer>
     </RowContainer>
   );
 };

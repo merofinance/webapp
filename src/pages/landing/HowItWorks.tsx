@@ -20,7 +20,6 @@ const cardsList: CardType[][] = [
       number: "howItWorks.categories.earnAndProtect.cards.deposit.number",
       header: "howItWorks.categories.earnAndProtect.cards.deposit.header",
       description: "howItWorks.categories.earnAndProtect.cards.deposit.description",
-      depositButton: true,
     },
     {
       number: "howItWorks.categories.earnAndProtect.cards.register.number",
