@@ -91,6 +91,16 @@ const InfoCards = styled.div`
   }
 `;
 
+const EmptyState = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6rem;
+  font-weight: 500;
+  padding: 3rem 0 2rem 0;
+`;
+
 const PoolsPage = (): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -106,6 +116,21 @@ const PoolsPage = (): JSX.Element => {
     if (!mero) return;
     dispatch(fetchState(mero));
   }, [updated]);
+
+  const activePools = pools
+    ? pools
+        .filter((pool: Pool) => {
+          const paused = pool.isPaused || pool.isShutdown;
+          if (!paused) return true;
+          if (!balances || !balances[pool.address]) return false;
+          return !balances[pool.address].isZero();
+        })
+        .sort((a: Pool, b: Pool) => (a.apy && b.apy ? b.apy.toNumber() - a.apy.toNumber() : 0))
+        .sort((a: Pool, b: Pool) => {
+          if (!balances || !balances[a.address] || !balances[b.address]) return 0;
+          return balances[b.address].toNumber() - balances[a.address].toNumber();
+        })
+    : null;
 
   return (
     <StyledPoolsPage>
@@ -131,29 +156,19 @@ const PoolsPage = (): JSX.Element => {
               <Header hideOnMobile>{t("headers.deposits")}</Header>
               <ChevronHeader />
             </HeaderRow>
-            {!pools && (
+            {!activePools && (
               <>
                 <Loader row />
                 <Loader row />
                 <Loader row />
               </>
             )}
-            {pools &&
-              pools
-                .filter((pool: Pool) => {
-                  const paused = pool.isPaused || pool.isShutdown;
-                  if (!paused) return true;
-                  if (!balances || !balances[pool.address]) return false;
-                  return !balances[pool.address].isZero();
-                })
-                .sort((a: Pool, b: Pool) =>
-                  a.apy && b.apy ? b.apy.toNumber() - a.apy.toNumber() : 0
-                )
-                .sort((a: Pool, b: Pool) => {
-                  if (!balances || !balances[a.address] || !balances[b.address]) return 0;
-                  return balances[b.address].toNumber() - balances[a.address].toNumber();
-                })
-                .map((pool: Pool) => <PoolsRow key={pool.address} pool={pool} />)}
+            {activePools && activePools.length === 0 && (
+              <EmptyState>{t("pools.emptyState")}</EmptyState>
+            )}
+            {activePools &&
+              activePools.length > 0 &&
+              activePools.map((pool: Pool) => <PoolsRow key={pool.address} pool={pool} />)}
           </ContentSection>
         </ContentContainer>
         <InfoCards>
