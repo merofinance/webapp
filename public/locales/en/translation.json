@@ -302,6 +302,7 @@
     "header": "All pools",
     "overview": "Mero’s single-asset pools aggregate yield across strategies. Add utility and autonomy to your liquidity with actions.",
     "deposit": "deposit",
+    "emptyState": "All Mero pools are currently paused",
     "information": {
       "header": "Pools information",
       "tvl": {
