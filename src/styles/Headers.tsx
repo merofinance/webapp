@@ -39,8 +39,7 @@ export const Header3 = styled.h3`
   max-width: 84rem;
   letter-spacing: 0.25px;
 
-  font-size: 2.8rem;
-  line-height: 4.2rem;
+  font-size: 1.8rem;
   @media (max-width: 600px) {
     font-size: 1.4rem;
     line-height: 1.9rem;

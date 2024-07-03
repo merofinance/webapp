@@ -66,7 +66,6 @@ const Header = (): JSX.Element => {
         <Link to="/">
           <Logo src={logo} alt="Mero logo" />
         </Link>
-        <NavItems />
         <Connector />
       </Content>
     </StyledHeader>
