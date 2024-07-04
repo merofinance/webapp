@@ -34,11 +34,6 @@ const linkLists: LinkListType[] = [
     links: [
       {
         internal: false,
-        label: "footer.community.links.careers",
-        link: "/careers",
-      },
-      {
-        internal: false,
         label: "footer.community.links.discord",
         link: DISCORD_LINK,
       },
@@ -57,11 +52,6 @@ const linkLists: LinkListType[] = [
   {
     header: "footer.resources.header",
     links: [
-      {
-        internal: true,
-        label: "footer.resources.links.litepaper",
-        link: "/litepaper",
-      },
       {
         internal: false,
         label: "footer.resources.links.docs",

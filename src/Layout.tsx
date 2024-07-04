@@ -16,7 +16,6 @@ import MockSigner from "./lib/mock/signer";
 import Footer from "./components/Footer";
 import ErrorAlert from "./components/ErrorAlert";
 import { MeroError } from "./app/errors";
-import RegionPopup from "./components/RegionPopup";
 
 const Background = styled.div`
   background: radial-gradient(rgba(11, 3, 60, 0.2), rgba(10, 5, 38, 0.3));
@@ -91,7 +90,6 @@ const Layout = (): JSX.Element => {
               </Content>
               <Footer />
               <ErrorAlert />
-              <RegionPopup />
             </StyledApp>
           </Background>
         </Web3ReactProvider>

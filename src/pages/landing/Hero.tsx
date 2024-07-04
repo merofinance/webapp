@@ -13,11 +13,11 @@ const StyledHero = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: var(--section-margin);
 
   @media (max-width: 600px) {
     margin: var(--mobile-section-margin);
   }
+  flex: 1;
 `;
 
 const TvlHeader = styled.div`
@@ -66,19 +66,16 @@ const Hero = (): JSX.Element => {
 
   return (
     <StyledHero>
-      <Header1>{t("landingPage.header")}</Header1>
-      <Header3>{t("landingPage.subHeader")}</Header3>
-      <TvlHeader>{t("landingPage.stats.tvl")}</TvlHeader>
-      {tvl ? (
-        <TvlValue id="hero-statistics-tvl">{tvl.toCompactUsdValue(1)}</TvlValue>
-      ) : (
-        <LoaderContainer>
-          <Loader button />
-        </LoaderContainer>
-      )}
+      <Header1>Mero Protocol Shutdown</Header1>
+      <Header3>
+        Mero is no longer operational. Users can no longer deposit funds into Mero pools. For users
+        who still hold funds in Mero pools, you can withdraw your funds below. The Mero website will
+        be shutdown on 01/01/2025. It has been a pleasure working on Mero, and we thank all of those
+        who supported us during this time.
+      </Header3>
       <ButtonContainer>
         <Button primary large click={() => navigate("/pools")}>
-          {t("landingPage.viewPools")}
+          Withdraw
         </Button>
       </ButtonContainer>
     </StyledHero>
