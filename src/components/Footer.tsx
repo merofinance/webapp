@@ -34,11 +34,6 @@ const linkLists: LinkListType[] = [
     links: [
       {
         internal: false,
-        label: "footer.community.links.discord",
-        link: DISCORD_LINK,
-      },
-      {
-        internal: false,
         label: "footer.community.links.twitter",
         link: TWITTER_LINK,
       },
