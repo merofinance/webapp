@@ -22,6 +22,7 @@ export async function getMainnetApys(): Promise<Apy[]> {
 // This is temporary while the pool is new and volatile
 // We will switch to the same APY system as the other pools once it stabilizes
 export async function getPolygonApys(): Promise<Apy[]> {
+  return [];
   const response = await fetch(POLYGON_API_URL);
   const data = await response.json();
   const aprData = data.apys[POLYGON_USDC_POOL_ID];
